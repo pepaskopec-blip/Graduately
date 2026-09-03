@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <math.h>
 
 #define NUM_UNITS 12
@@ -25,6 +26,28 @@ static double path_y_at(double t) {
 
 static void on_continue_clicked(GtkButton *button, gpointer user_data) {
     gtk_stack_set_visible_child_name(main_stack, "roadmap");
+}
+
+static gboolean on_window_key_pressed(GtkEventControllerKey *controller,
+                                      guint keyval, guint keycode,
+                                      GdkModifierType state,
+                                      gpointer user_data) {
+    GtkWindow *window = user_data;
+
+    (void)controller;
+    (void)keycode;
+
+    if ((keyval == GDK_KEY_q &&
+         (state & (GDK_SUPER_MASK | GDK_META_MASK)) != 0) ||
+        (keyval == GDK_KEY_F4 &&
+         (state & GDK_ALT_MASK) != 0)) {
+        GtkApplication *app = gtk_window_get_application(window);
+        if (app != NULL)
+            g_application_quit(G_APPLICATION(app));
+        return GDK_EVENT_STOP;
+    }
+
+    return GDK_EVENT_PROPAGATE;
 }
 
 static GtkWidget *build_welcome_page(void) {
@@ -226,6 +249,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *title_label;
     GtkWidget *welcome_page;
     GtkWidget *roadmap_page;
+    GtkEventController *keys;
     GtkCssProvider *provider;
 
     // Create a new application window
@@ -254,6 +278,13 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, welcome_page, "welcome");
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
     gtk_stack_set_visible_child_name(main_stack, "welcome");
+
+    keys = gtk_event_controller_key_new();
+    gtk_event_controller_set_propagation_phase(GTK_EVENT_CONTROLLER(keys),
+                                               GTK_PHASE_CAPTURE);
+    g_signal_connect(keys, "key-pressed",
+                     G_CALLBACK(on_window_key_pressed), window);
+    gtk_widget_add_controller(GTK_WIDGET(window), GTK_EVENT_CONTROLLER(keys));
 
     // Load Catppuccin Mocha CSS
     provider = gtk_css_provider_new();
