@@ -1,2 +1,0 @@
-Entering activate
-After gtk_window_present
