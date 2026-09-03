@@ -2,48 +2,81 @@
 
 static void activate(GtkApplication *app, gpointer user_data) {
     GtkWindow *window;
+    GtkWidget *headerbar;
+    GtkWidget *title_label;
     GtkWidget *box;
-    GtkLabel *label;
+    GtkWidget *heading;
+    GtkWidget *card;
     GtkCssProvider *provider;
 
     // Create a new application window
     window = GTK_WINDOW(gtk_application_window_new(app));
     gtk_window_set_title(window, "Sprechen.c");
-    gtk_window_set_default_size(window, 600, 400);
+    gtk_window_set_default_size(window, 720, 520);
+
+    // Create a styled headerbar (titlebar)
+    headerbar = gtk_header_bar_new();
+    gtk_widget_add_css_class(headerbar, "titlebar");
+    title_label = gtk_label_new("Sprechen.c");
+    gtk_widget_add_css_class(title_label, "app-title");
+    gtk_header_bar_set_title_widget(GTK_HEADER_BAR(headerbar), title_label);
+    gtk_window_set_titlebar(window, headerbar);
 
     // Create a vertical box to hold contents
-    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 18);
     gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
+    gtk_widget_set_margin_top(GTK_WIDGET(box), 40);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(box), 40);
     gtk_window_set_child(window, box);
 
-    // Create a label with welcome message
-    label = GTK_LABEL(gtk_label_new("Vítejte ve Sprechen.C!\n\nSprechen.C je vzdělávací program na procvičování Němčiny, určený pro studenty středních škol a gymnázií. Program je napsaný v Céčku studentama ze SSŠVT!"));
-    gtk_label_set_justify(label, GTK_JUSTIFY_CENTER);
-    gtk_label_set_lines(label, -1);  // Allow multiple lines
-    gtk_label_set_xalign(label, 0.5);  // Center horizontally
-    gtk_label_set_yalign(label, 0.5);  // Center vertically
-    gtk_label_set_wrap(label, TRUE);  // Enable line wrapping
-    gtk_label_set_max_width_chars(label, 40);
-    gtk_widget_add_css_class(GTK_WIDGET(label), "welcome");
-    gtk_box_append(GTK_BOX(box), GTK_WIDGET(label));
+    // Heading
+    heading = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(heading),
+        "Vítejte ve <span color=\"#cba6f7\">Sprechen.C</span>!");
+    gtk_widget_add_css_class(heading, "heading");
+    gtk_box_append(GTK_BOX(box), heading);
 
-    // Load CSS for beautiful background
+    // Card with the welcome message
+    card = gtk_label_new(
+        "Sprechen.C je vzdělávací program na procvičování Němčiny, určený "
+        "pro studenty středních škol a gymnázií.\n\n"
+        "Program je napsaný v Céčku studentama ze SSŠVT!");
+    gtk_label_set_justify(GTK_LABEL(card), GTK_JUSTIFY_CENTER);
+    gtk_label_set_wrap(GTK_LABEL(card), TRUE);
+    gtk_label_set_max_width_chars(GTK_LABEL(card), 48);
+    gtk_widget_add_css_class(card, "card");
+    gtk_box_append(GTK_BOX(box), card);
+
+    // Load Catppuccin Mocha CSS
     provider = gtk_css_provider_new();
     gtk_css_provider_load_from_string(provider,
         "window {"
-        "   background-color: #2E3440;"  /* Dark bluish background */
-        "   background-image: linear-gradient(135deg, #2E3440 0%, #3B4252 100%);"
+        "   background-color: #1e1e2e;"
+        "   background-image: linear-gradient(160deg, #11111b 0%, #1e1e2e 40%, #313244 100%);"
         "}"
-        "label.welcome {"
-        "   color: #ECEFF4;"
-        "   font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;"
-        "   font-size: 18px;"
-        "   margin: 30px;"
-        "   padding: 30px;"
-        "   background-color: rgba(59, 66, 82, 0.8);"
-        "   border-radius: 16px;"
-        "   box-shadow: 0 8px 16px rgba(0,0,0,0.4);"
+        ".titlebar {"
+        "   background-color: #1e1e2e;"
+        "   box-shadow: none;"
+        "   border: none;"
+        "}"
+        ".app-title {"
+        "   color: #cdd6f4;"
+        "   font-weight: 700;"
+        "   font-size: 14px;"
+        "}"
+        ".heading {"
+        "   color: #cdd6f4;"
+        "   font-size: 32px;"
+        "   font-weight: 800;"
+        "}"
+        ".card {"
+        "   background-color: rgba(49, 50, 68, 0.92);"
+        "   border: 1px solid #45475a;"
+        "   border-radius: 18px;"
+        "   padding: 30px 34px;"
+        "   color: #cdd6f4;"
+        "   font-size: 16px;"
         "}"
     );
 
