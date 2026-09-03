@@ -4,16 +4,9 @@
 #define FIRST_LOCKED 1
 
 static GtkStack *main_stack;
-static GtkWidget *back_button;
 
 static void on_continue_clicked(GtkButton *button, gpointer user_data) {
     gtk_stack_set_visible_child_name(main_stack, "roadmap");
-    gtk_widget_set_visible(back_button, TRUE);
-}
-
-static void on_back_clicked(GtkButton *button, gpointer user_data) {
-    gtk_stack_set_visible_child_name(main_stack, "welcome");
-    gtk_widget_set_visible(back_button, FALSE);
 }
 
 static GtkWidget *build_welcome_page(void) {
@@ -176,13 +169,6 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_add_css_class(title_label, "app-title");
     gtk_header_bar_set_title_widget(GTK_HEADER_BAR(headerbar), title_label);
 
-    // Back button (shown only on the roadmap page)
-    back_button = gtk_button_new_from_icon_name("go-previous-symbolic");
-    gtk_widget_add_css_class(back_button, "back-btn");
-    gtk_widget_set_visible(back_button, FALSE);
-    gtk_header_bar_pack_start(GTK_HEADER_BAR(headerbar), back_button);
-    g_signal_connect(back_button, "clicked", G_CALLBACK(on_back_clicked), NULL);
-
     gtk_window_set_titlebar(window, headerbar);
 
     // Stack navigation between welcome and roadmap pages
@@ -207,6 +193,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "}"
         ".titlebar {"
         "   background-color: #1e1e2e;"
+        "   background-image: none;"
         "   box-shadow: none;"
         "   border: none;"
         "}"
