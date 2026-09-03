@@ -2,6 +2,9 @@
 # Prerequisites
 *.d
 
+# binary
+sprechen
+
 # Object files
 *.o
 *.ko
