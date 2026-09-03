@@ -1,9 +1,27 @@
 #include <gtk/gtk.h>
+#include <math.h>
 
 #define NUM_UNITS 12
 #define FIRST_LOCKED 1
 
+#define NODE_SIZE    88.0
+#define PATH_SPAC    150.0
+#define PATH_CYCLES  2.0
+#define PATH_MARGIN  72.0
+#define PATH_HEIGHT  380.0
+#define PATH_AMP     100.0
+
 static GtkStack *main_stack;
+
+static double path_x_at(double t) {
+    return PATH_MARGIN + (NODE_SIZE / 2.0) + t * PATH_SPAC;
+}
+
+static double path_y_at(double t) {
+    double mid = PATH_HEIGHT / 2.0;
+    double phase = 2.0 * G_PI * PATH_CYCLES / (NUM_UNITS - 1);
+    return mid + PATH_AMP * sin(t * phase);
+}
 
 static void on_continue_clicked(GtkButton *button, gpointer user_data) {
     gtk_stack_set_visible_child_name(main_stack, "roadmap");
@@ -53,13 +71,108 @@ static GtkWidget *build_welcome_page(void) {
     return box;
 }
 
+static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer user_data) {
+    const int segments = (NUM_UNITS - 1) * 60;
+    const double t_end = (double)(NUM_UNITS - 1);
+    const double t_lit = (double)(FIRST_LOCKED - 1);
+    int k;
+
+    (void)area;
+    (void)width;
+    (void)height;
+    (void)user_data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, path_x_at(0), path_y_at(0));
+    for (k = 1; k <= segments; k++) {
+        double t = t_end * (double)k / (double)segments;
+        cairo_line_to(cr, path_x_at(t), path_y_at(t));
+    }
+    cairo_set_line_width(cr, 16);
+    cairo_set_source_rgb(cr, 0.27059, 0.27843, 0.35294);
+    cairo_stroke(cr);
+
+    if (t_lit > 0.0) {
+        int lit_segments = (int)(t_lit / t_end * (double)segments + 0.5);
+        cairo_new_path(cr);
+        cairo_move_to(cr, path_x_at(0), path_y_at(0));
+        for (k = 1; k <= lit_segments; k++) {
+            double t = t_end * (double)k / (double)segments;
+            cairo_line_to(cr, path_x_at(t), path_y_at(t));
+        }
+        cairo_set_source_rgba(cr, 0.79608, 0.65098, 0.96863, 0.20);
+        cairo_set_line_width(cr, 36);
+        cairo_stroke_preserve(cr);
+        cairo_set_source_rgb(cr, 0.79608, 0.65098, 0.96863);
+        cairo_set_line_width(cr, 16);
+        cairo_stroke(cr);
+    }
+}
+
+static void add_path_node(GtkFixed *fixed, int index) {
+    int num = index + 1;
+    gboolean locked = index >= FIRST_LOCKED;
+    double cx = path_x_at(index);
+    double cy = path_y_at(index);
+    GtkWidget *card;
+    GtkWidget *vbox;
+    GtkWidget *number;
+    char *text;
+
+    card = gtk_button_new();
+    gtk_widget_add_css_class(card, "unit-node");
+    gtk_widget_set_sensitive(card, !locked);
+    gtk_widget_set_size_request(card, (int)NODE_SIZE, (int)NODE_SIZE);
+    if (locked)
+        gtk_widget_add_css_class(card, "locked");
+
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+    gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
+    gtk_button_set_child(GTK_BUTTON(card), vbox);
+
+    text = g_strdup_printf("%d", num);
+    number = gtk_label_new(text);
+    g_free(text);
+    gtk_widget_add_css_class(number, "unit-number");
+    gtk_box_append(GTK_BOX(vbox), number);
+
+    if (locked) {
+        GtkWidget *lock;
+        lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
+        gtk_image_set_pixel_size(GTK_IMAGE(lock), 16);
+        gtk_widget_add_css_class(lock, "lock-icon");
+        gtk_box_append(GTK_BOX(vbox), lock);
+    }
+
+    text = g_strdup_printf("Jednotka %d%s", num, locked ? " (zamčeno)" : "");
+    gtk_widget_set_tooltip_text(card, text);
+    g_free(text);
+
+    gtk_fixed_put(fixed, card,
+                  (int)(cx - NODE_SIZE / 2.0),
+                  (int)(cy - NODE_SIZE / 2.0));
+}
+
 static GtkWidget *build_roadmap_page(void) {
     GtkWidget *page;
     GtkWidget *heading;
     GtkWidget *sub;
     GtkWidget *scroll;
-    GtkWidget *flow;
+    GtkWidget *wrap;
+    GtkWidget *fixed;
+    GtkWidget *rail;
+    int canvas_w;
     int i;
+
+    canvas_w = (int)(path_x_at(NUM_UNITS - 1) + PATH_MARGIN);
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_widget_set_hexpand(page, TRUE);
@@ -69,82 +182,40 @@ static GtkWidget *build_roadmap_page(void) {
     gtk_widget_set_margin_top(page, 28);
     gtk_widget_set_margin_bottom(page, 24);
 
-    // Page heading
     heading = gtk_label_new("Učební plán");
     gtk_widget_set_halign(heading, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(heading, "roadmap-title");
     gtk_box_append(GTK_BOX(page), heading);
 
-    sub = gtk_label_new("Vyberte jednotku a začněte procvičovat.");
+    sub = gtk_label_new("Vyberte jednotku na cestě a začněte procvičovat.");
     gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(sub, "roadmap-sub");
     gtk_box_append(GTK_BOX(page), sub);
 
-    // Scrollable grid of unit cards
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_NEVER);
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 18);
     gtk_box_append(GTK_BOX(page), scroll);
 
-    flow = gtk_flow_box_new();
-    gtk_flow_box_set_homogeneous(GTK_FLOW_BOX(flow), TRUE);
-    gtk_flow_box_set_column_spacing(GTK_FLOW_BOX(flow), 16);
-    gtk_flow_box_set_row_spacing(GTK_FLOW_BOX(flow), 16);
-    gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(flow), 3);
-    gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(flow), GTK_SELECTION_NONE);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), flow);
+    wrap = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_vexpand(wrap, TRUE);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), wrap);
 
-    for (i = 0; i < NUM_UNITS; i++) {
-        int num = i + 1;
-        gboolean locked = i >= FIRST_LOCKED;
-        GtkWidget *card;
-        GtkWidget *vbox;
-        GtkWidget *badge;
-        GtkWidget *row;
-        GtkWidget *title;
-        char *text;
+    fixed = gtk_fixed_new();
+    gtk_widget_set_halign(fixed, GTK_ALIGN_START);
+    gtk_widget_set_valign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(fixed, canvas_w, (int)PATH_HEIGHT);
+    gtk_box_append(GTK_BOX(wrap), fixed);
 
-        card = gtk_button_new();
-        gtk_widget_add_css_class(card, "unit-card");
-        gtk_widget_set_sensitive(card, !locked);
-        gtk_widget_set_size_request(card, 190, 170);
-        if (locked)
-            gtk_widget_add_css_class(card, "locked");
+    rail = gtk_drawing_area_new();
+    gtk_widget_set_size_request(rail, canvas_w, (int)PATH_HEIGHT);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(rail), draw_rail, NULL, NULL);
+    gtk_fixed_put(GTK_FIXED(fixed), rail, 0, 0);
 
-        vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-        gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
-        gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
-        gtk_button_set_child(GTK_BUTTON(card), vbox);
-
-        // Number badge
-        text = g_strdup_printf("%d", num);
-        badge = gtk_label_new(text);
-        g_free(text);
-        gtk_widget_add_css_class(badge, "unit-badge");
-        gtk_box_append(GTK_BOX(vbox), badge);
-
-        // Title row (with lock icon when locked)
-        row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-        gtk_widget_set_halign(row, GTK_ALIGN_CENTER);
-        gtk_box_append(GTK_BOX(vbox), row);
-
-        if (locked) {
-            GtkWidget *lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
-            gtk_image_set_pixel_size(GTK_IMAGE(lock), 14);
-            gtk_widget_add_css_class(lock, "lock-icon");
-            gtk_box_append(GTK_BOX(row), lock);
-        }
-
-        text = g_strdup_printf("Jednotka %d", num);
-        title = gtk_label_new(text);
-        g_free(text);
-        gtk_widget_add_css_class(title, "unit-title");
-        gtk_box_append(GTK_BOX(row), title);
-
-        gtk_flow_box_insert(GTK_FLOW_BOX(flow), card, -1);
-    }
+    for (i = 0; i < NUM_UNITS; i++)
+        add_path_node(GTK_FIXED(fixed), i);
 
     return page;
 }
@@ -242,50 +313,39 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   color: #a6adc8;"
         "   font-size: 14px;"
         "}"
-        ".unit-card {"
-        "   background-color: rgba(30, 30, 46, 0.65);"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 20px;"
-        "   padding: 24px 18px;"
-        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);"
-        "   transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;"
-        "}"
-        ".unit-card:hover {"
-        "   transform: translateY(-3px);"
-        "   border-color: #cba6f7;"
-        "   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(203, 166, 247, 0.25);"
-        "}"
-        ".unit-card:active {"
-        "   transform: translateY(0px);"
-        "}"
-        ".unit-card.locked {"
-        "   opacity: 0.55;"
-        "   background-color: rgba(30, 30, 46, 0.5);"
-        "   box-shadow: none;"
-        "}"
-        ".unit-badge {"
-        "   min-width: 48px;"
-        "   min-height: 48px;"
-        "   border-radius: 999px;"
-        "   padding: 6px 14px;"
-        "   color: #11111b;"
+        ".unit-node {"
         "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 100%);"
-        "   font-size: 22px;"
-        "   font-weight: 800;"
-        "   box-shadow: 0 4px 12px rgba(203, 166, 247, 0.35);"
+        "   color: #1e1e2e;"
+        "   border: none;"
+        "   border-radius: 999px;"
+        "   padding: 0;"
+        "   box-shadow: 0 4px 16px rgba(203, 166, 247, 0.35), 0 0 0 1px rgba(203, 166, 247, 0.25);"
+        "   transition: transform 150ms ease, box-shadow 150ms ease;"
         "}"
-        ".unit-card.locked .unit-badge {"
+        ".unit-node:hover {"
+        "   transform: translateY(-3px);"
+        "   box-shadow: 0 10px 26px rgba(203, 166, 247, 0.55), 0 0 0 2px rgba(203, 166, 247, 0.35);"
+        "}"
+        ".unit-node:active {"
+        "   transform: translateY(0px);"
+        "   box-shadow: 0 4px 12px rgba(203, 166, 247, 0.45);"
+        "}"
+        ".unit-node.locked {"
         "   background-image: none;"
-        "   background-color: #45475a;"
+        "   background-color: #313244;"
         "   color: #a6adc8;"
+        "   border: 1px solid #45475a;"
         "   box-shadow: none;"
         "}"
-        ".unit-title {"
-        "   color: #cdd6f4;"
-        "   font-size: 15px;"
-        "   font-weight: 600;"
+        ".unit-node.locked:hover {"
+        "   transform: none;"
+        "   box-shadow: none;"
         "}"
-        ".unit-card.locked .unit-title {"
+        ".unit-number {"
+        "   font-size: 24px;"
+        "   font-weight: 800;"
+        "}"
+        ".unit-node.locked .unit-number {"
         "   color: #a6adc8;"
         "}"
         ".lock-icon {"
