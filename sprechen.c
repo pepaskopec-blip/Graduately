@@ -24,8 +24,22 @@ static double path_y_at(double t) {
     return mid + PATH_AMP * sin(t * phase);
 }
 
+typedef struct { double r, g, b; } Rgb;
+
+static Rgb color_from_hex(unsigned int hex) {
+    Rgb c;
+    c.r = (double)((hex >> 16) & 0xFF) / 255.0;
+    c.g = (double)((hex >> 8) & 0xFF) / 255.0;
+    c.b = (double)(hex & 0xFF) / 255.0;
+    return c;
+}
+
 static void on_continue_clicked(GtkButton *button, gpointer user_data) {
     gtk_stack_set_visible_child_name(main_stack, "roadmap");
+}
+
+static void on_back_clicked(GtkButton *button, gpointer user_data) {
+    gtk_stack_set_visible_child_name(main_stack, "welcome");
 }
 
 static gboolean on_window_key_pressed(GtkEventControllerKey *controller,
@@ -94,11 +108,56 @@ static GtkWidget *build_welcome_page(void) {
     return box;
 }
 
+static void draw_node_halo(cairo_t *cr, double cx, double cy,
+                           double radius, double r, double g, double b,
+                           double alpha) {
+    cairo_pattern_t *grad;
+    grad = cairo_pattern_create_radial(cx, cy, 6.0, cx, cy, radius);
+    cairo_pattern_add_color_stop_rgba(grad, 0.0, r, g, b, alpha);
+    cairo_pattern_add_color_stop_rgba(grad, 0.55, r, g, b, alpha * 0.30);
+    cairo_pattern_add_color_stop_rgba(grad, 1.0, r, g, b, 0.0);
+    cairo_set_source(cr, grad);
+    cairo_paint(cr);
+    cairo_pattern_destroy(grad);
+}
+
+static void draw_finish_flag(cairo_t *cr, double cx, double cy) {
+    double base_y = cy - NODE_SIZE / 2.0;
+    double top_y = base_y - 84.0;
+    double mid_y = top_y + 16.0;
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, cx - 2.0, base_y);
+    cairo_line_to(cr, cx + 2.0, base_y);
+    cairo_line_to(cr, cx + 2.0, top_y);
+    cairo_line_to(cr, cx - 2.0, top_y);
+    cairo_close_path(cr);
+    cairo_set_source_rgb(cr, 0.804, 0.820, 0.875);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, top_y - 4.0, 5.0, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, 0.969, 0.698, 0.671);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, cx, top_y + 2.0);
+    cairo_line_to(cr, cx + 42.0, mid_y);
+    cairo_line_to(cr, cx, top_y + 30.0);
+    cairo_close_path(cr);
+    cairo_set_source_rgb(cr, 0.796, 0.651, 0.969);
+    cairo_fill(cr);
+}
+
 static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
                       int width, int height, gpointer user_data) {
     const int segments = (NUM_UNITS - 1) * 60;
     const double t_end = (double)(NUM_UNITS - 1);
     const double t_lit = (double)(FIRST_LOCKED - 1);
+    const Rgb mauve = color_from_hex(0xcba6f7);
+    const Rgb blue = color_from_hex(0x89b4fa);
+    double x0 = path_x_at(0);
+    double x1 = path_x_at(NUM_UNITS - 1);
     int k;
 
     (void)area;
@@ -112,6 +171,10 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
+    draw_node_halo(cr, path_x_at(FIRST_LOCKED - 1),
+                   path_y_at(FIRST_LOCKED - 1),
+                   NODE_SIZE * 1.05, mauve.r, mauve.g, mauve.b, 0.18);
+
     cairo_new_path(cr);
     cairo_move_to(cr, path_x_at(0), path_y_at(0));
     for (k = 1; k <= segments; k++) {
@@ -119,28 +182,65 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
         cairo_line_to(cr, path_x_at(t), path_y_at(t));
     }
     cairo_set_line_width(cr, 16);
-    cairo_set_source_rgb(cr, 0.27059, 0.27843, 0.35294);
+    cairo_set_source_rgb(cr, 0.153, 0.157, 0.235);
     cairo_stroke(cr);
 
     if (t_lit > 0.0) {
-        int lit_segments = (int)(t_lit / t_end * (double)segments + 0.5);
+        int lit_segments;
+        cairo_pattern_t *grad;
+
+        lit_segments = (int)(t_lit / t_end * (double)segments + 0.5);
         cairo_new_path(cr);
         cairo_move_to(cr, path_x_at(0), path_y_at(0));
         for (k = 1; k <= lit_segments; k++) {
             double t = t_end * (double)k / (double)segments;
             cairo_line_to(cr, path_x_at(t), path_y_at(t));
         }
-        cairo_set_source_rgba(cr, 0.79608, 0.65098, 0.96863, 0.20);
-        cairo_set_line_width(cr, 36);
+
+        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
+        cairo_pattern_add_color_stop_rgba(grad, 0.0,
+                                          mauve.r, mauve.g, mauve.b, 0.16);
+        cairo_pattern_add_color_stop_rgba(grad, 1.0,
+                                          blue.r, blue.g, blue.b, 0.16);
+        cairo_set_source(cr, grad);
+        cairo_set_line_width(cr, 34);
         cairo_stroke_preserve(cr);
-        cairo_set_source_rgb(cr, 0.79608, 0.65098, 0.96863);
+        cairo_pattern_destroy(grad);
+
+        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
+        cairo_pattern_add_color_stop_rgba(grad, 0.0,
+                                          mauve.r, mauve.g, mauve.b, 1.0);
+        cairo_pattern_add_color_stop_rgba(grad, 1.0,
+                                          blue.r, blue.g, blue.b, 1.0);
+        cairo_set_source(cr, grad);
         cairo_set_line_width(cr, 16);
-        cairo_stroke(cr);
+        cairo_stroke_preserve(cr);
+        cairo_pattern_destroy(grad);
     }
+
+    {
+        double start_t = t_lit > 0.0 ? t_lit : 0.0;
+        int first_seg = (int)(start_t / t_end * (double)segments + 0.5);
+        cairo_set_source_rgba(cr, 0.651, 0.678, 0.784, 0.17);
+        cairo_set_dash(cr, (double[]){1.0, 26.0}, 2, 0.0);
+        cairo_new_path(cr);
+        cairo_move_to(cr, path_x_at(start_t), path_y_at(start_t));
+        for (k = first_seg; k <= segments; k++) {
+            double t = t_end * (double)k / (double)segments;
+            cairo_line_to(cr, path_x_at(t), path_y_at(t));
+        }
+        cairo_stroke(cr);
+        cairo_set_dash(cr, NULL, 0, 0.0);
+    }
+
+    draw_finish_flag(cr, path_x_at(NUM_UNITS - 1),
+                     path_y_at(NUM_UNITS - 1));
 }
 
 static void add_path_node(GtkFixed *fixed, int index) {
     int num = index + 1;
+    gboolean done = index < FIRST_LOCKED - 1;
+    gboolean current = index == FIRST_LOCKED - 1;
     gboolean locked = index >= FIRST_LOCKED;
     double cx = path_x_at(index);
     double cy = path_y_at(index);
@@ -153,7 +253,11 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gtk_widget_add_css_class(card, "unit-node");
     gtk_widget_set_sensitive(card, !locked);
     gtk_widget_set_size_request(card, (int)NODE_SIZE, (int)NODE_SIZE);
-    if (locked)
+    if (done)
+        gtk_widget_add_css_class(card, "done");
+    else if (current)
+        gtk_widget_add_css_class(card, "current");
+    else
         gtk_widget_add_css_class(card, "locked");
 
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
@@ -167,7 +271,13 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gtk_widget_add_css_class(number, "unit-number");
     gtk_box_append(GTK_BOX(vbox), number);
 
-    if (locked) {
+    if (done) {
+        GtkWidget *icon;
+        icon = gtk_image_new_from_icon_name("object-select-symbolic");
+        gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
+        gtk_widget_add_css_class(icon, "state-icon");
+        gtk_box_append(GTK_BOX(vbox), icon);
+    } else if (locked) {
         GtkWidget *lock;
         lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
         gtk_image_set_pixel_size(GTK_IMAGE(lock), 16);
@@ -175,17 +285,36 @@ static void add_path_node(GtkFixed *fixed, int index) {
         gtk_box_append(GTK_BOX(vbox), lock);
     }
 
-    text = g_strdup_printf("Jednotka %d%s", num, locked ? " (zamčeno)" : "");
+    if (done)
+        text = g_strdup_printf("Jednotka %d · dokončeno", num);
+    else if (current)
+        text = g_strdup_printf("Jednotka %d · pokračovat", num);
+    else
+        text = g_strdup_printf("Jednotka %d · zamčeno", num);
     gtk_widget_set_tooltip_text(card, text);
     g_free(text);
 
     gtk_fixed_put(fixed, card,
                   (int)(cx - NODE_SIZE / 2.0),
                   (int)(cy - NODE_SIZE / 2.0));
+
+    if (current) {
+        GtkWidget *cap;
+        cap = gtk_label_new(NULL);
+        gtk_label_set_markup(GTK_LABEL(cap),
+            "<span color=\"#89b4fa\">▶</span> Pokračuj zde");
+        gtk_widget_add_css_class(cap, "node-caption");
+        gtk_fixed_put(fixed, cap,
+                      (int)(cx + NODE_SIZE / 2.0 + 14.0),
+                      (int)(cy - 30.0));
+    }
 }
 
 static GtkWidget *build_roadmap_page(void) {
     GtkWidget *page;
+    GtkWidget *top;
+    GtkWidget *back;
+    GtkWidget *center;
     GtkWidget *heading;
     GtkWidget *sub;
     GtkWidget *scroll;
@@ -197,29 +326,45 @@ static GtkWidget *build_roadmap_page(void) {
 
     canvas_w = (int)(path_x_at(NUM_UNITS - 1) + PATH_MARGIN);
 
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_hexpand(page, TRUE);
     gtk_widget_set_vexpand(page, TRUE);
     gtk_widget_set_margin_start(page, 32);
     gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 28);
+    gtk_widget_set_margin_top(page, 24);
     gtk_widget_set_margin_bottom(page, 24);
+
+    top = gtk_center_box_new();
+    gtk_widget_set_margin_top(top, 2);
+    gtk_widget_set_margin_bottom(top, 6);
+    gtk_box_append(GTK_BOX(page), top);
+
+    back = gtk_button_new_from_icon_name("go-previous-symbolic");
+    gtk_widget_add_css_class(back, "back-btn");
+    gtk_widget_set_valign(back, GTK_ALIGN_CENTER);
+    gtk_widget_set_tooltip_text(back, "Zpět");
+    g_signal_connect(back, "clicked", G_CALLBACK(on_back_clicked), NULL);
+    gtk_center_box_set_start_widget(GTK_CENTER_BOX(top), back);
+
+    center = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_widget_set_valign(center, GTK_ALIGN_CENTER);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(top), center);
 
     heading = gtk_label_new("Učební plán");
     gtk_widget_set_halign(heading, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(heading, "roadmap-title");
-    gtk_box_append(GTK_BOX(page), heading);
+    gtk_box_append(GTK_BOX(center), heading);
 
     sub = gtk_label_new("Vyberte jednotku na cestě a začněte procvičovat.");
     gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(sub, "roadmap-sub");
-    gtk_box_append(GTK_BOX(page), sub);
+    gtk_box_append(GTK_BOX(center), sub);
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_NEVER);
     gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 18);
+    gtk_widget_set_margin_top(scroll, 14);
     gtk_box_append(GTK_BOX(page), scroll);
 
     wrap = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -344,28 +489,74 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   color: #a6adc8;"
         "   font-size: 14px;"
         "}"
+        ".back-btn {"
+        "   min-width: 42px;"
+        "   min-height: 42px;"
+        "   padding: 0;"
+        "   border-radius: 999px;"
+        "   background-color: rgba(49, 50, 68, 0.9);"
+        "   border: 1px solid #45475a;"
+        "   color: #cdd6f4;"
+        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
+        "   transition: background-color 150ms ease, color 150ms ease,"
+        "                border-color 150ms ease, box-shadow 150ms ease;"
+        "}"
+        ".back-btn:hover {"
+        "   background-color: #45475a;"
+        "   border-color: #585b70;"
+        "   color: #cba6f7;"
+        "   box-shadow: 0 6px 20px rgba(203, 166, 247, 0.35);"
+        "}"
+        ".back-btn:active {"
+        "   background-color: #313244;"
+        "   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);"
+        "}"
         ".unit-node {"
-        "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 100%);"
-        "   color: #1e1e2e;"
-        "   border: none;"
+        "   background-image: none;"
+        "   background-color: #2b2d40;"
+        "   color: #cdd6f4;"
+        "   border: 2px solid #3b3e56;"
         "   border-radius: 999px;"
         "   padding: 0;"
-        "   box-shadow: 0 4px 16px rgba(203, 166, 247, 0.35), 0 0 0 1px rgba(203, 166, 247, 0.25);"
-        "   transition: transform 150ms ease, box-shadow 150ms ease;"
+        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
+        "   transition: transform 150ms ease, box-shadow 150ms ease,"
+        "                border-color 150ms ease;"
         "}"
-        ".unit-node:hover {"
-        "   transform: translateY(-3px);"
-        "   box-shadow: 0 10px 26px rgba(203, 166, 247, 0.55), 0 0 0 2px rgba(203, 166, 247, 0.35);"
+        ".unit-node.done {"
+        "   background-image: linear-gradient(135deg, #a6e3a1 0%, #94e2d5 100%);"
+        "   border-color: #a6e3a1;"
+        "   color: #1e1e2e;"
+        "   box-shadow: 0 4px 16px rgba(166, 227, 161, 0.35);"
         "}"
-        ".unit-node:active {"
-        "   transform: translateY(0px);"
-        "   box-shadow: 0 4px 12px rgba(203, 166, 247, 0.45);"
+        ".unit-node.current {"
+        "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 55%, #89b4fa 100%);"
+        "   border-color: #cba6f7;"
+        "   color: #1e1e2e;"
+        "   box-shadow: 0 4px 18px rgba(203, 166, 247, 0.5),"
+        "               0 0 0 4px rgba(30, 30, 46, 0.9),"
+        "               0 0 0 7px rgba(203, 166, 247, 0.45);"
+        "}"
+        ".unit-node.done:hover,"
+        ".unit-node.current:hover {"
+        "   transform: translateY(-3px) scale(1.05);"
+        "}"
+        ".unit-node.done:hover {"
+        "   box-shadow: 0 8px 22px rgba(166, 227, 161, 0.5);"
+        "}"
+        ".unit-node.current:hover {"
+        "   box-shadow: 0 8px 26px rgba(203, 166, 247, 0.65),"
+        "               0 0 0 4px rgba(30, 30, 46, 0.9),"
+        "               0 0 0 7px rgba(203, 166, 247, 0.55);"
+        "}"
+        ".unit-node.done:active,"
+        ".unit-node.current:active {"
+        "   transform: translateY(0px) scale(0.98);"
         "}"
         ".unit-node.locked {"
         "   background-image: none;"
-        "   background-color: #313244;"
-        "   color: #a6adc8;"
-        "   border: 1px solid #45475a;"
+        "   background-color: #24263a;"
+        "   border: 2px solid #383b52;"
+        "   color: #6c7086;"
         "   box-shadow: none;"
         "}"
         ".unit-node.locked:hover {"
@@ -376,11 +567,34 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   font-size: 24px;"
         "   font-weight: 800;"
         "}"
-        ".unit-node.locked .unit-number {"
-        "   color: #a6adc8;"
+        ".unit-node.done .unit-number,"
+        ".unit-node.current .unit-number {"
+        "   color: #1e1e2e;"
         "}"
-        ".lock-icon {"
+        ".unit-node.locked .unit-number {"
         "   color: #6c7086;"
+        "}"
+        ".state-icon {"
+        "   color: #1e1e2e;"
+        "}"
+        ".unit-node.locked .lock-icon {"
+        "   color: #585b70;"
+        "}"
+        ".node-caption {"
+        "   background-color: rgba(30, 30, 46, 0.88);"
+        "   border: 1px solid #45475a;"
+        "   border-radius: 999px;"
+        "   padding: 7px 15px;"
+        "   color: #cdd6f4;"
+        "   font-size: 13px;"
+        "   font-weight: 700;"
+        "   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"
+        "}"
+        "tooltip {"
+        "   background-color: #181825;"
+        "   border: 1px solid #45475a;"
+        "   border-radius: 10px;"
+        "   color: #cdd6f4;"
         "}"
     );
 
