@@ -132,12 +132,12 @@ static void draw_finish_flag(cairo_t *cr, double cx, double cy) {
     cairo_line_to(cr, cx + 2.0, top_y);
     cairo_line_to(cr, cx - 2.0, top_y);
     cairo_close_path(cr);
-    cairo_set_source_rgb(cr, 0.804, 0.820, 0.875);
+    cairo_set_source_rgb(cr, 0.3451, 0.3569, 0.4392);
     cairo_fill(cr);
 
     cairo_new_path(cr);
     cairo_arc(cr, cx, top_y - 4.0, 5.0, 0.0, 2.0 * G_PI);
-    cairo_set_source_rgb(cr, 0.969, 0.698, 0.671);
+    cairo_set_source_rgb(cr, 0.2706, 0.2784, 0.3529);
     cairo_fill(cr);
 
     cairo_new_path(cr);
@@ -145,7 +145,7 @@ static void draw_finish_flag(cairo_t *cr, double cx, double cy) {
     cairo_line_to(cr, cx + 42.0, mid_y);
     cairo_line_to(cr, cx, top_y + 30.0);
     cairo_close_path(cr);
-    cairo_set_source_rgb(cr, 0.796, 0.651, 0.969);
+    cairo_set_source_rgb(cr, 0.4235, 0.4392, 0.5255);
     cairo_fill(cr);
 }
 
@@ -251,6 +251,7 @@ static void add_path_node(GtkFixed *fixed, int index) {
 
     card = gtk_button_new();
     gtk_widget_add_css_class(card, "unit-node");
+    gtk_widget_set_can_focus(card, FALSE);
     gtk_widget_set_sensitive(card, !locked);
     gtk_widget_set_size_request(card, (int)NODE_SIZE, (int)NODE_SIZE);
     if (done)
@@ -285,29 +286,9 @@ static void add_path_node(GtkFixed *fixed, int index) {
         gtk_box_append(GTK_BOX(vbox), lock);
     }
 
-    if (done)
-        text = g_strdup_printf("Jednotka %d · dokončeno", num);
-    else if (current)
-        text = g_strdup_printf("Jednotka %d · pokračovat", num);
-    else
-        text = g_strdup_printf("Jednotka %d · zamčeno", num);
-    gtk_widget_set_tooltip_text(card, text);
-    g_free(text);
-
     gtk_fixed_put(fixed, card,
                   (int)(cx - NODE_SIZE / 2.0),
                   (int)(cy - NODE_SIZE / 2.0));
-
-    if (current) {
-        GtkWidget *cap;
-        cap = gtk_label_new(NULL);
-        gtk_label_set_markup(GTK_LABEL(cap),
-            "<span color=\"#89b4fa\">▶</span> Pokračuj zde");
-        gtk_widget_add_css_class(cap, "node-caption");
-        gtk_fixed_put(fixed, cap,
-                      (int)(cx + NODE_SIZE / 2.0 + 14.0),
-                      (int)(cy - 30.0));
-    }
 }
 
 static GtkWidget *build_roadmap_page(void) {
@@ -538,7 +519,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "}"
         ".unit-node.done:hover,"
         ".unit-node.current:hover {"
-        "   transform: translateY(-3px) scale(1.05);"
+        "   transition: box-shadow 150ms ease, border-color 150ms ease;"
         "}"
         ".unit-node.done:hover {"
         "   box-shadow: 0 8px 22px rgba(166, 227, 161, 0.5);"
@@ -547,10 +528,6 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   box-shadow: 0 8px 26px rgba(203, 166, 247, 0.65),"
         "               0 0 0 4px rgba(30, 30, 46, 0.9),"
         "               0 0 0 7px rgba(203, 166, 247, 0.55);"
-        "}"
-        ".unit-node.done:active,"
-        ".unit-node.current:active {"
-        "   transform: translateY(0px) scale(0.98);"
         "}"
         ".unit-node.locked {"
         "   background-image: none;"
@@ -562,6 +539,11 @@ static void activate(GtkApplication *app, gpointer user_data) {
         ".unit-node.locked:hover {"
         "   transform: none;"
         "   box-shadow: none;"
+        "}"
+        ".unit-node:focus,"
+        ".unit-node:focus-visible,"
+        ".unit-node:hover {"
+        "   outline: none;"
         "}"
         ".unit-number {"
         "   font-size: 24px;"
@@ -579,16 +561,6 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "}"
         ".unit-node.locked .lock-icon {"
         "   color: #585b70;"
-        "}"
-        ".node-caption {"
-        "   background-color: rgba(30, 30, 46, 0.88);"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 999px;"
-        "   padding: 7px 15px;"
-        "   color: #cdd6f4;"
-        "   font-size: 13px;"
-        "   font-weight: 700;"
-        "   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"
         "}"
         "tooltip {"
         "   background-color: #181825;"
