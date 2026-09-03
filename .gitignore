@@ -4,6 +4,9 @@
 
 # binary
 sprechen
+error.txt
+error.log
+CLAUDE.md
 
 # Object files
 *.o
