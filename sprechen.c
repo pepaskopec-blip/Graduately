@@ -1,31 +1,32 @@
 #include <gtk/gtk.h>
 
 static void activate(GtkApplication *app, gpointer user_data) {
-    GtkWidget *window;
+    GtkWindow *window;
     GtkWidget *box;
-    GtkWidget *label;
+    GtkLabel *label;
     GtkCssProvider *provider;
 
     // Create a new application window
-    window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), "Sprechen.c");
-    gtk_window_set_default_size(GTK_WINDOW(window), 600, 400);
+    window = GTK_WINDOW(gtk_application_window_new(app));
+    gtk_window_set_title(window, "Sprechen.c");
+    gtk_window_set_default_size(window, 600, 400);
 
     // Create a vertical box to hold contents
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 20);
     gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), box);
+    gtk_window_set_child(window, box);
 
     // Create a label with welcome message
-    label = gtk_label_new("Vítejte ve Sprechen.C!\n\nSprechen.C je vzdělávací program na procvičování Němčiny, určený pro studenty středních škol a gymnázií. Program je napsaný v Céčku studentama ze SSŠVT!");
-    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
+    label = GTK_LABEL(gtk_label_new("Vítejte ve Sprechen.C!\n\nSprechen.C je vzdělávací program na procvičování Němčiny, určený pro studenty středních škol a gymnázií. Program je napsaný v Céčku studentama ze SSŠVT!"));
+    gtk_label_set_justify(label, GTK_JUSTIFY_CENTER);
     gtk_label_set_lines(label, -1);  // Allow multiple lines
     gtk_label_set_xalign(label, 0.5);  // Center horizontally
     gtk_label_set_yalign(label, 0.5);  // Center vertically
     gtk_label_set_wrap(label, TRUE);  // Enable line wrapping
     gtk_label_set_max_width_chars(label, 40);
-    gtk_box_append(GTK_BOX(box), label);
+    gtk_widget_add_css_class(GTK_WIDGET(label), "welcome");
+    gtk_box_append(GTK_BOX(box), GTK_WIDGET(label));
 
     // Load CSS for beautiful background
     provider = gtk_css_provider_new();
@@ -33,11 +34,11 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "window {"
         "   background-color: #2E3440;"  /* Dark bluish background */
         "   background-image: linear-gradient(135deg, #2E3440 0%, #3B4252 100%);"
+        "}"
+        "label.welcome {"
         "   color: #ECEFF4;"
         "   font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;"
         "   font-size: 18px;"
-        "}"
-        "label {"
         "   margin: 30px;"
         "   padding: 30px;"
         "   background-color: rgba(59, 66, 82, 0.8);"
