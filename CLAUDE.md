@@ -60,7 +60,6 @@ The application is a simple GUI program written in C using GTK 4. It features:
 - A main window with a title "Sprechen.c".
 - A vertical box layout containing a centered label with welcome text.
 - Custom CSS styling for a gradient background and styled label box.
-- The text size scales dynamically with the window width to ensure readability on different screen sizes.
 - The GTK application lifecycle is managed via `GtkApplication`, with activation callback setting up the UI.
 
 Future extensions may include:
