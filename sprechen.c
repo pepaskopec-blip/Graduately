@@ -7,6 +7,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *box;
     GtkWidget *heading;
     GtkWidget *card;
+    GtkWidget *button;
     GtkCssProvider *provider;
 
     // Create a new application window
@@ -48,6 +49,13 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_add_css_class(card, "card");
     gtk_box_append(GTK_BOX(box), card);
 
+    // Continue button
+    button = gtk_button_new_with_label("Pokračuj");
+    gtk_widget_set_halign(button, GTK_ALIGN_CENTER);
+    gtk_widget_set_margin_top(button, 6);
+    gtk_widget_add_css_class(button, "btn-primary");
+    gtk_box_append(GTK_BOX(box), button);
+
     // Load Catppuccin Mocha CSS
     provider = gtk_css_provider_new();
     gtk_css_provider_load_from_string(provider,
@@ -77,6 +85,24 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   padding: 30px 34px;"
         "   color: #cdd6f4;"
         "   font-size: 16px;"
+        "}"
+        ".btn-primary {"
+        "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 100%);"
+        "   color: #1e1e2e;"
+        "   font-size: 16px;"
+        "   font-weight: 700;"
+        "   padding: 12px 40px;"
+        "   border: none;"
+        "   border-radius: 999px;"
+        "   box-shadow: 0 6px 18px rgba(203, 166, 247, 0.25);"
+        "   transition: box-shadow 150ms ease, background-image 150ms ease;"
+        "}"
+        ".btn-primary:hover {"
+        "   box-shadow: 0 8px 24px rgba(203, 166, 247, 0.45);"
+        "   background-image: linear-gradient(135deg, #b4befe 0%, #89b4fa 100%);"
+        "}"
+        ".btn-primary:active {"
+        "   box-shadow: 0 3px 10px rgba(203, 166, 247, 0.35);"
         "}"
     );
 
