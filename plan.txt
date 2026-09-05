@@ -1,0 +1,55 @@
+# Plan: Unit 1 exercises as clickable bubbles
+
+## What exists now
+`sprechen.c` (single-file GTK4 app) has a roadmap page where unit 1 ("Neue Freunde") is the only unlocked/current node. Clicking it does nothing — no click handler. Navigation is a `GtkStack` (`welcome` ↔ `roadmap`). CSS is one embedded string; state is fully static (`FIRST_LOCKED 1`).
+
+## 1. New navigation layer (stack pages)
+Add children to `main_stack`:
+- **`unit1`** – exercise bubble map (grid of 13 bubbles) for unit 1.
+- **`ex1` … `ex13`** – one page per exercise.
+
+Wiring: unit-1 node on the roadmap gets a click handler → `unit1`. Each bubble click → its `exN`. Every page keeps the same pattern as the roadmap header (circular back button + title + subtitle). Back from `unit1` → `roadmap`; back from `exN` → `unit1` (bubbles re-render their done state). A `top_bar()` helper refactors the header code reused by the roadmap + new pages.
+
+## 2. Bubble map (`unit1` page)
+- `GtkFlowBox` with one cell per exercise: a circular bubble button (reuses `unit-node` styling, new `.ex-bubble` class) with the number, plus a short German label beneath (`Dialog`, `Sätze bilden`, `Was ist richtig?`, `Freie Antwort`, `Zahlen`, `Wie viel?`, `Zahlenreihe`, `Verb einsetzen`, `Wer? Wie? Wo?`, `Wörter trennen`, `Grußformen`, `Was macht er/sie?`, `Länder`).
+- Completed bubbles show a green gradient + checkmark (like roadmap `.done` nodes).
+- Header: back (to roadmap), title **"Neue Freunde"**, subtitle "Vyberte cvičení a dokončete je."
+
+## 3. Exercise interactions (all German prompts, Czech buttons)
+Body of each exercise sits in a `GtkScrolledWindow`; each page has a **„Zkontrolovat"** (check) button and a feedback label. On check: correct answers get green styling, wrong ones red (retry hint, nothing completed); only when **all** answers are correct does it show success („Výborně!") and auto-save completion.
+
+Answer comparison uses a tolerant normalizer: lowercase, trim/collapse spaces, and accept `ae/oe/ue/ss` for `ä/ö/ü/ß` (Czech keyboards can't type umlauts).
+
+Per-exercise rendering:
+1. **Dialog** – the 3 mini-dialogues as labeled sentence rows with inline `GtkEntry` gaps; type whole missing words.
+2. **Sätze** – the 4 scrambled word sets shown as shuffled click-chips; click to build the sentence in order (chips include punctuation tokens). Compare built order vs. expected.
+3. **Richtig?** – 4 single-choice questions (radio/toggle pills), numbers read aloud text vs. digits.
+4. **Freie Antwort** – 4 questions with entries, no auto-grade; revealable sample answers + „Dokončit" button to finish.
+5. **Kreuzworträtsel** – 14/17/20/6/13 → type `vierzehn/siebzehn/zwanzig/sechs/dreizehn`.
+6. **Wie viel?** – emoji counts (🍎⭐🐱🌸🚗📚🕯️⚽🐦) with the noun; type the number word (2=zwei … 11=elf).
+7. **Zahlenreihe** – 5 sequences; type the missing German number word (8, 14, 20, 6, 12).
+8. **Verb einsetzen** – sentences with `GtkComboBoxText` blanks seeded from the two word lists.
+9. **Wer/Wie/Wo?** – 5 sentences, pick the question word (3 options each).
+10. **Wörter trennen** – the glued chain shown above one entry per line; type the words separated by spaces → split tokens compared.
+11. **Grußformen** – pool of 12 chips + two target boxes (Begrüßung / Verabschiedung); click a chip to assign to the active group, click an assigned chip to send it back. 6/6 split.
+12. **Was macht …?** – 8 sentences with first-letter hints + emoji clue; type the conjugated verb (`schwimmt, singt, kocht, liest, fährt, malt, spielt, schläft`).
+13. **Länder** – same assign widget with 3 targets (**D / A / CH**) and emoji+label chips for the 10 landmarks/foods. (Emoji stand in for the missing images.)
+
+All 13 answer keys embedded as data arrays.
+
+## 4. Persistence
+- Add `progress/` to `.gitignore`.
+- On finish: write `progress/unit1.conf` via GLib `GKeyFile` (`done/1`…`done/13`), creating the dir with `g_mkdir_with_parents`. Path is relative to the app's working directory (i.e. `./progress/` next to `./sprechen`, since `make run` launches `./sprechen` from the repo root). If writing fails, degrade silently to in-memory.
+- On startup: load file, mark bubbles done, mark unit-1 node green when all 13 done (roadmap node stays clickable for review). Roadmap unlock logic for later units stays unchanged.
+
+## 5. CSS additions
+`.ex-bubble`/`.ex-bubble.done`, entry `.answer-ok`/`.answer-wrong`, option pills, chip styling, group/feedback styling — all in the existing embedded stylesheet, matching the Mocha palette.
+
+## 6. Build & docs
+- `make` to confirm it compiles with `-Wall`-style clean output; manual smoke test of flow.
+- Update `README.md` Features/To-Do (first unit now has interactive exercises; progress file note).
+
+## Judgment calls
+- Exercise 4 is the only non-auto-graded one (personal answers).
+- Exercises 6/12/13 use emoji instead of the textbook images.
+- Exercise 12 expects the conjugated verb typed (not infinitive) since the clues identify the activity.
