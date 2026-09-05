@@ -22,6 +22,11 @@ CSS-styled GTK 4 interface with a Catppuccin Mocha dark theme.
   - finish flag at the end of the path
 - **Back navigation** – themed circular back button (top-left) returns to the
   welcome screen
+- **Unit 1 exercises** – "Neue Freunde" opens an interactive bubble map with 13
+  exercises (dialogs, sentence building, numbers, verb conjugation, greeting
+  sorting and more), each with German prompts and a "Zkontrolovat" check
+- **Progress tracking** – completed exercises are marked green; progress is
+  saved to `progress/unit1.conf` and restored on startup
 - **Catppuccin Mocha theme** – gradient background, rounded cards, glowing
   buttons and nodes, all driven by an embedded CSS stylesheet
 - **Keyboard quit shortcuts** – `Super/Cmd+Q` or `Alt+F4` closes the app
@@ -122,11 +127,14 @@ When launched, the application shows the welcome screen. From there:
 1. Click **"Pokračuj"** to open the learning roadmap.
 2. Browse the units along the path; the roadmap scrolls horizontally if the
    window is too narrow.
-3. Use the **back button** in the top-left corner to return to the welcome
+3. Click the **"Neue Freunde"** node to open the unit's exercise map, then pick
+   any bubble to start an exercise.
+4. Use the **back button** in the top-left corner to return to the previous
    screen.
 
-Only the first unit is currently unlocked. Clicking a locked unit does nothing –
-units are placeholders until lessons are implemented.
+Only the first unit is currently implemented. Locked units do nothing – they
+are placeholders until lessons are added. Completed exercises stay green and
+are saved to `progress/unit1.conf` (created next to the app on first finish).
 
 ### Keyboard shortcuts
 
@@ -156,6 +164,7 @@ that stylesheet and rebuild.
 Future enhancements planned for Sprechen.c:
 
 - [ ] Wire unit nodes to actual German vocabulary/grammar exercises
+  - [x] Unit 1 ("Neue Freunde") – 13 interactive exercises with progress saving
 - [ ] Lesson progression and unlock system for the remaining units
 - [ ] Add audio pronunciation features
 - [ ] Add user settings panel

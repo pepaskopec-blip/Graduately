@@ -7,6 +7,7 @@ sprechen
 error.txt
 error.log
 CLAUDE.md
+progress/
 
 # Object files
 *.o
