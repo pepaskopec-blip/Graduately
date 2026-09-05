@@ -13,8 +13,9 @@ CSS-styled GTK 4 interface with a Catppuccin Mocha dark theme.
 
 - **Welcome screen** – branded greeting with a description of the program and a
   "Pokračuj" button to get started
-- **Learning roadmap** – a wave-shaped "Učební plán" path with 12 units that
+- **Learning roadmap** – a wave-shaped "Učební plán" path with 10 units that
   scrolls horizontally
+  - each unit numbered and labeled with its topic (e.g. "Neue Freunde")
   - current unit highlighted with a mauve→blue gradient and glow
   - completed units shown in green with a checkmark
   - locked units dimmed with a lock icon

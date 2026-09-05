@@ -2,17 +2,30 @@
 #include <gdk/gdkkeysyms.h>
 #include <math.h>
 
-#define NUM_UNITS 12
+#define NUM_UNITS 10
 #define FIRST_LOCKED 1
 
 #define NODE_SIZE    88.0
-#define PATH_SPAC    150.0
+#define PATH_SPAC    240.0
 #define PATH_CYCLES  2.0
 #define PATH_MARGIN  72.0
-#define PATH_HEIGHT  380.0
-#define PATH_AMP     100.0
+#define PATH_HEIGHT  460.0
+#define PATH_AMP     90.0
 
 static GtkStack *main_stack;
+
+static const char *unit_names[] = {
+    "Neue Freunde",
+    "Aus aller Welt",
+    "Bei uns zu Hause",
+    "Schule und Freizeit",
+    "Guten Appetit!",
+    "Mein Tagesablauf",
+    "Meine Freunde",
+    "Wir treffen uns in Salzburg",
+    "Mein Haus ist meine Burg",
+    "Urlaub in Österreich",
+};
 
 static double path_x_at(double t) {
     return PATH_MARGIN + (NODE_SIZE / 2.0) + t * PATH_SPAC;
@@ -247,6 +260,7 @@ static void add_path_node(GtkFixed *fixed, int index) {
     GtkWidget *card;
     GtkWidget *vbox;
     GtkWidget *number;
+    GtkWidget *name;
     char *text;
 
     card = gtk_button_new();
@@ -289,6 +303,18 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gtk_fixed_put(fixed, card,
                   (int)(cx - NODE_SIZE / 2.0),
                   (int)(cy - NODE_SIZE / 2.0));
+
+    name = gtk_label_new(unit_names[index]);
+    gtk_widget_set_size_request(name, (int)(PATH_SPAC - 20.0), -1);
+    gtk_widget_set_halign(name, GTK_ALIGN_CENTER);
+    gtk_label_set_justify(GTK_LABEL(name), GTK_JUSTIFY_CENTER);
+    gtk_label_set_wrap(GTK_LABEL(name), TRUE);
+    gtk_widget_add_css_class(name, "unit-name");
+    if (locked)
+        gtk_widget_add_css_class(name, "unit-name-locked");
+    gtk_fixed_put(fixed, name,
+                  (int)(cx - (PATH_SPAC - 20.0) / 2.0),
+                  (int)(cy + NODE_SIZE / 2.0 + 8.0));
 }
 
 static GtkWidget *build_roadmap_page(void) {
@@ -561,6 +587,14 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "}"
         ".unit-node.locked .lock-icon {"
         "   color: #585b70;"
+        "}"
+        ".unit-name {"
+        "   color: #cdd6f4;"
+        "   font-size: 13px;"
+        "   font-weight: 600;"
+        "}"
+        ".unit-name-locked {"
+        "   color: #6c7086;"
         "}"
         "tooltip {"
         "   background-color: #181825;"
