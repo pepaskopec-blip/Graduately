@@ -56,22 +56,23 @@ static const char *ex_names[NUM_EXERCISES + 1] = {
     "Länder",
 };
 
-/* Scattered bubble positions on the unit-1 map (centre of each bubble). */
-static const double ex_pos[NUM_EXERCISES + 1][2] = {
+/* Scattered bubble positions on the unit-1 map, as fractions of the
+ * available width/height so the map scales with the window. */
+static const double scatter_pos[NUM_EXERCISES + 1][2] = {
     {0.0, 0.0},
-    { 70.0, 100.0},
-    {190.0,  45.0},
-    {320.0,  90.0},
-    {450.0,  40.0},
-    {590.0,  95.0},
-    {130.0, 210.0},
-    {280.0, 185.0},
-    {410.0, 215.0},
-    {540.0, 190.0},
-    { 70.0, 320.0},
-    {215.0, 330.0},
-    {360.0, 325.0},
-    {500.0, 335.0},
+    {0.100, 0.233},
+    {0.271, 0.105},
+    {0.457, 0.209},
+    {0.643, 0.093},
+    {0.843, 0.221},
+    {0.186, 0.488},
+    {0.400, 0.430},
+    {0.586, 0.500},
+    {0.771, 0.442},
+    {0.100, 0.744},
+    {0.307, 0.767},
+    {0.514, 0.756},
+    {0.714, 0.779},
 };
 
 static double path_x_at(double t) {
@@ -301,6 +302,8 @@ static GtkWidget *top_bar(const char *back_target, const char *title,
         GtkWidget *sub = gtk_label_new(subtitle);
         gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
         gtk_widget_add_css_class(sub, "roadmap-sub");
+        gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
+        gtk_label_set_max_width_chars(GTK_LABEL(sub), 60);
         gtk_box_append(GTK_BOX(center), sub);
     }
 
@@ -637,6 +640,77 @@ static GtkWidget *build_roadmap_page(void) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Scatter layout (scales bubble positions with the window)            */
+/* ------------------------------------------------------------------ */
+
+#define SCATTER_MIN_W 600
+#define SCATTER_MIN_H 380
+#define SCATTER_NAT_W 760
+#define SCATTER_NAT_H 440
+
+typedef struct {
+    GtkWidget parent_instance;
+    GtkWidget *children[NUM_EXERCISES + 1];
+} ScatterBox;
+
+typedef struct {
+    GtkWidgetClass parent_class;
+} ScatterBoxClass;
+
+G_DEFINE_TYPE(ScatterBox, scatter_box, GTK_TYPE_WIDGET)
+
+#define SCATTER_BOX(obj) \
+    (G_TYPE_CHECK_INSTANCE_CAST((obj), scatter_box_get_type(), ScatterBox))
+
+static void scatter_box_measure(GtkWidget *widget, GtkOrientation orientation,
+                                int for_size, int *minimum, int *natural,
+                                int *minimum_baseline, int *natural_baseline) {
+    (void)widget;
+    (void)for_size;
+    if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+        *minimum = SCATTER_MIN_W;
+        *natural = SCATTER_NAT_W;
+    } else {
+        *minimum = SCATTER_MIN_H;
+        *natural = SCATTER_NAT_H;
+    }
+    *minimum_baseline = -1;
+    *natural_baseline = -1;
+}
+
+static void scatter_box_size_allocate(GtkWidget *widget, int width, int height,
+                                      int baseline) {
+    ScatterBox *self = SCATTER_BOX(widget);
+
+    for (int i = 1; i <= NUM_EXERCISES; i++) {
+        GtkWidget *child = self->children[i];
+        GtkRequisition req;
+        GtkAllocation alloc;
+
+        if (!child)
+            continue;
+
+        gtk_widget_get_preferred_size(child, &req, NULL);
+        alloc.x = (int)(scatter_pos[i][0] * width) - req.width / 2;
+        alloc.y = (int)(scatter_pos[i][1] * height) - 32;
+        alloc.width = req.width;
+        alloc.height = req.height;
+        gtk_widget_size_allocate(child, &alloc, baseline);
+    }
+}
+
+static void scatter_box_init(ScatterBox *self) {
+    for (int i = 0; i <= NUM_EXERCISES; i++)
+        self->children[i] = NULL;
+}
+
+static void scatter_box_class_init(ScatterBoxClass *klass) {
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
+    widget_class->measure = scatter_box_measure;
+    widget_class->size_allocate = scatter_box_size_allocate;
+}
+
+/* ------------------------------------------------------------------ */
 /* Unit 1 bubble map (scattered)                                      */
 /* ------------------------------------------------------------------ */
 
@@ -698,8 +772,7 @@ static GtkWidget *make_bubble(int n) {
 
 static GtkWidget *build_unit1_page(void) {
     GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *fixed;
+    GtkWidget *scatter;
     int i;
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -712,23 +785,15 @@ static GtkWidget *build_unit1_page(void) {
                    top_bar("roadmap", "Neue Freunde",
                            "Vyberte cvičení a dokončete je."));
 
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 14);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    fixed = gtk_fixed_new();
-    gtk_widget_set_halign(fixed, GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(fixed, 700, 430);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), fixed);
+    scatter = g_object_new(scatter_box_get_type(), NULL);
+    gtk_widget_set_hexpand(scatter, TRUE);
+    gtk_widget_set_vexpand(scatter, TRUE);
+    gtk_box_append(GTK_BOX(page), scatter);
 
     for (i = 1; i <= NUM_EXERCISES; i++) {
         GtkWidget *cell = make_bubble(i);
-        gtk_fixed_put(GTK_FIXED(fixed), cell,
-                      (int)(ex_pos[i][0] - 60.0),
-                      (int)(ex_pos[i][1] - 32.0));
+        SCATTER_BOX(scatter)->children[i] = cell;
+        gtk_widget_set_parent(cell, scatter);
     }
 
     return page;
@@ -758,7 +823,7 @@ static GtkWidget *ex_page_shell(const char *title, const char *subtitle,
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 14);
     gtk_widget_set_margin_bottom(scroll, 14);
@@ -829,6 +894,24 @@ static GtkWidget *make_word_combo(const char **words, int n) {
     return combo;
 }
 
+static gboolean answer_accepts(const char *sel_norm, const char *ans) {
+    gchar **parts = g_strsplit(ans, "|", -1);
+    gboolean ok = FALSE;
+
+    for (int i = 0; parts[i] != NULL; i++) {
+        gchar *a = normalize_answer(parts[i]);
+        if (g_strcmp0(sel_norm, a) == 0) {
+            ok = TRUE;
+            g_free(a);
+            break;
+        }
+        g_free(a);
+    }
+
+    g_strfreev(parts);
+    return ok;
+}
+
 static void combo_list_check(GtkButton *button, gpointer data) {
     ComboListCtx *ctx = data;
     guint total = ctx->combos->len;
@@ -844,10 +927,8 @@ static void combo_list_check(GtkButton *button, gpointer data) {
 
         if (sel) {
             gchar *t = normalize_answer(sel);
-            gchar *a = normalize_answer(ans);
-            good = (g_strcmp0(t, a) == 0);
+            good = answer_accepts(t, ans);
             g_free(t);
-            g_free(a);
             g_free(sel);
         }
         answer_mark(GTK_WIDGET(combo), good);
@@ -883,12 +964,13 @@ typedef struct {
     int n_words;
 } SentBuilder;
 
-typedef struct {
-    SentBuilder *sb;
-    int idx;
-} ChipRef;
-
 static void sent_rebuild(SentBuilder *sb) {
+    for (int i = 0; i < sb->n_words; i++) {
+        GtkWidget *parent = gtk_widget_get_parent(sb->chips[i]);
+        if (parent != NULL && GTK_IS_FLOW_BOX_CHILD(parent))
+            gtk_flow_box_child_set_child(GTK_FLOW_BOX_CHILD(parent), NULL);
+    }
+
     flow_clear(GTK_FLOW_BOX(sb->pool));
     flow_clear(GTK_FLOW_BOX(sb->target));
 
@@ -909,30 +991,91 @@ static void sent_rebuild(SentBuilder *sb) {
     }
 }
 
-static void asm_chip_clicked(GtkButton *button, gpointer data) {
+typedef struct {
+    SentBuilder *sb;
+    int idx;
+} ChipRef;
+
+static GdkContentProvider *asm_drag_prepare(GtkDragSource *source,
+                                            double x, double y,
+                                            gpointer data) {
     ChipRef *ref = data;
-    SentBuilder *sb = ref->sb;
-    int idx = ref->idx;
+    (void)source;
+    (void)x;
+    (void)y;
+    return gdk_content_provider_new_typed(G_TYPE_INT, ref->idx);
+}
+
+static gboolean asm_rebuild_idle(gpointer data) {
+    sent_rebuild(data);
+    return G_SOURCE_REMOVE;
+}
+
+static void asm_drag_end(GtkDragSource *source, GdkDrag *drag,
+                         gboolean delete_data, gpointer data) {
+    ChipRef *ref = data;
+    (void)source;
+    (void)drag;
+    (void)delete_data;
+    g_idle_add(asm_rebuild_idle, ref->sb);
+}
+
+static gboolean asm_drop_to_sentence(GtkDropTarget *target, const GValue *value,
+                                     double x, double y, gpointer data) {
+    SentBuilder *sb = data;
+    int idx;
     int pos = -1;
 
-    (void)button;
+    (void)target;
+    (void)x;
+    (void)y;
 
+    if (!G_VALUE_HOLDS_INT(value))
+        return FALSE;
+
+    idx = g_value_get_int(value);
     for (int i = 0; i < sb->placed_count; i++) {
         if (sb->placed[i] == idx) {
             pos = i;
             break;
         }
     }
-
     if (pos >= 0) {
         for (int i = pos; i < sb->placed_count - 1; i++)
             sb->placed[i] = sb->placed[i + 1];
         sb->placed_count--;
-    } else {
-        sb->placed[sb->placed_count++] = idx;
     }
+    sb->placed[sb->placed_count++] = idx;
+    return TRUE;
+}
 
-    sent_rebuild(sb);
+static gboolean asm_drop_to_pool(GtkDropTarget *target, const GValue *value,
+                                 double x, double y, gpointer data) {
+    SentBuilder *sb = data;
+    int idx;
+    int pos = -1;
+
+    (void)target;
+    (void)x;
+    (void)y;
+
+    if (!G_VALUE_HOLDS_INT(value))
+        return FALSE;
+
+    idx = g_value_get_int(value);
+    for (int i = 0; i < sb->placed_count; i++) {
+        if (sb->placed[i] == idx) {
+            pos = i;
+            break;
+        }
+    }
+    if (pos < 0)
+        return FALSE;
+
+    for (int i = pos; i < sb->placed_count - 1; i++)
+        sb->placed[i] = sb->placed[i + 1];
+    sb->placed_count--;
+    return TRUE;
 }
 
 typedef struct {
@@ -1024,15 +1167,28 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
         sb->pool = pool;
         gtk_box_append(GTK_BOX(group), pool);
 
+        {
+            GtkDropTarget *dt = gtk_drop_target_new(G_TYPE_INT, GDK_ACTION_COPY);
+            GtkDropTarget *dp = gtk_drop_target_new(G_TYPE_INT, GDK_ACTION_COPY);
+            g_signal_connect(dt, "drop", G_CALLBACK(asm_drop_to_sentence), sb);
+            gtk_widget_add_controller(target, GTK_EVENT_CONTROLLER(dt));
+            g_signal_connect(dp, "drop", G_CALLBACK(asm_drop_to_pool), sb);
+            gtk_widget_add_controller(pool, GTK_EVENT_CONTROLLER(dp));
+        }
+
         for (int w = 0; w < item->n; w++) {
             GtkWidget *chip = gtk_button_new_with_label(item->words[w]);
+            GtkDragSource *src = gtk_drag_source_new();
             ChipRef *ref = g_new(ChipRef, 1);
             gtk_widget_add_css_class(chip, "chip");
             g_object_ref(chip);
             sb->chips[w] = chip;
             ref->sb = sb;
             ref->idx = w;
-            g_signal_connect(chip, "clicked", G_CALLBACK(asm_chip_clicked), ref);
+            gtk_drag_source_set_actions(src, GDK_ACTION_COPY);
+            g_signal_connect(src, "prepare", G_CALLBACK(asm_drag_prepare), ref);
+            g_signal_connect(src, "drag-end", G_CALLBACK(asm_drag_end), ref);
+            gtk_widget_add_controller(chip, GTK_EVENT_CONTROLLER(src));
         }
 
         {
@@ -1069,8 +1225,8 @@ typedef struct {
 } Dialogue;
 
 static const DialogRow ex1_d1[] = {
-    {"A:", "Hallo! Ich ", "bin", " Anna."},
-    {"B:", "Hallo! Ich ", "heiße", " Peter."},
+    {"A:", "Hallo! Ich ", "bin|heiße", " Anna."},
+    {"B:", "Hallo! Ich ", "bin|heiße", " Peter."},
     {"A:", "Woher ", "kommst", " du?"},
     {"B:", "Ich komme ", "aus", " Tschechien."},
 };
@@ -1721,6 +1877,12 @@ typedef struct {
 } AssignChipRef;
 
 static void assign_rebuild(AssignCtx *ac) {
+    for (int i = 0; i < ac->n_items; i++) {
+        GtkWidget *parent = gtk_widget_get_parent(ac->chips[i]);
+        if (parent != NULL && GTK_IS_FLOW_BOX_CHILD(parent))
+            gtk_flow_box_child_set_child(GTK_FLOW_BOX_CHILD(parent), NULL);
+    }
+
     flow_clear(GTK_FLOW_BOX(ac->pool));
     for (int g = 0; g < ac->n_groups; g++)
         flow_clear(GTK_FLOW_BOX(ac->group_flow[g]));
@@ -1928,7 +2090,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     ex_pages[1] = build_ex1();
     ex_pages[2] = build_assembly("Sätze bilden",
-                                 "Seřaďte slova do správného pořadí.",
+                                 "Přetáhněte slova do správného pořadí.",
                                  2, ex2_items, G_N_ELEMENTS(ex2_items));
     ex_pages[3] = build_choice("Was ist richtig?", "Vyberte správnou číslovku.",
                                3, ex3_questions, G_N_ELEMENTS(ex3_questions));
@@ -1940,7 +2102,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     ex_pages[9] = build_choice("Wer? Wie? Wo?", "Vyberte správné tázací slovo.",
                                9, ex9_questions, G_N_ELEMENTS(ex9_questions));
     ex_pages[10] = build_assembly("Wörter trennen",
-                                  "Poskládejte slova do správného pořadí.",
+                                  "Přetáhněte slova do správného pořadí.",
                                   10, ex10_items, G_N_ELEMENTS(ex10_items));
     ex_pages[11] = build_assign("Grußformen", "Roztřiďte pozdravy na pozdravy a rozloučení.",
                                 11, ex11_items, G_N_ELEMENTS(ex11_items),
