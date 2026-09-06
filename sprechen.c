@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib/gstdio.h>
+#include <pango/pangocairo.h>
 #include <math.h>
 
 #define NUM_UNITS 10
@@ -99,6 +100,94 @@ static Rgb color_from_hex(unsigned int hex) {
     c.g = (double)((hex >> 8) & 0xFF) / 255.0;
     c.b = (double)(hex & 0xFF) / 255.0;
     return c;
+}
+
+/* Vector icons drawn with cairo so they never depend on the system
+ * icon theme (which is missing on some installs). */
+
+static void draw_check_icon(GtkDrawingArea *area, cairo_t *cr,
+                            int width, int height, gpointer data) {
+    Rgb *c = data;
+
+    (void)area;
+    cairo_set_source_rgb(cr, c->r, c->g, c->b);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+    cairo_set_line_width(cr, width * 0.16);
+    cairo_move_to(cr, width * 0.24, height * 0.56);
+    cairo_line_to(cr, width * 0.43, height * 0.74);
+    cairo_line_to(cr, width * 0.78, height * 0.30);
+    cairo_stroke(cr);
+}
+
+/* Paint a padlock centred in the size x size box with top-left (x0,y0). */
+static void lock_paint(cairo_t *cr, double x0, double y0, double size,
+                       const Rgb *c) {
+    double sl = MAX(1.6, size * 0.13);   /* shackle stroke width          */
+    double bw = size * 0.60;             /* body width                    */
+    double bh = size * 0.44;             /* body height                   */
+    double cx = x0 + size / 2.0;
+    double body_top = y0 + size - bh - size * 0.04;
+    double bx = cx - bw / 2.0;
+    double r = bw / 2.0 - sl / 2.0;      /* shackle arc radius            */
+
+    cairo_set_source_rgb(cr, c->r, c->g, c->b);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_width(cr, sl);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, body_top, r, G_PI, 2.0 * G_PI);
+    cairo_stroke(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, bx, body_top, bw, bh);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, body_top + bh * 0.42, size * 0.07, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, 0.1216, 0.1255, 0.1804); /* #1f202e keyhole */
+    cairo_fill(cr);
+}
+
+static void draw_lock_icon(GtkDrawingArea *area, cairo_t *cr,
+                           int width, int height, gpointer data) {
+    (void)area;
+    lock_paint(cr, 0.0, 0.0, MIN(width, height), data);
+}
+
+static void draw_back_icon(GtkDrawingArea *area, cairo_t *cr,
+                           int width, int height, gpointer data) {
+    const double size = 15.0;      /* fixed logical icon size            */
+    const double stroke = 1.8;
+    double ox = (width - size) / 2.0;
+    double oy = (height - size) / 2.0;
+    GtkWidget *parent = gtk_widget_get_parent(GTK_WIDGET(area));
+    GdkRGBA color;
+
+    (void)data;
+    gtk_style_context_get_color(gtk_widget_get_style_context(parent), &color);
+    cairo_set_source_rgb(cr, color.red, color.green, color.blue);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+    cairo_set_line_width(cr, stroke);
+    cairo_move_to(cr, ox + size * 0.72, oy + size * 0.24);
+    cairo_line_to(cr, ox + size * 0.30, oy + size * 0.50);
+    cairo_line_to(cr, ox + size * 0.72, oy + size * 0.76);
+    cairo_stroke(cr);
+}
+
+static GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
+                                double r, double g, double b, int px) {
+    Rgb *col = g_new(Rgb, 1);
+    GtkWidget *d = gtk_drawing_area_new();
+
+    col->r = r;
+    col->g = g;
+    col->b = b;
+    gtk_widget_set_size_request(d, px, px);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(d), fn,
+                                   col, (GDestroyNotify)g_free);
+    return d;
 }
 
 /* ------------------------------------------------------------------ */
@@ -277,10 +366,18 @@ static void on_continue_clicked(GtkButton *button, gpointer user_data) {
 }
 
 static GtkWidget *make_back_button(const char *target) {
-    GtkWidget *back = gtk_button_new_from_icon_name("go-previous-symbolic");
+    GtkWidget *back = gtk_button_new();
+    GtkWidget *icon = gtk_drawing_area_new();
+
+    gtk_widget_set_size_request(icon, 14, 14);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(icon), draw_back_icon,
+                                   NULL, NULL);
+    gtk_button_set_child(GTK_BUTTON(back), icon);
     gtk_widget_add_css_class(back, "back-btn");
     gtk_widget_set_valign(back, GTK_ALIGN_CENTER);
     gtk_widget_set_tooltip_text(back, "Zpět");
+    g_signal_connect_swapped(back, "state-flags-changed",
+                             G_CALLBACK(gtk_widget_queue_draw), icon);
     g_object_set_data_full(G_OBJECT(back), "target", g_strdup(target), g_free);
     g_signal_connect(back, "clicked", G_CALLBACK(on_nav_clicked), NULL);
     return back;
@@ -399,10 +496,13 @@ static void draw_node_halo(cairo_t *cr, double cx, double cy,
     cairo_pattern_destroy(grad);
 }
 
-/* Draw a checkered "finish line" tile inside the last unit's node. */
+/* Draw the checkered "finish line" node: checkerboard behind the unit
+ * number and the same lock glyph the locked units use. */
 static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data) {
     const double s = 11.0;
+    const Rgb gray = {0.4235, 0.4392, 0.5255}; /* #6c7086 */
+    int n = GPOINTER_TO_INT(data);
     double cx = width / 2.0;
     double cy = height / 2.0;
     double r = MIN(width, height) / 2.0 - 2.0;
@@ -410,15 +510,20 @@ static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
     double start_y = cy - r;
     int cols = (int)ceil(2.0 * r / s);
     int rows = (int)ceil(2.0 * r / s);
+    char buf[8];
+    PangoLayout *layout;
+    PangoFontDescription *fd;
+    PangoRectangle ink;
+    double num_cy;
     int ix, iy;
 
     (void)area;
-    (void)data;
 
     cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
     cairo_paint(cr);
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
+    cairo_save(cr);
     cairo_new_path(cr);
     cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
     cairo_clip(cr);
@@ -436,6 +541,30 @@ static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
             cairo_fill(cr);
         }
     }
+
+    /* unit number, styled like the other locked nodes */
+    g_snprintf(buf, sizeof(buf), "%d", n);
+    layout = pango_cairo_create_layout(cr);
+    fd = pango_font_description_new();
+    pango_font_description_set_family(fd, "sans");
+    pango_font_description_set_weight(fd, PANGO_WEIGHT_ULTRABOLD);
+    pango_font_description_set_size(fd, 22 * PANGO_SCALE);
+    pango_layout_set_font_description(layout, fd);
+    pango_layout_set_text(layout, buf, -1);
+    pango_layout_get_pixel_extents(layout, &ink, NULL);
+
+    cairo_set_source_rgb(cr, gray.r, gray.g, gray.b);
+    num_cy = cy - 3.0;
+    cairo_move_to(cr, cx - ink.width / 2.0 - ink.x,
+                  num_cy - ink.height / 2.0 - ink.y);
+    pango_cairo_show_layout(cr, layout);
+
+    /* lock glyph below the number, as on the other locked units */
+    lock_paint(cr, cx - 8.0, num_cy + ink.height / 2.0 + 6.0, 16.0, &gray);
+
+    g_object_unref(layout);
+    pango_font_description_free(fd);
+    cairo_restore(cr);
 
     cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
     cairo_set_source_rgb(cr, 0.3216, 0.3333, 0.4196);
@@ -665,33 +794,15 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gtk_widget_set_size_request(card, (int)NODE_SIZE, (int)NODE_SIZE);
 
     if (index == NUM_UNITS - 1) {
-        GtkWidget *overlay = gtk_overlay_new();
         GtkWidget *fin = gtk_drawing_area_new();
-        GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
-        GtkWidget *number;
-        GtkWidget *lock;
 
         gtk_widget_add_css_class(card, "finish");
+        gtk_widget_add_css_class(card, "locked");
         gtk_widget_set_size_request(fin, (int)NODE_SIZE, (int)NODE_SIZE);
         gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(fin),
-                                       draw_finish_cell, NULL, NULL);
-        gtk_overlay_set_child(GTK_OVERLAY(overlay), fin);
-
-        text = g_strdup_printf("%d", num);
-        number = gtk_label_new(text);
-        g_free(text);
-        gtk_widget_add_css_class(number, "unit-number");
-        gtk_box_append(GTK_BOX(vbox), number);
-
-        lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
-        gtk_image_set_pixel_size(GTK_IMAGE(lock), 16);
-        gtk_widget_add_css_class(lock, "lock-icon");
-        gtk_box_append(GTK_BOX(vbox), lock);
-
-        gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
-        gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
-        gtk_overlay_add_overlay(GTK_OVERLAY(overlay), vbox);
-        gtk_button_set_child(GTK_BUTTON(card), overlay);
+                                       draw_finish_cell,
+                                       GINT_TO_POINTER(num), NULL);
+        gtk_button_set_child(GTK_BUTTON(card), fin);
     } else {
         GtkWidget *vbox;
         GtkWidget *number;
@@ -716,21 +827,18 @@ static void add_path_node(GtkFixed *fixed, int index) {
 
         if (done) {
             GtkWidget *icon;
-            icon = gtk_image_new_from_icon_name("object-select-symbolic");
-            gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
-            gtk_widget_add_css_class(icon, "state-icon");
+            icon = icon_area_new(draw_check_icon,
+                                 0.1176, 0.1176, 0.1804, 18);
             gtk_box_append(GTK_BOX(vbox), icon);
         } else if (locked) {
             GtkWidget *lock;
-            lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
-            gtk_image_set_pixel_size(GTK_IMAGE(lock), 16);
-            gtk_widget_add_css_class(lock, "lock-icon");
+            lock = icon_area_new(draw_lock_icon,
+                                 0.3451, 0.3569, 0.4392, 16);
             gtk_box_append(GTK_BOX(vbox), lock);
         } else if (index == 0) {
             GtkWidget *icon;
-            icon = gtk_image_new_from_icon_name("object-select-symbolic");
-            gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
-            gtk_widget_add_css_class(icon, "state-icon");
+            icon = icon_area_new(draw_check_icon,
+                                 0.1176, 0.1176, 0.1804, 18);
             gtk_widget_set_visible(icon, FALSE);
             gtk_box_append(GTK_BOX(vbox), icon);
             unit1_done_icon = icon;
@@ -936,9 +1044,7 @@ static GtkWidget *make_bubble(int n) {
     gtk_widget_add_css_class(num_label, "bubble-number");
     gtk_box_append(GTK_BOX(vbox), num_label);
 
-    icon = gtk_image_new_from_icon_name("object-select-symbolic");
-    gtk_image_set_pixel_size(GTK_IMAGE(icon), 16);
-    gtk_widget_add_css_class(icon, "bubble-icon");
+    icon = icon_area_new(draw_check_icon, 0.1176, 0.1176, 0.1804, 16);
     gtk_widget_set_visible(icon, ex_done[n]);
     gtk_box_append(GTK_BOX(vbox), icon);
 
@@ -1630,14 +1736,20 @@ static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_n
 
 typedef struct {
     const char *question;
+    const char *q_cs;   /* Czech translation of the question     */
     const char *sample;
+    const char *a_cs;   /* Czech translation of the sample answer */
 } FreeQ;
 
 static const FreeQ ex4_questions[] = {
-    {"Wie heißt du?", "Ich heiße Anna."},
-    {"Woher kommst du?", "Ich komme aus Tschechien."},
-    {"Wie alt bist du?", "Ich bin sechzehn Jahre alt."},
-    {"Wie geht es dir?", "Mir geht es gut, danke."},
+    {"Wie heißt du?", "Jak se jmenuješ?",
+     "Ich heiße Anna.", "Jmenuji se Anna."},
+    {"Woher kommst du?", "Odkud pocházíš?",
+     "Ich komme aus Tschechien.", "Pocházím z Česka."},
+    {"Wie alt bist du?", "Kolik je ti let?",
+     "Ich bin sechzehn Jahre alt.", "Je mi šestnáct let."},
+    {"Wie geht es dir?", "Jak se máš?",
+     "Mir geht es gut, danke.", "Mám se dobře, děkuji."},
 };
 
 static void ex4_reveal(GtkButton *button, gpointer data) {
@@ -1655,15 +1767,22 @@ static void ex4_finish(GtkButton *button, gpointer data) {
 
 static GtkWidget *build_ex4(void) {
     GtkWidget *body, *feedback, *check;
+    GtkWidget *tip;
     GtkWidget *page = ex_page_shell("Freie Antwort",
                                     "Odpovězte vlastními slovy, poté klikněte na Dokončit.",
                                     "Dokončit", &body, &feedback, &check);
+
+    tip = gtk_label_new("Písmeno „ß“ se dá na klávesnici zaměnit za „ss“!");
+    gtk_widget_set_halign(tip, GTK_ALIGN_START);
+    gtk_widget_add_css_class(tip, "hint");
+    gtk_box_append(GTK_BOX(body), tip);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex4_questions); i++) {
         GtkWidget *q = gtk_label_new(ex4_questions[i].question);
         GtkWidget *entry;
         GtkWidget *reveal;
         GtkWidget *sample;
+        char *txt;
 
         gtk_widget_set_halign(q, GTK_ALIGN_START);
         gtk_widget_add_css_class(q, "ex-prompt");
@@ -1678,9 +1797,15 @@ static GtkWidget *build_ex4(void) {
         gtk_widget_set_halign(reveal, GTK_ALIGN_START);
         gtk_box_append(GTK_BOX(body), reveal);
 
-        sample = gtk_label_new(ex4_questions[i].sample);
+        txt = g_strdup_printf("Otázka: %s\nVzor: %s  (česky: %s)",
+                              ex4_questions[i].q_cs,
+                              ex4_questions[i].sample,
+                              ex4_questions[i].a_cs);
+        sample = gtk_label_new(txt);
+        g_free(txt);
         gtk_widget_set_halign(sample, GTK_ALIGN_START);
         gtk_widget_add_css_class(sample, "hint");
+        gtk_label_set_wrap(GTK_LABEL(sample), TRUE);
         gtk_widget_set_visible(sample, FALSE);
         gtk_box_append(GTK_BOX(body), sample);
 
@@ -2461,9 +2586,10 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   box-shadow: none;"
         "}"
         ".unit-node.finish {"
-        "   background: transparent;"
+        "   background-color: transparent;"
         "   background-image: none;"
         "   border: none;"
+        "   color: #6c7086;"
         "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
         "}"
         ".unit-node.finish:hover {"
