@@ -166,6 +166,8 @@ static GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
     col->g = g;
     col->b = b;
     gtk_widget_set_size_request(d, px, px);
+    gtk_widget_set_halign(d, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(d, GTK_ALIGN_CENTER);
     gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(d), fn,
                                    col, (GDestroyNotify)g_free);
     return d;
@@ -1141,6 +1143,7 @@ static GtkWidget *make_bubble(int n) {
     num = g_strdup_printf("%d", n);
     num_label = gtk_label_new(num);
     g_free(num);
+    gtk_widget_set_halign(num_label, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(num_label, "bubble-number");
     gtk_box_append(GTK_BOX(vbox), num_label);
 
@@ -1562,10 +1565,10 @@ static gboolean asm_drop_to_pool(GtkDropTarget *target, const GValue *value,
 /* ------------------------------------------------------------------ */
 
 typedef struct {
-    SentBuilder *sb;
     GtkWidget *chip;    /* real chip, kept invisible in its final slot */
     GtkWidget *ghost;   /* sprite flying from start to finish          */
     GtkWidget *stage;
+    gboolean *flying;   /* pointer to the owner's "animating" flag     */
     double sx, sy;      /* start position (stage coords)               */
     double tx, ty;      /* target position (stage coords)              */
     guint wait;         /* ticks waited for relayout                   */
@@ -1575,7 +1578,8 @@ typedef struct {
 static void asm_finish_fly(FlyCtx *fc) {
     gtk_widget_remove_css_class(fc->chip, "ghost-host");
     gtk_fixed_remove(GTK_FIXED(fc->stage), fc->ghost);
-    fc->sb->flying = FALSE;
+    if (fc->flying)
+        *fc->flying = FALSE;
     g_free(fc);
 }
 
@@ -1627,6 +1631,37 @@ static gboolean asm_fly_tick(gpointer data) {
     return G_SOURCE_CONTINUE;
 }
 
+/* Start a fly animation: hide `chip` in place and animate a ghost from
+ * (sx, sy) to the chip's new location. */
+static void asm_begin_fly(GtkWidget *chip, GtkWidget *stage,
+                          gboolean *flying, double sx, double sy) {
+    GtkWidget *child = gtk_button_get_child(GTK_BUTTON(chip));
+    const char *txt = (child && GTK_IS_LABEL(child))
+                          ? gtk_label_get_text(GTK_LABEL(child)) : NULL;
+    GtkWidget *ghost = gtk_button_new_with_label(txt ? txt : "");
+    FlyCtx *fc;
+
+    gtk_widget_add_css_class(ghost, "chip");
+    gtk_widget_set_sensitive(ghost, FALSE);
+    gtk_widget_set_can_focus(ghost, FALSE);
+    gtk_fixed_put(GTK_FIXED(stage), ghost, (int)sx, (int)sy);
+
+    fc = g_new0(FlyCtx, 1);
+    fc->chip = chip;
+    fc->ghost = ghost;
+    fc->stage = stage;
+    fc->flying = flying;
+    fc->sx = sx;
+    fc->sy = sy;
+    fc->t0 = -1;
+
+    if (flying)
+        *flying = TRUE;
+    gtk_widget_add_css_class(chip, "ghost-host");
+
+    g_timeout_add(16, asm_fly_tick, fc);
+}
+
 static void asm_move_by_click(GtkButton *button, gpointer data) {
     ChipRef *ref = data;
     SentBuilder *sb = ref->sb;
@@ -1634,10 +1669,6 @@ static void asm_move_by_click(GtkButton *button, gpointer data) {
     int pos = -1;
     double sx = 0.0, sy = 0.0;
     GtkWidget *chip = GTK_WIDGET(button);
-    GtkWidget *ghost;
-    GtkWidget *child;
-    const char *txt = NULL;
-    FlyCtx *fc;
 
     (void)button;
 
@@ -1662,30 +1693,7 @@ static void asm_move_by_click(GtkButton *button, gpointer data) {
         }
 
         sent_rebuild(sb);
-
-        child = gtk_button_get_child(GTK_BUTTON(chip));
-        if (child && GTK_IS_LABEL(child))
-            txt = gtk_label_get_text(GTK_LABEL(child));
-
-        ghost = gtk_button_new_with_label(txt ? txt : "");
-        gtk_widget_add_css_class(ghost, "chip");
-        gtk_widget_set_sensitive(ghost, FALSE);
-        gtk_widget_set_can_focus(ghost, FALSE);
-        gtk_fixed_put(GTK_FIXED(sb->stage), ghost, (int)sx, (int)sy);
-
-        fc = g_new0(FlyCtx, 1);
-        fc->sb = sb;
-        fc->chip = chip;
-        fc->ghost = ghost;
-        fc->stage = sb->stage;
-        fc->sx = sx;
-        fc->sy = sy;
-        fc->t0 = -1;
-        sb->flying = TRUE;
-
-        gtk_widget_add_css_class(chip, "ghost-host");
-
-        g_timeout_add(16, asm_fly_tick, fc);
+        asm_begin_fly(chip, sb->stage, &sb->flying, sx, sy);
     } else {
         /* No usable animation layer yet – just move instantly. */
         if (pos >= 0) {
@@ -2683,6 +2691,8 @@ typedef struct {
     int active_group;
     GtkWidget **items;    /* per-item boxes (chip + hidden meaning)   */
     GtkWidget **trans;    /* hidden meaning labels                    */
+    GtkWidget *stage;     /* transparent overlay layer for the fly    */
+    gboolean flying;      /* a click-move animation is in progress    */
     int n_items;
     int *current_group;
     const AssignItem *items_data;
@@ -2719,15 +2729,32 @@ static void assign_chip_clicked(GtkButton *button, gpointer data) {
     AssignChipRef *ref = data;
     AssignCtx *ac = ref->ac;
     int idx = ref->idx;
+    double sx = 0.0, sy = 0.0;
+    GtkWidget *chip = GTK_WIDGET(button);
 
     (void)button;
 
-    if (ac->current_group[idx] < 0)
-        ac->current_group[idx] = ac->active_group;
-    else
-        ac->current_group[idx] = -1;
+    if (ac->flying)
+        return;
 
-    assign_rebuild(ac);
+    if (ac->stage &&
+        gtk_widget_translate_coordinates(chip, ac->stage, 0, 0, &sx, &sy)) {
+        if (ac->current_group[idx] < 0)
+            ac->current_group[idx] = ac->active_group;
+        else
+            ac->current_group[idx] = -1;
+
+        assign_rebuild(ac);
+        asm_begin_fly(chip, ac->stage, &ac->flying, sx, sy);
+    } else {
+        /* No usable animation layer yet – just move instantly. */
+        if (ac->current_group[idx] < 0)
+            ac->current_group[idx] = ac->active_group;
+        else
+            ac->current_group[idx] = -1;
+
+        assign_rebuild(ac);
+    }
 }
 
 static void assign_group_toggled(GtkToggleButton *button, gpointer data) {
@@ -2776,6 +2803,9 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     AssignCtx *ac = g_new0(AssignCtx, 1);
     GtkWidget *hint;
     GtkWidget *row;
+    GtkWidget *holder;
+    GtkWidget *content;
+    GtkWidget *stage;
     GtkToggleButton *first = NULL;
     int *order;
 
@@ -2791,15 +2821,30 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     for (int i = 0; i < n_items; i++)
         ac->current_group[i] = -1;
 
+    holder = gtk_overlay_new();
+    gtk_widget_set_hexpand(holder, TRUE);
+    gtk_box_append(GTK_BOX(body), holder);
+
+    content = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
+    gtk_widget_set_halign(content, GTK_ALIGN_FILL);
+    gtk_overlay_set_child(GTK_OVERLAY(holder), content);
+
+    stage = gtk_fixed_new();
+    gtk_widget_set_halign(stage, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(stage, GTK_ALIGN_FILL);
+    gtk_widget_set_can_target(stage, FALSE);
+    gtk_overlay_add_overlay(GTK_OVERLAY(holder), stage);
+    ac->stage = stage;
+
     hint = gtk_label_new(
         "Vyberte skupinu a klikněte na kartu. Kliknutím na kartu ve skupině ji vrátíte zpět.");
     gtk_widget_set_halign(hint, GTK_ALIGN_START);
     gtk_widget_add_css_class(hint, "ex-sub");
-    gtk_box_append(GTK_BOX(body), hint);
+    gtk_box_append(GTK_BOX(content), hint);
 
     row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
     gtk_widget_set_halign(row, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), row);
+    gtk_box_append(GTK_BOX(content), row);
     for (int g = 0; g < n_groups; g++) {
         GtkWidget *gb = gtk_toggle_button_new_with_label(group_labels[g]);
         gtk_widget_add_css_class(gb, "group-btn");
@@ -2816,7 +2861,7 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(ac->pool), GTK_SELECTION_NONE);
     gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(ac->pool), 2);
     gtk_widget_set_size_request(ac->pool, -1, 48);
-    gtk_box_append(GTK_BOX(body), ac->pool);
+    gtk_box_append(GTK_BOX(content), ac->pool);
 
     for (int g = 0; g < n_groups; g++) {
         GtkWidget *panel = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
@@ -2835,7 +2880,7 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
         ac->group_flow[g] = gf;
         gtk_box_append(GTK_BOX(panel), gf);
 
-        gtk_box_append(GTK_BOX(body), panel);
+        gtk_box_append(GTK_BOX(content), panel);
     }
 
     order = g_new0(int, n_items);
