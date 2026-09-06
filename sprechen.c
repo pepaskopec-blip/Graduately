@@ -644,10 +644,6 @@ static char *build_theme_css(const ThemePalette *p) {
         "   color: @accent;"
         "   background-color: alpha(@bg_surface1, 0.4);"
         "}"
-        ".settings-btn:checked {"
-        "   color: @on_accent;"
-        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 100%%);"
-        "}"
         "popover,"
         "popover.background,"
         ".settings-popover {"
@@ -769,6 +765,12 @@ static char *build_theme_css(const ThemePalette *p) {
         "   color: @fg_text;"
         "   box-shadow: none;"
         "   border: none;"
+        "}"
+        "windowcontrols button:not(:hover) {"
+        "   color: @fg_text;"
+        "}"
+        "windowcontrols button:not(:hover) image {"
+        "   color: @fg_text;"
         "}"
         ".heading {"
         "   color: @fg_text;"
@@ -1344,12 +1346,12 @@ static void draw_settings_icon(GtkDrawingArea *area, cairo_t *cr,
     double r_inner = size * 0.34;
     double r_hole = size * 0.16;
     double tooth_half = G_PI / (double)teeth;
-    GtkWidget *parent = gtk_widget_get_parent(GTK_WIDGET(area));
+    GtkWidget *color_w = data ? GTK_WIDGET(data)
+                              : gtk_widget_get_parent(GTK_WIDGET(area));
     GdkRGBA color;
     int i;
 
-    (void)data;
-    gtk_style_context_get_color(gtk_widget_get_style_context(parent), &color);
+    gtk_style_context_get_color(gtk_widget_get_style_context(color_w), &color);
     cairo_set_source_rgb(cr, color.red, color.green, color.blue);
     cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
 
@@ -4328,6 +4330,13 @@ static GtkWidget *make_theme_card(ThemeId id, GtkToggleButton *group) {
     return btn;
 }
 
+static void on_settings_clicked(GtkButton *button, gpointer user_data) {
+    GtkPopover *popover = GTK_POPOVER(user_data);
+
+    (void)button;
+    gtk_popover_popup(popover);
+}
+
 static GtkWidget *build_settings_button(void) {
     GtkWidget *btn;
     GtkWidget *icon;
@@ -4345,7 +4354,7 @@ static GtkWidget *build_settings_button(void) {
     GtkWidget *first_theme = NULL;
     int i;
 
-    btn = gtk_menu_button_new();
+    btn = gtk_button_new();
     gtk_widget_add_css_class(btn, "settings-btn");
     gtk_widget_add_css_class(btn, "flat");
     i18n_bind(btn, "settings", 2);
@@ -4357,7 +4366,7 @@ static GtkWidget *build_settings_button(void) {
     gtk_widget_set_can_target(icon, FALSE);
     gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(icon),
                                    draw_settings_icon, NULL, NULL);
-    gtk_menu_button_set_child(GTK_MENU_BUTTON(btn), icon);
+    gtk_button_set_child(GTK_BUTTON(btn), icon);
     g_signal_connect_swapped(btn, "state-flags-changed",
                              G_CALLBACK(gtk_widget_queue_draw), icon);
 
@@ -4365,7 +4374,10 @@ static GtkWidget *build_settings_button(void) {
     gtk_widget_add_css_class(popover, "settings-popover");
     gtk_popover_set_has_arrow(GTK_POPOVER(popover), TRUE);
     gtk_popover_set_position(GTK_POPOVER(popover), GTK_POS_BOTTOM);
-    gtk_menu_button_set_popover(GTK_MENU_BUTTON(btn), popover);
+    gtk_widget_set_parent(popover, btn);
+    g_signal_connect_swapped(btn, "destroy",
+                             G_CALLBACK(gtk_widget_unparent), popover);
+    g_signal_connect(btn, "clicked", G_CALLBACK(on_settings_clicked), popover);
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
     gtk_widget_add_css_class(box, "settings-box");
