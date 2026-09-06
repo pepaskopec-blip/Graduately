@@ -12,10 +12,12 @@
 
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
-#define PATH_CYCLES  2.0
-#define PATH_MARGIN  72.0
-#define PATH_HEIGHT  460.0
-#define PATH_AMP     90.0
+
+/* Serpentine roadmap layout */
+#define ROAD_MX    150.0   /* horizontal canvas margin                 */
+#define ROAD_MY    150.0   /* vertical canvas margin                   */
+#define ROAD_GAP   240.0   /* vertical space between folded rows       */
+#define ROAD_WAVE   44.0   /* wavy vertical offset of the nodes        */
 
 static GtkStack *main_stack;
 
@@ -25,6 +27,19 @@ static GtkWidget *ex_bubbles[NUM_EXERCISES + 1];
 static GtkWidget *ex_done_icons[NUM_EXERCISES + 1];
 static GtkWidget *unit1_node;
 static GtkWidget *unit1_done_icon;
+
+/* Adaptive serpentine roadmap geometry */
+static GtkWidget *road_scroll;
+static GtkWidget *road_fixed;
+static GtkWidget *road_rail;
+static GtkWidget *road_nodes[NUM_UNITS];
+static GtkWidget *road_labels[NUM_UNITS];
+static double road_cx[NUM_UNITS];
+static double road_cy[NUM_UNITS];
+static int road_cols = NUM_UNITS;
+static int road_rows = 1;
+static int road_cw = (int)(2.0 * ROAD_MX + (NUM_UNITS - 1) * PATH_SPAC);
+static int road_ch = (int)(2.0 * ROAD_MY);
 
 static const char *unit_names[] = {
     "Neue Freunde",
@@ -57,7 +72,8 @@ static const char *ex_names[NUM_EXERCISES + 1] = {
 };
 
 /* Scattered bubble positions on the unit-1 map, as fractions of the
- * available width/height so the map scales with the window. */
+ * design box (SCATTER_NAT_W x SCATTER_NAT_H); the whole box is scaled
+ * uniformly and centered within the available area. */
 static const double scatter_pos[NUM_EXERCISES + 1][2] = {
     {0.0, 0.0},
     {0.100, 0.233},
@@ -74,16 +90,6 @@ static const double scatter_pos[NUM_EXERCISES + 1][2] = {
     {0.514, 0.756},
     {0.714, 0.779},
 };
-
-static double path_x_at(double t) {
-    return PATH_MARGIN + (NODE_SIZE / 2.0) + t * PATH_SPAC;
-}
-
-static double path_y_at(double t) {
-    double mid = PATH_HEIGHT / 2.0;
-    double phase = 2.0 * G_PI * PATH_CYCLES / (NUM_UNITS - 1);
-    return mid + PATH_AMP * sin(t * phase);
-}
 
 typedef struct { double r, g, b; } Rgb;
 
@@ -393,44 +399,195 @@ static void draw_node_halo(cairo_t *cr, double cx, double cy,
     cairo_pattern_destroy(grad);
 }
 
-static void draw_finish_flag(cairo_t *cr, double cx, double cy) {
-    double base_y = cy - NODE_SIZE / 2.0;
-    double top_y = base_y - 84.0;
-    double mid_y = top_y + 16.0;
+/* Draw a checkered "finish line" tile inside the last unit's node. */
+static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
+                             int width, int height, gpointer data) {
+    const double s = 11.0;
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double r = MIN(width, height) / 2.0 - 2.0;
+    double start_x = cx - r;
+    double start_y = cy - r;
+    int cols = (int)ceil(2.0 * r / s);
+    int rows = (int)ceil(2.0 * r / s);
+    int ix, iy;
+
+    (void)area;
+    (void)data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
     cairo_new_path(cr);
-    cairo_move_to(cr, cx - 2.0, base_y);
-    cairo_line_to(cr, cx + 2.0, base_y);
-    cairo_line_to(cr, cx + 2.0, top_y);
-    cairo_line_to(cr, cx - 2.0, top_y);
-    cairo_close_path(cr);
-    cairo_set_source_rgb(cr, 0.3451, 0.3569, 0.4392);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_clip(cr);
+
+    cairo_rectangle(cr, start_x, start_y, 2.0 * r, 2.0 * r);
+    cairo_set_source_rgb(cr, 0.1216, 0.1255, 0.1804); /* #1f202e */
     cairo_fill(cr);
 
-    cairo_new_path(cr);
-    cairo_arc(cr, cx, top_y - 4.0, 5.0, 0.0, 2.0 * G_PI);
-    cairo_set_source_rgb(cr, 0.2706, 0.2784, 0.3529);
-    cairo_fill(cr);
+    for (iy = 0; iy < rows; iy++) {
+        for (ix = 0; ix < cols; ix++) {
+            if (((ix + iy) & 1) == 0)
+                continue;
+            cairo_rectangle(cr, start_x + ix * s, start_y + iy * s, s, s);
+            cairo_set_source_rgb(cr, 0.2314, 0.2431, 0.3451); /* #3b3e58 */
+            cairo_fill(cr);
+        }
+    }
 
-    cairo_new_path(cr);
-    cairo_move_to(cr, cx, top_y + 2.0);
-    cairo_line_to(cr, cx + 42.0, mid_y);
-    cairo_line_to(cr, cx, top_y + 30.0);
-    cairo_close_path(cr);
-    cairo_set_source_rgb(cr, 0.4235, 0.4392, 0.5255);
-    cairo_fill(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, 0.3216, 0.3333, 0.4196);
+    cairo_set_line_width(cr, 2.0);
+    cairo_stroke(cr);
+}
+
+static void road_point(double t, double *ox, double *oy) {
+    int k = (int)t;
+    double u = t - (double)k;
+    double u2, u3;
+    double p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+
+    if (k < 0) { k = 0; u = 0.0; }
+    if (k >= NUM_UNITS - 1) { k = NUM_UNITS - 2; u = 1.0; }
+
+    p1x = road_cx[k];     p1y = road_cy[k];
+    p2x = road_cx[k + 1]; p2y = road_cy[k + 1];
+    if (k - 1 >= 0) { p0x = road_cx[k - 1]; p0y = road_cy[k - 1]; }
+    else            { p0x = p1x - (p2x - p1x); p0y = p1y - (p2y - p1y); }
+    if (k + 2 < NUM_UNITS) { p3x = road_cx[k + 2]; p3y = road_cy[k + 2]; }
+    else                   { p3x = p2x + (p2x - p1x); p3y = p2y + (p2y - p1y); }
+
+    u2 = u * u;
+    u3 = u2 * u;
+    *ox = 0.5 * (2.0 * p1x + (-p0x + p2x) * u
+                 + (2.0 * p0x - 5.0 * p1x + 4.0 * p2x - p3x) * u2
+                 + (-p0x + 3.0 * p1x - 3.0 * p2x + p3x) * u3);
+    *oy = 0.5 * (2.0 * p1y + (-p0y + p2y) * u
+                 + (2.0 * p0y - 5.0 * p1y + 4.0 * p2y - p3y) * u2
+                 + (-p0y + 3.0 * p1y - 3.0 * p2y + p3y) * u3);
+}
+
+static void road_path(cairo_t *cr, double t0, double t1) {
+    const double steps_per_unit = 48.0;
+    int n = (int)((t1 - t0) * steps_per_unit);
+    double x, y;
+    int s;
+
+    if (n < 1)
+        n = 1;
+    road_point(t0, &x, &y);
+    cairo_move_to(cr, x, y);
+    for (s = 1; s <= n; s++) {
+        road_point(t0 + (t1 - t0) * (double)s / (double)n, &x, &y);
+        cairo_line_to(cr, x, y);
+    }
+}
+
+/* Compute the serpentine node layout for the given available width. */
+static void roadmap_geometry(double avail) {
+    const double phase = 2.0 * G_PI * 1.7 / (double)(NUM_UNITS - 1);
+    int rows;
+    int r, c, i;
+
+    for (rows = 1; rows <= NUM_UNITS; rows++) {
+        int cols = (NUM_UNITS + rows - 1) / rows;
+        if (2.0 * ROAD_MX + (cols - 1) * PATH_SPAC <= avail + 1.0)
+            break;
+    }
+    if (rows > NUM_UNITS)
+        rows = NUM_UNITS;
+    road_rows = rows;
+    road_cols = (NUM_UNITS + rows - 1) / rows;
+    if (road_cols < 1)
+        road_cols = 1;
+    road_cw = (int)(2.0 * ROAD_MX + (road_cols - 1) * PATH_SPAC);
+    road_ch = (int)(2.0 * ROAD_MY + (rows - 1) * ROAD_GAP);
+
+    for (r = 0; r < rows; r++) {
+        int base = r * road_cols;
+        int len = MIN(road_cols, NUM_UNITS - base);
+        int fwd = (r % 2) == 0;
+        for (c = 0; c < len; c++) {
+            i = base + c;
+            int cc = fwd ? c : (road_cols - 1 - c);
+            road_cx[i] = ROAD_MX + cc * PATH_SPAC;
+            road_cy[i] = ROAD_MY + r * ROAD_GAP
+                         + ROAD_WAVE * sin((double)i * phase);
+        }
+    }
+}
+
+static void road_apply_layout(void) {
+    int i;
+
+    if (!road_fixed)
+        return;
+
+    for (i = 0; i < NUM_UNITS; i++) {
+        if (!road_nodes[i] || !road_labels[i])
+            continue;
+        gtk_fixed_move(GTK_FIXED(road_fixed), road_nodes[i],
+                       (int)(road_cx[i] - NODE_SIZE / 2.0),
+                       (int)(road_cy[i] - NODE_SIZE / 2.0));
+        gtk_fixed_move(GTK_FIXED(road_fixed), road_labels[i],
+                       (int)(road_cx[i] - (PATH_SPAC - 20.0) / 2.0),
+                       (int)(road_cy[i] + NODE_SIZE / 2.0 + 10.0));
+    }
+
+    gtk_widget_set_size_request(road_fixed, road_cw, road_ch);
+    gtk_widget_set_size_request(road_rail, road_cw, road_ch);
+    gtk_fixed_move(GTK_FIXED(road_fixed), road_rail, 0, 0);
+    gtk_widget_queue_draw(road_rail);
+}
+
+static void road_relayout(void) {
+    GtkAdjustment *hadj;
+    double avail;
+
+    if (!road_scroll)
+        return;
+    hadj = gtk_scrolled_window_get_hadjustment(
+        GTK_SCROLLED_WINDOW(road_scroll));
+    avail = gtk_adjustment_get_page_size(hadj);
+    if (avail < 1.0)
+        return;
+    roadmap_geometry(avail);
+    road_apply_layout();
+}
+
+static guint road_idle;
+
+static gboolean road_relayout_idle(gpointer data) {
+    (void)data;
+    road_idle = 0;
+    road_relayout();
+    return G_SOURCE_REMOVE;
+}
+
+static void road_relayout_later(void) {
+    if (road_idle == 0)
+        road_idle = g_idle_add(road_relayout_idle, NULL);
+}
+
+static void road_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
+                               gpointer data) {
+    (void)adj;
+    (void)ps;
+    (void)data;
+    road_relayout_later();
 }
 
 static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
                       int width, int height, gpointer user_data) {
-    const int segments = (NUM_UNITS - 1) * 60;
-    const double t_end = (double)(NUM_UNITS - 1);
     const double t_lit = (double)(FIRST_LOCKED - 1);
+    const double t_end = (double)(NUM_UNITS - 1);
+    const double x0 = ROAD_MX;
+    const double x1 = (double)road_cw - ROAD_MX;
     const Rgb mauve = color_from_hex(0xcba6f7);
     const Rgb blue = color_from_hex(0x89b4fa);
-    double x0 = path_x_at(0);
-    double x1 = path_x_at(NUM_UNITS - 1);
-    int k;
+    double hx, hy;
 
     (void)area;
     (void)width;
@@ -443,31 +600,21 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
-    draw_node_halo(cr, path_x_at(FIRST_LOCKED - 1),
-                   path_y_at(FIRST_LOCKED - 1),
-                   NODE_SIZE * 1.05, mauve.r, mauve.g, mauve.b, 0.18);
+    road_point((double)(FIRST_LOCKED - 1), &hx, &hy);
+    draw_node_halo(cr, hx, hy, NODE_SIZE * 1.05,
+                   mauve.r, mauve.g, mauve.b, 0.18);
 
     cairo_new_path(cr);
-    cairo_move_to(cr, path_x_at(0), path_y_at(0));
-    for (k = 1; k <= segments; k++) {
-        double t = t_end * (double)k / (double)segments;
-        cairo_line_to(cr, path_x_at(t), path_y_at(t));
-    }
+    road_path(cr, 0.0, t_end);
     cairo_set_line_width(cr, 16);
     cairo_set_source_rgb(cr, 0.153, 0.157, 0.235);
     cairo_stroke(cr);
 
     if (t_lit > 0.0) {
-        int lit_segments;
         cairo_pattern_t *grad;
 
-        lit_segments = (int)(t_lit / t_end * (double)segments + 0.5);
         cairo_new_path(cr);
-        cairo_move_to(cr, path_x_at(0), path_y_at(0));
-        for (k = 1; k <= lit_segments; k++) {
-            double t = t_end * (double)k / (double)segments;
-            cairo_line_to(cr, path_x_at(t), path_y_at(t));
-        }
+        road_path(cr, 0.0, t_lit);
 
         grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
         cairo_pattern_add_color_stop_rgba(grad, 0.0,
@@ -492,21 +639,14 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
 
     {
         double start_t = t_lit > 0.0 ? t_lit : 0.0;
-        int first_seg = (int)(start_t / t_end * (double)segments + 0.5);
+
         cairo_set_source_rgba(cr, 0.651, 0.678, 0.784, 0.17);
         cairo_set_dash(cr, (double[]){1.0, 26.0}, 2, 0.0);
         cairo_new_path(cr);
-        cairo_move_to(cr, path_x_at(start_t), path_y_at(start_t));
-        for (k = first_seg; k <= segments; k++) {
-            double t = t_end * (double)k / (double)segments;
-            cairo_line_to(cr, path_x_at(t), path_y_at(t));
-        }
+        road_path(cr, start_t, t_end);
         cairo_stroke(cr);
         cairo_set_dash(cr, NULL, 0, 0.0);
     }
-
-    draw_finish_flag(cr, path_x_at(NUM_UNITS - 1),
-                     path_y_at(NUM_UNITS - 1));
 }
 
 static void add_path_node(GtkFixed *fixed, int index) {
@@ -514,11 +654,7 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gboolean done = index < FIRST_LOCKED - 1;
     gboolean current = index == FIRST_LOCKED - 1;
     gboolean locked = index >= FIRST_LOCKED;
-    double cx = path_x_at(index);
-    double cy = path_y_at(index);
     GtkWidget *card;
-    GtkWidget *vbox;
-    GtkWidget *number;
     GtkWidget *name;
     char *text;
 
@@ -527,53 +663,86 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gtk_widget_set_can_focus(card, FALSE);
     gtk_widget_set_sensitive(card, !locked);
     gtk_widget_set_size_request(card, (int)NODE_SIZE, (int)NODE_SIZE);
-    if (done)
-        gtk_widget_add_css_class(card, "done");
-    else if (current)
-        gtk_widget_add_css_class(card, "current");
-    else
-        gtk_widget_add_css_class(card, "locked");
 
-    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
-    gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
-    gtk_button_set_child(GTK_BUTTON(card), vbox);
-
-    text = g_strdup_printf("%d", num);
-    number = gtk_label_new(text);
-    g_free(text);
-    gtk_widget_add_css_class(number, "unit-number");
-    gtk_box_append(GTK_BOX(vbox), number);
-
-    if (done) {
-        GtkWidget *icon;
-        icon = gtk_image_new_from_icon_name("object-select-symbolic");
-        gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
-        gtk_widget_add_css_class(icon, "state-icon");
-        gtk_box_append(GTK_BOX(vbox), icon);
-    } else if (locked) {
+    if (index == NUM_UNITS - 1) {
+        GtkWidget *overlay = gtk_overlay_new();
+        GtkWidget *fin = gtk_drawing_area_new();
+        GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+        GtkWidget *number;
         GtkWidget *lock;
+
+        gtk_widget_add_css_class(card, "finish");
+        gtk_widget_set_size_request(fin, (int)NODE_SIZE, (int)NODE_SIZE);
+        gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(fin),
+                                       draw_finish_cell, NULL, NULL);
+        gtk_overlay_set_child(GTK_OVERLAY(overlay), fin);
+
+        text = g_strdup_printf("%d", num);
+        number = gtk_label_new(text);
+        g_free(text);
+        gtk_widget_add_css_class(number, "unit-number");
+        gtk_box_append(GTK_BOX(vbox), number);
+
         lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
         gtk_image_set_pixel_size(GTK_IMAGE(lock), 16);
         gtk_widget_add_css_class(lock, "lock-icon");
         gtk_box_append(GTK_BOX(vbox), lock);
-    } else if (index == 0) {
-        GtkWidget *icon;
-        icon = gtk_image_new_from_icon_name("object-select-symbolic");
-        gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
-        gtk_widget_add_css_class(icon, "state-icon");
-        gtk_widget_set_visible(icon, FALSE);
-        gtk_box_append(GTK_BOX(vbox), icon);
-        unit1_done_icon = icon;
-        unit1_node = card;
-        g_object_set_data_full(G_OBJECT(card), "target",
-                               g_strdup("unit1"), g_free);
-        g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+
+        gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
+        gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
+        gtk_overlay_add_overlay(GTK_OVERLAY(overlay), vbox);
+        gtk_button_set_child(GTK_BUTTON(card), overlay);
+    } else {
+        GtkWidget *vbox;
+        GtkWidget *number;
+
+        if (done)
+            gtk_widget_add_css_class(card, "done");
+        else if (current)
+            gtk_widget_add_css_class(card, "current");
+        else
+            gtk_widget_add_css_class(card, "locked");
+
+        vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+        gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
+        gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
+        gtk_button_set_child(GTK_BUTTON(card), vbox);
+
+        text = g_strdup_printf("%d", num);
+        number = gtk_label_new(text);
+        g_free(text);
+        gtk_widget_add_css_class(number, "unit-number");
+        gtk_box_append(GTK_BOX(vbox), number);
+
+        if (done) {
+            GtkWidget *icon;
+            icon = gtk_image_new_from_icon_name("object-select-symbolic");
+            gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
+            gtk_widget_add_css_class(icon, "state-icon");
+            gtk_box_append(GTK_BOX(vbox), icon);
+        } else if (locked) {
+            GtkWidget *lock;
+            lock = gtk_image_new_from_icon_name("system-lock-screen-symbolic");
+            gtk_image_set_pixel_size(GTK_IMAGE(lock), 16);
+            gtk_widget_add_css_class(lock, "lock-icon");
+            gtk_box_append(GTK_BOX(vbox), lock);
+        } else if (index == 0) {
+            GtkWidget *icon;
+            icon = gtk_image_new_from_icon_name("object-select-symbolic");
+            gtk_image_set_pixel_size(GTK_IMAGE(icon), 18);
+            gtk_widget_add_css_class(icon, "state-icon");
+            gtk_widget_set_visible(icon, FALSE);
+            gtk_box_append(GTK_BOX(vbox), icon);
+            unit1_done_icon = icon;
+            unit1_node = card;
+            g_object_set_data_full(G_OBJECT(card), "target",
+                                   g_strdup("unit1"), g_free);
+            g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+        }
     }
 
-    gtk_fixed_put(fixed, card,
-                  (int)(cx - NODE_SIZE / 2.0),
-                  (int)(cy - NODE_SIZE / 2.0));
+    road_nodes[index] = card;
+    gtk_fixed_put(fixed, card, 0, 0);
 
     name = gtk_label_new(unit_names[index]);
     gtk_widget_set_size_request(name, (int)(PATH_SPAC - 20.0), -1);
@@ -583,9 +752,8 @@ static void add_path_node(GtkFixed *fixed, int index) {
     gtk_widget_add_css_class(name, "unit-name");
     if (locked)
         gtk_widget_add_css_class(name, "unit-name-locked");
-    gtk_fixed_put(fixed, name,
-                  (int)(cx - (PATH_SPAC - 20.0) / 2.0),
-                  (int)(cy + NODE_SIZE / 2.0 + 8.0));
+    road_labels[index] = name;
+    gtk_fixed_put(fixed, name, 0, 0);
 }
 
 static GtkWidget *build_roadmap_page(void) {
@@ -594,10 +762,11 @@ static GtkWidget *build_roadmap_page(void) {
     GtkWidget *wrap;
     GtkWidget *fixed;
     GtkWidget *rail;
-    int canvas_w;
+    GtkAdjustment *ha;
+    GtkAdjustment *va;
     int i;
 
-    canvas_w = (int)(path_x_at(NUM_UNITS - 1) + PATH_MARGIN);
+    roadmap_geometry(1000.0);
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_hexpand(page, TRUE);
@@ -613,38 +782,52 @@ static GtkWidget *build_roadmap_page(void) {
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_NEVER);
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 14);
     gtk_box_append(GTK_BOX(page), scroll);
+    road_scroll = scroll;
 
-    wrap = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    wrap = gtk_center_box_new();
     gtk_widget_set_vexpand(wrap, TRUE);
+    gtk_widget_set_hexpand(wrap, TRUE);
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), wrap);
 
     fixed = gtk_fixed_new();
-    gtk_widget_set_halign(fixed, GTK_ALIGN_START);
+    gtk_widget_set_halign(fixed, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(fixed, GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(fixed, canvas_w, (int)PATH_HEIGHT);
-    gtk_box_append(GTK_BOX(wrap), fixed);
+    gtk_widget_set_size_request(fixed, road_cw, road_ch);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), fixed);
+    road_fixed = fixed;
 
     rail = gtk_drawing_area_new();
-    gtk_widget_set_size_request(rail, canvas_w, (int)PATH_HEIGHT);
+    gtk_widget_set_size_request(rail, road_cw, road_ch);
     gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(rail), draw_rail, NULL, NULL);
     gtk_fixed_put(GTK_FIXED(fixed), rail, 0, 0);
+    road_rail = rail;
 
     for (i = 0; i < NUM_UNITS; i++)
         add_path_node(GTK_FIXED(fixed), i);
 
+    ha = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
+    va = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
+    g_signal_connect(ha, "notify::page-size",
+                     G_CALLBACK(road_adjust_notify), NULL);
+    g_signal_connect(va, "notify::page-size",
+                     G_CALLBACK(road_adjust_notify), NULL);
+
+    road_relayout_later();
+
     return page;
 }
 
+
 /* ------------------------------------------------------------------ */
-/* Scatter layout (scales bubble positions with the window)            */
+/* Scatter layout (scales a centered design box to the window)         */
 /* ------------------------------------------------------------------ */
 
-#define SCATTER_MIN_W 600
-#define SCATTER_MIN_H 380
+#define SCATTER_MIN_W 684
+#define SCATTER_MIN_H 396
 #define SCATTER_NAT_W 760
 #define SCATTER_NAT_H 440
 
@@ -669,10 +852,10 @@ static void scatter_box_measure(GtkWidget *widget, GtkOrientation orientation,
     (void)for_size;
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
         *minimum = SCATTER_MIN_W;
-        *natural = SCATTER_NAT_W;
+        *natural = SCATTER_MIN_W;
     } else {
         *minimum = SCATTER_MIN_H;
-        *natural = SCATTER_NAT_H;
+        *natural = SCATTER_MIN_H;
     }
     *minimum_baseline = -1;
     *natural_baseline = -1;
@@ -681,6 +864,14 @@ static void scatter_box_measure(GtkWidget *widget, GtkOrientation orientation,
 static void scatter_box_size_allocate(GtkWidget *widget, int width, int height,
                                       int baseline) {
     ScatterBox *self = SCATTER_BOX(widget);
+    double scale = MIN((double)width / SCATTER_NAT_W,
+                       (double)height / SCATTER_NAT_H);
+    double mw, mh, ox, oy;
+
+    mw = SCATTER_NAT_W * scale;
+    mh = SCATTER_NAT_H * scale;
+    ox = (width - mw) / 2.0;
+    oy = (height - mh) / 2.0;
 
     for (int i = 1; i <= NUM_EXERCISES; i++) {
         GtkWidget *child = self->children[i];
@@ -691,8 +882,8 @@ static void scatter_box_size_allocate(GtkWidget *widget, int width, int height,
             continue;
 
         gtk_widget_get_preferred_size(child, &req, NULL);
-        alloc.x = (int)(scatter_pos[i][0] * width) - req.width / 2;
-        alloc.y = (int)(scatter_pos[i][1] * height) - 32;
+        alloc.x = (int)(ox + scatter_pos[i][0] * mw) - req.width / 2;
+        alloc.y = (int)(oy + scatter_pos[i][1] * mh) - 32;
         alloc.width = req.width;
         alloc.height = req.height;
         gtk_widget_size_allocate(child, &alloc, baseline);
@@ -772,6 +963,7 @@ static GtkWidget *make_bubble(int n) {
 
 static GtkWidget *build_unit1_page(void) {
     GtkWidget *page;
+    GtkWidget *scroll;
     GtkWidget *scatter;
     int i;
 
@@ -788,7 +980,15 @@ static GtkWidget *build_unit1_page(void) {
     scatter = g_object_new(scatter_box_get_type(), NULL);
     gtk_widget_set_hexpand(scatter, TRUE);
     gtk_widget_set_vexpand(scatter, TRUE);
-    gtk_box_append(GTK_BOX(page), scatter);
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 14);
+    gtk_widget_set_margin_bottom(scroll, 14);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), scatter);
+    gtk_box_append(GTK_BOX(page), scroll);
 
     for (i = 1; i <= NUM_EXERCISES; i++) {
         GtkWidget *cell = make_bubble(i);
@@ -2259,6 +2459,16 @@ static void activate(GtkApplication *app, gpointer user_data) {
         ".unit-node.locked:hover {"
         "   transform: none;"
         "   box-shadow: none;"
+        "}"
+        ".unit-node.finish {"
+        "   background: transparent;"
+        "   background-image: none;"
+        "   border: none;"
+        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
+        "}"
+        ".unit-node.finish:hover {"
+        "   transform: none;"
+        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
         "}"
         ".unit-node:focus,"
         ".unit-node:focus-visible,"
