@@ -72,25 +72,6 @@ static const char *ex_names[NUM_EXERCISES + 1] = {
     "Länder",
 };
 
-/* Scattered bubble positions on the unit-1 map, as fractions of the
- * design box (SCATTER_NAT_W x SCATTER_NAT_H); the whole box is scaled
- * uniformly and centered within the available area. */
-static const double scatter_pos[NUM_EXERCISES + 1][2] = {
-    {0.0, 0.0},
-    {0.100, 0.233},
-    {0.271, 0.105},
-    {0.457, 0.209},
-    {0.643, 0.093},
-    {0.843, 0.221},
-    {0.186, 0.488},
-    {0.400, 0.430},
-    {0.586, 0.500},
-    {0.771, 0.442},
-    {0.100, 0.744},
-    {0.307, 0.767},
-    {0.514, 0.756},
-    {0.714, 0.779},
-};
 
 typedef struct { double r, g, b; } Rgb;
 
@@ -931,105 +912,233 @@ static GtkWidget *build_roadmap_page(void) {
 
 
 /* ------------------------------------------------------------------ */
-/* Scatter layout (scales a centered design box to the window)         */
+/* Unit 1 exercise path (roadmap-style serpentine)                    */
 /* ------------------------------------------------------------------ */
 
-#define SCATTER_MIN_W 684
-#define SCATTER_MIN_H 396
-#define SCATTER_NAT_W 760
-#define SCATTER_NAT_H 440
+#define EX_BUBBLE  64.0    /* exercise bubble size (matches .ex-bubble) */
+#define EX_MX      80.0    /* horizontal canvas margin                  */
+#define EX_MY      120.0   /* vertical canvas margin                    */
+#define EX_SPAC    150.0   /* horizontal distance between bubbles       */
+#define EX_GAP     200.0   /* vertical space between folded rows        */
+#define EX_WAVE    26.0    /* wavy vertical offset of the bubbles       */
 
-typedef struct {
-    GtkWidget parent_instance;
-    GtkWidget *children[NUM_EXERCISES + 1];
-} ScatterBox;
+static GtkWidget *ex_scroll;
+static GtkWidget *ex_fixed;
+static GtkWidget *ex_rail;
+static GtkWidget *ex_cells[NUM_EXERCISES];
+static GtkWidget *ex_labels[NUM_EXERCISES];
+static double ex_cx[NUM_EXERCISES];
+static double ex_cy[NUM_EXERCISES];
+static int ex_rows = 1;
+static int ex_cols = NUM_EXERCISES;
+static int ex_cw = (int)(2.0 * EX_MX + (NUM_EXERCISES - 1) * EX_SPAC);
+static int ex_ch = (int)(2.0 * EX_MY);
 
-typedef struct {
-    GtkWidgetClass parent_class;
-} ScatterBoxClass;
+/* Compute the serpentine exercise layout for the given available width. */
+static void ex_layout_geometry(double avail) {
+    const double phase = 2.0 * G_PI * 1.7 / (double)(NUM_EXERCISES - 1);
+    int rows;
+    int r, c, i;
 
-G_DEFINE_TYPE(ScatterBox, scatter_box, GTK_TYPE_WIDGET)
-
-#define SCATTER_BOX(obj) \
-    (G_TYPE_CHECK_INSTANCE_CAST((obj), scatter_box_get_type(), ScatterBox))
-
-static void scatter_box_measure(GtkWidget *widget, GtkOrientation orientation,
-                                int for_size, int *minimum, int *natural,
-                                int *minimum_baseline, int *natural_baseline) {
-    (void)widget;
-    (void)for_size;
-    if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        *minimum = SCATTER_MIN_W;
-        *natural = SCATTER_MIN_W;
-    } else {
-        *minimum = SCATTER_MIN_H;
-        *natural = SCATTER_MIN_H;
+    for (rows = 1; rows <= NUM_EXERCISES; rows++) {
+        int cols = (NUM_EXERCISES + rows - 1) / rows;
+        if (2.0 * EX_MX + (cols - 1) * EX_SPAC <= avail + 1.0)
+            break;
     }
-    *minimum_baseline = -1;
-    *natural_baseline = -1;
-}
+    if (rows > NUM_EXERCISES)
+        rows = NUM_EXERCISES;
+    ex_rows = rows;
+    ex_cols = (NUM_EXERCISES + rows - 1) / rows;
+    if (ex_cols < 1)
+        ex_cols = 1;
+    ex_cw = (int)(2.0 * EX_MX + (ex_cols - 1) * EX_SPAC);
+    ex_ch = (int)(2.0 * EX_MY + (rows - 1) * EX_GAP);
 
-static void scatter_box_size_allocate(GtkWidget *widget, int width, int height,
-                                      int baseline) {
-    ScatterBox *self = SCATTER_BOX(widget);
-    double scale = MIN((double)width / SCATTER_NAT_W,
-                       (double)height / SCATTER_NAT_H);
-    double mw, mh, ox, oy;
-
-    mw = SCATTER_NAT_W * scale;
-    mh = SCATTER_NAT_H * scale;
-    ox = (width - mw) / 2.0;
-    oy = (height - mh) / 2.0;
-
-    for (int i = 1; i <= NUM_EXERCISES; i++) {
-        GtkWidget *child = self->children[i];
-        GtkRequisition req;
-        GtkAllocation alloc;
-
-        if (!child)
-            continue;
-
-        gtk_widget_get_preferred_size(child, &req, NULL);
-        alloc.x = (int)(ox + scatter_pos[i][0] * mw) - req.width / 2;
-        alloc.y = (int)(oy + scatter_pos[i][1] * mh) - 32;
-        alloc.width = req.width;
-        alloc.height = req.height;
-        gtk_widget_size_allocate(child, &alloc, baseline);
+    for (r = 0; r < rows; r++) {
+        int base = r * ex_cols;
+        int len = MIN(ex_cols, NUM_EXERCISES - base);
+        int fwd = (r % 2) == 0;
+        for (c = 0; c < len; c++) {
+            i = base + c;
+            int cc = fwd ? c : (ex_cols - 1 - c);
+            ex_cx[i] = EX_MX + cc * EX_SPAC;
+            ex_cy[i] = EX_MY + r * EX_GAP + EX_WAVE * sin((double)i * phase);
+        }
     }
 }
 
-static void scatter_box_init(ScatterBox *self) {
-    for (int i = 0; i <= NUM_EXERCISES; i++)
-        self->children[i] = NULL;
+static void ex_point(double t, double *ox, double *oy) {
+    int k = (int)t;
+    double u = t - (double)k;
+    double u2, u3;
+    double p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+
+    if (k < 0) { k = 0; u = 0.0; }
+    if (k >= NUM_EXERCISES - 1) { k = NUM_EXERCISES - 2; u = 1.0; }
+
+    p1x = ex_cx[k];     p1y = ex_cy[k];
+    p2x = ex_cx[k + 1]; p2y = ex_cy[k + 1];
+    if (k - 1 >= 0) { p0x = ex_cx[k - 1]; p0y = ex_cy[k - 1]; }
+    else            { p0x = p1x - (p2x - p1x); p0y = p1y - (p2y - p1y); }
+    if (k + 2 < NUM_EXERCISES) { p3x = ex_cx[k + 2]; p3y = ex_cy[k + 2]; }
+    else                       { p3x = p2x + (p2x - p1x); p3y = p2y + (p2y - p1y); }
+
+    u2 = u * u;
+    u3 = u2 * u;
+    *ox = 0.5 * (2.0 * p1x + (-p0x + p2x) * u
+                 + (2.0 * p0x - 5.0 * p1x + 4.0 * p2x - p3x) * u2
+                 + (-p0x + 3.0 * p1x - 3.0 * p2x + p3x) * u3);
+    *oy = 0.5 * (2.0 * p1y + (-p0y + p2y) * u
+                 + (2.0 * p0y - 5.0 * p1y + 4.0 * p2y - p3y) * u2
+                 + (-p0y + 3.0 * p1y - 3.0 * p2y + p3y) * u3);
 }
 
-static void scatter_box_class_init(ScatterBoxClass *klass) {
-    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
-    widget_class->measure = scatter_box_measure;
-    widget_class->size_allocate = scatter_box_size_allocate;
+static void ex_path(cairo_t *cr, double t0, double t1) {
+    const double steps_per_unit = 48.0;
+    int n = (int)((t1 - t0) * steps_per_unit);
+    double x, y;
+    int s;
+
+    if (n < 1)
+        n = 1;
+    ex_point(t0, &x, &y);
+    cairo_move_to(cr, x, y);
+    for (s = 1; s <= n; s++) {
+        ex_point(t0 + (t1 - t0) * (double)s / (double)n, &x, &y);
+        cairo_line_to(cr, x, y);
+    }
 }
 
-/* ------------------------------------------------------------------ */
-/* Unit 1 bubble map (scattered)                                      */
-/* ------------------------------------------------------------------ */
+static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
+                         int width, int height, gpointer user_data) {
+    const double t_end = (double)(NUM_EXERCISES - 1);
+    const double x0 = EX_MX;
+    const double x1 = (double)ex_cw - EX_MX;
+    const Rgb mauve = color_from_hex(0xcba6f7);
+    const Rgb blue = color_from_hex(0x89b4fa);
+    double hx, hy;
+
+    (void)area;
+    (void)width;
+    (void)height;
+    (void)user_data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+
+    ex_point(0.0, &hx, &hy);
+    draw_node_halo(cr, hx, hy, EX_BUBBLE * 1.25,
+                   mauve.r, mauve.g, mauve.b, 0.20);
+
+    cairo_new_path(cr);
+    ex_path(cr, 0.0, t_end);
+    cairo_set_line_width(cr, 12);
+    cairo_set_source_rgb(cr, 0.153, 0.157, 0.235);
+    cairo_stroke(cr);
+
+    {
+        cairo_pattern_t *grad;
+
+        cairo_new_path(cr);
+        ex_path(cr, 0.0, t_end);
+
+        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
+        cairo_pattern_add_color_stop_rgba(grad, 0.0,
+                                          mauve.r, mauve.g, mauve.b, 0.16);
+        cairo_pattern_add_color_stop_rgba(grad, 1.0,
+                                          blue.r, blue.g, blue.b, 0.16);
+        cairo_set_source(cr, grad);
+        cairo_set_line_width(cr, 24);
+        cairo_stroke_preserve(cr);
+        cairo_pattern_destroy(grad);
+
+        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
+        cairo_pattern_add_color_stop_rgba(grad, 0.0,
+                                          mauve.r, mauve.g, mauve.b, 1.0);
+        cairo_pattern_add_color_stop_rgba(grad, 1.0,
+                                          blue.r, blue.g, blue.b, 1.0);
+        cairo_set_source(cr, grad);
+        cairo_set_line_width(cr, 12);
+        cairo_stroke_preserve(cr);
+        cairo_pattern_destroy(grad);
+    }
+}
+
+static void ex_apply_layout(void) {
+    int i;
+
+    if (!ex_fixed)
+        return;
+
+    for (i = 0; i < NUM_EXERCISES; i++) {
+        if (ex_cells[i])
+            gtk_fixed_move(GTK_FIXED(ex_fixed), ex_cells[i],
+                           (int)(ex_cx[i] - EX_BUBBLE / 2.0),
+                           (int)(ex_cy[i] - EX_BUBBLE / 2.0));
+        if (ex_labels[i])
+            gtk_fixed_move(GTK_FIXED(ex_fixed), ex_labels[i],
+                           (int)(ex_cx[i] - (EX_SPAC - 20.0) / 2.0),
+                           (int)(ex_cy[i] + EX_BUBBLE / 2.0 + 8.0));
+    }
+
+    gtk_widget_set_size_request(ex_fixed, ex_cw, ex_ch);
+    gtk_widget_set_size_request(ex_rail, ex_cw, ex_ch);
+    gtk_fixed_move(GTK_FIXED(ex_fixed), ex_rail, 0, 0);
+    gtk_widget_queue_draw(ex_rail);
+}
+
+static void ex_relayout(void) {
+    GtkAdjustment *hadj;
+    double avail;
+
+    if (!ex_scroll)
+        return;
+    hadj = gtk_scrolled_window_get_hadjustment(
+        GTK_SCROLLED_WINDOW(ex_scroll));
+    avail = gtk_adjustment_get_page_size(hadj);
+    if (avail < 1.0)
+        return;
+    ex_layout_geometry(avail);
+    ex_apply_layout();
+}
+
+static guint ex_idle;
+
+static gboolean ex_relayout_idle(gpointer data) {
+    (void)data;
+    ex_idle = 0;
+    ex_relayout();
+    return G_SOURCE_REMOVE;
+}
+
+static void ex_relayout_later(void) {
+    if (ex_idle == 0)
+        ex_idle = g_idle_add(ex_relayout_idle, NULL);
+}
+
+static void ex_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
+                             gpointer data) {
+    (void)adj;
+    (void)ps;
+    (void)data;
+    ex_relayout_later();
+}
 
 static GtkWidget *make_bubble(int n) {
-    GtkWidget *cell = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
     GtkWidget *btn;
     GtkWidget *vbox;
     GtkWidget *num_label;
     GtkWidget *icon;
-    GtkWidget *name_label;
     char *num;
     char *target;
 
-    gtk_widget_set_halign(cell, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(cell, GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(cell, 120, -1);
-
     btn = gtk_button_new();
     gtk_widget_add_css_class(btn, "ex-bubble");
-    gtk_widget_set_size_request(btn, 64, 64);
+    gtk_widget_set_size_request(btn, (int)EX_BUBBLE, (int)EX_BUBBLE);
+    gtk_widget_set_can_focus(btn, FALSE);
     if (ex_done[n])
         gtk_widget_add_css_class(btn, "done");
 
@@ -1048,15 +1157,6 @@ static GtkWidget *make_bubble(int n) {
     gtk_widget_set_visible(icon, ex_done[n]);
     gtk_box_append(GTK_BOX(vbox), icon);
 
-    gtk_box_append(GTK_BOX(cell), btn);
-
-    name_label = gtk_label_new(ex_names[n]);
-    gtk_widget_set_halign(name_label, GTK_ALIGN_CENTER);
-    gtk_widget_add_css_class(name_label, "ex-label");
-    gtk_label_set_wrap(GTK_LABEL(name_label), TRUE);
-    gtk_label_set_max_width_chars(GTK_LABEL(name_label), 12);
-    gtk_box_append(GTK_BOX(cell), name_label);
-
     ex_bubbles[n] = btn;
     ex_done_icons[n] = icon;
 
@@ -1064,16 +1164,24 @@ static GtkWidget *make_bubble(int n) {
     g_object_set_data_full(G_OBJECT(btn), "target", target, g_free);
     g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
 
-    return cell;
+    return btn;
 }
 
 static GtkWidget *build_unit1_page(void) {
     GtkWidget *page;
     GtkWidget *scroll;
-    GtkWidget *scatter;
+    GtkWidget *wrap;
+    GtkWidget *fixed;
+    GtkWidget *rail;
+    GtkAdjustment *ha;
+    GtkAdjustment *va;
     int i;
 
+    ex_layout_geometry(1000.0);
+
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_hexpand(page, TRUE);
+    gtk_widget_set_vexpand(page, TRUE);
     gtk_widget_set_margin_start(page, 32);
     gtk_widget_set_margin_end(page, 32);
     gtk_widget_set_margin_top(page, 24);
@@ -1083,24 +1191,59 @@ static GtkWidget *build_unit1_page(void) {
                    top_bar("roadmap", "Neue Freunde",
                            "Vyberte cvičení a dokončete je."));
 
-    scatter = g_object_new(scatter_box_get_type(), NULL);
-    gtk_widget_set_hexpand(scatter, TRUE);
-    gtk_widget_set_vexpand(scatter, TRUE);
-
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 14);
-    gtk_widget_set_margin_bottom(scroll, 14);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), scatter);
     gtk_box_append(GTK_BOX(page), scroll);
+    ex_scroll = scroll;
 
-    for (i = 1; i <= NUM_EXERCISES; i++) {
-        GtkWidget *cell = make_bubble(i);
-        SCATTER_BOX(scatter)->children[i] = cell;
-        gtk_widget_set_parent(cell, scatter);
+    wrap = gtk_center_box_new();
+    gtk_widget_set_vexpand(wrap, TRUE);
+    gtk_widget_set_hexpand(wrap, TRUE);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), wrap);
+
+    fixed = gtk_fixed_new();
+    gtk_widget_set_halign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(fixed, ex_cw, ex_ch);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), fixed);
+    ex_fixed = fixed;
+
+    rail = gtk_drawing_area_new();
+    gtk_widget_set_size_request(rail, ex_cw, ex_ch);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(rail), draw_ex_rail,
+                                   NULL, NULL);
+    gtk_fixed_put(GTK_FIXED(fixed), rail, 0, 0);
+    ex_rail = rail;
+
+    for (i = 0; i < NUM_EXERCISES; i++) {
+        GtkWidget *btn = make_bubble(i + 1);
+        GtkWidget *lbl = gtk_label_new(ex_names[i + 1]);
+
+        ex_cells[i] = btn;
+        ex_labels[i] = lbl;
+
+        gtk_widget_set_size_request(lbl, (int)(EX_SPAC - 20.0), -1);
+        gtk_widget_set_halign(lbl, GTK_ALIGN_CENTER);
+        gtk_label_set_justify(GTK_LABEL(lbl), GTK_JUSTIFY_CENTER);
+        gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
+        gtk_widget_add_css_class(lbl, "ex-label");
+
+        gtk_fixed_put(GTK_FIXED(fixed), btn, 0, 0);
+        gtk_fixed_put(GTK_FIXED(fixed), lbl, 0, 0);
     }
+
+    ha = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
+    va = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
+    g_signal_connect(ha, "notify::page-size",
+                     G_CALLBACK(ex_adjust_notify), NULL);
+    g_signal_connect(va, "notify::page-size",
+                     G_CALLBACK(ex_adjust_notify), NULL);
+
+    ex_apply_layout();
+    ex_relayout_later();
 
     return page;
 }
