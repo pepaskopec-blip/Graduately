@@ -1440,6 +1440,7 @@ typedef struct {
     GtkWidget *stage;    /* transparent overlay layer for the fly sprite */
     GtkWidget *trans;    /* hidden meaning label under the group */
     GtkWidget *chips[6];
+    int pool_order[6]; /* fixed shuffled order of the word pool       */
     int placed[6];
     int placed_count;
     int n_words;
@@ -1461,15 +1462,16 @@ static void sent_rebuild(SentBuilder *sb) {
                             sb->chips[sb->placed[i]], -1);
 
     for (int i = 0; i < sb->n_words; i++) {
+        int w = sb->pool_order[i];
         gboolean in_target = FALSE;
         for (int j = 0; j < sb->placed_count; j++) {
-            if (sb->placed[j] == i) {
+            if (sb->placed[j] == w) {
                 in_target = TRUE;
                 break;
             }
         }
         if (!in_target)
-            gtk_flow_box_insert(GTK_FLOW_BOX(sb->pool), sb->chips[i], -1);
+            gtk_flow_box_insert(GTK_FLOW_BOX(sb->pool), sb->chips[w], -1);
     }
 }
 
@@ -1841,12 +1843,12 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
         }
 
         {
-            int order[6];
             for (int w = 0; w < item->n; w++)
-                order[w] = w;
-            shuffle_indices(order, item->n);
+                sb->pool_order[w] = w;
+            shuffle_indices(sb->pool_order, item->n);
             for (int w = 0; w < item->n; w++)
-                gtk_flow_box_insert(GTK_FLOW_BOX(pool), sb->chips[order[w]], -1);
+                gtk_flow_box_insert(GTK_FLOW_BOX(pool),
+                                    sb->chips[sb->pool_order[w]], -1);
         }
 
         gtk_box_append(GTK_BOX(body), holder);
