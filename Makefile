@@ -1,6 +1,21 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wno-deprecated-declarations `pkg-config --cflags gtk4`
-LIBS = `pkg-config --libs gtk4` -lm
+
+# Make sure pkg-config is found even when make runs with a minimal PATH
+# (e.g. launched from an IDE such as CLion on macOS).
+PKG_CONFIG ?= $(firstword $(wildcard \
+	$(addsuffix /pkg-config,$(subst :, ,$(PATH)) /opt/homebrew/bin /usr/local/bin)))
+ifeq ($(PKG_CONFIG),)
+PKG_CONFIG := pkg-config
+endif
+
+# Use $(shell ...) instead of backticks so the flags are expanded by make
+# itself; IDEs that import the Makefile via a dry run then see the real
+# include paths.
+GTK_CFLAGS := $(shell $(PKG_CONFIG) --cflags gtk4)
+GTK_LIBS   := $(shell $(PKG_CONFIG) --libs gtk4)
+
+CFLAGS = -Wall -Wextra -Wno-deprecated-declarations $(GTK_CFLAGS)
+LIBS = $(GTK_LIBS) -lm
 TARGET = sprechen
 SRC = sprechen.c
 

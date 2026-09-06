@@ -10,6 +10,7 @@
 
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_FILE "progress/unit1.conf"
+#define SETTINGS_FILE "progress/settings.conf"
 
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
@@ -21,6 +22,80 @@
 #define ROAD_WAVE   44.0   /* wavy vertical offset of the nodes        */
 
 static GtkStack *main_stack;
+static GtkWindow *main_window;
+static GtkWidget *welcome_heading;
+static GtkCssProvider *theme_provider;
+
+typedef enum {
+    THEME_CATPPUCCIN = 0,
+    THEME_NORD,
+    THEME_DRACULA,
+    THEME_ROSE_PINE,
+    THEME_OCEAN,
+    THEME_GRUVBOX,
+    THEME_SOLARIZED,
+    THEME_EVERFOREST,
+    THEME_MONOKAI,
+    THEME_ONE_DARK,
+    THEME_COUNT
+} ThemeId;
+
+typedef enum {
+    MODE_DARK = 0,
+    MODE_LIGHT
+} ColorMode;
+
+typedef enum {
+    LANG_CS = 0,
+    LANG_EN
+} UiLang;
+
+typedef struct {
+    unsigned crust;
+    unsigned base;
+    unsigned mantle;
+    unsigned surface0;
+    unsigned surface1;
+    unsigned surface2;
+    unsigned overlay;
+    unsigned text;
+    unsigned subtext;
+    unsigned accent;
+    unsigned accent2;
+    unsigned accent3;
+    unsigned success;
+    unsigned success2;
+    unsigned warning;
+    unsigned error;
+    unsigned on_accent;
+    unsigned node;
+    unsigned locked_bg;
+    unsigned locked_border;
+    unsigned rail;
+    unsigned finish_dark;
+    unsigned finish_light;
+    unsigned finish_stroke;
+} ThemePalette;
+
+static ThemeId   app_theme_id = THEME_CATPPUCCIN;
+static ColorMode app_color_mode = MODE_DARK;
+static UiLang    app_lang = LANG_CS;
+static ThemePalette app_theme;
+
+static const char *theme_names[THEME_COUNT] = {
+    "Catppuccin",
+    "Nord",
+    "Dracula",
+    "Rose Pine",
+    "Ocean",
+    "Gruvbox",
+    "Solarized",
+    "Everforest",
+    "Monokai",
+    "One Dark",
+};
+
+static GtkWidget *theme_swatch_areas[THEME_COUNT];
 
 static gboolean ex_done[NUM_EXERCISES + 1]; /* indexed 1..13 */
 
@@ -33,6 +108,7 @@ static GtkWidget *unit1_done_icon;
 static GtkWidget *road_scroll;
 static GtkWidget *road_fixed;
 static GtkWidget *road_rail;
+static GtkWidget *ex_rail;
 static GtkWidget *road_nodes[NUM_UNITS];
 static GtkWidget *road_labels[NUM_UNITS];
 static double road_cx[NUM_UNITS];
@@ -83,15 +159,1107 @@ static Rgb color_from_hex(unsigned int hex) {
     return c;
 }
 
+static ThemePalette theme_palette(ThemeId id, ColorMode mode) {
+    /* Catppuccin Mocha / Latte */
+    static const ThemePalette cat_dark = {
+        0x11111b, 0x1e1e2e, 0x181825, 0x313244, 0x45475a, 0x585b70,
+        0x6c7086, 0xcdd6f4, 0xa6adc8, 0xcba6f7, 0xb4befe, 0x89b4fa,
+        0xa6e3a1, 0x94e2d5, 0xf9e2af, 0xf38ba8, 0x1e1e2e,
+        0x2b2d40, 0x24263a, 0x383b52, 0x27293c, 0x1f202e, 0x3b3e58, 0x52556b
+    };
+    static const ThemePalette cat_light = {
+        0xdce0e8, 0xeff1f5, 0xe6e9ef, 0xccd0da, 0xbcc0cc, 0xacb0be,
+        0x9ca0b0, 0x4c4f69, 0x6c6f85, 0x8839ef, 0x7287fd, 0x1e66f5,
+        0x40a02b, 0x179299, 0xdf8e1d, 0xd20f39, 0xeff1f5,
+        0xe6e9ef, 0xdce0e8, 0xbcc0cc, 0xccd0da, 0xdce0e8, 0xbcc0cc, 0x9ca0b0
+    };
+    /* Nord */
+    static const ThemePalette nord_dark = {
+        0x2e3440, 0x3b4252, 0x2e3440, 0x434c5e, 0x4c566a, 0x616e88,
+        0x7b88a1, 0xeceff4, 0xd8dee9, 0x88c0d0, 0x81a1c1, 0x5e81ac,
+        0xa3be8c, 0x8fbcbb, 0xebcb8b, 0xbf616a, 0x2e3440,
+        0x434c5e, 0x3b4252, 0x4c566a, 0x2e3440, 0x2e3440, 0x434c5e, 0x4c566a
+    };
+    static const ThemePalette nord_light = {
+        0xd8dee9, 0xeceff4, 0xe5e9f0, 0xd8dee9, 0xc7ceda, 0xb0b8c8,
+        0x7b88a1, 0x2e3440, 0x4c566a, 0x5e81ac, 0x81a1c1, 0x5e81ac,
+        0xa3be8c, 0x8fbcbb, 0xebcb8b, 0xbf616a, 0xeceff4,
+        0xe5e9f0, 0xd8dee9, 0xc7ceda, 0xd8dee9, 0xd8dee9, 0xc7ceda, 0x7b88a1
+    };
+    /* Dracula / light soft */
+    static const ThemePalette dra_dark = {
+        0x191a21, 0x282a36, 0x21222c, 0x44475a, 0x6272a4, 0x707eb0,
+        0x6272a4, 0xf8f8f2, 0xbfbfb2, 0xbd93f9, 0xff79c6, 0x8be9fd,
+        0x50fa7b, 0x8be9fd, 0xf1fa8c, 0xff5555, 0x282a36,
+        0x383a4a, 0x2f3240, 0x44475a, 0x21222c, 0x191a21, 0x383a4a, 0x6272a4
+    };
+    static const ThemePalette dra_light = {
+        0xd5d7e0, 0xf8f8f2, 0xefefea, 0xe2e2d8, 0xd0d0c4, 0xbfbfb2,
+        0x9a9a8c, 0x282a36, 0x44475a, 0x7c3aed, 0xd946a6, 0x0891b2,
+        0x16a34a, 0x0e7490, 0xca8a04, 0xdc2626, 0xf8f8f2,
+        0xefefea, 0xe2e2d8, 0xd0d0c4, 0xe2e2d8, 0xd5d7e0, 0xd0d0c4, 0x9a9a8c
+    };
+    /* Rose Pine / Dawn */
+    static const ThemePalette rose_dark = {
+        0x191724, 0x1f1d2e, 0x1f1d2e, 0x26233a, 0x403d52, 0x524f67,
+        0x6e6a86, 0xe0def4, 0x908caa, 0xc4a7e7, 0xebbcba, 0x9ccfd8,
+        0x31748f, 0x9ccfd8, 0xf6c177, 0xeb6f92, 0x191724,
+        0x26233a, 0x21202e, 0x403d52, 0x191724, 0x191724, 0x26233a, 0x524f67
+    };
+    static const ThemePalette rose_light = {
+        0xf2e9e1, 0xfaf4ed, 0xfffaf3, 0xf2e9e1, 0xdfdad9, 0xcecacd,
+        0x9893a5, 0x575279, 0x797593, 0x907aa9, 0xd7827e, 0x56949f,
+        0x286983, 0x56949f, 0xea9d34, 0xb4637a, 0xfaf4ed,
+        0xfffaf3, 0xf2e9e1, 0xdfdad9, 0xf2e9e1, 0xf2e9e1, 0xdfdad9, 0x9893a5
+    };
+    /* Ocean / Tokyo Night inspired */
+    static const ThemePalette ocean_dark = {
+        0x16161e, 0x1a1b26, 0x16161e, 0x24283b, 0x414868, 0x565f89,
+        0x565f89, 0xc0caf5, 0xa9b1d6, 0x7aa2f7, 0xbb9af7, 0x7dcfff,
+        0x9ece6a, 0x73daca, 0xe0af68, 0xf7768e, 0x1a1b26,
+        0x24283b, 0x1f2335, 0x3b4261, 0x16161e, 0x16161e, 0x24283b, 0x414868
+    };
+    static const ThemePalette ocean_light = {
+        0xd6dae8, 0xe1e2ec, 0xd5d6e2, 0xc8c9d6, 0xb4b6c5, 0x9aa0b5,
+        0x7a8199, 0x2e3446, 0x4a5168, 0x2e7de9, 0x7847bd, 0x007197,
+        0x387068, 0x007197, 0x8c6c3e, 0xc64343, 0xe1e2ec,
+        0xd5d6e2, 0xc8c9d6, 0xb4b6c5, 0xc8c9d6, 0xd6dae8, 0xb4b6c5, 0x7a8199
+    };
+
+    /* Gruvbox */
+    static const ThemePalette gruv_dark = {
+        0x1d2021, 0x282828, 0x1d2021, 0x3c3836, 0x504945, 0x665c54,
+        0x928374, 0xebdbb2, 0xa89984, 0xfe8019, 0xd3869b, 0x83a598,
+        0xb8bb26, 0x8ec07c, 0xfabd2f, 0xfb4934, 0x1d2021,
+        0x3c3836, 0x32302f, 0x504945, 0x1d2021, 0x1d2021, 0x3c3836, 0x504945
+    };
+    static const ThemePalette gruv_light = {
+        0xebdbb2, 0xfbf1c7, 0xf2e5bc, 0xebdbb2, 0xd5c4a1, 0xbdae93,
+        0x928374, 0x3c3836, 0x504945, 0xd65d0e, 0xb16286, 0x076678,
+        0x79740e, 0x427b58, 0xb57614, 0x9d0006, 0xfbf1c7,
+        0xf2e5bc, 0xebdbb2, 0xd5c4a1, 0xebdbb2, 0xebdbb2, 0xd5c4a1, 0x928374
+    };
+    /* Solarized */
+    static const ThemePalette sol_dark = {
+        0x002b36, 0x073642, 0x002b36, 0x586e75, 0x657b83, 0x839496,
+        0x93a1a1, 0xfdf6e3, 0x93a1a1, 0x268bd2, 0x6c71c4, 0x2aa198,
+        0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0x002b36,
+        0x073642, 0x002b36, 0x586e75, 0x002b36, 0x002b36, 0x073642, 0x586e75
+    };
+    static const ThemePalette sol_light = {
+        0xeee8d5, 0xfdf6e3, 0xeee8d5, 0x93a1a1, 0x839496, 0x657b83,
+        0x586e75, 0x657b83, 0x93a1a1, 0x268bd2, 0x6c71c4, 0x2aa198,
+        0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0xfdf6e3,
+        0xeee8d5, 0xe6dfc8, 0x93a1a1, 0xeee8d5, 0xeee8d5, 0x93a1a1, 0x586e75
+    };
+    /* Everforest */
+    static const ThemePalette ever_dark = {
+        0x1e2326, 0x272e33, 0x2d353b, 0x374145, 0x4f5b58, 0x7a8478,
+        0x859289, 0xd3c6aa, 0xa7c080, 0xa7c080, 0xd699b6, 0x7fbbb3,
+        0xa7c080, 0x83c092, 0xdbbc7f, 0xe67e80, 0x272e33,
+        0x374145, 0x2d353b, 0x4f5b58, 0x1e2326, 0x1e2326, 0x374145, 0x4f5b58
+    };
+    static const ThemePalette ever_light = {
+        0xe6e2cc, 0xfdf6e3, 0xf4f0d9, 0xefebd4, 0xe0dcc7, 0xa6b0a0,
+        0x939f91, 0x5c6a72, 0x829181, 0x8da101, 0xdf69ba, 0x35a77c,
+        0x8da101, 0x35a77c, 0xdfa000, 0xf85552, 0xfdf6e3,
+        0xf4f0d9, 0xefebd4, 0xe0dcc7, 0xe6e2cc, 0xe6e2cc, 0xe0dcc7, 0x939f91
+    };
+    /* Monokai */
+    static const ThemePalette mono_dark = {
+        0x1d1e19, 0x272822, 0x1e1f1a, 0x3e3d32, 0x49483e, 0x75715e,
+        0x75715e, 0xf8f8f2, 0xa59f85, 0xf92672, 0xae81ff, 0x66d9ef,
+        0xa6e22e, 0xa1efe4, 0xe6db74, 0xf92672, 0x272822,
+        0x3e3d32, 0x2e2f29, 0x49483e, 0x1d1e19, 0x1d1e19, 0x3e3d32, 0x49483e
+    };
+    static const ThemePalette mono_light = {
+        0xe6e3d4, 0xfaf8f0, 0xf3f0e4, 0xe8e4d4, 0xd6d2c0, 0xb8b49e,
+        0x8a8674, 0x2d2a2e, 0x5b5854, 0xe14775, 0x7c5cbf, 0x1c7d9b,
+        0x5b8c2a, 0x1c7d9b, 0xb08900, 0xe14775, 0xfaf8f0,
+        0xf3f0e4, 0xe8e4d4, 0xd6d2c0, 0xe6e3d4, 0xe6e3d4, 0xd6d2c0, 0x8a8674
+    };
+    /* One Dark / One Light */
+    static const ThemePalette one_dark = {
+        0x21252b, 0x282c34, 0x21252b, 0x3b4048, 0x4b5263, 0x5c6370,
+        0x5c6370, 0xabb2bf, 0x7f848e, 0xc678dd, 0x61afef, 0x56b6c2,
+        0x98c379, 0x56b6c2, 0xe5c07b, 0xe06c75, 0x282c34,
+        0x3b4048, 0x2c313a, 0x4b5263, 0x21252b, 0x21252b, 0x3b4048, 0x4b5263
+    };
+    static const ThemePalette one_light = {
+        0xe5e5e6, 0xfafafa, 0xf0f0f0, 0xe5e5e6, 0xd0d0d2, 0xa0a1a7,
+        0xa0a1a7, 0x383a42, 0x696c77, 0xa626a4, 0x4078f2, 0x0184bc,
+        0x50a14f, 0x0184bc, 0xc18401, 0xe45649, 0xfafafa,
+        0xf0f0f0, 0xe5e5e6, 0xd0d0d2, 0xe5e5e6, 0xe5e5e6, 0xd0d0d2, 0xa0a1a7
+    };
+
+    switch (id) {
+        case THEME_NORD:
+            return mode == MODE_LIGHT ? nord_light : nord_dark;
+        case THEME_DRACULA:
+            return mode == MODE_LIGHT ? dra_light : dra_dark;
+        case THEME_ROSE_PINE:
+            return mode == MODE_LIGHT ? rose_light : rose_dark;
+        case THEME_OCEAN:
+            return mode == MODE_LIGHT ? ocean_light : ocean_dark;
+        case THEME_GRUVBOX:
+            return mode == MODE_LIGHT ? gruv_light : gruv_dark;
+        case THEME_SOLARIZED:
+            return mode == MODE_LIGHT ? sol_light : sol_dark;
+        case THEME_EVERFOREST:
+            return mode == MODE_LIGHT ? ever_light : ever_dark;
+        case THEME_MONOKAI:
+            return mode == MODE_LIGHT ? mono_light : mono_dark;
+        case THEME_ONE_DARK:
+            return mode == MODE_LIGHT ? one_light : one_dark;
+        case THEME_CATPPUCCIN:
+        default:
+            return mode == MODE_LIGHT ? cat_light : cat_dark;
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/* i18n                                                               */
+/* ------------------------------------------------------------------ */
+
+typedef struct {
+    GtkWidget *widget;
+    const char *key;
+    int kind; /* 0 label, 1 button, 2 tooltip, 3 placeholder, 4 ex4 sample */
+} I18nBind;
+
+static void ex4_fill_sample(GtkWidget *label);
+
+static GArray *i18n_binds;
+
+typedef struct {
+    const char *key;
+    const char *cs;
+    const char *en;
+} TrEntry;
+
+static const TrEntry tr_ui[] = {
+    {"back", "Zpět", "Back"},
+    {"settings", "Nastavení", "Settings"},
+    {"settings_title", "Nastavení", "Settings"},
+    {"mode", "REŽIM", "MODE"},
+    {"mode_dark", "Tmavý", "Dark"},
+    {"mode_light", "Světlý", "Light"},
+    {"theme", "TÉMA", "THEME"},
+    {"language", "JAZYK", "LANGUAGE"},
+    {"welcome_body",
+     "Sprechen.C je vzdělávací program na procvičování Němčiny, určený "
+     "pro studenty středních škol a gymnázií.\n\n"
+     "Program je napsaný v Céčku studentama ze SSŠVT!",
+     "Sprechen.C is an educational app for practicing German, made for "
+     "high-school and gymnasium students.\n\n"
+     "The program is written in C by students from SSŠVT!"},
+    {"continue", "Pokračuj", "Continue"},
+    {"roadmap_title", "Učební plán", "Learning path"},
+    {"roadmap_sub", "Vyberte jednotku na cestě a začněte procvičovat.",
+     "Pick a unit on the path and start practicing."},
+    {"unit1_sub", "Vyberte cvičení a dokončete je.",
+     "Choose an exercise and complete it."},
+    {"check", "Zkontrolovat", "Check"},
+    {"finish", "Dokončit", "Finish"},
+    {"show_sample", "Ukázat vzor", "Show sample"},
+    {"your_answer", "Vaše odpověď…", "Your answer…"},
+    {"feedback_ok", "Výborně!", "Great!"},
+    {"feedback_retry", "Ještě to není správně. Zkuste to znovu.",
+     "Not quite right yet. Try again."},
+    {"feedback_retry_short", "Ještě to není správně.", "Not quite right yet."},
+    {"feedback_sentences", "Některé věty nejsou správně. Zkuste to znovu.",
+     "Some sentences are not correct. Try again."},
+    {"tip_ss", "Písmeno „ß“ se dá na klávesnici zaměnit za „ss“!",
+     "You can type “ss” instead of “ß” on the keyboard!"},
+    {"sample_fmt", "Otázka: %s\nVzor: %s  (česky: %s)",
+     "Question: %s\nSample: %s  (English: %s)"},
+    {"sub_dialog", "Doplňte chybějící slova v dialogu.",
+     "Fill in the missing words in the dialogue."},
+    {"sub_assembly", "Přetáhněte slova do správného pořadí.",
+     "Drag the words into the correct order."},
+    {"sub_choice_num", "Vyberte správnou číslovku.",
+     "Choose the correct numeral."},
+    {"sub_free", "Odpovězte vlastními slovy, poté klikněte na Dokončit.",
+     "Answer in your own words, then click Finish."},
+    {"sub_zahlen", "Vyberte správné slovo pro dané číslo.",
+     "Choose the correct word for the given number."},
+    {"sub_wieviel", "Spočítejte předměty a vyberte počet.",
+     "Count the items and choose the amount."},
+    {"sub_reihe", "Doplňte chybějící číslovku.",
+     "Fill in the missing numeral."},
+    {"sub_verb", "Vyberte správný tvar slovesa.",
+     "Choose the correct verb form."},
+    {"sub_wer", "Vyberte správné tázací slovo.",
+     "Choose the correct question word."},
+    {"sub_bild", "Vyberte správný tvar slovesa podle obrázku.",
+     "Choose the correct verb form for the picture."},
+    {"sub_gruss", "Roztřiďte pozdravy na pozdravy a rozloučení.",
+     "Sort the phrases into greetings and farewells."},
+    {"sub_land", "Přiřaďte symboly ke správné zemi.",
+     "Match the symbols to the correct country."},
+    {"assign_hint",
+     "Vyberte skupinu a klikněte na kartu. Kliknutím na kartu ve skupině "
+     "ji vrátíte zpět.",
+     "Pick a group and click a card. Click a card inside a group to send "
+     "it back."},
+    {NULL, NULL, NULL}
+};
+
+/* Exercise content: the Czech text doubles as the lookup key, so `cs`
+ * stays NULL and tr() falls back to the key itself. */
+static const TrEntry tr_content[] = {
+    {"Ahoj! Jmenuji se Anna.", NULL, "Hi! My name is Anna."},
+    {"Ahoj! Jmenuji se Petr.", NULL, "Hi! My name is Petr."},
+    {"Jmenuji se Anna.", NULL, "My name is Anna."},
+    {"Jmenuji se Petr.", NULL, "My name is Petr."},
+    {"Odkud jsi?", NULL, "Where are you from?"},
+    {"Odkud pocházíš?", NULL, "Where do you come from?"},
+    {"Pocházím z Česka.", NULL, "I come from Czechia."},
+    {"Dobré ráno!", NULL, "Good morning!"},
+    {"Jak se máš?", NULL, "How are you?"},
+    {"Mám se dobře, děkuji.", NULL, "I am fine, thank you."},
+    {"Musím jít. Na shledanou!", NULL, "I have to go. Goodbye!"},
+    {"Brzy na viděnou!", NULL, "See you soon!"},
+    {"Čau!", NULL, "Bye!"},
+    {"Jak se jmenuješ?", NULL, "What is your name?"},
+    {"Kde bydlíš?", NULL, "Where do you live?"},
+    {"Kdo to je?", NULL, "Who is that?"},
+    {"Kolik je ti let?", NULL, "How old are you?"},
+    {"Je mi šestnáct let.", NULL, "I am sixteen years old."},
+    {"Bydlím v Praze.", NULL, "I live in Prague."},
+    {"Hraji fotbal.", NULL, "I play football."},
+    {"Co rád/a děláš?", NULL, "What do you like to do?"},
+    {"Kolik je hodin?", NULL, "What time is it?"},
+    {"Na shledanou.", NULL, "Goodbye."},
+    {"Moc děkuji.", NULL, "Thank you very much."},
+    {"„vierzehn“ = čtrnáct (14)", NULL, "“vierzehn” = fourteen (14)"},
+    {"„siebzehn“ = sedmnáct (17)", NULL, "“siebzehn” = seventeen (17)"},
+    {"„zwanzig“ = dvacet (20)", NULL, "“zwanzig” = twenty (20)"},
+    {"„sechs“ = šest (6)", NULL, "“sechs” = six (6)"},
+    {"čtrnáct", NULL, "fourteen"},
+    {"sedmnáct", NULL, "seventeen"},
+    {"dvacet", NULL, "twenty"},
+    {"šest", NULL, "six"},
+    {"třináct", NULL, "thirteen"},
+    {"dvě jablka", NULL, "two apples"},
+    {"pět hvězd", NULL, "five stars"},
+    {"sedm koček", NULL, "seven cats"},
+    {"devět květin", NULL, "nine flowers"},
+    {"tři auta", NULL, "three cars"},
+    {"jedenáct knih", NULL, "eleven books"},
+    {"čtyři svíčky", NULL, "four candles"},
+    {"osm míčů", NULL, "eight balls"},
+    {"šest ptáků", NULL, "six birds"},
+    {"šest, sedm, osm, devět", NULL, "six, seven, eight, nine"},
+    {"dvanáct, třináct, čtrnáct, patnáct", NULL,
+     "twelve, thirteen, fourteen, fifteen"},
+    {"osmnáct, devatenáct, dvacet, dvacet jedna", NULL,
+     "eighteen, nineteen, twenty, twenty-one"},
+    {"čtyři, pět, šest, sedm", NULL, "four, five, six, seven"},
+    {"deset, jedenáct, dvanáct, třináct", NULL,
+     "ten, eleven, twelve, thirteen"},
+    {"Plave v jezeře.", NULL, "He/She is swimming in the lake."},
+    {"Zpívá píseň.", NULL, "He/She is singing a song."},
+    {"Vaří polévku.", NULL, "He/She is cooking soup."},
+    {"Čte knihu.", NULL, "He/She is reading a book."},
+    {"Řídí auto.", NULL, "He/She is driving a car."},
+    {"Maluje obraz.", NULL, "He/She is painting a picture."},
+    {"Hraje fotbal.", NULL, "He/She is playing football."},
+    {"Spí.", NULL, "He/She is sleeping."},
+    {"Ahoj", NULL, "Hi"},
+    {"Dobré ráno", NULL, "Good morning"},
+    {"Dobrý den", NULL, "Good day"},
+    {"Dobrý večer", NULL, "Good evening"},
+    {"Dobrý den (Bavorsko, Rakousko)", NULL, "Good day (Bavaria, Austria)"},
+    {"Ahoj / Čau", NULL, "Hi / Hey"},
+    {"Čau", NULL, "Bye"},
+    {"Na shledanou", NULL, "Goodbye"},
+    {"Brzy na viděnou", NULL, "See you soon"},
+    {"Do zítřka", NULL, "See you tomorrow"},
+    {"Dobrou noc", NULL, "Good night"},
+    {"Zatím / Na viděnou", NULL, "See you later"},
+    {"Preclík", NULL, "Pretzel"},
+    {"Klobása", NULL, "Sausage"},
+    {"Braniborská brána", NULL, "Brandenburg Gate"},
+    {"Značka aut", NULL, "Car brand"},
+    {"Rakouský skladatel", NULL, "Austrian composer"},
+    {"Čokoládový dort (Vídeň)", NULL, "Chocolate cake (Vienna)"},
+    {"Vídeňský řízek", NULL, "Viennese schnitzel"},
+    {"Sýr", NULL, "Cheese"},
+    {"Švýcarská hora", NULL, "Swiss mountain"},
+    {"Čokoláda", NULL, "Chocolate"},
+    {NULL, NULL, NULL}
+};
+
+static const char *tr(const char *key) {
+    static GHashTable *idx;
+    const TrEntry *e;
+    int i;
+
+    if (!key)
+        return NULL;
+
+    if (!idx) {
+        idx = g_hash_table_new(g_str_hash, g_str_equal);
+        for (i = 0; tr_ui[i].key; i++)
+            g_hash_table_insert(idx, (gpointer)tr_ui[i].key,
+                                (gpointer)&tr_ui[i]);
+        for (i = 0; tr_content[i].key; i++)
+            g_hash_table_insert(idx, (gpointer)tr_content[i].key,
+                                (gpointer)&tr_content[i]);
+    }
+
+    e = g_hash_table_lookup(idx, key);
+    if (!e)
+        return key;
+    if (app_lang == LANG_EN)
+        return e->en;
+    return e->cs ? e->cs : e->key;
+}
+
+static void i18n_ensure(void) {
+    if (!i18n_binds)
+        i18n_binds = g_array_new(FALSE, FALSE, sizeof(I18nBind));
+}
+
+static void i18n_apply_one(const I18nBind *b) {
+    if (!b->widget || !b->key)
+        return;
+    switch (b->kind) {
+        case 0:
+            gtk_label_set_text(GTK_LABEL(b->widget), tr(b->key));
+            break;
+        case 1:
+            gtk_button_set_label(GTK_BUTTON(b->widget), tr(b->key));
+            break;
+        case 2:
+            gtk_widget_set_tooltip_text(b->widget, tr(b->key));
+            break;
+        case 3:
+            gtk_entry_set_placeholder_text(GTK_ENTRY(b->widget), tr(b->key));
+            break;
+        case 4:
+            ex4_fill_sample(b->widget);
+            break;
+        default:
+            break;
+    }
+}
+
+static void i18n_bind(GtkWidget *widget, const char *key, int kind) {
+    I18nBind b;
+
+    i18n_ensure();
+    b.widget = widget;
+    b.key = key;
+    b.kind = kind;
+    g_array_append_val(i18n_binds, b);
+
+    i18n_apply_one(&b);
+}
+
+static void refresh_welcome_heading(void) {
+    char *markup;
+
+    if (!welcome_heading)
+        return;
+    if (app_lang == LANG_EN)
+        markup = g_strdup_printf(
+            "Welcome to <span color=\"#%06x\">Sprechen.C</span>!",
+            app_theme.accent);
+    else
+        markup = g_strdup_printf(
+            "Vítejte ve <span color=\"#%06x\">Sprechen.C</span>!",
+            app_theme.accent);
+    gtk_label_set_markup(GTK_LABEL(welcome_heading), markup);
+    g_free(markup);
+}
+
+static void apply_language(void) {
+    guint i;
+
+    i18n_ensure();
+    for (i = 0; i < i18n_binds->len; i++)
+        i18n_apply_one(&g_array_index(i18n_binds, I18nBind, i));
+    refresh_welcome_heading();
+}
+
+static char *build_theme_css(const ThemePalette *p) {
+    return g_strdup_printf(
+        "@define-color bg_crust #%06x;"
+        "@define-color bg_base #%06x;"
+        "@define-color bg_mantle #%06x;"
+        "@define-color bg_surface0 #%06x;"
+        "@define-color bg_surface1 #%06x;"
+        "@define-color bg_surface2 #%06x;"
+        "@define-color fg_overlay #%06x;"
+        "@define-color fg_text #%06x;"
+        "@define-color fg_subtext #%06x;"
+        "@define-color accent #%06x;"
+        "@define-color accent2 #%06x;"
+        "@define-color accent3 #%06x;"
+        "@define-color success #%06x;"
+        "@define-color success2 #%06x;"
+        "@define-color warning #%06x;"
+        "@define-color error #%06x;"
+        "@define-color on_accent #%06x;"
+        "@define-color node_bg #%06x;"
+        "@define-color locked_bg #%06x;"
+        "@define-color locked_border #%06x;"
+        "window {"
+        "   background-color: @bg_base;"
+        "   background-image: linear-gradient(160deg, @bg_crust 0%%, @bg_base 40%%, @bg_surface0 100%%);"
+        "}"
+        "button {"
+        "   background-image: none;"
+        "}"
+        ".app-title {"
+        "   color: @fg_text;"
+        "   font-weight: 700;"
+        "   font-size: 14px;"
+        "}"
+        ".settings-btn,"
+        ".settings-btn:hover,"
+        ".settings-btn:active,"
+        ".settings-btn:checked,"
+        ".settings-btn:focus,"
+        ".settings-btn:focus-visible {"
+        "   min-width: 34px;"
+        "   min-height: 34px;"
+        "   padding: 0;"
+        "   border-radius: 999px;"
+        "   background: transparent;"
+        "   background-color: transparent;"
+        "   background-image: none;"
+        "   border: none;"
+        "   outline: none;"
+        "   box-shadow: none;"
+        "   color: @fg_text;"
+        "}"
+        ".settings-btn:hover {"
+        "   color: @accent;"
+        "   background-color: alpha(@bg_surface0, 0.55);"
+        "}"
+        ".settings-btn:active {"
+        "   color: @accent;"
+        "   background-color: alpha(@bg_surface1, 0.4);"
+        "}"
+        "popover,"
+        "popover.background,"
+        ".settings-popover {"
+        "   background: @bg_mantle;"
+        "   background-color: @bg_mantle;"
+        "   color: @fg_text;"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 18px;"
+        "   box-shadow: 0 18px 40px alpha(@bg_crust, 0.45);"
+        "}"
+        "popover > contents,"
+        ".settings-popover > contents {"
+        "   background: transparent;"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   border-radius: 18px;"
+        "   box-shadow: none;"
+        "   padding: 0;"
+        "}"
+        ".settings-box {"
+        "   background-color: transparent;"
+        "   color: @fg_text;"
+        "   min-width: 292px;"
+        "   padding: 16px 16px 14px 16px;"
+        "}"
+        ".settings-title {"
+        "   color: @fg_text;"
+        "   font-size: 17px;"
+        "   font-weight: 800;"
+        "   letter-spacing: -0.2px;"
+        "}"
+        ".settings-label {"
+        "   color: @fg_overlay;"
+        "   font-size: 11px;"
+        "   font-weight: 700;"
+        "   letter-spacing: 0.8px;"
+        "}"
+        ".settings-seg {"
+        "   background-color: alpha(@bg_surface0, 0.55);"
+        "   border: none;"
+        "   border-radius: 12px;"
+        "   padding: 3px;"
+        "}"
+        ".mode-chip {"
+        "   background-image: none;"
+        "   background-color: transparent;"
+        "   color: @fg_subtext;"
+        "   border: none;"
+        "   border-radius: 10px;"
+        "   padding: 9px 12px;"
+        "   font-size: 13px;"
+        "   font-weight: 600;"
+        "   min-width: 0;"
+        "   box-shadow: none;"
+        "   transition: background-color 140ms ease, color 140ms ease,"
+        "                box-shadow 140ms ease;"
+        "}"
+        ".mode-chip:hover {"
+        "   background-color: alpha(@bg_surface1, 0.28);"
+        "   color: @fg_text;"
+        "}"
+        ".mode-chip:checked {"
+        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 100%%);"
+        "   color: @on_accent;"
+        "   font-weight: 800;"
+        "   box-shadow: 0 4px 12px alpha(@accent, 0.25);"
+        "}"
+        ".mode-chip:checked:hover {"
+        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 100%%);"
+        "   color: @on_accent;"
+        "}"
+        ".theme-grid {"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   padding: 0;"
+        "}"
+        "flowboxchild {"
+        "   padding: 0;"
+        "   margin: 0;"
+        "   background: transparent;"
+        "   border: none;"
+        "   box-shadow: none;"
+        "}"
+        ".theme-card {"
+        "   background-image: none;"
+        "   background-color: transparent;"
+        "   color: @fg_text;"
+        "   border: none;"
+        "   border-radius: 12px;"
+        "   padding: 6px 4px;"
+        "   min-width: 0;"
+        "   box-shadow: none;"
+        "   transition: background-color 140ms ease;"
+        "}"
+        ".theme-card:hover {"
+        "   background-color: alpha(@bg_surface0, 0.45);"
+        "}"
+        ".theme-card:checked {"
+        "   background-color: transparent;"
+        "   box-shadow: none;"
+        "}"
+        ".theme-card:checked:hover {"
+        "   background-color: alpha(@bg_surface0, 0.35);"
+        "}"
+        ".theme-card-name {"
+        "   color: @fg_subtext;"
+        "   font-size: 11px;"
+        "   font-weight: 600;"
+        "}"
+        ".theme-card:checked .theme-card-name {"
+        "   color: @fg_text;"
+        "   font-weight: 700;"
+        "}"
+        "headerbar,"
+        "headerbar.titlebar,"
+        ".titlebar {"
+        "   background-color: @bg_base;"
+        "   background-image: none;"
+        "   color: @fg_text;"
+        "   box-shadow: none;"
+        "   border: none;"
+        "}"
+        ".heading {"
+        "   color: @fg_text;"
+        "   font-size: 32px;"
+        "   font-weight: 800;"
+        "}"
+        ".card {"
+        "   background-color: alpha(@bg_surface0, 0.92);"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 18px;"
+        "   padding: 30px 34px;"
+        "   color: @fg_text;"
+        "   font-size: 16px;"
+        "}"
+        ".btn-primary {"
+        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 100%%);"
+        "   color: @on_accent;"
+        "   font-size: 16px;"
+        "   font-weight: 700;"
+        "   padding: 12px 40px;"
+        "   border: none;"
+        "   border-radius: 999px;"
+        "   box-shadow: 0 6px 18px alpha(@accent, 0.25);"
+        "   transition: box-shadow 150ms ease, background-image 150ms ease;"
+        "}"
+        ".btn-primary:hover {"
+        "   box-shadow: 0 8px 24px alpha(@accent, 0.45);"
+        "   background-image: linear-gradient(135deg, @accent2 0%%, @accent3 100%%);"
+        "}"
+        ".btn-primary:active {"
+        "   box-shadow: 0 3px 10px alpha(@accent, 0.35);"
+        "}"
+        ".roadmap-title {"
+        "   color: @fg_text;"
+        "   font-size: 28px;"
+        "   font-weight: 800;"
+        "}"
+        ".roadmap-sub {"
+        "   color: @fg_subtext;"
+        "   font-size: 14px;"
+        "}"
+        ".back-btn {"
+        "   min-width: 42px;"
+        "   min-height: 42px;"
+        "   padding: 0;"
+        "   border-radius: 999px;"
+        "   background-color: alpha(@bg_surface0, 0.9);"
+        "   border: 1px solid @bg_surface1;"
+        "   color: @fg_text;"
+        "   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);"
+        "   transition: background-color 150ms ease, color 150ms ease,"
+        "                border-color 150ms ease, box-shadow 150ms ease;"
+        "}"
+        ".back-btn:hover {"
+        "   background-color: @bg_surface1;"
+        "   border-color: @bg_surface2;"
+        "   color: @accent;"
+        "   box-shadow: 0 6px 20px alpha(@accent, 0.35);"
+        "}"
+        ".back-btn:active {"
+        "   background-color: @bg_surface0;"
+        "   box-shadow: 0 2px 8px alpha(@bg_crust, 0.35);"
+        "}"
+        ".unit-node {"
+        "   background-image: none;"
+        "   background-color: @node_bg;"
+        "   color: @fg_text;"
+        "   border: 2px solid @locked_border;"
+        "   border-radius: 999px;"
+        "   padding: 0;"
+        "   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);"
+        "   transition: transform 150ms ease, box-shadow 150ms ease,"
+        "                border-color 150ms ease;"
+        "}"
+        ".unit-node.done {"
+        "   background-image: linear-gradient(135deg, @success 0%%, @success2 100%%);"
+        "   border-color: @success;"
+        "   color: @on_accent;"
+        "   box-shadow: 0 4px 16px alpha(@success, 0.35);"
+        "}"
+        ".unit-node.current {"
+        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 55%%, @accent3 100%%);"
+        "   border-color: @accent;"
+        "   color: @on_accent;"
+        "   box-shadow: 0 4px 18px alpha(@accent, 0.5),"
+        "               0 0 0 4px alpha(@bg_base, 0.9),"
+        "               0 0 0 7px alpha(@accent, 0.45);"
+        "}"
+        ".unit-node.done:hover,"
+        ".unit-node.current:hover {"
+        "   transition: box-shadow 150ms ease, border-color 150ms ease;"
+        "}"
+        ".unit-node.done:hover {"
+        "   box-shadow: 0 8px 22px alpha(@success, 0.5);"
+        "}"
+        ".unit-node.current:hover {"
+        "   box-shadow: 0 8px 26px alpha(@accent, 0.65),"
+        "               0 0 0 4px alpha(@bg_base, 0.9),"
+        "               0 0 0 7px alpha(@accent, 0.55);"
+        "}"
+        ".unit-node.locked {"
+        "   background-image: none;"
+        "   background-color: @locked_bg;"
+        "   border: 2px solid @locked_border;"
+        "   color: @fg_overlay;"
+        "   box-shadow: none;"
+        "}"
+        ".unit-node.locked:hover {"
+        "   transform: none;"
+        "   box-shadow: none;"
+        "}"
+        ".unit-node.finish {"
+        "   background-color: transparent;"
+        "   background-image: none;"
+        "   border: none;"
+        "   color: @fg_overlay;"
+        "   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);"
+        "}"
+        ".unit-node.finish:hover {"
+        "   transform: none;"
+        "   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);"
+        "}"
+        ".unit-node:focus,"
+        ".unit-node:focus-visible,"
+        ".unit-node:hover {"
+        "   outline: none;"
+        "}"
+        ".unit-number {"
+        "   font-size: 24px;"
+        "   font-weight: 800;"
+        "}"
+        ".unit-node.done .unit-number,"
+        ".unit-node.current .unit-number {"
+        "   color: @on_accent;"
+        "}"
+        ".unit-node.locked .unit-number {"
+        "   color: @fg_overlay;"
+        "}"
+        ".state-icon {"
+        "   color: @on_accent;"
+        "}"
+        ".unit-node.locked .lock-icon {"
+        "   color: @bg_surface2;"
+        "}"
+        ".unit-name {"
+        "   color: @fg_text;"
+        "   font-size: 13px;"
+        "   font-weight: 600;"
+        "}"
+        ".unit-name-locked {"
+        "   color: @fg_overlay;"
+        "}"
+        ".ex-bubble {"
+        "   min-width: 64px;"
+        "   min-height: 64px;"
+        "   padding: 0;"
+        "   border-radius: 999px;"
+        "   background-color: @node_bg;"
+        "   color: @fg_text;"
+        "   border: 2px solid @locked_border;"
+        "   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);"
+        "   transition: border-color 150ms ease, box-shadow 150ms ease;"
+        "}"
+        ".ex-bubble:hover {"
+        "   border-color: @accent;"
+        "   box-shadow: 0 6px 20px alpha(@accent, 0.35);"
+        "}"
+        ".ex-bubble.done {"
+        "   background-image: linear-gradient(135deg, @success 0%%, @success2 100%%);"
+        "   border-color: @success;"
+        "   color: @on_accent;"
+        "   box-shadow: 0 4px 16px alpha(@success, 0.35);"
+        "}"
+        ".ex-bubble.done:hover {"
+        "   box-shadow: 0 8px 22px alpha(@success, 0.5);"
+        "}"
+        ".ex-bubble:focus,"
+        ".ex-bubble:focus-visible {"
+        "   outline: none;"
+        "}"
+        ".bubble-number {"
+        "   font-size: 22px;"
+        "   font-weight: 800;"
+        "}"
+        ".ex-bubble.done .bubble-number {"
+        "   color: @on_accent;"
+        "}"
+        ".bubble-icon {"
+        "   color: @on_accent;"
+        "}"
+        ".ex-label {"
+        "   color: @fg_text;"
+        "   font-size: 12px;"
+        "   font-weight: 600;"
+        "}"
+        ".ex-prompt {"
+        "   color: @fg_text;"
+        "   font-size: 16px;"
+        "   font-weight: 500;"
+        "}"
+        ".ex-sub {"
+        "   color: @fg_subtext;"
+        "   font-size: 13px;"
+        "   font-weight: 700;"
+        "}"
+        ".hint {"
+        "   color: @fg_subtext;"
+        "   font-size: 13px;"
+        "   font-style: italic;"
+        "}"
+        ".meaning {"
+        "   color: @fg_subtext;"
+        "   font-size: 13px;"
+        "   font-style: italic;"
+        "}"
+        ".dlg-speaker {"
+        "   color: @accent;"
+        "   font-weight: 700;"
+        "   font-size: 15px;"
+        "}"
+        ".number-big {"
+        "   color: @warning;"
+        "   font-size: 26px;"
+        "   font-weight: 800;"
+        "}"
+        ".chain {"
+        "   color: @warning;"
+        "   font-size: 20px;"
+        "   font-weight: 700;"
+        "   letter-spacing: 1px;"
+        "}"
+        "entry {"
+        "   background-color: @bg_mantle;"
+        "   color: @fg_text;"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 10px;"
+        "   padding: 8px 12px;"
+        "   font-size: 15px;"
+        "   caret-color: @accent;"
+        "}"
+        "entry:focus {"
+        "   border-color: @accent;"
+        "}"
+        "combobox {"
+        "   background-color: @bg_mantle;"
+        "   color: @fg_text;"
+        "}"
+        "combobox button {"
+        "   background-image: none;"
+        "   background-color: @bg_mantle;"
+        "   color: @fg_text;"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 10px;"
+        "   padding: 4px 10px;"
+        "}"
+        "combobox button:hover {"
+        "   border-color: @accent;"
+        "}"
+        "combobox.answer-ok button {"
+        "   border-color: @success;"
+        "   background-color: alpha(@success, 0.12);"
+        "}"
+        "combobox.answer-wrong button {"
+        "   border-color: @error;"
+        "   background-color: alpha(@error, 0.12);"
+        "}"
+        ".pill {"
+        "   background-color: @node_bg;"
+        "   color: @fg_text;"
+        "   border: 2px solid @locked_border;"
+        "   border-radius: 999px;"
+        "   padding: 6px 18px;"
+        "   font-size: 15px;"
+        "   transition: border-color 150ms ease, box-shadow 150ms ease;"
+        "}"
+        ".pill:hover {"
+        "   border-color: @accent;"
+        "}"
+        ".pill:checked {"
+        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 100%%);"
+        "   color: @on_accent;"
+        "   border-color: @accent;"
+        "   font-weight: 700;"
+        "}"
+        ".pill.ok {"
+        "   border-color: @success;"
+        "   box-shadow: 0 0 0 2px alpha(@success, 0.4);"
+        "}"
+        ".pill.wrong {"
+        "   border-color: @error;"
+        "   box-shadow: 0 0 0 2px alpha(@error, 0.4);"
+        "}"
+        ".chip {"
+        "   background-color: @bg_surface0;"
+        "   color: @fg_text;"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 999px;"
+        "   padding: 6px 14px;"
+        "   font-size: 14px;"
+        "   font-weight: 600;"
+        "   transition: background-color 150ms ease, border-color 150ms ease;"
+        "}"
+        ".chip:hover {"
+        "   background-color: @bg_surface1;"
+        "   border-color: @accent;"
+        "}"
+        ".chip.ghost-host {"
+        "   opacity: 0;"
+        "}"
+        ".group-btn {"
+        "   background-color: @node_bg;"
+        "   color: @fg_text;"
+        "   border: 2px solid @locked_border;"
+        "   border-radius: 12px;"
+        "   padding: 8px 18px;"
+        "   font-size: 14px;"
+        "   font-weight: 700;"
+        "   transition: border-color 150ms ease, box-shadow 150ms ease;"
+        "}"
+        ".group-btn:hover {"
+        "   border-color: @accent;"
+        "}"
+        ".group-btn:checked {"
+        "   background-image: linear-gradient(135deg, @accent3 0%%, @success2 100%%);"
+        "   color: @on_accent;"
+        "   border-color: @accent3;"
+        "}"
+        ".group-panel {"
+        "   background-color: alpha(@bg_surface0, 0.5);"
+        "   border: 2px dashed @bg_surface1;"
+        "   border-radius: 14px;"
+        "   padding: 10px;"
+        "}"
+        ".group-panel-label {"
+        "   color: @fg_subtext;"
+        "   font-size: 13px;"
+        "   font-weight: 700;"
+        "}"
+        ".sent-group {"
+        "   background-color: alpha(@bg_surface0, 0.5);"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 14px;"
+        "   padding: 12px;"
+        "}"
+        ".sent-group.ok {"
+        "   border-color: @success;"
+        "}"
+        ".sent-group.wrong {"
+        "   border-color: @error;"
+        "}"
+        ".feedback-ok {"
+        "   color: @success;"
+        "   font-size: 15px;"
+        "   font-weight: 700;"
+        "}"
+        ".feedback-err {"
+        "   color: @error;"
+        "   font-size: 15px;"
+        "   font-weight: 700;"
+        "}"
+        "tooltip {"
+        "   background-color: @bg_mantle;"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 10px;"
+        "   color: @fg_text;"
+        "}",
+        p->crust, p->base, p->mantle, p->surface0, p->surface1, p->surface2,
+        p->overlay, p->text, p->subtext, p->accent, p->accent2, p->accent3,
+        p->success, p->success2, p->warning, p->error, p->on_accent,
+        p->node, p->locked_bg, p->locked_border);
+}
+
+static void save_settings(void) {
+    GKeyFile *kf = g_key_file_new();
+    gchar *data;
+
+    g_key_file_set_string(kf, "ui", "theme", theme_names[app_theme_id]);
+    g_key_file_set_string(kf, "ui", "mode",
+                          app_color_mode == MODE_LIGHT ? "light" : "dark");
+    g_key_file_set_string(kf, "ui", "lang",
+                          app_lang == LANG_EN ? "en" : "cs");
+
+    if (g_mkdir_with_parents(PROGRESS_DIR, 0755) != 0) {
+        g_key_file_free(kf);
+        return;
+    }
+
+    data = g_key_file_to_data(kf, NULL, NULL);
+    g_key_file_free(kf);
+    if (data) {
+        GError *err = NULL;
+        g_file_set_contents(SETTINGS_FILE, data, -1, &err);
+        if (err)
+            g_error_free(err);
+        g_free(data);
+    }
+}
+
+static void load_settings(void) {
+    GKeyFile *kf = g_key_file_new();
+    GError *err = NULL;
+    gchar *theme = NULL;
+    gchar *mode = NULL;
+
+    if (!g_key_file_load_from_file(kf, SETTINGS_FILE, G_KEY_FILE_NONE, &err)) {
+        if (err)
+            g_error_free(err);
+        g_key_file_free(kf);
+        return;
+    }
+
+    theme = g_key_file_get_string(kf, "ui", "theme", NULL);
+    mode = g_key_file_get_string(kf, "ui", "mode", NULL);
+    if (theme) {
+        for (int i = 0; i < THEME_COUNT; i++) {
+            if (g_ascii_strcasecmp(theme, theme_names[i]) == 0) {
+                app_theme_id = (ThemeId)i;
+                break;
+            }
+        }
+        g_free(theme);
+    }
+    if (mode) {
+        if (g_ascii_strcasecmp(mode, "light") == 0 ||
+            g_ascii_strcasecmp(mode, "white") == 0)
+            app_color_mode = MODE_LIGHT;
+        else
+            app_color_mode = MODE_DARK;
+        g_free(mode);
+    }
+    {
+        gchar *lang = g_key_file_get_string(kf, "ui", "lang", NULL);
+        if (lang) {
+            if (g_ascii_strcasecmp(lang, "en") == 0 ||
+                g_ascii_strcasecmp(lang, "english") == 0)
+                app_lang = LANG_EN;
+            else
+                app_lang = LANG_CS;
+            g_free(lang);
+        }
+    }
+
+    g_key_file_free(kf);
+}
+
+static void apply_theme(void) {
+    char *css;
+    GtkSettings *settings = gtk_settings_get_default();
+
+    app_theme = theme_palette(app_theme_id, app_color_mode);
+
+    if (settings) {
+        g_object_set(settings,
+                     "gtk-application-prefer-dark-theme",
+                     app_color_mode == MODE_DARK,
+                     NULL);
+    }
+
+    css = build_theme_css(&app_theme);
+
+    if (!theme_provider) {
+        theme_provider = gtk_css_provider_new();
+        gtk_style_context_add_provider_for_display(
+            gdk_display_get_default(),
+            GTK_STYLE_PROVIDER(theme_provider),
+            GTK_STYLE_PROVIDER_PRIORITY_USER);
+    }
+
+    gtk_css_provider_load_from_string(theme_provider, css);
+    g_free(css);
+
+    refresh_welcome_heading();
+
+    if (main_window)
+        gtk_widget_queue_draw(GTK_WIDGET(main_window));
+    if (road_rail)
+        gtk_widget_queue_draw(road_rail);
+    if (ex_rail)
+        gtk_widget_queue_draw(ex_rail);
+    for (int i = 0; i < THEME_COUNT; i++) {
+        if (theme_swatch_areas[i])
+            gtk_widget_queue_draw(theme_swatch_areas[i]);
+    }
+}
+
 /* Vector icons drawn with cairo so they never depend on the system
  * icon theme (which is missing on some installs). */
 
 static void draw_check_icon(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data) {
-    Rgb *c = data;
+    Rgb c = color_from_hex(app_theme.on_accent);
 
     (void)area;
-    cairo_set_source_rgb(cr, c->r, c->g, c->b);
+    (void)data;
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
     cairo_set_line_width(cr, width * 0.16);
@@ -126,14 +1294,19 @@ static void lock_paint(cairo_t *cr, double x0, double y0, double size,
 
     cairo_new_path(cr);
     cairo_arc(cr, cx, body_top + bh * 0.42, size * 0.07, 0.0, 2.0 * G_PI);
-    cairo_set_source_rgb(cr, 0.1216, 0.1255, 0.1804); /* #1f202e keyhole */
+    {
+        Rgb hole = color_from_hex(app_theme.crust);
+        cairo_set_source_rgb(cr, hole.r, hole.g, hole.b);
+    }
     cairo_fill(cr);
 }
 
 static void draw_lock_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data) {
+    Rgb c = color_from_hex(app_theme.overlay);
     (void)area;
-    lock_paint(cr, 0.0, 0.0, MIN(width, height), data);
+    (void)data;
+    lock_paint(cr, 0.0, 0.0, MIN(width, height), &c);
 }
 
 static void draw_back_icon(GtkDrawingArea *area, cairo_t *cr,
@@ -155,6 +1328,48 @@ static void draw_back_icon(GtkDrawingArea *area, cairo_t *cr,
     cairo_line_to(cr, ox + size * 0.30, oy + size * 0.50);
     cairo_line_to(cr, ox + size * 0.72, oy + size * 0.76);
     cairo_stroke(cr);
+}
+
+static void draw_settings_icon(GtkDrawingArea *area, cairo_t *cr,
+                               int width, int height, gpointer data) {
+    const int teeth = 8;
+    const double size = 16.0;
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double r_outer = size * 0.48;
+    double r_inner = size * 0.34;
+    double r_hole = size * 0.16;
+    double tooth_half = G_PI / (double)teeth;
+    GtkWidget *parent = gtk_widget_get_parent(GTK_WIDGET(area));
+    GdkRGBA color;
+    int i;
+
+    (void)data;
+    gtk_style_context_get_color(gtk_widget_get_style_context(parent), &color);
+    cairo_set_source_rgb(cr, color.red, color.green, color.blue);
+    cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
+
+    cairo_new_path(cr);
+    for (i = 0; i < teeth; i++) {
+        double a = -G_PI / 2.0 + (2.0 * G_PI * (double)i) / (double)teeth;
+        double a0 = a - tooth_half * 0.55;
+        double a1 = a - tooth_half * 0.28;
+        double a2 = a + tooth_half * 0.28;
+        double a3 = a + tooth_half * 0.55;
+
+        if (i == 0)
+            cairo_move_to(cr, cx + cos(a0) * r_inner, cy + sin(a0) * r_inner);
+        else
+            cairo_line_to(cr, cx + cos(a0) * r_inner, cy + sin(a0) * r_inner);
+
+        cairo_line_to(cr, cx + cos(a1) * r_outer, cy + sin(a1) * r_outer);
+        cairo_line_to(cr, cx + cos(a2) * r_outer, cy + sin(a2) * r_outer);
+        cairo_line_to(cr, cx + cos(a3) * r_inner, cy + sin(a3) * r_inner);
+    }
+    cairo_close_path(cr);
+    cairo_new_sub_path(cr);
+    cairo_arc(cr, cx, cy, r_hole, 0.0, 2.0 * G_PI);
+    cairo_fill(cr);
 }
 
 static GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
@@ -362,7 +1577,7 @@ static GtkWidget *make_back_button(const char *target) {
     gtk_button_set_child(GTK_BUTTON(back), icon);
     gtk_widget_add_css_class(back, "back-btn");
     gtk_widget_set_valign(back, GTK_ALIGN_CENTER);
-    gtk_widget_set_tooltip_text(back, "Zpět");
+    i18n_bind(back, "back", 2);
     g_signal_connect_swapped(back, "state-flags-changed",
                              G_CALLBACK(gtk_widget_queue_draw), icon);
     g_object_set_data_full(G_OBJECT(back), "target", g_strdup(target), g_free);
@@ -383,13 +1598,15 @@ static GtkWidget *top_bar(const char *back_target, const char *title,
     gtk_widget_set_valign(center, GTK_ALIGN_CENTER);
     gtk_center_box_set_center_widget(GTK_CENTER_BOX(top), center);
 
-    GtkWidget *heading = gtk_label_new(title);
+    GtkWidget *heading = gtk_label_new(NULL);
+    i18n_bind(heading, title, 0);
     gtk_widget_set_halign(heading, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(heading, "roadmap-title");
     gtk_box_append(GTK_BOX(center), heading);
 
     if (subtitle) {
-        GtkWidget *sub = gtk_label_new(subtitle);
+        GtkWidget *sub = gtk_label_new(NULL);
+        i18n_bind(sub, subtitle, 0);
         gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
         gtk_widget_add_css_class(sub, "roadmap-sub");
         gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
@@ -439,23 +1656,21 @@ static GtkWidget *build_welcome_page(void) {
     gtk_widget_set_margin_bottom(box, 40);
 
     heading = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(heading),
-        "Vítejte ve <span color=\"#cba6f7\">Sprechen.C</span>!");
+    welcome_heading = heading;
     gtk_widget_set_halign(heading, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(heading, "heading");
     gtk_box_append(GTK_BOX(box), heading);
 
-    card = gtk_label_new(
-        "Sprechen.C je vzdělávací program na procvičování Němčiny, určený "
-        "pro studenty středních škol a gymnázií.\n\n"
-        "Program je napsaný v Céčku studentama ze SSŠVT!");
+    card = gtk_label_new(NULL);
+    i18n_bind(card, "welcome_body", 0);
     gtk_label_set_justify(GTK_LABEL(card), GTK_JUSTIFY_CENTER);
     gtk_label_set_wrap(GTK_LABEL(card), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(card), 48);
     gtk_widget_add_css_class(card, "card");
     gtk_box_append(GTK_BOX(box), card);
 
-    button = gtk_button_new_with_label("Pokračuj");
+    button = gtk_button_new();
+    i18n_bind(button, "continue", 1);
     gtk_widget_set_halign(button, GTK_ALIGN_CENTER);
     gtk_widget_set_margin_top(button, 6);
     gtk_widget_add_css_class(button, "btn-primary");
@@ -488,7 +1703,10 @@ static void draw_node_halo(cairo_t *cr, double cx, double cy,
 static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data) {
     const double s = 11.0;
-    const Rgb gray = {0.4235, 0.4392, 0.5255}; /* #6c7086 */
+    const Rgb gray = color_from_hex(app_theme.overlay);
+    const Rgb fin_dark = color_from_hex(app_theme.finish_dark);
+    const Rgb fin_light = color_from_hex(app_theme.finish_light);
+    const Rgb fin_stroke = color_from_hex(app_theme.finish_stroke);
     int n = GPOINTER_TO_INT(data);
     double cx = width / 2.0;
     double cy = height / 2.0;
@@ -516,7 +1734,7 @@ static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
     cairo_clip(cr);
 
     cairo_rectangle(cr, start_x, start_y, 2.0 * r, 2.0 * r);
-    cairo_set_source_rgb(cr, 0.1216, 0.1255, 0.1804); /* #1f202e */
+    cairo_set_source_rgb(cr, fin_dark.r, fin_dark.g, fin_dark.b);
     cairo_fill(cr);
 
     for (iy = 0; iy < rows; iy++) {
@@ -524,7 +1742,7 @@ static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
             if (((ix + iy) & 1) == 0)
                 continue;
             cairo_rectangle(cr, start_x + ix * s, start_y + iy * s, s, s);
-            cairo_set_source_rgb(cr, 0.2314, 0.2431, 0.3451); /* #3b3e58 */
+            cairo_set_source_rgb(cr, fin_light.r, fin_light.g, fin_light.b);
             cairo_fill(cr);
         }
     }
@@ -554,7 +1772,7 @@ static void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
     cairo_restore(cr);
 
     cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
-    cairo_set_source_rgb(cr, 0.3216, 0.3333, 0.4196);
+    cairo_set_source_rgb(cr, fin_stroke.r, fin_stroke.g, fin_stroke.b);
     cairo_set_line_width(cr, 2.0);
     cairo_stroke(cr);
 }
@@ -701,8 +1919,10 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     const double t_end = (double)(NUM_UNITS - 1);
     const double x0 = ROAD_MX;
     const double x1 = (double)road_cw - ROAD_MX;
-    const Rgb mauve = color_from_hex(0xcba6f7);
-    const Rgb blue = color_from_hex(0x89b4fa);
+    const Rgb mauve = color_from_hex(app_theme.accent);
+    const Rgb blue = color_from_hex(app_theme.accent3);
+    const Rgb rail = color_from_hex(app_theme.rail);
+    const Rgb muted = color_from_hex(app_theme.subtext);
     double hx, hy;
 
     (void)area;
@@ -723,7 +1943,7 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_new_path(cr);
     road_path(cr, 0.0, t_end);
     cairo_set_line_width(cr, 16);
-    cairo_set_source_rgb(cr, 0.153, 0.157, 0.235);
+    cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
     cairo_stroke(cr);
 
     if (t_lit > 0.0) {
@@ -756,7 +1976,7 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     {
         double start_t = t_lit > 0.0 ? t_lit : 0.0;
 
-        cairo_set_source_rgba(cr, 0.651, 0.678, 0.784, 0.17);
+        cairo_set_source_rgba(cr, muted.r, muted.g, muted.b, 0.17);
         cairo_set_dash(cr, (double[]){1.0, 26.0}, 2, 0.0);
         cairo_new_path(cr);
         road_path(cr, start_t, t_end);
@@ -872,8 +2092,7 @@ static GtkWidget *build_roadmap_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("welcome", "Učební plán",
-                           "Vyberte jednotku na cestě a začněte procvičovat."));
+                   top_bar("welcome", "roadmap_title", "roadmap_sub"));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -930,7 +2149,6 @@ static GtkWidget *build_roadmap_page(void) {
 
 static GtkWidget *ex_scroll;
 static GtkWidget *ex_fixed;
-static GtkWidget *ex_rail;
 static GtkWidget *ex_cells[NUM_EXERCISES];
 static GtkWidget *ex_labels[NUM_EXERCISES];
 static double ex_cx[NUM_EXERCISES];
@@ -1023,8 +2241,9 @@ static void ex_path(cairo_t *cr, double t0, double t1) {
 static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
                          int width, int height, gpointer user_data) {
     const double t_end = (double)(NUM_EXERCISES - 1);
-    const Rgb slate = color_from_hex(0x45475a);
-    const Rgb green = color_from_hex(0xa6e3a1);
+    const Rgb slate = color_from_hex(app_theme.surface1);
+    const Rgb green = color_from_hex(app_theme.success);
+    const Rgb rail = color_from_hex(app_theme.rail);
 
     (void)area;
     (void)width;
@@ -1040,7 +2259,7 @@ static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_new_path(cr);
     ex_path(cr, 0.0, t_end);
     cairo_set_line_width(cr, 14);
-    cairo_set_source_rgb(cr, 0.094, 0.098, 0.141);
+    cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
     cairo_stroke(cr);
 
     cairo_new_path(cr);
@@ -1182,8 +2401,7 @@ static GtkWidget *build_unit1_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("roadmap", "Neue Freunde",
-                           "Vyberte cvičení a dokončete je."));
+                   top_bar("roadmap", "Neue Freunde", "unit1_sub"));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -1288,7 +2506,8 @@ static GtkWidget *ex_page_shell(const char *title, const char *subtitle,
     gtk_box_append(GTK_BOX(bottom), feedback);
     *feedback_out = feedback;
 
-    btn = gtk_button_new_with_label(btn_label);
+    btn = gtk_button_new();
+    i18n_bind(btn, btn_label, 1);
     gtk_widget_add_css_class(btn, "btn-primary");
     gtk_widget_set_valign(btn, GTK_ALIGN_CENTER);
     gtk_box_append(GTK_BOX(bottom), btn);
@@ -1311,8 +2530,9 @@ typedef struct {
 
 /* Build a hidden translation label ("meaning") appended under an item. */
 static GtkWidget *meaning_add(GtkWidget *body, const char *text) {
-    GtkWidget *lbl = gtk_label_new(text);
+    GtkWidget *lbl = gtk_label_new(NULL);
 
+    i18n_bind(lbl, text, 0);
     gtk_label_set_xalign(GTK_LABEL(lbl), 0.0);
     gtk_widget_set_halign(lbl, GTK_ALIGN_START);
     gtk_widget_add_css_class(lbl, "meaning");
@@ -1416,10 +2636,10 @@ static void combo_list_check(GtkButton *button, gpointer data) {
     }
 
     if (ok == total) {
-        set_feedback(ctx->feedback, TRUE, "Výborně!");
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
         mark_done(ctx->ex_num);
     } else {
-        set_feedback(ctx->feedback, FALSE, "Ještě to není správně. Zkuste to znovu.");
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
     }
 }
 
@@ -1749,10 +2969,10 @@ static void assembly_check(GtkButton *button, gpointer data) {
     }
 
     if (ok == ctx->n) {
-        set_feedback(ctx->feedback, TRUE, "Výborně!");
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
         mark_done(ctx->ex_num);
     } else {
-        set_feedback(ctx->feedback, FALSE, "Některé věty nejsou správně. Zkuste to znovu.");
+        set_feedback(ctx->feedback, FALSE, tr("feedback_sentences"));
     }
 }
 
@@ -1760,7 +2980,7 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
                                  int ex_num, const AssemblyItem *items,
                                  const char **meanings, int n) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(title, subtitle, "Zkontrolovat",
+    GtkWidget *page = ex_page_shell(title, subtitle, "check",
                                     &body, &feedback, &check);
     AsmCtx *ctx = g_new0(AsmCtx, 1);
 
@@ -1925,8 +3145,8 @@ static const char *ex1_meaning[] = {
 static GtkWidget *build_ex1(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Dialog",
-                                    "Doplňte chybějící slova v dialogu.",
-                                    "Zkontrolovat", &body, &feedback, &check);
+                                    "sub_dialog",
+                                    "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(1, feedback);
     int ri = 0;
 
@@ -2072,10 +3292,10 @@ static void choice_check(GtkButton *button, gpointer data) {
     }
 
     if (ok == ctx->n) {
-        set_feedback(ctx->feedback, TRUE, "Výborně!");
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
         mark_done(ctx->ex_num);
     } else {
-        set_feedback(ctx->feedback, FALSE, "Ještě to není správně.");
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry_short"));
     }
 
     meaning_reveal_all(ctx->trans, ctx->n);
@@ -2084,7 +3304,7 @@ static void choice_check(GtkButton *button, gpointer data) {
 static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_num,
                                const ChoiceQ *qs, const char **meanings, int n) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(title, subtitle, "Zkontrolovat",
+    GtkWidget *page = ex_page_shell(title, subtitle, "check",
                                     &body, &feedback, &check);
     ChoiceCtx *ctx = g_new0(ChoiceCtx, 1);
 
@@ -2148,9 +3368,21 @@ static const FreeQ ex4_questions[] = {
      "Mir geht es gut, danke.", "Mám se dobře, děkuji."},
 };
 
+static void ex4_fill_sample(GtkWidget *label) {
+    int i = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(label), "qidx"));
+    char *txt = g_strdup_printf(tr("sample_fmt"),
+                                tr(ex4_questions[i].q_cs),
+                                ex4_questions[i].sample,
+                                tr(ex4_questions[i].a_cs));
+
+    gtk_label_set_text(GTK_LABEL(label), txt);
+    g_free(txt);
+}
+
 static void ex4_reveal(GtkButton *button, gpointer data) {
     GtkWidget *sample = data;
     (void)button;
+    ex4_fill_sample(sample);
     gtk_widget_set_visible(sample, !gtk_widget_get_visible(sample));
 }
 
@@ -2163,9 +3395,11 @@ typedef struct {
 static void ex4_finish(GtkButton *button, gpointer data) {
     Ex4Ctx *ctx = data;
     (void)button;
-    set_feedback(ctx->feedback, TRUE, "Výborně!");
-    for (int i = 0; i < ctx->n; i++)
+    set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+    for (int i = 0; i < ctx->n; i++) {
+        ex4_fill_sample(ctx->samples[i]);
         gtk_widget_set_visible(ctx->samples[i], TRUE);
+    }
     mark_done(4);
 }
 
@@ -2174,15 +3408,16 @@ static GtkWidget *build_ex4(void) {
     GtkWidget *tip;
     Ex4Ctx *ctx;
     GtkWidget *page = ex_page_shell("Freie Antwort",
-                                    "Odpovězte vlastními slovy, poté klikněte na Dokončit.",
-                                    "Dokončit", &body, &feedback, &check);
+                                    "sub_free",
+                                    "finish", &body, &feedback, &check);
 
     ctx = g_new0(Ex4Ctx, 1);
     ctx->feedback = feedback;
     ctx->n = (int)G_N_ELEMENTS(ex4_questions);
     ctx->samples = g_new0(GtkWidget *, ctx->n);
 
-    tip = gtk_label_new("Písmeno „ß“ se dá na klávesnici zaměnit za „ss“!");
+    tip = gtk_label_new(NULL);
+    i18n_bind(tip, "tip_ss", 0);
     gtk_widget_set_halign(tip, GTK_ALIGN_START);
     gtk_widget_add_css_class(tip, "hint");
     gtk_box_append(GTK_BOX(body), tip);
@@ -2192,27 +3427,24 @@ static GtkWidget *build_ex4(void) {
         GtkWidget *entry;
         GtkWidget *reveal;
         GtkWidget *sample;
-        char *txt;
 
         gtk_widget_set_halign(q, GTK_ALIGN_START);
         gtk_widget_add_css_class(q, "ex-prompt");
         gtk_box_append(GTK_BOX(body), q);
 
         entry = gtk_entry_new();
-        gtk_entry_set_placeholder_text(GTK_ENTRY(entry), "Vaše odpověď…");
+        i18n_bind(entry, "your_answer", 3);
         gtk_box_append(GTK_BOX(body), entry);
 
-        reveal = gtk_button_new_with_label("Ukázat vzor");
+        reveal = gtk_button_new();
+        i18n_bind(reveal, "show_sample", 1);
         gtk_widget_add_css_class(reveal, "pill");
         gtk_widget_set_halign(reveal, GTK_ALIGN_START);
         gtk_box_append(GTK_BOX(body), reveal);
 
-        txt = g_strdup_printf("Otázka: %s\nVzor: %s  (česky: %s)",
-                              ex4_questions[i].q_cs,
-                              ex4_questions[i].sample,
-                              ex4_questions[i].a_cs);
-        sample = gtk_label_new(txt);
-        g_free(txt);
+        sample = gtk_label_new(NULL);
+        g_object_set_data(G_OBJECT(sample), "qidx", GINT_TO_POINTER(i));
+        i18n_bind(sample, "sample_fmt", 4);
         gtk_widget_set_halign(sample, GTK_ALIGN_START);
         gtk_widget_add_css_class(sample, "hint");
         gtk_label_set_wrap(GTK_LABEL(sample), TRUE);
@@ -2259,8 +3491,8 @@ static const char *ex5_meaning[] = {
 static GtkWidget *build_ex5(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Zahlen",
-                                    "Vyberte správné slovo pro dané číslo.",
-                                    "Zkontrolovat", &body, &feedback, &check);
+                                    "sub_zahlen",
+                                    "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(5, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex5_data); i++) {
@@ -2334,8 +3566,8 @@ static const char *ex6_meaning[] = {
 static GtkWidget *build_ex6(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Wie viel?",
-                                    "Spočítejte předměty a vyberte počet.",
-                                    "Zkontrolovat", &body, &feedback, &check);
+                                    "sub_wieviel",
+                                    "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(6, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex6_data); i++) {
@@ -2408,8 +3640,8 @@ static const char *ex7_meaning[] = {
 static GtkWidget *build_ex7(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Zahlenreihe",
-                                    "Doplňte chybějící číslovku.",
-                                    "Zkontrolovat", &body, &feedback, &check);
+                                    "sub_reihe",
+                                    "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(7, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex7_data); i++) {
@@ -2480,8 +3712,8 @@ static const char *ex8_meaning[] = {
 static GtkWidget *build_ex8(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Verb einsetzen",
-                                    "Vyberte správný tvar slovesa.",
-                                    "Zkontrolovat", &body, &feedback, &check);
+                                    "sub_verb",
+                                    "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(8, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex8_data); i++) {
@@ -2576,8 +3808,8 @@ static const char *ex12_meaning[] = {
 static GtkWidget *build_ex12(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Was macht er/sie?",
-                                    "Vyberte správný tvar slovesa podle obrázku.",
-                                    "Zkontrolovat", &body, &feedback, &check);
+                                    "sub_bild",
+                                    "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(12, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex12_data); i++) {
@@ -2784,10 +4016,10 @@ static void assign_check(GtkButton *button, gpointer data) {
             ok++;
 
     if (ok == ac->n_items) {
-        set_feedback(ac->feedback, TRUE, "Výborně!");
+        set_feedback(ac->feedback, TRUE, tr("feedback_ok"));
         mark_done(ac->ex_num);
     } else {
-        set_feedback(ac->feedback, FALSE, "Ještě to není správně. Zkuste to znovu.");
+        set_feedback(ac->feedback, FALSE, tr("feedback_retry"));
     }
 
     for (int i = 0; i < ac->n_items; i++)
@@ -2800,7 +4032,7 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
                                const char **group_labels, int n_groups,
                                const char **meanings) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(title, subtitle, "Zkontrolovat",
+    GtkWidget *page = ex_page_shell(title, subtitle, "check",
                                     &body, &feedback, &check);
     AssignCtx *ac = g_new0(AssignCtx, 1);
     GtkWidget *hint;
@@ -2838,8 +4070,9 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     gtk_overlay_add_overlay(GTK_OVERLAY(holder), stage);
     ac->stage = stage;
 
-    hint = gtk_label_new(
-        "Vyberte skupinu a klikněte na kartu. Kliknutím na kartu ve skupině ji vrátíte zpět.");
+    hint = gtk_label_new(NULL);
+    i18n_bind(hint, "assign_hint", 0);
+    gtk_label_set_wrap(GTK_LABEL(hint), TRUE);
     gtk_widget_set_halign(hint, GTK_ALIGN_START);
     gtk_widget_add_css_class(hint, "ex-sub");
     gtk_box_append(GTK_BOX(content), hint);
@@ -2914,7 +4147,8 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
         gtk_box_append(GTK_BOX(box), chip);
 
         if (meanings[i]) {
-            m = gtk_label_new(meanings[i]);
+            m = gtk_label_new(NULL);
+            i18n_bind(m, meanings[i], 0);
             gtk_label_set_xalign(GTK_LABEL(m), 0.5);
             gtk_widget_set_halign(m, GTK_ALIGN_CENTER);
             gtk_widget_add_css_class(m, "meaning");
@@ -2941,6 +4175,310 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
 }
 
 /* ------------------------------------------------------------------ */
+/* Settings                                                           */
+/* ------------------------------------------------------------------ */
+
+static void draw_theme_swatch(GtkDrawingArea *area, cairo_t *cr,
+                              int width, int height, gpointer data) {
+    ThemeId id = (ThemeId)GPOINTER_TO_INT(data);
+    ThemePalette p = theme_palette(id, app_color_mode);
+    Rgb base = color_from_hex(p.base);
+    Rgb a1 = color_from_hex(p.accent);
+    Rgb a2 = color_from_hex(p.accent3);
+    Rgb ok = color_from_hex(p.success);
+    Rgb accent = color_from_hex(app_theme.accent);
+    gboolean selected = (app_theme_id == id);
+    double size = MIN(width, height);
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double r = size / 2.0 - (selected ? 3.0 : 1.0);
+    double dot = MAX(3.5, r * 0.26);
+    double gap = dot * 2.05;
+
+    (void)area;
+
+    if (selected) {
+        cairo_new_path(cr);
+        cairo_arc(cr, cx, cy, size / 2.0 - 0.5, 0.0, 2.0 * G_PI);
+        cairo_set_source_rgb(cr, accent.r, accent.g, accent.b);
+        cairo_set_line_width(cr, 2.2);
+        cairo_stroke(cr);
+    }
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, base.r, base.g, base.b);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx - gap, cy, dot, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, a1.r, a1.g, a1.b);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy, dot, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, a2.r, a2.g, a2.b);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx + gap, cy, dot, 0.0, 2.0 * G_PI);
+    cairo_set_source_rgb(cr, ok.r, ok.g, ok.b);
+    cairo_fill(cr);
+}
+
+static void on_mode_toggled(GtkToggleButton *btn, gpointer user_data) {
+    ColorMode mode = (ColorMode)GPOINTER_TO_INT(user_data);
+
+    if (!gtk_toggle_button_get_active(btn))
+        return;
+    if (app_color_mode == mode)
+        return;
+    app_color_mode = mode;
+    apply_theme();
+    save_settings();
+}
+
+static void on_theme_toggled(GtkToggleButton *btn, gpointer user_data) {
+    ThemeId id = (ThemeId)GPOINTER_TO_INT(user_data);
+
+    if (!gtk_toggle_button_get_active(btn))
+        return;
+    if (app_theme_id == id)
+        return;
+    app_theme_id = id;
+    apply_theme();
+    save_settings();
+}
+
+static void on_lang_toggled(GtkToggleButton *btn, gpointer user_data) {
+    UiLang lang = (UiLang)GPOINTER_TO_INT(user_data);
+
+    if (!gtk_toggle_button_get_active(btn))
+        return;
+    if (app_lang == lang)
+        return;
+    app_lang = lang;
+    apply_language();
+    save_settings();
+}
+
+static GtkWidget *make_lang_chip(const char *label, UiLang lang,
+                                 GtkToggleButton *group) {
+    GtkWidget *btn = gtk_toggle_button_new_with_label(label);
+
+    gtk_widget_add_css_class(btn, "mode-chip");
+    gtk_widget_set_hexpand(btn, TRUE);
+    if (group)
+        gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(btn), group);
+    g_signal_connect(btn, "toggled", G_CALLBACK(on_lang_toggled),
+                     GINT_TO_POINTER(lang));
+    return btn;
+}
+
+static GtkWidget *make_mode_chip(const char *label, ColorMode mode,
+                                 GtkToggleButton *group) {
+    GtkWidget *btn = gtk_toggle_button_new();
+
+    i18n_bind(btn, label, 1);
+    gtk_widget_add_css_class(btn, "mode-chip");
+    gtk_widget_set_hexpand(btn, TRUE);
+    if (group)
+        gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(btn), group);
+    g_signal_connect(btn, "toggled", G_CALLBACK(on_mode_toggled),
+                     GINT_TO_POINTER(mode));
+    return btn;
+}
+
+static GtkWidget *make_theme_card(ThemeId id, GtkToggleButton *group) {
+    GtkWidget *btn;
+    GtkWidget *vbox;
+    GtkWidget *swatch;
+    GtkWidget *name;
+
+    btn = gtk_toggle_button_new();
+    gtk_widget_add_css_class(btn, "theme-card");
+    gtk_widget_set_hexpand(btn, TRUE);
+    if (group)
+        gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(btn), group);
+
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
+    gtk_button_set_child(GTK_BUTTON(btn), vbox);
+
+    swatch = gtk_drawing_area_new();
+    gtk_widget_set_size_request(swatch, 44, 44);
+    gtk_widget_set_halign(swatch, GTK_ALIGN_CENTER);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(swatch),
+                                   draw_theme_swatch,
+                                   GINT_TO_POINTER(id), NULL);
+    theme_swatch_areas[id] = swatch;
+    gtk_box_append(GTK_BOX(vbox), swatch);
+
+    name = gtk_label_new(theme_names[id]);
+    gtk_widget_add_css_class(name, "theme-card-name");
+    gtk_widget_set_halign(name, GTK_ALIGN_CENTER);
+    gtk_box_append(GTK_BOX(vbox), name);
+
+    g_signal_connect(btn, "toggled", G_CALLBACK(on_theme_toggled),
+                     GINT_TO_POINTER(id));
+    return btn;
+}
+
+static void on_settings_clicked(GtkButton *button, gpointer user_data) {
+    GtkPopover *popover = GTK_POPOVER(user_data);
+
+    (void)button;
+    gtk_popover_popup(popover);
+}
+
+static GtkWidget *build_settings_button(void) {
+    GtkWidget *btn;
+    GtkWidget *icon;
+    GtkWidget *popover;
+    GtkWidget *box;
+    GtkWidget *title;
+    GtkWidget *label;
+    GtkWidget *mode_row;
+    GtkWidget *lang_row;
+    GtkWidget *theme_grid;
+    GtkWidget *dark_btn;
+    GtkWidget *light_btn;
+    GtkWidget *cs_btn;
+    GtkWidget *en_btn;
+    GtkWidget *first_theme = NULL;
+    int i;
+
+    btn = gtk_button_new();
+    gtk_widget_add_css_class(btn, "settings-btn");
+    gtk_widget_add_css_class(btn, "flat");
+    i18n_bind(btn, "settings", 2);
+    gtk_widget_set_valign(btn, GTK_ALIGN_CENTER);
+    gtk_widget_set_focus_on_click(btn, FALSE);
+
+    icon = gtk_drawing_area_new();
+    gtk_widget_set_size_request(icon, 18, 18);
+    gtk_widget_set_can_target(icon, FALSE);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(icon),
+                                   draw_settings_icon, NULL, NULL);
+    gtk_button_set_child(GTK_BUTTON(btn), icon);
+    g_signal_connect_swapped(btn, "state-flags-changed",
+                             G_CALLBACK(gtk_widget_queue_draw), icon);
+
+    popover = gtk_popover_new();
+    gtk_widget_add_css_class(popover, "settings-popover");
+    gtk_widget_set_parent(popover, btn);
+    g_signal_connect_swapped(btn, "destroy",
+                             G_CALLBACK(gtk_widget_unparent), popover);
+    gtk_popover_set_has_arrow(GTK_POPOVER(popover), TRUE);
+    gtk_popover_set_position(GTK_POPOVER(popover), GTK_POS_BOTTOM);
+    g_signal_connect(btn, "clicked", G_CALLBACK(on_settings_clicked), popover);
+
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
+    gtk_widget_add_css_class(box, "settings-box");
+    gtk_popover_set_child(GTK_POPOVER(popover), box);
+
+    title = gtk_label_new(NULL);
+    i18n_bind(title, "settings_title", 0);
+    gtk_widget_set_halign(title, GTK_ALIGN_START);
+    gtk_widget_add_css_class(title, "settings-title");
+    gtk_box_append(GTK_BOX(box), title);
+
+    label = gtk_label_new(NULL);
+    i18n_bind(label, "mode", 0);
+    gtk_widget_set_halign(label, GTK_ALIGN_START);
+    gtk_widget_add_css_class(label, "settings-label");
+    gtk_widget_set_margin_top(label, 4);
+    gtk_box_append(GTK_BOX(box), label);
+
+    mode_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+    gtk_widget_add_css_class(mode_row, "settings-seg");
+    gtk_box_append(GTK_BOX(box), mode_row);
+
+    dark_btn = make_mode_chip("mode_dark", MODE_DARK, NULL);
+    light_btn = make_mode_chip("mode_light", MODE_LIGHT,
+                               GTK_TOGGLE_BUTTON(dark_btn));
+    g_signal_handlers_block_matched(dark_btn, G_SIGNAL_MATCH_FUNC,
+                                    0, 0, NULL, on_mode_toggled, NULL);
+    g_signal_handlers_block_matched(light_btn, G_SIGNAL_MATCH_FUNC,
+                                    0, 0, NULL, on_mode_toggled, NULL);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dark_btn),
+                                 app_color_mode == MODE_DARK);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(light_btn),
+                                 app_color_mode == MODE_LIGHT);
+    g_signal_handlers_unblock_matched(dark_btn, G_SIGNAL_MATCH_FUNC,
+                                      0, 0, NULL, on_mode_toggled, NULL);
+    g_signal_handlers_unblock_matched(light_btn, G_SIGNAL_MATCH_FUNC,
+                                      0, 0, NULL, on_mode_toggled, NULL);
+    gtk_box_append(GTK_BOX(mode_row), dark_btn);
+    gtk_box_append(GTK_BOX(mode_row), light_btn);
+
+    label = gtk_label_new(NULL);
+    i18n_bind(label, "theme", 0);
+    gtk_widget_set_halign(label, GTK_ALIGN_START);
+    gtk_widget_add_css_class(label, "settings-label");
+    gtk_widget_set_margin_top(label, 2);
+    gtk_box_append(GTK_BOX(box), label);
+
+    theme_grid = gtk_flow_box_new();
+    gtk_widget_add_css_class(theme_grid, "theme-grid");
+    gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(theme_grid),
+                                    GTK_SELECTION_NONE);
+    gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(theme_grid), 3);
+    gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(theme_grid), 3);
+    gtk_flow_box_set_column_spacing(GTK_FLOW_BOX(theme_grid), 8);
+    gtk_flow_box_set_row_spacing(GTK_FLOW_BOX(theme_grid), 8);
+    gtk_flow_box_set_homogeneous(GTK_FLOW_BOX(theme_grid), TRUE);
+    gtk_widget_set_hexpand(theme_grid, TRUE);
+    gtk_box_append(GTK_BOX(box), theme_grid);
+
+    for (i = 0; i < THEME_COUNT; i++) {
+        GtkWidget *card = make_theme_card(
+            (ThemeId)i,
+            first_theme ? GTK_TOGGLE_BUTTON(first_theme) : NULL);
+        if (!first_theme)
+            first_theme = card;
+        if (app_theme_id == (ThemeId)i) {
+            g_signal_handlers_block_matched(card, G_SIGNAL_MATCH_FUNC,
+                                            0, 0, NULL, on_theme_toggled, NULL);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(card), TRUE);
+            g_signal_handlers_unblock_matched(card, G_SIGNAL_MATCH_FUNC,
+                                              0, 0, NULL, on_theme_toggled, NULL);
+        }
+        gtk_flow_box_insert(GTK_FLOW_BOX(theme_grid), card, -1);
+    }
+
+    label = gtk_label_new(NULL);
+    i18n_bind(label, "language", 0);
+    gtk_widget_set_halign(label, GTK_ALIGN_START);
+    gtk_widget_add_css_class(label, "settings-label");
+    gtk_widget_set_margin_top(label, 4);
+    gtk_box_append(GTK_BOX(box), label);
+
+    lang_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+    gtk_widget_add_css_class(lang_row, "settings-seg");
+    gtk_box_append(GTK_BOX(box), lang_row);
+
+    cs_btn = make_lang_chip("Čeština", LANG_CS, NULL);
+    en_btn = make_lang_chip("English", LANG_EN, GTK_TOGGLE_BUTTON(cs_btn));
+    g_signal_handlers_block_matched(cs_btn, G_SIGNAL_MATCH_FUNC,
+                                    0, 0, NULL, on_lang_toggled, NULL);
+    g_signal_handlers_block_matched(en_btn, G_SIGNAL_MATCH_FUNC,
+                                    0, 0, NULL, on_lang_toggled, NULL);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cs_btn),
+                                 app_lang == LANG_CS);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(en_btn),
+                                 app_lang == LANG_EN);
+    g_signal_handlers_unblock_matched(cs_btn, G_SIGNAL_MATCH_FUNC,
+                                      0, 0, NULL, on_lang_toggled, NULL);
+    g_signal_handlers_unblock_matched(en_btn, G_SIGNAL_MATCH_FUNC,
+                                      0, 0, NULL, on_lang_toggled, NULL);
+    gtk_box_append(GTK_BOX(lang_row), cs_btn);
+    gtk_box_append(GTK_BOX(lang_row), en_btn);
+
+    return btn;
+}
+
+/* ------------------------------------------------------------------ */
 /* Activate                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -2953,14 +4491,16 @@ static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *unit1_page;
     GtkWidget *ex_pages[NUM_EXERCISES + 1];
     GtkEventController *keys;
-    GtkCssProvider *provider;
     char name[16];
 
     (void)user_data;
 
+    load_settings();
     load_progress();
+    app_theme = theme_palette(app_theme_id, app_color_mode);
 
     window = GTK_WINDOW(gtk_application_window_new(app));
+    main_window = window;
     gtk_window_set_title(window, "Sprechen.c");
     gtk_window_set_default_size(window, 760, 560);
 
@@ -2970,6 +4510,8 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_add_css_class(title_label, "app-title");
     gtk_header_bar_set_title_widget(GTK_HEADER_BAR(headerbar), title_label);
     gtk_window_set_titlebar(window, headerbar);
+    apply_theme();
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(headerbar), build_settings_button());
 
     main_stack = GTK_STACK(gtk_stack_new());
     gtk_stack_set_transition_type(GTK_STACK(main_stack),
@@ -2982,25 +4524,25 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     ex_pages[1] = build_ex1();
     ex_pages[2] = build_assembly("Sätze bilden",
-                                 "Přetáhněte slova do správného pořadí.",
+                                 "sub_assembly",
                                  2, ex2_items, ex2_meaning, G_N_ELEMENTS(ex2_items));
-    ex_pages[3] = build_choice("Was ist richtig?", "Vyberte správnou číslovku.",
+    ex_pages[3] = build_choice("Was ist richtig?", "sub_choice_num",
                                3, ex3_questions, ex3_meaning, G_N_ELEMENTS(ex3_questions));
     ex_pages[4] = build_ex4();
     ex_pages[5] = build_ex5();
     ex_pages[6] = build_ex6();
     ex_pages[7] = build_ex7();
     ex_pages[8] = build_ex8();
-    ex_pages[9] = build_choice("Wer? Wie? Wo?", "Vyberte správné tázací slovo.",
+    ex_pages[9] = build_choice("Wer? Wie? Wo?", "sub_wer",
                                9, ex9_questions, ex9_meaning, G_N_ELEMENTS(ex9_questions));
     ex_pages[10] = build_assembly("Wörter trennen",
-                                  "Přetáhněte slova do správného pořadí.",
+                                  "sub_assembly",
                                   10, ex10_items, ex10_meaning, G_N_ELEMENTS(ex10_items));
-    ex_pages[11] = build_assign("Grußformen", "Roztřiďte pozdravy na pozdravy a rozloučení.",
+    ex_pages[11] = build_assign("Grußformen", "sub_gruss",
                                 11, ex11_items, G_N_ELEMENTS(ex11_items),
                                 ex11_groups, G_N_ELEMENTS(ex11_groups), ex11_meaning);
     ex_pages[12] = build_ex12();
-    ex_pages[13] = build_assign("Länder", "Přiřaďte symboly ke správné zemi.",
+    ex_pages[13] = build_assign("Länder", "sub_land",
                                 13, ex13_items, G_N_ELEMENTS(ex13_items),
                                 ex13_groups, G_N_ELEMENTS(ex13_groups), ex13_meaning);
 
@@ -3022,399 +4564,8 @@ static void activate(GtkApplication *app, gpointer user_data) {
                      G_CALLBACK(on_window_key_pressed), window);
     gtk_widget_add_controller(GTK_WIDGET(window), GTK_EVENT_CONTROLLER(keys));
 
-    provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_string(provider,
-        "window {"
-        "   background-color: #1e1e2e;"
-        "   background-image: linear-gradient(160deg, #11111b 0%, #1e1e2e 40%, #313244 100%);"
-        "}"
-        "button {"
-        "   background-image: none;"
-        "}"
-        ".titlebar {"
-        "   background-color: #1e1e2e;"
-        "   background-image: none;"
-        "   box-shadow: none;"
-        "   border: none;"
-        "}"
-        ".app-title {"
-        "   color: #cdd6f4;"
-        "   font-weight: 700;"
-        "   font-size: 14px;"
-        "}"
-        ".heading {"
-        "   color: #cdd6f4;"
-        "   font-size: 32px;"
-        "   font-weight: 800;"
-        "}"
-        ".card {"
-        "   background-color: rgba(49, 50, 68, 0.92);"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 18px;"
-        "   padding: 30px 34px;"
-        "   color: #cdd6f4;"
-        "   font-size: 16px;"
-        "}"
-        ".btn-primary {"
-        "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 100%);"
-        "   color: #1e1e2e;"
-        "   font-size: 16px;"
-        "   font-weight: 700;"
-        "   padding: 12px 40px;"
-        "   border: none;"
-        "   border-radius: 999px;"
-        "   box-shadow: 0 6px 18px rgba(203, 166, 247, 0.25);"
-        "   transition: box-shadow 150ms ease, background-image 150ms ease;"
-        "}"
-        ".btn-primary:hover {"
-        "   box-shadow: 0 8px 24px rgba(203, 166, 247, 0.45);"
-        "   background-image: linear-gradient(135deg, #b4befe 0%, #89b4fa 100%);"
-        "}"
-        ".btn-primary:active {"
-        "   box-shadow: 0 3px 10px rgba(203, 166, 247, 0.35);"
-        "}"
-        ".roadmap-title {"
-        "   color: #cdd6f4;"
-        "   font-size: 28px;"
-        "   font-weight: 800;"
-        "}"
-        ".roadmap-sub {"
-        "   color: #a6adc8;"
-        "   font-size: 14px;"
-        "}"
-        ".back-btn {"
-        "   min-width: 42px;"
-        "   min-height: 42px;"
-        "   padding: 0;"
-        "   border-radius: 999px;"
-        "   background-color: rgba(49, 50, 68, 0.9);"
-        "   border: 1px solid #45475a;"
-        "   color: #cdd6f4;"
-        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
-        "   transition: background-color 150ms ease, color 150ms ease,"
-        "                border-color 150ms ease, box-shadow 150ms ease;"
-        "}"
-        ".back-btn:hover {"
-        "   background-color: #45475a;"
-        "   border-color: #585b70;"
-        "   color: #cba6f7;"
-        "   box-shadow: 0 6px 20px rgba(203, 166, 247, 0.35);"
-        "}"
-        ".back-btn:active {"
-        "   background-color: #313244;"
-        "   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);"
-        "}"
-        ".unit-node {"
-        "   background-image: none;"
-        "   background-color: #2b2d40;"
-        "   color: #cdd6f4;"
-        "   border: 2px solid #3b3e56;"
-        "   border-radius: 999px;"
-        "   padding: 0;"
-        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
-        "   transition: transform 150ms ease, box-shadow 150ms ease,"
-        "                border-color 150ms ease;"
-        "}"
-        ".unit-node.done {"
-        "   background-image: linear-gradient(135deg, #a6e3a1 0%, #94e2d5 100%);"
-        "   border-color: #a6e3a1;"
-        "   color: #1e1e2e;"
-        "   box-shadow: 0 4px 16px rgba(166, 227, 161, 0.35);"
-        "}"
-        ".unit-node.current {"
-        "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 55%, #89b4fa 100%);"
-        "   border-color: #cba6f7;"
-        "   color: #1e1e2e;"
-        "   box-shadow: 0 4px 18px rgba(203, 166, 247, 0.5),"
-        "               0 0 0 4px rgba(30, 30, 46, 0.9),"
-        "               0 0 0 7px rgba(203, 166, 247, 0.45);"
-        "}"
-        ".unit-node.done:hover,"
-        ".unit-node.current:hover {"
-        "   transition: box-shadow 150ms ease, border-color 150ms ease;"
-        "}"
-        ".unit-node.done:hover {"
-        "   box-shadow: 0 8px 22px rgba(166, 227, 161, 0.5);"
-        "}"
-        ".unit-node.current:hover {"
-        "   box-shadow: 0 8px 26px rgba(203, 166, 247, 0.65),"
-        "               0 0 0 4px rgba(30, 30, 46, 0.9),"
-        "               0 0 0 7px rgba(203, 166, 247, 0.55);"
-        "}"
-        ".unit-node.locked {"
-        "   background-image: none;"
-        "   background-color: #24263a;"
-        "   border: 2px solid #383b52;"
-        "   color: #6c7086;"
-        "   box-shadow: none;"
-        "}"
-        ".unit-node.locked:hover {"
-        "   transform: none;"
-        "   box-shadow: none;"
-        "}"
-        ".unit-node.finish {"
-        "   background-color: transparent;"
-        "   background-image: none;"
-        "   border: none;"
-        "   color: #6c7086;"
-        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
-        "}"
-        ".unit-node.finish:hover {"
-        "   transform: none;"
-        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
-        "}"
-        ".unit-node:focus,"
-        ".unit-node:focus-visible,"
-        ".unit-node:hover {"
-        "   outline: none;"
-        "}"
-        ".unit-number {"
-        "   font-size: 24px;"
-        "   font-weight: 800;"
-        "}"
-        ".unit-node.done .unit-number,"
-        ".unit-node.current .unit-number {"
-        "   color: #1e1e2e;"
-        "}"
-        ".unit-node.locked .unit-number {"
-        "   color: #6c7086;"
-        "}"
-        ".state-icon {"
-        "   color: #1e1e2e;"
-        "}"
-        ".unit-node.locked .lock-icon {"
-        "   color: #585b70;"
-        "}"
-        ".unit-name {"
-        "   color: #cdd6f4;"
-        "   font-size: 13px;"
-        "   font-weight: 600;"
-        "}"
-        ".unit-name-locked {"
-        "   color: #6c7086;"
-        "}"
-        ".ex-bubble {"
-        "   min-width: 64px;"
-        "   min-height: 64px;"
-        "   padding: 0;"
-        "   border-radius: 999px;"
-        "   background-color: #2b2d40;"
-        "   color: #cdd6f4;"
-        "   border: 2px solid #3b3e56;"
-        "   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);"
-        "   transition: border-color 150ms ease, box-shadow 150ms ease;"
-        "}"
-        ".ex-bubble:hover {"
-        "   border-color: #cba6f7;"
-        "   box-shadow: 0 6px 20px rgba(203, 166, 247, 0.35);"
-        "}"
-        ".ex-bubble.done {"
-        "   background-image: linear-gradient(135deg, #a6e3a1 0%, #94e2d5 100%);"
-        "   border-color: #a6e3a1;"
-        "   color: #1e1e2e;"
-        "   box-shadow: 0 4px 16px rgba(166, 227, 161, 0.35);"
-        "}"
-        ".ex-bubble.done:hover {"
-        "   box-shadow: 0 8px 22px rgba(166, 227, 161, 0.5);"
-        "}"
-        ".ex-bubble:focus,"
-        ".ex-bubble:focus-visible {"
-        "   outline: none;"
-        "}"
-        ".bubble-number {"
-        "   font-size: 22px;"
-        "   font-weight: 800;"
-        "}"
-        ".ex-bubble.done .bubble-number {"
-        "   color: #1e1e2e;"
-        "}"
-        ".bubble-icon {"
-        "   color: #1e1e2e;"
-        "}"
-        ".ex-label {"
-        "   color: #cdd6f4;"
-        "   font-size: 12px;"
-        "   font-weight: 600;"
-        "}"
-        ".ex-prompt {"
-        "   color: #cdd6f4;"
-        "   font-size: 16px;"
-        "   font-weight: 500;"
-        "}"
-        ".ex-sub {"
-        "   color: #a6adc8;"
-        "   font-size: 13px;"
-        "   font-weight: 700;"
-        "}"
-        ".hint {"
-        "   color: #a6adc8;"
-        "   font-size: 13px;"
-        "   font-style: italic;"
-        "}"
-        ".meaning {"
-        "   color: #a6adc8;"
-        "   font-size: 13px;"
-        "   font-style: italic;"
-        "}"
-        ".dlg-speaker {"
-        "   color: #cba6f7;"
-        "   font-weight: 700;"
-        "   font-size: 15px;"
-        "}"
-        ".number-big {"
-        "   color: #f9e2af;"
-        "   font-size: 26px;"
-        "   font-weight: 800;"
-        "}"
-        ".chain {"
-        "   color: #f9e2af;"
-        "   font-size: 20px;"
-        "   font-weight: 700;"
-        "   letter-spacing: 1px;"
-        "}"
-        "entry {"
-        "   background-color: #181825;"
-        "   color: #cdd6f4;"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 10px;"
-        "   padding: 8px 12px;"
-        "   font-size: 15px;"
-        "   caret-color: #cba6f7;"
-        "}"
-        "entry:focus {"
-        "   border-color: #cba6f7;"
-        "}"
-        "combobox {"
-        "   background-color: #181825;"
-        "   color: #cdd6f4;"
-        "}"
-        "combobox button {"
-        "   background-image: none;"
-        "   background-color: #181825;"
-        "   color: #cdd6f4;"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 10px;"
-        "   padding: 4px 10px;"
-        "}"
-        "combobox button:hover {"
-        "   border-color: #cba6f7;"
-        "}"
-        "combobox.answer-ok button {"
-        "   border-color: #a6e3a1;"
-        "   background-color: rgba(166, 227, 161, 0.12);"
-        "}"
-        "combobox.answer-wrong button {"
-        "   border-color: #f38ba8;"
-        "   background-color: rgba(243, 139, 168, 0.12);"
-        "}"
-        ".pill {"
-        "   background-color: #2b2d40;"
-        "   color: #cdd6f4;"
-        "   border: 2px solid #3b3e56;"
-        "   border-radius: 999px;"
-        "   padding: 6px 18px;"
-        "   font-size: 15px;"
-        "   transition: border-color 150ms ease, box-shadow 150ms ease;"
-        "}"
-        ".pill:hover {"
-        "   border-color: #cba6f7;"
-        "}"
-        ".pill:checked {"
-        "   background-image: linear-gradient(135deg, #cba6f7 0%, #b4befe 100%);"
-        "   color: #1e1e2e;"
-        "   border-color: #cba6f7;"
-        "   font-weight: 700;"
-        "}"
-        ".pill.ok {"
-        "   border-color: #a6e3a1;"
-        "   box-shadow: 0 0 0 2px rgba(166, 227, 161, 0.4);"
-        "}"
-        ".pill.wrong {"
-        "   border-color: #f38ba8;"
-        "   box-shadow: 0 0 0 2px rgba(243, 139, 168, 0.4);"
-        "}"
-        ".chip {"
-        "   background-color: #313244;"
-        "   color: #cdd6f4;"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 999px;"
-        "   padding: 6px 14px;"
-        "   font-size: 14px;"
-        "   font-weight: 600;"
-        "   transition: background-color 150ms ease, border-color 150ms ease;"
-        "}"
-        ".chip:hover {"
-        "   background-color: #45475a;"
-        "   border-color: #cba6f7;"
-        "}"
-        ".chip.ghost-host {"
-        "   opacity: 0;"
-        "}"
-        ".group-btn {"
-        "   background-color: #2b2d40;"
-        "   color: #cdd6f4;"
-        "   border: 2px solid #3b3e56;"
-        "   border-radius: 12px;"
-        "   padding: 8px 18px;"
-        "   font-size: 14px;"
-        "   font-weight: 700;"
-        "   transition: border-color 150ms ease, box-shadow 150ms ease;"
-        "}"
-        ".group-btn:hover {"
-        "   border-color: #cba6f7;"
-        "}"
-        ".group-btn:checked {"
-        "   background-image: linear-gradient(135deg, #89b4fa 0%, #89dceb 100%);"
-        "   color: #1e1e2e;"
-        "   border-color: #89b4fa;"
-        "}"
-        ".group-panel {"
-        "   background-color: rgba(49, 50, 68, 0.5);"
-        "   border: 2px dashed #45475a;"
-        "   border-radius: 14px;"
-        "   padding: 10px;"
-        "}"
-        ".group-panel-label {"
-        "   color: #a6adc8;"
-        "   font-size: 13px;"
-        "   font-weight: 700;"
-        "}"
-        ".sent-group {"
-        "   background-color: rgba(49, 50, 68, 0.5);"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 14px;"
-        "   padding: 12px;"
-        "}"
-        ".sent-group.ok {"
-        "   border-color: #a6e3a1;"
-        "}"
-        ".sent-group.wrong {"
-        "   border-color: #f38ba8;"
-        "}"
-        ".feedback-ok {"
-        "   color: #a6e3a1;"
-        "   font-size: 15px;"
-        "   font-weight: 700;"
-        "}"
-        ".feedback-err {"
-        "   color: #f38ba8;"
-        "   font-size: 15px;"
-        "   font-weight: 700;"
-        "}"
-        "tooltip {"
-        "   background-color: #181825;"
-        "   border: 1px solid #45475a;"
-        "   border-radius: 10px;"
-        "   color: #cdd6f4;"
-        "}"
-    );
-
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider),
-        GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-    g_object_unref(provider);
+    apply_theme();
+    apply_language();
 
     gtk_window_present(window);
 }
