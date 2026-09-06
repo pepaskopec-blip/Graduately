@@ -1434,11 +1434,13 @@ typedef struct {
     GtkWidget *pool;
     GtkWidget *target;
     GtkWidget *group;
+    GtkWidget *stage;    /* transparent overlay layer for the fly sprite */
     GtkWidget *trans;    /* hidden meaning label under the group */
     GtkWidget *chips[6];
     int placed[6];
     int placed_count;
     int n_words;
+    gboolean flying;     /* a click-move animation is in progress       */
 } SentBuilder;
 
 static void sent_rebuild(SentBuilder *sb) {
@@ -1555,6 +1557,148 @@ static gboolean asm_drop_to_pool(GtkDropTarget *target, const GValue *value,
     return TRUE;
 }
 
+/* ------------------------------------------------------------------ */
+/* Click-to-move with a fly ("glide") animation                        */
+/* ------------------------------------------------------------------ */
+
+typedef struct {
+    SentBuilder *sb;
+    GtkWidget *chip;    /* real chip, kept invisible in its final slot */
+    GtkWidget *ghost;   /* sprite flying from start to finish          */
+    GtkWidget *stage;
+    double sx, sy;      /* start position (stage coords)               */
+    double tx, ty;      /* target position (stage coords)              */
+    guint wait;         /* ticks waited for relayout                   */
+    gint64 t0;          /* < 0 while still measuring the target        */
+} FlyCtx;
+
+static void asm_finish_fly(FlyCtx *fc) {
+    gtk_widget_remove_css_class(fc->chip, "ghost-host");
+    gtk_fixed_remove(GTK_FIXED(fc->stage), fc->ghost);
+    fc->sb->flying = FALSE;
+    g_free(fc);
+}
+
+static gboolean asm_fly_tick(gpointer data) {
+    FlyCtx *fc = data;
+    gint64 now = g_get_monotonic_time() / 1000;
+
+    if (fc->t0 < 0) {
+        double nx = 0.0, ny = 0.0;
+        gboolean ok;
+
+        fc->wait++;
+        ok = gtk_widget_translate_coordinates(fc->chip, fc->stage,
+                                              0, 0, &nx, &ny);
+        if (fc->wait < 2)
+            return G_SOURCE_CONTINUE;
+
+        if (ok && fc->wait < 14 &&
+            fabs(nx - fc->sx) + fabs(ny - fc->sy) < 0.5)
+            return G_SOURCE_CONTINUE;   /* still waiting for relayout   */
+
+        if (ok) {
+            fc->tx = nx;
+            fc->ty = ny;
+        } else {
+            fc->tx = fc->sx;
+            fc->ty = fc->sy;
+        }
+        fc->t0 = now;
+        return G_SOURCE_CONTINUE;
+    }
+
+    {
+        double t = (double)(now - fc->t0) / 240.0;
+        double e, x, y;
+
+        if (t > 1.0)
+            t = 1.0;
+        e = 1.0 - pow(1.0 - t, 3.0);   /* ease-out cubic                */
+        x = fc->sx + (fc->tx - fc->sx) * e;
+        y = fc->sy + (fc->ty - fc->sy) * e;
+        gtk_fixed_move(GTK_FIXED(fc->stage), fc->ghost, (int)x, (int)y);
+
+        if (t >= 1.0) {
+            asm_finish_fly(fc);
+            return G_SOURCE_REMOVE;
+        }
+    }
+    return G_SOURCE_CONTINUE;
+}
+
+static void asm_move_by_click(GtkButton *button, gpointer data) {
+    ChipRef *ref = data;
+    SentBuilder *sb = ref->sb;
+    int idx = ref->idx;
+    int pos = -1;
+    double sx = 0.0, sy = 0.0;
+    GtkWidget *chip = GTK_WIDGET(button);
+    GtkWidget *ghost;
+    GtkWidget *child;
+    const char *txt = NULL;
+    FlyCtx *fc;
+
+    (void)button;
+
+    if (sb->flying)
+        return;
+
+    for (int i = 0; i < sb->placed_count; i++) {
+        if (sb->placed[i] == idx) {
+            pos = i;
+            break;
+        }
+    }
+
+    if (sb->stage &&
+        gtk_widget_translate_coordinates(chip, sb->stage, 0, 0, &sx, &sy)) {
+        if (pos >= 0) {
+            for (int i = pos; i < sb->placed_count - 1; i++)
+                sb->placed[i] = sb->placed[i + 1];
+            sb->placed_count--;
+        } else {
+            sb->placed[sb->placed_count++] = idx;
+        }
+
+        sent_rebuild(sb);
+
+        child = gtk_button_get_child(GTK_BUTTON(chip));
+        if (child && GTK_IS_LABEL(child))
+            txt = gtk_label_get_text(GTK_LABEL(child));
+
+        ghost = gtk_button_new_with_label(txt ? txt : "");
+        gtk_widget_add_css_class(ghost, "chip");
+        gtk_widget_set_sensitive(ghost, FALSE);
+        gtk_widget_set_can_focus(ghost, FALSE);
+        gtk_fixed_put(GTK_FIXED(sb->stage), ghost, (int)sx, (int)sy);
+
+        fc = g_new0(FlyCtx, 1);
+        fc->sb = sb;
+        fc->chip = chip;
+        fc->ghost = ghost;
+        fc->stage = sb->stage;
+        fc->sx = sx;
+        fc->sy = sy;
+        fc->t0 = -1;
+        sb->flying = TRUE;
+
+        gtk_widget_add_css_class(chip, "ghost-host");
+
+        g_timeout_add(16, asm_fly_tick, fc);
+    } else {
+        /* No usable animation layer yet – just move instantly. */
+        if (pos >= 0) {
+            for (int i = pos; i < sb->placed_count - 1; i++)
+                sb->placed[i] = sb->placed[i + 1];
+            sb->placed_count--;
+        } else {
+            sb->placed[sb->placed_count++] = idx;
+        }
+        sent_rebuild(sb);
+    }
+}
+
 typedef struct {
     SentBuilder **sbs;
     int n;
@@ -1618,9 +1762,11 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
     for (int s = 0; s < n; s++) {
         const AssemblyItem *item = &items[s];
         SentBuilder *sb = g_new0(SentBuilder, 1);
+        GtkWidget *holder;
         GtkWidget *group;
         GtkWidget *target;
         GtkWidget *pool;
+        GtkWidget *stage;
 
         sb->n_words = item->n;
         ctx->sbs[s] = sb;
@@ -1632,9 +1778,13 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
             gtk_box_append(GTK_BOX(body), prompt);
         }
 
+        holder = gtk_overlay_new();
+        gtk_widget_set_hexpand(holder, TRUE);
+
         group = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
         gtk_widget_add_css_class(group, "sent-group");
         sb->group = group;
+        gtk_overlay_set_child(GTK_OVERLAY(holder), group);
 
         target = gtk_flow_box_new();
         gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(target), GTK_SELECTION_NONE);
@@ -1649,6 +1799,13 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
         gtk_widget_set_size_request(pool, -1, 44);
         sb->pool = pool;
         gtk_box_append(GTK_BOX(group), pool);
+
+        stage = gtk_fixed_new();
+        gtk_widget_set_halign(stage, GTK_ALIGN_FILL);
+        gtk_widget_set_valign(stage, GTK_ALIGN_FILL);
+        gtk_widget_set_can_target(stage, FALSE);
+        gtk_overlay_add_overlay(GTK_OVERLAY(holder), stage);
+        sb->stage = stage;
 
         {
             GtkDropTarget *dt = gtk_drop_target_new(G_TYPE_INT, GDK_ACTION_COPY);
@@ -1671,6 +1828,7 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
             gtk_drag_source_set_actions(src, GDK_ACTION_COPY);
             g_signal_connect(src, "prepare", G_CALLBACK(asm_drag_prepare), ref);
             g_signal_connect(src, "drag-end", G_CALLBACK(asm_drag_end), ref);
+            g_signal_connect(chip, "clicked", G_CALLBACK(asm_move_by_click), ref);
             gtk_widget_add_controller(chip, GTK_EVENT_CONTROLLER(src));
         }
 
@@ -1683,7 +1841,7 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
                 gtk_flow_box_insert(GTK_FLOW_BOX(pool), sb->chips[order[w]], -1);
         }
 
-        gtk_box_append(GTK_BOX(body), group);
+        gtk_box_append(GTK_BOX(body), holder);
 
         if (meanings[s])
             sb->trans = meaning_add(body, meanings[s]);
@@ -1821,7 +1979,7 @@ static const AssemblyItem ex2_items[] = {
     {NULL, {"Ich", "heiße", "Anna", "."}, 4},
     {NULL, {"Woher", "kommst", "du", "?"}, 4},
     {NULL, {"Ich", "komme", "aus", "Tschechien", "."}, 5},
-    {NULL, {"Wie", "geht", "es", "dir", "?"}, 4},
+    {NULL, {"Wie", "geht", "es", "dir", "?"}, 5},
 };
 
 static const char *ex2_meaning[] = {
@@ -3141,6 +3299,9 @@ static void activate(GtkApplication *app, gpointer user_data) {
         ".chip:hover {"
         "   background-color: #45475a;"
         "   border-color: #cba6f7;"
+        "}"
+        ".chip.ghost-host {"
+        "   opacity: 0;"
         "}"
         ".group-btn {"
         "   background-color: #2b2d40;"
