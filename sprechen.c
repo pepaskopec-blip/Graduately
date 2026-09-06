@@ -1301,14 +1301,38 @@ static GtkWidget *ex_page_shell(const char *title, const char *subtitle,
 typedef struct {
     GArray *combos;   /* GtkComboBox* */
     GArray *answers;  /* const char* */
+    GArray *trans;    /* GtkWidget* hidden meaning labels              */
     int ex_num;
     GtkWidget *feedback;
 } ComboListCtx;
+
+/* Build a hidden translation label ("meaning") appended under an item. */
+static GtkWidget *meaning_add(GtkWidget *body, const char *text) {
+    GtkWidget *lbl = gtk_label_new(text);
+
+    gtk_label_set_xalign(GTK_LABEL(lbl), 0.0);
+    gtk_widget_set_halign(lbl, GTK_ALIGN_START);
+    gtk_widget_add_css_class(lbl, "meaning");
+    gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
+    gtk_widget_set_visible(lbl, FALSE);
+    gtk_widget_set_margin_top(lbl, 2);
+    gtk_widget_set_margin_bottom(lbl, 2);
+    gtk_widget_set_margin_start(lbl, 8);
+    gtk_box_append(GTK_BOX(body), lbl);
+    return lbl;
+}
+
+static void meaning_reveal_all(GtkWidget **labels, int n) {
+    for (int i = 0; i < n; i++)
+        if (labels[i])
+            gtk_widget_set_visible(labels[i], TRUE);
+}
 
 static ComboListCtx *combo_list_ctx_new(int ex_num, GtkWidget *feedback) {
     ComboListCtx *ctx = g_new0(ComboListCtx, 1);
     ctx->combos = g_array_new(FALSE, FALSE, sizeof(GtkComboBox *));
     ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
+    ctx->trans = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
     return ctx;
@@ -1317,6 +1341,10 @@ static ComboListCtx *combo_list_ctx_new(int ex_num, GtkWidget *feedback) {
 static void combo_list_add(ComboListCtx *ctx, GtkWidget *combo, const char *ans) {
     g_array_append_val(ctx->combos, combo);
     g_array_append_val(ctx->answers, ans);
+}
+
+static void combo_list_add_trans(ComboListCtx *ctx, GtkWidget *label) {
+    g_array_append_val(ctx->trans, label);
 }
 
 static GtkWidget *make_word_combo(const char **words, int n) {
@@ -1376,6 +1404,14 @@ static void combo_list_check(GtkButton *button, gpointer data) {
             ok++;
     }
 
+    if (ctx->trans->len > 0) {
+        for (guint i = 0; i < ctx->trans->len; i++) {
+            GtkWidget *lbl = g_array_index(ctx->trans, GtkWidget *, i);
+            if (lbl)
+                gtk_widget_set_visible(lbl, TRUE);
+        }
+    }
+
     if (ok == total) {
         set_feedback(ctx->feedback, TRUE, "Výborně!");
         mark_done(ctx->ex_num);
@@ -1398,6 +1434,7 @@ typedef struct {
     GtkWidget *pool;
     GtkWidget *target;
     GtkWidget *group;
+    GtkWidget *trans;    /* hidden meaning label under the group */
     GtkWidget *chips[6];
     int placed[6];
     int placed_count;
@@ -1552,6 +1589,11 @@ static void assembly_check(GtkButton *button, gpointer data) {
         }
     }
 
+    for (int i = 0; i < ctx->n; i++) {
+        if (ctx->sbs[i]->trans)
+            gtk_widget_set_visible(ctx->sbs[i]->trans, TRUE);
+    }
+
     if (ok == ctx->n) {
         set_feedback(ctx->feedback, TRUE, "Výborně!");
         mark_done(ctx->ex_num);
@@ -1561,7 +1603,8 @@ static void assembly_check(GtkButton *button, gpointer data) {
 }
 
 static GtkWidget *build_assembly(const char *title, const char *subtitle,
-                                 int ex_num, const AssemblyItem *items, int n) {
+                                 int ex_num, const AssemblyItem *items,
+                                 const char **meanings, int n) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(title, subtitle, "Zkontrolovat",
                                     &body, &feedback, &check);
@@ -1641,6 +1684,9 @@ static GtkWidget *build_assembly(const char *title, const char *subtitle,
         }
 
         gtk_box_append(GTK_BOX(body), group);
+
+        if (meanings[s])
+            sb->trans = meaning_add(body, meanings[s]);
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(assembly_check), ctx);
@@ -1694,12 +1740,27 @@ static const char *ex1_pool[] = {
     "geht", "danke", "Wiedersehen", "Bis", "Tschüss",
 };
 
+/* One Czech meaning per dialog line, in the same order as the rows. */
+static const char *ex1_meaning[] = {
+    "Ahoj! Jmenuji se Anna.",
+    "Ahoj! Jmenuji se Petr.",
+    "Odkud jsi?",
+    "Pocházím z Česka.",
+    "Dobré ráno!",
+    "Jak se máš?",
+    "Mám se dobře, děkuji.",
+    "Musím jít. Na shledanou!",
+    "Brzy na viděnou!",
+    "Čau!",
+};
+
 static GtkWidget *build_ex1(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell("Dialog",
                                     "Doplňte chybějící slova v dialogu.",
                                     "Zkontrolovat", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(1, feedback);
+    int ri = 0;
 
     for (guint d = 0; d < G_N_ELEMENTS(ex1_dialogues); d++) {
         const Dialogue *diag = &ex1_dialogues[d];
@@ -1741,6 +1802,10 @@ static GtkWidget *build_ex1(void) {
                 gtk_widget_add_css_class(la, "ex-prompt");
                 gtk_box_append(GTK_BOX(line), la);
             }
+
+            if (ri < (int)G_N_ELEMENTS(ex1_meaning))
+                combo_list_add_trans(ctx, meaning_add(body, ex1_meaning[ri]));
+            ri++;
         }
     }
 
@@ -1757,6 +1822,13 @@ static const AssemblyItem ex2_items[] = {
     {NULL, {"Woher", "kommst", "du", "?"}, 4},
     {NULL, {"Ich", "komme", "aus", "Tschechien", "."}, 5},
     {NULL, {"Wie", "geht", "es", "dir", "?"}, 4},
+};
+
+static const char *ex2_meaning[] = {
+    "Jmenuji se Anna.",
+    "Odkud jsi?",
+    "Pocházím z Česka.",
+    "Jak se máš?",
 };
 
 /* ------------------------------------------------------------------ */
@@ -1776,6 +1848,13 @@ static const ChoiceQ ex3_questions[] = {
     {"Welche Zahl ist „sechs“?", {"6", "16", "60"}, 0},
 };
 
+static const char *ex3_meaning[] = {
+    "„vierzehn“ = čtrnáct (14)",
+    "„siebzehn“ = sedmnáct (17)",
+    "„zwanzig“ = dvacet (20)",
+    "„sechs“ = šest (6)",
+};
+
 static const ChoiceQ ex9_questions[] = {
     {"___ heißt du?", {"Wer", "Wie", "Wo"}, 1},
     {"___ kommst du?", {"Woher", "Wie", "Wer"}, 0},
@@ -1784,12 +1863,21 @@ static const ChoiceQ ex9_questions[] = {
     {"___ alt bist du?", {"Wie", "Woher", "Was"}, 0},
 };
 
+static const char *ex9_meaning[] = {
+    "Jak se jmenuješ?",
+    "Odkud jsi?",
+    "Kde bydlíš?",
+    "Kdo to je?",
+    "Kolik je ti let?",
+};
+
 typedef struct {
     const ChoiceQ *qs;
     int n;
     int ex_num;
     GtkWidget *feedback;
     GtkToggleButton **toggles;
+    GtkWidget **trans;   /* hidden meaning labels, one per question */
 } ChoiceCtx;
 
 static void choice_check(GtkButton *button, gpointer data) {
@@ -1821,10 +1909,12 @@ static void choice_check(GtkButton *button, gpointer data) {
     } else {
         set_feedback(ctx->feedback, FALSE, "Ještě to není správně.");
     }
+
+    meaning_reveal_all(ctx->trans, ctx->n);
 }
 
 static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_num,
-                               const ChoiceQ *qs, int n) {
+                               const ChoiceQ *qs, const char **meanings, int n) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(title, subtitle, "Zkontrolovat",
                                     &body, &feedback, &check);
@@ -1835,6 +1925,7 @@ static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_n
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
     ctx->toggles = g_new0(GtkToggleButton *, n * 3);
+    ctx->trans = g_new0(GtkWidget *, n);
 
     for (int i = 0; i < n; i++) {
         GtkWidget *prompt = gtk_label_new(qs[i].prompt);
@@ -1858,6 +1949,9 @@ static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_n
             gtk_box_append(GTK_BOX(row), tb);
             ctx->toggles[i * 3 + o] = GTK_TOGGLE_BUTTON(tb);
         }
+
+        if (meanings[i])
+            ctx->trans[i] = meaning_add(body, meanings[i]);
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(choice_check), ctx);
@@ -1892,19 +1986,33 @@ static void ex4_reveal(GtkButton *button, gpointer data) {
     gtk_widget_set_visible(sample, !gtk_widget_get_visible(sample));
 }
 
+typedef struct {
+    GtkWidget *feedback;
+    GtkWidget **samples;
+    int n;
+} Ex4Ctx;
+
 static void ex4_finish(GtkButton *button, gpointer data) {
-    GtkWidget *feedback = data;
+    Ex4Ctx *ctx = data;
     (void)button;
-    set_feedback(feedback, TRUE, "Výborně!");
+    set_feedback(ctx->feedback, TRUE, "Výborně!");
+    for (int i = 0; i < ctx->n; i++)
+        gtk_widget_set_visible(ctx->samples[i], TRUE);
     mark_done(4);
 }
 
 static GtkWidget *build_ex4(void) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *tip;
+    Ex4Ctx *ctx;
     GtkWidget *page = ex_page_shell("Freie Antwort",
                                     "Odpovězte vlastními slovy, poté klikněte na Dokončit.",
                                     "Dokončit", &body, &feedback, &check);
+
+    ctx = g_new0(Ex4Ctx, 1);
+    ctx->feedback = feedback;
+    ctx->n = (int)G_N_ELEMENTS(ex4_questions);
+    ctx->samples = g_new0(GtkWidget *, ctx->n);
 
     tip = gtk_label_new("Písmeno „ß“ se dá na klávesnici zaměnit za „ss“!");
     gtk_widget_set_halign(tip, GTK_ALIGN_START);
@@ -1942,11 +2050,12 @@ static GtkWidget *build_ex4(void) {
         gtk_label_set_wrap(GTK_LABEL(sample), TRUE);
         gtk_widget_set_visible(sample, FALSE);
         gtk_box_append(GTK_BOX(body), sample);
+        ctx->samples[i] = sample;
 
         g_signal_connect(reveal, "clicked", G_CALLBACK(ex4_reveal), sample);
     }
 
-    g_signal_connect(check, "clicked", G_CALLBACK(ex4_finish), feedback);
+    g_signal_connect(check, "clicked", G_CALLBACK(ex4_finish), ctx);
     return page;
 }
 
@@ -1969,6 +2078,14 @@ static const NumberQ ex5_data[] = {
 
 static const char *ex5_pool[] = {
     "vierzehn", "siebzehn", "zwanzig", "sechs", "dreizehn",
+};
+
+static const char *ex5_meaning[] = {
+    "čtrnáct",
+    "sedmnáct",
+    "dvacet",
+    "šest",
+    "třináct",
 };
 
 static GtkWidget *build_ex5(void) {
@@ -2000,6 +2117,7 @@ static GtkWidget *build_ex5(void) {
         combo_list_add(ctx, combo, ex5_data[i].answer);
 
         gtk_box_append(GTK_BOX(body), row);
+        combo_list_add_trans(ctx, meaning_add(body, ex5_meaning[i]));
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -2031,6 +2149,18 @@ static const CountQ ex6_data[] = {
 
 static const char *ex6_pool[] = {
     "zwei", "fünf", "sieben", "neun", "drei", "elf", "vier", "acht", "sechs",
+};
+
+static const char *ex6_meaning[] = {
+    "dvě jablka",
+    "pět hvězd",
+    "sedm koček",
+    "devět květin",
+    "tři auta",
+    "jedenáct knih",
+    "čtyři svíčky",
+    "osm míčů",
+    "šest ptáků",
 };
 
 static GtkWidget *build_ex6(void) {
@@ -2070,6 +2200,7 @@ static GtkWidget *build_ex6(void) {
         combo_list_add(ctx, combo, q->answer);
 
         gtk_box_append(GTK_BOX(body), row);
+        combo_list_add_trans(ctx, meaning_add(body, ex6_meaning[i]));
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -2096,6 +2227,14 @@ static const SeqQ ex7_data[] = {
 
 static const char *ex7_pool[] = {
     "acht", "vierzehn", "zwanzig", "sechs", "zwölf",
+};
+
+static const char *ex7_meaning[] = {
+    "šest, sedm, osm, devět",
+    "dvanáct, třináct, čtrnáct, patnáct",
+    "osmnáct, devatenáct, dvacet, dvacet jedna",
+    "čtyři, pět, šest, sedm",
+    "deset, jedenáct, dvanáct, třináct",
 };
 
 static GtkWidget *build_ex7(void) {
@@ -2129,6 +2268,8 @@ static GtkWidget *build_ex7(void) {
         gtk_box_append(GTK_BOX(row), after);
 
         gtk_box_append(GTK_BOX(body), row);
+
+        combo_list_add_trans(ctx, meaning_add(body, ex7_meaning[i]));
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -2157,6 +2298,15 @@ static const VerbQ ex8_data[] = {
 static const char *ex8_pool[] = {
     "heißen", "kommen", "wohnen", "sein", "spielen", "machen",
     "heiße", "kommst", "wohne", "bist", "spiele", "machst",
+};
+
+static const char *ex8_meaning[] = {
+    "Jmenuji se Petr.",
+    "Odkud jsi?",
+    "Bydlím v Praze.",
+    "Kolik je ti let?",
+    "Hraji fotbal.",
+    "Co rád/a děláš?",
 };
 
 static GtkWidget *build_ex8(void) {
@@ -2190,6 +2340,8 @@ static GtkWidget *build_ex8(void) {
         gtk_box_append(GTK_BOX(row), after);
 
         gtk_box_append(GTK_BOX(body), row);
+
+        combo_list_add_trans(ctx, meaning_add(body, ex8_meaning[i]));
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -2206,6 +2358,14 @@ static const AssemblyItem ex10_items[] = {
     {"woherkommstdu", {"woher", "kommst", "du"}, 3},
     {"aufwiedersehen", {"auf", "wiedersehen"}, 2},
     {"dankeschön", {"danke", "schön"}, 2},
+};
+
+static const char *ex10_meaning[] = {
+    "Kolik je hodin?",
+    "Jmenuji se Anna.",
+    "Odkud jsi?",
+    "Na shledanou.",
+    "Moc děkuji.",
 };
 
 /* ------------------------------------------------------------------ */
@@ -2232,6 +2392,17 @@ static const VerbClueQ ex12_data[] = {
 
 static const char *ex12_pool[] = {
     "schwimmt", "singt", "kocht", "liest", "fährt", "malt", "spielt", "schläft",
+};
+
+static const char *ex12_meaning[] = {
+    "Plave v jezeře.",
+    "Zpívá píseň.",
+    "Vaří polévku.",
+    "Čte knihu.",
+    "Řídí auto.",
+    "Maluje obraz.",
+    "Hraje fotbal.",
+    "Spí.",
 };
 
 static GtkWidget *build_ex12(void) {
@@ -2269,6 +2440,8 @@ static GtkWidget *build_ex12(void) {
         gtk_box_append(GTK_BOX(row), after);
 
         gtk_box_append(GTK_BOX(body), row);
+
+        combo_list_add_trans(ctx, meaning_add(body, ex12_meaning[i]));
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -2316,16 +2489,45 @@ static const AssignItem ex13_items[] = {
 static const char *ex11_groups[] = {"Begrüßung", "Verabschiedung"};
 static const char *ex13_groups[] = {"Deutschland (D)", "Österreich (A)", "Schweiz (CH)"};
 
+static const char *ex11_meaning[] = {
+    "Ahoj",
+    "Dobré ráno",
+    "Dobrý den",
+    "Dobrý večer",
+    "Dobrý den (Bavorsko, Rakousko)",
+    "Ahoj / Čau",
+    "Čau",
+    "Na shledanou",
+    "Brzy na viděnou",
+    "Do zítřka",
+    "Dobrou noc",
+    "Zatím / Na viděnou",
+};
+
+static const char *ex13_meaning[] = {
+    "Preclík",
+    "Klobása",
+    "Braniborská brána",
+    "Značka aut",
+    "Rakouský skladatel",
+    "Čokoládový dort (Vídeň)",
+    "Vídeňský řízek",
+    "Sýr",
+    "Švýcarská hora",
+    "Čokoláda",
+};
+
 typedef struct {
     GtkWidget *pool;
     GtkWidget *group_flow[3];
     GtkWidget *group_btn[3];
     int n_groups;
     int active_group;
-    GtkWidget **chips;
+    GtkWidget **items;    /* per-item boxes (chip + hidden meaning)   */
+    GtkWidget **trans;    /* hidden meaning labels                    */
     int n_items;
     int *current_group;
-    const AssignItem *items;
+    const AssignItem *items_data;
     int ex_num;
     GtkWidget *feedback;
 } AssignCtx;
@@ -2337,7 +2539,7 @@ typedef struct {
 
 static void assign_rebuild(AssignCtx *ac) {
     for (int i = 0; i < ac->n_items; i++) {
-        GtkWidget *parent = gtk_widget_get_parent(ac->chips[i]);
+        GtkWidget *parent = gtk_widget_get_parent(ac->items[i]);
         if (parent != NULL && GTK_IS_FLOW_BOX_CHILD(parent))
             gtk_flow_box_child_set_child(GTK_FLOW_BOX_CHILD(parent), NULL);
     }
@@ -2348,10 +2550,10 @@ static void assign_rebuild(AssignCtx *ac) {
 
     for (int i = 0; i < ac->n_items; i++) {
         if (ac->current_group[i] < 0)
-            gtk_flow_box_insert(GTK_FLOW_BOX(ac->pool), ac->chips[i], -1);
+            gtk_flow_box_insert(GTK_FLOW_BOX(ac->pool), ac->items[i], -1);
         else
             gtk_flow_box_insert(GTK_FLOW_BOX(ac->group_flow[ac->current_group[i]]),
-                                ac->chips[i], -1);
+                                ac->items[i], -1);
     }
 }
 
@@ -2391,7 +2593,7 @@ static void assign_check(GtkButton *button, gpointer data) {
     (void)button;
 
     for (int i = 0; i < ac->n_items; i++)
-        if (ac->current_group[i] == ac->items[i].correct_group)
+        if (ac->current_group[i] == ac->items_data[i].correct_group)
             ok++;
 
     if (ok == ac->n_items) {
@@ -2400,11 +2602,16 @@ static void assign_check(GtkButton *button, gpointer data) {
     } else {
         set_feedback(ac->feedback, FALSE, "Ještě to není správně. Zkuste to znovu.");
     }
+
+    for (int i = 0; i < ac->n_items; i++)
+        if (ac->trans[i])
+            gtk_widget_set_visible(ac->trans[i], TRUE);
 }
 
 static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_num,
                                const AssignItem *items, int n_items,
-                               const char **group_labels, int n_groups) {
+                               const char **group_labels, int n_groups,
+                               const char **meanings) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(title, subtitle, "Zkontrolovat",
                                     &body, &feedback, &check);
@@ -2419,8 +2626,9 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     ac->active_group = 0;
     ac->ex_num = ex_num;
     ac->feedback = feedback;
-    ac->items = items;
-    ac->chips = g_new0(GtkWidget *, n_items);
+    ac->items_data = items;
+    ac->items = g_new0(GtkWidget *, n_items);
+    ac->trans = g_new0(GtkWidget *, n_items);
     ac->current_group = g_new0(int, n_items);
     for (int i = 0; i < n_items; i++)
         ac->current_group[i] = -1;
@@ -2480,7 +2688,9 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     for (int k = 0; k < n_items; k++) {
         int i = order[k];
         GString *lab = g_string_new(NULL);
+        GtkWidget *box;
         GtkWidget *chip;
+        GtkWidget *m = NULL;
         AssignChipRef *ref = g_new(AssignChipRef, 1);
 
         if (items[i].emoji) {
@@ -2489,17 +2699,35 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
         }
         g_string_append(lab, items[i].label);
 
+        box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+        gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
+
         chip = gtk_button_new_with_label(lab->str);
         g_string_free(lab, TRUE);
         gtk_widget_add_css_class(chip, "chip");
-        g_object_ref(chip);
-        ac->chips[i] = chip;
+        gtk_widget_set_halign(chip, GTK_ALIGN_CENTER);
+        gtk_box_append(GTK_BOX(box), chip);
+
+        if (meanings[i]) {
+            m = gtk_label_new(meanings[i]);
+            gtk_label_set_xalign(GTK_LABEL(m), 0.5);
+            gtk_widget_set_halign(m, GTK_ALIGN_CENTER);
+            gtk_widget_add_css_class(m, "meaning");
+            gtk_label_set_wrap(GTK_LABEL(m), TRUE);
+            gtk_label_set_max_width_chars(GTK_LABEL(m), 16);
+            gtk_widget_set_visible(m, FALSE);
+            gtk_box_append(GTK_BOX(box), m);
+            ac->trans[i] = m;
+        }
+
+        g_object_ref(box);
+        ac->items[i] = box;
 
         ref->ac = ac;
         ref->idx = i;
         g_signal_connect(chip, "clicked", G_CALLBACK(assign_chip_clicked), ref);
 
-        gtk_flow_box_insert(GTK_FLOW_BOX(ac->pool), chip, -1);
+        gtk_flow_box_insert(GTK_FLOW_BOX(ac->pool), box, -1);
     }
     g_free(order);
 
@@ -2550,26 +2778,26 @@ static void activate(GtkApplication *app, gpointer user_data) {
     ex_pages[1] = build_ex1();
     ex_pages[2] = build_assembly("Sätze bilden",
                                  "Přetáhněte slova do správného pořadí.",
-                                 2, ex2_items, G_N_ELEMENTS(ex2_items));
+                                 2, ex2_items, ex2_meaning, G_N_ELEMENTS(ex2_items));
     ex_pages[3] = build_choice("Was ist richtig?", "Vyberte správnou číslovku.",
-                               3, ex3_questions, G_N_ELEMENTS(ex3_questions));
+                               3, ex3_questions, ex3_meaning, G_N_ELEMENTS(ex3_questions));
     ex_pages[4] = build_ex4();
     ex_pages[5] = build_ex5();
     ex_pages[6] = build_ex6();
     ex_pages[7] = build_ex7();
     ex_pages[8] = build_ex8();
     ex_pages[9] = build_choice("Wer? Wie? Wo?", "Vyberte správné tázací slovo.",
-                               9, ex9_questions, G_N_ELEMENTS(ex9_questions));
+                               9, ex9_questions, ex9_meaning, G_N_ELEMENTS(ex9_questions));
     ex_pages[10] = build_assembly("Wörter trennen",
                                   "Přetáhněte slova do správného pořadí.",
-                                  10, ex10_items, G_N_ELEMENTS(ex10_items));
+                                  10, ex10_items, ex10_meaning, G_N_ELEMENTS(ex10_items));
     ex_pages[11] = build_assign("Grußformen", "Roztřiďte pozdravy na pozdravy a rozloučení.",
                                 11, ex11_items, G_N_ELEMENTS(ex11_items),
-                                ex11_groups, G_N_ELEMENTS(ex11_groups));
+                                ex11_groups, G_N_ELEMENTS(ex11_groups), ex11_meaning);
     ex_pages[12] = build_ex12();
     ex_pages[13] = build_assign("Länder", "Přiřaďte symboly ke správné zemi.",
                                 13, ex13_items, G_N_ELEMENTS(ex13_items),
-                                ex13_groups, G_N_ELEMENTS(ex13_groups));
+                                ex13_groups, G_N_ELEMENTS(ex13_groups), ex13_meaning);
 
     gtk_stack_add_named(main_stack, welcome_page, "welcome");
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
@@ -2814,6 +3042,11 @@ static void activate(GtkApplication *app, gpointer user_data) {
         "   font-weight: 700;"
         "}"
         ".hint {"
+        "   color: #a6adc8;"
+        "   font-size: 13px;"
+        "   font-style: italic;"
+        "}"
+        ".meaning {"
         "   color: #a6adc8;"
         "   font-size: 13px;"
         "   font-style: italic;"
