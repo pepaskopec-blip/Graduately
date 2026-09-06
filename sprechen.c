@@ -291,6 +291,8 @@ static void load_progress(void) {
     g_key_file_free(kf);
 }
 
+static void ex_rail_refresh(void);
+
 static void refresh_completion_ui(void) {
     gboolean all = TRUE;
 
@@ -319,6 +321,8 @@ static void refresh_completion_ui(void) {
             gtk_widget_set_visible(unit1_done_icon, FALSE);
         }
     }
+
+    ex_rail_refresh();
 }
 
 static void mark_done(int n) {
@@ -934,6 +938,11 @@ static int ex_cols = NUM_EXERCISES;
 static int ex_cw = (int)(2.0 * EX_MX + (NUM_EXERCISES - 1) * EX_SPAC);
 static int ex_ch = (int)(2.0 * EX_MY);
 
+static void ex_rail_refresh(void) {
+    if (ex_rail)
+        gtk_widget_queue_draw(ex_rail);
+}
+
 /* Compute the serpentine exercise layout for the given available width. */
 static void ex_layout_geometry(double avail) {
     const double phase = 2.0 * G_PI * 1.7 / (double)(NUM_EXERCISES - 1);
@@ -1012,11 +1021,8 @@ static void ex_path(cairo_t *cr, double t0, double t1) {
 static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
                          int width, int height, gpointer user_data) {
     const double t_end = (double)(NUM_EXERCISES - 1);
-    const double x0 = EX_MX;
-    const double x1 = (double)ex_cw - EX_MX;
-    const Rgb mauve = color_from_hex(0xcba6f7);
-    const Rgb blue = color_from_hex(0x89b4fa);
-    double hx, hy;
+    const Rgb slate = color_from_hex(0x45475a);
+    const Rgb green = color_from_hex(0xa6e3a1);
 
     (void)area;
     (void)width;
@@ -1029,41 +1035,26 @@ static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
-    ex_point(0.0, &hx, &hy);
-    draw_node_halo(cr, hx, hy, EX_BUBBLE * 1.25,
-                   mauve.r, mauve.g, mauve.b, 0.20);
+    cairo_new_path(cr);
+    ex_path(cr, 0.0, t_end);
+    cairo_set_line_width(cr, 14);
+    cairo_set_source_rgb(cr, 0.094, 0.098, 0.141);
+    cairo_stroke(cr);
 
     cairo_new_path(cr);
     ex_path(cr, 0.0, t_end);
-    cairo_set_line_width(cr, 12);
-    cairo_set_source_rgb(cr, 0.153, 0.157, 0.235);
+    cairo_set_line_width(cr, 9);
+    cairo_set_source_rgb(cr, slate.r, slate.g, slate.b);
     cairo_stroke(cr);
 
-    {
-        cairo_pattern_t *grad;
-
+    for (int k = 0; k < NUM_EXERCISES - 1; k++) {
+        if (!(ex_done[k + 1] || ex_done[k + 2]))
+            continue;
         cairo_new_path(cr);
-        ex_path(cr, 0.0, t_end);
-
-        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
-        cairo_pattern_add_color_stop_rgba(grad, 0.0,
-                                          mauve.r, mauve.g, mauve.b, 0.16);
-        cairo_pattern_add_color_stop_rgba(grad, 1.0,
-                                          blue.r, blue.g, blue.b, 0.16);
-        cairo_set_source(cr, grad);
-        cairo_set_line_width(cr, 24);
-        cairo_stroke_preserve(cr);
-        cairo_pattern_destroy(grad);
-
-        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
-        cairo_pattern_add_color_stop_rgba(grad, 0.0,
-                                          mauve.r, mauve.g, mauve.b, 1.0);
-        cairo_pattern_add_color_stop_rgba(grad, 1.0,
-                                          blue.r, blue.g, blue.b, 1.0);
-        cairo_set_source(cr, grad);
-        cairo_set_line_width(cr, 12);
-        cairo_stroke_preserve(cr);
-        cairo_pattern_destroy(grad);
+        ex_path(cr, (double)k, (double)(k + 1));
+        cairo_set_source_rgba(cr, green.r, green.g, green.b, 0.85);
+        cairo_set_line_width(cr, 9);
+        cairo_stroke(cr);
     }
 }
 
