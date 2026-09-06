@@ -644,6 +644,10 @@ static char *build_theme_css(const ThemePalette *p) {
         "   color: @accent;"
         "   background-color: alpha(@bg_surface1, 0.4);"
         "}"
+        ".settings-btn:checked {"
+        "   color: @on_accent;"
+        "   background-image: linear-gradient(135deg, @accent 0%%, @accent2 100%%);"
+        "}"
         "popover,"
         "popover.background,"
         ".settings-popover {"
@@ -4324,13 +4328,6 @@ static GtkWidget *make_theme_card(ThemeId id, GtkToggleButton *group) {
     return btn;
 }
 
-static void on_settings_clicked(GtkButton *button, gpointer user_data) {
-    GtkPopover *popover = GTK_POPOVER(user_data);
-
-    (void)button;
-    gtk_popover_popup(popover);
-}
-
 static GtkWidget *build_settings_button(void) {
     GtkWidget *btn;
     GtkWidget *icon;
@@ -4348,7 +4345,7 @@ static GtkWidget *build_settings_button(void) {
     GtkWidget *first_theme = NULL;
     int i;
 
-    btn = gtk_button_new();
+    btn = gtk_menu_button_new();
     gtk_widget_add_css_class(btn, "settings-btn");
     gtk_widget_add_css_class(btn, "flat");
     i18n_bind(btn, "settings", 2);
@@ -4360,22 +4357,18 @@ static GtkWidget *build_settings_button(void) {
     gtk_widget_set_can_target(icon, FALSE);
     gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(icon),
                                    draw_settings_icon, NULL, NULL);
-    gtk_button_set_child(GTK_BUTTON(btn), icon);
+    gtk_menu_button_set_child(GTK_MENU_BUTTON(btn), icon);
     g_signal_connect_swapped(btn, "state-flags-changed",
                              G_CALLBACK(gtk_widget_queue_draw), icon);
 
     popover = gtk_popover_new();
     gtk_widget_add_css_class(popover, "settings-popover");
-    gtk_widget_set_parent(popover, btn);
-    g_signal_connect_swapped(btn, "destroy",
-                             G_CALLBACK(gtk_widget_unparent), popover);
     gtk_popover_set_has_arrow(GTK_POPOVER(popover), TRUE);
     gtk_popover_set_position(GTK_POPOVER(popover), GTK_POS_BOTTOM);
-    g_signal_connect(btn, "clicked", G_CALLBACK(on_settings_clicked), popover);
+    gtk_menu_button_set_popover(GTK_MENU_BUTTON(btn), popover);
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
     gtk_widget_add_css_class(box, "settings-box");
-    gtk_popover_set_child(GTK_POPOVER(popover), box);
 
     title = gtk_label_new(NULL);
     i18n_bind(title, "settings_title", 0);
@@ -4474,6 +4467,20 @@ static GtkWidget *build_settings_button(void) {
                                       0, 0, NULL, on_lang_toggled, NULL);
     gtk_box_append(GTK_BOX(lang_row), cs_btn);
     gtk_box_append(GTK_BOX(lang_row), en_btn);
+
+    {
+        GtkWidget *sw = gtk_scrolled_window_new();
+        gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw),
+                                       GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+        gtk_scrolled_window_set_max_content_height(GTK_SCROLLED_WINDOW(sw), 470);
+        gtk_scrolled_window_set_has_frame(GTK_SCROLLED_WINDOW(sw), FALSE);
+        gtk_scrolled_window_set_propagate_natural_width(GTK_SCROLLED_WINDOW(sw), TRUE);
+        gtk_scrolled_window_set_propagate_natural_height(GTK_SCROLLED_WINDOW(sw), TRUE);
+        gtk_widget_set_hexpand(sw, FALSE);
+        gtk_widget_set_vexpand(sw, FALSE);
+        gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(sw), box);
+        gtk_popover_set_child(GTK_POPOVER(popover), sw);
+    }
 
     return btn;
 }
