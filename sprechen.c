@@ -599,6 +599,12 @@ static const TrEntry tr_content[] = {
     {"Anglie", NULL, "England"},
     {"Polsko", NULL, "Poland"},
     {"Rusko", NULL, "Russia"},
+    {"Russland – Rusko", NULL, "Russland – Russia"},
+    {"Türkei – Turecko", NULL, "Türkei – Turkey"},
+    {"Slowakei – Slovensko", NULL, "Slowakei – Slovakia"},
+    {"Kroatien – Chorvatsko", NULL, "Kroatien – Croatia"},
+    {"Griechenland – Řecko", NULL, "Griechenland – Greece"},
+    {"Italien – Itálie", NULL, "Italien – Italy"},
     {"Turecko", NULL, "Turkey"},
     {"Chorvatsko", NULL, "Croatia"},
     {"Řecko", NULL, "Greece"},
@@ -4645,14 +4651,14 @@ static const TypedQ g06_rows[] = {
 };
 
 static const TypedQ g07_rows[] = {
-    {"1.  Ru__land", "russland", "Rusko"},
-    {"2.  T__rkei", "türkei|turkei", "Turecko"},
-    {"3.  Slo__kei", "slowakei", "Slovensko"},
-    {"4.  Kro__ien", "kroatien", "Chorvatsko"},
-    {"5.  Deut___land", "deutschland", "Německo"},
-    {"6.  Öst___reich", "österreich|osterreich", "Rakousko"},
-    {"7.  Gr__chenlan__", "griechenland", "Řecko"},
-    {"8.  Ita__en", "italien", "Itálie"},
+    {"1.  Ru__land", "russland|ss", "Russland – Rusko"},
+    {"2.  T_rkei", "türkei|turkei|ü|u", "Türkei – Turecko"},
+    {"3.  Slo__kei", "slowakei|wa", "Slowakei – Slovensko"},
+    {"4.  Kro__ien", "kroatien|at", "Kroatien – Chorvatsko"},
+    {"5.  Deut___land", "deutschland|sch", "Deutschland – Německo"},
+    {"6.  Öst__reich", "österreich|osterreich|er", "Österreich – Rakousko"},
+    {"7.  Gr__chenland", "griechenland|ie", "Griechenland – Řecko"},
+    {"8.  Ita__en", "italien|li", "Italien – Itálie"},
 };
 
 static const TypedQ g11_rows[] = {
