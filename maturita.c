@@ -258,8 +258,8 @@ static ThemePalette theme_palette(ThemeId id, ColorMode mode) {
         0x073642, 0x002b36, 0x586e75, 0x002b36, 0x002b36, 0x073642, 0x586e75
     };
     static const ThemePalette sol_light = {
-        0xeee8d5, 0xfdf6e3, 0xeee8d5, 0x93a1a1, 0x839496, 0x657b83,
-        0x586e75, 0x657b83, 0x93a1a1, 0x268bd2, 0x6c71c4, 0x2aa198,
+        0xeee8d5, 0xfdf6e3, 0xeee8d5, 0xeee8d5, 0xe2dbc6, 0xc9c0a6,
+        0x657b83, 0x586e75, 0x657b83, 0x268bd2, 0x6c71c4, 0x2aa198,
         0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0xfdf6e3,
         0xeee8d5, 0xe6dfc8, 0x93a1a1, 0xeee8d5, 0xeee8d5, 0x93a1a1, 0x586e75
     };
@@ -1465,6 +1465,26 @@ static void load_settings(void) {
     g_key_file_free(kf);
 }
 
+/* GTK only re-resolves the style of widgets that are actually drawn after a
+ * CSS provider reload. Pages that are not the current stack child keep their
+ * previously resolved colors, so after switching the theme any page you then
+ * open still shows the old palette (e.g. near-white text in light mode).
+ * Adding and immediately removing a dummy class forces GTK to invalidate the
+ * style node of every widget, including hidden pages. */
+static void force_restyle_tree(GtkWidget *w) {
+    GtkWidget *child;
+
+    if (!w)
+        return;
+
+    gtk_widget_add_css_class(w, "m4-restyle");
+    gtk_widget_remove_css_class(w, "m4-restyle");
+
+    for (child = gtk_widget_get_first_child(w); child;
+         child = gtk_widget_get_next_sibling(child))
+        force_restyle_tree(child);
+}
+
 static void apply_theme(void) {
     char *css;
     GtkSettings *settings = gtk_settings_get_default();
@@ -1493,8 +1513,10 @@ static void apply_theme(void) {
 
     refresh_welcome_heading();
 
-    if (main_window)
+    if (main_window) {
         gtk_widget_queue_draw(GTK_WIDGET(main_window));
+        force_restyle_tree(GTK_WIDGET(main_window));
+    }
     if (road_rail)
         gtk_widget_queue_draw(road_rail);
     for (int i = 0; i < NUM_UNLOCKED; i++)
