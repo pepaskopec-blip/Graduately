@@ -2,6 +2,9 @@
 # Prerequisites
 #.d
 
+#jetbrains slop
+.idea/
+
 # binary
 sprechen
 maturita
