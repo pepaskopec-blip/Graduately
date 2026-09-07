@@ -587,6 +587,12 @@ static const TrEntry tr_content[] = {
     {"Švýcarka", NULL, "Swiss woman"},
     {"Němec", NULL, "German man"},
     {"Německo", NULL, "Germany"},
+    {"Deutschland – Německo", NULL, "Deutschland – Germany"},
+    {"Slowakei – Slovensko", NULL, "Slowakei – Slovakia"},
+    {"Österreich – Rakousko", NULL, "Österreich – Austria"},
+    {"Spanien – Španělsko", NULL, "Spanien – Spain"},
+    {"England – Anglie", NULL, "England – England"},
+    {"Polen – Polsko", NULL, "Polen – Poland"},
     {"Slovensko", NULL, "Slovakia"},
     {"Rakousko", NULL, "Austria"},
     {"Španělsko", NULL, "Spain"},
@@ -4625,17 +4631,17 @@ static const TypedQ g05_rows[] = {
 
 static const TypedQ g06_rows[] = {
     {"Ich heiße Thomas. Ich spreche Deutsch. Ich komme aus D________.",
-     "deutschland", "Německo"},
+     "deutschland|eutschland", "Deutschland – Německo"},
     {"Ich heiße Martina. Ich spreche Slowakisch. Ich komme aus der S________.",
-     "slowakei", "Slovensko"},
+     "slowakei|lowakei", "Slowakei – Slovensko"},
     {"Ich heiße Petra. Ich spreche Deutsch. Ich komme aus Ö________.",
-     "österreich|osterreich", "Rakousko"},
+     "österreich|osterreich|sterreich", "Österreich – Rakousko"},
     {"Ich heiße Miguel. Ich spreche Spanisch. Ich komme aus S________.",
-     "spanien", "Španělsko"},
+     "spanien|panien", "Spanien – Španělsko"},
     {"Ich heiße George. Ich spreche Englisch. Ich komme aus E________.",
-     "england", "Anglie"},
+     "england|ngland", "England – Anglie"},
     {"Ich heiße Maria. Ich spreche Polnisch. Ich komme aus P________.",
-     "polen", "Polsko"},
+     "polen|olen", "Polen – Polsko"},
 };
 
 static const TypedQ g07_rows[] = {
