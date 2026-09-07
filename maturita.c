@@ -1308,6 +1308,11 @@ static char *build_theme_css(const ThemePalette *p) {
         "   border-color: @error;"
         "   box-shadow: 0 0 0 2px alpha(@error, 0.4);"
         "}"
+        ".pill.hm-key {"
+        "   padding: 4px 5px;"
+        "   min-width: 32px;"
+        "   font-size: 13px;"
+        "}"
         ".chip {"
         "   background-image: none;"
         "   background-color: @bg_surface1;"
@@ -5029,14 +5034,72 @@ static void typed_check(GtkButton *button, gpointer data) {
     }
 }
 
+typedef struct {
+    TypedCtx *ctx;
+    GtkWidget *note;
+    const TypedQ *qs;
+    int n;
+} TypedNoteCtx;
+
+/* Capitalise the first (canonical) answer alternative for display. */
+static char *typed_answer_display(const char *answers) {
+    const char *pipe = strchr(answers, '|');
+    char *base = pipe ? g_strndup(answers, (gsize)(pipe - answers))
+                      : g_strdup(answers);
+
+    if (base[0]) {
+        gunichar ch = g_utf8_get_char(base);
+        gunichar up = g_unichar_toupper(ch);
+        if (up != ch) {
+            char *first = g_ucs4_to_utf8(&up, 1, NULL, NULL, NULL);
+            char *res = g_strconcat(first, g_utf8_next_char(base), NULL);
+            g_free(first);
+            g_free(base);
+            return res;
+        }
+    }
+    return base;
+}
+
+static void typed_note_reveal(TypedNoteCtx *nc) {
+    GString *s;
+    int i;
+
+    if (!nc->note)
+        return;
+
+    s = g_string_new(NULL);
+    for (i = 0; i < nc->n; i++) {
+        char *word = typed_answer_display(nc->qs[i].answers);
+        if (i > 0)
+            g_string_append_c(s, '\n');
+        if (nc->qs[i].meaning)
+            g_string_append_printf(s, "%s – %s", word, tr(nc->qs[i].meaning));
+        else
+            g_string_append(s, word);
+        g_free(word);
+    }
+    gtk_label_set_text(GTK_LABEL(nc->note), s->str);
+    g_string_free(s, TRUE);
+    gtk_widget_set_visible(nc->note, TRUE);
+}
+
+static void typed_ex_check(GtkButton *button, gpointer data) {
+    TypedNoteCtx *nc = data;
+
+    typed_check(button, nc->ctx);
+    typed_note_reveal(nc);
+}
+
 static GtkWidget *build_typed(UnitCtx *unit, int ex_num,
                               const char *title, const char *sub,
                               const TypedQ *qs, int n,
-                              const char *word_bank) {
+                              const char *word_bank, gboolean answers_note) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
                                     &body, &feedback, &check);
     TypedCtx *ctx = g_new0(TypedCtx, 1);
+    TypedNoteCtx *nc = NULL;
 
     ctx->qs = qs;
     ctx->n = n;
@@ -5079,7 +5142,25 @@ static GtkWidget *build_typed(UnitCtx *unit, int ex_num,
             ctx->trans[i] = meaning_add(body, qs[i].meaning);
     }
 
-    g_signal_connect(check, "clicked", G_CALLBACK(typed_check), ctx);
+    if (answers_note) {
+        GtkWidget *note = gtk_label_new(NULL);
+        gtk_widget_set_halign(note, GTK_ALIGN_START);
+        gtk_widget_set_margin_top(note, 6);
+        gtk_widget_add_css_class(note, "meaning");
+        gtk_label_set_wrap(GTK_LABEL(note), TRUE);
+        gtk_widget_set_visible(note, FALSE);
+        gtk_box_append(GTK_BOX(body), note);
+
+        nc = g_new0(TypedNoteCtx, 1);
+        nc->ctx = ctx;
+        nc->note = note;
+        nc->qs = qs;
+        nc->n = n;
+        g_signal_connect(check, "clicked", G_CALLBACK(typed_ex_check), nc);
+    } else {
+        g_signal_connect(check, "clicked", G_CALLBACK(typed_check), ctx);
+    }
+
     return page;
 }
 
@@ -5578,16 +5659,22 @@ static const char *hm_tips[HM_WORDS] = {
     "prodává v obchodě",
 };
 
+/* QWERTY order, Ä/Ö/Ü in their own bottom row. */
 static const char *hm_letters[] = {
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
+    "A", "S", "D", "F", "G", "H", "J", "K", "L",
+    "Z", "X", "C", "V", "B", "N", "M",
     "Ä", "Ö", "Ü",
 };
 #define HM_N_LETTERS (int)(G_N_ELEMENTS(hm_letters))
+#define HM_ROW2 10   /* start of the ASDF row */
+#define HM_ROW3 19   /* start of the ZXCV row   */
+#define HM_ROW4 26   /* start of the umlaut row */
 
 static const gunichar hm_letters_u[] = {
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
+    'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
+    'Z', 'X', 'C', 'V', 'B', 'N', 'M',
     0x00c4, 0x00d6, 0x00dc,
 };
 
@@ -5894,21 +5981,29 @@ static GtkWidget *build_hangman(UnitCtx *unit, int ex_num, const char *title,
     gtk_widget_add_css_class(guess_lbl, "ex-sub");
     gtk_box_append(GTK_BOX(content), guess_lbl);
 
-    letters = gtk_flow_box_new();
-    gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(letters), GTK_SELECTION_NONE);
-    gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(letters), 9);
-    gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(letters), 9);
+    letters = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
     gtk_box_append(GTK_BOX(content), letters);
 
     hm->letter_btns = g_new0(GtkWidget *, HM_N_LETTERS);
-    for (int i = 0; i < HM_N_LETTERS; i++) {
-        GtkWidget *b = gtk_button_new_with_label(hm_letters[i]);
-        gtk_widget_add_css_class(b, "pill");
-        gtk_widget_set_hexpand(b, FALSE);
-        g_object_set_data(G_OBJECT(b), "li", GINT_TO_POINTER(i));
-        g_signal_connect(b, "clicked", G_CALLBACK(hm_guess_letter), hm);
-        gtk_flow_box_append(GTK_FLOW_BOX(letters), b);
-        hm->letter_btns[i] = b;
+    {
+        static const int kb_start[4] = { 0, HM_ROW2, HM_ROW3, HM_ROW4 };
+        static const int kb_end[4] = { HM_ROW2, HM_ROW3, HM_ROW4,
+                                       HM_N_LETTERS };
+        for (int r = 0; r < 4; r++) {
+            GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+            gtk_widget_set_halign(row, GTK_ALIGN_CENTER);
+            gtk_widget_set_margin_top(row, r == 3 ? 4 : 0);
+            for (int i = kb_start[r]; i < kb_end[r]; i++) {
+                GtkWidget *b = gtk_button_new_with_label(hm_letters[i]);
+                gtk_widget_add_css_class(b, "pill");
+                gtk_widget_add_css_class(b, "hm-key");
+                g_object_set_data(G_OBJECT(b), "li", GINT_TO_POINTER(i));
+                g_signal_connect(b, "clicked", G_CALLBACK(hm_guess_letter), hm);
+                gtk_box_append(GTK_BOX(row), b);
+                hm->letter_btns[i] = b;
+            }
+            gtk_box_append(GTK_BOX(letters), row);
+        }
     }
 
     hm->feedback = gtk_label_new(NULL);
@@ -5973,17 +6068,17 @@ static GtkWidget *u2ex4(UnitCtx *unit) {
 
 static GtkWidget *u2ex5(UnitCtx *unit) {
     return build_typed(unit, 5, "Nationalitäten", "sub_nation",
-                       g05_rows, G_N_ELEMENTS(g05_rows), g05_bank);
+                       g05_rows, G_N_ELEMENTS(g05_rows), g05_bank, FALSE);
 }
 
 static GtkWidget *u2ex6(UnitCtx *unit) {
     return build_typed(unit, 6, "Woher?", "sub_woher",
-                       g06_rows, G_N_ELEMENTS(g06_rows), NULL);
+                       g06_rows, G_N_ELEMENTS(g06_rows), NULL, FALSE);
 }
 
 static GtkWidget *u2ex7(UnitCtx *unit) {
     return build_typed(unit, 7, "Länder schreiben", "sub_laender",
-                       g07_rows, G_N_ELEMENTS(g07_rows), NULL);
+                       g07_rows, G_N_ELEMENTS(g07_rows), NULL, FALSE);
 }
 
 static GtkWidget *u2ex8(UnitCtx *unit) {
@@ -6007,7 +6102,7 @@ static GtkWidget *u2ex10(UnitCtx *unit) {
 
 static GtkWidget *u2ex11(UnitCtx *unit) {
     return build_typed(unit, 11, "Wörter suchen", "sub_wortsuchen",
-                       g11_rows, G_N_ELEMENTS(g11_rows), NULL);
+                       g11_rows, G_N_ELEMENTS(g11_rows), NULL, FALSE);
 }
 
 static GtkWidget *u2ex12(UnitCtx *unit) {
@@ -6098,7 +6193,7 @@ static GtkWidget *u2ex18(UnitCtx *unit) {
 
 static GtkWidget *u2ex19(UnitCtx *unit) {
     return build_typed(unit, 19, "Nationalität", "sub_bistdu",
-                       s03_rows, G_N_ELEMENTS(s03_rows), NULL);
+                       s03_rows, G_N_ELEMENTS(s03_rows), NULL, TRUE);
 }
 
 /* ------------------------------------------------------------------ */
