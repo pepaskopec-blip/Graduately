@@ -695,6 +695,19 @@ static const TrEntry tr_content[] = {
     {"učí ve škole", NULL, "he teaches at school"},
     {"pracuje u policie", NULL, "he works for the police"},
     {"prodává v obchodě", NULL, "he sells in a shop"},
+    /* ---- unit 2: word-level glosses for ex14/ex15 ---- */
+    {"z", NULL, "from"},
+    {"dělá", NULL, "does"},
+    {"kamarád", NULL, "friend"},
+    {"žije", NULL, "lives"},
+    {"jazyk", NULL, "language"},
+    {"dobře", NULL, "well"},
+    {"potřebovat", NULL, "to need"},
+    {"pracovat", NULL, "to work"},
+    {"řídit", NULL, "to drive"},
+    {"navštěvovat", NULL, "to attend"},
+    {"mluvit", NULL, "to speak"},
+    {"číst", NULL, "to read"},
     {NULL, NULL, NULL}
 };
 
@@ -4850,7 +4863,7 @@ static GtkWidget *build_assign(UnitCtx *unit, const char *title,
 static void verb_rows_add(ComboListCtx *ctx, GtkWidget *body, int *counter,
                           const VerbQ *qs, int n,
                           const char **pool, int pool_n,
-                          const char **meanings) {
+                          const char **meanings, gboolean pre_meaning) {
     for (int i = 0; i < n; i++) {
         GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
         GtkWidget *before = gtk_label_new(qs[i].before);
@@ -4886,24 +4899,85 @@ static void verb_rows_add(ComboListCtx *ctx, GtkWidget *body, int *counter,
 
         gtk_box_append(GTK_BOX(body), row);
 
-        if (meanings && meanings[i])
-            combo_list_add_trans(ctx, meaning_add(body, meanings[i]));
+        if (meanings && meanings[i]) {
+            GtkWidget *mean = meaning_add(body, meanings[i]);
+            if (pre_meaning)
+                gtk_widget_set_visible(mean, TRUE);
+            combo_list_add_trans(ctx, mean);
+        }
     }
+}
+
+typedef struct {
+    ComboListCtx *ctx;
+    GtkWidget *note;
+    const VerbQ *qs;
+    int n;
+    const char **gloss;   /* per-row word-level meaning keys (current lang) */
+} VerbNoteCtx;
+
+static void verb_note_reveal(VerbNoteCtx *nc) {
+    GString *s;
+    int i;
+
+    if (!nc->note || !nc->gloss)
+        return;
+
+    s = g_string_new(NULL);
+    for (i = 0; i < nc->n; i++) {
+        if (i > 0)
+            g_string_append_c(s, '\n');
+        g_string_append_printf(s, "%s – %s", nc->qs[i].answer,
+                               tr(nc->gloss[i]));
+    }
+    gtk_label_set_text(GTK_LABEL(nc->note), s->str);
+    g_string_free(s, TRUE);
+    gtk_widget_set_visible(nc->note, TRUE);
+}
+
+static void verb_ex_check(GtkButton *button, gpointer data) {
+    VerbNoteCtx *nc = data;
+
+    combo_list_check(button, nc->ctx);
+    verb_note_reveal(nc);
 }
 
 static GtkWidget *build_verb_ex(UnitCtx *unit, int ex_num,
                                 const char *title, const char *sub,
                                 const VerbQ *qs, int n,
                                 const char **pool, int pool_n,
-                                const char **meanings) {
+                                const char **meanings, gboolean pre_meaning,
+                                const char **gloss) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
                                     &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(unit, ex_num, feedback);
+    VerbNoteCtx *nc = NULL;
     int counter = 0;
 
-    verb_rows_add(ctx, body, &counter, qs, n, pool, pool_n, meanings);
-    g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
+    verb_rows_add(ctx, body, &counter, qs, n, pool, pool_n, meanings,
+                  pre_meaning);
+
+    if (gloss) {
+        GtkWidget *note = gtk_label_new(NULL);
+        gtk_widget_set_halign(note, GTK_ALIGN_START);
+        gtk_widget_set_margin_top(note, 6);
+        gtk_widget_add_css_class(note, "meaning");
+        gtk_label_set_wrap(GTK_LABEL(note), TRUE);
+        gtk_widget_set_visible(note, FALSE);
+        gtk_box_append(GTK_BOX(body), note);
+
+        nc = g_new0(VerbNoteCtx, 1);
+        nc->ctx = ctx;
+        nc->note = note;
+        nc->qs = qs;
+        nc->n = n;
+        nc->gloss = gloss;
+        g_signal_connect(check, "clicked", G_CALLBACK(verb_ex_check), nc);
+    } else {
+        g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
+    }
+
     return page;
 }
 
@@ -5213,6 +5287,10 @@ static const char *g14_mean[] = {
     "Už mluví velmi dobře německy.",
 };
 
+static const char *g14_gloss[] = {
+    "z", "dělá", "kamarád", "žije", "jazyk", "dobře",
+};
+
 /* ---- G15 Verbinde ---------------------------------------------------- */
 
 static const VerbQ g15_rows[] = {
@@ -5235,6 +5313,11 @@ static const char *g15_mean[] = {
     "navštěvovat gymnázium",
     "mluvit španělsky",
     "číst detektivky",
+};
+
+static const char *g15_gloss[] = {
+    "potřebovat", "pracovat", "řídit",
+    "navštěvovat", "mluvit", "číst",
 };
 
 /* ---- G16 Zahlenpaare -------------------------------------------------- */
@@ -5335,7 +5418,7 @@ typedef struct {
 } OrdneRow;
 
 static const OrdneRow g13_rows[] = {
-    {"heißen sie?", "Was", "Jana und Michael."},
+    {"heißen sie?", "Wie", "Jana und Michael."},
     {"spricht Polnisch?", "Wer", "Jacek."},
     {"wohnt Eva?", "Wo", "In Plzeň."},
     {"kommt Markus?", "Woher", "Aus Deutschland."},
@@ -5343,7 +5426,7 @@ static const OrdneRow g13_rows[] = {
     {"spricht Jana?", "Was", "Slowakisch."},
 };
 
-static const char *g13_fw_pool[] = {"Was", "Wer", "Wo", "Woher"};
+static const char *g13_fw_pool[] = {"Was", "Wer", "Wie", "Wo", "Woher"};
 
 static const char *g13_ans_pool[] = {
     "Jana und Michael.", "Jacek.", "In Plzeň.", "Aus Deutschland.",
@@ -5865,7 +5948,7 @@ static GtkWidget *u2ex1(UnitCtx *unit) {
     gtk_widget_add_css_class(h1, "ex-sub");
     gtk_box_append(GTK_BOX(body), h1);
     verb_rows_add(ctx, body, &counter, g01_peter, G_N_ELEMENTS(g01_peter),
-                  g01_pool, G_N_ELEMENTS(g01_pool), g01_peter_mean);
+                  g01_pool, G_N_ELEMENTS(g01_pool), g01_peter_mean, FALSE);
 
     GtkWidget *h2 = gtk_label_new("Jana Nová und Pavol Korčák:");
     gtk_widget_set_halign(h2, GTK_ALIGN_START);
@@ -5873,7 +5956,7 @@ static GtkWidget *u2ex1(UnitCtx *unit) {
     gtk_widget_set_margin_top(h2, 10);
     gtk_box_append(GTK_BOX(body), h2);
     verb_rows_add(ctx, body, &counter, g01_jana, G_N_ELEMENTS(g01_jana),
-                  g01_pool, G_N_ELEMENTS(g01_pool), g01_jana_mean);
+                  g01_pool, G_N_ELEMENTS(g01_pool), g01_jana_mean, FALSE);
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
     return page;
@@ -5892,7 +5975,8 @@ static GtkWidget *u2ex3(UnitCtx *unit) {
 static GtkWidget *u2ex4(UnitCtx *unit) {
     return build_verb_ex(unit, 4, "sprechen", "sub_sprich",
                          g04_rows, G_N_ELEMENTS(g04_rows),
-                         g04_pool, G_N_ELEMENTS(g04_pool), g04_mean);
+                         g04_pool, G_N_ELEMENTS(g04_pool), g04_mean, FALSE,
+                         NULL);
 }
 
 static GtkWidget *u2ex5(UnitCtx *unit) {
@@ -5913,18 +5997,20 @@ static GtkWidget *u2ex7(UnitCtx *unit) {
 static GtkWidget *u2ex8(UnitCtx *unit) {
     return build_verb_ex(unit, 8, "Verben einsetzen", "sub_verb2",
                          g08_rows, G_N_ELEMENTS(g08_rows),
-                         g08_pool, G_N_ELEMENTS(g08_pool), g08_mean);
+                         g08_pool, G_N_ELEMENTS(g08_pool), g08_mean, FALSE,
+                         NULL);
 }
 
 static GtkWidget *u2ex9(UnitCtx *unit) {
-    return build_free_answer(unit, 9, "Freie Antwort", "sub_free", NULL,
+    return build_free_answer(unit, 9, "Freie Antwort", "sub_free", "tip_ss",
                              ex9_free_qs, (int)G_N_ELEMENTS(ex9_free_qs));
 }
 
 static GtkWidget *u2ex10(UnitCtx *unit) {
     return build_verb_ex(unit, 10, "Euro", "sub_euro",
                          g10_rows, G_N_ELEMENTS(g10_rows),
-                         g10_pool, G_N_ELEMENTS(g10_pool), g10_mean);
+                         g10_pool, G_N_ELEMENTS(g10_pool), g10_mean, TRUE,
+                         NULL);
 }
 
 static GtkWidget *u2ex11(UnitCtx *unit) {
@@ -5991,19 +6077,22 @@ static GtkWidget *u2ex13(UnitCtx *unit) {
 static GtkWidget *u2ex14(UnitCtx *unit) {
     return build_verb_ex(unit, 14, "Lückentext", "sub_luecke",
                          g14_rows, G_N_ELEMENTS(g14_rows),
-                         g14_pool, G_N_ELEMENTS(g14_pool), g14_mean);
+                         g14_pool, G_N_ELEMENTS(g14_pool), g14_mean, TRUE,
+                         g14_gloss);
 }
 
 static GtkWidget *u2ex15(UnitCtx *unit) {
     return build_verb_ex(unit, 15, "Verbinde", "sub_verbinde",
                          g15_rows, G_N_ELEMENTS(g15_rows),
-                         g15_pool, G_N_ELEMENTS(g15_pool), g15_mean);
+                         g15_pool, G_N_ELEMENTS(g15_pool), g15_mean, TRUE,
+                         g15_gloss);
 }
 
 static GtkWidget *u2ex16(UnitCtx *unit) {
     return build_verb_ex(unit, 16, "Zahlen", "sub_zahlpaar",
                          g16_rows, G_N_ELEMENTS(g16_rows),
-                         g16_pool, G_N_ELEMENTS(g16_pool), g16_mean);
+                         g16_pool, G_N_ELEMENTS(g16_pool), g16_mean, FALSE,
+                         NULL);
 }
 
 static GtkWidget *u2ex17(UnitCtx *unit) {
