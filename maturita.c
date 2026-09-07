@@ -5599,7 +5599,6 @@ typedef struct {
     GtkWidget *slots;
     GtkWidget *hint_lbl;
     GtkWidget *counter_lbl;
-    GtkWidget *retry_btn;
     GtkWidget **letter_btns;
     gboolean guessed[HM_N_LETTERS];
     gboolean locked;      /* true during the "word solved" pause */
@@ -5691,7 +5690,6 @@ static gboolean hm_advance(gpointer data) {
         g_free(t);
     }
     hm_clear_feedback(hm);
-    gtk_widget_set_visible(hm->retry_btn, FALSE);
     hm_redraw(hm);
     return G_SOURCE_REMOVE;
 }
@@ -5705,8 +5703,12 @@ static void hm_reset_word(gpointer data) {
     hm_set_letters_enabled(hm, TRUE);
     hm_update_slots(hm);
     hm_clear_feedback(hm);
-    gtk_widget_set_visible(hm->retry_btn, FALSE);
     hm_redraw(hm);
+}
+
+static gboolean hm_retry_word(gpointer data) {
+    hm_reset_word(data);
+    return G_SOURCE_REMOVE;
 }
 
 static void hm_guess_letter(GtkButton *button, gpointer data) {
@@ -5748,12 +5750,12 @@ static void hm_guess_letter(GtkButton *button, gpointer data) {
             hm_set_letters_enabled(hm, FALSE);
             set_feedback(hm->feedback, FALSE, msg);
             g_free(msg);
-            gtk_widget_set_visible(hm->retry_btn, TRUE);
-            /* reveal the word */
+            /* reveal the word, then restart it with empty letters */
             for (int i = 0; i < HM_N_LETTERS; i++)
                 hm->guessed[i] = TRUE;
             hm_update_slots(hm);
             hm_redraw(hm);
+            g_timeout_add(1600, hm_retry_word, hm);
         }
     }
 }
@@ -5833,7 +5835,6 @@ static GtkWidget *build_hangman(UnitCtx *unit, int ex_num, const char *title,
     GtkWidget *slots;
     GtkWidget *tip_hdr;
     GtkWidget *hint_lbl;
-    GtkWidget *retry;
     GtkWidget *letters;
     GtkWidget *head;
     GtkWidget *guess_lbl;
@@ -5914,15 +5915,6 @@ static GtkWidget *build_hangman(UnitCtx *unit, int ex_num, const char *title,
     gtk_widget_set_halign(hm->feedback, GTK_ALIGN_CENTER);
     gtk_widget_set_margin_top(hm->feedback, 6);
     gtk_box_append(GTK_BOX(content), hm->feedback);
-
-    retry = gtk_button_new();
-    i18n_bind(retry, "hm_retry", 1);
-    gtk_widget_add_css_class(retry, "btn-primary");
-    gtk_widget_set_halign(retry, GTK_ALIGN_CENTER);
-    gtk_widget_set_visible(retry, FALSE);
-    hm->retry_btn = retry;
-    g_signal_connect(retry, "clicked", G_CALLBACK(hm_reset_word), hm);
-    gtk_box_append(GTK_BOX(content), retry);
 
     gtk_label_set_text(GTK_LABEL(hint_lbl), tr(hm_tips[0]));
     tmp = g_strdup_printf(tr("hm_progress"), 1, HM_WORDS);
