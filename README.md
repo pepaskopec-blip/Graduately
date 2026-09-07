@@ -15,9 +15,8 @@ modern, CSS-styled GTK 4 interface.
   continue button to get started
 - **Learning roadmap** – adaptive serpentine learning path with 10 units
   - each unit numbered and labeled with its topic (e.g. "Neue Freunde")
-  - current unit highlighted with an accent gradient and glow
-  - completed units shown in green with a checkmark
-  - locked units dimmed with a lock icon
+  - units 1 and 2 are open; completed units shown in green with a checkmark
+  - remaining units dimmed with a lock icon
   - finish node at the end of the path
   - layout folds into multiple rows when the window is narrow
 - **Back navigation** – themed circular back button (top-left) returns to the
@@ -26,8 +25,14 @@ modern, CSS-styled GTK 4 interface.
   exercises (dialogs, sentence building, multiple choice, free answers,
   numbers, verb conjugation, greeting sorting and more), each with German
   prompts and a check button that reveals the translations
+- **Unit 2 exercises** – "Aus aller Welt" is playable from the start (no need
+  to finish unit 1 first) and offers a bubble map with 19 exercises: verb
+  conjugation, prepositions `aus`/`in`, question words, nationalities and
+  countries, spelling/look-and-find tasks, a matching exercise, a number/word
+  game, free-answer "Steckbrief" tasks and a Hangman game with 5 professions
 - **Progress tracking** – completed exercises are marked green; progress is
-  saved to `progress/unit1.conf` and restored on startup
+  saved per unit to `progress/unit1.conf` and `progress/unit2.conf` and
+  restored on startup
 - **Settings** – gear icon in the top-right header opens a panel where you can
   choose:
   - **mode**: dark or light, as a segmented control
@@ -132,16 +137,18 @@ When launched, the application shows the welcome screen. From there:
 1. Click **"Pokračuj" / "Continue"** to open the learning roadmap.
 2. Browse the units along the path; the roadmap reflows into rows and scrolls
    if the window is too narrow.
-3. Click the **"Neue Freunde"** node to open the unit's exercise map, then pick
-   any bubble to start an exercise.
+3. Click the **"Neue Freunde"** node to open unit 1 or **"Aus aller Welt"** to
+   open unit 2, then pick any bubble to start an exercise. Unit 2 is available
+   even if unit 1 is not finished yet.
 4. Use the **back button** in the top-left corner to return to the previous
    screen.
 5. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
-Only the first unit is currently implemented. Locked units do nothing – they
-are placeholders until lessons are added. Completed exercises stay green and
-are saved to `progress/unit1.conf` (created next to the app on first finish).
+Units 1 and 2 are currently implemented. Locked units do nothing – they are
+placeholders until lessons are added. Completed exercises stay green and are
+saved per unit to `progress/unit1.conf` / `progress/unit2.conf` (created next
+to the app on first finish).
 
 ### Keyboard shortcuts
 
@@ -158,7 +165,8 @@ Makefile                build & run targets
 README.md               this file
 LICENSE                 MIT license
 progress/               created at runtime
-  unit1.conf            exercise completion state
+  unit1.conf            unit 1 exercise completion state
+  unit2.conf            unit 2 exercise completion state
   settings.conf         theme, dark/light mode and language preference
 ```
 
@@ -192,6 +200,7 @@ Future enhancements planned for Sprechen.c:
 
 - [ ] Wire unit nodes to actual German vocabulary/grammar exercises
   - [x] Unit 1 ("Neue Freunde") – 13 interactive exercises with progress saving
+  - [x] Unit 2 ("Aus aller Welt") – 19 interactive exercises (incl. Hangman)
 - [ ] Lesson progression and unlock system for the remaining units
 - [ ] Add audio pronunciation features
 - [x] Add user settings panel (theme, dark/light mode, language)

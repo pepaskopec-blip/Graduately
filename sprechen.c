@@ -4,12 +4,13 @@
 #include <pango/pangocairo.h>
 #include <math.h>
 
-#define NUM_UNITS 10
-#define FIRST_LOCKED 1
-#define NUM_EXERCISES 13
+#define NUM_UNITS     10
+#define NUM_UNLOCKED   2   /* first NUM_UNLOCKED units (index 0..1) are open */
+#define MAX_UNIT_EX   20   /* largest exercise count any unit may have       */
 
 #define PROGRESS_DIR  "progress"
-#define PROGRESS_FILE "progress/unit1.conf"
+#define PROGRESS_U1   "progress/unit1.conf"
+#define PROGRESS_U2   "progress/unit2.conf"
 #define SETTINGS_FILE "progress/settings.conf"
 
 #define NODE_SIZE    88.0
@@ -97,18 +98,58 @@ static const char *theme_names[THEME_COUNT] = {
 
 static GtkWidget *theme_swatch_areas[THEME_COUNT];
 
-static gboolean ex_done[NUM_EXERCISES + 1]; /* indexed 1..13 */
+/* Per-unit context. Every playable unit owns its exercise state, its
+ * exercise-map page and the related geometry, so future units (3..10) can
+ * be added without more duplicated machinery. */
+typedef struct {
+    const char *title;         /* German unit title                       */
+    const char *page;          /* roadmap-stack child name, e.g. "unit1"  */
+    const char *ex_tag;        /* exercise page prefix, e.g. "u1"         */
+    const char *sub_key;       /* i18n key for the exercise-map subtitle   */
+    const char *progress_file;
+    gboolean unlocked;
+    gboolean done[MAX_UNIT_EX + 1];         /* exercise state, 1..n_ex    */
+    const char *ex_names[MAX_UNIT_EX + 1];  /* bubble labels, 1..n_ex     */
+    int n_ex;
+    GtkWidget *node;             /* roadmap node button                    */
+    GtkWidget *node_done_icon;
+    /* exercise-map page widgets + serpentine geometry */
+    GtkWidget *ex_scroll;
+    GtkWidget *ex_fixed;
+    GtkWidget *ex_rail;
+    GtkWidget *ex_cells[MAX_UNIT_EX];       /* 0..n_ex-1                   */
+    GtkWidget *ex_labels[MAX_UNIT_EX];      /* 0..n_ex-1                   */
+    GtkWidget *ex_icons[MAX_UNIT_EX + 1];   /* per-bubble check icon 1..n  */
+    double ex_cx[MAX_UNIT_EX];
+    double ex_cy[MAX_UNIT_EX];
+    int ex_rows, ex_cols, ex_cw, ex_ch;
+    guint ex_idle;
+} UnitCtx;
 
-static GtkWidget *ex_bubbles[NUM_EXERCISES + 1];
-static GtkWidget *ex_done_icons[NUM_EXERCISES + 1];
-static GtkWidget *unit1_node;
-static GtkWidget *unit1_done_icon;
+static UnitCtx units[NUM_UNITS] = {0};
+
+/* Short German bubble titles, indexed 1..n_ex (entry 0 unused). */
+static const char *const u1_ex_names[MAX_UNIT_EX + 1] = {
+    NULL,
+    "Dialog", "Sätze bilden", "Was ist richtig?", "Freie Antwort",
+    "Zahlen", "Wie viel?", "Zahlenreihe", "Verb einsetzen",
+    "Wer? Wie? Wo?", "Wörter trennen", "Grußformen",
+    "Was macht er/sie?", "Länder",
+};
+
+static const char *const u2_ex_names[MAX_UNIT_EX + 1] = {
+    NULL,
+    "Verben konjugieren", "aus oder in", "Fragewörter", "sprechen",
+    "Nationalitäten", "Woher?", "Länder schreiben", "Verben einsetzen",
+    "Freie Antwort", "Euro", "Wörter suchen", "Was ist richtig?",
+    "Ordne zu", "Lückentext", "Verbinde", "Zahlen",
+    "Steckbrief", "Berufe", "Nationalität",
+};
 
 /* Adaptive serpentine roadmap geometry */
 static GtkWidget *road_scroll;
 static GtkWidget *road_fixed;
 static GtkWidget *road_rail;
-static GtkWidget *ex_rail;
 static GtkWidget *road_nodes[NUM_UNITS];
 static GtkWidget *road_labels[NUM_UNITS];
 static double road_cx[NUM_UNITS];
@@ -117,36 +158,6 @@ static int road_cols = NUM_UNITS;
 static int road_rows = 1;
 static int road_cw = (int)(2.0 * ROAD_MX + (NUM_UNITS - 1) * PATH_SPAC);
 static int road_ch = (int)(2.0 * ROAD_MY);
-
-static const char *unit_names[] = {
-    "Neue Freunde",
-    "Aus aller Welt",
-    "Bei uns zu Hause",
-    "Schule und Freizeit",
-    "Guten Appetit!",
-    "Mein Tagesablauf",
-    "Meine Freunde",
-    "Wir treffen uns in Salzburg",
-    "Mein Haus ist meine Burg",
-    "Urlaub in Österreich",
-};
-
-static const char *ex_names[NUM_EXERCISES + 1] = {
-    NULL,
-    "Dialog",
-    "Sätze bilden",
-    "Was ist richtig?",
-    "Freie Antwort",
-    "Zahlen",
-    "Wie viel?",
-    "Zahlenreihe",
-    "Verb einsetzen",
-    "Wer? Wie? Wo?",
-    "Wörter trennen",
-    "Grußformen",
-    "Was macht er/sie?",
-    "Länder",
-};
 
 
 typedef struct { double r, g, b; } Rgb;
@@ -402,6 +413,51 @@ static const TrEntry tr_ui[] = {
      "ji vrátíte zpět.",
      "Pick a group and click a card. Click a card inside a group to send "
      "it back."},
+    {"unit2_sub", "Vyberte cvičení a dokončete je.",
+     "Choose an exercise and complete it."},
+    {"wordbank", "Nabídka slov:", "Word bank:"},
+    {"sample_line", "Příklad: %s", "Sample: %s"},
+    {"sub_verben", "Doplňte sloveso ve správném tvaru.",
+     "Fill in the verb in the correct form."},
+    {"sub_ausin", "Vyberte správnou předložku: aus nebo in.",
+     "Choose the correct preposition: aus or in."},
+    {"sub_sprich", "Doplňte sloveso „sprechen“.",
+     "Fill in the verb “sprechen”."},
+    {"sub_nation", "Doplňte národnost – použijte slova z nabídky.",
+     "Fill in the nationality – use the words in the box."},
+    {"sub_woher", "Odkud lidé pocházejí? Napište zemi.",
+     "Where are the people from? Type the country."},
+    {"sub_laender", "Doplňte chybějící písmena v názvech zemí.",
+     "Type the full country name (the missing letters are shown as _)."},
+    {"sub_verb2", "Vyberte správný tvar slovesa.",
+     "Choose the correct verb form."},
+    {"sub_euro", "Napište částku slovy.",
+     "Write the amount in words."},
+    {"sub_wortsuchen", "Najděte skryté slovo a napište ho.",
+     "Find the hidden word and type it."},
+    {"sub_ordne", "Přiřaďte správné tázací slovo a odpověď.",
+     "Match each phrase with the right question word and answer."},
+    {"sub_luecke", "Doplňte chybějící slova do textu.",
+     "Fill the missing words into the text."},
+    {"sub_verbinde", "Spojte každé podstatné jméno se správným slovesem.",
+     "Match each noun with the right verb."},
+    {"sub_zahlpaar", "Spojte čísla s německými slovy.",
+     "Match the numbers with the German words."},
+    {"sub_steckbrief", "Doplňte údaje o sobě.",
+     "Complete the information about yourself."},
+    {"sub_berufe", "Hádejte povolání dřív, než bude oběšenec hotový.",
+     "Guess each job before the hangman drawing is finished."},
+    {"sub_bistdu", "Odpovězte podle vlajky – jakou máte národnost?",
+     "Answer according to the flag – what is your nationality?"},
+    {"hm_progress", "Slovo %d / %d", "Word %d / %d"},
+    {"hm_hint", "Nápověda", "Hint"},
+    {"hm_wrong", "Slovo je uhodnuto!", "Word guessed!"},
+    {"hm_fail", "Oběšenec! Slovo bylo „%s“.",
+     "Hanged! The word was “%s”."},
+    {"hm_retry", "Zkusit znovu", "Try again"},
+    {"hm_done", "Výborně! Uhodli jste všechna povolání.",
+     "Great! You guessed all the jobs."},
+    {"hm_guess", "Hádejte písmeno", "Guess a letter"},
     {NULL, NULL, NULL}
 };
 
@@ -488,6 +544,126 @@ static const TrEntry tr_content[] = {
     {"Sýr", NULL, "Cheese"},
     {"Švýcarská hora", NULL, "Swiss mountain"},
     {"Čokoláda", NULL, "Chocolate"},
+    /* ---- unit 2: grammar & vocabulary meanings ---- */
+    {"Pochází z Rakouska.", NULL, "He is from Austria."},
+    {"Bydlí ve Štýrském Hradci (Graz).", NULL, "He lives in Graz."},
+    {"Rád hraje golf.", NULL, "He likes playing golf."},
+    {"Mluví německy, anglicky a italsky.", NULL,
+     "He speaks German, English and Italian."},
+    {"Pocházejí ze Slovenska.", NULL, "They are from Slovakia."},
+    {"Bydlí v Bratislavě (ona).", NULL, "She lives in Bratislava."},
+    {"Ona ráda tancuje.", NULL, "She likes dancing."},
+    {"On rád cestuje.", NULL, "He likes travelling."},
+    {"Jsou dobří přátelé.", NULL, "They are good friends."},
+    {"Pocházím z Atén.", NULL, "I am from Athens."},
+    {"Petr bydlí v Salcburku.", NULL, "Peter lives in Salzburg."},
+    {"Berlín leží v Německu.", NULL, "Berlin is in Germany."},
+    {"Bydlíme v Paříži.", NULL, "We live in Paris."},
+    {"Pocházejí z Řecka.", NULL, "They are from Greece."},
+    {"Odkud je? – Z Londýna.", NULL, "Where is he from? – From London."},
+    {"Jak se jmenuje? – Andrea.", NULL, "What is her name? – Andrea."},
+    {"Kdo pochází z Ruska? – Alexandr.", NULL,
+     "Who comes from Russia? – Alexander."},
+    {"Kde leží Praha? – V Česku.", NULL, "Where is Prague? – In Czechia."},
+    {"Kde bydlí? – V Bratislavě.", NULL, "Where do they live? – In Bratislava."},
+    {"Co děláte? – Studujeme germanistiku.", NULL,
+     "What are you doing? – We're studying German studies."},
+    {"Mluvím německy. A ty?", NULL, "I speak German. And you?"},
+    {"Kterými jazyky mluvíte?", NULL, "Which languages do you speak?"},
+    {"Mluvíš francouzsky? – Ano, trochu.", NULL,
+     "Do you speak French? – Yes, a little."},
+    {"My mluvíme polsky a vy?", NULL, "We speak Polish and you?"},
+    {"Mluvíte anglicky? – Ano, velmi dobře.", NULL,
+     "Do you speak English? – Yes, very well."},
+    {"Nemluví ani slovo turecky.", NULL,
+     "He doesn't speak a word of Turkish."},
+    {"Čech", NULL, "Czech man"},
+    {"Španělka", NULL, "Spanish woman"},
+    {"Turek", NULL, "Turk (man)"},
+    {"Chorvatka", NULL, "Croatian woman"},
+    {"Němka", NULL, "German woman"},
+    {"Rakušanka", NULL, "Austrian woman"},
+    {"Slovák", NULL, "Slovak man"},
+    {"Švýcarka", NULL, "Swiss woman"},
+    {"Němec", NULL, "German man"},
+    {"Německo", NULL, "Germany"},
+    {"Slovensko", NULL, "Slovakia"},
+    {"Rakousko", NULL, "Austria"},
+    {"Španělsko", NULL, "Spain"},
+    {"Anglie", NULL, "England"},
+    {"Polsko", NULL, "Poland"},
+    {"Rusko", NULL, "Russia"},
+    {"Turecko", NULL, "Turkey"},
+    {"Chorvatsko", NULL, "Croatia"},
+    {"Řecko", NULL, "Greece"},
+    {"Itálie", NULL, "Italy"},
+    {"otec", NULL, "father"},
+    {"rodiče", NULL, "parents"},
+    {"Češka", NULL, "Czech woman"},
+    {"student", NULL, "student"},
+    {"Co čte? – Knihu.", NULL, "What is he reading? – A book."},
+    {"Co studuje? – Medicínu.", NULL, "What is she studying? – Medicine."},
+    {"Čím Jan rád jezdí? – Autem.", NULL,
+     "What does Jan like to drive? – A car."},
+    {"Kde bydlíte? – Ve Vídni.", NULL, "Where do you live? – In Vienna."},
+    {"Kdo pracuje u Siemensu? – Moje kamarádka Věra.", NULL,
+     "Who works at Siemens? – My friend Vera."},
+    {"Kam jedeš?", NULL, "Where are you going?"},
+    {"Co rád/a čteš?", NULL, "What do you like to read?"},
+    {"Co rád/a hraješ?", NULL, "What do you like to play?"},
+    {"Jmenuji se Lukáš.", NULL, "My name is Lukáš."},
+    {"Jedu do Německa.", NULL, "I'm going to Germany."},
+    {"Rád/a čtu detektivky.", NULL, "I like reading crime novels."},
+    {"Rád/a hraju golf.", NULL, "I like playing golf."},
+    {"šedesát tři eur", NULL, "sixty-three euros"},
+    {"třicet osm eur", NULL, "thirty-eight euros"},
+    {"čtyřicet pět eur", NULL, "forty-five euros"},
+    {"padesát sedm eur", NULL, "fifty-seven euros"},
+    {"devadesát devět eur", NULL, "ninety-nine euros"},
+    {"Agnieszka Kowalski pochází z Polska, z Krakova.", NULL,
+     "Agnieszka Kowalski is from Kraków, Poland."},
+    {"Je jí 18 let a letos dělá maturitu.", NULL,
+     "She is 18 years old and is taking her A-levels this year."},
+    {"Ráda chatuje se svým německým přítelem.", NULL,
+     "She likes chatting with her German friend."},
+    {"Jmenuje se Stefan Böhmermann a bydlí v Drážďanech.", NULL,
+     "His name is Stefan Böhmermann and he lives in Dresden."},
+    {"Agnieszce přijde ten jazyk super.", NULL,
+     "Agnieszka thinks the language is cool."},
+    {"Už mluví velmi dobře německy.", NULL,
+     "She already speaks German very well."},
+    {"potřebovat mobil", NULL, "to need a mobile phone"},
+    {"pracovat ve BMW", NULL, "to work at BMW"},
+    {"řídit auto", NULL, "to drive a car"},
+    {"navštěvovat gymnázium", NULL, "to attend a grammar school"},
+    {"mluvit španělsky", NULL, "to speak Spanish"},
+    {"číst detektivky", NULL, "to read crime novels"},
+    {"padesát čtyři", NULL, "fifty-four"},
+    {"čtyřicet pět", NULL, "forty-five"},
+    {"tři sta šedesát devět", NULL, "three hundred and sixty-nine"},
+    {"sto dvanáct", NULL, "one hundred and twelve"},
+    {"sto dvacet dva", NULL, "one hundred and twenty-two"},
+    {"šedesát osm", NULL, "sixty-eight"},
+    {"Petr rád čte knihy.", NULL, "Peter likes reading books."},
+    {"Filip pracuje v Salcburku.", NULL, "Filip works in Salzburg."},
+    {"Magda dobře mluví anglicky.", NULL, "Magda speaks English well."},
+    {"Marek navštěvuje gymnázium.", NULL, "Marek attends the grammar school."},
+    {"Dominice je 15 let.", NULL, "Dominika is 15 years old."},
+    {"Moje sestra se jmenuje Marta.", NULL, "My sister is called Marta."},
+    {"Jak se jmenují? – Jana a Michael.", NULL,
+     "What are their names? – Jana and Michael."},
+    {"Kdo mluví polsky? – Jacek.", NULL, "Who speaks Polish? – Jacek."},
+    {"Kde bydlí Eva? – V Plzni.", NULL, "Where does Eva live? – In Plzeň."},
+    {"Odkud pochází Markus? – Z Německa.", NULL,
+     "Where is Markus from? – From Germany."},
+    {"Jakým jazykem mluví Jana? – Slovensky.", NULL,
+     "What language does Jana speak? – Slovak."},
+    /* ---- unit 2: hangman hints ---- */
+    {"vaří v restauraci", NULL, "he cooks in a restaurant"},
+    {"léčí nemocné lidi", NULL, "he treats sick people"},
+    {"učí ve škole", NULL, "he teaches at school"},
+    {"pracuje u policie", NULL, "he works for the police"},
+    {"prodává v obchodě", NULL, "he sells in a shop"},
     {NULL, NULL, NULL}
 };
 
@@ -997,6 +1173,12 @@ static char *build_theme_css(const ThemePalette *p) {
         "   font-size: 26px;"
         "   font-weight: 800;"
         "}"
+        ".hm-word {"
+        "   color: @fg_text;"
+        "   font-family: monospace;"
+        "   font-size: 30px;"
+        "   font-weight: 800;"
+        "}"
         ".chain {"
         "   color: @warning;"
         "   font-size: 20px;"
@@ -1038,6 +1220,14 @@ static char *build_theme_css(const ThemePalette *p) {
         "combobox.answer-wrong button {"
         "   border-color: @error;"
         "   background-color: alpha(@error, 0.12);"
+        "}"
+        "entry.answer-ok {"
+        "   border-color: @success;"
+        "   background-color: alpha(@success, 0.08);"
+        "}"
+        "entry.answer-wrong {"
+        "   border-color: @error;"
+        "   background-color: alpha(@error, 0.08);"
         "}"
         ".pill {"
         "   background-image: none;"
@@ -1276,8 +1466,9 @@ static void apply_theme(void) {
         gtk_widget_queue_draw(GTK_WIDGET(main_window));
     if (road_rail)
         gtk_widget_queue_draw(road_rail);
-    if (ex_rail)
-        gtk_widget_queue_draw(ex_rail);
+    for (int i = 0; i < NUM_UNLOCKED; i++)
+        if (units[i].ex_rail)
+            gtk_widget_queue_draw(units[i].ex_rail);
     for (int i = 0; i < THEME_COUNT; i++) {
         if (theme_swatch_areas[i])
             gtk_widget_queue_draw(theme_swatch_areas[i]);
@@ -1497,12 +1688,12 @@ static void set_feedback(GtkWidget *label, gboolean ok, const char *text) {
 /* Progress                                                           */
 /* ------------------------------------------------------------------ */
 
-static void save_progress(void) {
+static void unit_save_progress(UnitCtx *u) {
     GKeyFile *kf = g_key_file_new();
-    for (int i = 1; i <= NUM_EXERCISES; i++) {
+    for (int i = 1; i <= u->n_ex; i++) {
         gchar key[8];
         g_snprintf(key, sizeof(key), "%d", i);
-        g_key_file_set_boolean(kf, "done", key, ex_done[i]);
+        g_key_file_set_boolean(kf, "done", key, u->done[i]);
     }
 
     if (g_mkdir_with_parents(PROGRESS_DIR, 0755) != 0) {
@@ -1515,73 +1706,101 @@ static void save_progress(void) {
 
     if (data) {
         GError *err = NULL;
-        g_file_set_contents(PROGRESS_FILE, data, -1, &err);
+        g_file_set_contents(u->progress_file, data, -1, &err);
         if (err)
             g_error_free(err);
         g_free(data);
     }
 }
 
-static void load_progress(void) {
+static void unit_load_progress(UnitCtx *u) {
     GKeyFile *kf = g_key_file_new();
     GError *err = NULL;
 
-    if (!g_key_file_load_from_file(kf, PROGRESS_FILE, G_KEY_FILE_NONE, &err)) {
+    if (!g_key_file_load_from_file(kf, u->progress_file, G_KEY_FILE_NONE, &err)) {
         if (err)
             g_error_free(err);
         g_key_file_free(kf);
         return;
     }
 
-    for (int i = 1; i <= NUM_EXERCISES; i++) {
+    for (int i = 1; i <= u->n_ex; i++) {
         gchar key[8];
         g_snprintf(key, sizeof(key), "%d", i);
-        ex_done[i] = g_key_file_get_boolean(kf, "done", key, NULL);
+        u->done[i] = g_key_file_get_boolean(kf, "done", key, NULL);
     }
 
     g_key_file_free(kf);
 }
 
-static void ex_rail_refresh(void);
+static void load_progress(void) {
+    for (int i = 0; i < NUM_UNLOCKED; i++)
+        unit_load_progress(&units[i]);
+}
+
+/* Redraw the exercise rails of every unit that already has a page. */
+static void all_rails_redraw(void) {
+    for (int i = 0; i < NUM_UNLOCKED; i++) {
+        if (units[i].ex_rail)
+            gtk_widget_queue_draw(units[i].ex_rail);
+    }
+}
 
 static void refresh_completion_ui(void) {
-    gboolean all = TRUE;
+    for (int uidx = 0; uidx < NUM_UNLOCKED; uidx++) {
+        UnitCtx *u = &units[uidx];
+        gboolean all = TRUE;
 
-    for (int i = 1; i <= NUM_EXERCISES; i++) {
-        if (!ex_done[i])
-            all = FALSE;
-        if (ex_bubbles[i]) {
-            if (ex_done[i]) {
-                gtk_widget_add_css_class(ex_bubbles[i], "done");
-                gtk_widget_set_visible(ex_done_icons[i], TRUE);
+        for (int i = 1; i <= u->n_ex; i++) {
+            if (!u->done[i]) {
+                all = FALSE;
+                break;
+            }
+        }
+
+        /* per-bubble markers */
+        if (u->ex_cells[0] != NULL) {
+            for (int i = 1; i <= u->n_ex; i++) {
+                GtkWidget *btn = u->ex_cells[i - 1];
+                if (!btn)
+                    continue;
+                if (u->done[i]) {
+                    gtk_widget_add_css_class(btn, "done");
+                    if (u->ex_icons[i])
+                        gtk_widget_set_visible(u->ex_icons[i], TRUE);
+                } else {
+                    gtk_widget_remove_css_class(btn, "done");
+                    if (u->ex_icons[i])
+                        gtk_widget_set_visible(u->ex_icons[i], FALSE);
+                }
+            }
+        }
+
+        /* roadmap node marker */
+        if (u->node) {
+            if (all && u->n_ex > 0) {
+                gtk_widget_remove_css_class(u->node, "current");
+                gtk_widget_add_css_class(u->node, "done");
+                if (u->node_done_icon)
+                    gtk_widget_set_visible(u->node_done_icon, TRUE);
             } else {
-                gtk_widget_remove_css_class(ex_bubbles[i], "done");
-                gtk_widget_set_visible(ex_done_icons[i], FALSE);
+                gtk_widget_remove_css_class(u->node, "done");
+                gtk_widget_add_css_class(u->node, "current");
+                if (u->node_done_icon)
+                    gtk_widget_set_visible(u->node_done_icon, FALSE);
             }
         }
     }
 
-    if (unit1_node) {
-        if (all) {
-            gtk_widget_remove_css_class(unit1_node, "current");
-            gtk_widget_add_css_class(unit1_node, "done");
-            gtk_widget_set_visible(unit1_done_icon, TRUE);
-        } else {
-            gtk_widget_remove_css_class(unit1_node, "done");
-            gtk_widget_add_css_class(unit1_node, "current");
-            gtk_widget_set_visible(unit1_done_icon, FALSE);
-        }
-    }
-
-    ex_rail_refresh();
+    all_rails_redraw();
 }
 
-static void mark_done(int n) {
-    if (n < 1 || n > NUM_EXERCISES)
+static void mark_done(UnitCtx *u, int n) {
+    if (!u || n < 1 || n > u->n_ex)
         return;
-    ex_done[n] = TRUE;
+    u->done[n] = TRUE;
     refresh_completion_ui();
-    save_progress();
+    unit_save_progress(u);
 }
 
 /* ------------------------------------------------------------------ */
@@ -1949,7 +2168,7 @@ static void road_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
 
 static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
                       int width, int height, gpointer user_data) {
-    const double t_lit = (double)(FIRST_LOCKED - 1);
+    const double t_lit = (double)(NUM_UNLOCKED - 1);
     const double t_end = (double)(NUM_UNITS - 1);
     const double x0 = ROAD_MX;
     const double x1 = (double)road_cw - ROAD_MX;
@@ -1970,7 +2189,7 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
-    road_point((double)(FIRST_LOCKED - 1), &hx, &hy);
+    road_point((double)(NUM_UNLOCKED - 1), &hx, &hy);
     draw_node_halo(cr, hx, hy, NODE_SIZE * 1.05,
                    mauve.r, mauve.g, mauve.b, 0.18);
 
@@ -2021,9 +2240,8 @@ static void draw_rail(GtkDrawingArea *area, cairo_t *cr,
 
 static void add_path_node(GtkFixed *fixed, int index) {
     int num = index + 1;
-    gboolean done = index < FIRST_LOCKED - 1;
-    gboolean current = index == FIRST_LOCKED - 1;
-    gboolean locked = index >= FIRST_LOCKED;
+    UnitCtx *u = &units[index];
+    gboolean locked = !u->unlocked;
     GtkWidget *card;
     GtkWidget *name;
     char *text;
@@ -2047,13 +2265,12 @@ static void add_path_node(GtkFixed *fixed, int index) {
     } else {
         GtkWidget *vbox;
         GtkWidget *number;
+        GtkWidget *icon;
 
-        if (done)
-            gtk_widget_add_css_class(card, "done");
-        else if (current)
-            gtk_widget_add_css_class(card, "current");
-        else
+        if (locked)
             gtk_widget_add_css_class(card, "locked");
+        else
+            gtk_widget_add_css_class(card, "current");
 
         vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
         gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
@@ -2066,34 +2283,26 @@ static void add_path_node(GtkFixed *fixed, int index) {
         gtk_widget_add_css_class(number, "unit-number");
         gtk_box_append(GTK_BOX(vbox), number);
 
-        if (done) {
-            GtkWidget *icon;
-            icon = icon_area_new(draw_check_icon,
-                                 0.1176, 0.1176, 0.1804, 18);
-            gtk_box_append(GTK_BOX(vbox), icon);
-        } else if (locked) {
-            GtkWidget *lock;
-            lock = icon_area_new(draw_lock_icon,
+        if (locked) {
+            icon = icon_area_new(draw_lock_icon,
                                  0.3451, 0.3569, 0.4392, 16);
-            gtk_box_append(GTK_BOX(vbox), lock);
-        } else if (index == 0) {
-            GtkWidget *icon;
+        } else {
             icon = icon_area_new(draw_check_icon,
                                  0.1176, 0.1176, 0.1804, 18);
             gtk_widget_set_visible(icon, FALSE);
-            gtk_box_append(GTK_BOX(vbox), icon);
-            unit1_done_icon = icon;
-            unit1_node = card;
+            u->node = card;
+            u->node_done_icon = icon;
             g_object_set_data_full(G_OBJECT(card), "target",
-                                   g_strdup("unit1"), g_free);
+                                   g_strdup(u->page), g_free);
             g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
         }
+        gtk_box_append(GTK_BOX(vbox), icon);
     }
 
     road_nodes[index] = card;
     gtk_fixed_put(fixed, card, 0, 0);
 
-    name = gtk_label_new(unit_names[index]);
+    name = gtk_label_new(u->title);
     gtk_widget_set_size_request(name, (int)(PATH_SPAC - 20.0), -1);
     gtk_widget_set_halign(name, GTK_ALIGN_CENTER);
     gtk_label_set_justify(GTK_LABEL(name), GTK_JUSTIFY_CENTER);
@@ -2181,82 +2390,72 @@ static GtkWidget *build_roadmap_page(void) {
 #define EX_GAP     200.0   /* vertical space between folded rows        */
 #define EX_WAVE    26.0    /* wavy vertical offset of the bubbles       */
 
-static GtkWidget *ex_scroll;
-static GtkWidget *ex_fixed;
-static GtkWidget *ex_cells[NUM_EXERCISES];
-static GtkWidget *ex_labels[NUM_EXERCISES];
-static double ex_cx[NUM_EXERCISES];
-static double ex_cy[NUM_EXERCISES];
-static int ex_rows = 1;
-static int ex_cols = NUM_EXERCISES;
-static int ex_cw = (int)(2.0 * EX_MX + (NUM_EXERCISES - 1) * EX_SPAC);
-static int ex_ch = (int)(2.0 * EX_MY);
-
-static void ex_rail_refresh(void) {
-    if (ex_rail)
-        gtk_widget_queue_draw(ex_rail);
-}
-
 /* Compute the serpentine exercise layout for the given available width. */
-static void ex_layout_geometry(double avail) {
-    const double phase = 2.0 * G_PI * 1.7 / (double)(NUM_EXERCISES - 1);
+static void ex_layout_geometry(UnitCtx *u, double avail) {
+    const int n = u->n_ex;
+    const double phase = 2.0 * G_PI * 1.7 / (double)(n > 1 ? n - 1 : 1);
     int rows;
     int r, c, i;
 
-    for (rows = 1; rows <= NUM_EXERCISES; rows++) {
-        int cols = (NUM_EXERCISES + rows - 1) / rows;
+    if (n < 1)
+        return;
+    for (rows = 1; rows <= n; rows++) {
+        int cols = (n + rows - 1) / rows;
         if (2.0 * EX_MX + (cols - 1) * EX_SPAC <= avail + 1.0)
             break;
     }
-    if (rows > NUM_EXERCISES)
-        rows = NUM_EXERCISES;
-    ex_rows = rows;
-    ex_cols = (NUM_EXERCISES + rows - 1) / rows;
-    if (ex_cols < 1)
-        ex_cols = 1;
-    ex_cw = (int)(2.0 * EX_MX + (ex_cols - 1) * EX_SPAC);
-    ex_ch = (int)(2.0 * EX_MY + (rows - 1) * EX_GAP);
+    if (rows > n)
+        rows = n;
+    u->ex_rows = rows;
+    u->ex_cols = (n + rows - 1) / rows;
+    if (u->ex_cols < 1)
+        u->ex_cols = 1;
+    u->ex_cw = (int)(2.0 * EX_MX + (u->ex_cols - 1) * EX_SPAC);
+    u->ex_ch = (int)(2.0 * EX_MY + (rows - 1) * EX_GAP);
 
     for (r = 0; r < rows; r++) {
-        int base = r * ex_cols;
-        int len = MIN(ex_cols, NUM_EXERCISES - base);
+        int base = r * u->ex_cols;
+        int len = MIN(u->ex_cols, n - base);
         int fwd = (r % 2) == 0;
         for (c = 0; c < len; c++) {
             i = base + c;
-            int cc = fwd ? c : (ex_cols - 1 - c);
-            ex_cx[i] = EX_MX + cc * EX_SPAC;
-            ex_cy[i] = EX_MY + r * EX_GAP + EX_WAVE * sin((double)i * phase);
+            int cc = fwd ? c : (u->ex_cols - 1 - c);
+            u->ex_cx[i] = EX_MX + cc * EX_SPAC;
+            u->ex_cy[i] = EX_MY + r * EX_GAP
+                          + EX_WAVE * sin((double)i * phase);
         }
     }
 }
 
-static void ex_point(double t, double *ox, double *oy) {
+static void ex_point(UnitCtx *u, double t, double *ox, double *oy) {
+    const int n = u->n_ex;
     int k = (int)t;
-    double u = t - (double)k;
+    double uu = t - (double)k;
     double u2, u3;
     double p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
 
-    if (k < 0) { k = 0; u = 0.0; }
-    if (k >= NUM_EXERCISES - 1) { k = NUM_EXERCISES - 2; u = 1.0; }
+    if (n < 2) { *ox = u->ex_cx[0]; *oy = u->ex_cy[0]; return; }
+    if (k < 0) { k = 0; uu = 0.0; }
+    if (k >= n - 1) { k = n - 2; uu = 1.0; }
 
-    p1x = ex_cx[k];     p1y = ex_cy[k];
-    p2x = ex_cx[k + 1]; p2y = ex_cy[k + 1];
-    if (k - 1 >= 0) { p0x = ex_cx[k - 1]; p0y = ex_cy[k - 1]; }
+    p1x = u->ex_cx[k];     p1y = u->ex_cy[k];
+    p2x = u->ex_cx[k + 1]; p2y = u->ex_cy[k + 1];
+    if (k - 1 >= 0) { p0x = u->ex_cx[k - 1]; p0y = u->ex_cy[k - 1]; }
     else            { p0x = p1x - (p2x - p1x); p0y = p1y - (p2y - p1y); }
-    if (k + 2 < NUM_EXERCISES) { p3x = ex_cx[k + 2]; p3y = ex_cy[k + 2]; }
-    else                       { p3x = p2x + (p2x - p1x); p3y = p2y + (p2y - p1y); }
+    if (k + 2 < n) { p3x = u->ex_cx[k + 2]; p3y = u->ex_cy[k + 2]; }
+    else           { p3x = p2x + (p2x - p1x); p3y = p2y + (p2y - p1y); }
 
-    u2 = u * u;
-    u3 = u2 * u;
-    *ox = 0.5 * (2.0 * p1x + (-p0x + p2x) * u
+    u2 = uu * uu;
+    u3 = u2 * uu;
+    *ox = 0.5 * (2.0 * p1x + (-p0x + p2x) * uu
                  + (2.0 * p0x - 5.0 * p1x + 4.0 * p2x - p3x) * u2
                  + (-p0x + 3.0 * p1x - 3.0 * p2x + p3x) * u3);
-    *oy = 0.5 * (2.0 * p1y + (-p0y + p2y) * u
+    *oy = 0.5 * (2.0 * p1y + (-p0y + p2y) * uu
                  + (2.0 * p0y - 5.0 * p1y + 4.0 * p2y - p3y) * u2
                  + (-p0y + 3.0 * p1y - 3.0 * p2y + p3y) * u3);
 }
 
-static void ex_path(cairo_t *cr, double t0, double t1) {
+static void ex_path(UnitCtx *u, cairo_t *cr, double t0, double t1) {
     const double steps_per_unit = 48.0;
     int n = (int)((t1 - t0) * steps_per_unit);
     double x, y;
@@ -2264,17 +2463,18 @@ static void ex_path(cairo_t *cr, double t0, double t1) {
 
     if (n < 1)
         n = 1;
-    ex_point(t0, &x, &y);
+    ex_point(u, t0, &x, &y);
     cairo_move_to(cr, x, y);
     for (s = 1; s <= n; s++) {
-        ex_point(t0 + (t1 - t0) * (double)s / (double)n, &x, &y);
+        ex_point(u, t0 + (t1 - t0) * (double)s / (double)n, &x, &y);
         cairo_line_to(cr, x, y);
     }
 }
 
 static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
                          int width, int height, gpointer user_data) {
-    const double t_end = (double)(NUM_EXERCISES - 1);
+    UnitCtx *u = user_data;
+    const double t_end = (double)(u->n_ex - 1);
     const Rgb slate = color_from_hex(app_theme.surface1);
     const Rgb green = color_from_hex(app_theme.success);
     const Rgb rail = color_from_hex(app_theme.rail);
@@ -2282,7 +2482,6 @@ static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
     (void)area;
     (void)width;
     (void)height;
-    (void)user_data;
 
     cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
     cairo_paint(cr);
@@ -2291,89 +2490,86 @@ static void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
     cairo_new_path(cr);
-    ex_path(cr, 0.0, t_end);
+    ex_path(u, cr, 0.0, t_end);
     cairo_set_line_width(cr, 14);
     cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
     cairo_stroke(cr);
 
     cairo_new_path(cr);
-    ex_path(cr, 0.0, t_end);
+    ex_path(u, cr, 0.0, t_end);
     cairo_set_line_width(cr, 9);
     cairo_set_source_rgb(cr, slate.r, slate.g, slate.b);
     cairo_stroke(cr);
 
-    for (int k = 0; k < NUM_EXERCISES - 1; k++) {
-        if (!(ex_done[k + 1] || ex_done[k + 2]))
+    for (int k = 0; k < u->n_ex - 1; k++) {
+        if (!(u->done[k + 1] || u->done[k + 2]))
             continue;
         cairo_new_path(cr);
-        ex_path(cr, (double)k, (double)(k + 1));
+        ex_path(u, cr, (double)k, (double)(k + 1));
         cairo_set_source_rgba(cr, green.r, green.g, green.b, 0.85);
         cairo_set_line_width(cr, 9);
         cairo_stroke(cr);
     }
 }
 
-static void ex_apply_layout(void) {
+static void ex_apply_layout(UnitCtx *u) {
     int i;
 
-    if (!ex_fixed)
+    if (!u->ex_fixed)
         return;
 
-    for (i = 0; i < NUM_EXERCISES; i++) {
-        if (ex_cells[i])
-            gtk_fixed_move(GTK_FIXED(ex_fixed), ex_cells[i],
-                           (int)(ex_cx[i] - EX_BUBBLE / 2.0),
-                           (int)(ex_cy[i] - EX_BUBBLE / 2.0));
-        if (ex_labels[i])
-            gtk_fixed_move(GTK_FIXED(ex_fixed), ex_labels[i],
-                           (int)(ex_cx[i] - (EX_SPAC - 20.0) / 2.0),
-                           (int)(ex_cy[i] + EX_BUBBLE / 2.0 + 8.0));
+    for (i = 0; i < u->n_ex; i++) {
+        if (u->ex_cells[i])
+            gtk_fixed_move(GTK_FIXED(u->ex_fixed), u->ex_cells[i],
+                           (int)(u->ex_cx[i] - EX_BUBBLE / 2.0),
+                           (int)(u->ex_cy[i] - EX_BUBBLE / 2.0));
+        if (u->ex_labels[i])
+            gtk_fixed_move(GTK_FIXED(u->ex_fixed), u->ex_labels[i],
+                           (int)(u->ex_cx[i] - (EX_SPAC - 20.0) / 2.0),
+                           (int)(u->ex_cy[i] + EX_BUBBLE / 2.0 + 8.0));
     }
 
-    gtk_widget_set_size_request(ex_fixed, ex_cw, ex_ch);
-    gtk_widget_set_size_request(ex_rail, ex_cw, ex_ch);
-    gtk_fixed_move(GTK_FIXED(ex_fixed), ex_rail, 0, 0);
-    gtk_widget_queue_draw(ex_rail);
+    gtk_widget_set_size_request(u->ex_fixed, u->ex_cw, u->ex_ch);
+    gtk_widget_set_size_request(u->ex_rail, u->ex_cw, u->ex_ch);
+    gtk_fixed_move(GTK_FIXED(u->ex_fixed), u->ex_rail, 0, 0);
+    gtk_widget_queue_draw(u->ex_rail);
 }
 
-static void ex_relayout(void) {
+static void ex_relayout(UnitCtx *u) {
     GtkAdjustment *hadj;
     double avail;
 
-    if (!ex_scroll)
+    if (!u->ex_scroll)
         return;
     hadj = gtk_scrolled_window_get_hadjustment(
-        GTK_SCROLLED_WINDOW(ex_scroll));
+        GTK_SCROLLED_WINDOW(u->ex_scroll));
     avail = gtk_adjustment_get_page_size(hadj);
     if (avail < 1.0)
         return;
-    ex_layout_geometry(avail);
-    ex_apply_layout();
+    ex_layout_geometry(u, avail);
+    ex_apply_layout(u);
 }
 
-static guint ex_idle;
-
 static gboolean ex_relayout_idle(gpointer data) {
-    (void)data;
-    ex_idle = 0;
-    ex_relayout();
+    UnitCtx *u = data;
+    u->ex_idle = 0;
+    ex_relayout(u);
     return G_SOURCE_REMOVE;
 }
 
-static void ex_relayout_later(void) {
-    if (ex_idle == 0)
-        ex_idle = g_idle_add(ex_relayout_idle, NULL);
+static void ex_relayout_later(UnitCtx *u) {
+    if (u->ex_idle == 0)
+        u->ex_idle = g_idle_add(ex_relayout_idle, u);
 }
 
 static void ex_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
                              gpointer data) {
     (void)adj;
     (void)ps;
-    (void)data;
-    ex_relayout_later();
+    ex_relayout_later(data);
 }
 
-static GtkWidget *make_bubble(int n) {
+static GtkWidget *make_bubble(UnitCtx *u, int n) {
     GtkWidget *btn;
     GtkWidget *vbox;
     GtkWidget *num_label;
@@ -2385,7 +2581,7 @@ static GtkWidget *make_bubble(int n) {
     gtk_widget_add_css_class(btn, "ex-bubble");
     gtk_widget_set_size_request(btn, (int)EX_BUBBLE, (int)EX_BUBBLE);
     gtk_widget_set_can_focus(btn, FALSE);
-    if (ex_done[n])
+    if (u->done[n])
         gtk_widget_add_css_class(btn, "done");
 
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
@@ -2401,20 +2597,20 @@ static GtkWidget *make_bubble(int n) {
     gtk_box_append(GTK_BOX(vbox), num_label);
 
     icon = icon_area_new(draw_check_icon, 0.1176, 0.1176, 0.1804, 16);
-    gtk_widget_set_visible(icon, ex_done[n]);
+    gtk_widget_set_visible(icon, u->done[n]);
     gtk_box_append(GTK_BOX(vbox), icon);
 
-    ex_bubbles[n] = btn;
-    ex_done_icons[n] = icon;
+    u->ex_cells[n - 1] = btn;
+    u->ex_icons[n] = icon;
 
-    target = g_strdup_printf("ex%d", n);
+    target = g_strdup_printf("%se%d", u->ex_tag, n);
     g_object_set_data_full(G_OBJECT(btn), "target", target, g_free);
     g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
 
     return btn;
 }
 
-static GtkWidget *build_unit1_page(void) {
+static GtkWidget *build_unit_page(UnitCtx *u) {
     GtkWidget *page;
     GtkWidget *scroll;
     GtkWidget *wrap;
@@ -2424,7 +2620,9 @@ static GtkWidget *build_unit1_page(void) {
     GtkAdjustment *va;
     int i;
 
-    ex_layout_geometry(1000.0);
+    if (u->n_ex < 1)
+        return NULL;
+    ex_layout_geometry(u, 1000.0);
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_hexpand(page, TRUE);
@@ -2435,7 +2633,7 @@ static GtkWidget *build_unit1_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("roadmap", "Neue Freunde", "unit1_sub"));
+                   top_bar("roadmap", u->title, u->sub_key));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -2443,7 +2641,7 @@ static GtkWidget *build_unit1_page(void) {
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 14);
     gtk_box_append(GTK_BOX(page), scroll);
-    ex_scroll = scroll;
+    u->ex_scroll = scroll;
 
     wrap = gtk_center_box_new();
     gtk_widget_set_vexpand(wrap, TRUE);
@@ -2453,23 +2651,22 @@ static GtkWidget *build_unit1_page(void) {
     fixed = gtk_fixed_new();
     gtk_widget_set_halign(fixed, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(fixed, GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(fixed, ex_cw, ex_ch);
+    gtk_widget_set_size_request(fixed, u->ex_cw, u->ex_ch);
     gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), fixed);
-    ex_fixed = fixed;
+    u->ex_fixed = fixed;
 
     rail = gtk_drawing_area_new();
-    gtk_widget_set_size_request(rail, ex_cw, ex_ch);
+    gtk_widget_set_size_request(rail, u->ex_cw, u->ex_ch);
     gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(rail), draw_ex_rail,
-                                   NULL, NULL);
+                                   u, NULL);
     gtk_fixed_put(GTK_FIXED(fixed), rail, 0, 0);
-    ex_rail = rail;
+    u->ex_rail = rail;
 
-    for (i = 0; i < NUM_EXERCISES; i++) {
-        GtkWidget *btn = make_bubble(i + 1);
-        GtkWidget *lbl = gtk_label_new(ex_names[i + 1]);
+    for (i = 0; i < u->n_ex; i++) {
+        GtkWidget *btn = make_bubble(u, i + 1);
+        GtkWidget *lbl = gtk_label_new(u->ex_names[i + 1]);
 
-        ex_cells[i] = btn;
-        ex_labels[i] = lbl;
+        u->ex_labels[i] = lbl;
 
         gtk_widget_set_size_request(lbl, (int)(EX_SPAC - 20.0), -1);
         gtk_widget_set_halign(lbl, GTK_ALIGN_CENTER);
@@ -2484,12 +2681,12 @@ static GtkWidget *build_unit1_page(void) {
     ha = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
     va = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
     g_signal_connect(ha, "notify::page-size",
-                     G_CALLBACK(ex_adjust_notify), NULL);
+                     G_CALLBACK(ex_adjust_notify), u);
     g_signal_connect(va, "notify::page-size",
-                     G_CALLBACK(ex_adjust_notify), NULL);
+                     G_CALLBACK(ex_adjust_notify), u);
 
-    ex_apply_layout();
-    ex_relayout_later();
+    ex_apply_layout(u);
+    ex_relayout_later(u);
 
     return page;
 }
@@ -2498,8 +2695,8 @@ static GtkWidget *build_unit1_page(void) {
 /* Exercise page shell                                                */
 /* ------------------------------------------------------------------ */
 
-static GtkWidget *ex_page_shell(const char *title, const char *subtitle,
-                                const char *btn_label,
+static GtkWidget *ex_page_shell(const char *back_target, const char *title,
+                                const char *subtitle, const char *btn_label,
                                 GtkWidget **body_out, GtkWidget **feedback_out,
                                 GtkWidget **btn_out) {
     GtkWidget *page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -2514,7 +2711,7 @@ static GtkWidget *ex_page_shell(const char *title, const char *subtitle,
     gtk_widget_set_margin_top(page, 24);
     gtk_widget_set_margin_bottom(page, 24);
 
-    gtk_box_append(GTK_BOX(page), top_bar("unit1", title, subtitle));
+    gtk_box_append(GTK_BOX(page), top_bar(back_target, title, subtitle));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -2558,6 +2755,7 @@ typedef struct {
     GArray *combos;   /* GtkComboBox* */
     GArray *answers;  /* const char* */
     GArray *trans;    /* GtkWidget* hidden meaning labels              */
+    UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
 } ComboListCtx;
@@ -2585,11 +2783,13 @@ static void meaning_reveal_all(GtkWidget **labels, int n) {
             gtk_widget_set_visible(labels[i], TRUE);
 }
 
-static ComboListCtx *combo_list_ctx_new(int ex_num, GtkWidget *feedback) {
+static ComboListCtx *combo_list_ctx_new(UnitCtx *unit, int ex_num,
+                                        GtkWidget *feedback) {
     ComboListCtx *ctx = g_new0(ComboListCtx, 1);
     ctx->combos = g_array_new(FALSE, FALSE, sizeof(GtkComboBox *));
     ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
     ctx->trans = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    ctx->unit = unit;
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
     return ctx;
@@ -2671,7 +2871,7 @@ static void combo_list_check(GtkButton *button, gpointer data) {
 
     if (ok == total) {
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
-        mark_done(ctx->ex_num);
+        mark_done(ctx->unit, ctx->ex_num);
     } else {
         set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
     }
@@ -2966,6 +3166,7 @@ static void asm_move_by_click(GtkButton *button, gpointer data) {
 typedef struct {
     SentBuilder **sbs;
     int n;
+    UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
 } AsmCtx;
@@ -3004,22 +3205,24 @@ static void assembly_check(GtkButton *button, gpointer data) {
 
     if (ok == ctx->n) {
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
-        mark_done(ctx->ex_num);
+        mark_done(ctx->unit, ctx->ex_num);
     } else {
         set_feedback(ctx->feedback, FALSE, tr("feedback_sentences"));
     }
 }
 
-static GtkWidget *build_assembly(const char *title, const char *subtitle,
-                                 int ex_num, const AssemblyItem *items,
+static GtkWidget *build_assembly(UnitCtx *unit, const char *title,
+                                 const char *subtitle, int ex_num,
+                                 const AssemblyItem *items,
                                  const char **meanings, int n) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(title, subtitle, "check",
+    GtkWidget *page = ex_page_shell(unit->page, title, subtitle, "check",
                                     &body, &feedback, &check);
     AsmCtx *ctx = g_new0(AsmCtx, 1);
 
     ctx->sbs = g_new0(SentBuilder *, n);
     ctx->n = n;
+    ctx->unit = unit;
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
 
@@ -3176,12 +3379,12 @@ static const char *ex1_meaning[] = {
     "Čau!",
 };
 
-static GtkWidget *build_ex1(void) {
+static GtkWidget *build_ex1(UnitCtx *unit) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell("Dialog",
+    GtkWidget *page = ex_page_shell(unit->page, "Dialog",
                                     "sub_dialog",
                                     "check", &body, &feedback, &check);
-    ComboListCtx *ctx = combo_list_ctx_new(1, feedback);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 1, feedback);
     int ri = 0;
 
     for (guint d = 0; d < G_N_ELEMENTS(ex1_dialogues); d++) {
@@ -3259,15 +3462,16 @@ static const char *ex2_meaning[] = {
 
 typedef struct {
     const char *prompt;
-    const char *options[3];
+    const char *options[5];
+    int n_options;
     int correct;
 } ChoiceQ;
 
 static const ChoiceQ ex3_questions[] = {
-    {"Welche Zahl ist „vierzehn“?", {"4", "14", "40"}, 1},
-    {"Welche Zahl ist „siebzehn“?", {"7", "17", "70"}, 1},
-    {"Welche Zahl ist „zwanzig“?", {"2", "12", "20"}, 2},
-    {"Welche Zahl ist „sechs“?", {"6", "16", "60"}, 0},
+    {"Welche Zahl ist „vierzehn“?", {"4", "14", "40"}, 3, 1},
+    {"Welche Zahl ist „siebzehn“?", {"7", "17", "70"}, 3, 1},
+    {"Welche Zahl ist „zwanzig“?", {"2", "12", "20"}, 3, 2},
+    {"Welche Zahl ist „sechs“?", {"6", "16", "60"}, 3, 0},
 };
 
 static const char *ex3_meaning[] = {
@@ -3278,11 +3482,11 @@ static const char *ex3_meaning[] = {
 };
 
 static const ChoiceQ ex9_questions[] = {
-    {"___ heißt du?", {"Wer", "Wie", "Wo"}, 1},
-    {"___ kommst du?", {"Woher", "Wie", "Wer"}, 0},
-    {"___ wohnst du?", {"Wo", "Wer", "Was"}, 0},
-    {"___ ist das?", {"Wer", "Wo", "Wie"}, 0},
-    {"___ alt bist du?", {"Wie", "Woher", "Was"}, 0},
+    {"___ heißt du?", {"Wer", "Wie", "Wo"}, 3, 1},
+    {"___ kommst du?", {"Woher", "Wie", "Wer"}, 3, 0},
+    {"___ wohnst du?", {"Wo", "Wer", "Was"}, 3, 0},
+    {"___ ist das?", {"Wer", "Wo", "Wie"}, 3, 0},
+    {"___ alt bist du?", {"Wie", "Woher", "Was"}, 3, 0},
 };
 
 static const char *ex9_meaning[] = {
@@ -3296,6 +3500,8 @@ static const char *ex9_meaning[] = {
 typedef struct {
     const ChoiceQ *qs;
     int n;
+    int n_opts;
+    UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
     GtkToggleButton **toggles;
@@ -3310,8 +3516,8 @@ static void choice_check(GtkButton *button, gpointer data) {
 
     for (int i = 0; i < ctx->n; i++) {
         int active = -1;
-        for (int o = 0; o < 3; o++) {
-            GtkToggleButton *tb = ctx->toggles[i * 3 + o];
+        for (int o = 0; o < ctx->n_opts; o++) {
+            GtkToggleButton *tb = ctx->toggles[i * ctx->n_opts + o];
             gtk_widget_remove_css_class(GTK_WIDGET(tb), "ok");
             gtk_widget_remove_css_class(GTK_WIDGET(tb), "wrong");
             if (gtk_toggle_button_get_active(tb))
@@ -3319,15 +3525,15 @@ static void choice_check(GtkButton *button, gpointer data) {
         }
         if (active == ctx->qs[i].correct) {
             ok++;
-            gtk_widget_add_css_class(GTK_WIDGET(ctx->toggles[i * 3 + active]), "ok");
+            gtk_widget_add_css_class(GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "ok");
         } else if (active >= 0) {
-            gtk_widget_add_css_class(GTK_WIDGET(ctx->toggles[i * 3 + active]), "wrong");
+            gtk_widget_add_css_class(GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "wrong");
         }
     }
 
     if (ok == ctx->n) {
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
-        mark_done(ctx->ex_num);
+        mark_done(ctx->unit, ctx->ex_num);
     } else {
         set_feedback(ctx->feedback, FALSE, tr("feedback_retry_short"));
     }
@@ -3335,18 +3541,22 @@ static void choice_check(GtkButton *button, gpointer data) {
     meaning_reveal_all(ctx->trans, ctx->n);
 }
 
-static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_num,
+static GtkWidget *build_choice(UnitCtx *unit, const char *title,
+                               const char *subtitle, int ex_num,
                                const ChoiceQ *qs, const char **meanings, int n) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(title, subtitle, "check",
+    GtkWidget *page = ex_page_shell(unit->page, title, subtitle, "check",
                                     &body, &feedback, &check);
     ChoiceCtx *ctx = g_new0(ChoiceCtx, 1);
+    int n_opts = qs[0].n_options;
 
     ctx->qs = qs;
     ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->unit = unit;
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
-    ctx->toggles = g_new0(GtkToggleButton *, n * 3);
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
     ctx->trans = g_new0(GtkWidget *, n);
 
     for (int i = 0; i < n; i++) {
@@ -3358,18 +3568,21 @@ static GtkWidget *build_choice(const char *title, const char *subtitle, int ex_n
         gtk_widget_add_css_class(prompt, "ex-prompt");
         gtk_box_append(GTK_BOX(body), prompt);
 
-        row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
         gtk_widget_set_halign(row, GTK_ALIGN_START);
         gtk_box_append(GTK_BOX(body), row);
 
-        for (int o = 0; o < 3; o++) {
+        for (int o = 0; o < qs[i].n_options; o++) {
             GtkWidget *tb = gtk_toggle_button_new_with_label(qs[i].options[o]);
             gtk_widget_add_css_class(tb, "pill");
             gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
             if (!first)
                 first = GTK_TOGGLE_BUTTON(tb);
-            gtk_box_append(GTK_BOX(row), tb);
-            ctx->toggles[i * 3 + o] = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
         }
 
         if (meanings[i])
@@ -3403,12 +3616,13 @@ static const FreeQ ex4_questions[] = {
 };
 
 static void ex4_fill_sample(GtkWidget *label) {
-    int i = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(label), "qidx"));
-    char *txt = g_strdup_printf(tr("sample_fmt"),
-                                tr(ex4_questions[i].q_cs),
-                                ex4_questions[i].sample,
-                                tr(ex4_questions[i].a_cs));
+    const FreeQ *q = g_object_get_data(G_OBJECT(label), "fq");
+    char *txt;
 
+    if (!q)
+        return;
+    txt = g_strdup_printf(tr("sample_fmt"), tr(q->q_cs), q->sample,
+                          tr(q->a_cs));
     gtk_label_set_text(GTK_LABEL(label), txt);
     g_free(txt);
 }
@@ -3421,6 +3635,8 @@ static void ex4_reveal(GtkButton *button, gpointer data) {
 }
 
 typedef struct {
+    UnitCtx *unit;
+    int ex_num;
     GtkWidget *feedback;
     GtkWidget **samples;
     int n;
@@ -3434,37 +3650,42 @@ static void ex4_finish(GtkButton *button, gpointer data) {
         ex4_fill_sample(ctx->samples[i]);
         gtk_widget_set_visible(ctx->samples[i], TRUE);
     }
-    mark_done(4);
+    mark_done(ctx->unit, ctx->ex_num);
 }
 
-static GtkWidget *build_ex4(void) {
+static GtkWidget *build_free_answer(UnitCtx *unit, int ex_num, const char *title,
+                                    const char *subtitle, const char *tip_key,
+                                    const FreeQ *qs, int n) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *tip;
     Ex4Ctx *ctx;
-    GtkWidget *page = ex_page_shell("Freie Antwort",
-                                    "sub_free",
-                                    "finish", &body, &feedback, &check);
+    GtkWidget *page = ex_page_shell(unit->page, title, subtitle, "finish",
+                                    &body, &feedback, &check);
 
     ctx = g_new0(Ex4Ctx, 1);
+    ctx->unit = unit;
+    ctx->ex_num = ex_num;
     ctx->feedback = feedback;
-    ctx->n = (int)G_N_ELEMENTS(ex4_questions);
-    ctx->samples = g_new0(GtkWidget *, ctx->n);
+    ctx->n = n;
+    ctx->samples = g_new0(GtkWidget *, n);
 
-    tip = gtk_label_new(NULL);
-    i18n_bind(tip, "tip_ss", 0);
-    gtk_widget_set_halign(tip, GTK_ALIGN_START);
-    gtk_widget_add_css_class(tip, "hint");
-    gtk_box_append(GTK_BOX(body), tip);
+    if (tip_key) {
+        GtkWidget *tip = gtk_label_new(NULL);
+        i18n_bind(tip, tip_key, 0);
+        gtk_widget_set_halign(tip, GTK_ALIGN_START);
+        gtk_widget_add_css_class(tip, "hint");
+        gtk_box_append(GTK_BOX(body), tip);
+    }
 
-    for (guint i = 0; i < G_N_ELEMENTS(ex4_questions); i++) {
-        GtkWidget *q = gtk_label_new(ex4_questions[i].question);
+    for (int i = 0; i < n; i++) {
+        const FreeQ *q = &qs[i];
+        GtkWidget *ql = gtk_label_new(q->question);
         GtkWidget *entry;
         GtkWidget *reveal;
         GtkWidget *sample;
 
-        gtk_widget_set_halign(q, GTK_ALIGN_START);
-        gtk_widget_add_css_class(q, "ex-prompt");
-        gtk_box_append(GTK_BOX(body), q);
+        gtk_widget_set_halign(ql, GTK_ALIGN_START);
+        gtk_widget_add_css_class(ql, "ex-prompt");
+        gtk_box_append(GTK_BOX(body), ql);
 
         entry = gtk_entry_new();
         i18n_bind(entry, "your_answer", 3);
@@ -3477,8 +3698,7 @@ static GtkWidget *build_ex4(void) {
         gtk_box_append(GTK_BOX(body), reveal);
 
         sample = gtk_label_new(NULL);
-        g_object_set_data(G_OBJECT(sample), "qidx", GINT_TO_POINTER(i));
-        i18n_bind(sample, "sample_fmt", 4);
+        g_object_set_data(G_OBJECT(sample), "fq", (gpointer)q);
         gtk_widget_set_halign(sample, GTK_ALIGN_START);
         gtk_widget_add_css_class(sample, "hint");
         gtk_label_set_wrap(GTK_LABEL(sample), TRUE);
@@ -3491,6 +3711,12 @@ static GtkWidget *build_ex4(void) {
 
     g_signal_connect(check, "clicked", G_CALLBACK(ex4_finish), ctx);
     return page;
+}
+
+static GtkWidget *build_ex4(UnitCtx *unit) {
+    return build_free_answer(unit, 4, "Freie Antwort", "sub_free", "tip_ss",
+                             ex4_questions,
+                             (int)G_N_ELEMENTS(ex4_questions));
 }
 
 /* ------------------------------------------------------------------ */
@@ -3522,12 +3748,12 @@ static const char *ex5_meaning[] = {
     "třináct",
 };
 
-static GtkWidget *build_ex5(void) {
+static GtkWidget *build_ex5(UnitCtx *unit) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell("Zahlen",
+    GtkWidget *page = ex_page_shell(unit->page, "Zahlen",
                                     "sub_zahlen",
                                     "check", &body, &feedback, &check);
-    ComboListCtx *ctx = combo_list_ctx_new(5, feedback);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 5, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex5_data); i++) {
         GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
@@ -3597,12 +3823,12 @@ static const char *ex6_meaning[] = {
     "šest ptáků",
 };
 
-static GtkWidget *build_ex6(void) {
+static GtkWidget *build_ex6(UnitCtx *unit) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell("Wie viel?",
+    GtkWidget *page = ex_page_shell(unit->page, "Wie viel?",
                                     "sub_wieviel",
                                     "check", &body, &feedback, &check);
-    ComboListCtx *ctx = combo_list_ctx_new(6, feedback);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 6, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex6_data); i++) {
         const CountQ *q = &ex6_data[i];
@@ -3671,12 +3897,12 @@ static const char *ex7_meaning[] = {
     "deset, jedenáct, dvanáct, třináct",
 };
 
-static GtkWidget *build_ex7(void) {
+static GtkWidget *build_ex7(UnitCtx *unit) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell("Zahlenreihe",
+    GtkWidget *page = ex_page_shell(unit->page, "Zahlenreihe",
                                     "sub_reihe",
                                     "check", &body, &feedback, &check);
-    ComboListCtx *ctx = combo_list_ctx_new(7, feedback);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 7, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex7_data); i++) {
         const SeqQ *q = &ex7_data[i];
@@ -3743,12 +3969,12 @@ static const char *ex8_meaning[] = {
     "Co rád/a děláš?",
 };
 
-static GtkWidget *build_ex8(void) {
+static GtkWidget *build_ex8(UnitCtx *unit) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell("Verb einsetzen",
+    GtkWidget *page = ex_page_shell(unit->page, "Verb einsetzen",
                                     "sub_verb",
                                     "check", &body, &feedback, &check);
-    ComboListCtx *ctx = combo_list_ctx_new(8, feedback);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 8, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex8_data); i++) {
         const VerbQ *q = &ex8_data[i];
@@ -3839,12 +4065,12 @@ static const char *ex12_meaning[] = {
     "Spí.",
 };
 
-static GtkWidget *build_ex12(void) {
+static GtkWidget *build_ex12(UnitCtx *unit) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell("Was macht er/sie?",
+    GtkWidget *page = ex_page_shell(unit->page, "Was macht er/sie?",
                                     "sub_bild",
                                     "check", &body, &feedback, &check);
-    ComboListCtx *ctx = combo_list_ctx_new(12, feedback);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 12, feedback);
 
     for (guint i = 0; i < G_N_ELEMENTS(ex12_data); i++) {
         const VerbClueQ *q = &ex12_data[i];
@@ -3964,6 +4190,7 @@ typedef struct {
     int n_items;
     int *current_group;
     const AssignItem *items_data;
+    UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
 } AssignCtx;
@@ -4051,7 +4278,7 @@ static void assign_check(GtkButton *button, gpointer data) {
 
     if (ok == ac->n_items) {
         set_feedback(ac->feedback, TRUE, tr("feedback_ok"));
-        mark_done(ac->ex_num);
+        mark_done(ac->unit, ac->ex_num);
     } else {
         set_feedback(ac->feedback, FALSE, tr("feedback_retry"));
     }
@@ -4061,12 +4288,13 @@ static void assign_check(GtkButton *button, gpointer data) {
             gtk_widget_set_visible(ac->trans[i], TRUE);
 }
 
-static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_num,
+static GtkWidget *build_assign(UnitCtx *unit, const char *title,
+                               const char *subtitle, int ex_num,
                                const AssignItem *items, int n_items,
                                const char **group_labels, int n_groups,
                                const char **meanings) {
     GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(title, subtitle, "check",
+    GtkWidget *page = ex_page_shell(unit->page, title, subtitle, "check",
                                     &body, &feedback, &check);
     AssignCtx *ac = g_new0(AssignCtx, 1);
     GtkWidget *hint;
@@ -4080,6 +4308,7 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
     ac->n_items = n_items;
     ac->n_groups = n_groups;
     ac->active_group = 0;
+    ac->unit = unit;
     ac->ex_num = ex_num;
     ac->feedback = feedback;
     ac->items_data = items;
@@ -4206,6 +4435,1185 @@ static GtkWidget *build_assign(const char *title, const char *subtitle, int ex_n
 
     g_signal_connect(check, "clicked", G_CALLBACK(assign_check), ac);
     return page;
+}
+
+/* ------------------------------------------------------------------ */
+/* Unit 2 exercises ("Aus aller Welt")                                */
+/* ------------------------------------------------------------------ */
+
+/* ---- generic word-row helper (single blank, shared word bank) ----- */
+
+static void verb_rows_add(ComboListCtx *ctx, GtkWidget *body, int *counter,
+                          const VerbQ *qs, int n,
+                          const char **pool, int pool_n,
+                          const char **meanings) {
+    for (int i = 0; i < n; i++) {
+        GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        GtkWidget *before = gtk_label_new(qs[i].before);
+        GtkWidget *after = gtk_label_new(qs[i].after);
+        GtkWidget *combo;
+        char *numtxt;
+
+        (*counter)++;
+        numtxt = g_strdup_printf("%d. ", *counter);
+        GtkWidget *num = gtk_label_new(numtxt);
+        g_free(numtxt);
+
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_widget_set_valign(num, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(num, "ex-prompt");
+        gtk_box_append(GTK_BOX(row), num);
+
+        gtk_widget_set_valign(before, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(before, "ex-prompt");
+        gtk_box_append(GTK_BOX(row), before);
+
+        combo = make_word_combo(pool, pool_n);
+        gtk_widget_set_size_request(combo, 150, -1);
+        gtk_widget_set_valign(combo, GTK_ALIGN_CENTER);
+        gtk_box_append(GTK_BOX(row), combo);
+        combo_list_add(ctx, combo, qs[i].answer);
+
+        if (qs[i].after && qs[i].after[0]) {
+            gtk_widget_set_valign(after, GTK_ALIGN_CENTER);
+            gtk_widget_add_css_class(after, "ex-prompt");
+            gtk_box_append(GTK_BOX(row), after);
+        }
+
+        gtk_box_append(GTK_BOX(body), row);
+
+        if (meanings && meanings[i])
+            combo_list_add_trans(ctx, meaning_add(body, meanings[i]));
+    }
+}
+
+static GtkWidget *build_verb_ex(UnitCtx *unit, int ex_num,
+                                const char *title, const char *sub,
+                                const VerbQ *qs, int n,
+                                const char **pool, int pool_n,
+                                const char **meanings) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
+                                    &body, &feedback, &check);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, ex_num, feedback);
+    int counter = 0;
+
+    verb_rows_add(ctx, body, &counter, qs, n, pool, pool_n, meanings);
+    g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
+    return page;
+}
+
+/* ---- typed-entry builder with auto-check --------------------------- */
+
+typedef struct {
+    const char *prompt;    /* German prompt text                       */
+    const char *answers;   /* accepted answers separated by '|'         */
+    const char *meaning;   /* i18n key of the revealed meaning or NULL  */
+} TypedQ;
+
+typedef struct {
+    const TypedQ *qs;
+    int n;
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+    GtkWidget **entries;
+    GtkWidget **trans;
+} TypedCtx;
+
+static void typed_check(GtkButton *button, gpointer data) {
+    TypedCtx *ctx = data;
+    int ok = 0;
+
+    (void)button;
+
+    for (int i = 0; i < ctx->n; i++) {
+        const gchar *txt = gtk_editable_get_text(GTK_EDITABLE(ctx->entries[i]));
+        gchar *norm = normalize_answer(txt);
+        gboolean good = txt && txt[0] && answer_accepts(norm, ctx->qs[i].answers);
+        g_free(norm);
+        answer_mark(ctx->entries[i], good);
+        if (good)
+            ok++;
+    }
+
+    if (ctx->trans) {
+        for (int i = 0; i < ctx->n; i++)
+            if (ctx->trans[i])
+                gtk_widget_set_visible(ctx->trans[i], TRUE);
+    }
+
+    if (ok == ctx->n) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
+static GtkWidget *build_typed(UnitCtx *unit, int ex_num,
+                              const char *title, const char *sub,
+                              const TypedQ *qs, int n,
+                              const char *word_bank) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
+                                    &body, &feedback, &check);
+    TypedCtx *ctx = g_new0(TypedCtx, 1);
+
+    ctx->qs = qs;
+    ctx->n = n;
+    ctx->unit = unit;
+    ctx->ex_num = ex_num;
+    ctx->feedback = feedback;
+    ctx->entries = g_new0(GtkWidget *, n);
+    ctx->trans = g_new0(GtkWidget *, n);
+
+    if (word_bank) {
+        GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        GtkWidget *hdr = gtk_label_new(NULL);
+        GtkWidget *words = gtk_label_new(word_bank);
+
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        i18n_bind(hdr, "wordbank", 0);
+        gtk_widget_add_css_class(hdr, "hint");
+        gtk_widget_add_css_class(words, "hint");
+        gtk_box_append(GTK_BOX(row), hdr);
+        gtk_box_append(GTK_BOX(row), words);
+        gtk_box_append(GTK_BOX(body), row);
+    }
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt = gtk_label_new(qs[i].prompt);
+        GtkWidget *entry;
+
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        entry = gtk_entry_new();
+        gtk_widget_set_hexpand(entry, FALSE);
+        gtk_widget_set_halign(entry, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), entry);
+        ctx->entries[i] = entry;
+
+        if (qs[i].meaning)
+            ctx->trans[i] = meaning_add(body, qs[i].meaning);
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(typed_check), ctx);
+    return page;
+}
+
+/* ---- G05/G06/G07/G11/S03 typed content ----------------------------- */
+
+static const char *g05_bank =
+    "Tscheche, Tschechin, Spanier, Spanierin, Türke, Türkin, Kroate, "
+    "Kroatin, Deutscher, Deutsche, Österreicher, Österreicherin, "
+    "Slowake, Slowakin";
+
+static const TypedQ g05_rows[] = {
+    {"Er kommt aus Tschechien. Er ist _________.", "tscheche", "Čech"},
+    {"Sie kommt aus Spanien. Sie ist _________.", "spanierin", "Španělka"},
+    {"Er kommt aus der Türkei. Er ist _________.", "türke|turke", "Turek"},
+    {"Sie kommt aus Kroatien. Sie ist _________.", "kroatin", "Chorvatka"},
+    {"Sie kommt aus Deutschland. Sie ist _________.", "deutsche", "Němka"},
+    {"Sie kommt aus Österreich. Sie ist _________.", "österreicherin|osterreicherin",
+     "Rakušanka"},
+    {"Er kommt aus der Slowakei. Er ist _________.", "slowake", "Slovák"},
+};
+
+static const TypedQ g06_rows[] = {
+    {"Ich heiße Thomas. Ich spreche Deutsch. Ich komme aus D________.",
+     "deutschland", "Německo"},
+    {"Ich heiße Martina. Ich spreche Slowakisch. Ich komme aus der S________.",
+     "slowakei", "Slovensko"},
+    {"Ich heiße Petra. Ich spreche Deutsch. Ich komme aus Ö________.",
+     "österreich|osterreich", "Rakousko"},
+    {"Ich heiße Miguel. Ich spreche Spanisch. Ich komme aus S________.",
+     "spanien", "Španělsko"},
+    {"Ich heiße George. Ich spreche Englisch. Ich komme aus E________.",
+     "england", "Anglie"},
+    {"Ich heiße Maria. Ich spreche Polnisch. Ich komme aus P________.",
+     "polen", "Polsko"},
+};
+
+static const TypedQ g07_rows[] = {
+    {"1.  Ru__land", "russland", "Rusko"},
+    {"2.  T__rkei", "türkei|turkei", "Turecko"},
+    {"3.  Slo__kei", "slowakei", "Slovensko"},
+    {"4.  Kro__ien", "kroatien", "Chorvatsko"},
+    {"5.  Deut___land", "deutschland", "Německo"},
+    {"6.  Öst___reich", "österreich|osterreich", "Rakousko"},
+    {"7.  Gr__chenlan__", "griechenland", "Řecko"},
+    {"8.  Ita__en", "italien", "Itálie"},
+};
+
+static const TypedQ g11_rows[] = {
+    {"tergehvatereikauwauzeh", "vater", "otec"},
+    {"berelternnemrerhobschaz", "eltern", "rodiče"},
+    {"nefrastschechinreiabtab", "tschechin", "Češka"},
+    {"hejkosstudentaldwsahujoi", "student", "student"},
+};
+
+static const TypedQ s03_rows[] = {
+    {"1.  🇨🇿  Bist du Russe? – Nein, ich bin _________.", "tscheche",
+     "Čech"},
+    {"2.  🇦🇹  Bist du Tschechin? – Nein, ich bin _________.", "österreicherin|osterreicherin",
+     "Rakušanka"},
+    {"3.  🇨🇭  Bist du Deutsche? – Nein, ich bin _________.", "schweizerin",
+     "Švýcarka"},
+    {"4.  🇩🇪  Bist du Engländer? – Nein, ich bin _________.", "deutscher",
+     "Němec"},
+    {"5.  🇨🇭  Bist du Amerikanerin? – Nein, ich bin _________.", "schweizerin",
+     "Švýcarka"},
+};
+
+/* ---- G01 content ---------------------------------------------------- */
+
+static const VerbQ g01_peter[] = {
+    {"Er ", " aus Österreich. (kommen)", "kommt"},
+    {"Er ", " in Graz. (wohnen)", "wohnt"},
+    {"Er ", " gern Golf. (spielen)", "spielt"},
+    {"Er ", " Deutsch, Englisch und Italienisch. (sprechen)", "spricht"},
+};
+
+static const VerbQ g01_jana[] = {
+    {"Sie ", " aus der Slowakei. (kommen)", "kommen"},
+    {"Sie ", " in Bratislava. (wohnen)", "wohnen"},
+    {"Sie ", " gern. (tanzen)", "tanzt"},
+    {"Er ", " gern. (reisen)", "reist"},
+    {"Sie ", " gute Freunde. (sein)", "sind"},
+};
+
+static const char *g01_pool[] = {
+    "kommt", "kommst", "komme", "kommen",
+    "wohnt", "wohnst", "wohne", "wohnen",
+    "spielt", "spielst", "spiele", "spielen",
+    "spricht", "sprichst", "spreche", "sprechen",
+    "tanzt", "tanze", "tanzen",
+    "reist", "reise", "reisen",
+    "ist", "bist", "bin", "sind", "seid",
+};
+
+static const char *g01_peter_mean[] = {
+    "Pochází z Rakouska.",
+    "Bydlí ve Štýrském Hradci (Graz).",
+    "Rád hraje golf.",
+    "Mluví německy, anglicky a italsky.",
+};
+
+static const char *g01_jana_mean[] = {
+    "Pocházejí ze Slovenska.",
+    "Bydlí v Bratislavě (ona).",
+    "Ona ráda tancuje.",
+    "On rád cestuje.",
+    "Jsou dobří přátelé.",
+};
+
+/* ---- G04 sprechen --------------------------------------------------- */
+
+static const VerbQ g04_rows[] = {
+    {"• Ich ", " Deutsch und du?", "spreche"},
+    {"• Welche Sprachen ", " Sie?", "sprechen"},
+    {"• ", " du Französisch?", "sprichst"},
+    {"• Wir ", " Polnisch und ihr?", "sprechen"},
+    {"• ", " ihr Englisch?", "sprecht"},
+    {"• Er ", " kein Wort Türkisch.", "spricht"},
+};
+
+static const char *g04_pool[] = {
+    "spreche", "sprichst", "spricht", "sprechen", "sprecht",
+};
+
+static const char *g04_mean[] = {
+    "Mluvím německy. A ty?",
+    "Kterými jazyky mluvíte?",
+    "Mluvíš francouzsky? – Ano, trochu.",
+    "My mluvíme polsky a vy?",
+    "Mluvíte anglicky? – Ano, velmi dobře.",
+    "Nemluví ani slovo turecky.",
+};
+
+/* ---- G08 Verben einsetzen ------------------------------------------- */
+
+static const VerbQ g08_rows[] = {
+    {"Was ", " er?  →  Ein Buch. (lesen)", "liest"},
+    {"Was ", " sie?  →  Medizin. (studieren)", "studiert"},
+    {"Was ", " Jan gern?  →  Auto. (fahren)", "fährt"},
+    {"Wo ", " ihr?  →  In Wien. (leben)", "lebt"},
+    {"Wer ", " bei Siemens?  →  Meine Freundin Vera. (arbeiten)",
+     "arbeitet"},
+};
+
+static const char *g08_pool[] = {
+    "liest", "lese", "lest", "lesen",
+    "studiert", "studiere", "studiert", "studieren",
+    "fährt", "fahre", "fahrt", "fahren",
+    "lebt", "lebe", "lebt", "leben",
+    "arbeitet", "arbeite", "arbeitet", "arbeiten",
+};
+
+static const char *g08_mean[] = {
+    "Co čte? – Knihu.",
+    "Co studuje? – Medicínu.",
+    "Čím Jan rád jezdí? – Autem.",
+    "Kde bydlíte? – Ve Vídni.",
+    "Kdo pracuje u Siemensu? – Moje kamarádka Věra.",
+};
+
+/* ---- G10 Euro -------------------------------------------------------- */
+
+static const VerbQ g10_rows[] = {
+    {"Julia hat ", " Euro.", "dreiundsechzig"},
+    {"Tina hat ", " Euro.", "achtunddreißig"},
+    {"Peter hat ", " Euro.", "fünfundvierzig"},
+    {"Hans hat ", " Euro.", "siebenundfünfzig"},
+    {"Barbara hat ", " Euro.", "neunundneunzig"},
+};
+
+static const char *g10_pool[] = {
+    "dreiundsechzig", "achtunddreißig", "fünfundvierzig",
+    "siebenundfünfzig", "neunundneunzig",
+};
+
+static const char *g10_mean[] = {
+    "šedesát tři eur",
+    "třicet osm eur",
+    "čtyřicet pět eur",
+    "padesát sedm eur",
+    "devadesát devět eur",
+};
+
+/* ---- G14 Lückentext -------------------------------------------------- */
+
+static const VerbQ g14_rows[] = {
+    {"Agnieszka Kowalski kommt ", " Polen, aus Kraków.", "aus"},
+    {"Sie ist 18 Jahre alt und ", " dieses Jahr Abitur.", "macht"},
+    {"Sie chattet gerne mit ihrem deutschen ", ".", "Freund"},
+    {"Er heißt Stefan Böhmermann und ", " in Dresden.", "lebt"},
+    {"Agnieszka findet die ", " cool.", "Sprache"},
+    {"Sie spricht schon sehr ", " Deutsch.", "gut"},
+};
+
+static const char *g14_pool[] = {
+    "aus", "macht", "Freund", "lebt", "Sprache", "gut",
+};
+
+static const char *g14_mean[] = {
+    "Agnieszka Kowalski pochází z Polska, z Krakova.",
+    "Je jí 18 let a letos dělá maturitu.",
+    "Ráda chatuje se svým německým přítelem.",
+    "Jmenuje se Stefan Böhmermann a bydlí v Drážďanech.",
+    "Agnieszce přijde ten jazyk super.",
+    "Už mluví velmi dobře německy.",
+};
+
+/* ---- G15 Verbinde ---------------------------------------------------- */
+
+static const VerbQ g15_rows[] = {
+    {"ein Handy ", "", "brauchen"},
+    {"bei BMW ", "", "arbeiten"},
+    {"Auto ", "", "fahren"},
+    {"das Gymnasium ", "", "besuchen"},
+    {"Spanisch ", "", "sprechen"},
+    {"Krimis ", "", "lesen"},
+};
+
+static const char *g15_pool[] = {
+    "brauchen", "arbeiten", "fahren", "besuchen", "sprechen", "lesen",
+};
+
+static const char *g15_mean[] = {
+    "potřebovat mobil",
+    "pracovat ve BMW",
+    "řídit auto",
+    "navštěvovat gymnázium",
+    "mluvit španělsky",
+    "číst detektivky",
+};
+
+/* ---- G16 Zahlenpaare -------------------------------------------------- */
+
+static const VerbQ g16_rows[] = {
+    {"54  =  ", "", "vierundfünfzig"},
+    {"45  =  ", "", "fünfundvierzig"},
+    {"369  =  ", "", "dreihundertneunundsechzig"},
+    {"112  =  ", "", "hundertzwölf"},
+    {"122  =  ", "", "hundertzweiundzwanzig"},
+    {"68  =  ", "", "achtundsechzig"},
+};
+
+static const char *g16_pool[] = {
+    "vierundfünfzig", "fünfundvierzig", "dreihundertneunundsechzig",
+    "hundertzwölf", "hundertzweiundzwanzig", "achtundsechzig",
+};
+
+static const char *g16_mean[] = {
+    "padesát čtyři",
+    "čtyřicet pět",
+    "tři sta šedesát devět",
+    "sto dvanáct",
+    "sto dvacet dva",
+    "šedesát osm",
+};
+
+/* ---- G02 choice ------------------------------------------------------ */
+
+static const ChoiceQ g02_rows[] = {
+    {"1.  Ich komme ___ Athen.", {"aus", "in"}, 2, 0},
+    {"2.  Peter wohnt ___ Salzburg.", {"aus", "in"}, 2, 1},
+    {"3.  Berlin liegt ___ Deutschland.", {"aus", "in"}, 2, 1},
+    {"4.  Wir wohnen ___ Paris.", {"aus", "in"}, 2, 1},
+    {"5.  Sie kommen ___ Griechenland.", {"aus", "in"}, 2, 0},
+};
+
+static const char *g02_mean[] = {
+    "Pocházím z Atén.",
+    "Petr bydlí v Salcburku.",
+    "Berlín leží v Německu.",
+    "Bydlíme v Paříži.",
+    "Pocházejí z Řecka.",
+};
+
+/* ---- G03 Fragewörter -------------------------------------------------- */
+
+static const ChoiceQ g03_rows[] = {
+    {"1.  ___ kommt er?  →  Aus London.", {"Wer", "Wie", "Wo", "Woher", "Was"},
+     5, 3},
+    {"2.  ___ heißt sie?  →  Andrea.", {"Wer", "Wie", "Wo", "Woher", "Was"},
+     5, 1},
+    {"3.  ___ kommt aus Russland?  →  Alexander.",
+     {"Wer", "Wie", "Wo", "Woher", "Was"}, 5, 0},
+    {"4.  ___ liegt Prag?  →  In Tschechien.", {"Wer", "Wie", "Wo", "Woher", "Was"},
+     5, 2},
+    {"5.  ___ wohnen sie?  →  In Bratislava.",
+     {"Wer", "Wie", "Wo", "Woher", "Was"}, 5, 2},
+    {"6.  ___ macht ihr?  →  Wir studieren Germanistik.",
+     {"Wer", "Wie", "Wo", "Woher", "Was"}, 5, 4},
+};
+
+static const char *g03_mean[] = {
+    "Odkud je? – Z Londýna.",
+    "Jak se jmenuje? – Andrea.",
+    "Kdo pochází z Ruska? – Alexandr.",
+    "Kde leží Praha? – V Česku.",
+    "Kde bydlí? – V Bratislavě.",
+    "Co děláte? – Studujeme germanistiku.",
+};
+
+/* ---- G12 Unterstreiche ------------------------------------------------ */
+
+static const ChoiceQ g12_rows[] = {
+    {"1.  Peter ___ gern Bücher.", {"liest", "lest", "lesen"}, 3, 0},
+    {"2.  Filip ___ in Salzburg.", {"arbeit", "arbeitet", "arbeite"}, 3, 1},
+    {"3.  Magda ___ gut Englisch.", {"spricht", "sprecht", "sprechen"}, 3, 0},
+    {"4.  Marek ___ das Gymnasium.", {"besuchst", "besucht", "besuchen"}, 3, 1},
+    {"5.  Dominika ___ 15 Jahre alt.", {"ist", "seid", "bin"}, 3, 0},
+    {"6.  Meine Schwester ___ Marta.", {"heiße", "heißt", "heißen"}, 3, 1},
+};
+
+static const char *g12_mean[] = {
+    "Petr rád čte knihy.",
+    "Filip pracuje v Salcburku.",
+    "Magda dobře mluví anglicky.",
+    "Marek navštěvuje gymnázium.",
+    "Dominice je 15 let.",
+    "Moje sestra se jmenuje Marta.",
+};
+
+/* ---- G13 Ordne zu ----------------------------------------------------- */
+
+typedef struct {
+    const char *mid;   /* middle part of the question, without the FW */
+    const char *fw;    /* correct Fragewort */
+    const char *ans;   /* correct answer */
+} OrdneRow;
+
+static const OrdneRow g13_rows[] = {
+    {"heißen sie?", "Was", "Jana und Michael."},
+    {"spricht Polnisch?", "Wer", "Jacek."},
+    {"wohnt Eva?", "Wo", "In Plzeň."},
+    {"kommt Markus?", "Woher", "Aus Deutschland."},
+    {"macht ihr?", "Was", "Wir studieren Germanistik."},
+    {"spricht Jana?", "Was", "Slowakisch."},
+};
+
+static const char *g13_fw_pool[] = {"Was", "Wer", "Wo", "Woher"};
+
+static const char *g13_ans_pool[] = {
+    "Jana und Michael.", "Jacek.", "In Plzeň.", "Aus Deutschland.",
+    "Wir studieren Germanistik.", "Slowakisch.",
+};
+
+static const char *g13_mean[] = {
+    "Jak se jmenují? – Jana a Michael.",
+    "Kdo mluví polsky? – Jacek.",
+    "Kde bydlí Eva? – V Plzni.",
+    "Odkud pochází Markus? – Z Německa.",
+    "Co děláte? – Studujeme germanistiku.",
+    "Jakým jazykem mluví Jana? – Slovensky.",
+};
+
+/* ---- G09 content (Freie Antwort) ------------------------------------- */
+
+static const FreeQ ex9_free_qs[] = {
+    {"Wie heißt du?", "Jak se jmenuješ?",
+     "Ich heiße Lukas.", "Jmenuji se Lukáš."},
+    {"Wo wohnst du?", "Kde bydlíš?",
+     "Ich wohne in Prag.", "Bydlím v Praze."},
+    {"Wohin fährst du?", "Kam jedeš?",
+     "Ich fahre nach Deutschland.", "Jedu do Německa."},
+    {"Was liest du gern?", "Co rád/a čteš?",
+     "Ich lese gern Krimis.", "Rád/a čtu detektivky."},
+    {"Was spielst du gern?", "Co rád/a hraješ?",
+     "Ich spiele gern Golf.", "Rád/a hraju golf."},
+};
+
+/* ---- S01 Steckbrief --------------------------------------------------- */
+
+typedef struct {
+    const char *stem;    /* German sentence beginning with an ellipsis */
+    const char *sample;  /* finished German sample line               */
+} ProfileQ;
+
+static const ProfileQ s01_rows[] = {
+    {"Ich heiße …", "Ich heiße Petra."},
+    {"Ich komme …", "Ich komme aus Tschechien."},
+    {"Ich lebe …", "Ich lebe in Prag."},
+    {"Ich bin …", "Ich bin fünfzehn Jahre alt."},
+    {"Ich spreche …", "Ich spreche Tschechisch und Deutsch."},
+    {"Ich besuche …", "Ich besuche das Gymnasium."},
+    {"Ich finde …", "Ich finde Deutsch toll."},
+    {"Ich arbeite …", "Ich arbeite noch nicht."},
+};
+
+static void s01_fill_sample(GtkWidget *label) {
+    const ProfileQ *q = g_object_get_data(G_OBJECT(label), "pq");
+    char *txt;
+
+    if (!q)
+        return;
+    txt = g_strdup_printf(tr("sample_line"), q->sample);
+    gtk_label_set_text(GTK_LABEL(label), txt);
+    g_free(txt);
+}
+
+typedef struct {
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+    GtkWidget **samples;
+    int n;
+} ProfileCtx;
+
+static void s01_reveal(GtkButton *button, gpointer data) {
+    GtkWidget *sample = data;
+    (void)button;
+    s01_fill_sample(sample);
+    gtk_widget_set_visible(sample, !gtk_widget_get_visible(sample));
+}
+
+static void s01_finish(GtkButton *button, gpointer data) {
+    ProfileCtx *ctx = data;
+    (void)button;
+    set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+    for (int i = 0; i < ctx->n; i++) {
+        s01_fill_sample(ctx->samples[i]);
+        gtk_widget_set_visible(ctx->samples[i], TRUE);
+    }
+    mark_done(ctx->unit, ctx->ex_num);
+}
+
+static GtkWidget *build_profile(UnitCtx *unit, int ex_num, const char *title,
+                                const char *sub, const ProfileQ *qs, int n) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, title, sub, "finish",
+                                    &body, &feedback, &check);
+    ProfileCtx *ctx = g_new0(ProfileCtx, 1);
+
+    ctx->unit = unit;
+    ctx->ex_num = ex_num;
+    ctx->feedback = feedback;
+    ctx->n = n;
+    ctx->samples = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt = gtk_label_new(qs[i].stem);
+        GtkWidget *entry;
+        GtkWidget *reveal;
+        GtkWidget *sample;
+
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        entry = gtk_entry_new();
+        i18n_bind(entry, "your_answer", 3);
+        gtk_box_append(GTK_BOX(body), entry);
+
+        reveal = gtk_button_new();
+        i18n_bind(reveal, "show_sample", 1);
+        gtk_widget_add_css_class(reveal, "pill");
+        gtk_widget_set_halign(reveal, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), reveal);
+
+        sample = gtk_label_new(NULL);
+        g_object_set_data(G_OBJECT(sample), "pq", (gpointer)&qs[i]);
+        gtk_widget_set_halign(sample, GTK_ALIGN_START);
+        gtk_widget_add_css_class(sample, "hint");
+        gtk_label_set_wrap(GTK_LABEL(sample), TRUE);
+        gtk_widget_set_visible(sample, FALSE);
+        gtk_box_append(GTK_BOX(body), sample);
+        ctx->samples[i] = sample;
+
+        g_signal_connect(reveal, "clicked", G_CALLBACK(s01_reveal), sample);
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(s01_finish), ctx);
+    return page;
+}
+
+/* ---- S02 Hangman (Berufe) --------------------------------------------- */
+
+#define HM_WORDS 5
+#define HM_MAX_MISSES 6
+
+static const char *hm_words[HM_WORDS] = {
+    "KOCH", "ARZT", "LEHRER", "POLIZIST", "VERKÄUFER",
+};
+
+static const char *hm_tips[HM_WORDS] = {
+    "vaří v restauraci",
+    "léčí nemocné lidi",
+    "učí ve škole",
+    "pracuje u policie",
+    "prodává v obchodě",
+};
+
+static const char *hm_letters[] = {
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    "Ä", "Ö", "Ü",
+};
+#define HM_N_LETTERS (int)(G_N_ELEMENTS(hm_letters))
+
+static const gunichar hm_letters_u[] = {
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    0x00c4, 0x00d6, 0x00dc,
+};
+
+typedef struct {
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+    GtkWidget *draw;
+    GtkWidget *slots;
+    GtkWidget *hint_lbl;
+    GtkWidget *counter_lbl;
+    GtkWidget *retry_btn;
+    GtkWidget **letter_btns;
+    gboolean guessed[HM_N_LETTERS];
+    gboolean locked;      /* true during the "word solved" pause */
+    gboolean finished;
+    int misses;
+    int word_index;
+} HangmanCtx;
+
+static int hm_char_index(gunichar ch) {
+    for (int i = 0; i < HM_N_LETTERS; i++)
+        if (hm_letters_u[i] == ch)
+            return i;
+    return -1;
+}
+
+static void hm_update_slots(HangmanCtx *hm) {
+    const char *w = hm_words[hm->word_index];
+    const char *p = w;
+    GString *out = g_string_new(NULL);
+
+    while (*p) {
+        gunichar ch = g_utf8_get_char(p);
+        p = g_utf8_next_char(p);
+        if (out->len > 0)
+            g_string_append_c(out, ' ');
+        int idx = hm_char_index(ch);
+        if (idx >= 0 && hm->guessed[idx])
+            g_string_append_unichar(out, ch);
+        else
+            g_string_append_c(out, '_');
+    }
+    gtk_label_set_text(GTK_LABEL(hm->slots), out->str);
+    g_string_free(out, TRUE);
+}
+
+static gboolean hm_word_solved(HangmanCtx *hm) {
+    const char *w = hm_words[hm->word_index];
+    const char *p = w;
+
+    while (*p) {
+        gunichar ch = g_utf8_get_char(p);
+        p = g_utf8_next_char(p);
+        int idx = hm_char_index(ch);
+        if (idx < 0 || !hm->guessed[idx])
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static void hm_set_letters_enabled(HangmanCtx *hm, gboolean enabled) {
+    for (int i = 0; i < HM_N_LETTERS; i++) {
+        if (hm->letter_btns[i])
+            gtk_widget_set_sensitive(hm->letter_btns[i], enabled);
+    }
+}
+
+static void hm_redraw(HangmanCtx *hm) {
+    if (hm->draw)
+        gtk_widget_queue_draw(hm->draw);
+}
+
+static void hm_clear_feedback(HangmanCtx *hm) {
+    gtk_widget_remove_css_class(hm->feedback, "feedback-ok");
+    gtk_widget_remove_css_class(hm->feedback, "feedback-err");
+    gtk_label_set_text(GTK_LABEL(hm->feedback), "");
+}
+
+static gboolean hm_advance(gpointer data) {
+    HangmanCtx *hm = data;
+
+    hm->locked = FALSE;
+    if (hm->word_index + 1 >= HM_WORDS) {
+        hm->finished = TRUE;
+        set_feedback(hm->feedback, TRUE, tr("hm_done"));
+        mark_done(hm->unit, hm->ex_num);
+        return G_SOURCE_REMOVE;
+    }
+    hm->word_index++;
+    hm->misses = 0;
+    for (int i = 0; i < HM_N_LETTERS; i++)
+        hm->guessed[i] = FALSE;
+    hm_set_letters_enabled(hm, TRUE);
+    hm_update_slots(hm);
+    gtk_label_set_text(GTK_LABEL(hm->hint_lbl), tr(hm_tips[hm->word_index]));
+    {
+        char *t = g_strdup_printf(tr("hm_progress"), hm->word_index + 1,
+                                  HM_WORDS);
+        gtk_label_set_text(GTK_LABEL(hm->counter_lbl), t);
+        g_free(t);
+    }
+    hm_clear_feedback(hm);
+    gtk_widget_set_visible(hm->retry_btn, FALSE);
+    hm_redraw(hm);
+    return G_SOURCE_REMOVE;
+}
+
+static void hm_reset_word(gpointer data) {
+    HangmanCtx *hm = data;
+    hm->misses = 0;
+    for (int i = 0; i < HM_N_LETTERS; i++)
+        hm->guessed[i] = FALSE;
+    hm->locked = FALSE;
+    hm_set_letters_enabled(hm, TRUE);
+    hm_update_slots(hm);
+    hm_clear_feedback(hm);
+    gtk_widget_set_visible(hm->retry_btn, FALSE);
+    hm_redraw(hm);
+}
+
+static void hm_guess_letter(GtkButton *button, gpointer data) {
+    HangmanCtx *hm = data;
+    int idx = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(button), "li"));
+    const char *w = hm_words[hm->word_index];
+    const char *p = w;
+    gboolean correct = FALSE;
+
+    (void)button;
+    if (hm->finished || hm->locked)
+        return;
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+    hm->guessed[idx] = TRUE;
+
+    while (*p) {
+        gunichar ch = g_utf8_get_char(p);
+        p = g_utf8_next_char(p);
+        if (hm_char_index(ch) == idx) {
+            correct = TRUE;
+            break;
+        }
+    }
+
+    if (correct) {
+        hm_update_slots(hm);
+        if (hm_word_solved(hm)) {
+            hm->locked = TRUE;
+            hm_set_letters_enabled(hm, FALSE);
+            set_feedback(hm->feedback, TRUE, tr("hm_wrong"));
+            g_timeout_add(1100, hm_advance, hm);
+        }
+    } else {
+        hm->misses++;
+        hm_redraw(hm);
+        if (hm->misses >= HM_MAX_MISSES) {
+            char *msg = g_strdup_printf(tr("hm_fail"), w);
+            hm->locked = TRUE;
+            hm_set_letters_enabled(hm, FALSE);
+            set_feedback(hm->feedback, FALSE, msg);
+            g_free(msg);
+            gtk_widget_set_visible(hm->retry_btn, TRUE);
+            /* reveal the word */
+            for (int i = 0; i < HM_N_LETTERS; i++)
+                hm->guessed[i] = TRUE;
+            hm_update_slots(hm);
+            hm_redraw(hm);
+        }
+    }
+}
+
+static void draw_hangman(GtkDrawingArea *area, cairo_t *cr,
+                         int width, int height, gpointer data) {
+    HangmanCtx *hm = data;
+    Rgb c = color_from_hex(app_theme.subtext);
+    double cx = width / 2.0 - 30.0;
+    double ground = height - 10.0;
+    int parts = hm->misses;
+
+    (void)area;
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_width(cr, 3.0);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+    /* scaffold */
+    cairo_new_path(cr);
+    cairo_move_to(cr, width * 0.15, ground);
+    cairo_line_to(cr, width * 0.85, ground);
+    cairo_move_to(cr, cx, ground);
+    cairo_line_to(cr, cx, 20.0);
+    cairo_line_to(cr, cx + 70.0, 20.0);
+    cairo_move_to(cr, cx + 70.0, 20.0);
+    cairo_line_to(cr, cx + 70.0, 42.0);
+    cairo_stroke(cr);
+
+    if (parts >= 1) {            /* head */
+        cairo_new_path(cr);
+        cairo_arc(cr, cx + 70.0, 54.0, 12.0, 0.0, 2.0 * G_PI);
+        cairo_stroke(cr);
+    }
+    if (parts >= 2) {            /* body */
+        cairo_new_path(cr);
+        cairo_move_to(cr, cx + 70.0, 66.0);
+        cairo_line_to(cr, cx + 70.0, 108.0);
+        cairo_stroke(cr);
+    }
+    if (parts >= 3) {            /* left arm */
+        cairo_new_path(cr);
+        cairo_move_to(cr, cx + 70.0, 76.0);
+        cairo_line_to(cr, cx + 50.0, 96.0);
+        cairo_stroke(cr);
+    }
+    if (parts >= 4) {            /* right arm */
+        cairo_new_path(cr);
+        cairo_move_to(cr, cx + 70.0, 76.0);
+        cairo_line_to(cr, cx + 90.0, 96.0);
+        cairo_stroke(cr);
+    }
+    if (parts >= 5) {            /* left leg */
+        cairo_new_path(cr);
+        cairo_move_to(cr, cx + 70.0, 108.0);
+        cairo_line_to(cr, cx + 50.0, 132.0);
+        cairo_stroke(cr);
+    }
+    if (parts >= 6) {            /* right leg */
+        cairo_new_path(cr);
+        cairo_move_to(cr, cx + 70.0, 108.0);
+        cairo_line_to(cr, cx + 90.0, 132.0);
+        cairo_stroke(cr);
+    }
+}
+
+static GtkWidget *build_hangman(UnitCtx *unit, int ex_num, const char *title,
+                                const char *sub) {
+    GtkWidget *page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *wrap = gtk_center_box_new();
+    GtkWidget *content;
+    HangmanCtx *hm = g_new0(HangmanCtx, 1);
+    GtkWidget *hint_row;
+    GtkWidget *counter;
+    GtkWidget *slots;
+    GtkWidget *tip_hdr;
+    GtkWidget *hint_lbl;
+    GtkWidget *retry;
+    GtkWidget *letters;
+    GtkWidget *head;
+    GtkWidget *guess_lbl;
+    char *tmp;
+
+    hm->unit = unit;
+    hm->ex_num = ex_num;
+
+    gtk_widget_set_hexpand(page, TRUE);
+    gtk_widget_set_vexpand(page, TRUE);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+    gtk_box_append(GTK_BOX(page), top_bar(unit->page, title, sub));
+
+    gtk_widget_set_vexpand(wrap, TRUE);
+    gtk_widget_set_hexpand(wrap, TRUE);
+    gtk_box_append(GTK_BOX(page), wrap);
+
+    content = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+    gtk_widget_set_halign(content, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(content, GTK_ALIGN_CENTER);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), content);
+
+    counter = gtk_label_new(NULL);
+    hm->counter_lbl = counter;
+    gtk_widget_add_css_class(counter, "ex-sub");
+    gtk_box_append(GTK_BOX(content), counter);
+
+    head = gtk_drawing_area_new();
+    gtk_widget_set_size_request(head, 220, 170);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(head), draw_hangman,
+                                   hm, NULL);
+    hm->draw = head;
+    gtk_box_append(GTK_BOX(content), head);
+
+    slots = gtk_label_new(NULL);
+    gtk_widget_add_css_class(slots, "hm-word");
+    hm->slots = slots;
+    gtk_box_append(GTK_BOX(content), slots);
+
+    hint_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_widget_set_halign(hint_row, GTK_ALIGN_CENTER);
+    tip_hdr = gtk_label_new(NULL);
+    i18n_bind(tip_hdr, "hm_hint", 0);
+    gtk_widget_add_css_class(tip_hdr, "hint");
+    hint_lbl = gtk_label_new(NULL);
+    gtk_widget_add_css_class(hint_lbl, "hint");
+    hm->hint_lbl = hint_lbl;
+    gtk_box_append(GTK_BOX(hint_row), tip_hdr);
+    gtk_box_append(GTK_BOX(hint_row), hint_lbl);
+    gtk_box_append(GTK_BOX(content), hint_row);
+
+    guess_lbl = gtk_label_new(NULL);
+    i18n_bind(guess_lbl, "hm_guess", 0);
+    gtk_widget_add_css_class(guess_lbl, "ex-sub");
+    gtk_box_append(GTK_BOX(content), guess_lbl);
+
+    letters = gtk_flow_box_new();
+    gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(letters), GTK_SELECTION_NONE);
+    gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(letters), 9);
+    gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(letters), 9);
+    gtk_box_append(GTK_BOX(content), letters);
+
+    hm->letter_btns = g_new0(GtkWidget *, HM_N_LETTERS);
+    for (int i = 0; i < HM_N_LETTERS; i++) {
+        GtkWidget *b = gtk_button_new_with_label(hm_letters[i]);
+        gtk_widget_add_css_class(b, "pill");
+        gtk_widget_set_hexpand(b, FALSE);
+        g_object_set_data(G_OBJECT(b), "li", GINT_TO_POINTER(i));
+        g_signal_connect(b, "clicked", G_CALLBACK(hm_guess_letter), hm);
+        gtk_flow_box_append(GTK_FLOW_BOX(letters), b);
+        hm->letter_btns[i] = b;
+    }
+
+    hm->feedback = gtk_label_new(NULL);
+    gtk_widget_set_halign(hm->feedback, GTK_ALIGN_CENTER);
+    gtk_widget_set_margin_top(hm->feedback, 6);
+    gtk_box_append(GTK_BOX(content), hm->feedback);
+
+    retry = gtk_button_new();
+    i18n_bind(retry, "hm_retry", 1);
+    gtk_widget_add_css_class(retry, "btn-primary");
+    gtk_widget_set_halign(retry, GTK_ALIGN_CENTER);
+    gtk_widget_set_visible(retry, FALSE);
+    hm->retry_btn = retry;
+    g_signal_connect(retry, "clicked", G_CALLBACK(hm_reset_word), hm);
+    gtk_box_append(GTK_BOX(content), retry);
+
+    gtk_label_set_text(GTK_LABEL(hint_lbl), tr(hm_tips[0]));
+    tmp = g_strdup_printf(tr("hm_progress"), 1, HM_WORDS);
+    gtk_label_set_text(GTK_LABEL(counter), tmp);
+    g_free(tmp);
+    hm_update_slots(hm);
+
+    return page;
+}
+
+/* ---- per-exercise builders for unit 2 ------------------------------- */
+
+static GtkWidget *u2ex1(UnitCtx *unit) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, "Verben konjugieren",
+                                    "sub_verben", "check",
+                                    &body, &feedback, &check);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 1, feedback);
+    int counter = 0;
+
+    GtkWidget *h1 = gtk_label_new("Peter Fritsch:");
+    gtk_widget_set_halign(h1, GTK_ALIGN_START);
+    gtk_widget_add_css_class(h1, "ex-sub");
+    gtk_box_append(GTK_BOX(body), h1);
+    verb_rows_add(ctx, body, &counter, g01_peter, G_N_ELEMENTS(g01_peter),
+                  g01_pool, G_N_ELEMENTS(g01_pool), g01_peter_mean);
+
+    GtkWidget *h2 = gtk_label_new("Jana Nová und Pavol Korčák:");
+    gtk_widget_set_halign(h2, GTK_ALIGN_START);
+    gtk_widget_add_css_class(h2, "ex-sub");
+    gtk_widget_set_margin_top(h2, 10);
+    gtk_box_append(GTK_BOX(body), h2);
+    verb_rows_add(ctx, body, &counter, g01_jana, G_N_ELEMENTS(g01_jana),
+                  g01_pool, G_N_ELEMENTS(g01_pool), g01_jana_mean);
+
+    g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
+    return page;
+}
+
+static GtkWidget *u2ex2(UnitCtx *unit) {
+    return build_choice(unit, "aus oder in", "sub_ausin", 2,
+                        g02_rows, g02_mean, G_N_ELEMENTS(g02_rows));
+}
+
+static GtkWidget *u2ex3(UnitCtx *unit) {
+    return build_choice(unit, "Fragewörter", "sub_wer", 3,
+                        g03_rows, g03_mean, G_N_ELEMENTS(g03_rows));
+}
+
+static GtkWidget *u2ex4(UnitCtx *unit) {
+    return build_verb_ex(unit, 4, "sprechen", "sub_sprich",
+                         g04_rows, G_N_ELEMENTS(g04_rows),
+                         g04_pool, G_N_ELEMENTS(g04_pool), g04_mean);
+}
+
+static GtkWidget *u2ex5(UnitCtx *unit) {
+    return build_typed(unit, 5, "Nationalitäten", "sub_nation",
+                       g05_rows, G_N_ELEMENTS(g05_rows), g05_bank);
+}
+
+static GtkWidget *u2ex6(UnitCtx *unit) {
+    return build_typed(unit, 6, "Woher?", "sub_woher",
+                       g06_rows, G_N_ELEMENTS(g06_rows), NULL);
+}
+
+static GtkWidget *u2ex7(UnitCtx *unit) {
+    return build_typed(unit, 7, "Länder schreiben", "sub_laender",
+                       g07_rows, G_N_ELEMENTS(g07_rows), NULL);
+}
+
+static GtkWidget *u2ex8(UnitCtx *unit) {
+    return build_verb_ex(unit, 8, "Verben einsetzen", "sub_verb2",
+                         g08_rows, G_N_ELEMENTS(g08_rows),
+                         g08_pool, G_N_ELEMENTS(g08_pool), g08_mean);
+}
+
+static GtkWidget *u2ex9(UnitCtx *unit) {
+    return build_free_answer(unit, 9, "Freie Antwort", "sub_free", NULL,
+                             ex9_free_qs, (int)G_N_ELEMENTS(ex9_free_qs));
+}
+
+static GtkWidget *u2ex10(UnitCtx *unit) {
+    return build_verb_ex(unit, 10, "Euro", "sub_euro",
+                         g10_rows, G_N_ELEMENTS(g10_rows),
+                         g10_pool, G_N_ELEMENTS(g10_pool), g10_mean);
+}
+
+static GtkWidget *u2ex11(UnitCtx *unit) {
+    return build_typed(unit, 11, "Wörter suchen", "sub_wortsuchen",
+                       g11_rows, G_N_ELEMENTS(g11_rows), NULL);
+}
+
+static GtkWidget *u2ex12(UnitCtx *unit) {
+    return build_choice(unit, "Was ist richtig?", "sub_verb2", 12,
+                        g12_rows, g12_mean, G_N_ELEMENTS(g12_rows));
+}
+
+static GtkWidget *u2ex13(UnitCtx *unit) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, "Ordne zu", "sub_ordne",
+                                    "check", &body, &feedback, &check);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, 13, feedback);
+
+    for (guint i = 0; i < G_N_ELEMENTS(g13_rows); i++) {
+        const OrdneRow *r = &g13_rows[i];
+        GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+        GtkWidget *num = gtk_label_new(NULL);
+        GtkWidget *mid = gtk_label_new(r->mid);
+        GtkWidget *arrow = gtk_label_new("→");
+        GtkWidget *fw = make_word_combo(g13_fw_pool,
+                                        G_N_ELEMENTS(g13_fw_pool));
+        GtkWidget *ans = make_word_combo(g13_ans_pool,
+                                         G_N_ELEMENTS(g13_ans_pool));
+        char *numtxt = g_strdup_printf("%d.", (int)(i + 1));
+
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_label_set_text(GTK_LABEL(num), numtxt);
+        g_free(numtxt);
+        gtk_widget_set_valign(num, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(num, "ex-prompt");
+        gtk_box_append(GTK_BOX(row), num);
+
+        gtk_widget_set_valign(fw, GTK_ALIGN_CENTER);
+        gtk_widget_set_size_request(fw, 110, -1);
+        gtk_box_append(GTK_BOX(row), fw);
+        combo_list_add(ctx, fw, r->fw);
+
+        gtk_widget_set_valign(mid, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(mid, "ex-prompt");
+        gtk_box_append(GTK_BOX(row), mid);
+
+        gtk_widget_set_valign(arrow, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(arrow, "ex-prompt");
+        gtk_box_append(GTK_BOX(row), arrow);
+
+        gtk_widget_set_valign(ans, GTK_ALIGN_CENTER);
+        gtk_widget_set_size_request(ans, 190, -1);
+        gtk_box_append(GTK_BOX(row), ans);
+        combo_list_add(ctx, ans, r->ans);
+
+        gtk_box_append(GTK_BOX(body), row);
+        combo_list_add_trans(ctx, meaning_add(body, g13_mean[i]));
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
+    return page;
+}
+
+static GtkWidget *u2ex14(UnitCtx *unit) {
+    return build_verb_ex(unit, 14, "Lückentext", "sub_luecke",
+                         g14_rows, G_N_ELEMENTS(g14_rows),
+                         g14_pool, G_N_ELEMENTS(g14_pool), g14_mean);
+}
+
+static GtkWidget *u2ex15(UnitCtx *unit) {
+    return build_verb_ex(unit, 15, "Verbinde", "sub_verbinde",
+                         g15_rows, G_N_ELEMENTS(g15_rows),
+                         g15_pool, G_N_ELEMENTS(g15_pool), g15_mean);
+}
+
+static GtkWidget *u2ex16(UnitCtx *unit) {
+    return build_verb_ex(unit, 16, "Zahlen", "sub_zahlpaar",
+                         g16_rows, G_N_ELEMENTS(g16_rows),
+                         g16_pool, G_N_ELEMENTS(g16_pool), g16_mean);
+}
+
+static GtkWidget *u2ex17(UnitCtx *unit) {
+    return build_profile(unit, 17, "Steckbrief", "sub_steckbrief",
+                         s01_rows, G_N_ELEMENTS(s01_rows));
+}
+
+static GtkWidget *u2ex18(UnitCtx *unit) {
+    return build_hangman(unit, 18, "Berufe", "sub_berufe");
+}
+
+static GtkWidget *u2ex19(UnitCtx *unit) {
+    return build_typed(unit, 19, "Nationalität", "sub_bistdu",
+                       s03_rows, G_N_ELEMENTS(s03_rows), NULL);
 }
 
 /* ------------------------------------------------------------------ */
@@ -4529,20 +5937,115 @@ static GtkWidget *build_settings_button(void) {
 /* Activate                                                           */
 /* ------------------------------------------------------------------ */
 
+static void unit_meta_init(void) {
+    static const char *titles[NUM_UNITS] = {
+        "Neue Freunde", "Aus aller Welt", "Bei uns zu Hause",
+        "Schule und Freizeit", "Guten Appetit!", "Mein Tagesablauf",
+        "Meine Freunde", "Wir treffen uns in Salzburg",
+        "Mein Haus ist meine Burg", "Urlaub in Österreich",
+    };
+    static const char *pages[NUM_UNITS] = {
+        "unit1", "unit2", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    };
+    static const char *tags[NUM_UNITS] = {
+        "u1", "u2", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    };
+
+    for (int i = 0; i < NUM_UNITS; i++) {
+        units[i].title = titles[i];
+        units[i].page = pages[i];
+        units[i].ex_tag = tags[i];
+        units[i].sub_key = NULL;
+        units[i].unlocked = (i < NUM_UNLOCKED);
+    }
+    units[0].sub_key = "unit1_sub";
+    units[0].progress_file = PROGRESS_U1;
+    units[1].sub_key = "unit2_sub";
+    units[1].progress_file = PROGRESS_U2;
+}
+
+static void unit_configure(int idx, const char *const *names, int n) {
+    UnitCtx *u = &units[idx];
+
+    u->n_ex = n;
+    for (int i = 1; i <= n; i++)
+        u->ex_names[i] = names[i];
+}
+
+static GtkWidget *build_exercise_page(UnitCtx *u, int n) {
+    if (u->ex_tag[1] == '1') {
+        switch (n) {
+            case 1:  return build_ex1(u);
+            case 2:  return build_assembly(u, "Sätze bilden", "sub_assembly", 2,
+                                           ex2_items, ex2_meaning,
+                                           G_N_ELEMENTS(ex2_items));
+            case 3:  return build_choice(u, "Was ist richtig?", "sub_choice_num",
+                                         3, ex3_questions, ex3_meaning,
+                                         G_N_ELEMENTS(ex3_questions));
+            case 4:  return build_ex4(u);
+            case 5:  return build_ex5(u);
+            case 6:  return build_ex6(u);
+            case 7:  return build_ex7(u);
+            case 8:  return build_ex8(u);
+            case 9:  return build_choice(u, "Wer? Wie? Wo?", "sub_wer",
+                                         9, ex9_questions, ex9_meaning,
+                                         G_N_ELEMENTS(ex9_questions));
+            case 10: return build_assembly(u, "Wörter trennen", "sub_assembly",
+                                           10, ex10_items, ex10_meaning,
+                                           G_N_ELEMENTS(ex10_items));
+            case 11: return build_assign(u, "Grußformen", "sub_gruss",
+                                         11, ex11_items,
+                                         G_N_ELEMENTS(ex11_items),
+                                         ex11_groups, G_N_ELEMENTS(ex11_groups),
+                                         ex11_meaning);
+            case 12: return build_ex12(u);
+            case 13: return build_assign(u, "Länder", "sub_land",
+                                         13, ex13_items,
+                                         G_N_ELEMENTS(ex13_items),
+                                         ex13_groups, G_N_ELEMENTS(ex13_groups),
+                                         ex13_meaning);
+            default: return NULL;
+        }
+    } else {
+        switch (n) {
+            case 1:  return u2ex1(u);
+            case 2:  return u2ex2(u);
+            case 3:  return u2ex3(u);
+            case 4:  return u2ex4(u);
+            case 5:  return u2ex5(u);
+            case 6:  return u2ex6(u);
+            case 7:  return u2ex7(u);
+            case 8:  return u2ex8(u);
+            case 9:  return u2ex9(u);
+            case 10: return u2ex10(u);
+            case 11: return u2ex11(u);
+            case 12: return u2ex12(u);
+            case 13: return u2ex13(u);
+            case 14: return u2ex14(u);
+            case 15: return u2ex15(u);
+            case 16: return u2ex16(u);
+            case 17: return u2ex17(u);
+            case 18: return u2ex18(u);
+            case 19: return u2ex19(u);
+            default: return NULL;
+        }
+    }
+}
+
 static void activate(GtkApplication *app, gpointer user_data) {
     GtkWindow *window;
     GtkWidget *headerbar;
     GtkWidget *title_label;
     GtkWidget *welcome_page;
     GtkWidget *roadmap_page;
-    GtkWidget *unit1_page;
-    GtkWidget *ex_pages[NUM_EXERCISES + 1];
     GtkEventController *keys;
-    char name[16];
 
     (void)user_data;
 
     load_settings();
+    unit_meta_init();
+    unit_configure(0, u1_ex_names, 13);
+    unit_configure(1, u2_ex_names, 19);
     load_progress();
     app_theme = theme_palette(app_theme_id, app_color_mode);
 
@@ -4567,39 +6070,26 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     welcome_page = build_welcome_page();
     roadmap_page = build_roadmap_page();
-    unit1_page = build_unit1_page();
-
-    ex_pages[1] = build_ex1();
-    ex_pages[2] = build_assembly("Sätze bilden",
-                                 "sub_assembly",
-                                 2, ex2_items, ex2_meaning, G_N_ELEMENTS(ex2_items));
-    ex_pages[3] = build_choice("Was ist richtig?", "sub_choice_num",
-                               3, ex3_questions, ex3_meaning, G_N_ELEMENTS(ex3_questions));
-    ex_pages[4] = build_ex4();
-    ex_pages[5] = build_ex5();
-    ex_pages[6] = build_ex6();
-    ex_pages[7] = build_ex7();
-    ex_pages[8] = build_ex8();
-    ex_pages[9] = build_choice("Wer? Wie? Wo?", "sub_wer",
-                               9, ex9_questions, ex9_meaning, G_N_ELEMENTS(ex9_questions));
-    ex_pages[10] = build_assembly("Wörter trennen",
-                                  "sub_assembly",
-                                  10, ex10_items, ex10_meaning, G_N_ELEMENTS(ex10_items));
-    ex_pages[11] = build_assign("Grußformen", "sub_gruss",
-                                11, ex11_items, G_N_ELEMENTS(ex11_items),
-                                ex11_groups, G_N_ELEMENTS(ex11_groups), ex11_meaning);
-    ex_pages[12] = build_ex12();
-    ex_pages[13] = build_assign("Länder", "sub_land",
-                                13, ex13_items, G_N_ELEMENTS(ex13_items),
-                                ex13_groups, G_N_ELEMENTS(ex13_groups), ex13_meaning);
-
     gtk_stack_add_named(main_stack, welcome_page, "welcome");
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
-    gtk_stack_add_named(main_stack, unit1_page, "unit1");
-    for (int i = 1; i <= NUM_EXERCISES; i++) {
-        g_snprintf(name, sizeof(name), "ex%d", i);
-        gtk_stack_add_named(main_stack, ex_pages[i], name);
+
+    for (int i = 0; i < NUM_UNLOCKED; i++) {
+        UnitCtx *u = &units[i];
+        GtkWidget *map = build_unit_page(u);
+
+        if (map)
+            gtk_stack_add_named(main_stack, map, u->page);
+        for (int n = 1; n <= u->n_ex; n++) {
+            GtkWidget *page = build_exercise_page(u, n);
+            char name[16];
+
+            if (!page)
+                continue;
+            g_snprintf(name, sizeof(name), "%se%d", u->ex_tag, n);
+            gtk_stack_add_named(main_stack, page, name);
+        }
     }
+
     gtk_stack_set_visible_child_name(main_stack, "welcome");
 
     refresh_completion_ui();
