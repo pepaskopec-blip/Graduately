@@ -9,6 +9,12 @@ preparing for their maturita exam. The UI is available in Czech and English and
 is built as a single C file (`maturita.c`) that renders a modern, CSS-styled
 GTK 4 interface.
 
+## Screenshots
+
+| Welcome screen                          | Subjects ("Předměty")                    | German learning roadmap                 |
+| --------------------------------------- | ---------------------------------------- | --------------------------------------- |
+| ![Welcome screen](assets/welcomescreen.png) | ![Subjects screen](assets/subjectsscreen.png) | ![German roadmap](assets/germanlection.png) |
+
 ## Features
 
 - **Welcome screen** – branded greeting with a description of the program and a
