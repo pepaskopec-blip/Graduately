@@ -1,18 +1,24 @@
-# Sprechen.c
+# maturita.c
 
-A German learning application written in C using GTK 4.
+An educational application written in C using GTK 4.
 
 ## Description
 
-Sprechen.c is an educational program designed for practicing German language
-skills, aimed at high school and gymnasium students. The UI is available in
-Czech and English and is built as a single C file (`sprechen.c`) that renders a
-modern, CSS-styled GTK 4 interface.
+maturita.c is an educational program for high-school and gymnasium students
+preparing for their maturita exam. The UI is available in Czech and English and
+is built as a single C file (`maturita.c`) that renders a modern, CSS-styled
+GTK 4 interface.
 
 ## Features
 
 - **Welcome screen** – branded greeting with a description of the program and a
   continue button to get started
+- **Subjects ("Předměty")** – adaptive serpentine subject map with 13 subjects
+  - only **Deutsch** is open (round bubble with the German flag); picking it
+    opens the German learning path
+  - the other subjects are dimmed/locked placeholders until their content is
+    added
+  - layout folds into multiple rows when the window is narrow
 - **Learning roadmap** – adaptive serpentine learning path with 10 units
   - each unit numbered and labeled with its topic (e.g. "Neue Freunde")
   - units 1 and 2 are open; completed units shown in green with a checkmark
@@ -115,7 +121,7 @@ make
 Or manually:
 
 ```bash
-gcc -o sprechen sprechen.c `pkg-config --cflags --libs gtk4` -lm
+gcc -o maturita maturita.c `pkg-config --cflags --libs gtk4` -lm
 ```
 
 ### Running the Application
@@ -127,22 +133,24 @@ make run
 or
 
 ```bash
-./sprechen
+./maturita
 ```
 
 ## Usage
 
 When launched, the application shows the welcome screen. From there:
 
-1. Click **"Pokračuj" / "Continue"** to open the learning roadmap.
-2. Browse the units along the path; the roadmap reflows into rows and scrolls
+1. Click **"Pokračuj" / "Continue"** to open the **Předměty / Subjects** map.
+2. Click the **Deutsch** bubble (German flag) to open the German learning
+   roadmap. The other subjects are locked for now.
+3. Browse the units along the path; the roadmap reflows into rows and scrolls
    if the window is too narrow.
-3. Click the **"Neue Freunde"** node to open unit 1 or **"Aus aller Welt"** to
+4. Click the **"Neue Freunde"** node to open unit 1 or **"Aus aller Welt"** to
    open unit 2, then pick any bubble to start an exercise. Unit 2 is available
    even if unit 1 is not finished yet.
-4. Use the **back button** in the top-left corner to return to the previous
+5. Use the **back button** in the top-left corner to return to the previous
    screen.
-5. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
+6. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
 Units 1 and 2 are currently implemented. Locked units do nothing – they are
@@ -160,7 +168,7 @@ to the app on first finish).
 ## Project structure
 
 ```
-sprechen.c              entire application (UI, navigation, themes, exercises)
+maturita.c              entire application (UI, navigation, themes, exercises)
 Makefile                build & run targets
 README.md               this file
 LICENSE                 MIT license
@@ -174,18 +182,18 @@ progress/               created at runtime
 
 The app ships with ten palettes – Catppuccin, Nord, Dracula, Rose Pine, Ocean,
 Gruvbox, Solarized, Everforest, Monokai and One Dark – each available in dark
-and light mode. Colors are defined as theme palettes in `sprechen.c` and
+and light mode. Colors are defined as theme palettes in `maturita.c` and
 applied through a generated CSS stylesheet (plus matching Cairo colors for the
 roadmap rails and icons).
 
 Change the look from the in-app settings panel, or edit the palette tables /
-`build_theme_css()` in `sprechen.c` and rebuild.
+`build_theme_css()` in `maturita.c` and rebuild.
 
 ## Languages
 
 The interface can be switched between Czech and English from the settings
 panel; the choice takes effect immediately and is remembered between runs.
-Translations live in two tables in `sprechen.c`: `tr_ui` holds interface
+Translations live in two tables in `maturita.c`: `tr_ui` holds interface
 strings under short keys, while `tr_content` translates the Czech meanings
 shown next to the German exercise items and uses the Czech text itself as the
 key. Widgets are registered with `i18n_bind()` so `apply_language()` can
@@ -196,7 +204,7 @@ German in both languages.
 
 ## To-Do Plans
 
-Future enhancements planned for Sprechen.c:
+Future enhancements planned for maturita.c:
 
 - [ ] Wire unit nodes to actual German vocabulary/grammar exercises
   - [x] Unit 1 ("Neue Freunde") – 13 interactive exercises with progress saving

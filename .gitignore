@@ -1,9 +1,10 @@
 # ---> C
 # Prerequisites
-*.d
+#.d
 
 # binary
 sprechen
+maturita
 error.txt
 error.log
 CLAUDE.md

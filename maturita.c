@@ -358,11 +358,11 @@ static const TrEntry tr_ui[] = {
     {"theme", "TÉMA", "THEME"},
     {"language", "JAZYK", "LANGUAGE"},
     {"welcome_body",
-     "Sprechen.C je vzdělávací program na procvičování Němčiny, určený "
-     "pro studenty středních škol a gymnázií.\n\n"
+     "maturita.C je vzdělávací program pro studenty středních škol a "
+     "gymnázií na přípravu k maturitě.\n\n"
      "Program je napsaný v Céčku studentama ze SSŠVT!",
-     "Sprechen.C is an educational app for practicing German, made for "
-     "high-school and gymnasium students.\n\n"
+     "maturita.C is an educational app for high-school and gymnasium "
+     "students to prepare for their maturita exam.\n\n"
      "The program is written in C by students from SSŠVT!"},
     {"continue", "Pokračuj", "Continue"},
     {"roadmap_title", "Učební plán", "Learning path"},
@@ -458,6 +458,25 @@ static const TrEntry tr_ui[] = {
     {"hm_done", "Výborně! Uhodli jste všechna povolání.",
      "Great! You guessed all the jobs."},
     {"hm_guess", "Hádejte písmeno", "Guess a letter"},
+    {"subjects_title", "Předměty", "Subjects"},
+    {"subjects_sub", "Zatím je dostupný předmět Deutsch.",
+     "Only Deutsch is available so far."},
+    {"Český jazyk a literatura", "Český jazyk a literatura",
+     "Czech Language and Literature"},
+    {"Občanská nauka", "Občanská nauka", "Civics"},
+    {"English", "English", "English"},
+    {"Deutsch", "Deutsch", "Deutsch"},
+    {"Matematika", "Matematika", "Mathematics"},
+    {"Fyzika", "Fyzika", "Physics"},
+    {"Základy Přírodopisných věd", "Základy Přírodopisných věd",
+     "Fundamentals of Natural Sciences"},
+    {"Technická grafika", "Technická grafika", "Technical Drawing"},
+    {"Prezentační grafika", "Prezentační grafika", "Presentation Graphics"},
+    {"Správa počítačových sítí", "Správa počítačových sítí",
+     "Computer Network Administration"},
+    {"Programování", "Programování", "Programming"},
+    {"Technické vybavení", "Technické vybavení", "Computer Hardware"},
+    {"Programové vybavení", "Programové vybavení", "Software"},
     {NULL, NULL, NULL}
 };
 
@@ -753,11 +772,11 @@ static void refresh_welcome_heading(void) {
         return;
     if (app_lang == LANG_EN)
         markup = g_strdup_printf(
-            "Welcome to <span color=\"#%06x\">Sprechen.C</span>!",
+            "Welcome to <span color=\"#%06x\">maturita.C</span>!",
             app_theme.accent);
     else
         markup = g_strdup_printf(
-            "Vítejte ve <span color=\"#%06x\">Sprechen.C</span>!",
+            "Vítejte ve <span color=\"#%06x\">maturita.C</span>!",
             app_theme.accent);
     gtk_label_set_markup(GTK_LABEL(welcome_heading), markup);
     g_free(markup);
@@ -1829,7 +1848,7 @@ static void on_nav_clicked(GtkButton *button, gpointer user_data) {
 static void on_continue_clicked(GtkButton *button, gpointer user_data) {
     (void)button;
     (void)user_data;
-    gtk_stack_set_visible_child_name(main_stack, "roadmap");
+    gtk_stack_set_visible_child_name(main_stack, "subjects");
 }
 
 static GtkWidget *make_back_button(const char *target) {
@@ -2347,7 +2366,7 @@ static GtkWidget *build_roadmap_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("welcome", "roadmap_title", "roadmap_sub"));
+                   top_bar("subjects", "roadmap_title", "roadmap_sub"));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -2386,6 +2405,357 @@ static GtkWidget *build_roadmap_page(void) {
                      G_CALLBACK(road_adjust_notify), NULL);
 
     road_relayout_later();
+
+    return page;
+}
+
+
+/* ------------------------------------------------------------------ */
+/* Subjects page ("Předměty") - serpentine subject map                */
+/* ------------------------------------------------------------------ */
+
+#define NUM_SUBJECTS  13
+#define SUB_BUBBLE    NODE_SIZE    /* round node, matches .unit-node */
+#define SUB_MX        110.0
+#define SUB_MY        150.0
+#define SUB_SPAC      220.0
+#define SUB_GAP       210.0
+#define SUB_WAVE       34.0
+
+/* Index 0 is Deutsch and is the only unlocked subject for now. */
+static const char *sub_keys[NUM_SUBJECTS] = {
+    "Deutsch",
+    "Český jazyk a literatura",
+    "Občanská nauka",
+    "English",
+    "Matematika",
+    "Fyzika",
+    "Základy Přírodopisných věd",
+    "Technická grafika",
+    "Prezentační grafika",
+    "Správa počítačových sítí",
+    "Programování",
+    "Technické vybavení",
+    "Programové vybavení",
+};
+
+static GtkWidget *sub_scroll;
+static GtkWidget *sub_fixed;
+static GtkWidget *sub_rail;
+static GtkWidget *sub_cells[NUM_SUBJECTS];
+static GtkWidget *sub_labels[NUM_SUBJECTS];
+static double sub_cx[NUM_SUBJECTS];
+static double sub_cy[NUM_SUBJECTS];
+static int sub_rows = 1;
+static int sub_cols = NUM_SUBJECTS;
+static int sub_cw = (int)(2.0 * SUB_MX + (NUM_SUBJECTS - 1) * SUB_SPAC);
+static int sub_ch = (int)(2.0 * SUB_MY);
+static guint sub_idle;
+
+static void sub_layout_geometry(double avail) {
+    const double phase = 2.0 * G_PI * 1.7 / (double)(NUM_SUBJECTS - 1);
+    int rows;
+    int r, c, i;
+
+    for (rows = 1; rows <= NUM_SUBJECTS; rows++) {
+        int cols = (NUM_SUBJECTS + rows - 1) / rows;
+        if (2.0 * SUB_MX + (cols - 1) * SUB_SPAC <= avail + 1.0)
+            break;
+    }
+    if (rows > NUM_SUBJECTS)
+        rows = NUM_SUBJECTS;
+    sub_rows = rows;
+    sub_cols = (NUM_SUBJECTS + rows - 1) / rows;
+    if (sub_cols < 1)
+        sub_cols = 1;
+    sub_cw = (int)(2.0 * SUB_MX + (sub_cols - 1) * SUB_SPAC);
+    sub_ch = (int)(2.0 * SUB_MY + (rows - 1) * SUB_GAP);
+
+    for (r = 0; r < rows; r++) {
+        int base = r * sub_cols;
+        int len = MIN(sub_cols, NUM_SUBJECTS - base);
+        int fwd = (r % 2) == 0;
+        for (c = 0; c < len; c++) {
+            i = base + c;
+            int cc = fwd ? c : (sub_cols - 1 - c);
+            sub_cx[i] = SUB_MX + cc * SUB_SPAC;
+            sub_cy[i] = SUB_MY + r * SUB_GAP
+                        + SUB_WAVE * sin((double)i * phase);
+        }
+    }
+}
+
+static void sub_point(double t, double *ox, double *oy) {
+    int k = (int)t;
+    double u = t - (double)k;
+    double u2, u3;
+    double p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+
+    if (k < 0) { k = 0; u = 0.0; }
+    if (k >= NUM_SUBJECTS - 1) { k = NUM_SUBJECTS - 2; u = 1.0; }
+
+    p1x = sub_cx[k];     p1y = sub_cy[k];
+    p2x = sub_cx[k + 1]; p2y = sub_cy[k + 1];
+    if (k - 1 >= 0) { p0x = sub_cx[k - 1]; p0y = sub_cy[k - 1]; }
+    else            { p0x = p1x - (p2x - p1x); p0y = p1y - (p2y - p1y); }
+    if (k + 2 < NUM_SUBJECTS) { p3x = sub_cx[k + 2]; p3y = sub_cy[k + 2]; }
+    else                      { p3x = p2x + (p2x - p1x); p3y = p2y + (p2y - p1y); }
+
+    u2 = u * u;
+    u3 = u2 * u;
+    *ox = 0.5 * (2.0 * p1x + (-p0x + p2x) * u
+                 + (2.0 * p0x - 5.0 * p1x + 4.0 * p2x - p3x) * u2
+                 + (-p0x + 3.0 * p1x - 3.0 * p2x + p3x) * u3);
+    *oy = 0.5 * (2.0 * p1y + (-p0y + p2y) * u
+                 + (2.0 * p0y - 5.0 * p1y + 4.0 * p2y - p3y) * u2
+                 + (-p0y + 3.0 * p1y - 3.0 * p2y + p3y) * u3);
+}
+
+static void sub_path(cairo_t *cr, double t0, double t1) {
+    const double steps_per_unit = 48.0;
+    int n = (int)((t1 - t0) * steps_per_unit);
+    double x, y;
+    int s;
+
+    if (n < 1)
+        n = 1;
+    sub_point(t0, &x, &y);
+    cairo_move_to(cr, x, y);
+    for (s = 1; s <= n; s++) {
+        sub_point(t0 + (t1 - t0) * (double)s / (double)n, &x, &y);
+        cairo_line_to(cr, x, y);
+    }
+}
+
+static void draw_sub_rail(GtkDrawingArea *area, cairo_t *cr,
+                          int width, int height, gpointer user_data) {
+    const double t_end = (double)(NUM_SUBJECTS - 1);
+    const Rgb rail = color_from_hex(app_theme.rail);
+    const Rgb mauve = color_from_hex(app_theme.accent);
+    double hx, hy;
+
+    (void)area;
+    (void)width;
+    (void)height;
+    (void)user_data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+
+    sub_point(0.0, &hx, &hy);
+    draw_node_halo(cr, hx, hy, SUB_BUBBLE * 1.05,
+                   mauve.r, mauve.g, mauve.b, 0.18);
+
+    cairo_new_path(cr);
+    sub_path(cr, 0.0, t_end);
+    cairo_set_line_width(cr, 14);
+    cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
+    cairo_stroke(cr);
+}
+
+static void sub_apply_layout(void) {
+    int i;
+
+    if (!sub_fixed)
+        return;
+
+    for (i = 0; i < NUM_SUBJECTS; i++) {
+        if (sub_cells[i])
+            gtk_fixed_move(GTK_FIXED(sub_fixed), sub_cells[i],
+                           (int)(sub_cx[i] - SUB_BUBBLE / 2.0),
+                           (int)(sub_cy[i] - SUB_BUBBLE / 2.0));
+        if (sub_labels[i])
+            gtk_fixed_move(GTK_FIXED(sub_fixed), sub_labels[i],
+                           (int)(sub_cx[i] - (SUB_SPAC - 24.0) / 2.0),
+                           (int)(sub_cy[i] + SUB_BUBBLE / 2.0 + 10.0));
+    }
+
+    gtk_widget_set_size_request(sub_fixed, sub_cw, sub_ch);
+    gtk_widget_set_size_request(sub_rail, sub_cw, sub_ch);
+    gtk_fixed_move(GTK_FIXED(sub_fixed), sub_rail, 0, 0);
+    gtk_widget_queue_draw(sub_rail);
+}
+
+static void sub_relayout(void) {
+    GtkAdjustment *hadj;
+    double avail;
+
+    if (!sub_scroll)
+        return;
+    hadj = gtk_scrolled_window_get_hadjustment(
+        GTK_SCROLLED_WINDOW(sub_scroll));
+    avail = gtk_adjustment_get_page_size(hadj);
+    if (avail < 1.0)
+        return;
+    sub_layout_geometry(avail);
+    sub_apply_layout();
+}
+
+static gboolean sub_relayout_idle(gpointer data) {
+    (void)data;
+    sub_idle = 0;
+    sub_relayout();
+    return G_SOURCE_REMOVE;
+}
+
+static void sub_relayout_later(void) {
+    if (sub_idle == 0)
+        sub_idle = g_idle_add(sub_relayout_idle, NULL);
+}
+
+static void sub_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
+                              gpointer data) {
+    (void)adj;
+    (void)ps;
+    (void)data;
+    sub_relayout_later();
+}
+
+/* German flag (black / red / gold) drawn in a clipped circle. */
+static void draw_german_flag(GtkDrawingArea *area, cairo_t *cr,
+                             int width, int height, gpointer data) {
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double r = MIN(width, height) / 2.0 - 2.0;
+    double band = (double)height / 3.0;
+
+    (void)area;
+    (void)data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+    cairo_save(cr);
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_clip(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, 0.0, 0.0, (double)width, band);
+    cairo_set_source_rgb(cr, 0.18, 0.18, 0.19);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, 0.0, band, (double)width, band);
+    cairo_set_source_rgb(cr, 0.72, 0.27, 0.24);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, 0.0, 2.0 * band, (double)width, band);
+    cairo_set_source_rgb(cr, 0.84, 0.70, 0.32);
+    cairo_fill(cr);
+
+    cairo_restore(cr);
+}
+
+static GtkWidget *build_subjects_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *wrap;
+    GtkWidget *fixed;
+    GtkWidget *rail;
+    GtkAdjustment *ha;
+    GtkAdjustment *va;
+    int i;
+
+    sub_layout_geometry(1000.0);
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_hexpand(page, TRUE);
+    gtk_widget_set_vexpand(page, TRUE);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("welcome", "subjects_title", "subjects_sub"));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 14);
+    gtk_box_append(GTK_BOX(page), scroll);
+    sub_scroll = scroll;
+
+    wrap = gtk_center_box_new();
+    gtk_widget_set_vexpand(wrap, TRUE);
+    gtk_widget_set_hexpand(wrap, TRUE);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), wrap);
+
+    fixed = gtk_fixed_new();
+    gtk_widget_set_halign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(fixed, sub_cw, sub_ch);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), fixed);
+    sub_fixed = fixed;
+
+    rail = gtk_drawing_area_new();
+    gtk_widget_set_size_request(rail, sub_cw, sub_ch);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(rail), draw_sub_rail,
+                                   NULL, NULL);
+    gtk_fixed_put(GTK_FIXED(fixed), rail, 0, 0);
+    sub_rail = rail;
+
+    for (i = 0; i < NUM_SUBJECTS; i++) {
+        GtkWidget *card;
+        GtkWidget *lbl;
+
+        card = gtk_button_new();
+        gtk_widget_add_css_class(card, "unit-node");
+        gtk_widget_set_can_focus(card, FALSE);
+        gtk_widget_set_size_request(card, (int)SUB_BUBBLE, (int)SUB_BUBBLE);
+
+        if (i == 0) {
+            GtkWidget *flag = gtk_drawing_area_new();
+            gtk_widget_add_css_class(card, "current");
+            gtk_widget_set_size_request(flag, (int)SUB_BUBBLE,
+                                        (int)SUB_BUBBLE);
+            gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(flag),
+                                           draw_german_flag, NULL, NULL);
+            gtk_button_set_child(GTK_BUTTON(card), flag);
+            g_object_set_data_full(G_OBJECT(card), "target",
+                                   g_strdup("roadmap"), g_free);
+            g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+        } else {
+            GtkWidget *lock;
+            gtk_widget_add_css_class(card, "locked");
+            gtk_widget_set_sensitive(card, FALSE);
+            lock = icon_area_new(draw_lock_icon,
+                                 0.3451, 0.3569, 0.4392, 26);
+            gtk_button_set_child(GTK_BUTTON(card), lock);
+        }
+
+        sub_cells[i] = card;
+        gtk_fixed_put(GTK_FIXED(fixed), card, 0, 0);
+
+        lbl = gtk_label_new(NULL);
+        i18n_bind(lbl, sub_keys[i], 0);
+        gtk_widget_set_size_request(lbl, (int)(SUB_SPAC - 24.0), -1);
+        gtk_widget_set_halign(lbl, GTK_ALIGN_CENTER);
+        gtk_label_set_justify(GTK_LABEL(lbl), GTK_JUSTIFY_CENTER);
+        gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
+        gtk_widget_add_css_class(lbl, "unit-name");
+        if (i != 0)
+            gtk_widget_add_css_class(lbl, "unit-name-locked");
+        sub_labels[i] = lbl;
+        gtk_fixed_put(GTK_FIXED(fixed), lbl, 0, 0);
+    }
+
+    ha = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(scroll));
+    va = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scroll));
+    g_signal_connect(ha, "notify::page-size",
+                     G_CALLBACK(sub_adjust_notify), NULL);
+    g_signal_connect(va, "notify::page-size",
+                     G_CALLBACK(sub_adjust_notify), NULL);
+
+    sub_apply_layout();
+    sub_relayout_later();
 
     return page;
 }
@@ -6063,12 +6433,12 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     window = GTK_WINDOW(gtk_application_window_new(app));
     main_window = window;
-    gtk_window_set_title(window, "Sprechen.c");
+    gtk_window_set_title(window, "maturita.c");
     gtk_window_set_default_size(window, 760, 560);
 
     headerbar = gtk_header_bar_new();
     gtk_widget_add_css_class(headerbar, "titlebar");
-    title_label = gtk_label_new("Sprechen.c");
+    title_label = gtk_label_new("maturita.c");
     gtk_widget_add_css_class(title_label, "app-title");
     gtk_header_bar_set_title_widget(GTK_HEADER_BAR(headerbar), title_label);
     gtk_window_set_titlebar(window, headerbar);
@@ -6083,6 +6453,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     welcome_page = build_welcome_page();
     roadmap_page = build_roadmap_page();
     gtk_stack_add_named(main_stack, welcome_page, "welcome");
+    gtk_stack_add_named(main_stack, build_subjects_page(), "subjects");
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
 
     for (int i = 0; i < NUM_UNLOCKED; i++) {
@@ -6123,7 +6494,7 @@ int main(int argc, char **argv) {
     GtkApplication *app;
     int status;
 
-    app = gtk_application_new("org.example.Sprechen", G_APPLICATION_DEFAULT_FLAGS);
+    app = gtk_application_new("org.example.maturita", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);

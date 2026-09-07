@@ -16,8 +16,8 @@ GTK_LIBS   := $(shell $(PKG_CONFIG) --libs gtk4)
 
 CFLAGS = -Wall -Wextra -Wno-deprecated-declarations $(GTK_CFLAGS)
 LIBS = $(GTK_LIBS) -lm
-TARGET = sprechen
-SRC = sprechen.c
+TARGET = maturita
+SRC = maturita.c
 
 all: $(TARGET)
 
