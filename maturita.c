@@ -761,6 +761,12 @@ static const TrEntry tr_content[] = {
     /* ex2 possessive pronouns (nominative) */
     {"Je to tvoje matka? – Ne, to není moje matka. To je jeho teta.", NULL,
      "Is that your mother? – No, that is not my mother. That is his aunt."},
+    /* ex2 word-level glosses for the selected possessive pronouns */
+    {"tvůj", NULL, "yours (m.)"},
+    {"tvoje", NULL, "yours (f.)"},
+    {"můj", NULL, "mine (m.)"},
+    {"moje", NULL, "mine (f.)"},
+    {"jeho", NULL, "his"},
     {"Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec.", NULL,
      "Is that your brother? – No, that is not my brother. That is his cousin."},
     {"Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče Markuse.",
@@ -782,10 +788,28 @@ static const TrEntry tr_content[] = {
      "They are called Elfriede and Jiri. They also have children."},
     {"Jejich syn se jmenuje Philipp a jejich dcera Sabine.", NULL,
      "Their son is called Philipp and their daughter Sabine."},
+    {"Rodina ráda cestuje.", NULL, "The family likes travelling."},
+    {"Často je u nás na návštěvě v Česku.", NULL,
+     "They often visit us in Czechia."},
     {"Rodina ráda cestuje. Často je u nás na návštěvě v Česku.", NULL,
      "The family likes travelling. They often visit us in Czechia."},
     {"Děti se učí také česky.", NULL,
      "The children are also learning Czech."},
+    /* ex4 word-level glosses for the gapped words */
+    {"mít", NULL, "to have"},
+    {"přátelé", NULL, "friends"},
+    {"bydlet", NULL, "to live"},
+    {"jmenovat se", NULL, "to be called"},
+    {"děti", NULL, "children"},
+    {"syn", NULL, "son"},
+    {"jejich", NULL, "their"},
+    {"rodina", NULL, "family"},
+    {"cestuje", NULL, "travels"},
+    {"často", NULL, "often"},
+    {"návštěva", NULL, "visit"},
+    {"Česko", NULL, "Czechia"},
+    {"učit se", NULL, "to learn"},
+    {"čeština", NULL, "Czech"},
     /* ex5 Marco's family */
     {"Máme mužskou domácnost: Můj otec Johann (50), Ivo (16) a já.", NULL,
      "We live in an all-male household: my father Johann (50), Ivo (16) and me."},
@@ -6497,30 +6521,204 @@ static const char *ex2_u3_pool[] = {
     "dein", "deine", "mein", "meine", "sein", "seine",
 };
 
-static const U3Fill ex2_u3_rows[] = {
-    {"2.", "Ist das ", "deine",
-     " Mutter? – Nein, das ist nicht ", "meine", " Mutter.", NULL, NULL,
-     NULL},
-    {NULL, "Das ist ", "seine", " Tante.", NULL, NULL, NULL, NULL,
-     "Je to tvoje matka? – Ne, to není moje matka. To je jeho teta."},
-    {"3.", "Ist das ", "dein",
-     " Bruder? – Nein, das ist nicht ", "mein", " Bruder.", NULL, NULL,
-     NULL},
-    {NULL, "Das ist ", "sein", " Cousin.", NULL, NULL, NULL, NULL,
-     "Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec."},
-    {"4.", "Sind das ", "deine",
-     " Eltern? – Nein, das sind nicht ", "meine",
-     " Eltern. Das sind die Eltern von Markus.", NULL, NULL,
-     "Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče "
-     "Markuse."},
+/* The Czech sentence is shown straight away, and pressing "Check" only
+ * adds the translations of the words the student picked in the blanks. */
+typedef struct {
+    const char *num;      /* item number on the first line of the item  */
+    const char *seg[4];   /* literal text segments, gaps+1 of them      */
+    const char *ans[3];   /* correct word per blank                     */
+    int gaps;
+} Ex2Row;
+
+typedef struct {
+    const char *czech;    /* whole-sentence translation, always shown   */
+    const Ex2Row *rows;
+    int nrows;
+} Ex2Item;
+
+static const Ex2Row ex2_u3_rows2[] = {
+    {"2.", {"Ist das ", " Mutter? – Nein, das ist nicht ", " Mutter.", NULL},
+     {"deine", "meine", NULL}, 2},
+    {NULL, {"Das ist ", " Tante.", NULL, NULL}, {"seine", NULL, NULL}, 1},
 };
 
+static const Ex2Row ex2_u3_rows3[] = {
+    {"3.", {"Ist das ", " Bruder? – Nein, das ist nicht ", " Bruder.", NULL},
+     {"dein", "mein", NULL}, 2},
+    {NULL, {"Das ist ", " Cousin.", NULL, NULL}, {"sein", NULL, NULL}, 1},
+};
+
+static const Ex2Row ex2_u3_rows4[] = {
+    {"4.",
+     {"Sind das ", " Eltern? – Nein, das sind nicht ",
+      " Eltern. Das sind die Eltern von Markus.", NULL},
+     {"deine", "meine", NULL}, 2},
+};
+
+static const Ex2Item ex2_u3_items[] = {
+    {"Je to tvoje matka? – Ne, to není moje matka. To je jeho teta.",
+     ex2_u3_rows2, G_N_ELEMENTS(ex2_u3_rows2)},
+    {"Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec.",
+     ex2_u3_rows3, G_N_ELEMENTS(ex2_u3_rows3)},
+    {"Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče "
+     "Markuse.",
+     ex2_u3_rows4, G_N_ELEMENTS(ex2_u3_rows4)},
+};
+
+typedef struct {
+    GArray *combos;        /* every blank combo (checking order)         */
+    GArray *answers;
+    GtkWidget **notes;     /* one hidden word-translation note per item  */
+    GArray **item_combos;  /* blank combos of each item                  */
+    int n_items;
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+} Ex2Ctx;
+
+static const char *ex2_word_cs(const char *w) {
+    if (!w)
+        return NULL;
+    if (g_strcmp0(w, "dein") == 0)  return "tvůj";
+    if (g_strcmp0(w, "deine") == 0) return "tvoje";
+    if (g_strcmp0(w, "mein") == 0)  return "můj";
+    if (g_strcmp0(w, "meine") == 0) return "moje";
+    if (g_strcmp0(w, "sein") == 0)  return "jeho";
+    if (g_strcmp0(w, "seine") == 0) return "jeho";
+    return NULL;
+}
+
+static void ex2_check(GtkButton *button, gpointer data) {
+    Ex2Ctx *ctx = data;
+    guint total = ctx->combos->len;
+    guint ok = 0;
+
+    (void)button;
+
+    for (guint i = 0; i < total; i++) {
+        GtkComboBox *combo = g_array_index(ctx->combos, GtkComboBox *, i);
+        const char *ans = g_array_index(ctx->answers, const char *, i);
+        gchar *sel = gtk_combo_box_text_get_active_text(
+            GTK_COMBO_BOX_TEXT(combo));
+        gboolean good = FALSE;
+        if (sel) {
+            gchar *t = normalize_answer(sel);
+            good = answer_accepts(t, ans);
+            g_free(t);
+            g_free(sel);
+        }
+        answer_mark(GTK_WIDGET(combo), good);
+        if (good)
+            ok++;
+    }
+
+    for (int it = 0; it < ctx->n_items; it++) {
+        GArray *item = ctx->item_combos[it];
+        GtkWidget *note = ctx->notes[it];
+        GString *s = g_string_new(NULL);
+        for (guint k = 0; k < item->len; k++) {
+            GtkComboBox *combo = g_array_index(item, GtkComboBox *, k);
+            gchar *sel = gtk_combo_box_text_get_active_text(
+                GTK_COMBO_BOX_TEXT(combo));
+            const char *cs;
+            if (sel) {
+                cs = ex2_word_cs(sel);
+                if (cs) {
+                    if (s->len > 0)
+                        g_string_append(s, " · ");
+                    g_string_append_printf(s, "%s = %s", sel, tr(cs));
+                }
+                g_free(sel);
+            }
+        }
+        gtk_label_set_text(GTK_LABEL(note), s->str);
+        g_string_free(s, TRUE);
+        gtk_widget_set_visible(note, TRUE);
+    }
+
+    if (ok == total) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
 static GtkWidget *u3ex2(UnitCtx *unit) {
-    return u3_build_drop(unit, 2, "mein oder dein", "sub3_poss",
-                         "Beispiel: Ist das dein Vater? – Nein, das ist "
-                         "nicht mein Vater. Das ist sein Onkel.",
-                         ex2_u3_rows, G_N_ELEMENTS(ex2_u3_rows),
-                         ex2_u3_pool, G_N_ELEMENTS(ex2_u3_pool));
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, "mein oder dein", "sub3_poss",
+                                    "check", &body, &feedback, &check);
+    Ex2Ctx *ctx = g_new0(Ex2Ctx, 1);
+
+    ctx->combos = g_array_new(FALSE, FALSE, sizeof(GtkComboBox *));
+    ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
+    ctx->n_items = G_N_ELEMENTS(ex2_u3_items);
+    ctx->notes = g_new0(GtkWidget *, ctx->n_items);
+    ctx->item_combos = g_new0(GArray *, ctx->n_items);
+    ctx->unit = unit;
+    ctx->ex_num = 2;
+    ctx->feedback = feedback;
+
+    u3_sample_line(body, "Beispiel: Ist das dein Vater? – Nein, das ist "
+                         "nicht mein Vater. Das ist sein Onkel.");
+
+    for (int it = 0; it < ctx->n_items; it++) {
+        const Ex2Item *item = &ex2_u3_items[it];
+        GtkWidget *mean;
+        GtkWidget *note;
+        GArray *item_combos = g_array_new(FALSE, FALSE,
+                                          sizeof(GtkComboBox *));
+        ctx->item_combos[it] = item_combos;
+
+        for (int r = 0; r < item->nrows; r++) {
+            const Ex2Row *row = &item->rows[r];
+            GtkWidget *line = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+
+            gtk_widget_set_halign(line, GTK_ALIGN_START);
+            if (row->num && row->num[0]) {
+                GtkWidget *nl = gtk_label_new(row->num);
+                gtk_widget_set_valign(nl, GTK_ALIGN_CENTER);
+                gtk_widget_add_css_class(nl, "ex-prompt");
+                gtk_box_append(GTK_BOX(line), nl);
+            }
+            for (int i = 0; i <= row->gaps; i++) {
+                if (row->seg[i] && row->seg[i][0]) {
+                    GtkWidget *lb = gtk_label_new(row->seg[i]);
+                    gtk_widget_set_valign(lb, GTK_ALIGN_CENTER);
+                    gtk_widget_add_css_class(lb, "ex-prompt");
+                    gtk_box_append(GTK_BOX(line), lb);
+                }
+                if (i < row->gaps) {
+                    GtkWidget *combo = make_word_combo(ex2_u3_pool,
+                                       G_N_ELEMENTS(ex2_u3_pool));
+                    gtk_widget_set_size_request(combo, 96, -1);
+                    gtk_widget_set_valign(combo, GTK_ALIGN_CENTER);
+                    gtk_box_append(GTK_BOX(line), combo);
+                    g_array_append_val(ctx->combos, combo);
+                    g_array_append_val(item_combos, combo);
+                    g_array_append_val(ctx->answers, row->ans[i]);
+                }
+            }
+            gtk_box_append(GTK_BOX(body), line);
+        }
+
+        /* Czech sentence is available before checking. */
+        mean = meaning_add(body, item->czech);
+        gtk_widget_set_visible(mean, TRUE);
+
+        /* word translations appear only after pressing "Check". */
+        note = gtk_label_new(NULL);
+        gtk_widget_set_halign(note, GTK_ALIGN_START);
+        gtk_widget_set_margin_bottom(note, 2);
+        gtk_widget_add_css_class(note, "meaning");
+        gtk_label_set_wrap(GTK_LABEL(note), TRUE);
+        gtk_widget_set_visible(note, FALSE);
+        gtk_box_append(GTK_BOX(body), note);
+        ctx->notes[it] = note;
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(ex2_check), ctx);
+    return page;
 }
 
 /* ---- ex3: Haustiere – ein/kein --------------------------------------- */
@@ -6558,7 +6756,7 @@ static GtkWidget *u3ex3(UnitCtx *unit) {
                          ex3_u3_pool, G_N_ELEMENTS(ex3_u3_pool));
 }
 
-/* ---- inline letter-gap rows (ex4 + ex15) ----------------------------- */
+/* ---- inline letter-gap rows (ex15) ----------------------------------- */
 
 /* One sentence row whose text is split into segments with up to four
  * small text entries (one per missing-letter group) inserted. */
@@ -6691,29 +6889,163 @@ static GtkWidget *u3_build_letters(UnitCtx *unit, int ex_num,
 
 /* ---- ex4: missing letters in a paragraph ----------------------------- */
 
-static const U3Let ex4_u3_rows[] = {
-    /* num, s0, a0, s1, a1, s2, a2, s3, a3, s4, mean */
-    {NULL, "Wir hab", "e", "n Fre", "u", "nde in Öster", "re", "ich. Sie wo",
-     "h", "nen in Wien.",
-     "Máme přátele v Rakousku. Bydlí ve Vídni."},
-    {NULL, "Sie hei", "ß", "en Elfriede und Jiri. Sie haben auch ", "K",
-     "inder.", NULL, NULL, NULL, NULL,
-     "Jmenují se Elfriede a Jiří. Mají také děti."},
-    {NULL, "Ihr S", "o", "hn heißt Philipp und ihr", "e",
-     " Tochter heißt Sabine.", NULL, NULL, NULL, NULL,
-     "Jejich syn se jmenuje Philipp a jejich dcera Sabine."},
-    {NULL, "Die Famili", "e", " re", "i", "st gern.", NULL, NULL, NULL,
-     NULL, NULL},
-    {NULL, "Sie ist o", "f", "t bei uns zu Bes", "u", "ch in Tsche", "ch",
-     "ien.", NULL, NULL,
-     "Rodina ráda cestuje. Často je u nás na návštěvě v Česku."},
-    {NULL, "Die Kinder ler", "n", "en auch Tsche", "ch", "isch.", NULL,
-     NULL, NULL, NULL, "Děti se učí také česky."},
+/* The Czech sentence is shown straight away; pressing "Check" only adds
+ * the translations of the words the student had to complete. */
+typedef struct {
+    const char *seg[5];   /* literal text segments (gaps + 1)           */
+    const char *ans[4];   /* missing letters per gap                    */
+    const char *czech;    /* whole-sentence translation, always shown   */
+    const char *word[4];  /* completed German word per gap              */
+    const char *gmean[4]; /* Czech meaning of that word                 */
+    int gaps;
+} Ex4Row;
+
+static const Ex4Row ex4_u3_rows[] = {
+    {{"Wir hab", "n Fre", "nde in Öster", "ich. Sie wo", "nen in Wien."},
+     {"e", "u", "re", "h"},
+     "Máme přátele v Rakousku. Bydlí ve Vídni.",
+     {"haben", "Freunde", "Österreich", "wohnen"},
+     {"mít", "přátelé", "Rakousko", "bydlet"}, 4},
+    {{"Sie hei", "en Elfriede und Jiri. Sie haben auch ", "inder.", NULL,
+      NULL},
+     {"ß", "K", NULL, NULL},
+     "Jmenují se Elfriede a Jiří. Mají také děti.",
+     {"heißen", "Kinder", NULL, NULL},
+     {"jmenovat se", "děti", NULL, NULL}, 2},
+    {{"Ihr S", "hn heißt Philipp und ihr", " Tochter heißt Sabine.", NULL,
+      NULL},
+     {"o", "e", NULL, NULL},
+     "Jejich syn se jmenuje Philipp a jejich dcera Sabine.",
+     {"Sohn", "ihre", NULL, NULL},
+     {"syn", "jejich", NULL, NULL}, 2},
+    {{"Die Famili", " re", "st gern.", NULL, NULL},
+     {"e", "i", NULL, NULL},
+     "Rodina ráda cestuje.",
+     {"Familie", "reist", NULL, NULL},
+     {"rodina", "cestuje", NULL, NULL}, 2},
+    {{"Sie ist o", "t bei uns zu Bes", "ch in Tsche", "ien.", NULL},
+     {"f", "u", "ch", NULL},
+     "Často je u nás na návštěvě v Česku.",
+     {"oft", "Besuch", "Tschechien", NULL},
+     {"často", "návštěva", "Česko", NULL}, 3},
+    {{"Die Kinder ler", "en auch Tsche", "isch.", NULL, NULL},
+     {"n", "ch", NULL, NULL},
+     "Děti se učí také česky.",
+     {"lernen", "Tschechisch", NULL, NULL},
+     {"učit se", "čeština", NULL, NULL}, 2},
 };
 
+typedef struct {
+    GArray *entries;   /* every small letter entry (checking order)     */
+    GArray *answers;
+    const Ex4Row *rows;
+    int n_rows;
+    GtkWidget **notes; /* hidden word-translation note per row          */
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+} Ex4LetterCtx;
+
+static void ex4_check(GtkButton *button, gpointer data) {
+    Ex4LetterCtx *ctx = data;
+    guint total = ctx->entries->len;
+    guint ok = 0;
+
+    (void)button;
+
+    for (guint i = 0; i < total; i++) {
+        GtkWidget *e = g_array_index(ctx->entries, GtkWidget *, i);
+        const char *ans = g_array_index(ctx->answers, const char *, i);
+        const gchar *txt = gtk_editable_get_text(GTK_EDITABLE(e));
+        gchar *norm = normalize_answer(txt);
+        gboolean good = txt && txt[0] && answer_accepts(norm, ans);
+        g_free(norm);
+        answer_mark(e, good);
+        if (good)
+            ok++;
+    }
+
+    for (int r = 0; r < ctx->n_rows; r++) {
+        const Ex4Row *row = &ctx->rows[r];
+        GtkWidget *note = ctx->notes[r];
+        GString *s = g_string_new(NULL);
+        for (int k = 0; k < row->gaps; k++) {
+            if (k > 0)
+                g_string_append(s, " · ");
+            if (row->word[k])
+                g_string_append_printf(s, "%s = %s", row->word[k],
+                                       tr(row->gmean[k]));
+        }
+        gtk_label_set_text(GTK_LABEL(note), s->str);
+        g_string_free(s, TRUE);
+        gtk_widget_set_visible(note, TRUE);
+    }
+
+    if (ok == total) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
 static GtkWidget *u3ex4(UnitCtx *unit) {
-    return u3_build_letters(unit, 4, "Lückentext", "sub3_buchst",
-                            ex4_u3_rows, G_N_ELEMENTS(ex4_u3_rows));
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, "Lückentext", "sub3_buchst",
+                                    "check", &body, &feedback, &check);
+    Ex4LetterCtx *ctx = g_new0(Ex4LetterCtx, 1);
+
+    ctx->entries = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
+    ctx->rows = ex4_u3_rows;
+    ctx->n_rows = G_N_ELEMENTS(ex4_u3_rows);
+    ctx->notes = g_new0(GtkWidget *, ctx->n_rows);
+    ctx->unit = unit;
+    ctx->ex_num = 4;
+    ctx->feedback = feedback;
+
+    for (int r = 0; r < ctx->n_rows; r++) {
+        const Ex4Row *row = &ctx->rows[r];
+        GtkWidget *line = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+        GtkWidget *mean;
+        GtkWidget *note;
+
+        gtk_widget_set_halign(line, GTK_ALIGN_START);
+        for (int i = 0; i <= row->gaps; i++) {
+            if (row->seg[i] && row->seg[i][0]) {
+                GtkWidget *lb = gtk_label_new(row->seg[i]);
+                gtk_widget_set_valign(lb, GTK_ALIGN_CENTER);
+                gtk_widget_add_css_class(lb, "ex-prompt");
+                gtk_box_append(GTK_BOX(line), lb);
+            }
+            if (i < row->gaps) {
+                GtkWidget *e = gtk_entry_new();
+                gtk_editable_set_width_chars(GTK_EDITABLE(e), 4);
+                gtk_widget_set_valign(e, GTK_ALIGN_CENTER);
+                gtk_box_append(GTK_BOX(line), e);
+                g_array_append_val(ctx->entries, e);
+                g_array_append_val(ctx->answers, row->ans[i]);
+            }
+        }
+        gtk_box_append(GTK_BOX(body), line);
+
+        /* the Czech sentence is available before checking */
+        mean = meaning_add(body, row->czech);
+        gtk_widget_set_visible(mean, TRUE);
+
+        /* gapped-word translations appear only after "Check" */
+        note = gtk_label_new(NULL);
+        gtk_widget_set_halign(note, GTK_ALIGN_START);
+        gtk_widget_set_margin_bottom(note, 2);
+        gtk_widget_add_css_class(note, "meaning");
+        gtk_label_set_wrap(GTK_LABEL(note), TRUE);
+        gtk_widget_set_visible(note, FALSE);
+        gtk_box_append(GTK_BOX(body), note);
+        ctx->notes[r] = note;
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(ex4_check), ctx);
+    return page;
 }
 
 /* ---- ex5: Marcos Familie (word-bank typing) -------------------------- */
