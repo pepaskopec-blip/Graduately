@@ -5,12 +5,13 @@
 #include <math.h>
 
 #define NUM_UNITS     10
-#define NUM_UNLOCKED   2   /* first NUM_UNLOCKED units (index 0..1) are open */
+#define NUM_UNLOCKED   3   /* first NUM_UNLOCKED units (index 0..2) are open */
 #define MAX_UNIT_EX   20   /* largest exercise count any unit may have       */
 
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_U1   "progress/unit1.conf"
 #define PROGRESS_U2   "progress/unit2.conf"
+#define PROGRESS_U3   "progress/unit3.conf"
 #define SETTINGS_FILE "progress/settings.conf"
 
 #define NODE_SIZE    88.0
@@ -144,6 +145,14 @@ static const char *const u2_ex_names[MAX_UNIT_EX + 1] = {
     "Freie Antwort", "Euro", "Wörter suchen", "Was ist richtig?",
     "Ordne zu", "Lückentext", "Verbinde", "Zahlen",
     "Steckbrief", "Berufe", "Nationalität",
+};
+
+static const char *const u3_ex_names[MAX_UNIT_EX + 1] = {
+    NULL,
+    "Familienpaare", "mein oder dein", "ein / kein", "Lückentext",
+    "Marcos Familie", "Sortieren", "Possessivtabelle", "Akkusativ",
+    "kein / nicht", "Sätze bauen", "Was siehst du?", "Wem gehört das?",
+    "Es gibt …", "Beschreiben", "Wochenende",
 };
 
 /* Adaptive serpentine roadmap geometry */
@@ -415,6 +424,39 @@ static const TrEntry tr_ui[] = {
      "it back."},
     {"unit2_sub", "Vyberte cvičení a dokončete je.",
      "Choose an exercise and complete it."},
+    {"Bei uns zu Hause", "Bei uns zu Hause", "At Home with Us"},
+    {"unit3_sub", "Vyberte cvičení a dokončete je.",
+     "Choose an exercise and complete it."},
+    {"sub3_pair", "Přiřaďte každému slovu jeho protějšek.",
+     "Match each word with its counterpart."},
+    {"sub3_poss", "Doplňte přivlastňovací zájmena (1. pád).",
+     "Fill in the possessive pronouns (nominative)."},
+    {"sub3_haustier", "Doplňte ein/kein ve správném tvaru.",
+     "Fill in ein/kein in the correct form."},
+    {"sub3_buchst", "Doplňte chybějící písmena.",
+     "Fill in the missing letters."},
+    {"sub3_marco", "Doplňte slova z nabídky.",
+     "Fill in the words from the box."},
+    {"sub3_sort", "Roztřiďte slova do dvou skupin.",
+     "Sort the words into two groups."},
+    {"sub3_tabelle", "Doplňte přivlastňovací zájmena do tabulky.",
+     "Fill the possessive pronouns into the table."},
+    {"sub3_akk", "Doplňte přivlastňovací zájmena (4. pád).",
+     "Fill in the possessive pronouns (accusative)."},
+    {"sub3_nicht", "Vyberte kein/keine/keinen/nicht.",
+     "Choose kein/keine/keinen/nicht."},
+    {"sub3_satz", "Sestavte správné věty.",
+     "Build the correct sentences."},
+    {"sub3_sehen", "Napište větu „Ich sehe…“.",
+     "Write an “Ich sehe…” sentence."},
+    {"sub3_wem", "Komu to patří? Doplňte zájmeno.",
+     "Whose is it? Fill in the pronoun."},
+    {"sub3_gibt", "Doplňte „Es gibt“ + ein/eine/einen.",
+     "Fill in “Es gibt” + ein/eine/einen."},
+    {"sub3_saetze", "Doplňte věty podle vzoru.",
+     "Complete the sentences following the example."},
+    {"sub3_wochen", "Doplňte chybějící písmena.",
+     "Fill in the missing letters."},
     {"wordbank", "Nabídka slov:", "Word bank:"},
     {"sample_line", "Příklad: %s", "Sample: %s"},
     {"sub_verben", "Doplňte sloveso ve správném tvaru.",
@@ -708,6 +750,135 @@ static const TrEntry tr_content[] = {
     {"navštěvovat", NULL, "to attend"},
     {"mluvit", NULL, "to speak"},
     {"číst", NULL, "to read"},
+    /* ---- unit 3: Bei uns zu Hause ---- */
+    /* ex1 family word pairs */
+    {"bratranec / sestřenice", NULL, "male cousin / female cousin"},
+    {"strýc / teta", NULL, "uncle / aunt"},
+    {"dědeček / babička", NULL, "grandfather / grandmother"},
+    {"sestra / bratr", NULL, "sister / brother"},
+    {"kamarád / kamarádka", NULL, "friend (m) / friend (f)"},
+    {"dcera / syn", NULL, "daughter / son"},
+    /* ex2 possessive pronouns (nominative) */
+    {"Je to tvoje matka? – Ne, to není moje matka. To je jeho teta.", NULL,
+     "Is that your mother? – No, that is not my mother. That is his aunt."},
+    {"Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec.", NULL,
+     "Is that your brother? – No, that is not my brother. That is his cousin."},
+    {"Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče Markuse.",
+     NULL, "Are those your parents? – No, those are not my parents. "
+           "Those are Markus's parents."},
+    /* ex3 ein/kein (pets) */
+    {"Máš křečka? – Ne, nemám křečka. Mám želvu.", NULL,
+     "Have you got a hamster? – No, I haven't got a hamster. I have a tortoise."},
+    {"Máš koně? – Ne, nemám koně. Mám králíka.", NULL,
+     "Have you got a horse? – No, I haven't got a horse. I have a rabbit."},
+    {"Máš rybu? – Ne, nemám rybu. Mám ptáka.", NULL,
+     "Have you got a fish? – No, I haven't got a fish. I have a bird."},
+    {"Máš morče? – Ne, nemám morče. Mám andulku.", NULL,
+     "Have you got a guinea pig? – No, I haven't got a guinea pig. I have a budgie."},
+    /* ex4 missing letters (text) */
+    {"Máme přátele v Rakousku. Bydlí ve Vídni.", NULL,
+     "We have friends in Austria. They live in Vienna."},
+    {"Jmenují se Elfriede a Jiří. Mají také děti.", NULL,
+     "They are called Elfriede and Jiri. They also have children."},
+    {"Jejich syn se jmenuje Philipp a jejich dcera Sabine.", NULL,
+     "Their son is called Philipp and their daughter Sabine."},
+    {"Rodina ráda cestuje. Často je u nás na návštěvě v Česku.", NULL,
+     "The family likes travelling. They often visit us in Czechia."},
+    {"Děti se učí také česky.", NULL,
+     "The children are also learning Czech."},
+    /* ex5 Marco's family */
+    {"Máme mužskou domácnost: Můj otec Johann (50), Ivo (16) a já.", NULL,
+     "We live in an all-male household: my father Johann (50), Ivo (16) and me."},
+    {"Ivo a já jsme stejně staří – jsme totiž dvojčata.", NULL,
+     "Ivo and I are the same age – we are twins."},
+    {"Náš otec tu má novou práci.", NULL,
+     "Our father has a new job here."},
+    {"Naši rodiče jsou rozvedení.", NULL,
+     "Our parents are divorced."},
+    {"Naše matka Maja (50) žije ve Vídni, ale pochází z Chorvatska.", NULL,
+     "Our mother Maja (50) lives in Vienna, but she comes from Croatia."},
+    {"Máme v Chorvatsku hodně strýců, tet, sestřenic a bratranců.", NULL,
+     "We have many uncles, aunts, male and female cousins in Croatia."},
+    {"Vídáme je někdy o prázdninách.", NULL,
+     "We sometimes see them on holiday."},
+    /* ex6 sorting vocabulary */
+    {"křeček", NULL, "hamster"},
+    {"babička", NULL, "grandmother"},
+    {"kůň", NULL, "horse"},
+    {"bratr", NULL, "brother"},
+    {"kočka", NULL, "cat"},
+    {"dědeček", NULL, "grandfather"},
+    {"dcera", NULL, "daughter"},
+    {"pes", NULL, "dog"},
+    {"teta", NULL, "aunt"},
+    {"andulka", NULL, "budgerigar"},
+    /* ex8 possessive pronouns (accusative) */
+    {"Potřebuješ svůj mobil.", NULL, "You need your mobile."},
+    {"Má svého koně.", NULL, "He has his horse."},
+    {"Dělá svou párty.", NULL, "She is throwing her party."},
+    {"Ptá se svého učitele.", NULL, "It is asking its teacher."},
+    {"Navštěvujeme náš víkendový dům.", NULL,
+     "We are visiting our weekend house."},
+    {"Vy vidíte svého psa.", NULL, "You see your dog."},
+    {"Mají své nástroje.", NULL, "They have their instruments."},
+    /* ex9 kein / nicht */
+    {"Mluvíš španělsky? – Ne, nemluvím španělsky.", NULL,
+     "Do you speak Spanish? – No, I don't speak any Spanish."},
+    {"Máš bratra? – Ne, nemám bratra.", NULL,
+     "Have you got a brother? – No, I haven't got a brother."},
+    {"Je v Opavě zoo? – Ne, v Opavě žádná zoo není.", NULL,
+     "Is there a zoo in Opava? – No, there is no zoo in Opava."},
+    {"Jdeš do bazénu? – Ne, do bazénu nejdu.", NULL,
+     "Are you going to the swimming pool? – No, I am not going to the swimming pool."},
+    {"Rád chodí na túry? – Ne, nerad chodí na túry.", NULL,
+     "Does he like hiking? – No, he does not like hiking."},
+    {"Navštívíš dnes zámek? – Ne, dnes nenavštívím žádný zámek.", NULL,
+     "Are you visiting a castle today? – No, I am not visiting a castle today."},
+    /* ex10 sentence order */
+    {"Mají želvu.", NULL, "They have a tortoise."},
+    {"Co dělá tvoje kamarádka o víkendu?", NULL,
+     "What does your friend do at the weekend?"},
+    {"Můj otec je povoláním učitel.", NULL,
+     "My father is a teacher by profession."},
+    {"Je vás doma hodně?", NULL, "Are there many of you at home?"},
+    {"Julie představuje svého psa Trixiho.", NULL,
+     "Julia is introducing her dog Trixi."},
+    /* ex11 what do you see */
+    {"Vidím hrad / zámek.", NULL, "I see a castle."},
+    {"Vidím jezero.", NULL, "I see a lake."},
+    {"Vidím rodinu.", NULL, "I see a family."},
+    /* ex12 whose is it */
+    {"To je jeho mobil.", NULL, "That is his mobile."},
+    {"To je její králík.", NULL, "That is her rabbit."},
+    {"To jsou jejich brusle.", NULL, "Those are their inline skates."},
+    {"To je její dort.", NULL, "That is her cake."},
+    {"To je jeho dům.", NULL, "That is his house."},
+    {"To jsou jejich děti.", NULL, "Those are their children."},
+    /* ex13 es gibt */
+    {"Je tu koncert.", NULL, "There is a concert."},
+    {"Je tu výstava.", NULL, "There is an exhibition."},
+    {"Je tu sportovní slavnost.", NULL, "There is a sports festival."},
+    {"Je tu rodinné setkání.", NULL, "There is a family reunion."},
+    {"Je tu divadelní představení.", NULL, "There is a theatre performance."},
+    {"Je tu bleší trh.", NULL, "There is a flea market."},
+    /* ex14 describe (sentence pairs) */
+    {"Vidím ženu.", NULL, "I see a woman."},
+    {"Jezdí na kole.", NULL, "She is riding a bike."},
+    {"Vidím muže.", NULL, "I see a man."},
+    {"Chodí po lese.", NULL, "He is hiking in the forest."},
+    {"Vidím dvě děti.", NULL, "I see two children."},
+    {"Hrají fotbal.", NULL, "They are playing football."},
+    /* ex15 missing letters (weekend) */
+    {"Moji prarodiče jedou o víkendu do víkendového domu.", NULL,
+     "My grandparents are driving to their weekend house."},
+    {"Můj otec a moje matka navštíví koncert.", NULL,
+     "My father and my mother are going to a concert."},
+    {"Moje sestra jde do kina.", NULL,
+     "My sister is going to the cinema."},
+    {"Můj bratr jede k jezeru.", NULL,
+     "My brother is driving to a lake."},
+    {"A já? Navštívím obchodní centrum.", NULL,
+     "And me? I am going to a shopping centre."},
     {NULL, NULL, NULL}
 };
 
@@ -6197,6 +6368,839 @@ static GtkWidget *u2ex19(UnitCtx *unit) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Unit 3 exercises ("Bei uns zu Hause")                              */
+/* ------------------------------------------------------------------ */
+
+/* Sentence fill-ins: a row is made of literal text segments that
+ * alternate with one or more blank widgets (dropdowns). `num` is the
+ * optional item number shown at the start of the line. */
+typedef struct {
+    const char *num;
+    const char *s0, *a0, *s1, *a1, *s2, *a2, *s3;   /* up to 3 blanks  */
+    const char *mean;                                /* Czech meaning   */
+} U3Fill;
+
+/* Append one horizontal fill row to `body`. The answer of blank i sits
+ * between text segments s[i] and s[i+1]; empty segments are skipped. */
+static void u3_fill_row(ComboListCtx *ctx, GtkWidget *body, const U3Fill *f,
+                        const char **pool, int pool_n) {
+    const char *segs[4];
+    const char *ans[3];
+    int i, g;
+    GtkWidget *line;
+
+    segs[0] = f->s0;
+    segs[1] = f->s1;
+    segs[2] = f->s2;
+    segs[3] = f->s3;
+    ans[0] = f->a0;
+    ans[1] = f->a1;
+    ans[2] = f->a2;
+    g = 0;
+    while (g < 3 && ans[g])
+        g++;
+
+    line = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_widget_set_halign(line, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), line);
+
+    if (f->num && f->num[0]) {
+        GtkWidget *nl = gtk_label_new(f->num);
+        gtk_widget_set_valign(nl, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(nl, "ex-prompt");
+        gtk_box_append(GTK_BOX(line), nl);
+    }
+    for (i = 0; i <= g; i++) {
+        if (segs[i] && segs[i][0]) {
+            GtkWidget *lb = gtk_label_new(segs[i]);
+            gtk_widget_set_valign(lb, GTK_ALIGN_CENTER);
+            gtk_widget_add_css_class(lb, "ex-prompt");
+            gtk_box_append(GTK_BOX(line), lb);
+        }
+        if (i < g) {
+            GtkWidget *combo = make_word_combo(pool, pool_n);
+            gtk_widget_set_size_request(combo, 96, -1);
+            gtk_widget_set_valign(combo, GTK_ALIGN_CENTER);
+            gtk_box_append(GTK_BOX(line), combo);
+            combo_list_add(ctx, combo, ans[i]);
+        }
+    }
+
+    if (f->mean && f->mean[0]) {
+        GtkWidget *m = meaning_add(body, f->mean);
+        combo_list_add_trans(ctx, m);
+    }
+}
+
+static void u3_sample_line(GtkWidget *body, const char *text) {
+    GtkWidget *sl = gtk_label_new(text);
+
+    gtk_widget_set_halign(sl, GTK_ALIGN_START);
+    gtk_widget_set_margin_top(sl, 2);
+    gtk_widget_set_margin_bottom(sl, 4);
+    gtk_widget_add_css_class(sl, "hint");
+    gtk_label_set_wrap(GTK_LABEL(sl), TRUE);
+    gtk_box_append(GTK_BOX(body), sl);
+}
+
+static GtkWidget *u3_build_drop(UnitCtx *unit, int ex_num, const char *title,
+                                const char *sub, const char *sample,
+                                const U3Fill *rows, int n,
+                                const char **pool, int pool_n) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
+                                    &body, &feedback, &check);
+    ComboListCtx *ctx = combo_list_ctx_new(unit, ex_num, feedback);
+
+    if (sample && sample[0])
+        u3_sample_line(body, sample);
+
+    for (int i = 0; i < n; i++)
+        u3_fill_row(ctx, body, &rows[i], pool, pool_n);
+
+    g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
+    return page;
+}
+
+/* ---- ex1: Familienpaare (match the pair) ---------------------------- */
+
+static const char *ex1_u3_pool[] = {
+    "die Cousine", "die Tante", "die Oma", "der Bruder",
+    "die Freundin", "der Sohn",
+};
+
+static const U3Fill ex1_u3_rows[] = {
+    {"1.", "der Cousin", "die Cousine", NULL, NULL, NULL, NULL, NULL,
+     "bratranec / sestřenice"},
+    {"2.", "der Onkel", "die Tante", NULL, NULL, NULL, NULL, NULL,
+     "strýc / teta"},
+    {"3.", "der Opa", "die Oma", NULL, NULL, NULL, NULL, NULL,
+     "dědeček / babička"},
+    {"4.", "die Schwester", "der Bruder", NULL, NULL, NULL, NULL, NULL,
+     "sestra / bratr"},
+    {"5.", "der Freund", "die Freundin", NULL, NULL, NULL, NULL, NULL,
+     "kamarád / kamarádka"},
+    {"6.", "die Tochter", "der Sohn", NULL, NULL, NULL, NULL, NULL,
+     "dcera / syn"},
+};
+
+static GtkWidget *u3ex1(UnitCtx *unit) {
+    return u3_build_drop(unit, 1, "Familienpaare", "sub3_pair",
+                         "Beispiel: der Vater ↔ die Mutter",
+                         ex1_u3_rows, G_N_ELEMENTS(ex1_u3_rows),
+                         ex1_u3_pool, G_N_ELEMENTS(ex1_u3_pool));
+}
+
+/* ---- ex2: Possessivpronomen im Nominativ ----------------------------- */
+
+static const char *ex2_u3_pool[] = {
+    "dein", "deine", "mein", "meine", "sein", "seine",
+};
+
+static const U3Fill ex2_u3_rows[] = {
+    {"2.", "Ist das ", "deine",
+     " Mutter? – Nein, das ist nicht ", "meine", " Mutter.", NULL, NULL,
+     NULL},
+    {NULL, "Das ist ", "seine", " Tante.", NULL, NULL, NULL, NULL,
+     "Je to tvoje matka? – Ne, to není moje matka. To je jeho teta."},
+    {"3.", "Ist das ", "dein",
+     " Bruder? – Nein, das ist nicht ", "mein", " Bruder.", NULL, NULL,
+     NULL},
+    {NULL, "Das ist ", "sein", " Cousin.", NULL, NULL, NULL, NULL,
+     "Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec."},
+    {"4.", "Sind das ", "deine",
+     " Eltern? – Nein, das sind nicht ", "meine",
+     " Eltern. Das sind die Eltern von Markus.", NULL, NULL,
+     "Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče "
+     "Markuse."},
+};
+
+static GtkWidget *u3ex2(UnitCtx *unit) {
+    return u3_build_drop(unit, 2, "mein oder dein", "sub3_poss",
+                         "Beispiel: Ist das dein Vater? – Nein, das ist "
+                         "nicht mein Vater. Das ist sein Onkel.",
+                         ex2_u3_rows, G_N_ELEMENTS(ex2_u3_rows),
+                         ex2_u3_pool, G_N_ELEMENTS(ex2_u3_pool));
+}
+
+/* ---- ex3: Haustiere – ein/kein --------------------------------------- */
+
+static const char *ex3_u3_pool[] = {
+    "ein", "eine", "einen", "kein", "keine", "keinen",
+};
+
+static const U3Fill ex3_u3_rows[] = {
+    {"2.", "Hast du ", "einen",
+     " Hamster? – Nein, ich habe ", "keinen", " Hamster.", NULL, NULL,
+     NULL},
+    {NULL, "Ich habe ", "eine", " Schildkröte.", NULL, NULL, NULL, NULL,
+     "Máš křečka? – Ne, nemám křečka. Mám želvu."},
+    {"3.", "Hast du ", "ein",
+     " Pferd? – Nein, ich habe ", "kein", " Pferd.", NULL, NULL, NULL},
+    {NULL, "Ich habe ", "ein", " Kaninchen.", NULL, NULL, NULL, NULL,
+     "Máš koně? – Ne, nemám koně. Mám králíka."},
+    {"4.", "Hast du ", "einen",
+     " Fisch? – Nein, ich habe ", "keinen", " Fisch.", NULL, NULL, NULL},
+    {NULL, "Ich habe ", "einen", " Vogel.", NULL, NULL, NULL, NULL,
+     "Máš rybu? – Ne, nemám rybu. Mám ptáka."},
+    {"5.", "Hast du ", "ein",
+     " Meerschweinchen? – Nein, ich habe ", "kein",
+     " Meerschweinchen.", NULL, NULL, NULL},
+    {NULL, "Ich habe ", "einen", " Wellensittich.", NULL, NULL, NULL, NULL,
+     "Máš morče? – Ne, nemám morče. Mám andulku."},
+};
+
+static GtkWidget *u3ex3(UnitCtx *unit) {
+    return u3_build_drop(unit, 3, "ein / kein", "sub3_haustier",
+                         "Beispiel: Hast du eine Katze? – Nein, ich habe "
+                         "keine Katze. Ich habe einen Hund.",
+                         ex3_u3_rows, G_N_ELEMENTS(ex3_u3_rows),
+                         ex3_u3_pool, G_N_ELEMENTS(ex3_u3_pool));
+}
+
+/* ---- inline letter-gap rows (ex4 + ex15) ----------------------------- */
+
+/* One sentence row whose text is split into segments with up to four
+ * small text entries (one per missing-letter group) inserted. */
+typedef struct {
+    const char *num;
+    const char *s0, *a0, *s1, *a1, *s2, *a2, *s3, *a3, *s4;
+    const char *mean;
+} U3Let;
+
+typedef struct {
+    GArray *entries;
+    GArray *answers;
+    GArray *trans;
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+} U3LetCtx;
+
+static U3LetCtx *u3_let_ctx_new(UnitCtx *unit, int ex_num,
+                                GtkWidget *feedback) {
+    U3LetCtx *ctx = g_new0(U3LetCtx, 1);
+    ctx->entries = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
+    ctx->trans = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    ctx->unit = unit;
+    ctx->ex_num = ex_num;
+    ctx->feedback = feedback;
+    return ctx;
+}
+
+static void u3_let_check(GtkButton *button, gpointer data) {
+    U3LetCtx *ctx = data;
+    guint total = ctx->entries->len;
+    guint ok = 0;
+
+    (void)button;
+
+    for (guint i = 0; i < total; i++) {
+        GtkWidget *e = g_array_index(ctx->entries, GtkWidget *, i);
+        const char *ans = g_array_index(ctx->answers, const char *, i);
+        const gchar *txt = gtk_editable_get_text(GTK_EDITABLE(e));
+        gchar *norm = normalize_answer(txt);
+        gboolean good = txt && txt[0] && answer_accepts(norm, ans);
+        g_free(norm);
+        answer_mark(e, good);
+        if (good)
+            ok++;
+    }
+
+    for (guint i = 0; i < ctx->trans->len; i++) {
+        GtkWidget *lbl = g_array_index(ctx->trans, GtkWidget *, i);
+        if (lbl)
+            gtk_widget_set_visible(lbl, TRUE);
+    }
+
+    if (ok == total) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
+static void u3_let_row(U3LetCtx *ctx, GtkWidget *body, const U3Let *row) {
+    const char *segs[5];
+    const char *ans[4];
+    int i, g;
+    GtkWidget *line;
+
+    segs[0] = row->s0;
+    segs[1] = row->s1;
+    segs[2] = row->s2;
+    segs[3] = row->s3;
+    segs[4] = row->s4;
+    ans[0] = row->a0;
+    ans[1] = row->a1;
+    ans[2] = row->a2;
+    ans[3] = row->a3;
+    g = 0;
+    while (g < 4 && ans[g])
+        g++;
+
+    line = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+    gtk_widget_set_halign(line, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), line);
+
+    if (row->num && row->num[0]) {
+        GtkWidget *nl = gtk_label_new(row->num);
+        gtk_widget_set_valign(nl, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(nl, "ex-prompt");
+        gtk_box_append(GTK_BOX(line), nl);
+    }
+    for (i = 0; i <= g; i++) {
+        if (segs[i] && segs[i][0]) {
+            GtkWidget *lb = gtk_label_new(segs[i]);
+            gtk_widget_set_valign(lb, GTK_ALIGN_CENTER);
+            gtk_widget_add_css_class(lb, "ex-prompt");
+            gtk_box_append(GTK_BOX(line), lb);
+        }
+        if (i < g) {
+            GtkWidget *e = gtk_entry_new();
+            gtk_editable_set_width_chars(GTK_EDITABLE(e), 4);
+            gtk_widget_set_valign(e, GTK_ALIGN_CENTER);
+            gtk_box_append(GTK_BOX(line), e);
+            g_array_append_val(ctx->entries, e);
+            g_array_append_val(ctx->answers, ans[i]);
+        }
+    }
+
+    if (row->mean && row->mean[0]) {
+        GtkWidget *m = meaning_add(body, row->mean);
+        g_array_append_val(ctx->trans, m);
+    }
+}
+
+static GtkWidget *u3_build_letters(UnitCtx *unit, int ex_num,
+                                   const char *title, const char *sub,
+                                   const U3Let *rows, int n) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
+                                    &body, &feedback, &check);
+    U3LetCtx *ctx = u3_let_ctx_new(unit, ex_num, feedback);
+
+    for (int i = 0; i < n; i++)
+        u3_let_row(ctx, body, &rows[i]);
+
+    g_signal_connect(check, "clicked", G_CALLBACK(u3_let_check), ctx);
+    return page;
+}
+
+/* ---- ex4: missing letters in a paragraph ----------------------------- */
+
+static const U3Let ex4_u3_rows[] = {
+    /* num, s0, a0, s1, a1, s2, a2, s3, a3, s4, mean */
+    {NULL, "Wir hab", "e", "n Fre", "u", "nde in Öster", "re", "ich. Sie wo",
+     "h", "nen in Wien.",
+     "Máme přátele v Rakousku. Bydlí ve Vídni."},
+    {NULL, "Sie hei", "ß", "en Elfriede und Jiri. Sie haben auch ", "K",
+     "inder.", NULL, NULL, NULL, NULL,
+     "Jmenují se Elfriede a Jiří. Mají také děti."},
+    {NULL, "Ihr S", "o", "hn heißt Philipp und ihr", "e",
+     " Tochter heißt Sabine.", NULL, NULL, NULL, NULL,
+     "Jejich syn se jmenuje Philipp a jejich dcera Sabine."},
+    {NULL, "Die Famili", "e", " re", "i", "st gern.", NULL, NULL, NULL,
+     NULL, NULL},
+    {NULL, "Sie ist o", "f", "t bei uns zu Bes", "u", "ch in Tsche", "ch",
+     "ien.", NULL, NULL,
+     "Rodina ráda cestuje. Často je u nás na návštěvě v Česku."},
+    {NULL, "Die Kinder ler", "n", "en auch Tsche", "ch", "isch.", NULL,
+     NULL, NULL, NULL, "Děti se učí také česky."},
+};
+
+static GtkWidget *u3ex4(UnitCtx *unit) {
+    return u3_build_letters(unit, 4, "Lückentext", "sub3_buchst",
+                            ex4_u3_rows, G_N_ELEMENTS(ex4_u3_rows));
+}
+
+/* ---- ex5: Marcos Familie (word-bank typing) -------------------------- */
+
+static const char *ex5_u3_bank =
+    "Tanten | Job | Vater | Ferien | Zwillinge | Eltern | Kroatien";
+
+static const TypedQ ex5_u3_rows[] = {
+    {"Wir haben eine Männer-Wohngemeinschaft: Mein ________ Johann (50), "
+     "Ivo (16) und ich.",
+     "vater", "Máme mužskou domácnost: Můj otec Johann (50), Ivo (16) a já."},
+    {"Ivo und ich sind gleich alt – wir sind nämlich ________.",
+     "zwillinge", "Ivo a já jsme stejně staří – jsme totiž dvojčata."},
+    {"Jetzt wohnen wir in Hannover, unser Vater hat hier einen neuen "
+     "________.",
+     "job", "Náš otec tu má novou práci."},
+    {"Unsere ________ sind geschieden.",
+     "eltern", "Naši rodiče jsou rozvedení."},
+    {"Unsere Mutter Maja (50) lebt in Wien, aber sie kommt aus ________.",
+     "kroatien", "Naše matka Maja (50) žije ve Vídni, ale pochází z "
+     "Chorvatska."},
+    {"Wir haben viele Onkel, ________, Cousinen und Cousins in Kroatien.",
+     "tanten", "Máme v Chorvatsku hodně strýců, tet, sestřenic a bratranců."},
+    {"Wir sehen sie manchmal in den ________.",
+     "ferien", "Vídáme je někdy o prázdninách."},
+};
+
+static GtkWidget *u3ex5(UnitCtx *unit) {
+    return build_typed(unit, 5, "Marcos Familie", "sub3_marco",
+                       ex5_u3_rows, G_N_ELEMENTS(ex5_u3_rows),
+                       ex5_u3_bank, FALSE);
+}
+
+/* ---- ex6: Wortschatz sortieren --------------------------------------- */
+
+static const AssignItem ex6_u3_items[] = {
+    {NULL, "die Oma", 0},
+    {NULL, "der Bruder", 0},
+    {NULL, "der Opa", 0},
+    {NULL, "die Tochter", 0},
+    {NULL, "die Tante", 0},
+    {NULL, "der Hamster", 1},
+    {NULL, "das Pferd", 1},
+    {NULL, "die Katze", 1},
+    {NULL, "der Hund", 1},
+    {NULL, "der Wellensittich", 1},
+};
+
+static const char *ex6_u3_groups[] = {"Familienmitglieder", "Haustiere"};
+
+static const char *ex6_u3_meaning[] = {
+    "babička", "bratr", "dědeček", "dcera", "teta",
+    "křeček", "kůň", "kočka", "pes", "andulka",
+};
+
+static GtkWidget *u3ex6(UnitCtx *unit) {
+    return build_assign(unit, "Sortieren", "sub3_sort", 6,
+                        ex6_u3_items, G_N_ELEMENTS(ex6_u3_items),
+                        ex6_u3_groups, G_N_ELEMENTS(ex6_u3_groups),
+                        ex6_u3_meaning);
+}
+
+/* ---- ex7: Possessivpronomen-Tabelle ---------------------------------- */
+
+typedef struct {
+    GtkWidget **entries;
+    const char **answers;
+    int n;
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+} U3TableCtx;
+
+static void u3_table_check(GtkButton *button, gpointer data) {
+    U3TableCtx *ctx = data;
+    int ok = 0;
+
+    (void)button;
+
+    for (int i = 0; i < ctx->n; i++) {
+        const gchar *txt = gtk_editable_get_text(
+            GTK_EDITABLE(ctx->entries[i]));
+        gchar *norm = normalize_answer(txt);
+        gboolean good = txt && txt[0] &&
+                        g_strcmp0(norm, ctx->answers[i]) == 0;
+        g_free(norm);
+        answer_mark(ctx->entries[i], good);
+        if (good)
+            ok++;
+    }
+
+    if (ok == ctx->n) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
+static GtkWidget *u3ex7(UnitCtx *unit) {
+    static const char *persons[] = {
+        "ich", "du", "er", "sie", "es", "wir", "ihr", "sie / Sie",
+    };
+    static const char *nouns[] = {
+        "der Garten", "die Idee", "das Fest", "die Geschwister",
+    };
+    static const char *ans[4][8] = {
+        {"mein",  "dein",  "sein",  "ihr", "sein",  "unser",  "euer",
+         "ihr"},
+        {"meine", "deine", "seine", "ihre", "seine", "unsere", "eure",
+         "ihre"},
+        {"mein",  "dein",  "sein",  "ihr", "sein",  "unser",  "euer",
+         "ihr"},
+        {"meine", "deine", "seine", "ihre", "seine", "unsere", "eure",
+         "ihre"},
+    };
+    const int np = G_N_ELEMENTS(persons);
+    const int nn = G_N_ELEMENTS(nouns);
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, "Possessivtabelle",
+                                    "sub3_tabelle", "check",
+                                    &body, &feedback, &check);
+    GtkWidget *grid;
+    GtkWidget *sample_note;
+    U3TableCtx *ctx = g_new0(U3TableCtx, 1);
+
+    ctx->n = nn * np;
+    ctx->entries = g_new0(GtkWidget *, ctx->n);
+    ctx->answers = g_new0(const char *, ctx->n);
+    ctx->unit = unit;
+    ctx->ex_num = 7;
+    ctx->feedback = feedback;
+
+    sample_note = gtk_label_new("Beispiel: mein (ich × der Garten)");
+    gtk_widget_set_halign(sample_note, GTK_ALIGN_START);
+    gtk_widget_set_margin_top(sample_note, 2);
+    gtk_widget_set_margin_bottom(sample_note, 4);
+    gtk_widget_add_css_class(sample_note, "hint");
+    gtk_box_append(GTK_BOX(body), sample_note);
+
+    grid = gtk_grid_new();
+    gtk_grid_set_column_spacing(GTK_GRID(grid), 8);
+    gtk_grid_set_row_spacing(GTK_GRID(grid), 8);
+    gtk_widget_set_halign(grid, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), grid);
+
+    for (int c = 0; c < np; c++) {
+        GtkWidget *h = gtk_label_new(persons[c]);
+        gtk_widget_set_halign(h, GTK_ALIGN_CENTER);
+        gtk_widget_add_css_class(h, "ex-sub");
+        gtk_grid_attach(GTK_GRID(grid), h, c + 1, 0, 1, 1);
+    }
+    for (int r = 0; r < nn; r++) {
+        GtkWidget *h = gtk_label_new(nouns[r]);
+        gtk_widget_set_halign(h, GTK_ALIGN_START);
+        gtk_widget_add_css_class(h, "ex-sub");
+        gtk_grid_attach(GTK_GRID(grid), h, 0, r + 1, 1, 1);
+    }
+    for (int r = 0; r < nn; r++) {
+        for (int c = 0; c < np; c++) {
+            GtkWidget *e = gtk_entry_new();
+            gtk_editable_set_width_chars(GTK_EDITABLE(e), 6);
+            gtk_widget_set_halign(e, GTK_ALIGN_CENTER);
+            gtk_grid_attach(GTK_GRID(grid), e, c + 1, r + 1, 1, 1);
+            ctx->entries[r * np + c] = e;
+            ctx->answers[r * np + c] = ans[r][c];
+        }
+    }
+    /* pre-filled sample cell (ich × der Garten) */
+    gtk_editable_set_text(GTK_EDITABLE(ctx->entries[0]), "mein");
+    gtk_widget_set_sensitive(ctx->entries[0], FALSE);
+
+    g_signal_connect(check, "clicked", G_CALLBACK(u3_table_check), ctx);
+    return page;
+}
+
+/* ---- ex8: Possessivpronomen im Akkusativ ------------------------------ */
+
+static const char *ex8_u3_pool[] = {
+    "mein", "meine", "meinen", "dein", "deine", "deinen",
+    "sein", "seine", "seinen", "ihr", "ihre", "ihren",
+    "unser", "unsere", "unseren", "euer", "eure", "euren",
+};
+
+static const U3Fill ex8_u3_rows[] = {
+    {"2.", "das Handy → Du brauchst ", "dein", " Handy.", NULL, NULL, NULL,
+     NULL, "Potřebuješ svůj mobil."},
+    {"3.", "das Pferd → Er hat ", "sein", " Pferd.", NULL, NULL, NULL, NULL,
+     "Má svého koně."},
+    {"4.", "die Party → Sie macht ", "ihre", " Party.", NULL, NULL, NULL,
+     NULL, "Dělá svou párty."},
+    {"5.", "der Lehrer → Es fragt ", "seinen", " Lehrer.", NULL, NULL, NULL,
+     NULL, "Ptá se svého učitele."},
+    {"6.", "das Wochenendhaus → Wir besuchen ", "unser", " Wochenendhaus.",
+     NULL, NULL, NULL, NULL, "Navštěvujeme náš víkendový dům."},
+    {"7.", "der Hund → Ihr seht ", "euren", " Hund.", NULL, NULL, NULL, NULL,
+     "Vy vidíte svého psa."},
+    {"8.", "die Instrumente → Sie haben ", "ihre", " Instrumente.", NULL,
+     NULL, NULL, NULL, "Mají své nástroje."},
+};
+
+static GtkWidget *u3ex8(UnitCtx *unit) {
+    return u3_build_drop(unit, 8, "Akkusativ", "sub3_akk",
+                         "Beispiel: die Inliner (ich) → Ich brauche meine "
+                         "Inliner.",
+                         ex8_u3_rows, G_N_ELEMENTS(ex8_u3_rows),
+                         ex8_u3_pool, G_N_ELEMENTS(ex8_u3_pool));
+}
+
+/* ---- ex9: kein / keine / keinen / nicht ------------------------------ */
+
+static const char *ex9_u3_pool[] = {
+    "kein", "keine", "keinen", "nicht",
+};
+
+static const U3Fill ex9_u3_rows[] = {
+    {"1.", "● Sprichst du Spanisch?  ○ Nein, ich spreche ", "kein",
+     " Spanisch.", NULL, NULL, NULL, NULL,
+     "Mluvíš španělsky? – Ne, nemluvím španělsky."},
+    {"2.", "● Hast du einen Bruder?  ○ Nein, ich habe ", "keinen",
+     " Bruder.", NULL, NULL, NULL, NULL, "Máš bratra? – Ne, nemám bratra."},
+    {"3.", "● Gibt es in Opava einen Zoo?  ○ Nein, in Opava gibt es ",
+     "keinen", " Zoo.", NULL, NULL, NULL, NULL,
+     "Je v Opavě zoo? – Ne, v Opavě žádná zoo není."},
+    {"4.", "● Gehst du ins Schwimmbad?  ○ Nein, ich gehe ", "nicht",
+     " ins Schwimmbad.", NULL, NULL, NULL, NULL,
+     "Jdeš do bazénu? – Ne, do bazénu nejdu."},
+    {"5.", "● Wandert er gern?  ○ Nein, er wandert ", "nicht", " gern.",
+     NULL, NULL, NULL, NULL, "Rád chodí na túry? – Ne, nerad chodí na túry."},
+    {"6.", "● Besuchst du heute ein Schloss?  ○ Nein, heute besuche ich ",
+     "kein", " Schloss.", NULL, NULL, NULL, NULL,
+     "Navštívíš dnes zámek? – Ne, dnes nenavštívím žádný zámek."},
+};
+
+static GtkWidget *u3ex9(UnitCtx *unit) {
+    return u3_build_drop(unit, 9, "kein / nicht", "sub3_nicht", NULL,
+                         ex9_u3_rows, G_N_ELEMENTS(ex9_u3_rows),
+                         ex9_u3_pool, G_N_ELEMENTS(ex9_u3_pool));
+}
+
+/* ---- ex10: Sätze bauen ------------------------------------------------ */
+
+static const AssemblyItem ex10_u3_items[] = {
+    {NULL, {"Sie", "haben", "eine", "Schildkröte", "."}, 5},
+    {NULL, {"Was", "macht", "deine", "Freundin", "am", "Wochenende?"}, 6},
+    {NULL, {"Mein", "Vater", "ist", "Lehrer", "von", "Beruf."}, 6},
+    {NULL, {"Seid", "ihr", "viele", "zu", "Hause?"}, 5},
+    {NULL, {"Julia", "stellt", "ihren", "Hund", "Trixi", "vor."}, 6},
+};
+
+static const char *ex10_u3_meaning[] = {
+    "Mají želvu.",
+    "Co dělá tvoje kamarádka o víkendu?",
+    "Můj otec je povoláním učitel.",
+    "Je vás doma hodně?",
+    "Julie představuje svého psa Trixiho.",
+};
+
+static GtkWidget *u3ex10(UnitCtx *unit) {
+    return build_assembly(unit, "Sätze bauen", "sub3_satz", 10,
+                          ex10_u3_items, ex10_u3_meaning,
+                          G_N_ELEMENTS(ex10_u3_items));
+}
+
+/* ---- keyword-typed builder (ex11 + ex14) ----------------------------- */
+
+typedef struct {
+    const char *prompt;
+    const char *answers;   /* accepted substrings separated by '|'     */
+    const char *mean;      /* Czech meaning revealed after checking    */
+} U3Kw;
+
+typedef struct {
+    const U3Kw *qs;
+    int n;
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+    GtkWidget **entries;
+    GtkWidget **trans;
+} U3KwCtx;
+
+static void u3_kw_check(GtkButton *button, gpointer data) {
+    U3KwCtx *ctx = data;
+    int ok = 0;
+
+    (void)button;
+
+    for (int i = 0; i < ctx->n; i++) {
+        const gchar *txt = gtk_editable_get_text(GTK_EDITABLE(ctx->entries[i]));
+        gchar *norm = normalize_answer(txt);
+        gboolean good = txt && txt[0];
+        if (good) {
+            gchar **parts = g_strsplit(ctx->qs[i].answers, "|", -1);
+            good = FALSE;
+            for (int j = 0; parts[j]; j++) {
+                gchar *a = normalize_answer(parts[j]);
+                if (a[0] && g_strrstr(norm, a)) {
+                    good = TRUE;
+                    g_free(a);
+                    break;
+                }
+                g_free(a);
+            }
+            g_strfreev(parts);
+        }
+        g_free(norm);
+        answer_mark(ctx->entries[i], good);
+        if (good)
+            ok++;
+    }
+
+    for (int i = 0; i < ctx->n; i++)
+        if (ctx->trans[i])
+            gtk_widget_set_visible(ctx->trans[i], TRUE);
+
+    if (ok == ctx->n) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
+static GtkWidget *u3_build_kw(UnitCtx *unit, int ex_num, const char *title,
+                              const char *sub, const char *sample,
+                              const U3Kw *qs, int n) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
+                                    &body, &feedback, &check);
+    U3KwCtx *ctx = g_new0(U3KwCtx, 1);
+
+    ctx->qs = qs;
+    ctx->n = n;
+    ctx->unit = unit;
+    ctx->ex_num = ex_num;
+    ctx->feedback = feedback;
+    ctx->entries = g_new0(GtkWidget *, n);
+    ctx->trans = g_new0(GtkWidget *, n);
+
+    if (sample && sample[0])
+        u3_sample_line(body, sample);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt = gtk_label_new(qs[i].prompt);
+        GtkWidget *entry;
+
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        entry = gtk_entry_new();
+        gtk_widget_set_hexpand(entry, FALSE);
+        gtk_widget_set_halign(entry, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), entry);
+        ctx->entries[i] = entry;
+
+        if (qs[i].mean)
+            ctx->trans[i] = meaning_add(body, qs[i].mean);
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(u3_kw_check), ctx);
+    return page;
+}
+
+/* ---- ex11: Was siehst du? -------------------------------------------- */
+
+static const U3Kw ex11_u3_qs[] = {
+    {"Ein altes Gebäude aus dem Mittelalter. Es steht auf einem Berg.",
+     "burg|schloss", "Vidím hrad / zámek."},
+    {"Wasser, Bäume und Berge. Es ist sehr ruhig.",
+     "see", "Vidím jezero."},
+    {"Eine Frau, ein Mann und zwei Kinder essen zusammen.",
+     "familie", "Vidím rodinu."},
+};
+
+static GtkWidget *u3ex11(UnitCtx *unit) {
+    return u3_build_kw(unit, 11, "Was siehst du?", "sub3_sehen",
+                       "Beispiel: Ich sehe eine Burg. / Ich sehe ein Schloss.",
+                       ex11_u3_qs, G_N_ELEMENTS(ex11_u3_qs));
+}
+
+/* ---- ex12: Wem gehört das? ------------------------------------------- */
+
+static const char *ex12_u3_pool[] = {
+    "mein", "meine", "dein", "deine", "sein", "seine",
+    "ihr", "ihre", "unser", "unsere", "euer", "eure",
+};
+
+static const U3Fill ex12_u3_rows[] = {
+    {"1.", "Das ist Tom. → Das ist ", "sein", " Handy.", NULL, NULL, NULL,
+     NULL, "To je jeho mobil."},
+    {"2.", "Das ist Maria. → Das ist ", "ihr", " Kaninchen.", NULL, NULL,
+     NULL, NULL, "To je její králík."},
+    {"3.", "Das sind Max und Lisa. → Das sind ", "ihre", " Inliner.", NULL,
+     NULL, NULL, NULL, "To jsou jejich brusle."},
+    {"4.", "Das ist Frau Berger. → Das ist ", "ihr", " Kuchen.", NULL, NULL,
+     NULL, NULL, "To je její dort."},
+    {"5.", "Das ist Herr Müller. → Das ist ", "sein", " Haus.", NULL, NULL,
+     NULL, NULL, "To je jeho dům."},
+    {"6.", "Das sind die Schmidts. → Das sind ", "ihre", " Kinder.", NULL,
+     NULL, NULL, NULL, "To jsou jejich děti."},
+};
+
+static GtkWidget *u3ex12(UnitCtx *unit) {
+    return u3_build_drop(unit, 12, "Wem gehört das?", "sub3_wem", NULL,
+                         ex12_u3_rows, G_N_ELEMENTS(ex12_u3_rows),
+                         ex12_u3_pool, G_N_ELEMENTS(ex12_u3_pool));
+}
+
+/* ---- ex13: Es gibt + unbestimmter Artikel ---------------------------- */
+
+static const char *ex13_u3_pool[] = {"ein", "eine", "einen"};
+
+static const U3Fill ex13_u3_rows[] = {
+    {"1.", "(das Konzert) → Es gibt ", "ein", " Konzert.", NULL, NULL, NULL,
+     NULL, "Je tu koncert."},
+    {"2.", "(die Ausstellung) → Es gibt ", "eine", " Ausstellung.", NULL,
+     NULL, NULL, NULL, "Je tu výstava."},
+    {"3.", "(das Sportfest) → Es gibt ", "ein", " Sportfest.", NULL, NULL,
+     NULL, NULL, "Je tu sportovní slavnost."},
+    {"4.", "(das Familientreffen) → Es gibt ", "ein", " Familientreffen.",
+     NULL, NULL, NULL, NULL, "Je tu rodinné setkání."},
+    {"5.", "(die Theatervorstellung) → Es gibt ", "eine",
+     " Theatervorstellung.", NULL, NULL, NULL, NULL,
+     "Je tu divadelní představení."},
+    {"6.", "(der Flohmarkt) → Es gibt ", "einen", " Flohmarkt.", NULL, NULL,
+     NULL, NULL, "Je tu bleší trh."},
+};
+
+static GtkWidget *u3ex13(UnitCtx *unit) {
+    return u3_build_drop(unit, 13, "Es gibt …", "sub3_gibt", NULL,
+                         ex13_u3_rows, G_N_ELEMENTS(ex13_u3_rows),
+                         ex13_u3_pool, G_N_ELEMENTS(ex13_u3_pool));
+}
+
+/* ---- ex14: Beschreiben (sentence pairs) ------------------------------ */
+
+static const U3Kw ex14_u3_qs[] = {
+    {"Eine Frau fährt Fahrrad.  →  Ich sehe ________.",
+     "eine frau|frau", "Vidím ženu."},
+    {"→ Sie ________.",
+     "sie fährt fahrrad|sie fährt|fährt fahrrad|fährt", "Jezdí na kole."},
+    {"Ein Mann wandert im Wald.  →  Ich sehe ________.",
+     "einen mann|mann", "Vidím muže."},
+    {"→ Er ________.",
+     "er wandert im wald|er wandert|wandert im wald|wandert",
+     "Chodí po lese."},
+    {"Zwei Kinder spielen Fußball.  →  Ich sehe ________.",
+     "zwei kinder|kinder", "Vidím dvě děti."},
+    {"→ Sie ________.",
+     "sie spielen fußball|sie spielen fussball|spielen fußball|spielen "
+     "fussball|spielen", "Hrají fotbal."},
+};
+
+static GtkWidget *u3ex14(UnitCtx *unit) {
+    return u3_build_kw(unit, 14, "Beschreiben", "sub3_saetze",
+                       "Beispiel: Ich sehe einen Jungen. Er liest ein Buch.",
+                       ex14_u3_qs, G_N_ELEMENTS(ex14_u3_qs));
+}
+
+/* ---- ex15: missing letters (Wochenende) ------------------------------ */
+
+static const U3Let ex15_u3_rows[] = {
+    {"1.", "Meine Gr", "oß", "eltern fahr", "en", " ins Wochen", "end",
+     "haus.", NULL, NULL,
+     "Moji prarodiče jedou o víkendu do víkendového domu."},
+    {"2.", "Mein ", "Va", "ter und mein", "e", " Mutter besuch", "en",
+     " ein Konz", "er", "t.",
+     "Můj otec a moje matka navštíví koncert."},
+    {"3.", "Mein", "e", " Sch", "w", "ester geh", "t", " ins K", "in", "o.",
+     "Moje sestra jde do kina."},
+    {"4.", "Mein Bru", "d", "er f", "äh", "rt an ", "ei", "nen S", "ee",
+     ".",
+     "Můj bratr jede k jezeru."},
+    {"5.", "Und ich? Ich besuch", "e", " ein Einka", "ufs", "zentrum.",
+     NULL, NULL, NULL, NULL,
+     "A já? Navštívím obchodní centrum."},
+};
+
+static GtkWidget *u3ex15(UnitCtx *unit) {
+    return u3_build_letters(unit, 15, "Wochenende", "sub3_wochen",
+                            ex15_u3_rows, G_N_ELEMENTS(ex15_u3_rows));
+}
+
+/* ------------------------------------------------------------------ */
 /* Settings                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -6525,10 +7529,10 @@ static void unit_meta_init(void) {
         "Mein Haus ist meine Burg", "Urlaub in Österreich",
     };
     static const char *pages[NUM_UNITS] = {
-        "unit1", "unit2", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        "unit1", "unit2", "unit3", NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     };
     static const char *tags[NUM_UNITS] = {
-        "u1", "u2", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        "u1", "u2", "u3", NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     };
 
     for (int i = 0; i < NUM_UNITS; i++) {
@@ -6542,6 +7546,8 @@ static void unit_meta_init(void) {
     units[0].progress_file = PROGRESS_U1;
     units[1].sub_key = "unit2_sub";
     units[1].progress_file = PROGRESS_U2;
+    units[2].sub_key = "unit3_sub";
+    units[2].progress_file = PROGRESS_U3;
 }
 
 static void unit_configure(int idx, const char *const *names, int n) {
@@ -6586,7 +7592,7 @@ static GtkWidget *build_exercise_page(UnitCtx *u, int n) {
                                          ex13_meaning);
             default: return NULL;
         }
-    } else {
+    } else if (u->ex_tag[1] == '2') {
         switch (n) {
             case 1:  return u2ex1(u);
             case 2:  return u2ex2(u);
@@ -6609,6 +7615,25 @@ static GtkWidget *build_exercise_page(UnitCtx *u, int n) {
             case 19: return u2ex19(u);
             default: return NULL;
         }
+    } else {
+        switch (n) {
+            case 1:  return u3ex1(u);
+            case 2:  return u3ex2(u);
+            case 3:  return u3ex3(u);
+            case 4:  return u3ex4(u);
+            case 5:  return u3ex5(u);
+            case 6:  return u3ex6(u);
+            case 7:  return u3ex7(u);
+            case 8:  return u3ex8(u);
+            case 9:  return u3ex9(u);
+            case 10: return u3ex10(u);
+            case 11: return u3ex11(u);
+            case 12: return u3ex12(u);
+            case 13: return u3ex13(u);
+            case 14: return u3ex14(u);
+            case 15: return u3ex15(u);
+            default: return NULL;
+        }
     }
 }
 
@@ -6626,6 +7651,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     unit_meta_init();
     unit_configure(0, u1_ex_names, 13);
     unit_configure(1, u2_ex_names, 19);
+    unit_configure(2, u3_ex_names, 15);
     load_progress();
     app_theme = theme_palette(app_theme_id, app_color_mode);
 
