@@ -6,6 +6,7 @@
 .idea/
 
 # binary
+.DS_Store
 sprechen
 maturita
 error.txt

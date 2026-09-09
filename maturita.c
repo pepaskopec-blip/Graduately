@@ -845,6 +845,14 @@ static const TrEntry tr_content[] = {
      "We are visiting our weekend house."},
     {"Vy vidíte svého psa.", NULL, "You see your dog."},
     {"Mají své nástroje.", NULL, "They have their instruments."},
+    /* ex8 grey notes showing which possessive is expected */
+    {"u3g_dein", "(tvůj)", "(your)"},
+    {"u3g_sein", "(jeho)", "(his)"},
+    {"u3g_ihr_sie", "(její)", "(her)"},
+    {"u3g_sein_es", "(jeho)", "(its)"},
+    {"u3g_unser", "(náš)", "(our)"},
+    {"u3g_euer", "(váš)", "(your)"},
+    {"u3g_ihr_sie_pl", "(jejich)", "(their)"},
     /* ex9 kein / nicht */
     {"Mluvíš španělsky? – Ne, nemluvím španělsky.", NULL,
      "Do you speak Spanish? – No, I don't speak any Spanish."},
@@ -6405,9 +6413,11 @@ typedef struct {
 } U3Fill;
 
 /* Append one horizontal fill row to `body`. The answer of blank i sits
- * between text segments s[i] and s[i+1]; empty segments are skipped. */
+ * between text segments s[i] and s[i+1]; empty segments are skipped.
+ * `gloss` (may be NULL) is an i18n key for a small grey note shown at
+ * the end of the line, e.g. the meaning of the expected possessive. */
 static void u3_fill_row(ComboListCtx *ctx, GtkWidget *body, const U3Fill *f,
-                        const char **pool, int pool_n) {
+                        const char **pool, int pool_n, const char *gloss) {
     const char *segs[4];
     const char *ans[3];
     int i, g;
@@ -6450,6 +6460,15 @@ static void u3_fill_row(ComboListCtx *ctx, GtkWidget *body, const U3Fill *f,
         }
     }
 
+    if (gloss && gloss[0]) {
+        GtkWidget *gl = gtk_label_new(NULL);
+        i18n_bind(gl, gloss, 0);
+        gtk_widget_set_valign(gl, GTK_ALIGN_CENTER);
+        gtk_widget_set_margin_start(gl, 8);
+        gtk_widget_add_css_class(gl, "meaning");
+        gtk_box_append(GTK_BOX(line), gl);
+    }
+
     if (f->mean && f->mean[0]) {
         GtkWidget *m = meaning_add(body, f->mean);
         combo_list_add_trans(ctx, m);
@@ -6470,7 +6489,8 @@ static void u3_sample_line(GtkWidget *body, const char *text) {
 static GtkWidget *u3_build_drop(UnitCtx *unit, int ex_num, const char *title,
                                 const char *sub, const char *sample,
                                 const U3Fill *rows, int n,
-                                const char **pool, int pool_n) {
+                                const char **pool, int pool_n,
+                                const char **glosses) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
                                     &body, &feedback, &check);
@@ -6480,7 +6500,8 @@ static GtkWidget *u3_build_drop(UnitCtx *unit, int ex_num, const char *title,
         u3_sample_line(body, sample);
 
     for (int i = 0; i < n; i++)
-        u3_fill_row(ctx, body, &rows[i], pool, pool_n);
+        u3_fill_row(ctx, body, &rows[i], pool, pool_n,
+                    glosses ? glosses[i] : NULL);
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
     return page;
@@ -6512,7 +6533,7 @@ static GtkWidget *u3ex1(UnitCtx *unit) {
     return u3_build_drop(unit, 1, "Familienpaare", "sub3_pair",
                          "Beispiel: der Vater ↔ die Mutter",
                          ex1_u3_rows, G_N_ELEMENTS(ex1_u3_rows),
-                         ex1_u3_pool, G_N_ELEMENTS(ex1_u3_pool));
+                         ex1_u3_pool, G_N_ELEMENTS(ex1_u3_pool), NULL);
 }
 
 /* ---- ex2: Possessivpronomen im Nominativ ----------------------------- */
@@ -6753,7 +6774,7 @@ static GtkWidget *u3ex3(UnitCtx *unit) {
                          "Beispiel: Hast du eine Katze? – Nein, ich habe "
                          "keine Katze. Ich habe einen Hund.",
                          ex3_u3_rows, G_N_ELEMENTS(ex3_u3_rows),
-                         ex3_u3_pool, G_N_ELEMENTS(ex3_u3_pool));
+                         ex3_u3_pool, G_N_ELEMENTS(ex3_u3_pool), NULL);
 }
 
 /* ---- inline letter-gap rows (ex15) ----------------------------------- */
@@ -7170,6 +7191,10 @@ static GtkWidget *u3ex7(UnitCtx *unit) {
                                     &body, &feedback, &check);
     GtkWidget *grid;
     GtkWidget *sample_note;
+    GtkWidget *bank_row;
+    GtkWidget *bank_hdr;
+    GtkWidget *bank1;
+    GtkWidget *bank2;
     U3TableCtx *ctx = g_new0(U3TableCtx, 1);
 
     ctx->n = nn * np;
@@ -7185,6 +7210,26 @@ static GtkWidget *u3ex7(UnitCtx *unit) {
     gtk_widget_set_margin_bottom(sample_note, 4);
     gtk_widget_add_css_class(sample_note, "hint");
     gtk_box_append(GTK_BOX(body), sample_note);
+
+    bank_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_widget_set_halign(bank_row, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), bank_row);
+    bank_hdr = gtk_label_new(NULL);
+    i18n_bind(bank_hdr, "wordbank", 0);
+    gtk_widget_add_css_class(bank_hdr, "hint");
+    gtk_box_append(GTK_BOX(bank_row), bank_hdr);
+    bank1 = gtk_label_new("(der Garten / das Fest)  "
+                          "mein · dein · sein · ihr · unser · euer");
+    gtk_widget_add_css_class(bank1, "hint");
+    gtk_box_append(GTK_BOX(bank_row), bank1);
+
+    bank_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_widget_set_halign(bank_row, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), bank_row);
+    bank2 = gtk_label_new("(die Idee / die Geschwister)  "
+                          "meine · deine · seine · ihre · unsere · eure");
+    gtk_widget_add_css_class(bank2, "hint");
+    gtk_box_append(GTK_BOX(bank_row), bank2);
 
     grid = gtk_grid_new();
     gtk_grid_set_column_spacing(GTK_GRID(grid), 8);
@@ -7247,12 +7292,18 @@ static const U3Fill ex8_u3_rows[] = {
      NULL, NULL, NULL, "Mají své nástroje."},
 };
 
+static const char *ex8_u3_gloss[] = {
+    "u3g_dein", "u3g_sein", "u3g_ihr_sie", "u3g_sein_es",
+    "u3g_unser", "u3g_euer", "u3g_ihr_sie_pl",
+};
+
 static GtkWidget *u3ex8(UnitCtx *unit) {
     return u3_build_drop(unit, 8, "Akkusativ", "sub3_akk",
                          "Beispiel: die Inliner (ich) → Ich brauche meine "
                          "Inliner.",
                          ex8_u3_rows, G_N_ELEMENTS(ex8_u3_rows),
-                         ex8_u3_pool, G_N_ELEMENTS(ex8_u3_pool));
+                         ex8_u3_pool, G_N_ELEMENTS(ex8_u3_pool),
+                         ex8_u3_gloss);
 }
 
 /* ---- ex9: kein / keine / keinen / nicht ------------------------------ */
@@ -7283,7 +7334,7 @@ static const U3Fill ex9_u3_rows[] = {
 static GtkWidget *u3ex9(UnitCtx *unit) {
     return u3_build_drop(unit, 9, "kein / nicht", "sub3_nicht", NULL,
                          ex9_u3_rows, G_N_ELEMENTS(ex9_u3_rows),
-                         ex9_u3_pool, G_N_ELEMENTS(ex9_u3_pool));
+                         ex9_u3_pool, G_N_ELEMENTS(ex9_u3_pool), NULL);
 }
 
 /* ---- ex10: Sätze bauen ------------------------------------------------ */
@@ -7454,7 +7505,7 @@ static const U3Fill ex12_u3_rows[] = {
 static GtkWidget *u3ex12(UnitCtx *unit) {
     return u3_build_drop(unit, 12, "Wem gehört das?", "sub3_wem", NULL,
                          ex12_u3_rows, G_N_ELEMENTS(ex12_u3_rows),
-                         ex12_u3_pool, G_N_ELEMENTS(ex12_u3_pool));
+                         ex12_u3_pool, G_N_ELEMENTS(ex12_u3_pool), NULL);
 }
 
 /* ---- ex13: Es gibt + unbestimmter Artikel ---------------------------- */
@@ -7480,7 +7531,7 @@ static const U3Fill ex13_u3_rows[] = {
 static GtkWidget *u3ex13(UnitCtx *unit) {
     return u3_build_drop(unit, 13, "Es gibt …", "sub3_gibt", NULL,
                          ex13_u3_rows, G_N_ELEMENTS(ex13_u3_rows),
-                         ex13_u3_pool, G_N_ELEMENTS(ex13_u3_pool));
+                         ex13_u3_pool, G_N_ELEMENTS(ex13_u3_pool), NULL);
 }
 
 /* ---- ex14: Beschreiben (sentence pairs) ------------------------------ */
