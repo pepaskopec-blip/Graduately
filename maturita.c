@@ -500,6 +500,19 @@ static const TrEntry tr_ui[] = {
     {"hm_done", "Výborně! Uhodli jste všechna povolání.",
      "Great! You guessed all the jobs."},
     {"hm_guess", "Hádejte písmeno", "Guess a letter"},
+    {"stats", "Statistiky", "Statistics"},
+    {"stats_title", "Statistiky", "Statistics"},
+    {"stats_sub", "Přehled vašeho pokroku v němčině.",
+     "Overview of your German learning progress."},
+    {"stats_ex_label", "Cvičení", "Exercises"},
+    {"stats_pct_label", "Hotovo", "Done"},
+    {"stats_units_label", "Jednotky", "Units"},
+    {"stats_section", "Podle jednotek", "By unit"},
+    {"stats_locked", "Zamčeno", "Locked"},
+    {"stats_complete", "Hotovo", "Complete"},
+    {"stats_ex_fmt", "%d / %d", "%d / %d"},
+    {"stats_pct_fmt", "%d %%", "%d %%"},
+    {"stats_units_fmt", "%d / %d", "%d / %d"},
     {"subjects_title", "Předměty", "Subjects"},
     {"subjects_sub", "Zatím je dostupný předmět Deutsch.",
      "Only Deutsch is available so far."},
@@ -998,6 +1011,8 @@ static void refresh_welcome_heading(void) {
     g_free(markup);
 }
 
+static void refresh_stats_ui(void);
+
 static void apply_language(void) {
     guint i;
 
@@ -1005,6 +1020,7 @@ static void apply_language(void) {
     for (i = 0; i < i18n_binds->len; i++)
         i18n_apply_one(&g_array_index(i18n_binds, I18nBind, i));
     refresh_welcome_heading();
+    refresh_stats_ui();
 }
 
 static char *build_theme_css(const ThemePalette *p) {
@@ -1601,6 +1617,100 @@ static char *build_theme_css(const ThemePalette *p) {
         "   font-size: 15px;"
         "   font-weight: 700;"
         "}"
+        ".stats-page {"
+        "   padding: 8px 28px 24px 28px;"
+        "}"
+        ".stats-summary {"
+        "   margin-top: 8px;"
+        "   margin-bottom: 18px;"
+        "}"
+        ".stats-metric {"
+        "   background-color: alpha(@bg_surface0, 0.92);"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 16px;"
+        "   padding: 16px 18px;"
+        "   min-width: 120px;"
+        "}"
+        ".stats-metric-value {"
+        "   color: @fg_text;"
+        "   font-size: 26px;"
+        "   font-weight: 800;"
+        "   letter-spacing: -0.4px;"
+        "}"
+        ".stats-metric-label {"
+        "   color: @fg_overlay;"
+        "   font-size: 11px;"
+        "   font-weight: 700;"
+        "   letter-spacing: 0.8px;"
+        "   margin-top: 4px;"
+        "}"
+        ".stats-overall-bar,"
+        ".stats-overall-bar trough,"
+        ".stats-unit-bar,"
+        ".stats-unit-bar trough {"
+        "   min-height: 10px;"
+        "   border-radius: 999px;"
+        "   background-color: alpha(@bg_surface1, 0.85);"
+        "   border: none;"
+        "   padding: 0;"
+        "}"
+        ".stats-overall-bar {"
+        "   margin-bottom: 22px;"
+        "   min-height: 12px;"
+        "}"
+        ".stats-overall-bar progress,"
+        ".stats-unit-bar progress {"
+        "   min-height: 10px;"
+        "   border-radius: 999px;"
+        "   background-image: linear-gradient(90deg, @accent 0%%, @accent2 100%%);"
+        "   background-color: @accent;"
+        "   border: none;"
+        "}"
+        ".stats-unit-bar.done progress {"
+        "   background-image: linear-gradient(90deg, @success 0%%, @success2 100%%);"
+        "   background-color: @success;"
+        "}"
+        ".stats-section {"
+        "   color: @fg_overlay;"
+        "   font-size: 11px;"
+        "   font-weight: 700;"
+        "   letter-spacing: 0.8px;"
+        "   margin-bottom: 10px;"
+        "}"
+        ".stats-unit-row {"
+        "   background-color: alpha(@bg_surface0, 0.72);"
+        "   border: 1px solid @bg_surface1;"
+        "   border-radius: 14px;"
+        "   padding: 12px 14px;"
+        "   margin-bottom: 8px;"
+        "}"
+        ".stats-unit-row.locked {"
+        "   opacity: 0.55;"
+        "}"
+        ".stats-unit-row.done {"
+        "   border-color: alpha(@success, 0.55);"
+        "}"
+        ".stats-unit-index {"
+        "   color: @fg_overlay;"
+        "   font-size: 13px;"
+        "   font-weight: 700;"
+        "   min-width: 22px;"
+        "}"
+        ".stats-unit-name {"
+        "   color: @fg_text;"
+        "   font-size: 15px;"
+        "   font-weight: 700;"
+        "}"
+        ".stats-unit-count {"
+        "   color: @fg_subtext;"
+        "   font-size: 13px;"
+        "   font-weight: 600;"
+        "}"
+        ".stats-unit-badge {"
+        "   color: @success;"
+        "   font-size: 12px;"
+        "   font-weight: 700;"
+        "}"
         "tooltip {"
         "   background-color: @bg_mantle;"
         "   border: 1px solid @bg_surface1;"
@@ -1871,6 +1981,42 @@ static void draw_settings_icon(GtkDrawingArea *area, cairo_t *cr,
     cairo_fill(cr);
 }
 
+static void draw_stats_icon(GtkDrawingArea *area, cairo_t *cr,
+                            int width, int height, gpointer data) {
+    GtkWidget *color_w = data ? GTK_WIDGET(data)
+                              : gtk_widget_get_parent(GTK_WIDGET(area));
+    GdkRGBA color;
+    const double bar_w = 3.2;
+    const double gap = 2.6;
+    const double total_w = 3.0 * bar_w + 2.0 * gap;
+    const double heights[3] = {0.42, 0.72, 1.0};
+    double base_x = (width - total_w) / 2.0;
+    double base_y = height * 0.82;
+    double max_h = height * 0.58;
+    int i;
+
+    (void)area;
+    gtk_style_context_get_color(gtk_widget_get_style_context(color_w), &color);
+    cairo_set_source_rgb(cr, color.red, color.green, color.blue);
+    cairo_set_line_width(cr, 1.5);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+    for (i = 0; i < 3; i++) {
+        double x = base_x + (double)i * (bar_w + gap);
+        double h = max_h * heights[i];
+        double y = base_y - h;
+        double r = 1.2;
+
+        cairo_new_sub_path(cr);
+        cairo_arc(cr, x + r, y + r, r, G_PI, 1.5 * G_PI);
+        cairo_arc(cr, x + bar_w - r, y + r, r, 1.5 * G_PI, 2.0 * G_PI);
+        cairo_line_to(cr, x + bar_w, base_y);
+        cairo_line_to(cr, x, base_y);
+        cairo_close_path(cr);
+        cairo_fill(cr);
+    }
+}
+
 static GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
                                 double r, double g, double b, int px) {
     Rgb *col = g_new(Rgb, 1);
@@ -2067,6 +2213,7 @@ static void refresh_completion_ui(void) {
     }
 
     all_rails_redraw();
+    refresh_stats_ui();
 }
 
 static void mark_done(UnitCtx *u, int n) {
@@ -2075,6 +2222,321 @@ static void mark_done(UnitCtx *u, int n) {
     u->done[n] = TRUE;
     refresh_completion_ui();
     unit_save_progress(u);
+}
+
+/* ------------------------------------------------------------------ */
+/* Statistics                                                         */
+/* ------------------------------------------------------------------ */
+
+static GtkWidget *make_back_button(const char *target);
+static void on_nav_clicked(GtkButton *button, gpointer user_data);
+
+typedef struct {
+    GtkWidget *ex_value;
+    GtkWidget *pct_value;
+    GtkWidget *units_value;
+    GtkWidget *overall_bar;
+    GtkWidget *unit_count[NUM_UNITS];
+    GtkWidget *unit_badge[NUM_UNITS];
+    GtkWidget *unit_bar[NUM_UNITS];
+    GtkWidget *unit_row[NUM_UNITS];
+} StatsUi;
+
+static StatsUi stats_ui;
+static char *stats_return_page;
+
+static int unit_done_count(const UnitCtx *u) {
+    int n = 0;
+
+    if (!u)
+        return 0;
+    for (int i = 1; i <= u->n_ex; i++) {
+        if (u->done[i])
+            n++;
+    }
+    return n;
+}
+
+static void refresh_stats_ui(void) {
+    int done_ex = 0;
+    int total_ex = 0;
+    int done_units = 0;
+    int open_units = 0;
+    int pct;
+    char *tmp;
+
+    if (!stats_ui.ex_value)
+        return;
+
+    for (int i = 0; i < NUM_UNLOCKED; i++) {
+        UnitCtx *u = &units[i];
+        int d = unit_done_count(u);
+
+        done_ex += d;
+        total_ex += u->n_ex;
+        open_units++;
+        if (u->n_ex > 0 && d == u->n_ex)
+            done_units++;
+    }
+
+    pct = total_ex > 0 ? (done_ex * 100) / total_ex : 0;
+
+    tmp = g_strdup_printf(tr("stats_ex_fmt"), done_ex, total_ex);
+    gtk_label_set_text(GTK_LABEL(stats_ui.ex_value), tmp);
+    g_free(tmp);
+
+    tmp = g_strdup_printf(tr("stats_pct_fmt"), pct);
+    gtk_label_set_text(GTK_LABEL(stats_ui.pct_value), tmp);
+    g_free(tmp);
+
+    tmp = g_strdup_printf(tr("stats_units_fmt"), done_units, open_units);
+    gtk_label_set_text(GTK_LABEL(stats_ui.units_value), tmp);
+    g_free(tmp);
+
+    gtk_progress_bar_set_fraction(
+        GTK_PROGRESS_BAR(stats_ui.overall_bar),
+        total_ex > 0 ? (double)done_ex / (double)total_ex : 0.0);
+
+    for (int i = 0; i < NUM_UNITS; i++) {
+        UnitCtx *u = &units[i];
+        GtkWidget *count = stats_ui.unit_count[i];
+        GtkWidget *badge = stats_ui.unit_badge[i];
+        GtkWidget *bar = stats_ui.unit_bar[i];
+        GtkWidget *row = stats_ui.unit_row[i];
+        gboolean unlocked = u->unlocked && u->n_ex > 0;
+        int d = unlocked ? unit_done_count(u) : 0;
+        gboolean complete = unlocked && d == u->n_ex;
+
+        if (!count || !bar || !row)
+            continue;
+
+        gtk_widget_remove_css_class(row, "done");
+        gtk_widget_remove_css_class(row, "locked");
+        gtk_widget_remove_css_class(bar, "done");
+
+        if (!unlocked) {
+            gtk_widget_add_css_class(row, "locked");
+            gtk_label_set_text(GTK_LABEL(count), tr("stats_locked"));
+            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(bar), 0.0);
+            if (badge)
+                gtk_widget_set_visible(badge, FALSE);
+            continue;
+        }
+
+        tmp = g_strdup_printf(tr("stats_ex_fmt"), d, u->n_ex);
+        gtk_label_set_text(GTK_LABEL(count), tmp);
+        g_free(tmp);
+        gtk_progress_bar_set_fraction(
+            GTK_PROGRESS_BAR(bar),
+            u->n_ex > 0 ? (double)d / (double)u->n_ex : 0.0);
+
+        if (complete) {
+            gtk_widget_add_css_class(row, "done");
+            gtk_widget_add_css_class(bar, "done");
+            if (badge) {
+                gtk_label_set_text(GTK_LABEL(badge), tr("stats_complete"));
+                gtk_widget_set_visible(badge, TRUE);
+            }
+        } else if (badge) {
+            gtk_widget_set_visible(badge, FALSE);
+        }
+    }
+}
+
+static void on_stats_back_clicked(GtkButton *button, gpointer user_data) {
+    const char *target = stats_return_page;
+
+    (void)button;
+    (void)user_data;
+    if (!target || !target[0])
+        target = "subjects";
+    gtk_stack_set_visible_child_name(main_stack, target);
+}
+
+static void on_stats_clicked(GtkButton *button, gpointer user_data) {
+    const char *cur;
+
+    (void)button;
+    (void)user_data;
+
+    cur = gtk_stack_get_visible_child_name(main_stack);
+    if (cur && g_strcmp0(cur, "stats") != 0) {
+        g_free(stats_return_page);
+        stats_return_page = g_strdup(cur);
+    }
+    refresh_stats_ui();
+    gtk_stack_set_visible_child_name(main_stack, "stats");
+}
+
+static GtkWidget *stats_metric_card(const char *label_key, GtkWidget **value_out) {
+    GtkWidget *card;
+    GtkWidget *value;
+    GtkWidget *label;
+
+    card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_add_css_class(card, "stats-metric");
+    gtk_widget_set_hexpand(card, TRUE);
+
+    value = gtk_label_new("0");
+    gtk_widget_set_halign(value, GTK_ALIGN_START);
+    gtk_widget_add_css_class(value, "stats-metric-value");
+    gtk_box_append(GTK_BOX(card), value);
+
+    label = gtk_label_new(NULL);
+    i18n_bind(label, label_key, 0);
+    gtk_widget_set_halign(label, GTK_ALIGN_START);
+    gtk_widget_add_css_class(label, "stats-metric-label");
+    gtk_box_append(GTK_BOX(card), label);
+
+    *value_out = value;
+    return card;
+}
+
+static GtkWidget *build_stats_page(void) {
+    GtkWidget *outer;
+    GtkWidget *scroll;
+    GtkWidget *page;
+    GtkWidget *top;
+    GtkWidget *back;
+    GtkWidget *center;
+    GtkWidget *heading;
+    GtkWidget *sub;
+    GtkWidget *summary;
+    GtkWidget *section;
+    GtkWidget *list;
+
+    outer = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_add_css_class(outer, "stats-page");
+
+    top = gtk_center_box_new();
+    gtk_widget_set_margin_top(top, 2);
+    gtk_widget_set_margin_bottom(top, 6);
+    gtk_box_append(GTK_BOX(outer), top);
+
+    back = make_back_button("subjects");
+    g_signal_handlers_disconnect_matched(back, G_SIGNAL_MATCH_FUNC,
+                                         0, 0, NULL, on_nav_clicked, NULL);
+    g_signal_connect(back, "clicked", G_CALLBACK(on_stats_back_clicked), NULL);
+    gtk_center_box_set_start_widget(GTK_CENTER_BOX(top), back);
+
+    center = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_widget_set_valign(center, GTK_ALIGN_CENTER);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(top), center);
+
+    heading = gtk_label_new(NULL);
+    i18n_bind(heading, "stats_title", 0);
+    gtk_widget_set_halign(heading, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(heading, "roadmap-title");
+    gtk_box_append(GTK_BOX(center), heading);
+
+    sub = gtk_label_new(NULL);
+    i18n_bind(sub, "stats_sub", 0);
+    gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(sub, "roadmap-sub");
+    gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
+    gtk_box_append(GTK_BOX(center), sub);
+
+    scroll = gtk_scrolled_window_new();
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_hexpand(scroll, TRUE);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_box_append(GTK_BOX(outer), scroll);
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_halign(page, GTK_ALIGN_FILL);
+    gtk_widget_set_margin_start(page, 4);
+    gtk_widget_set_margin_end(page, 4);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), page);
+
+    summary = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_widget_add_css_class(summary, "stats-summary");
+    gtk_widget_set_halign(summary, GTK_ALIGN_FILL);
+    gtk_box_append(GTK_BOX(page), summary);
+
+    gtk_box_append(GTK_BOX(summary),
+                   stats_metric_card("stats_ex_label", &stats_ui.ex_value));
+    gtk_box_append(GTK_BOX(summary),
+                   stats_metric_card("stats_pct_label", &stats_ui.pct_value));
+    gtk_box_append(GTK_BOX(summary),
+                   stats_metric_card("stats_units_label",
+                                     &stats_ui.units_value));
+
+    stats_ui.overall_bar = gtk_progress_bar_new();
+    gtk_widget_add_css_class(stats_ui.overall_bar, "stats-overall-bar");
+    gtk_widget_set_hexpand(stats_ui.overall_bar, TRUE);
+    gtk_box_append(GTK_BOX(page), stats_ui.overall_bar);
+
+    section = gtk_label_new(NULL);
+    i18n_bind(section, "stats_section", 0);
+    gtk_widget_set_halign(section, GTK_ALIGN_START);
+    gtk_widget_add_css_class(section, "stats-section");
+    gtk_box_append(GTK_BOX(page), section);
+
+    list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_append(GTK_BOX(page), list);
+
+    for (int i = 0; i < NUM_UNITS; i++) {
+        GtkWidget *row;
+        GtkWidget *head;
+        GtkWidget *left;
+        GtkWidget *idx;
+        GtkWidget *name;
+        GtkWidget *right;
+        GtkWidget *count;
+        GtkWidget *badge;
+        GtkWidget *bar;
+        char num[8];
+
+        row = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
+        gtk_widget_add_css_class(row, "stats-unit-row");
+        gtk_box_append(GTK_BOX(list), row);
+        stats_ui.unit_row[i] = row;
+
+        head = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+        gtk_box_append(GTK_BOX(row), head);
+
+        left = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+        gtk_widget_set_hexpand(left, TRUE);
+        gtk_box_append(GTK_BOX(head), left);
+
+        g_snprintf(num, sizeof(num), "%d", i + 1);
+        idx = gtk_label_new(num);
+        gtk_widget_add_css_class(idx, "stats-unit-index");
+        gtk_widget_set_valign(idx, GTK_ALIGN_CENTER);
+        gtk_box_append(GTK_BOX(left), idx);
+
+        name = gtk_label_new(units[i].title);
+        gtk_widget_set_halign(name, GTK_ALIGN_START);
+        gtk_widget_set_hexpand(name, TRUE);
+        gtk_label_set_xalign(GTK_LABEL(name), 0.0);
+        gtk_label_set_ellipsize(GTK_LABEL(name), PANGO_ELLIPSIZE_END);
+        gtk_widget_add_css_class(name, "stats-unit-name");
+        gtk_box_append(GTK_BOX(left), name);
+
+        right = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+        gtk_widget_set_valign(right, GTK_ALIGN_CENTER);
+        gtk_box_append(GTK_BOX(head), right);
+
+        badge = gtk_label_new(NULL);
+        gtk_widget_add_css_class(badge, "stats-unit-badge");
+        gtk_widget_set_visible(badge, FALSE);
+        gtk_box_append(GTK_BOX(right), badge);
+        stats_ui.unit_badge[i] = badge;
+
+        count = gtk_label_new("");
+        gtk_widget_add_css_class(count, "stats-unit-count");
+        gtk_box_append(GTK_BOX(right), count);
+        stats_ui.unit_count[i] = count;
+
+        bar = gtk_progress_bar_new();
+        gtk_widget_add_css_class(bar, "stats-unit-bar");
+        gtk_widget_set_hexpand(bar, TRUE);
+        gtk_box_append(GTK_BOX(row), bar);
+        stats_ui.unit_bar[i] = bar;
+    }
+
+    return outer;
 }
 
 /* ------------------------------------------------------------------ */
@@ -7740,6 +8202,30 @@ static void on_settings_clicked(GtkButton *button, gpointer user_data) {
     gtk_popover_popup(popover);
 }
 
+static GtkWidget *build_stats_button(void) {
+    GtkWidget *btn;
+    GtkWidget *icon;
+
+    btn = gtk_button_new();
+    gtk_widget_add_css_class(btn, "settings-btn");
+    gtk_widget_add_css_class(btn, "flat");
+    i18n_bind(btn, "stats", 2);
+    gtk_widget_set_valign(btn, GTK_ALIGN_CENTER);
+    gtk_widget_set_focus_on_click(btn, FALSE);
+
+    icon = gtk_drawing_area_new();
+    gtk_widget_set_size_request(icon, 18, 18);
+    gtk_widget_set_can_target(icon, FALSE);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(icon),
+                                   draw_stats_icon, NULL, NULL);
+    gtk_button_set_child(GTK_BUTTON(btn), icon);
+    g_signal_connect_swapped(btn, "state-flags-changed",
+                             G_CALLBACK(gtk_widget_queue_draw), icon);
+    g_signal_connect(btn, "clicked", G_CALLBACK(on_stats_clicked), NULL);
+
+    return btn;
+}
+
 static GtkWidget *build_settings_button(void) {
     GtkWidget *btn;
     GtkWidget *icon;
@@ -8051,6 +8537,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_window_set_titlebar(window, headerbar);
     apply_theme();
     gtk_header_bar_pack_end(GTK_HEADER_BAR(headerbar), build_settings_button());
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(headerbar), build_stats_button());
 
     main_stack = GTK_STACK(gtk_stack_new());
     gtk_stack_set_transition_type(GTK_STACK(main_stack),
@@ -8062,6 +8549,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, welcome_page, "welcome");
     gtk_stack_add_named(main_stack, build_subjects_page(), "subjects");
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
+    gtk_stack_add_named(main_stack, build_stats_page(), "stats");
 
     for (int i = 0; i < NUM_UNLOCKED; i++) {
         UnitCtx *u = &units[i];

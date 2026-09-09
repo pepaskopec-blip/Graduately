@@ -27,7 +27,7 @@ GTK 4 interface.
   - layout folds into multiple rows when the window is narrow
 - **Learning roadmap** – adaptive serpentine learning path with 10 units
   - each unit numbered and labeled with its topic (e.g. "Neue Freunde")
-  - units 1 and 2 are open; completed units shown in green with a checkmark
+  - units 1–3 are open; completed units shown in green with a checkmark
   - remaining units dimmed with a lock icon
   - finish node at the end of the path
   - layout folds into multiple rows when the window is narrow
@@ -42,9 +42,14 @@ GTK 4 interface.
   conjugation, prepositions `aus`/`in`, question words, nationalities and
   countries, spelling/look-and-find tasks, a matching exercise, a number/word
   game, free-answer "Steckbrief" tasks and a Hangman game with 5 professions
+- **Unit 3 exercises** – "Bei uns zu Hause" covers family vocabulary,
+  possessives, accusative and related grammar across 15 exercises
 - **Progress tracking** – completed exercises are marked green; progress is
-  saved per unit to `progress/unit1.conf` and `progress/unit2.conf` and
-  restored on startup
+  saved per unit to `progress/unit1.conf`, `progress/unit2.conf` and
+  `progress/unit3.conf` and restored on startup
+- **Statistics** – chart icon in the header opens a progress overview with
+  totals (exercises done, percent, finished units) and a per-unit breakdown
+  with progress bars; numbers update as soon as you finish an exercise
 - **Settings** – gear icon in the top-right header opens a panel where you can
   choose:
   - **mode**: dark or light, as a segmented control
@@ -156,13 +161,15 @@ When launched, the application shows the welcome screen. From there:
    even if unit 1 is not finished yet.
 5. Use the **back button** in the top-left corner to return to the previous
    screen.
-6. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
+6. Open **Statistiky / Statistics** (chart icon, top-right) to see overall and
+   per-unit progress.
+7. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
-Units 1 and 2 are currently implemented. Locked units do nothing – they are
+Units 1–3 are currently implemented. Locked units do nothing – they are
 placeholders until lessons are added. Completed exercises stay green and are
-saved per unit to `progress/unit1.conf` / `progress/unit2.conf` (created next
-to the app on first finish).
+saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
+`progress/unit3.conf` (created next to the app on first finish).
 
 ### Keyboard shortcuts
 
@@ -181,6 +188,7 @@ LICENSE                 MIT license
 progress/               created at runtime
   unit1.conf            unit 1 exercise completion state
   unit2.conf            unit 2 exercise completion state
+  unit3.conf            unit 3 exercise completion state
   settings.conf         theme, dark/light mode and language preference
 ```
 
@@ -215,13 +223,14 @@ Future enhancements planned for maturita.c:
 - [ ] Wire unit nodes to actual German vocabulary/grammar exercises
   - [x] Unit 1 ("Neue Freunde") – 13 interactive exercises with progress saving
   - [x] Unit 2 ("Aus aller Welt") – 19 interactive exercises (incl. Hangman)
+  - [x] Unit 3 ("Bei uns zu Hause") – 15 interactive exercises
 - [ ] Lesson progression and unlock system for the remaining units
 - [ ] Add audio pronunciation features
 - [x] Add user settings panel (theme, dark/light mode, language)
 - [ ] Implement spaced repetition system for vocabulary
 - [ ] Add listening and reading comprehension exercises
 - [ ] Add writing practice with feedback
-- [ ] Expand progress tracking with statistics
+- [x] Expand progress tracking with statistics
 - [ ] Move CSS styling to an external file
 - [ ] Split the UI code into multiple files
 - [x] Add internationalization support (Czech and English)
