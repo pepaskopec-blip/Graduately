@@ -36,20 +36,27 @@ GTK 4 interface.
 - **Unit 1 exercises** – "Neue Freunde" opens an interactive bubble map with 13
   exercises (dialogs, sentence building, multiple choice, free answers,
   numbers, verb conjugation, greeting sorting and more), each with German
-  prompts and a check button that reveals the translations
+  prompts and an instant-check button
 - **Unit 2 exercises** – "Aus aller Welt" is playable from the start (no need
   to finish unit 1 first) and offers a bubble map with 19 exercises: verb
   conjugation, prepositions `aus`/`in`, question words, nationalities and
   countries, spelling/look-and-find tasks, a matching exercise, a number/word
   game, free-answer "Steckbrief" tasks and a Hangman game with 5 professions
 - **Unit 3 exercises** – "Bei uns zu Hause" covers family vocabulary,
-  possessives, accusative and related grammar across 15 exercises
+  possessives, accusative and related grammar across 15 exercises (drop-down
+  sentence fill-ins, word building, "Was siehst du?", sentence ordering and
+  missing-letter sentences)
+- **Hints & model answers** – in exercises where you write or complete a German
+  sentence the Czech meaning is shown right away as a hint, and clicking the
+  check button also reveals the correct German sentence so you can compare
 - **Progress tracking** – completed exercises are marked green; progress is
   saved per unit to `progress/unit1.conf`, `progress/unit2.conf` and
   `progress/unit3.conf` and restored on startup
-- **Statistics** – chart icon in the header opens a progress overview with
-  totals (exercises done, percent, finished units) and a per-unit breakdown
-  with progress bars; numbers update as soon as you finish an exercise
+- **Statistics** – chart icon in the header opens a per-subject progress
+  overview: summary totals (exercises done, percent, finished units) at the
+  top, then every subject with its own progress bar (subjects without content
+  yet are shown as locked), and a per-unit breakdown with progress bars for
+  Deutsch; numbers update as soon as you finish an exercise
 - **Settings** – gear icon in the top-right header opens a panel where you can
   choose:
   - **mode**: dark or light, as a segmented control
@@ -156,13 +163,15 @@ When launched, the application shows the welcome screen. From there:
    roadmap. The other subjects are locked for now.
 3. Browse the units along the path; the roadmap reflows into rows and scrolls
    if the window is too narrow.
-4. Click the **"Neue Freunde"** node to open unit 1 or **"Aus aller Welt"** to
-   open unit 2, then pick any bubble to start an exercise. Unit 2 is available
-   even if unit 1 is not finished yet.
+4. Click the **"Neue Freunde"** node to open unit 1, **"Aus aller Welt"** for
+   unit 2 or **"Bei uns zu Hause"** for unit 3, then pick any bubble to start
+   an exercise. Units 2 and 3 are available even if the earlier units are not
+   finished yet.
 5. Use the **back button** in the top-left corner to return to the previous
    screen.
-6. Open **Statistiky / Statistics** (chart icon, top-right) to see overall and
-   per-unit progress.
+6. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
+   grouped per subject (overall totals plus, for Deutsch, a per-unit
+   breakdown).
 7. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
