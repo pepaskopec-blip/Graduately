@@ -184,7 +184,7 @@ saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
 maturita.c              entire application (UI, navigation, themes, exercises)
 Makefile                build & run targets
 README.md               this file
-LICENSE                 MIT license
+LICENSE                 GPL-3.0 license
 progress/               created at runtime
   unit1.conf            unit 1 exercise completion state
   unit2.conf            unit 2 exercise completion state
