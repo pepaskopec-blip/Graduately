@@ -1432,6 +1432,11 @@ static char *build_theme_css(const ThemePalette *p) {
         "   font-size: 13px;"
         "   font-style: italic;"
         "}"
+        ".u3-answer {"
+        "   color: @success;"
+        "   font-size: 13px;"
+        "   font-weight: 700;"
+        "}"
         ".dlg-speaker {"
         "   color: @accent;"
         "   font-weight: 700;"
@@ -7991,7 +7996,8 @@ static GtkWidget *u3ex10(UnitCtx *unit) {
 typedef struct {
     const char *prompt;
     const char *answers;   /* accepted substrings separated by '|'     */
-    const char *mean;      /* Czech meaning revealed after checking    */
+    const char *mean;      /* Czech meaning shown under the entry       */
+    const char *german;    /* German sentence(s) revealed after Check   */
 } U3Kw;
 
 typedef struct {
@@ -8002,6 +8008,7 @@ typedef struct {
     GtkWidget *feedback;
     GtkWidget **entries;
     GtkWidget **trans;
+    GtkWidget **models;
 } U3KwCtx;
 
 static void u3_kw_check(GtkButton *button, gpointer data) {
@@ -8035,8 +8042,8 @@ static void u3_kw_check(GtkButton *button, gpointer data) {
     }
 
     for (int i = 0; i < ctx->n; i++)
-        if (ctx->trans[i])
-            gtk_widget_set_visible(ctx->trans[i], TRUE);
+        if (ctx->models[i])
+            gtk_widget_set_visible(ctx->models[i], TRUE);
 
     if (ok == ctx->n) {
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
@@ -8061,6 +8068,7 @@ static GtkWidget *u3_build_kw(UnitCtx *unit, int ex_num, const char *title,
     ctx->feedback = feedback;
     ctx->entries = g_new0(GtkWidget *, n);
     ctx->trans = g_new0(GtkWidget *, n);
+    ctx->models = g_new0(GtkWidget *, n);
 
     if (sample && sample[0])
         u3_sample_line(body, sample);
@@ -8082,6 +8090,26 @@ static GtkWidget *u3_build_kw(UnitCtx *unit, int ex_num, const char *title,
 
         if (qs[i].mean)
             ctx->trans[i] = meaning_add(body, qs[i].mean);
+
+        /* Czech meaning acts as a hint and stays visible. */
+        if (ctx->trans[i])
+            gtk_widget_set_visible(ctx->trans[i], TRUE);
+
+        /* The model German sentence is only shown after clicking Check. */
+        if (qs[i].german && qs[i].german[0]) {
+            GtkWidget *model = gtk_label_new(qs[i].german);
+
+            gtk_widget_set_halign(model, GTK_ALIGN_START);
+            gtk_label_set_xalign(GTK_LABEL(model), 0.0);
+            gtk_label_set_wrap(GTK_LABEL(model), TRUE);
+            gtk_widget_set_margin_top(model, 2);
+            gtk_widget_set_margin_bottom(model, 2);
+            gtk_widget_set_margin_start(model, 8);
+            gtk_widget_add_css_class(model, "u3-answer");
+            gtk_widget_set_visible(model, FALSE);
+            gtk_box_append(GTK_BOX(body), model);
+            ctx->models[i] = model;
+        }
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(u3_kw_check), ctx);
@@ -8092,11 +8120,12 @@ static GtkWidget *u3_build_kw(UnitCtx *unit, int ex_num, const char *title,
 
 static const U3Kw ex11_u3_qs[] = {
     {"Ein altes Gebäude aus dem Mittelalter. Es steht auf einem Berg.",
-     "burg|schloss", "Vidím hrad / zámek."},
+     "burg|schloss", "Vidím hrad / zámek.",
+     "Ich sehe eine Burg. / Ich sehe ein Schloss."},
     {"Wasser, Bäume und Berge. Es ist sehr ruhig.",
-     "see", "Vidím jezero."},
+     "see", "Vidím jezero.", "Ich sehe einen See."},
     {"Eine Frau, ein Mann und zwei Kinder essen zusammen.",
-     "familie", "Vidím rodinu."},
+     "familie", "Vidím rodinu.", "Ich sehe eine Familie."},
 };
 
 static GtkWidget *u3ex11(UnitCtx *unit) {
@@ -8163,19 +8192,20 @@ static GtkWidget *u3ex13(UnitCtx *unit) {
 
 static const U3Kw ex14_u3_qs[] = {
     {"Eine Frau fährt Fahrrad.  →  Ich sehe ________.",
-     "eine frau|frau", "Vidím ženu."},
+     "eine frau|frau", "Vidím ženu.", "Ich sehe eine Frau."},
     {"→ Sie ________.",
-     "sie fährt fahrrad|sie fährt|fährt fahrrad|fährt", "Jezdí na kole."},
+     "sie fährt fahrrad|sie fährt|fährt fahrrad|fährt", "Jezdí na kole.",
+     "Sie fährt Fahrrad."},
     {"Ein Mann wandert im Wald.  →  Ich sehe ________.",
-     "einen mann|mann", "Vidím muže."},
+     "einen mann|mann", "Vidím muže.", "Ich sehe einen Mann."},
     {"→ Er ________.",
      "er wandert im wald|er wandert|wandert im wald|wandert",
-     "Chodí po lese."},
+     "Chodí po lese.", "Er wandert im Wald."},
     {"Zwei Kinder spielen Fußball.  →  Ich sehe ________.",
-     "zwei kinder|kinder", "Vidím dvě děti."},
+     "zwei kinder|kinder", "Vidím dvě děti.", "Ich sehe zwei Kinder."},
     {"→ Sie ________.",
      "sie spielen fußball|sie spielen fussball|spielen fußball|spielen "
-     "fussball|spielen", "Hrají fotbal."},
+     "fussball|spielen", "Hrají fotbal.", "Sie spielen Fußball."},
 };
 
 static GtkWidget *u3ex14(UnitCtx *unit) {
