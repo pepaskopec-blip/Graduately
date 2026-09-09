@@ -4010,6 +4010,9 @@ typedef struct {
     GArray *combos;   /* GtkComboBox* */
     GArray *answers;  /* const char* */
     GArray *trans;    /* GtkWidget* hidden meaning labels              */
+    GArray *models;   /* GtkWidget* hidden German answer labels        */
+    gboolean trans_upfront;  /* meanings shown before Check            */
+    gboolean reveal_german;  /* German answer shown on Check           */
     UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
@@ -4032,6 +4035,22 @@ static GtkWidget *meaning_add(GtkWidget *body, const char *text) {
     return lbl;
 }
 
+/* A hidden green label that shows the model German sentence after Check. */
+static GtkWidget *model_answer_add(GtkWidget *body, const char *german) {
+    GtkWidget *lbl = gtk_label_new(german);
+
+    gtk_widget_set_halign(lbl, GTK_ALIGN_START);
+    gtk_label_set_xalign(GTK_LABEL(lbl), 0.0);
+    gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
+    gtk_widget_set_margin_top(lbl, 2);
+    gtk_widget_set_margin_bottom(lbl, 2);
+    gtk_widget_set_margin_start(lbl, 8);
+    gtk_widget_add_css_class(lbl, "u3-answer");
+    gtk_widget_set_visible(lbl, FALSE);
+    gtk_box_append(GTK_BOX(body), lbl);
+    return lbl;
+}
+
 static void meaning_reveal_all(GtkWidget **labels, int n) {
     for (int i = 0; i < n; i++)
         if (labels[i])
@@ -4044,6 +4063,7 @@ static ComboListCtx *combo_list_ctx_new(UnitCtx *unit, int ex_num,
     ctx->combos = g_array_new(FALSE, FALSE, sizeof(GtkComboBox *));
     ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
     ctx->trans = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    ctx->models = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
     ctx->unit = unit;
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
@@ -4119,6 +4139,14 @@ static void combo_list_check(GtkButton *button, gpointer data) {
     if (ctx->trans->len > 0) {
         for (guint i = 0; i < ctx->trans->len; i++) {
             GtkWidget *lbl = g_array_index(ctx->trans, GtkWidget *, i);
+            if (lbl)
+                gtk_widget_set_visible(lbl, TRUE);
+        }
+    }
+
+    if (ctx->models->len > 0) {
+        for (guint i = 0; i < ctx->models->len; i++) {
+            GtkWidget *lbl = g_array_index(ctx->models, GtkWidget *, i);
             if (lbl)
                 gtk_widget_set_visible(lbl, TRUE);
         }
@@ -5201,6 +5229,50 @@ typedef struct {
     const char *answer;
 } VerbQ;
 
+/* Complete German sentence for a before/after gap row (with any trailing
+ * "(…)" hint such as "(kommen)" removed) – shown after Check. */
+static char *verbq_german(const char *before, const char *answer,
+                          const char *after) {
+    GString *s;
+    const char *p;
+    gboolean inside = FALSE;
+    char *out;
+
+    s = g_string_new(NULL);
+    if (before && before[0])
+        g_string_append(s, before);
+    if (answer && answer[0])
+        g_string_append(s, answer);
+    if (after && after[0])
+        g_string_append(s, after);
+
+    out = s->str;
+    s->str = NULL;
+    g_string_free(s, TRUE);
+    s = g_string_new(NULL);
+    for (p = out; *p; p++) {
+        if (*p == '(') {
+            inside = TRUE;
+            continue;
+        }
+        if (*p == ')') {
+            inside = FALSE;
+            continue;
+        }
+        if (!inside)
+            g_string_append_c(s, *p);
+    }
+    g_free(out);
+
+    while (s->len > 0 && g_ascii_isspace(s->str[s->len - 1]))
+        g_string_truncate(s, s->len - 1);
+    if (s->len == 0) {
+        g_string_free(s, TRUE);
+        return NULL;
+    }
+    return g_string_free(s, FALSE);
+}
+
 static const VerbQ ex8_data[] = {
     {"Ich ", " Peter.", "heiße"},
     {"Woher ", " du?", "kommst"},
@@ -5231,6 +5303,9 @@ static GtkWidget *build_ex8(UnitCtx *unit) {
                                     "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(unit, 8, feedback);
 
+    ctx->trans_upfront = TRUE;
+    ctx->reveal_german = TRUE;
+
     for (guint i = 0; i < G_N_ELEMENTS(ex8_data); i++) {
         const VerbQ *q = &ex8_data[i];
         GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
@@ -5256,7 +5331,21 @@ static GtkWidget *build_ex8(UnitCtx *unit) {
 
         gtk_box_append(GTK_BOX(body), row);
 
-        combo_list_add_trans(ctx, meaning_add(body, ex8_meaning[i]));
+        {
+            GtkWidget *mean = meaning_add(body, ex8_meaning[i]);
+            GtkWidget *w;
+            char *sentence;
+
+            gtk_widget_set_visible(mean, TRUE);
+            combo_list_add_trans(ctx, mean);
+
+            sentence = verbq_german(q->before, q->answer, q->after);
+            if (sentence && sentence[0]) {
+                w = model_answer_add(body, sentence);
+                g_array_append_val(ctx->models, w);
+            }
+            g_free(sentence);
+        }
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -5327,6 +5416,9 @@ static GtkWidget *build_ex12(UnitCtx *unit) {
                                     "check", &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(unit, 12, feedback);
 
+    ctx->trans_upfront = TRUE;
+    ctx->reveal_german = TRUE;
+
     for (guint i = 0; i < G_N_ELEMENTS(ex12_data); i++) {
         const VerbClueQ *q = &ex12_data[i];
         GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
@@ -5356,7 +5448,21 @@ static GtkWidget *build_ex12(UnitCtx *unit) {
 
         gtk_box_append(GTK_BOX(body), row);
 
-        combo_list_add_trans(ctx, meaning_add(body, ex12_meaning[i]));
+        {
+            GtkWidget *mean = meaning_add(body, ex12_meaning[i]);
+            GtkWidget *w;
+            char *sentence;
+
+            gtk_widget_set_visible(mean, TRUE);
+            combo_list_add_trans(ctx, mean);
+
+            sentence = verbq_german(q->before, q->answer, q->after);
+            if (sentence && sentence[0]) {
+                w = model_answer_add(body, sentence);
+                g_array_append_val(ctx->models, w);
+            }
+            g_free(sentence);
+        }
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(combo_list_check), ctx);
@@ -5739,9 +5845,21 @@ static void verb_rows_add(ComboListCtx *ctx, GtkWidget *body, int *counter,
 
         if (meanings && meanings[i]) {
             GtkWidget *mean = meaning_add(body, meanings[i]);
-            if (pre_meaning)
+            if (pre_meaning || ctx->trans_upfront)
                 gtk_widget_set_visible(mean, TRUE);
             combo_list_add_trans(ctx, mean);
+        }
+
+        if (ctx->reveal_german) {
+            char *sentence = verbq_german(qs[i].before, qs[i].answer,
+                                          qs[i].after);
+
+            if (sentence && sentence[0]) {
+                GtkWidget *w = model_answer_add(body, sentence);
+
+                g_array_append_val(ctx->models, w);
+            }
+            g_free(sentence);
         }
     }
 }
@@ -5792,6 +5910,9 @@ static GtkWidget *build_verb_ex(UnitCtx *unit, int ex_num,
     ComboListCtx *ctx = combo_list_ctx_new(unit, ex_num, feedback);
     VerbNoteCtx *nc = NULL;
     int counter = 0;
+
+    ctx->trans_upfront = TRUE;
+    ctx->reveal_german = TRUE;
 
     verb_rows_add(ctx, body, &counter, qs, n, pool, pool_n, meanings,
                   pre_meaning);
@@ -6863,6 +6984,9 @@ static GtkWidget *u2ex1(UnitCtx *unit) {
     ComboListCtx *ctx = combo_list_ctx_new(unit, 1, feedback);
     int counter = 0;
 
+    ctx->trans_upfront = TRUE;
+    ctx->reveal_german = TRUE;
+
     GtkWidget *h1 = gtk_label_new("Peter Fritsch:");
     gtk_widget_set_halign(h1, GTK_ALIGN_START);
     gtk_widget_add_css_class(h1, "ex-sub");
@@ -7042,6 +7166,39 @@ typedef struct {
     const char *mean;                                /* Czech meaning   */
 } U3Fill;
 
+/* Build the complete German sentence of a fill row (segments spliced
+ * with the correct answers) – used as the model shown after Check. */
+static char *u3_fill_sentence(const U3Fill *f) {
+    const char *segs[4];
+    const char *ans[3];
+    GString *s;
+    int i, g;
+
+    segs[0] = f->s0;
+    segs[1] = f->s1;
+    segs[2] = f->s2;
+    segs[3] = f->s3;
+    ans[0] = f->a0;
+    ans[1] = f->a1;
+    ans[2] = f->a2;
+    g = 0;
+    while (g < 3 && ans[g])
+        g++;
+
+    s = g_string_new(NULL);
+    for (i = 0; i <= g; i++) {
+        if (segs[i] && segs[i][0])
+            g_string_append(s, segs[i]);
+        if (i < g && ans[i])
+            g_string_append(s, ans[i]);
+    }
+    if (s->len == 0) {
+        g_string_free(s, TRUE);
+        return NULL;
+    }
+    return g_string_free(s, FALSE);
+}
+
 /* Append one horizontal fill row to `body`. The answer of blank i sits
  * between text segments s[i] and s[i+1]; empty segments are skipped.
  * `gloss` (may be NULL) is an i18n key for a small grey note shown at
@@ -7102,6 +7259,19 @@ static void u3_fill_row(ComboListCtx *ctx, GtkWidget *body, const U3Fill *f,
     if (f->mean && f->mean[0]) {
         GtkWidget *m = meaning_add(body, f->mean);
         combo_list_add_trans(ctx, m);
+        if (ctx->trans_upfront)
+            gtk_widget_set_visible(m, TRUE);
+    }
+
+    if (ctx->reveal_german) {
+        char *sentence = u3_fill_sentence(f);
+
+        if (sentence && sentence[0]) {
+            GtkWidget *w = model_answer_add(body, sentence);
+
+            g_array_append_val(ctx->models, w);
+        }
+        g_free(sentence);
     }
 }
 
@@ -7120,11 +7290,14 @@ static GtkWidget *u3_build_drop(UnitCtx *unit, int ex_num, const char *title,
                                 const char *sub, const char *sample,
                                 const U3Fill *rows, int n,
                                 const char **pool, int pool_n,
-                                const char **glosses) {
+                                const char **glosses, gboolean show_german) {
     GtkWidget *body, *feedback, *check;
     GtkWidget *page = ex_page_shell(unit->page, title, sub, "check",
                                     &body, &feedback, &check);
     ComboListCtx *ctx = combo_list_ctx_new(unit, ex_num, feedback);
+
+    ctx->trans_upfront = show_german;
+    ctx->reveal_german = show_german;
 
     if (sample && sample[0])
         u3_sample_line(body, sample);
@@ -7163,7 +7336,7 @@ static GtkWidget *u3ex1(UnitCtx *unit) {
     return u3_build_drop(unit, 1, "Familienpaare", "sub3_pair",
                          "Beispiel: der Vater ↔ die Mutter",
                          ex1_u3_rows, G_N_ELEMENTS(ex1_u3_rows),
-                         ex1_u3_pool, G_N_ELEMENTS(ex1_u3_pool), NULL);
+                         ex1_u3_pool, G_N_ELEMENTS(ex1_u3_pool), NULL, FALSE);
 }
 
 /* ---- ex2: Possessivpronomen im Nominativ ----------------------------- */
@@ -7404,7 +7577,7 @@ static GtkWidget *u3ex3(UnitCtx *unit) {
                          "Beispiel: Hast du eine Katze? – Nein, ich habe "
                          "keine Katze. Ich habe einen Hund.",
                          ex3_u3_rows, G_N_ELEMENTS(ex3_u3_rows),
-                         ex3_u3_pool, G_N_ELEMENTS(ex3_u3_pool), NULL);
+                         ex3_u3_pool, G_N_ELEMENTS(ex3_u3_pool), NULL, TRUE);
 }
 
 /* ---- inline letter-gap rows (ex15) ----------------------------------- */
@@ -7421,6 +7594,7 @@ typedef struct {
     GArray *entries;
     GArray *answers;
     GArray *trans;
+    GArray *models;
     UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
@@ -7432,10 +7606,45 @@ static U3LetCtx *u3_let_ctx_new(UnitCtx *unit, int ex_num,
     ctx->entries = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
     ctx->answers = g_array_new(FALSE, FALSE, sizeof(const char *));
     ctx->trans = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    ctx->models = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
     ctx->unit = unit;
     ctx->ex_num = ex_num;
     ctx->feedback = feedback;
     return ctx;
+}
+
+/* Rebuild the full German sentence (letter gaps filled in). */
+static char *u3_let_sentence(const U3Let *row) {
+    const char *segs[5];
+    const char *ans[4];
+    GString *s;
+    int i, g;
+
+    segs[0] = row->s0;
+    segs[1] = row->s1;
+    segs[2] = row->s2;
+    segs[3] = row->s3;
+    segs[4] = row->s4;
+    ans[0] = row->a0;
+    ans[1] = row->a1;
+    ans[2] = row->a2;
+    ans[3] = row->a3;
+    g = 0;
+    while (g < 4 && ans[g])
+        g++;
+
+    s = g_string_new(NULL);
+    for (i = 0; i <= g; i++) {
+        if (segs[i] && segs[i][0])
+            g_string_append(s, segs[i]);
+        if (i < g && ans[i])
+            g_string_append(s, ans[i]);
+    }
+    if (s->len == 0) {
+        g_string_free(s, TRUE);
+        return NULL;
+    }
+    return g_string_free(s, FALSE);
 }
 
 static void u3_let_check(GtkButton *button, gpointer data) {
@@ -7459,6 +7668,12 @@ static void u3_let_check(GtkButton *button, gpointer data) {
 
     for (guint i = 0; i < ctx->trans->len; i++) {
         GtkWidget *lbl = g_array_index(ctx->trans, GtkWidget *, i);
+        if (lbl)
+            gtk_widget_set_visible(lbl, TRUE);
+    }
+
+    for (guint i = 0; i < ctx->models->len; i++) {
+        GtkWidget *lbl = g_array_index(ctx->models, GtkWidget *, i);
         if (lbl)
             gtk_widget_set_visible(lbl, TRUE);
     }
@@ -7519,7 +7734,19 @@ static void u3_let_row(U3LetCtx *ctx, GtkWidget *body, const U3Let *row) {
 
     if (row->mean && row->mean[0]) {
         GtkWidget *m = meaning_add(body, row->mean);
+        gtk_widget_set_visible(m, TRUE);
         g_array_append_val(ctx->trans, m);
+    }
+
+    {
+        char *sentence = u3_let_sentence(row);
+
+        if (sentence && sentence[0]) {
+            GtkWidget *w = model_answer_add(body, sentence);
+
+            g_array_append_val(ctx->models, w);
+        }
+        g_free(sentence);
     }
 }
 
@@ -7933,7 +8160,7 @@ static GtkWidget *u3ex8(UnitCtx *unit) {
                          "Inliner.",
                          ex8_u3_rows, G_N_ELEMENTS(ex8_u3_rows),
                          ex8_u3_pool, G_N_ELEMENTS(ex8_u3_pool),
-                         ex8_u3_gloss);
+                         ex8_u3_gloss, TRUE);
 }
 
 /* ---- ex9: kein / keine / keinen / nicht ------------------------------ */
@@ -7964,7 +8191,7 @@ static const U3Fill ex9_u3_rows[] = {
 static GtkWidget *u3ex9(UnitCtx *unit) {
     return u3_build_drop(unit, 9, "kein / nicht", "sub3_nicht", NULL,
                          ex9_u3_rows, G_N_ELEMENTS(ex9_u3_rows),
-                         ex9_u3_pool, G_N_ELEMENTS(ex9_u3_pool), NULL);
+                         ex9_u3_pool, G_N_ELEMENTS(ex9_u3_pool), NULL, TRUE);
 }
 
 /* ---- ex10: Sätze bauen ------------------------------------------------ */
@@ -8159,7 +8386,7 @@ static const U3Fill ex12_u3_rows[] = {
 static GtkWidget *u3ex12(UnitCtx *unit) {
     return u3_build_drop(unit, 12, "Wem gehört das?", "sub3_wem", NULL,
                          ex12_u3_rows, G_N_ELEMENTS(ex12_u3_rows),
-                         ex12_u3_pool, G_N_ELEMENTS(ex12_u3_pool), NULL);
+                         ex12_u3_pool, G_N_ELEMENTS(ex12_u3_pool), NULL, TRUE);
 }
 
 /* ---- ex13: Es gibt + unbestimmter Artikel ---------------------------- */
@@ -8185,7 +8412,7 @@ static const U3Fill ex13_u3_rows[] = {
 static GtkWidget *u3ex13(UnitCtx *unit) {
     return u3_build_drop(unit, 13, "Es gibt …", "sub3_gibt", NULL,
                          ex13_u3_rows, G_N_ELEMENTS(ex13_u3_rows),
-                         ex13_u3_pool, G_N_ELEMENTS(ex13_u3_pool), NULL);
+                         ex13_u3_pool, G_N_ELEMENTS(ex13_u3_pool), NULL, TRUE);
 }
 
 /* ---- ex14: Beschreiben (sentence pairs) ------------------------------ */
