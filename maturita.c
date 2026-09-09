@@ -398,6 +398,11 @@ static const TrEntry tr_ui[] = {
      "Some sentences are not correct. Try again."},
     {"tip_ss", "Písmeno „ß“ se dá na klávesnici zaměnit za „ss“!",
      "You can type “ss” instead of “ß” on the keyboard!"},
+    {"hint_umlauts",
+     "Na klávesnici nemáte německé znaky? Můžete psát ä jako ae, ö jako oe, "
+     "ü jako ue a ß jako ss.",
+     "No German keyboard? You can type ä as ae, ö as oe, ü as ue and ß as "
+     "ss."},
     {"sample_fmt", "Otázka: %s\nVzor: %s  (česky: %s)",
      "Question: %s\nSample: %s  (English: %s)"},
     {"sub_dialog", "Doplňte chybějící slova v dialogu.",
@@ -2152,6 +2157,33 @@ static void set_feedback(GtkWidget *label, gboolean ok, const char *text) {
     gtk_widget_remove_css_class(label, "feedback-err");
     gtk_widget_add_css_class(label, ok ? "feedback-ok" : "feedback-err");
     gtk_label_set_text(GTK_LABEL(label), text);
+}
+
+/* True if `s` contains any German special letter (ä, ö, ü or ß). */
+static gboolean text_has_german_umlaut(const char *s) {
+    const char *p = s ? s : "";
+
+    while (*p) {
+        gunichar c = g_utf8_get_char(p);
+
+        if (c == 0x00e4 || c == 0x00f6 || c == 0x00fc || c == 0x00df)
+            return TRUE;
+        p = g_utf8_next_char(p);
+    }
+    return FALSE;
+}
+
+/* Small bilingual note shown under the exercise title whenever the answer
+ * the student has to type may contain a German special letter. */
+static void add_umlaut_note(GtkWidget *body) {
+    GtkWidget *n = gtk_label_new(NULL);
+
+    i18n_bind(n, "hint_umlauts", 0);
+    gtk_widget_set_halign(n, GTK_ALIGN_START);
+    gtk_label_set_wrap(GTK_LABEL(n), TRUE);
+    gtk_widget_set_margin_bottom(n, 2);
+    gtk_widget_add_css_class(n, "hint");
+    gtk_box_append(GTK_BOX(body), n);
 }
 
 /* ------------------------------------------------------------------ */
@@ -6063,6 +6095,20 @@ static GtkWidget *build_typed(UnitCtx *unit, int ex_num,
     ctx->entries = g_new0(GtkWidget *, n);
     ctx->trans = g_new0(GtkWidget *, n);
 
+    {
+        gboolean need = FALSE;
+
+        for (int i = 0; i < n; i++) {
+            if (text_has_german_umlaut(qs[i].prompt) ||
+                text_has_german_umlaut(qs[i].answers)) {
+                need = TRUE;
+                break;
+            }
+        }
+        if (need)
+            add_umlaut_note(body);
+    }
+
     if (word_bank) {
         GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
         GtkWidget *hdr = gtk_label_new(NULL);
@@ -7758,6 +7804,26 @@ static GtkWidget *u3_build_letters(UnitCtx *unit, int ex_num,
                                     &body, &feedback, &check);
     U3LetCtx *ctx = u3_let_ctx_new(unit, ex_num, feedback);
 
+    {
+        gboolean need = FALSE;
+
+        for (int i = 0; i < n && !need; i++) {
+            const U3Let *r = &rows[i];
+
+            need = text_has_german_umlaut(r->s0) ||
+                   text_has_german_umlaut(r->s1) ||
+                   text_has_german_umlaut(r->s2) ||
+                   text_has_german_umlaut(r->s3) ||
+                   text_has_german_umlaut(r->s4) ||
+                   text_has_german_umlaut(r->a0) ||
+                   text_has_german_umlaut(r->a1) ||
+                   text_has_german_umlaut(r->a2) ||
+                   text_has_german_umlaut(r->a3);
+        }
+        if (need)
+            add_umlaut_note(body);
+    }
+
     for (int i = 0; i < n; i++)
         u3_let_row(ctx, body, &rows[i]);
 
@@ -7881,6 +7947,22 @@ static GtkWidget *u3ex4(UnitCtx *unit) {
     ctx->unit = unit;
     ctx->ex_num = 4;
     ctx->feedback = feedback;
+
+    {
+        gboolean need = FALSE;
+
+        for (int r = 0; r < ctx->n_rows && !need; r++) {
+            for (int i = 0; i < ctx->rows[r].gaps; i++) {
+                if (text_has_german_umlaut(ctx->rows[r].ans[i]) ||
+                    text_has_german_umlaut(ctx->rows[r].word[i])) {
+                    need = TRUE;
+                    break;
+                }
+            }
+        }
+        if (need)
+            add_umlaut_note(body);
+    }
 
     for (int r = 0; r < ctx->n_rows; r++) {
         const Ex4Row *row = &ctx->rows[r];
@@ -8296,6 +8378,18 @@ static GtkWidget *u3_build_kw(UnitCtx *unit, int ex_num, const char *title,
     ctx->entries = g_new0(GtkWidget *, n);
     ctx->trans = g_new0(GtkWidget *, n);
     ctx->models = g_new0(GtkWidget *, n);
+
+    {
+        gboolean need = FALSE;
+
+        for (int i = 0; i < n && !need; i++) {
+            need = text_has_german_umlaut(qs[i].prompt) ||
+                   text_has_german_umlaut(qs[i].answers) ||
+                   text_has_german_umlaut(qs[i].german);
+        }
+        if (need)
+            add_umlaut_note(body);
+    }
 
     if (sample && sample[0])
         u3_sample_line(body, sample);
