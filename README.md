@@ -20,10 +20,14 @@ GTK 4 interface.
 - **Welcome screen** – branded greeting with a description of the program and a
   continue button to get started
 - **Subjects ("Předměty")** – adaptive serpentine subject map with 13 subjects
-  - only **Deutsch** is open (round bubble with the German flag); picking it
-    opens the German learning path
-  - the other subjects are dimmed/locked placeholders until their content is
-    added
+  - **Deutsch** is open (round bubble with the German flag) and opens the
+    German learning path
+  - **Správa počítačových sítí / Computer Network Administration** is open too
+    (marked "IP") and leads to a 30-unit computer-networks path whose first
+    unit, **Výpočet IP adres / IP Address Calculation**, is playable; the rest
+    are locked placeholders
+  - the remaining subjects are dimmed/locked placeholders until their content
+    is added
   - layout folds into multiple rows when the window is narrow
 - **Learning roadmap** – adaptive serpentine learning path with 10 units
   - each unit numbered and labeled with its topic (e.g. "Neue Freunde")
@@ -49,6 +53,10 @@ GTK 4 interface.
 - **Hints & model answers** – in exercises where you write or complete a German
   sentence the Czech meaning is shown right away as a hint, and clicking the
   check button also reveals the correct German sentence so you can compare
+- **Computer networks ("Výpočet IP adres")** – the first networks unit contains
+  a 4-slide walkthrough of IP subnetting (masks, host ranges, VLSM) followed by
+  a practice sheet with four subnetting tasks; each task has a "show solution"
+  button with a worked answer key
 - **Progress tracking** – completed exercises are marked green; progress is
   saved per unit to `progress/unit1.conf`, `progress/unit2.conf` and
   `progress/unit3.conf` and restored on startup
@@ -160,19 +168,23 @@ When launched, the application shows the welcome screen. From there:
 
 1. Click **"Pokračuj" / "Continue"** to open the **Předměty / Subjects** map.
 2. Click the **Deutsch** bubble (German flag) to open the German learning
-   roadmap. The other subjects are locked for now.
+   roadmap, or the **IP** bubble ("Správa počítačových sítí") for the
+   computer-networks path. Other subjects are still locked.
 3. Browse the units along the path; the roadmap reflows into rows and scrolls
    if the window is too narrow.
 4. Click the **"Neue Freunde"** node to open unit 1, **"Aus aller Welt"** for
    unit 2 or **"Bei uns zu Hause"** for unit 3, then pick any bubble to start
    an exercise. Units 2 and 3 are available even if the earlier units are not
    finished yet.
-5. Use the **back button** in the top-left corner to return to the previous
+5. On the networks path, open **"Výpočet IP adres"** (the first unit) to walk
+   through four slides on IP subnetting; the final slide leads to the practice
+   sheet with four subnetting tasks and per-task "show solution" answers.
+6. Use the **back button** in the top-left corner to return to the previous
    screen.
-6. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
+7. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
    grouped per subject (overall totals plus, for Deutsch, a per-unit
    breakdown).
-7. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
+8. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
 Units 1–3 are currently implemented. Locked units do nothing – they are
