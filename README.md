@@ -104,14 +104,17 @@ Linux (Arch):
 sudo pacman -S gtk4
 ```
 
-Windows – GTK 4 has **no native Windows installer**. On Windows it is
-distributed through [MSYS2](https://www.msys2.org/), a Unix-like build
-environment that comes with its own package manager called **`pacman`**.
+Windows – GTK 4 has no official installer for Windows. There are two
+supported ways to get it:
 
-`pacman` is **not** a Windows command. It only exists inside an MSYS2
-terminal, so it will not work in `cmd.exe` or PowerShell. Install MSYS2
-first, then follow the [Windows step-by-step](#windows-step-by-step)
-instructions below.
+- **Native (MSVC / Visual Studio) – recommended.** Download the prebuilt
+  [gvsbuild](https://github.com/wingtk/gvsbuild/releases/latest) GTK4
+  package and unzip it. See
+  [Native Windows](#native-windows-visual-studio--msvc) below.
+- **MSYS2 / MinGW.** Install [MSYS2](https://www.msys2.org/) and use its
+  `pacman` package manager. `pacman` is **not** a Windows command and only
+  works inside an MSYS2 terminal. See
+  [Windows with MSYS2](#windows-with-msys2) below.
 
 #### 2. Build tools (compiler, Make, pkg-config)
 
@@ -143,10 +146,11 @@ sudo dnf install pkgconf-pkg-config
 sudo pacman -S base-devel pkgconf
 ```
 
-Windows – the MSYS2 packages installed in the step above already include
-GCC, Make and pkgconf; there is nothing extra to install. Always build and
-run from the **MSYS2 UCRT64** terminal so the MinGW `PATH` (and the GTK
-DLLs) are available.
+Windows – with the native MSVC path you only need Visual Studio with the
+**Desktop development with C++** workload (this includes the compiler and
+`pkg-config` comes from the GTK package). With the MSYS2 path, the packages
+installed above already include GCC, Make and pkgconf; there is nothing
+extra to install.
 
 ### Building the Application
 
@@ -168,6 +172,30 @@ gcc -o maturita maturita.c `pkg-config --cflags --libs gtk4` -lm
 gcc -o maturita.exe maturita.c `pkg-config --cflags --libs gtk4` -lm -mwindows
 ```
 
+On Windows with Visual Studio, use the native build script or CMake
+instead – see [Native Windows](#native-windows-visual-studio--msvc).
+
+#### Building with CMake (optional, all platforms)
+
+A `CMakeLists.txt` is provided for CMake/IDE users. On Linux and macOS:
+
+```bash
+cmake -S . -B build
+cmake --build build
+```
+
+On Windows, first add GTK to the environment (adjust `C:\gtk` if needed),
+then configure from an **x64 Native Tools Command Prompt**:
+
+```bat
+set "PATH=C:\gtk\bin;%PATH%"
+set "PKG_CONFIG_PATH=C:\gtk\lib\pkgconfig"
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+```
+
+CMake finds GTK 4 through pkg-config on every platform.
+
 ### Running the Application
 
 ```bash
@@ -184,10 +212,55 @@ or
 ./maturita.exe
 ```
 
-### Windows step-by-step
+### Native Windows (Visual Studio / MSVC)
 
-There is no native Windows build of GTK, so the whole toolchain lives
-inside MSYS2. From start to finish:
+This is the recommended Windows path: it builds a real native `.exe` with
+MSVC and needs no MSYS2 or MinGW shell. GTK 4 for MSVC comes from
+[gvsbuild](https://github.com/wingtk/gvsbuild).
+
+1. **Install Visual Studio** (2019 or 2022) with the **Desktop
+   development with C++** workload. The free Community edition is enough.
+
+2. **Download the gvsbuild GTK4 package** from the
+   [latest release](https://github.com/wingtk/gvsbuild/releases/latest) –
+   the asset is named `GTK4_Gvsbuild_<version>_x64.zip` – and unzip it to
+   `C:\gtk` so that `C:\gtk\bin`, `C:\gtk\lib`, `C:\gtk\include` and
+   `C:\gtk\share` exist. (If you unzip it elsewhere, set the `GTK_ROOT`
+   environment variable to that folder before building.)
+
+3. **Build.** From this repository, run `build-windows.bat` from a normal
+   Command Prompt (or double-click it). It locates Visual Studio, sets up
+   the MSVC environment and the GTK paths, and produces `maturita.exe`:
+
+   ```bat
+   build-windows.bat
+   ```
+
+   Internally it gathers the GTK flags with
+   `pkg-config --cflags gtk4 --msvc-syntax` /
+   `pkg-config --libs gtk4 --msvc-syntax` and compiles with:
+
+   ```bat
+   cl /O2 /MD maturita.c /Fe:maturita.exe ^
+      /link /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup ^
+      %GTK_CFLAGS% %GTK_LIBS%
+   ```
+
+4. **Run.** `maturita.exe` needs the GTK DLLs on `PATH`, so either run it
+   from the same terminal or double-click `run-windows.bat`, which adds
+   `C:\gtk\bin` to `PATH` first.
+
+To build from Visual Studio itself, open the folder with CMake support (the
+included `CMakeLists.txt` handles GTK), or create an empty C project and
+paste the output of `pkg-config --cflags gtk4 --msvc-syntax` into
+**C/C++ → Command Line → Additional Options** and the output of
+`pkg-config --libs gtk4 --msvc-syntax` into
+**Linker → Command Line → Additional Options**.
+
+### Windows with MSYS2
+
+If you prefer GCC over MSVC, you can still build a native `.exe` with
+MSYS2. The resulting binary is a normal Windows executable.
 
 1. **Install MSYS2** from <https://www.msys2.org/> and complete the
    installer (accept the default install location).
@@ -220,7 +293,7 @@ inside MSYS2. From start to finish:
    make run        # or: ./maturita.exe
    ```
 
-#### Running the `.exe` without the MSYS2 shell
+#### Bundling the MSYS2 build
 
 `maturita.exe` needs the GTK/MinGW DLLs next to it (or on `PATH`) to
 start, so double-clicking it from Explorer normally fails with a
@@ -276,7 +349,10 @@ saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
 
 ```
 maturita.c              entire application (UI, navigation, themes, exercises)
-Makefile                build & run targets
+Makefile                build & run targets (Linux, macOS, MSYS2)
+CMakeLists.txt          optional CMake build (all platforms, incl. MSVC)
+build-windows.bat       native MSVC build script (no MSYS2 needed)
+run-windows.bat         launches maturita.exe with the GTK4 DLLs on PATH
 README.md               this file
 LICENSE                 GPL-3.0 license
 progress/               created at runtime
