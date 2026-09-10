@@ -187,6 +187,15 @@ static Rgb color_from_hex(unsigned int hex) {
     return c;
 }
 
+/* Linear blend of two colours: t = 0 keeps a, t = 1 returns b. */
+static Rgb mix_rgb(Rgb a, Rgb b, double t) {
+    Rgb c;
+    c.r = a.r + (b.r - a.r) * t;
+    c.g = a.g + (b.g - a.g) * t;
+    c.b = a.b + (b.b - a.b) * t;
+    return c;
+}
+
 static ThemePalette theme_palette(ThemeId id, ColorMode mode) {
     /* Catppuccin Mocha / Latte */
     static const ThemePalette cat_dark = {
@@ -2017,18 +2026,22 @@ static void draw_wifi_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data) {
     const double s = MIN(width, height);
     const double cx = width / 2.0;
-    const double cy = height * 0.80;
-    const double dot_r = s * 0.075;
-    const double radii[3] = {s * 0.17, s * 0.28, s * 0.40};
-    const double phi = 0.88;
-    const Rgb c = color_from_hex(app_theme.on_accent);
+    const double cy = height * 0.68;
+    const double dot_r = s * 0.06;
+    const double radii[3] = {s * 0.15, s * 0.27, s * 0.39};
+    const double phi = 0.75;
+    /* Keep the icon legible on the accent-gradient bubble while giving it a
+     * hint of the active theme: blend the contrasting on-accent colour a
+     * little way towards the palette's middle accent. */
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
 
     (void)area;
     (void)data;
 
     cairo_set_source_rgb(cr, c.r, c.g, c.b);
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
-    cairo_set_line_width(cr, MAX(1.5, s * 0.10));
+    cairo_set_line_width(cr, MAX(1.5, s * 0.07));
 
     for (int i = 0; i < 3; i++) {
         double r = radii[i];

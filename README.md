@@ -23,9 +23,9 @@ GTK 4 interface.
   - **Deutsch** is open (round bubble with the German flag) and opens the
     German learning path
   - **Správa počítačových sítí / Computer Network Administration** is open too
-    (marked "IP") and leads to a 30-unit computer-networks path whose first
-    unit, **Výpočet IP adres / IP Address Calculation**, is playable; the rest
-    are locked placeholders
+    (shown with a Wi-Fi icon) and leads to a 30-unit computer-networks path
+    whose first unit, **Výpočet IP adres / IP Address Calculation**, is
+    playable; the rest are locked placeholders
   - the remaining subjects are dimmed/locked placeholders until their content
     is added
   - layout folds into multiple rows when the window is narrow
