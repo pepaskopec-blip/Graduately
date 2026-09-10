@@ -72,7 +72,7 @@ GTK 4 interface.
   - **language**: Czech or English, applied instantly without a restart
   - all three preferences are stored in `progress/settings.conf`
 - **Keyboard quit shortcuts** – `Super/Cmd+Q` or `Alt+F4` closes the app
-- Single-file C codebase, cross-platform (Linux and macOS supported)
+- Single-file C codebase, cross-platform (Linux, macOS and Windows)
 
 ## Installation
 
@@ -104,6 +104,17 @@ Linux (Arch):
 sudo pacman -S gtk4
 ```
 
+Windows (MSYS2) – install [MSYS2](https://www.msys2.org/), then open the
+**UCRT64** shell (not the plain “MSYS” one) and run:
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-gtk4 mingw-w64-ucrt-x86_64-toolchain \
+          mingw-w64-ucrt-x86_64-pkgconf make
+```
+
+If you prefer the older MINGW64 environment instead of UCRT64, use the
+`mingw-w64-x86_64-…` package names and open the **MINGW64** shell.
+
 #### 2. Build tools (compiler, Make, pkg-config)
 
 macOS – install all of these explicitly, they are **not** preinstalled:
@@ -134,6 +145,10 @@ sudo dnf install pkgconf-pkg-config
 sudo pacman -S base-devel pkgconf
 ```
 
+Windows – the `pacman` command above already installs GCC, Make and
+pkgconf inside the UCRT64/MINGW64 environment. Always build and run from
+that shell so the MinGW `PATH` (and GTK DLLs) are available.
+
 ### Building the Application
 
 1. Clone or download this repository
@@ -147,7 +162,11 @@ make
 Or manually:
 
 ```bash
+# Linux / macOS
 gcc -o maturita maturita.c `pkg-config --cflags --libs gtk4` -lm
+
+# Windows (MSYS2 UCRT64 / MINGW64)
+gcc -o maturita.exe maturita.c `pkg-config --cflags --libs gtk4` -lm -mwindows
 ```
 
 ### Running the Application
@@ -159,8 +178,17 @@ make run
 or
 
 ```bash
+# Linux / macOS
 ./maturita
+
+# Windows (from the same MSYS2 MinGW shell used to build)
+./maturita.exe
 ```
+
+On Windows, run the binary from the UCRT64/MINGW64 shell (or copy the
+required GTK DLLs next to `maturita.exe`). Double-clicking the `.exe`
+from Explorer usually fails with a missing-DLL error unless those
+libraries are on `PATH`.
 
 ## Usage
 

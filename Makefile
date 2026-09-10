@@ -16,7 +16,15 @@ GTK_LIBS   := $(shell $(PKG_CONFIG) --libs gtk4)
 
 CFLAGS = -Wall -Wextra -Wno-deprecated-declarations $(GTK_CFLAGS)
 LIBS = $(GTK_LIBS) -lm
+
+# Windows (MSYS2 / MinGW): .exe suffix and no console window for the GUI.
+ifeq ($(OS),Windows_NT)
+TARGET = maturita.exe
+LIBS += -mwindows
+else
 TARGET = maturita
+endif
+
 SRC = maturita.c
 
 all: $(TARGET)
@@ -25,7 +33,7 @@ $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC) $(LIBS)
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) maturita.exe
 
 run: $(TARGET)
 	./$(TARGET)
