@@ -13,6 +13,7 @@ error.txt
 error.log
 CLAUDE.md
 progress/
+dist/
 
 # Object files
 *.o

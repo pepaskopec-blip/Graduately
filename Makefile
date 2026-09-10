@@ -38,4 +38,20 @@ clean:
 run: $(TARGET)
 	./$(TARGET)
 
-.PHONY: all clean run
+# Windows only: copy the executable and every non-system (MinGW/GTK) DLL it
+# needs into dist/ so the app can be started by double-clicking, without an
+# MSYS2 shell on PATH.
+ifeq ($(OS),Windows_NT)
+bundle: $(TARGET)
+	@rm -rf dist
+	@mkdir -p dist
+	@cp $(TARGET) dist/
+	@ldd $(TARGET) | grep -Ei '/(ucrt64|mingw64)/bin/' | awk '{print $$3}' \
+		| xargs -r -I{} cp -f {} dist/
+	@echo "Bundled into dist/ - run dist/$(TARGET)"
+else
+bundle:
+	@echo "make bundle is only needed on Windows (MSYS2/MinGW)."
+endif
+
+.PHONY: all clean run bundle

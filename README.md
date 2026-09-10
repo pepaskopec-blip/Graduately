@@ -104,16 +104,14 @@ Linux (Arch):
 sudo pacman -S gtk4
 ```
 
-Windows (MSYS2) – install [MSYS2](https://www.msys2.org/), then open the
-**UCRT64** shell (not the plain “MSYS” one) and run:
+Windows – GTK 4 has **no native Windows installer**. On Windows it is
+distributed through [MSYS2](https://www.msys2.org/), a Unix-like build
+environment that comes with its own package manager called **`pacman`**.
 
-```bash
-pacman -S mingw-w64-ucrt-x86_64-gtk4 mingw-w64-ucrt-x86_64-toolchain \
-          mingw-w64-ucrt-x86_64-pkgconf make
-```
-
-If you prefer the older MINGW64 environment instead of UCRT64, use the
-`mingw-w64-x86_64-…` package names and open the **MINGW64** shell.
+`pacman` is **not** a Windows command. It only exists inside an MSYS2
+terminal, so it will not work in `cmd.exe` or PowerShell. Install MSYS2
+first, then follow the [Windows step-by-step](#windows-step-by-step)
+instructions below.
 
 #### 2. Build tools (compiler, Make, pkg-config)
 
@@ -145,9 +143,10 @@ sudo dnf install pkgconf-pkg-config
 sudo pacman -S base-devel pkgconf
 ```
 
-Windows – the `pacman` command above already installs GCC, Make and
-pkgconf inside the UCRT64/MINGW64 environment. Always build and run from
-that shell so the MinGW `PATH` (and GTK DLLs) are available.
+Windows – the MSYS2 packages installed in the step above already include
+GCC, Make and pkgconf; there is nothing extra to install. Always build and
+run from the **MSYS2 UCRT64** terminal so the MinGW `PATH` (and the GTK
+DLLs) are available.
 
 ### Building the Application
 
@@ -185,10 +184,56 @@ or
 ./maturita.exe
 ```
 
-On Windows, run the binary from the UCRT64/MINGW64 shell (or copy the
-required GTK DLLs next to `maturita.exe`). Double-clicking the `.exe`
-from Explorer usually fails with a missing-DLL error unless those
-libraries are on `PATH`.
+### Windows step-by-step
+
+There is no native Windows build of GTK, so the whole toolchain lives
+inside MSYS2. From start to finish:
+
+1. **Install MSYS2** from <https://www.msys2.org/> and complete the
+   installer (accept the default install location).
+
+2. Open the **“MSYS2 UCRT64”** entry from the Start menu. This is a
+   special terminal, **not** Command Prompt or PowerShell – `pacman` only
+   exists here. (If you run `pacman` in `cmd.exe`/PowerShell you will see
+   “`'pacman' is not recognized`”, which is expected.)
+
+3. In that MSYS2 UCRT64 terminal, install the compiler and GTK 4:
+
+   ```bash
+   pacman -S --needed mingw-w64-ucrt-x86_64-gtk4 \
+                     mingw-w64-ucrt-x86_64-toolchain \
+                     mingw-w64-ucrt-x86_64-pkgconf make
+   ```
+
+4. `cd` into this repository (MSYS2 uses `/c/...` for `C:\...`) and build:
+
+   ```bash
+   cd /c/path/to/maturita.c
+   make
+   ```
+
+   The Makefile detects Windows automatically and produces `maturita.exe`.
+
+5. Run it from the same terminal:
+
+   ```bash
+   make run        # or: ./maturita.exe
+   ```
+
+#### Running the `.exe` without the MSYS2 shell
+
+`maturita.exe` needs the GTK/MinGW DLLs next to it (or on `PATH`) to
+start, so double-clicking it from Explorer normally fails with a
+missing-DLL error. The Makefile can collect the required DLLs into a
+`dist/` folder:
+
+```bash
+make bundle
+```
+
+Then launch `dist/maturita.exe` by double-clicking it or from Explorer.
+Running the app from the MSYS2 UCRT64 terminal (step 5) always works and
+needs no bundling.
 
 ## Usage
 
