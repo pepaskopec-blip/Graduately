@@ -104,17 +104,10 @@ Linux (Arch):
 sudo pacman -S gtk4
 ```
 
-Windows – GTK 4 has no official installer for Windows. There are two
-supported ways to get it:
-
-- **Native (MSVC / Visual Studio) – recommended.** Download the prebuilt
-  [gvsbuild](https://github.com/wingtk/gvsbuild/releases/latest) GTK4
-  package and unzip it. See
-  [Native Windows](#native-windows-visual-studio--msvc) below.
-- **MSYS2 / MinGW.** Install [MSYS2](https://www.msys2.org/) and use its
-  `pacman` package manager. `pacman` is **not** a Windows command and only
-  works inside an MSYS2 terminal. See
-  [Windows with MSYS2](#windows-with-msys2) below.
+Windows – oficiální GTK 4 instalátor neexistuje. Doporučený a vyzkoušený
+postup je **MSYS2 + MinGW UCRT64** (bez Visual Studia). Kompletní návod
+v češtině je níže v
+[Instalační návod pro Windows (GTK4)](#instalační-návod-pro-windows-gtk4).
 
 #### 2. Build tools (compiler, Make, pkg-config)
 
@@ -146,11 +139,8 @@ sudo dnf install pkgconf-pkg-config
 sudo pacman -S base-devel pkgconf
 ```
 
-Windows – with the native MSVC path you only need Visual Studio with the
-**Desktop development with C++** workload (this includes the compiler and
-`pkg-config` comes from the GTK package). With the MSYS2 path, the packages
-installed above already include GCC, Make and pkgconf; there is nothing
-extra to install.
+Windows – kompilátor (`gcc`), GTK 4 i `pkg-config` se nainstalují v kroku 1
+návodu níže. Visual Studio není potřeba.
 
 ### Building the Application
 
@@ -168,33 +158,21 @@ Or manually:
 # Linux / macOS
 gcc -o maturita maturita.c `pkg-config --cflags --libs gtk4` -lm
 
-# Windows (MSYS2 UCRT64 / MINGW64)
-gcc -o maturita.exe maturita.c `pkg-config --cflags --libs gtk4` -lm -mwindows
+# Windows (MSYS2 UCRT64) – viz také český návod níže
+gcc -o maturita.exe maturita.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
 ```
 
-On Windows with Visual Studio, use the native build script or CMake
-instead – see [Native Windows](#native-windows-visual-studio--msvc).
+#### Building with CMake (optional, Linux / macOS)
 
-#### Building with CMake (optional, all platforms)
-
-A `CMakeLists.txt` is provided for CMake/IDE users. On Linux and macOS:
+A `CMakeLists.txt` is provided for CMake/IDE users:
 
 ```bash
 cmake -S . -B build
 cmake --build build
 ```
 
-On Windows, first add GTK to the environment (adjust `C:\gtk` if needed),
-then configure from an **x64 Native Tools Command Prompt**:
-
-```bat
-set "PATH=C:\gtk\bin;%PATH%"
-set "PKG_CONFIG_PATH=C:\gtk\lib\pkgconfig"
-cmake -S . -B build -G "Visual Studio 17 2022" -A x64
-cmake --build build --config Release
-```
-
-CMake finds GTK 4 through pkg-config on every platform.
+CMake finds GTK 4 through pkg-config. On Windows prefer the MSYS2
+`gcc` / `make` flow below.
 
 ### Running the Application
 
@@ -212,101 +190,74 @@ or
 ./maturita.exe
 ```
 
-### Native Windows (Visual Studio / MSVC)
+### Instalační návod pro Windows (GTK4)
 
-This is the recommended Windows path: it builds a real native `.exe` with
-MSVC and needs no MSYS2 or MinGW shell. GTK 4 for MSVC comes from
-[gvsbuild](https://github.com/wingtk/gvsbuild).
+Následujte tyto kroky pro rychlé zkompilování a spuštění na Windows.
+**Visual Studio není potřeba** – stačí MSYS2 a MinGW UCRT64.
 
-1. **Install Visual Studio** (2019 or 2022) with the **Desktop
-   development with C++** workload. The free Community edition is enough.
+1. **Nainstalujte MSYS2 a GTK4**
 
-2. **Download the gvsbuild GTK4 package** from the
-   [latest release](https://github.com/wingtk/gvsbuild/releases/latest) –
-   the asset is named `GTK4_Gvsbuild_<version>_x64.zip` – and unzip it to
-   `C:\gtk` so that `C:\gtk\bin`, `C:\gtk\lib`, `C:\gtk\include` and
-   `C:\gtk\share` exist. (If you unzip it elsewhere, set the `GTK_ROOT`
-   environment variable to that folder before building.)
+   Otevřete Příkazový řádek (CMD) nebo PowerShell jako Správce a spusťte:
 
-3. **Build.** From this repository, run `build-windows.bat` from a normal
-   Command Prompt (or double-click it). It locates Visual Studio, sets up
-   the MSVC environment and the GTK paths, and produces `maturita.exe`:
-
-   ```bat
-   build-windows.bat
+   ```cmd
+   winget install --id MSYS2.MSYS2 -e --source winget
+   C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gtk4 mingw-w64-ucrt-x86_64-pkg-config
    ```
 
-   Internally it gathers the GTK flags with
-   `pkg-config --cflags gtk4 --msvc-syntax` /
-   `pkg-config --libs gtk4 --msvc-syntax` and compiles with:
+   Počkejte, až se obě instalace dokončí. Pokud `winget` hlásí, že MSYS2 už
+   je nainstalované, klidně pokračujte druhým příkazem.
+   (Druhý příkaz otevře okno MSYS2, stáhne balíčky a zase se ukončí – to je
+   v pořádku.)
 
-   ```bat
-   cl /O2 /MD maturita.c /Fe:maturita.exe ^
-      /link /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup ^
-      %GTK_CFLAGS% %GTK_LIBS%
-   ```
+2. **Stáhněte projekt**
 
-4. **Run.** `maturita.exe` needs the GTK DLLs on `PATH`, so either run it
-   from the same terminal or double-click `run-windows.bat`, which adds
-   `C:\gtk\bin` to `PATH` first.
+   Naklonujte nebo stáhněte tento repozitář a zapamatujte si cestu, např.
+   `C:\Users\Josef\maturita.c`.
 
-To build from Visual Studio itself, open the folder with CMake support (the
-included `CMakeLists.txt` handles GTK), or create an empty C project and
-paste the output of `pkg-config --cflags gtk4 --msvc-syntax` into
-**C/C++ → Command Line → Additional Options** and the output of
-`pkg-config --libs gtk4 --msvc-syntax` into
-**Linker → Command Line → Additional Options**.
+3. **Otevřete terminál MSYS2 UCRT64**
 
-### Windows with MSYS2
+   Ve Start menu vyhledejte **MSYS2 UCRT64** a spusťte ho.
+   Nepoužívejte běžný CMD ani PowerShell – `gcc` a `pkg-config` fungují
+   právě v tomto okně.
 
-If you prefer GCC over MSVC, you can still build a native `.exe` with
-MSYS2. The resulting binary is a normal Windows executable.
+4. **Přejděte do složky projektu a zkompilujte**
 
-1. **Install MSYS2** from <https://www.msys2.org/> and complete the
-   installer (accept the default install location).
-
-2. Open the **“MSYS2 UCRT64”** entry from the Start menu. This is a
-   special terminal, **not** Command Prompt or PowerShell – `pacman` only
-   exists here. (If you run `pacman` in `cmd.exe`/PowerShell you will see
-   “`'pacman' is not recognized`”, which is expected.)
-
-3. In that MSYS2 UCRT64 terminal, install the compiler and GTK 4:
+   V MSYS2 se cesty píší jako `/c/...` místo `C:\...`. Upravte cestu podle
+   sebe a spusťte:
 
    ```bash
-   pacman -S --needed mingw-w64-ucrt-x86_64-gtk4 \
-                     mingw-w64-ucrt-x86_64-toolchain \
-                     mingw-w64-ucrt-x86_64-pkgconf make
+   cd /c/Users/Josef/maturita.c
+   gcc -o maturita.exe maturita.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
    ```
 
-4. `cd` into this repository (MSYS2 uses `/c/...` for `C:\...`) and build:
+   Příklady převodu cesty:
+
+   - `C:\Users\Josef\maturita.c` → `/c/Users/Josef/maturita.c`
+   - `C:\Users\Josef\Desktop\maturita.c` → `/c/Users/Josef/Desktop/maturita.c`
+
+   Pokud kompilace projde bez chyb, ve složce projektu vznikne `maturita.exe`.
+
+5. **Spusťte aplikaci**
+
+   Ze stejného terminálu UCRT64:
 
    ```bash
-   cd /c/path/to/maturita.c
-   make
+   ./maturita.exe
    ```
 
-   The Makefile detects Windows automatically and produces `maturita.exe`.
+6. **(Volitelně) Spuštění dvojklikem z Průzkumníka**
 
-5. Run it from the same terminal:
+   Samotný `maturita.exe` bez MSYS2 terminálu obvykle spadne na chybějící
+   DLL. Z UCRT64 terminálu (po instalaci `make` přes
+   `pacman -S --noconfirm make`) můžete vytvořit složku `dist/` se vším
+   potřebným:
 
    ```bash
-   make run        # or: ./maturita.exe
+   pacman -S --noconfirm make
+   make bundle
    ```
 
-#### Bundling the MSYS2 build
-
-`maturita.exe` needs the GTK/MinGW DLLs next to it (or on `PATH`) to
-start, so double-clicking it from Explorer normally fails with a
-missing-DLL error. The Makefile can collect the required DLLs into a
-`dist/` folder:
-
-```bash
-make bundle
-```
-
-Then launch `dist/maturita.exe` by double-clicking it or from Explorer.
-Running the app from the MSYS2 UCRT64 terminal (step 5) always works and
-needs no bundling.
+   Pak spusťte `dist/maturita.exe` dvojklikem.
 
 ## Usage
 
@@ -349,10 +300,10 @@ saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
 
 ```
 maturita.c              entire application (UI, navigation, themes, exercises)
-Makefile                build & run targets (Linux, macOS, MSYS2)
-CMakeLists.txt          optional CMake build (all platforms, incl. MSVC)
-build-windows.bat       native MSVC build script (no MSYS2 needed)
-run-windows.bat         launches maturita.exe with the GTK4 DLLs on PATH
+Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` na Windows
+CMakeLists.txt          optional CMake build (Linux / macOS)
+build-windows.bat       legacy MSVC build (vyžaduje Visual Studio + gvsbuild GTK)
+run-windows.bat         legacy spouštění MSVC buildu s GTK DLL na PATH
 README.md               this file
 LICENSE                 GPL-3.0 license
 progress/               created at runtime
