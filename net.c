@@ -576,16 +576,15 @@ GtkWidget *build_netmap_page(void) {
 }
 
 GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
-                               const NetSlide *slides, guint n_slides) {
+                               const char *sub_key, const NetSlide *slides,
+                               guint n_slides) {
     GtkWidget *page;
     GtkWidget *scroll;
     GtkWidget *nav;
-    char sub_key[64];
 
     net_lesson_notes_ensure(L);
     net_notes_target = L;
     L->n_slides = n_slides;
-    g_snprintf(sub_key, sizeof(sub_key), "%s_sub", title_key);
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_margin_start(page, 28);
@@ -593,6 +592,7 @@ GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
     gtk_widget_set_margin_top(page, 20);
     gtk_widget_set_margin_bottom(page, 20);
 
+    /* sub_key must be a stable string (i18n_bind keeps the pointer). */
     gtk_box_append(GTK_BOX(page), top_bar("netmap", title_key, sub_key));
 
     scroll = gtk_scrolled_window_new();
@@ -717,7 +717,8 @@ GtkWidget *build_net_unit1_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[0], "net_unit1", slides, NET_SLIDES);
+    return build_net_unit_page(&net_lessons[0], "net_unit1", "net_unit1_sub",
+                               slides, NET_SLIDES);
 }
 
 GtkWidget *build_net_unit2_page(void) {
@@ -783,7 +784,8 @@ GtkWidget *build_net_unit2_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[1], "net_unit2", slides, NET2_SLIDES);
+    return build_net_unit_page(&net_lessons[1], "net_unit2", "net_unit2_sub",
+                               slides, NET2_SLIDES);
 }
 
 GtkWidget *build_net_unit3_page(void) {
@@ -837,7 +839,8 @@ GtkWidget *build_net_unit3_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[2], "net_unit3", slides, NET3_SLIDES);
+    return build_net_unit_page(&net_lessons[2], "net_unit3", "net_unit3_sub",
+                               slides, NET3_SLIDES);
 }
 
 GtkWidget *build_net_unit4_page(void) {
@@ -886,7 +889,8 @@ GtkWidget *build_net_unit4_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[3], "net_unit4", slides, NET4_SLIDES);
+    return build_net_unit_page(&net_lessons[3], "net_unit4", "net_unit4_sub",
+                               slides, NET4_SLIDES);
 }
 
 GtkWidget *build_net_unit5_page(void) {
@@ -935,7 +939,8 @@ GtkWidget *build_net_unit5_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[4], "net_unit5", slides, NET5_SLIDES);
+    return build_net_unit_page(&net_lessons[4], "net_unit5", "net_unit5_sub",
+                               slides, NET5_SLIDES);
 }
 
 GtkWidget *build_net_unit6_page(void) {
@@ -979,7 +984,8 @@ GtkWidget *build_net_unit6_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[5], "net_unit6", slides, NET6_SLIDES);
+    return build_net_unit_page(&net_lessons[5], "net_unit6", "net_unit6_sub",
+                               slides, NET6_SLIDES);
 }
 
 GtkWidget *build_net_unit7_page(void) {
@@ -1024,7 +1030,8 @@ GtkWidget *build_net_unit7_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[6], "net_unit7", slides, NET7_SLIDES);
+    return build_net_unit_page(&net_lessons[6], "net_unit7", "net_unit7_sub",
+                               slides, NET7_SLIDES);
 }
 
 GtkWidget *build_net_unit8_page(void) {
@@ -1070,7 +1077,8 @@ GtkWidget *build_net_unit8_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[7], "net_unit8", slides, NET8_SLIDES);
+    return build_net_unit_page(&net_lessons[7], "net_unit8", "net_unit8_sub",
+                               slides, NET8_SLIDES);
 }
 
 GtkWidget *build_net_unit9_page(void) {
@@ -1114,7 +1122,8 @@ GtkWidget *build_net_unit9_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[8], "net_unit9", slides, NET9_SLIDES);
+    return build_net_unit_page(&net_lessons[8], "net_unit9", "net_unit9_sub",
+                               slides, NET9_SLIDES);
 }
 
 GtkWidget *build_net_unit10_page(void) {
@@ -1151,8 +1160,8 @@ GtkWidget *build_net_unit10_page(void) {
         },
     };
 
-    return build_net_unit_page(&net_lessons[9], "net_unit10", slides,
-                               NET10_SLIDES);
+    return build_net_unit_page(&net_lessons[9], "net_unit10", "net_unit10_sub",
+                               slides, NET10_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"

@@ -1020,7 +1020,8 @@ void net_rail_theme_reset(void);
 void net_add_node(GtkFixed *fixed, int index);
 GtkWidget *build_netmap_page(void);
 GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
-                               const NetSlide *slides, guint n_slides);
+                               const char *sub_key, const NetSlide *slides,
+                               guint n_slides);
 GtkWidget *build_net_unit1_page(void);
 GtkWidget *build_net_unit2_page(void);
 GtkWidget *build_net_unit3_page(void);

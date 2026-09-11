@@ -637,7 +637,8 @@ entry.answer-wrong {
 .stats-unit-bar,
 .stats-unit-bar trough {
    min-height: 10px;
-   border-radius: 999px;
+   min-width: 1px;
+   border-radius: 6px;
    background-color: alpha(@bg_surface1, 0.85);
    border: none;
    padding: 0;
@@ -648,8 +649,9 @@ entry.answer-wrong {
 }
 .stats-overall-bar progress,
 .stats-unit-bar progress {
+   min-width: 1px;
    min-height: 10px;
-   border-radius: 999px;
+   border-radius: 6px;
    background-image: linear-gradient(90deg, @accent 0%, @accent2 100%);
    background-color: @accent;
    border: none;
@@ -684,7 +686,8 @@ entry.answer-wrong {
 .stats-subject-bar,
 .stats-subject-bar trough {
    min-height: 12px;
-   border-radius: 999px;
+   min-width: 1px;
+   border-radius: 6px;
    background-color: alpha(@bg_surface1, 0.85);
    border: none;
    padding: 0;
@@ -693,8 +696,9 @@ entry.answer-wrong {
    margin: 4px 0 0 0;
 }
 .stats-subject-bar progress {
+   min-width: 1px;
    min-height: 10px;
-   border-radius: 999px;
+   border-radius: 6px;
    background-image: linear-gradient(90deg, @accent 0%, @accent2 100%);
    background-color: @accent;
    border: none;
