@@ -176,6 +176,8 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_hw_unit1_exercise_page(), "hwex1");
     gtk_stack_add_named(main_stack, build_hw_unit2_page(), "hwunit2");
     gtk_stack_add_named(main_stack, build_hw_unit2_exercise_page(), "hwex2");
+    gtk_stack_add_named(main_stack, build_hw_unit3_page(), "hwunit3");
+    gtk_stack_add_named(main_stack, build_hw_unit3_exercise_page(), "hwex3");
     {
         typedef GtkWidget *(*NetBuilder)(void);
         static const struct {

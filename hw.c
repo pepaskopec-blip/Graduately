@@ -5,6 +5,7 @@
 NetLesson hw_lessons[HW_LESSONS] = {
     { .n_slides = HW_SLIDES,  .unit_page = "hwunit1", .ex_page = "hwex1" },
     { .n_slides = HW2_SLIDES, .unit_page = "hwunit2", .ex_page = "hwex2" },
+    { .n_slides = HW3_SLIDES, .unit_page = "hwunit3", .ex_page = "hwex3" },
 };
 
 void hw_rail_theme_reset(void);
@@ -257,7 +258,7 @@ void hw_add_node(GtkFixed *fixed, int index) {
     GtkWidget *name;
     char *text;
     static const char *unit_keys[HW_LESSONS] = {
-        "hw_unit1", "hw_unit2"
+        "hw_unit1", "hw_unit2", "hw_unit3"
     };
 
     card = gtk_button_new();
@@ -873,4 +874,59 @@ GtkWidget *build_hw_unit2_exercise_page(void) {
     };
     return build_hw_mcq_page(1, "hwunit2", "hw_ex2_title", "hw_quiz2_head",
                              qs, hints, 8);
+}
+
+GtkWidget *build_hw_unit3_page(void) {
+    static const NetSlide slides[HW3_SLIDES] = {
+        {
+            "1 / 2   •   Bit", "Bit – nejmenší jednotka informace",
+            "Bit = binary digit (dvojková číslice)",
+            {
+                "Bit je dvojková číslice – nabývá hodnoty 0 nebo 1.",
+                "Je to nejmenší zobrazitelná jednotka informace.",
+                "Z bitů se skládají větší jednotky (např. byte).",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Byte", "Byte – adresovatelná jednotka paměti",
+            "Tip: 1 B = 8 b",
+            {
+                "Byte je nejmenší adresovatelná jednotka paměti.",
+                "Počítač tedy paměť adresuje po bytech, ne po jednotlivých "
+                "bitech.",
+                "Jeden byte obvykle obsahuje 8 bitů.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[2], "hw_unit3", "hw_unit3_sub",
+                               slides, HW3_SLIDES);
+}
+
+GtkWidget *build_hw_unit3_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je bit?",
+         {"Největší jednotka paměti", "Dvojková číslice – nejmenší jednotka "
+          "informace", "Jen klávesa na klávesnici", "Typ procesoru"},
+         4, 1},
+        {"Jaké hodnoty může nabývat bit?",
+         {"Jen 0", "Jen 1", "0 nebo 1", "0 až 255"}, 4, 2},
+        {"Co je byte?",
+         {"Nejmenší adresovatelná jednotka paměti",
+          "Nejmenší zobrazitelná jednotka informace",
+          "Jen síťový kabel", "Jen grafická karta"},
+         4, 0},
+        {"Kolik bitů má obvykle jeden byte?",
+         {"2", "4", "8", "16"}, 4, 2},
+    };
+    static const char *hints[] = {
+        "Bit = dvojková číslice, nejmenší jednotka informace",
+        "Bit nabývá hodnoty 0 nebo 1",
+        "Byte = nejmenší adresovatelná jednotka paměti",
+        "1 B = 8 b",
+    };
+    return build_hw_mcq_page(2, "hwunit3", "hw_ex3_title", "hw_quiz3_head",
+                             qs, hints, 4);
 }

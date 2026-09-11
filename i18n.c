@@ -297,6 +297,13 @@ const TrEntry tr_ui[] = {
      "Quiz: history of computers"},
     {"hw_quiz2_head", "Kvíz k historii počítačů",
      "Quiz on the history of computers"},
+    {"hw_unit3", "Zobrazování dat v počítači", "Data representation"},
+    {"hw_unit3_sub", "2 snímky o bitu a bytu a pak kvíz.",
+     "2 slides about bits and bytes, then a quiz."},
+    {"hw_ex3_title", "Kvíz: zobrazování dat",
+     "Quiz: data representation"},
+    {"hw_quiz3_head", "Kvíz k zobrazování dat v počítači",
+     "Quiz on data representation in computers"},
     {NULL, NULL, NULL}
 };
 
@@ -957,6 +964,12 @@ const TrEntry tr_content[] = {
     {"4. generace – programovatelné mikroprocesory", NULL,
      "4th generation – programmable microprocessors"},
     {"1972 – první počítačová hra", NULL, "1972 – first computer game"},
+    {"Bit = dvojková číslice, nejmenší jednotka informace", NULL,
+     "A bit is a binary digit, the smallest unit of information"},
+    {"Bit nabývá hodnoty 0 nebo 1", NULL, "A bit is either 0 or 1"},
+    {"Byte = nejmenší adresovatelná jednotka paměti", NULL,
+     "A byte is the smallest addressable unit of memory"},
+    {"1 B = 8 b", NULL, "1 B = 8 b"},
     {NULL, NULL, NULL}
 };
 
