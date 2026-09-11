@@ -56,6 +56,8 @@ void refresh_stats_ui(void) {
     for (int s = 0; s < NUM_SUBJECTS; s++) {
         if (s == NET_SUBJ)
             progress_for_net(&all);
+        else if (s == HW_SUBJ)
+            progress_for_hw(&all);
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
     }
@@ -83,12 +85,15 @@ void refresh_stats_ui(void) {
         GtkWidget *count = stats_ui.subj[s].count;
         GtkWidget *bar = stats_ui.subj[s].bar;
         ProgressSum sp = {0};
-        gboolean has_content = (s == NET_SUBJ) || sub_unit_count[s] > 0;
+        gboolean has_content = (s == NET_SUBJ) || (s == HW_SUBJ)
+                               || sub_unit_count[s] > 0;
 
         if (!count || !bar)
             continue;
         if (s == NET_SUBJ)
             progress_for_net(&sp);
+        else if (s == HW_SUBJ)
+            progress_for_hw(&sp);
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
         if (has_content) {
@@ -353,7 +358,8 @@ GtkWidget *build_stats_page(void) {
         GtkWidget *name;
         GtkWidget *count;
         GtkWidget *bar;
-        gboolean has_units = (s == NET_SUBJ) || sub_unit_count[s] > 0;
+        gboolean has_units = (s == NET_SUBJ) || (s == HW_SUBJ)
+                             || sub_unit_count[s] > 0;
         gboolean has_deutsch_units = sub_unit_count[s] > 0;
 
         subject = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

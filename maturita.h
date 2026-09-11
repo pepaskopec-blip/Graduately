@@ -12,6 +12,7 @@
 #define MAX_UNIT_EX   20   /* largest exercise count any unit may have       */
 #define NUM_SUBJECTS  13
 #define NET_SUBJ       1    /* index of "Správa počítačových sítí"     */
+#define HW_SUBJ       11    /* index of "Technické vybavení"          */
 #define CSS_FILE      "style.css"
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_U1   "progress/unit1.conf"
@@ -19,6 +20,7 @@
 #define PROGRESS_U3   "progress/unit3.conf"
 #define SETTINGS_FILE "progress/settings.conf"
 #define PROGRESS_NET  "progress/net.conf"
+#define PROGRESS_HW   "progress/hw.conf"
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -56,6 +58,9 @@
 #define NET9_SLIDES     4
 #define NET10_SLIDES    3
 #define NET_LESSONS     10
+#define HW_UNITS        10
+#define HW_LESSONS       1
+#define HW_SLIDES        3
 
 typedef enum {
     THEME_CATPPUCCIN = 0,
@@ -668,6 +673,9 @@ extern const U3Fill ex13_u3_rows[];
 extern const U3Kw ex14_u3_qs[];
 extern const U3Let ex15_u3_rows[];
 extern NetLesson net_lessons[NET_LESSONS];
+extern NetLesson *net_notes_target;
+extern NetLesson hw_lessons[HW_LESSONS];
+extern GtkWidget *hw_nodes[HW_UNITS];
 extern GtkWidget *net_note_host;
 extern int net_note_last_w;
 extern GtkWidget *net_scroll;
@@ -745,6 +753,20 @@ void net_save_progress(void);
 void mark_net_done(int lesson_id);
 void refresh_net_completion_ui(void);
 void progress_for_net(ProgressSum *out);
+void hw_load_progress(void);
+void hw_save_progress(void);
+void mark_hw_done(int lesson_id);
+void refresh_hw_completion_ui(void);
+void progress_for_hw(ProgressSum *out);
+void hw_rail_theme_reset(void);
+void hw_lessons_apply_lang(void);
+GtkWidget *build_hwmap_page(void);
+GtkWidget *build_hw_unit1_page(void);
+GtkWidget *build_hw_unit1_exercise_page(void);
+void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
+                           int width, int height, gpointer data);
+void net_lesson_notes_ensure(NetLesson *L);
+void net_rescale_lesson_notes(NetLesson *L, int body, int head, int kick);
 GtkWidget *make_back_button(const char *target);
 void on_nav_clicked(GtkButton *button, gpointer user_data);
 int unit_done_count(const UnitCtx *u);

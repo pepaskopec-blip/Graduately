@@ -171,6 +171,9 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
     gtk_stack_add_named(main_stack, build_stats_page(), "stats");
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
+    gtk_stack_add_named(main_stack, build_hwmap_page(), "hwmap");
+    gtk_stack_add_named(main_stack, build_hw_unit1_page(), "hwunit1");
+    gtk_stack_add_named(main_stack, build_hw_unit1_exercise_page(), "hwex1");
     {
         typedef GtkWidget *(*NetBuilder)(void);
         static const struct {

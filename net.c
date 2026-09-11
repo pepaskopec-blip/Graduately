@@ -40,7 +40,7 @@ void net_heading(GtkWidget *box, const char *text) {
 /* Note-card slides with text that scales with the window. */
 GtkWidget *net_note_host;
 int net_note_last_w = -1;
-static NetLesson *net_notes_target;
+NetLesson *net_notes_target;
 
 void net_lesson_notes_ensure(NetLesson *L) {
     if (L->note_kicks)

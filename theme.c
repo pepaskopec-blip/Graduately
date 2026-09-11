@@ -359,4 +359,5 @@ void apply_theme(void) {
             gtk_widget_queue_draw(theme_swatch_areas[i]);
     }
     net_rail_theme_reset();
+    hw_rail_theme_reset();
 }

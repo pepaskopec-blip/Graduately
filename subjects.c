@@ -5,7 +5,7 @@
 /* ------------------------------------------------------------------ */
 
 
-/* Index 0 (Deutsch) and NET_SUBJ (computer networks) are unlocked. */
+/* Index 0 (Deutsch), NET_SUBJ (networks) and HW_SUBJ (hardware) are unlocked. */
 const char *sub_keys[NUM_SUBJECTS] = {
     "Deutsch",
     "Správa počítačových sítí",
@@ -326,6 +326,17 @@ GtkWidget *build_subjects_page(void) {
             g_object_set_data_full(G_OBJECT(card), "target",
                                    g_strdup("netmap"), g_free);
             g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+        } else if (i == HW_SUBJ) {
+            GtkWidget *chip = gtk_drawing_area_new();
+            gtk_widget_add_css_class(card, "current");
+            gtk_widget_set_size_request(chip, (int)SUB_BUBBLE,
+                                        (int)SUB_BUBBLE);
+            gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(chip),
+                                           draw_chip_icon, NULL, NULL);
+            gtk_button_set_child(GTK_BUTTON(card), chip);
+            g_object_set_data_full(G_OBJECT(card), "target",
+                                   g_strdup("hwmap"), g_free);
+            g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
         } else {
             GtkWidget *lock;
             gtk_widget_add_css_class(card, "locked");
@@ -345,7 +356,7 @@ GtkWidget *build_subjects_page(void) {
         gtk_label_set_justify(GTK_LABEL(lbl), GTK_JUSTIFY_CENTER);
         gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
         gtk_widget_add_css_class(lbl, "unit-name");
-        if (i != 0 && i != NET_SUBJ)
+        if (i != 0 && i != NET_SUBJ && i != HW_SUBJ)
             gtk_widget_add_css_class(lbl, "unit-name-locked");
         sub_labels[i] = lbl;
         gtk_fixed_put(GTK_FIXED(fixed), lbl, 0, 0);

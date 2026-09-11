@@ -94,6 +94,54 @@ void draw_wifi_icon(GtkDrawingArea *area, cairo_t *cr,
     cairo_fill(cr);
 }
 
+/* CPU / chip icon for Technické vybavení. */
+void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
+                           int width, int height, gpointer data) {
+    const double s = MIN(width, height);
+    const double cx = width / 2.0;
+    const double cy = height / 2.0;
+    const double body = s * 0.42;
+    const double pin_len = s * 0.12;
+    const double pin_w = s * 0.055;
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+
+    cairo_rectangle(cr, cx - body / 2.0, cy - body / 2.0, body, body);
+    cairo_fill(cr);
+
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
+    cairo_set_line_width(cr, pin_w);
+    for (int i = 0; i < 4; i++) {
+        double t = (i + 0.5) / 4.0;
+        double x = cx - body / 2.0 + t * body;
+        double y = cy - body / 2.0 + t * body;
+
+        cairo_move_to(cr, x, cy - body / 2.0);
+        cairo_line_to(cr, x, cy - body / 2.0 - pin_len);
+        cairo_move_to(cr, x, cy + body / 2.0);
+        cairo_line_to(cr, x, cy + body / 2.0 + pin_len);
+        cairo_move_to(cr, cx - body / 2.0, y);
+        cairo_line_to(cr, cx - body / 2.0 - pin_len, y);
+        cairo_move_to(cr, cx + body / 2.0, y);
+        cairo_line_to(cr, cx + body / 2.0 + pin_len, y);
+    }
+    cairo_stroke(cr);
+
+    {
+        Rgb hole = color_from_hex(app_theme.crust);
+        double core = body * 0.34;
+
+        cairo_set_source_rgb(cr, hole.r, hole.g, hole.b);
+        cairo_rectangle(cr, cx - core / 2.0, cy - core / 2.0, core, core);
+        cairo_fill(cr);
+    }
+}
+
 void draw_back_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data) {
     const double size = 15.0;      /* fixed logical icon size            */

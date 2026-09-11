@@ -281,6 +281,15 @@ const TrEntry tr_ui[] = {
     {"net_slide_prev", "Zpět", "Back"},
     {"net_slide_start", "Přejít na cvičení", "Go to the exercise"},
     {"net_solution", "Ukázat řešení", "Show solution"},
+    {"hw_sub", "Vyberte lekci na cestě a začněte procvičovat.",
+     "Pick a unit on the path and start practicing."},
+    {"hw_unit1", "Architektura počítače", "Computer architecture"},
+    {"hw_unit1_sub", "3 snímky o Von Neumannovi a schématu a pak kvíz.",
+     "3 slides about von Neumann and the model, then a quiz."},
+    {"hw_ex1_title", "Kvíz: architektura počítače",
+     "Quiz: computer architecture"},
+    {"hw_quiz1_head", "Kvíz k architektuře počítače",
+     "Quiz on computer architecture"},
     {NULL, NULL, NULL}
 };
 
@@ -917,6 +926,17 @@ const TrEntry tr_content[] = {
     {"Ahoj! (při loučení)", NULL, "Bye!"},
     {"shledání", NULL, "reunion"},
     {"Na shledanou!", NULL, "Goodbye!"},
+    {"John von Neumann – americký matematik", NULL,
+     "John von Neumann – American mathematician"},
+    {"Americký matematik s objevy v digitálních počítačích", NULL,
+     "American mathematician with discoveries in digital computers"},
+    {"ALS = aritmeticko-logická jednotka", NULL,
+     "ALU = arithmetic-logic unit"},
+    {"Řadič řídí činnost ostatních částí", NULL,
+     "The control unit directs the other parts"},
+    {"Operační paměť uchovává program i data", NULL,
+     "Main memory stores both the program and data"},
+    {"Byl tvůrcem teorie her", NULL, "He created game theory"},
     {NULL, NULL, NULL}
 };
 
@@ -1006,6 +1026,7 @@ void refresh_welcome_heading(void) {
 
 void refresh_stats_ui(void);
 void net_lessons_apply_lang(void);
+void hw_lessons_apply_lang(void);
 void net_rail_theme_reset(void);
 
 void apply_language(void) {
@@ -1017,4 +1038,5 @@ void apply_language(void) {
     refresh_welcome_heading();
     refresh_stats_ui();
     net_lessons_apply_lang();
+    hw_lessons_apply_lang();
 }
