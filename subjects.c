@@ -9,6 +9,7 @@
 const char *sub_keys[NUM_SUBJECTS] = {
     "Deutsch",
     "Správa počítačových sítí",
+    "Technické vybavení",
     "Občanská nauka",
     "English",
     "Matematika",
@@ -18,7 +19,6 @@ const char *sub_keys[NUM_SUBJECTS] = {
     "Prezentační grafika",
     "Český jazyk a literatura",
     "Programování",
-    "Technické vybavení",
     "Programové vybavení",
 };
 

@@ -12,7 +12,7 @@
 #define MAX_UNIT_EX   20   /* largest exercise count any unit may have       */
 #define NUM_SUBJECTS  13
 #define NET_SUBJ       1    /* index of "Správa počítačových sítí"     */
-#define HW_SUBJ       11    /* index of "Technické vybavení"          */
+#define HW_SUBJ        2    /* index of "Technické vybavení"          */
 #define CSS_FILE      "style.css"
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_U1   "progress/unit1.conf"
