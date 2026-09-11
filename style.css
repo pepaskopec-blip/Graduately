@@ -344,6 +344,13 @@ windowcontrols button:not(:hover) image {
 .ex-bubble:focus-visible {
    outline: none;
 }
+.ex-branch {
+   border-style: dashed;
+   border-color: @accent;
+}
+.ex-branch:hover {
+   border-style: solid;
+}
 .bubble-number {
    font-size: 22px;
    font-weight: 800;

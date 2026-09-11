@@ -9,6 +9,7 @@
 void ex_layout_geometry(UnitCtx *u, double avail) {
     const int n = u->n_ex;
     const double phase = 2.0 * G_PI * 1.7 / (double)(n > 1 ? n - 1 : 1);
+    const double lift = u->has_branch ? EX_BRANCH_LIFT : 0.0;
     int rows;
     int r, c, i;
 
@@ -26,7 +27,7 @@ void ex_layout_geometry(UnitCtx *u, double avail) {
     if (u->ex_cols < 1)
         u->ex_cols = 1;
     u->ex_cw = (int)(2.0 * EX_MX + (u->ex_cols - 1) * EX_SPAC);
-    u->ex_ch = (int)(2.0 * EX_MY + (rows - 1) * EX_GAP);
+    u->ex_ch = (int)(2.0 * EX_MY + (rows - 1) * EX_GAP + lift);
 
     for (r = 0; r < rows; r++) {
         int base = r * u->ex_cols;
@@ -36,9 +37,15 @@ void ex_layout_geometry(UnitCtx *u, double avail) {
             i = base + c;
             int cc = fwd ? c : (u->ex_cols - 1 - c);
             u->ex_cx[i] = EX_MX + cc * EX_SPAC;
-            u->ex_cy[i] = EX_MY + r * EX_GAP
+            u->ex_cy[i] = EX_MY + lift + r * EX_GAP
                           + EX_WAVE * sin((double)i * phase);
         }
+    }
+
+    /* The branch hangs straight above exercise 2 (index 1). */
+    if (u->has_branch && n > 1) {
+        u->branch_cx = u->ex_cx[1];
+        u->branch_cy = u->ex_cy[1] - EX_BRANCH_LIFT;
     }
 }
 
@@ -125,6 +132,28 @@ void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
         cairo_set_line_width(cr, 9);
         cairo_stroke(cr);
     }
+
+    /* Off-path branch connector up from exercise 2. */
+    if (u->has_branch && u->n_ex > 1) {
+        gboolean bdone = u->done[u->branch_ex];
+
+        cairo_new_path(cr);
+        cairo_move_to(cr, u->ex_cx[1], u->ex_cy[1]);
+        cairo_line_to(cr, u->branch_cx, u->branch_cy);
+        cairo_set_line_width(cr, 14);
+        cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
+        cairo_stroke(cr);
+
+        cairo_new_path(cr);
+        cairo_move_to(cr, u->ex_cx[1], u->ex_cy[1]);
+        cairo_line_to(cr, u->branch_cx, u->branch_cy);
+        cairo_set_line_width(cr, 9);
+        if (bdone)
+            cairo_set_source_rgba(cr, green.r, green.g, green.b, 0.85);
+        else
+            cairo_set_source_rgb(cr, slate.r, slate.g, slate.b);
+        cairo_stroke(cr);
+    }
 }
 
 void ex_apply_layout(UnitCtx *u) {
@@ -142,6 +171,16 @@ void ex_apply_layout(UnitCtx *u) {
             gtk_fixed_move(GTK_FIXED(u->ex_fixed), u->ex_labels[i],
                            (int)(u->ex_cx[i] - (EX_SPAC - 20.0) / 2.0),
                            (int)(u->ex_cy[i] + EX_BUBBLE / 2.0 + 8.0));
+    }
+
+    if (u->has_branch && u->branch_cell) {
+        gtk_fixed_move(GTK_FIXED(u->ex_fixed), u->branch_cell,
+                       (int)(u->branch_cx - EX_BUBBLE / 2.0),
+                       (int)(u->branch_cy - EX_BUBBLE / 2.0));
+        if (u->branch_label)
+            gtk_fixed_move(GTK_FIXED(u->ex_fixed), u->branch_label,
+                           (int)(u->branch_cx + EX_BUBBLE / 2.0 + 10.0),
+                           (int)(u->branch_cy - 14.0));
     }
 
     gtk_widget_set_size_request(u->ex_fixed, u->ex_cw, u->ex_ch);
@@ -225,6 +264,43 @@ GtkWidget *make_bubble(UnitCtx *u, int n) {
     return btn;
 }
 
+static GtkWidget *make_branch_bubble(UnitCtx *u) {
+    GtkWidget *btn;
+    GtkWidget *vbox;
+    GtkWidget *star;
+    GtkWidget *icon;
+
+    btn = gtk_button_new();
+    gtk_widget_add_css_class(btn, "ex-bubble");
+    gtk_widget_add_css_class(btn, "ex-branch");
+    gtk_widget_set_size_request(btn, (int)EX_BUBBLE, (int)EX_BUBBLE);
+    gtk_widget_set_can_focus(btn, FALSE);
+    if (u->done[u->branch_ex])
+        gtk_widget_add_css_class(btn, "done");
+
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+    gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(vbox, GTK_ALIGN_CENTER);
+    gtk_button_set_child(GTK_BUTTON(btn), vbox);
+
+    star = gtk_label_new("★");
+    gtk_widget_set_halign(star, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(star, "bubble-number");
+    gtk_box_append(GTK_BOX(vbox), star);
+
+    icon = icon_area_new(draw_check_icon, 0.1176, 0.1176, 0.1804, 16);
+    gtk_widget_set_visible(icon, u->done[u->branch_ex]);
+    gtk_box_append(GTK_BOX(vbox), icon);
+
+    u->branch_cell = btn;
+    u->branch_icon = icon;
+
+    g_object_set_data_full(G_OBJECT(btn), "target",
+                           g_strdup(u->branch_target), g_free);
+    g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+    return btn;
+}
+
 GtkWidget *build_unit_page(UnitCtx *u) {
     GtkWidget *page;
     GtkWidget *scroll;
@@ -288,6 +364,19 @@ GtkWidget *build_unit_page(UnitCtx *u) {
         gtk_label_set_justify(GTK_LABEL(lbl), GTK_JUSTIFY_CENTER);
         gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
         gtk_widget_add_css_class(lbl, "ex-label");
+
+        gtk_fixed_put(GTK_FIXED(fixed), btn, 0, 0);
+        gtk_fixed_put(GTK_FIXED(fixed), lbl, 0, 0);
+    }
+
+    if (u->has_branch && u->branch_target) {
+        GtkWidget *btn = make_branch_bubble(u);
+        GtkWidget *lbl = gtk_label_new(u->branch_name);
+
+        u->branch_label = lbl;
+        gtk_widget_set_halign(lbl, GTK_ALIGN_START);
+        gtk_widget_add_css_class(lbl, "ex-label");
+        gtk_widget_set_visible(lbl, TRUE);
 
         gtk_fixed_put(GTK_FIXED(fixed), btn, 0, 0);
         gtk_fixed_put(GTK_FIXED(fixed), lbl, 0, 0);

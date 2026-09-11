@@ -36,6 +36,7 @@
 #define EX_SPAC    150.0   /* horizontal distance between bubbles       */
 #define EX_GAP     200.0   /* vertical space between folded rows        */
 #define EX_WAVE    26.0    /* wavy vertical offset of the bubbles       */
+#define EX_BRANCH_LIFT 150.0  /* extra top space for an off-path branch  */
 #define HM_WORDS 5
 #define HM_MAX_MISSES 6
 #define HM_N_LETTERS 29   /* QWERTY rows + Ä/Ö/Ü (see hm_letters[]) */
@@ -116,6 +117,16 @@ typedef struct {
     double ex_cy[MAX_UNIT_EX];
     int ex_rows, ex_cols, ex_cw, ex_ch;
     guint ex_idle;
+    /* optional off-path branch exercise (e.g. vocabulary training) */
+    gboolean has_branch;
+    const char *branch_name;     /* label under the branch bubble          */
+    const char *branch_target;   /* stack page name                        */
+    int branch_ex;               /* done[] slot used by the branch          */
+    GtkWidget *branch_cell;
+    GtkWidget *branch_label;
+    GtkWidget *branch_icon;
+    double branch_cx;
+    double branch_cy;
 } UnitCtx;
 typedef struct { double r, g, b; } Rgb;
 typedef struct {
@@ -816,6 +827,7 @@ char *verbq_german(const char *before, const char *answer,
                           const char *after);
 GtkWidget *build_ex8(UnitCtx *unit);
 GtkWidget *build_ex12(UnitCtx *unit);
+GtkWidget *build_translate(UnitCtx *unit);
 void assign_rebuild(AssignCtx *ac);
 void assign_chip_clicked(GtkButton *button, gpointer data);
 void assign_group_toggled(GtkToggleButton *button, gpointer data);

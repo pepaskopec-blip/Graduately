@@ -6,7 +6,7 @@
 
 void unit_save_progress(UnitCtx *u) {
     GKeyFile *kf = g_key_file_new();
-    for (int i = 1; i <= u->n_ex; i++) {
+    for (int i = 1; i <= MAX_UNIT_EX; i++) {
         gchar key[8];
         g_snprintf(key, sizeof(key), "%d", i);
         g_key_file_set_boolean(kf, "done", key, u->done[i]);
@@ -40,7 +40,7 @@ void unit_load_progress(UnitCtx *u) {
         return;
     }
 
-    for (int i = 1; i <= u->n_ex; i++) {
+    for (int i = 1; i <= MAX_UNIT_EX; i++) {
         gchar key[8];
         g_snprintf(key, sizeof(key), "%d", i);
         u->done[i] = g_key_file_get_boolean(kf, "done", key, NULL);
@@ -92,6 +92,19 @@ void refresh_completion_ui(void) {
             }
         }
 
+        /* off-path branch marker */
+        if (u->has_branch && u->branch_cell) {
+            if (u->done[u->branch_ex]) {
+                gtk_widget_add_css_class(u->branch_cell, "done");
+                if (u->branch_icon)
+                    gtk_widget_set_visible(u->branch_icon, TRUE);
+            } else {
+                gtk_widget_remove_css_class(u->branch_cell, "done");
+                if (u->branch_icon)
+                    gtk_widget_set_visible(u->branch_icon, FALSE);
+            }
+        }
+
         /* roadmap node marker */
         if (u->node) {
             if (all && u->n_ex > 0) {
@@ -113,7 +126,7 @@ void refresh_completion_ui(void) {
 }
 
 void mark_done(UnitCtx *u, int n) {
-    if (!u || n < 1 || n > u->n_ex)
+    if (!u || n < 1 || n > MAX_UNIT_EX)
         return;
     u->done[n] = TRUE;
     refresh_completion_ui();

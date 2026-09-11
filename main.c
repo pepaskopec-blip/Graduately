@@ -31,6 +31,12 @@ void unit_meta_init(void) {
     units[1].progress_file = PROGRESS_U2;
     units[2].sub_key = "unit3_sub";
     units[2].progress_file = PROGRESS_U3;
+
+    /* Off-path branch hanging above exercise 2 of unit 1. */
+    units[0].has_branch = TRUE;
+    units[0].branch_name = "Vokabeltraining";
+    units[0].branch_target = "u1vocab";
+    units[0].branch_ex = MAX_UNIT_EX;
 }
 
 void unit_configure(int idx, const char *const *names, int n) {
@@ -182,6 +188,12 @@ void activate(GtkApplication *app, gpointer user_data) {
                 continue;
             g_snprintf(name, sizeof(name), "%se%d", u->ex_tag, n);
             gtk_stack_add_named(main_stack, page, name);
+        }
+        if (u->has_branch && u->branch_target) {
+            GtkWidget *branch = build_translate(u);
+
+            if (branch)
+                gtk_stack_add_named(main_stack, branch, u->branch_target);
         }
     }
 

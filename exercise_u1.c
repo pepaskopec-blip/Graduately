@@ -977,3 +977,277 @@ GtkWidget *build_assign(UnitCtx *unit, const char *title,
     g_signal_connect(check, "clicked", G_CALLBACK(assign_check), ac);
     return page;
 }
+
+/* ------------------------------------------------------------------ */
+/* Exercise 14: Wörter übersetzen                                     */
+/* ------------------------------------------------------------------ */
+
+const TypedQ trans_p10[] = {
+    {"der Abend, -e", "večer|evening", "večer"},
+    {"Guten Abend!", "dobrý večer|good evening", "Dobrý večer!"},
+    {"du", "ty|you", "ty"},
+    {"(Es) freut mich.", "těší mě|nice to meet you", "Těší mě."},
+    {"gut", "dobrý|good", "dobrý"},
+    {"Hallo!", "ahoj|hello", "Ahoj!"},
+    {"heißen, er heißt", "jmenovat se|to be called|to be named", "jmenovat se"},
+    {"Ich heiße Jens.", "jmenuji se jens|my name is jens", "Jmenuji se Jens."},
+    {"Hi!", "ahoj|hi", "Ahoj! (neformálně)"},
+    {"ich", "já|i", "já"},
+    {"ihr", "vy|you", "vy"},
+    {"ja", "ano|yes", "ano"},
+    {"der Morgen", "ráno|morning", "ráno"},
+    {"Guten Morgen!", "dobré ráno|good morning", "Dobré ráno!"},
+    {"der Name, -n", "jméno|name", "jméno"},
+    {"nein", "ne|no", "ne"},
+    {"(er/sie/es) ist", "je|is", "je"},
+    {"der Tag, -e", "den|day", "den"},
+    {"Guten Tag!", "dobrý den|good day", "Dobrý den!"},
+    {"und", "a|and", "a"},
+    {"wer", "kdo|who", "kdo"},
+    {"Wer bist du?", "kdo jsi|who are you", "Kdo jsi?"},
+    {"wie", "jak|how", "jak"},
+    {"Wie heißt du?", "jak se jmenuješ|what is your name", "Jak se jmenuješ?"},
+    {"wir", "my|we", "my"},
+};
+
+const TypedQ trans_p11[] = {
+    {"in", "v|in", "v"},
+    {"in der Nähe (von)", "poblíž|v blízkosti|near|nearby", "poblíž, v blízkosti"},
+    {"das Spiel, -e", "hra|game", "hra"},
+    {"wo", "kde|where", "kde"},
+    {"wohnen, er wohnt", "bydlet|to live", "bydlet"},
+    {"Wo wohnst du?", "kde bydlíš|where do you live", "Kde bydlíš?"},
+    {"Ich wohne in Prag.", "bydlím v praze|i live in prague", "Bydlím v Praze."},
+    {"null", "nula|zero", "nula"},
+    {"eins", "jedna|one", "jedna"},
+    {"zwei", "dvě|two", "dvě"},
+    {"drei", "tři|three", "tři"},
+    {"vier", "čtyři|four", "čtyři"},
+    {"fünf", "pět|five", "pět"},
+    {"sechs", "šest|six", "šest"},
+    {"sieben", "sedm|seven", "sedm"},
+    {"acht", "osm|eight", "osm"},
+    {"neun", "devět|nine", "devět"},
+    {"zehn", "deset|ten", "deset"},
+    {"elf", "jedenáct|eleven", "jedenáct"},
+    {"zwölf", "dvanáct|twelve", "dvanáct"},
+    {"dreizehn", "třináct|thirteen", "třináct"},
+    {"vierzehn", "čtrnáct|fourteen", "čtrnáct"},
+    {"fünfzehn", "patnáct|fifteen", "patnáct"},
+    {"sechzehn", "šestnáct|sixteen", "šestnáct"},
+    {"siebzehn", "sedmnáct|seventeen", "sedmnáct"},
+    {"achtzehn", "osmnáct|eighteen", "osmnáct"},
+    {"neunzehn", "devatenáct|nineteen", "devatenáct"},
+    {"zwanzig", "dvacet|twenty", "dvacet"},
+};
+
+const TypedQ trans_p12[] = {
+    {"alt", "starý|old", "starý"},
+    {"er", "on|he", "on"},
+    {"der Monat, -e", "měsíc|month", "měsíc"},
+    {"sie", "ona|she", "ona"},
+    {"sie", "oni|they", "oni"},
+};
+
+const TypedQ trans_p13[] = {
+    {"aber", "ale|but", "ale"},
+    {"das Alter", "věk|age", "věk"},
+    {"auch", "také|also|too", "také"},
+    {"aus", "z|from", "z"},
+    {"die Band, -s", "skupina|band", "(hudební) skupina"},
+    {"chatten, er chattet", "chatovat|to chat", "chatovat"},
+    {"das Computerspiel, -e", "počítačová hra|computer game", "počítačová hra"},
+    {"die/das E-Mail, -s", "e-mail|email", "e-mail"},
+    {"das Englisch", "angličtina|anglicky|english", "angličtina, anglicky"},
+    {"der Fan, -s", "fanoušek|fan", "fanoušek"},
+    {"das Französisch", "francouzština|francouzsky|french",
+     "francouzština, francouzsky"},
+    {"der Freund, -e", "kamarád|friend", "kamarád"},
+    {"die Freundin, -nen", "kamarádka|friend", "kamarádka"},
+    {"beste Freundin", "nejlepší kamarádka|best friend", "nejlepší kamarádka"},
+    {"der Fußball", "fotbal|football", "fotbal"},
+    {"Er ist Fußballfanatiker.", "je fotbalový fanatik|he is a football fanatic",
+     "Je fotbalový fanatik."},
+    {"gehen, er geht", "jít|to go", "jít"},
+    {"Ich gehe gern auf Konzerte.",
+     "rád chodím na koncerty|ráda chodím na koncerty|i like going to concerts",
+     "Rád(a) chodím na koncerty."},
+    {"gern", "rád|ráda|gladly", "rád/a"},
+    {"die Gitarre, -n", "kytara|guitar", "kytara"},
+    {"das Handy, -s", "mobil|mobile phone", "mobil"},
+    {"das Hobby, -s", "koníček|hobby", "koníček"},
+    {"hören, er hört", "poslouchat|to listen", "poslouchat"},
+    {"Er hört gern Musik.", "rád poslouchá hudbu|he likes listening to music",
+     "Rád poslouchá hudbu."},
+    {"im Internet surfen, er surft im Internet",
+     "surfovat na internetu|to surf the internet", "surfovat na internetu"},
+    {"immer", "pořád|neustále|always", "pořád, neustále"},
+    {"das Jahr, -e", "rok|year", "rok"},
+    {"kein/keine/kein", "žádný|žádná|žádné|no|none", "žádný/žádná/žádné"},
+    {"das Klavier, -e", "klavír|piano", "klavír"},
+    {"kommen (aus), er kommt", "přicházet|pocházet|to come|to come from",
+     "přicházet, pocházet (z)"},
+    {"Er kommt aus Wien.", "pochází z vídně|he comes from vienna",
+     "Pochází z Vídně."},
+    {"das Konzert, -e", "koncert|concert", "koncert"},
+    {"lernen, er lernt", "učit se|to learn", "učit se"},
+    {"liegen, er liegt", "ležet|to lie", "ležet"},
+    {"der Nachname, -n", "příjmení|surname|last name", "příjmení"},
+    {"nicht weit von", "nedaleko od|not far from", "nedaleko od"},
+    {"reisen, er reist", "cestovat|to travel", "cestovat"},
+    {"schreiben, er schreibt", "psát|to write", "psát"},
+    {"die Schule, -n", "škola|school", "škola"},
+    {"spielen, er spielt", "hrát|to play", "hrát"},
+    {"Sie spielt Gitarre.", "hraje na kytaru|she plays the guitar",
+     "Hraje na kytaru."},
+    {"tanzen, er tanzt", "tancovat|to dance", "tancovat"},
+    {"der Vorname, -n", "křestní jméno|first name", "křestní jméno"},
+    {"der Wohnort, -e", "bydliště|place of residence", "bydliště"},
+};
+
+const TypedQ trans_p14[] = {
+    {"falsch", "nesprávně|chybně|wrong|incorrect", "nesprávně, chybně"},
+    {"die Flöte, -n", "flétna|flute", "flétna"},
+    {"haben, er hat", "mít|to have", "mít"},
+    {"das Instrument, -e", "nástroj|instrument", "(hudební) nástroj"},
+    {"jetzt", "teď|now", "teď"},
+    {"machen, er macht", "dělat|to do|to make", "dělat"},
+    {"richtig", "správně|correct|right", "správně"},
+    {"der Sport", "sport", "sport"},
+    {"Sport treiben, er treibt Sport", "sportovat|to do sport", "sportovat"},
+    {"das Squash", "squash", "squash"},
+    {"das/der Yoga", "jóga|yoga", "jóga"},
+};
+
+const TypedQ trans_p15[] = {
+    {"bald", "brzy|soon", "brzy"},
+    {"Bis bald!", "brzy na shledanou|see you soon", "Brzy na shledanou!"},
+    {"bis", "do|until", "do"},
+    {"Bis zum nächsten Mal!", "do příštího setkání|until next time",
+     "Do příštího setkání!"},
+    {"die Frau, -en", "paní|woman|mrs", "paní"},
+    {"der Herr, -en", "pan|man|mr", "pan"},
+    {"Mach's gut!", "měj se hezky|take care", "Měj se hezky!"},
+    {"das Museum, Museen", "muzeum|museum", "muzeum"},
+    {"Sie gehen ins Museum.", "jdou do muzea|they are going to the museum",
+     "Jdou do muzea."},
+    {"schön", "hezký|beautiful|nice", "hezký"},
+    {"Einen schönen Tag noch!", "hezký zbytek dne|have a nice day",
+     "Hezký zbytek dne!"},
+    {"Servus!", "ahoj|hi", "Ahoj! (servus)"},
+    {"Tschüs!", "ahoj|bye", "Ahoj! (při loučení)"},
+    {"das Wiedersehen", "shledání|reunion", "shledání"},
+    {"Auf Wiedersehen!", "na shledanou|goodbye", "Na shledanou!"},
+};
+
+typedef struct {
+    const char *header;   /* i18n key, e.g. "Strana 10" */
+    const TypedQ *rows;
+    int n;
+} TransSection;
+
+static const TransSection trans_sections[] = {
+    {"Strana 10", trans_p10, (int)G_N_ELEMENTS(trans_p10)},
+    {"Strana 11", trans_p11, (int)G_N_ELEMENTS(trans_p11)},
+    {"Strana 12", trans_p12, (int)G_N_ELEMENTS(trans_p12)},
+    {"Strana 13", trans_p13, (int)G_N_ELEMENTS(trans_p13)},
+    {"Strana 14", trans_p14, (int)G_N_ELEMENTS(trans_p14)},
+    {"Strana 15", trans_p15, (int)G_N_ELEMENTS(trans_p15)},
+};
+
+typedef struct {
+    UnitCtx *unit;
+    int ex_num;
+    GtkWidget *feedback;
+    GtkWidget **entries;
+    GtkWidget **trans;
+    int total;
+} TransCtx;
+
+static void translate_check(GtkButton *button, gpointer data) {
+    TransCtx *ctx = data;
+    int ok = 0;
+    int idx = 0;
+
+    (void)button;
+
+    for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++) {
+        const TransSection *sec = &trans_sections[s];
+        for (int i = 0; i < sec->n; i++, idx++) {
+            const gchar *txt =
+                gtk_editable_get_text(GTK_EDITABLE(ctx->entries[idx]));
+            gchar *norm = normalize_answer(txt);
+            gboolean good =
+                txt && txt[0] && answer_accepts(norm, sec->rows[i].answers);
+
+            g_free(norm);
+            answer_mark(ctx->entries[idx], good);
+            if (good)
+                ok++;
+        }
+    }
+
+    for (int i = 0; i < ctx->total; i++)
+        if (ctx->trans[i])
+            gtk_widget_set_visible(ctx->trans[i], TRUE);
+
+    if (ok == ctx->total) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_done(ctx->unit, ctx->ex_num);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+    }
+}
+
+GtkWidget *build_translate(UnitCtx *unit) {
+    GtkWidget *body, *feedback, *check;
+    GtkWidget *page = ex_page_shell(unit->page, "Vokabeltraining",
+                                    "sub_translate", "check",
+                                    &body, &feedback, &check);
+    TransCtx *ctx = g_new0(TransCtx, 1);
+    int total = 0;
+    int idx = 0;
+
+    for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++)
+        total += trans_sections[s].n;
+
+    ctx->unit = unit;
+    ctx->ex_num = unit->branch_ex;
+    ctx->feedback = feedback;
+    ctx->total = total;
+    ctx->entries = g_new0(GtkWidget *, total);
+    ctx->trans = g_new0(GtkWidget *, total);
+
+    for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++) {
+        const TransSection *sec = &trans_sections[s];
+        GtkWidget *hdr = gtk_label_new(NULL);
+
+        i18n_bind(hdr, sec->header, 0);
+        gtk_widget_set_halign(hdr, GTK_ALIGN_START);
+        gtk_widget_add_css_class(hdr, "ex-sub");
+        gtk_widget_set_margin_top(hdr, s > 0 ? 12 : 0);
+        gtk_box_append(GTK_BOX(body), hdr);
+
+        for (int i = 0; i < sec->n; i++, idx++) {
+            GtkWidget *prompt = gtk_label_new(sec->rows[i].prompt);
+            GtkWidget *entry;
+
+            gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+            gtk_widget_add_css_class(prompt, "ex-prompt");
+            gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+            gtk_box_append(GTK_BOX(body), prompt);
+
+            entry = gtk_entry_new();
+            gtk_widget_set_hexpand(entry, FALSE);
+            gtk_widget_set_halign(entry, GTK_ALIGN_START);
+            gtk_box_append(GTK_BOX(body), entry);
+            ctx->entries[idx] = entry;
+
+            if (sec->rows[i].meaning)
+                ctx->trans[idx] = meaning_add(body, sec->rows[i].meaning);
+        }
+    }
+
+    g_signal_connect(check, "clicked", G_CALLBACK(translate_check), ctx);
+    return page;
+}
