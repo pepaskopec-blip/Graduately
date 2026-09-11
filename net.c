@@ -7,6 +7,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET_SLIDES,  .unit_page = "netunit1", .ex_page = "netex"  },
     { .n_slides = NET2_SLIDES, .unit_page = "netunit2", .ex_page = "netex2" },
     { .n_slides = NET3_SLIDES, .unit_page = "netunit3", .ex_page = "netex3" },
+    { .n_slides = NET4_SLIDES, .unit_page = "netunit4", .ex_page = "netex4" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -433,7 +434,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     GtkWidget *name;
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
-        "net_unit1", "net_unit2", "net_unit3"
+        "net_unit1", "net_unit2", "net_unit3", "net_unit4"
     };
 
     card = gtk_button_new();
@@ -810,6 +811,55 @@ GtkWidget *build_net_unit3_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[2], "net_unit3", slides, NET3_SLIDES);
+}
+
+GtkWidget *build_net_unit4_page(void) {
+    static const NetSlide slides[NET4_SLIDES] = {
+        {
+            "1 / 4   •   Přenos", "Paralelní a sériový přenos",
+            NULL,
+            {
+                "Paralelní: více bitů současně po více vodičích.",
+                "Problém: přeslechy (rušení) při delších kabelech",
+                "a vysokých frekvencích.",
+                "Sériový: bit po bitu po jednom vodiči.",
+                "Umožňuje vyšší frekvence i délky – celkově rychlejší.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Časování", "Asynchronní přenos",
+            "Tip: Start-bit = 0, Stop-bit = 1",
+            {
+                "Data se posílají v blocích (znaky 5–8 bitů).",
+                "Start-bit (0) synchronizuje začátek znaku.",
+                "Stop-bit (1) znak ukončuje.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Časování", "Synchronní přenos",
+            NULL,
+            {
+                "Řízeno společným hodinovým signálem.",
+                "Přesné časování mezi vysílačem a přijímačem.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Zabezpečení", "Parita, checksum a CRC",
+            "Tip: CRC je nejbezpečnější z těchto tří metod",
+            {
+                "Parita: nejslabší – přidá bit pro sudý/lichý počet jedniček.",
+                "Checksum: součet znaků jako dvojkových čísel.",
+                "CRC (cyklické kódy): nejbezpečnější,",
+                "počítá se z jednotlivých bitů v bloku.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[3], "net_unit4", slides, NET4_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -1447,6 +1497,140 @@ GtkWidget *build_net_unit3_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net3_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 4: data transmission and security quiz -------------------- */
+
+const ChoiceQ net4_qs[] = {
+    {"Paralelní přenos znamená:",
+     {"Bit po bitu po jednom vodiči",
+      "Více bitů současně po více vodičích",
+      "Jen Wi‑Fi bez kabelů", "Jen cloudové ukládání"}, 4, 1},
+    {"Hlavní problém paralelního přenosu při delších kabelech je:",
+     {"Absence serveru", "Přeslechy (rušení)", "Chybějící SaaS",
+      "Peer‑to‑peer režim"}, 4, 1},
+    {"Sériový přenos je oproti paralelnímu celkově:",
+     {"Vždy pomalejší", "Rychlejší díky vyšším frekvencím a délkám",
+      "Jen pro tiskárny", "Bez jakéhokoli kabelu"}, 4, 1},
+    {"V asynchronním přenosu start-bit má hodnotu:",
+     {"1", "0", "8", "255"}, 4, 1},
+    {"Synchronní přenos je řízen:",
+     {"Jen stop-bitem", "Společným hodinovým signálem",
+      "Jen paritou", "Jen checksumem"}, 4, 1},
+    {"Nejslabší metoda zabezpečení z uvedených je:",
+     {"CRC", "Checksum", "Parita", "Mainframe"}, 4, 2},
+    {"Checksum spočívá v:",
+     {"Přidání start-bitu", "Součtu znaků jako dvojkových čísel",
+      "Jen Wi‑Fi šifrování", "Výměně kabelů"}, 4, 1},
+    {"CRC (cyklické kódy) je z uvedených metod:",
+     {"Nejslabší", "Stejně slabá jako parita", "Nejbezpečnější",
+      "Jen pro paralelní přenos"}, 4, 2},
+};
+
+const char *net4_hints[] = {
+    "Více bitů najednou po více vodičích; problém jsou přeslechy",
+    "Přeslechy vznikají při delších kabelech a vysokých frekvencích",
+    "Bit po bitu po jednom vodiči – vyšší frekvence i délky",
+    "Start-bit (0) synchronizuje, Stop-bit (1) ukončuje znak",
+    "Řízeno společným hodinovým signálem a přesným časováním",
+    "Nejslabší – přidá bit pro sudý/lichý počet jedniček",
+    "Součet znaků jako dvojkových čísel",
+    "Nejbezpečnější – počítá se z jednotlivých bitů v bloku",
+};
+
+GtkWidget *build_net_unit4_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net4_qs);
+    int n_opts = net4_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit4", "net_ex4_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k přenosu dat a zabezpečení");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net4_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net4_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net4_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net4_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
