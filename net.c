@@ -8,6 +8,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET2_SLIDES, .unit_page = "netunit2", .ex_page = "netex2" },
     { .n_slides = NET3_SLIDES, .unit_page = "netunit3", .ex_page = "netex3" },
     { .n_slides = NET4_SLIDES, .unit_page = "netunit4", .ex_page = "netex4" },
+    { .n_slides = NET5_SLIDES, .unit_page = "netunit5", .ex_page = "netex5" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -434,7 +435,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     GtkWidget *name;
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
-        "net_unit1", "net_unit2", "net_unit3", "net_unit4"
+        "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5"
     };
 
     card = gtk_button_new();
@@ -860,6 +861,55 @@ GtkWidget *build_net_unit4_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[3], "net_unit4", slides, NET4_SLIDES);
+}
+
+GtkWidget *build_net_unit5_page(void) {
+    static const NetSlide slides[NET5_SLIDES] = {
+        {
+            "1 / 4   •   Signál", "Analogový a digitální signál",
+            "Tip: f = 1/T",
+            {
+                "Analogový: spojitý, nabývá libovolných hodnot.",
+                "Digitální: diskrétní, hodnoty 0 a 1.",
+                "Parametry signálu:",
+                "perioda T, frekvence f = 1/T,",
+                "amplituda A, fázový posun Φ.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Modulace", "Základní typy modulace",
+            "Modulace = přenos v přeloženém pásmu",
+            {
+                "AM – amplitudová modulace.",
+                "FM – frekvenční modulace.",
+                "PM – fázová modulace.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Kombinované", "QPSK a 256-QAM",
+            NULL,
+            {
+                "QPSK: 2 bity v jednom prvku (symbolu).",
+                "256-QAM: 8 bitů v jednom prvku.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Rychlosti", "Modulační, přenosová a šířka pásma",
+            NULL,
+            {
+                "Modulační rychlost: počet změn signálu za sekundu [Baud, Bd/s].",
+                "Přenosová rychlost: velikost přenesené informace [bit/s, bps].",
+                "Šířka pásma: rozsah frekvencí –",
+                "určuje maximální možnou rychlost.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[4], "net_unit5", slides, NET5_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -1631,6 +1681,138 @@ GtkWidget *build_net_unit4_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net4_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 5: signals and modulation quiz ---------------------------- */
+
+const ChoiceQ net5_qs[] = {
+    {"Digitální signál nabývá:",
+     {"Libovolných spojitých hodnot", "Diskrétních hodnot 0 a 1",
+      "Jen frekvence FM", "Jen šířky pásma"}, 4, 1},
+    {"Frekvence f je:",
+     {"Stejná jako amplituda", "f = 1/T", "Jen fázový posun",
+      "Počet bitů v QPSK"}, 4, 1},
+    {"AM, FM a PM jsou:",
+     {"Typy kabelů", "Základní typy modulace", "Jen CRC metody",
+      "Typy serverů"}, 4, 1},
+    {"QPSK přenáší v jednom prvku:",
+     {"1 bit", "2 bity", "8 bitů", "256 bitů"}, 4, 1},
+    {"256-QAM přenáší v jednom prvku:",
+     {"2 bity", "4 bity", "8 bitů", "16 bitů"}, 4, 2},
+    {"Modulační rychlost se udává v:",
+     {"Jen bit/s", "Baud (Bd/s)", "Jen metrech", "Jen hertzech amplitudy"}, 4, 1},
+    {"Přenosová rychlost vyjadřuje:",
+     {"Počet změn signálu za sekundu", "Velikost přenesené informace [bit/s]",
+      "Jen fázový posun", "Jen periodu T"}, 4, 1},
+    {"Šířka pásma určuje:",
+     {"Jen barvu kabelu", "Maximální možnou přenosovou rychlost",
+      "Jen počet serverů", "Jen start-bit"}, 4, 1},
+};
+
+const char *net5_hints[] = {
+    "Analogový je spojitý, digitální má diskrétní hodnoty 0 a 1",
+    "Frekvence f = 1/T, kde T je perioda",
+    "AM mění amplitudu, FM frekvenci, PM fázi",
+    "QPSK nese 2 bity v prvku, 256-QAM nese 8 bitů",
+    "QPSK nese 2 bity v prvku, 256-QAM nese 8 bitů",
+    "Modulační rychlost = počet změn signálu za sekundu [Bd/s]",
+    "Přenosová rychlost = množství informace za sekundu [bit/s]",
+    "Šířka pásma určuje maximální možnou přenosovou rychlost",
+};
+
+GtkWidget *build_net_unit5_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net5_qs);
+    int n_opts = net5_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit5", "net_ex5_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k signálům a modulaci");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net5_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net5_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net5_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net5_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
