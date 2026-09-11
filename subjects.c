@@ -266,7 +266,7 @@ GtkWidget *build_subjects_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("welcome", "subjects_title", "subjects_sub"));
+                   top_bar("welcome", "subjects_title", NULL));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),

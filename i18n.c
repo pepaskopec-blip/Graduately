@@ -174,8 +174,6 @@ const TrEntry tr_ui[] = {
     {"stats_pct_fmt", "%d %%", "%d %%"},
     {"stats_units_fmt", "%d / %d", "%d / %d"},
     {"subjects_title", "Předměty", "Subjects"},
-    {"subjects_sub", "Zatím je dostupný předmět Deutsch.",
-     "Only Deutsch is available so far."},
     {"Český jazyk a literatura", "Český jazyk a literatura",
      "Czech Language and Literature"},
     {"Občanská nauka", "Občanská nauka", "Civics"},
