@@ -6,6 +6,7 @@
 NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET_SLIDES,  .unit_page = "netunit1", .ex_page = "netex"  },
     { .n_slides = NET2_SLIDES, .unit_page = "netunit2", .ex_page = "netex2" },
+    { .n_slides = NET3_SLIDES, .unit_page = "netunit3", .ex_page = "netex3" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -431,7 +432,9 @@ void net_add_node(GtkFixed *fixed, int index) {
     GtkWidget *icon;
     GtkWidget *name;
     char *text;
-    static const char *unit_keys[NET_LESSONS] = { "net_unit1", "net_unit2" };
+    static const char *unit_keys[NET_LESSONS] = {
+        "net_unit1", "net_unit2", "net_unit3"
+    };
 
     card = gtk_button_new();
     gtk_widget_add_css_class(card, "unit-node");
@@ -753,6 +756,60 @@ GtkWidget *build_net_unit2_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[1], "net_unit2", slides, NET2_SLIDES);
+}
+
+GtkWidget *build_net_unit3_page(void) {
+    static const NetSlide slides[NET3_SLIDES] = {
+        {
+            "1 / 4   •   Servery", "Role serverů a typy podle služby",
+            NULL,
+            {
+                "Servery ověřují uživatele a povolují přístup.",
+                "Souborový server (fileserver): sdílení souborů.",
+                "Tiskový server: sdílení tiskáren.",
+                "Poštovní server: e‑mailové služby.",
+                "Databázový server: správa a přístup k databázím.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Rozložení", "Centralizovaný a distribuovaný server",
+            NULL,
+            {
+                "Centralizovaný: jeden server v síti.",
+                "Výpadek = nedostupnost služby.",
+                "Distribuovaný: více serverů, každý obsluhuje část.",
+                "Vyšší spolehlivost a rychlost.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Využití", "Vyhrazený, nevyhrazený a mainframe",
+            NULL,
+            {
+                "Nevyhrazený: slouží i jako stanice (levnější).",
+                "Vyhrazený: jen síťové služby – vysoký výkon a bezpečnost,",
+                "typicky v racku.",
+                "Mainframe: obří sálové počítače (IBM, Siemens),",
+                "stovky procesorů, OS Unix (AIX, Solaris).",
+                "Použití: banky a státní správa.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Cloud", "Cloudové služby",
+            "Tip: SaaS = software jako služba",
+            {
+                "Cloud: globální síť vzdálených serverů propojených internetem.",
+                "Fungují jako jeden systém: ukládání dat, SaaS,",
+                "streamování, webová pošta.",
+                "Přístup online z jakéhokoli zařízení.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[2], "net_unit3", slides, NET3_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -1254,6 +1311,142 @@ GtkWidget *build_net_unit2_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net2_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 3: client–server and cloud quiz --------------------------- */
+
+const ChoiceQ net3_qs[] = {
+    {"Co typicky dělají servery v síti?",
+     {"Jen tisknou dokumenty", "Ověřují uživatele a povolují přístup",
+      "Nahrazují kabely", "Slouží jen jako Wi‑Fi"}, 4, 1},
+    {"Fileserver je:",
+     {"Tiskový server", "Poštovní server", "Souborový server",
+      "Databázový server"}, 4, 2},
+    {"Centralizovaný server znamená:",
+     {"Více serverů v síti", "Jeden server – výpadek = nedostupnost služby",
+      "Server jen pro tisk", "Cloud bez internetu"}, 4, 1},
+    {"Distribuovaný model serverů nabízí hlavně:",
+     {"Nižší spolehlivost", "Vyšší spolehlivost a rychlost",
+      "Jen levnější kabely", "Odstranění uživatelů"}, 4, 1},
+    {"Nevyhrazený server:",
+     {"Slouží jen síťovým službám", "Slouží i jako pracovní stanice",
+      "Je vždy mainframe", "Nemůže ověřovat uživatele"}, 4, 1},
+    {"Vyhrazený server je určen:",
+     {"Jen jako stanice uživatele", "Jen pro síťové služby",
+      "Jen pro Bluetooth", "Jen pro dočasné Wi‑Fi"}, 4, 1},
+    {"Mainframe se typicky používá:",
+     {"Jen v domácnostech", "V bankách a státní správě",
+      "Jen pro streamování hudby", "Jen jako tiskárna"}, 4, 1},
+    {"Cloud a SaaS znamenají především:",
+     {"Lokální síť bez internetu",
+      "Vzdálené servery a software jako služba online",
+      "Jen jeden kabel v budově", "Peer‑to‑peer bez serverů"}, 4, 1},
+};
+
+const char *net3_hints[] = {
+    "Ověřují uživatele a povolují přístup ke službám",
+    "Fileserver = souborový server",
+    "Jeden server – při výpadku je služba nedostupná",
+    "Více serverů, každý obsluhuje část – vyšší spolehlivost",
+    "Slouží zároveň i jako pracovní stanice",
+    "Jen síťové služby – vysoký výkon a bezpečnost, často v racku",
+    "Obří sálové počítače (IBM, Siemens) pro banky a státní správu",
+    "SaaS = software jako služba, přístup online z libovolného zařízení",
+};
+
+GtkWidget *build_net_unit3_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net3_qs);
+    int n_opts = net3_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit3", "net_ex3_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz ke klient–server a cloudu");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net3_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net3_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net3_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net3_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);

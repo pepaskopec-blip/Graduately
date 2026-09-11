@@ -47,7 +47,8 @@
 #define NET_GRID_COLS    6
 #define NET_SLIDES      4
 #define NET2_SLIDES     5
-#define NET_LESSONS     2
+#define NET3_SLIDES     4
+#define NET_LESSONS     3
 
 typedef enum {
     THEME_CATPPUCCIN = 0,
@@ -1007,6 +1008,7 @@ GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
                                const NetSlide *slides, guint n_slides);
 GtkWidget *build_net_unit1_page(void);
 GtkWidget *build_net_unit2_page(void);
+GtkWidget *build_net_unit3_page(void);
 GtkWidget *net_qz_combo(void);
 void net_qz_set_prefix(GtkComboBoxText *c, int pfx);
 int net_qz_prefix(GtkComboBoxText *c);
@@ -1019,6 +1021,7 @@ GtkWidget *net_qz_make_entry(void);
 GtkWidget *build_net_exercise_page(void);
 void net_mcq_check(GtkButton *button, gpointer data);
 GtkWidget *build_net_unit2_exercise_page(void);
+GtkWidget *build_net_unit3_exercise_page(void);
 void activate(GtkApplication *app, gpointer user_data);
 int main(int argc, char **argv);
 
