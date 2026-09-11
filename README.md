@@ -32,6 +32,9 @@ GTK 4 interface.
   - **Správa počítačových sítí / Computer Network Administration** is open too
     (shown with a Wi-Fi icon) and leads to a 30-unit computer-networks path;
     **units 1–10 are playable**, units 11–30 are locked placeholders
+  - **Technické vybavení / Computer Hardware** is open (chip icon) and leads
+    to a 10-unit hardware path; **units 1–3 are playable**, units 4–10 are
+    locked placeholders
   - the remaining subjects are dimmed/locked placeholders until their content
     is added
   - layout folds into multiple rows when the window is narrow
@@ -74,15 +77,24 @@ GTK 4 interface.
   10. Model ISO/OSI a TCP/IP – slides + quiz  
   Progress for networks is saved to `progress/net.conf` (one flag per unit);
   completed network units show a checkmark on the path and count in Statistics
+- **Computer hardware path** – three unlocked units (theory slides + quiz):
+  1. **Architektura počítače / Computer architecture** – von Neumann, the
+     von Neumann model (ALU, control unit, memory, I/O), then a quiz
+  2. **Historie počítačů / History of computers** – generations 0–4 (vacuum
+     tubes, transistors, ICs, microprocessors and milestones), then a quiz
+  3. **Zobrazování dat / Data representation** – bit and byte, then a quiz  
+  Progress for hardware is saved to `progress/hw.conf`; completed units show
+  a checkmark on the path and count in Statistics
 - **Progress tracking** – completed exercises are marked green; progress is
   saved per unit to `progress/unit1.conf`, `progress/unit2.conf` and
   `progress/unit3.conf` and restored on startup
 - **Statistics** – chart icon in the header opens a per-subject progress
   overview: summary totals (exercises done, percent, finished units) at the
   top, then every subject with its own progress bar (subjects without tracked
-  content yet are shown as locked; **networks** use lesson completion from
-  `progress/net.conf`), and a per-unit breakdown with progress bars for
-  Deutsch; numbers update as soon as you finish an exercise
+  content yet are shown as locked; **networks** and **hardware** use lesson
+  completion from `progress/net.conf` / `progress/hw.conf`), and a per-unit
+  breakdown with progress bars for Deutsch; numbers update as soon as you
+  finish an exercise
 - **Settings** – gear icon in the top-right header opens a panel where you can
   choose:
   - **mode**: dark or light, as a segmented control
@@ -276,9 +288,9 @@ Follow these steps to compile and run on Windows.
 When launched, the application shows the welcome screen. From there:
 
 1. Click **"Pokračuj" / "Continue"** to open the **Předměty / Subjects** map.
-2. Click the **Deutsch** bubble (German flag) to open the German learning
-   roadmap, or the **IP** bubble ("Správa počítačových sítí") for the
-   computer-networks path. Other subjects are still locked.
+2. Click the **Deutsch** bubble (German flag) for the German path, the **Wi-Fi**
+   bubble ("Správa počítačových sítí") for networks, or the **chip** bubble
+   ("Technické vybavení") for hardware. Other subjects are still locked.
 3. Browse the units along the path; the roadmap reflows into rows and scrolls
    if the window is too narrow.
 4. Click the **"Neue Freunde"** node to open unit 1, **"Aus aller Welt"** for
@@ -291,19 +303,24 @@ When launched, the application shows the welcome screen. From there:
    a multiple-choice quiz (basic concepts, client–server/cloud, transmission
    security, signals, path/channel/circuit, multiplexing, switching, layered
    models, ISO/OSI & TCP/IP). Units 11–30 stay locked placeholders.
-6. Use the **back button** in the top-left corner to return to the previous
+6. On the hardware path, units **1–3** are open (architecture / von Neumann,
+   computer history generations, bit & byte), each with slides and a quiz.
+   Units 4–10 stay locked.
+7. Use the **back button** in the top-left corner to return to the previous
    screen.
-7. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
+8. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
    grouped per subject (overall totals plus, for Deutsch, a per-unit
-   breakdown). Network lesson completion is included in the subject totals.
-8. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
+   breakdown). Network and hardware lesson completion is included in the
+   subject totals.
+9. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
-German units 1–3 and network units 1–10 are currently implemented. Locked
-nodes do nothing – they are placeholders until lessons are added. Completed
-Deutsch exercises stay green and are saved per unit to `progress/unit1.conf` /
-`progress/unit2.conf` / `progress/unit3.conf`. Completed network units are
-saved to `progress/net.conf`.
+German units 1–3, network units 1–10 and hardware units 1–3 are currently
+implemented. Locked nodes do nothing – they are placeholders until lessons are
+added. Completed Deutsch exercises stay green and are saved per unit to
+`progress/unit1.conf` / `progress/unit2.conf` / `progress/unit3.conf`.
+Completed network units are saved to `progress/net.conf`; hardware units to
+`progress/hw.conf`.
 
 #### Keyboard shortcuts
 
@@ -319,7 +336,7 @@ maturita.h              shared types, macros, globals and prototypes
 globals.c               shared global state (window, stack, units, theme, …)
 theme.c                 theme palettes, stylesheet injection and settings file
 i18n.c                  Czech/English translation tables and language switching
-icons.c                 Cairo-drawn vector icons (check, lock, wifi, gear, …)
+icons.c                 Cairo-drawn vector icons (check, lock, wifi, chip, …)
 util.c                  small helpers (answer normalisation, feedback, umlaut note)
 progress.c              per-unit exercise progress (load/save/completion)
 stats.c                 statistics page and progress aggregation
@@ -334,6 +351,8 @@ exercise_u3.c           unit 3 ("Bei uns zu Hause") exercises
 settings.c              settings popover (mode, theme, language)
 net.c                   computer-networks path (30 nodes), units 1–10 slides
                         and exercises (unit 1: VLSM practice; 2–10: MC quizzes)
+hw.c                    computer-hardware path (10 nodes), units 1–3 slides
+                        and quizzes (architecture, history, bit/byte)
 main.c                  application entry point and page wiring
 style.css               GTK stylesheet (palette colors are injected at runtime)
 Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` on Windows
@@ -348,6 +367,7 @@ progress/               created at runtime
   unit2.conf            unit 2 exercise completion state
   unit3.conf            unit 3 exercise completion state
   net.conf              computer-networks lesson completion
+  hw.conf               computer-hardware lesson completion
   settings.conf         theme, dark/light mode and language preference
 ```
 
@@ -384,6 +404,7 @@ German in both languages.
   - [x] Unit 3 ("Bei uns zu Hause") – 15 interactive exercises
 - [x] Computer networks units 1–10 (IP/VLSM + nine theory units with quizzes)
 - [x] Progress tracking / statistics for the networks path
+- [x] Technické vybavení units 1–3 (architecture, history, bit/byte + quizzes)
 - [ ] Lesson progression and unlock system for the remaining units
 - [ ] Add audio pronunciation features
 - [x] Add user settings panel (theme, dark/light mode, language)
@@ -434,6 +455,9 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   - **Správa počítačových sítí** je také otevřená (ikona Wi‑Fi) a vede na cestu
     s 30 jednotkami; **jednotky 1–10 jsou hratelné**, 11–30 jsou zamčené
     placeholdery
+  - **Technické vybavení** je otevřené (ikona čipu) a vede na cestu
+    s 10 jednotkami; **jednotky 1–3 jsou hratelné**, 4–10 jsou zamčené
+    placeholdery
   - ostatní předměty jsou ztmavené / zamčené placeholdery
   - při úzkém okně se mapa zalomí do více řad
 - **Učební cesta** – přizpůsobivá cesta s 10 jednotkami
@@ -469,13 +493,22 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   10. Model ISO/OSI a TCP/IP – snímky + kvíz  
   Postup u sítí se ukládá do `progress/net.conf` (příznak na jednotku);
   dokončené jednotky mají fajfku na cestě a počítají se ve Statistikách
+- **Cesta technického vybavení** – tři odemčené jednotky (snímky + kvíz):
+  1. **Architektura počítače** – von Neumann, Von Neumannovo schéma (ALS,
+     řadič, paměť, V/V) a kvíz
+  2. **Historie počítačů** – generace 0–4 (elektronky, tranzistory, IO,
+     mikroprocesory a milníky) a kvíz
+  3. **Zobrazování dat v počítači** – bit a byte a kvíz  
+  Postup se ukládá do `progress/hw.conf`; dokončené jednotky mají fajfku
+  na cestě a počítají se ve Statistikách
 - **Ukládání postupu** – hotová cvičení zezelenají; stav se ukládá do
   `progress/unit1.conf`, `progress/unit2.conf` a `progress/unit3.conf` a při
   startu se načte zpět
 - **Statistiky** – ikona grafu v hlavičce ukáže postup po předmětech (součty,
   procenta, dokončené jednotky), progress bary u každého předmětu (předměty
-  bez trackovaného obsahu jsou zamčené; **sítě** berou dokončení lekcí z
-  `progress/net.conf`) a rozpad po jednotkách u Deutsch
+  bez trackovaného obsahu jsou zamčené; **sítě** a **technické vybavení**
+  berou dokončení lekcí z `progress/net.conf` / `progress/hw.conf`) a rozpad
+  po jednotkách u Deutsch
 - **Nastavení** – ozubené kolečko vpravo nahoře:
   - **režim**: tmavý / světlý
   - **téma**: 10 barevných palet
@@ -670,9 +703,10 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
 
 1. Klikněte na **"Pokračuj" / "Continue"** a otevře se mapa **Předměty /
    Subjects**.
-2. Klikněte na bublinu **Deutsch** (německá vlajka) pro německou cestu, nebo
-   na bublinu **IP** („Správa počítačových sítí“) pro síťovou cestu. Ostatní
-   předměty jsou zatím zamčené.
+2. Klikněte na bublinu **Deutsch** (německá vlajka) pro německou cestu, na
+   bublinu **Wi‑Fi** („Správa počítačových sítí“) pro sítě, nebo na bublinu
+   **čipu** („Technické vybavení“) pro hardware. Ostatní předměty jsou zatím
+   zamčené.
 3. Procházejte jednotky po cestě; při úzkém okně se cesta zalomí a scrolluje.
 4. Otevřete **"Neue Freunde"** (jednotka 1), **"Aus aller Welt"** (2) nebo
    **"Bei uns zu Hause"** (3) a vyberte bublinu cvičení. Jednotky 2 a 3 jdou
@@ -683,18 +717,21 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
    (základní pojmy, klient–server/cloud, zabezpečení přenosu, signály, cesta/
    kanál/okruh, multiplex, přepojování, vrstevnaté modely, ISO/OSI a TCP/IP).
    Jednotky 11–30 zůstávají zamčené.
-6. Tlačítkem **zpět** vlevo nahoře se vrátíte na předchozí obrazovku.
-7. **Statistiky** (ikona grafu vpravo nahoře) ukazují postup po předmětech
-   (u Deutsch i po jednotkách). Dokončené síťové lekce se započítávají do
-   součů předmětu.
-8. **Nastavení** (ozubené kolečko) – tmavý/světlý režim, barevné téma nebo
+6. Na cestě technického vybavení jsou otevřené jednotky **1–3** (architektura /
+   von Neumann, historie generací, bit a byte), každá se snímky a kvízem.
+   Jednotky 4–10 zůstávají zamčené.
+7. Tlačítkem **zpět** vlevo nahoře se vrátíte na předchozí obrazovku.
+8. **Statistiky** (ikona grafu vpravo nahoře) ukazují postup po předmětech
+   (u Deutsch i po jednotkách). Dokončené síťové a hardwarové lekce se
+   započítávají do součů předmětu.
+9. **Nastavení** (ozubené kolečko) – tmavý/světlý režim, barevné téma nebo
    jazyk rozhraní.
 
-Hotové jsou německé jednotky 1–3 a síťové jednotky 1–10. Zamčené uzly nic
-nedělají – jsou to placeholdery. Dokončená německá cvičení zůstanou zelená a
-ukládají se do `progress/unit1.conf` / `progress/unit2.conf` /
-`progress/unit3.conf`. Dokončené síťové jednotky se ukládají do
-`progress/net.conf`.
+Hotové jsou německé jednotky 1–3, síťové jednotky 1–10 a hardwarové jednotky
+1–3. Zamčené uzly nic nedělají – jsou to placeholdery. Dokončená německá
+cvičení zůstanou zelená a ukládají se do `progress/unit1.conf` /
+`progress/unit2.conf` / `progress/unit3.conf`. Dokončené síťové jednotky se
+ukládají do `progress/net.conf`, hardwarové do `progress/hw.conf`.
 
 #### Klávesové zkratky
 
@@ -710,7 +747,7 @@ maturita.h              sdílené typy, makra, globální proměnné a prototypy
 globals.c               sdílený globální stav (okno, stack, jednotky, téma, …)
 theme.c                 palety témat, vkládání stylu a soubor nastavení
 i18n.c                  české/anglické překlady a přepínání jazyka
-icons.c                 vektorové ikony kreslené Cairem (fajfka, zámek, wifi, …)
+icons.c                 vektorové ikony kreslené Cairem (fajfka, zámek, wifi, čip, …)
 util.c                  pomocné funkce (normalizace odpovědí, feedback, poznámka)
 progress.c              postup cvičení jednotek (načtení/uložení/dokončení)
 stats.c                 stránka statistik a agregace pokroku
@@ -725,6 +762,8 @@ exercise_u3.c           cvičení jednotky 3 („Bei uns zu Hause“)
 settings.c              panel nastavení (režim, téma, jazyk)
 net.c                   cesta počítačových sítí (30 uzlů), jednotky 1–10
                         (1: VLSM cvičení; 2–10: kvízy s výběrem)
+hw.c                    cesta technického vybavení (10 uzlů), jednotky 1–3
+                        (architektura, historie, bit/byte + kvízy)
 main.c                  vstupní bod aplikace a zapojení stránek
 style.css               GTK styl (barvy palety se vkládají za běhu)
 Makefile                build & run (Linux, macOS, MSYS2); `make bundle` na Windows
@@ -739,6 +778,7 @@ progress/               vzniká za běhu
   unit2.conf            stav cvičení jednotky 2
   unit3.conf            stav cvičení jednotky 3
   net.conf              dokončení síťových lekcí
+  hw.conf               dokončení hardwarových lekcí
   settings.conf         téma, režim a jazyk
 ```
 
@@ -772,6 +812,7 @@ rozhraní.
   - [x] Jednotka 3 („Bei uns zu Hause“) – 15 cvičení
 - [x] Počítačové sítě: jednotky 1–10 (IP/VLSM + 9 teoretických s kvízy)
 - [x] Ukládání postupu / statistiky pro síťovou cestu
+- [x] Technické vybavení: jednotky 1–3 (architektura, historie, bit/byte + kvízy)
 - [ ] Postupné odemykání zbývajících jednotek
 - [ ] Audio / výslovnost
 - [x] Panel nastavení (téma, režim, jazyk)
