@@ -80,6 +80,7 @@ const TrEntry tr_ui[] = {
      "Přeložte slovo. Špatná odpověď se vrátí na konec.",
      "Translate the word. Wrong answers come back at the end."},
     {"trans_wrong", "Špatně. Správně: %s", "Wrong. Correct: %s"},
+    {"trans_incomplete", "Nepřesné – něco chybí.", "Almost – something is missing."},
     {"trans_progress", "Hotovo: %d / %d", "Done: %d / %d"},
     {"trans_done", "Hotovo! Zvládl(a) jsi všechna slova.",
      "Done! You mastered all the words."},

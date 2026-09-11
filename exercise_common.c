@@ -155,6 +155,39 @@ gboolean answer_accepts(const char *sel_norm, const char *ans) {
     return ok;
 }
 
+/* True when the typed answer matches the beginning of an accepted answer but
+ * is missing one or more trailing words (e.g. "jmenovat" for "jmenovat se").
+ * Used to warn about an incomplete answer before counting it wrong. */
+gboolean answer_is_incomplete(const char *sel_norm, const char *ans) {
+    gchar **parts = g_strsplit(ans, "|", -1);
+    gboolean incomplete = FALSE;
+
+    for (int i = 0; parts[i] != NULL && !incomplete; i++) {
+        gchar *a = normalize_answer(parts[i]);
+        gchar **sel_w = g_strsplit(sel_norm, " ", -1);
+        gchar **ans_w = g_strsplit(a, " ", -1);
+        int nsel = g_strv_length(sel_w);
+        int nans = g_strv_length(ans_w);
+        int k;
+
+        if (sel_norm[0] && nsel > 0 && nsel < nans) {
+            incomplete = TRUE;
+            for (k = 0; k < nsel; k++) {
+                if (g_strcmp0(sel_w[k], ans_w[k]) != 0) {
+                    incomplete = FALSE;
+                    break;
+                }
+            }
+        }
+        g_strfreev(sel_w);
+        g_strfreev(ans_w);
+        g_free(a);
+    }
+
+    g_strfreev(parts);
+    return incomplete;
+}
+
 void combo_list_check(GtkButton *button, gpointer data) {
     ComboListCtx *ctx = data;
     guint total = ctx->combos->len;

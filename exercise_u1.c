@@ -1062,7 +1062,7 @@ const TypedQ trans_p13[] = {
     {"das Alter", "věk|age", "věk"},
     {"auch", "také|taky|also|too", "také"},
     {"aus", "z|ze|from", "z"},
-    {"die Band, -s", "skupina|kapela|band", "(hudební) skupina"},
+    {"die Band, -s", "skupina|hudební skupina|kapela|hudební kapela|band", "(hudební) skupina"},
     {"chatten (Infinitiv)", "chatovat|chatuje|to chat", "chatovat"},
     {"das Computerspiel, -e", "počítačová hra|computer game", "počítačová hra"},
     {"die/das E-Mail, -s", "e-mail|email", "e-mail"},
@@ -1079,7 +1079,7 @@ const TypedQ trans_p13[] = {
      "Je fotbalový fanatik."},
     {"gehen (Infinitiv)", "jít|jde|chodit|to go", "jít"},
     {"Ich gehe gern auf Konzerte.",
-     "rád chodím na koncerty|ráda chodím na koncerty|i like going to concerts",
+     "rád chodím na koncerty|ráda chodím na koncerty|chodím rád na koncerty|chodím ráda na koncerty|i like going to concerts",
      "Rád(a) chodím na koncerty."},
     {"gern", "rád|ráda|gladly", "rád/a"},
     {"die Gitarre, -n", "kytara|guitar", "kytara"},
@@ -1096,7 +1096,7 @@ const TypedQ trans_p13[] = {
     {"kein/keine/kein", "žádný|žádná|žádné|no|none", "žádný/žádná/žádné"},
     {"das Klavier, -e", "klavír|piano", "klavír"},
     {"kommen (Infinitiv, aus)",
-     "přicházet|přijít|přichází|pochází|to come|to come from",
+     "přicházet|přijít|přichází|pocházet|pochází|to come|to come from",
      "přicházet, pocházet (z)"},
     {"Er kommt aus Wien.",
      "pochází z vídně|he comes from vienna|he is from vienna",
@@ -1119,30 +1119,30 @@ const TypedQ trans_p13[] = {
 };
 
 const TypedQ trans_p14[] = {
-    {"falsch", "nesprávně|chybně|špatně|wrong|incorrect", "nesprávně, chybně"},
+    {"falsch", "nesprávně|chybně|špatně|nepravda|wrong|incorrect", "nesprávně, chybně"},
     {"die Flöte, -n", "flétna|flute", "flétna"},
     {"haben (Infinitiv)", "mít|má|to have", "mít"},
-    {"das Instrument, -e", "nástroj|instrument", "(hudební) nástroj"},
+    {"das Instrument, -e", "nástroj|hudební nástroj|instrument", "(hudební) nástroj"},
     {"jetzt", "teď|nyní|now", "teď"},
     {"machen (Infinitiv)", "dělat|dělá|to do|to make", "dělat"},
     {"richtig", "správně|správný|correct|right", "správně"},
     {"der Sport", "sport", "sport"},
     {"Sport treiben (Infinitiv)",
-     "sportovat|sportuje|provozovat sport|to do sport", "sportovat"},
+     "sportovat|sportuje|provozovat sport|dělat sport|to do sport", "sportovat"},
     {"das Squash", "squash", "squash"},
     {"das/der Yoga", "jóga|yoga", "jóga"},
 };
 
 const TypedQ trans_p15[] = {
-    {"bald", "brzy|soon", "brzy"},
-    {"Bis bald!", "brzy na shledanou|brzy se uvidíme|see you soon",
+    {"bald", "brzy|brzo|soon", "brzy"},
+    {"Bis bald!", "brzy na shledanou|brzo na shledanou|brzy se uvidíme|brzo se uvidíme|see you soon",
      "Brzy na shledanou!"},
     {"bis", "do|až|until", "do"},
     {"Bis zum nächsten Mal!", "do příštího setkání|do příště|until next time",
      "Do příštího setkání!"},
-    {"die Frau, -en", "paní|žena|woman|mrs", "paní"},
+    {"die Frau, -en", "paní|žena|manželka|woman|mrs|wife", "paní"},
     {"der Herr, -en", "pan|muž|man|mr", "pan"},
-    {"Mach's gut!", "měj se hezky|měj se|take care", "Měj se hezky!"},
+    {"Mach's gut!", "měj se hezky|měj se|mějte se hezky|mějte se|take care", "Měj se hezky!"},
     {"das Museum, Museen", "muzeum|museum", "muzeum"},
     {"Sie gehen ins Museum.",
      "jdou do muzea|they are going to the museum|they go to the museum",
@@ -1186,6 +1186,7 @@ typedef struct {
     int done;
     int *order;           /* queue of word indices, order[0] = current */
     int qn;               /* words still in the queue                  */
+    gboolean warned;      /* current word already got an "incomplete" warning */
 } TransCtx;
 
 /* Canonical translation of a word, in the current UI language. */
@@ -1203,11 +1204,13 @@ static void trans_update_progress(TransCtx *ctx) {
 }
 
 static void trans_show(TransCtx *ctx) {
+    ctx->warned = FALSE;
+
     if (ctx->qn <= 0) {
         gtk_label_set_text(GTK_LABEL(ctx->header), "");
         gtk_label_set_text(GTK_LABEL(ctx->prompt), tr("trans_done"));
         gtk_widget_set_visible(ctx->entry, FALSE);
-        gtk_widget_set_sensitive(ctx->check, FALSE);
+        gtk_widget_set_visible(ctx->check, FALSE);
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
         trans_update_progress(ctx);
         mark_done(ctx->unit, ctx->ex_num);
@@ -1255,6 +1258,16 @@ static void translate_check(GtkButton *button, gpointer data) {
     txt = gtk_editable_get_text(GTK_EDITABLE(ctx->entry));
     norm = normalize_answer(txt ? txt : "");
     good = txt && txt[0] && answer_accepts(norm, q->answers);
+
+    /* Nearly there (e.g. "jmenovat" for "jmenovat se"): warn in yellow and let
+     * the student finish the answer. A second Check on the same word counts. */
+    if (!good && !ctx->warned && txt && txt[0] &&
+        answer_is_incomplete(norm, q->answers)) {
+        g_free(norm);
+        ctx->warned = TRUE;
+        set_feedback_warn(ctx->feedback, tr("trans_incomplete"));
+        return;
+    }
     g_free(norm);
 
     /* Pop the current word off the front of the queue. */

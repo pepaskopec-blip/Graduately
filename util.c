@@ -92,7 +92,17 @@ void answer_mark(GtkWidget *widget, gboolean ok) {
 void set_feedback(GtkWidget *label, gboolean ok, const char *text) {
     gtk_widget_remove_css_class(label, "feedback-ok");
     gtk_widget_remove_css_class(label, "feedback-err");
+    gtk_widget_remove_css_class(label, "feedback-warn");
     gtk_widget_add_css_class(label, ok ? "feedback-ok" : "feedback-err");
+    gtk_label_set_text(GTK_LABEL(label), text);
+}
+
+/* Yellow "almost there" note: close to a correct answer but incomplete. */
+void set_feedback_warn(GtkWidget *label, const char *text) {
+    gtk_widget_remove_css_class(label, "feedback-ok");
+    gtk_widget_remove_css_class(label, "feedback-err");
+    gtk_widget_remove_css_class(label, "feedback-warn");
+    gtk_widget_add_css_class(label, "feedback-warn");
     gtk_label_set_text(GTK_LABEL(label), text);
 }
 

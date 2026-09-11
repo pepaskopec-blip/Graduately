@@ -610,6 +610,11 @@ entry.answer-wrong {
    font-size: 15px;
    font-weight: 700;
 }
+.feedback-warn {
+   color: @warning;
+   font-size: 15px;
+   font-weight: 700;
+}
 .stats-page {
    padding: 8px 28px 24px 28px;
 }

@@ -743,6 +743,7 @@ void shuffle_indices(int *arr, int n);
 void flow_clear(GtkFlowBox *fb);
 void answer_mark(GtkWidget *widget, gboolean ok);
 void set_feedback(GtkWidget *label, gboolean ok, const char *text);
+void set_feedback_warn(GtkWidget *label, const char *text);
 gboolean text_has_german_umlaut(const char *s);
 void add_umlaut_note(GtkWidget *body);
 void unit_save_progress(UnitCtx *u);
@@ -852,6 +853,7 @@ void combo_list_add(ComboListCtx *ctx, GtkWidget *combo, const char *ans);
 void combo_list_add_trans(ComboListCtx *ctx, GtkWidget *label);
 GtkWidget *make_word_combo(const char **words, int n);
 gboolean answer_accepts(const char *sel_norm, const char *ans);
+gboolean answer_is_incomplete(const char *sel_norm, const char *ans);
 void combo_list_check(GtkButton *button, gpointer data);
 void sent_rebuild(SentBuilder *sb);
 GdkContentProvider *asm_drag_prepare(GtkDragSource *source,
