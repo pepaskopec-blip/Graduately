@@ -1159,44 +1159,105 @@ typedef struct {
     UnitCtx *unit;
     int ex_num;
     GtkWidget *feedback;
-    GtkWidget **entries;
-    GtkWidget **trans;
+    GtkWidget *header;
+    GtkWidget *progress;
+    GtkWidget *prompt;
+    GtkWidget *entry;
+    GtkWidget *check;
+    TypedQ *qs;           /* flattened words, in page order            */
+    const char **headers; /* section header i18n key per word          */
     int total;
+    int done;
+    int *order;           /* queue of word indices, order[0] = current */
+    int qn;               /* words still in the queue                  */
 } TransCtx;
+
+/* Canonical translation of a word, in the current UI language. */
+static const char *trans_answer(const TypedQ *q) {
+    if (q->meaning)
+        return tr(q->meaning);
+    return q->answers ? q->answers : "";
+}
+
+static void trans_update_progress(TransCtx *ctx) {
+    gchar *txt = g_strdup_printf(tr("trans_progress"), ctx->done, ctx->total);
+
+    gtk_label_set_text(GTK_LABEL(ctx->progress), txt);
+    g_free(txt);
+}
+
+static void trans_show(TransCtx *ctx) {
+    if (ctx->qn <= 0) {
+        gtk_label_set_text(GTK_LABEL(ctx->header), "");
+        gtk_label_set_text(GTK_LABEL(ctx->prompt), tr("trans_done"));
+        gtk_widget_set_visible(ctx->entry, FALSE);
+        gtk_widget_set_sensitive(ctx->check, FALSE);
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        trans_update_progress(ctx);
+        mark_done(ctx->unit, ctx->ex_num);
+        return;
+    }
+
+    {
+        int idx = ctx->order[0];
+        const TypedQ *q = &ctx->qs[idx];
+
+        gtk_label_set_text(GTK_LABEL(ctx->header), tr(ctx->headers[idx]));
+        gtk_label_set_text(GTK_LABEL(ctx->prompt), q->prompt);
+    }
+
+    gtk_editable_set_text(GTK_EDITABLE(ctx->entry), "");
+    gtk_widget_set_visible(ctx->entry, TRUE);
+    trans_update_progress(ctx);
+    if (gtk_widget_get_mapped(ctx->entry))
+        gtk_widget_grab_focus(ctx->entry);
+}
+
+static void trans_on_map(GtkWidget *widget, gpointer data) {
+    TransCtx *ctx = data;
+
+    (void)widget;
+    if (ctx->qn > 0 && gtk_widget_get_visible(ctx->entry))
+        gtk_widget_grab_focus(ctx->entry);
+}
 
 static void translate_check(GtkButton *button, gpointer data) {
     TransCtx *ctx = data;
-    int ok = 0;
-    int idx = 0;
+    int idx;
+    const TypedQ *q;
+    const gchar *txt;
+    gchar *norm;
+    gboolean good;
 
     (void)button;
 
-    for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++) {
-        const TransSection *sec = &trans_sections[s];
-        for (int i = 0; i < sec->n; i++, idx++) {
-            const gchar *txt =
-                gtk_editable_get_text(GTK_EDITABLE(ctx->entries[idx]));
-            gchar *norm = normalize_answer(txt);
-            gboolean good =
-                txt && txt[0] && answer_accepts(norm, sec->rows[i].answers);
+    if (ctx->qn <= 0)
+        return;
 
-            g_free(norm);
-            answer_mark(ctx->entries[idx], good);
-            if (good)
-                ok++;
-        }
-    }
+    idx = ctx->order[0];
+    q = &ctx->qs[idx];
+    txt = gtk_editable_get_text(GTK_EDITABLE(ctx->entry));
+    norm = normalize_answer(txt ? txt : "");
+    good = txt && txt[0] && answer_accepts(norm, q->answers);
+    g_free(norm);
 
-    for (int i = 0; i < ctx->total; i++)
-        if (ctx->trans[i])
-            gtk_widget_set_visible(ctx->trans[i], TRUE);
+    /* Pop the current word off the front of the queue. */
+    for (int i = 0; i < ctx->qn - 1; i++)
+        ctx->order[i] = ctx->order[i + 1];
+    ctx->qn--;
 
-    if (ok == ctx->total) {
+    if (good) {
+        ctx->done++;
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
-        mark_done(ctx->unit, ctx->ex_num);
     } else {
-        set_feedback(ctx->feedback, FALSE, tr("feedback_retry"));
+        gchar *msg = g_strdup_printf(tr("trans_wrong"), trans_answer(q));
+
+        set_feedback(ctx->feedback, FALSE, msg);
+        g_free(msg);
+        ctx->order[ctx->qn++] = idx;   /* failed words retry at the end */
     }
+
+    trans_show(ctx);
 }
 
 GtkWidget *build_translate(UnitCtx *unit) {
@@ -1205,8 +1266,9 @@ GtkWidget *build_translate(UnitCtx *unit) {
                                     "sub_translate", "check",
                                     &body, &feedback, &check);
     TransCtx *ctx = g_new0(TransCtx, 1);
+    GtkWidget *wrap, *card;
     int total = 0;
-    int idx = 0;
+    int k = 0;
 
     for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++)
         total += trans_sections[s].n;
@@ -1214,40 +1276,62 @@ GtkWidget *build_translate(UnitCtx *unit) {
     ctx->unit = unit;
     ctx->ex_num = unit->branch_ex;
     ctx->feedback = feedback;
+    ctx->check = check;
     ctx->total = total;
-    ctx->entries = g_new0(GtkWidget *, total);
-    ctx->trans = g_new0(GtkWidget *, total);
+    ctx->qn = total;
+    ctx->qs = g_new0(TypedQ, total);
+    ctx->headers = g_new0(const char *, total);
+    ctx->order = g_new0(int, total);
 
     for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++) {
         const TransSection *sec = &trans_sections[s];
-        GtkWidget *hdr = gtk_label_new(NULL);
 
-        i18n_bind(hdr, sec->header, 0);
-        gtk_widget_set_halign(hdr, GTK_ALIGN_START);
-        gtk_widget_add_css_class(hdr, "ex-sub");
-        gtk_widget_set_margin_top(hdr, s > 0 ? 12 : 0);
-        gtk_box_append(GTK_BOX(body), hdr);
-
-        for (int i = 0; i < sec->n; i++, idx++) {
-            GtkWidget *prompt = gtk_label_new(sec->rows[i].prompt);
-            GtkWidget *entry;
-
-            gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-            gtk_widget_add_css_class(prompt, "ex-prompt");
-            gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-            gtk_box_append(GTK_BOX(body), prompt);
-
-            entry = gtk_entry_new();
-            gtk_widget_set_hexpand(entry, FALSE);
-            gtk_widget_set_halign(entry, GTK_ALIGN_START);
-            gtk_box_append(GTK_BOX(body), entry);
-            ctx->entries[idx] = entry;
-
-            if (sec->rows[i].meaning)
-                ctx->trans[idx] = meaning_add(body, sec->rows[i].meaning);
+        for (int i = 0; i < sec->n; i++, k++) {
+            ctx->qs[k] = sec->rows[i];
+            ctx->headers[k] = sec->header;
+            ctx->order[k] = k;
         }
     }
 
+    wrap = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_vexpand(wrap, TRUE);
+    gtk_box_append(GTK_BOX(body), wrap);
+
+    card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
+    gtk_widget_add_css_class(card, "notes-card");
+    gtk_widget_set_halign(card, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(card, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(card, 380, -1);
+    gtk_box_append(GTK_BOX(wrap), card);
+
+    ctx->header = gtk_label_new(NULL);
+    gtk_widget_set_halign(ctx->header, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(ctx->header, "ex-sub");
+    gtk_box_append(GTK_BOX(card), ctx->header);
+
+    ctx->progress = gtk_label_new(NULL);
+    gtk_widget_set_halign(ctx->progress, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(ctx->progress, "hint");
+    gtk_box_append(GTK_BOX(card), ctx->progress);
+
+    ctx->prompt = gtk_label_new(NULL);
+    gtk_widget_set_halign(ctx->prompt, GTK_ALIGN_CENTER);
+    gtk_label_set_wrap(GTK_LABEL(ctx->prompt), TRUE);
+    gtk_label_set_justify(GTK_LABEL(ctx->prompt), GTK_JUSTIFY_CENTER);
+    gtk_widget_add_css_class(ctx->prompt, "trans-word");
+    gtk_widget_set_margin_top(ctx->prompt, 10);
+    gtk_widget_set_margin_bottom(ctx->prompt, 10);
+    gtk_box_append(GTK_BOX(card), ctx->prompt);
+
+    ctx->entry = gtk_entry_new();
+    gtk_entry_set_placeholder_text(GTK_ENTRY(ctx->entry), tr("your_answer"));
+    gtk_widget_set_halign(ctx->entry, GTK_ALIGN_FILL);
+    gtk_box_append(GTK_BOX(card), ctx->entry);
+
     g_signal_connect(check, "clicked", G_CALLBACK(translate_check), ctx);
+    g_signal_connect(ctx->entry, "activate", G_CALLBACK(translate_check), ctx);
+    g_signal_connect(page, "map", G_CALLBACK(trans_on_map), ctx);
+
+    trans_show(ctx);
     return page;
 }
