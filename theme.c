@@ -207,20 +207,36 @@ static gboolean scale_font_size_eval(const GMatchInfo *info, GString *result,
 }
 
 /* Scale every explicit `font-size: Npx` declaration so the interface grows on
- * large (e.g. maximised / high-DPI) windows. Layout metrics stay untouched. */
+ * large (e.g. maximised / high-DPI) windows. Layout metrics stay untouched.
+ * Rules after the no-scale marker keep their fixed size, so symbol / icon
+ * glyphs do not scale. */
 static char *scale_font_sizes(const char *css, double scale) {
-    GRegex *re;
+    static const char marker[] = "/* no-scale */";
+    const char *pos;
+    char *head;
+    char *scaled_head;
     char *out;
+    GRegex *re;
     FontScale fs;
 
     if (scale <= 1.0001)
         return g_strdup(css);
 
+    pos = g_strstr_len(css, -1, marker);
+    head = pos ? g_strndup(css, (gsize)(pos - css)) : g_strdup(css);
+
     fs.scale = scale;
     re = g_regex_new("font-size:([ \t]*)([0-9]+)px", 0, 0, NULL);
-    out = g_regex_replace_eval(re, css, -1, 0, 0,
-                               scale_font_size_eval, &fs, NULL);
+    scaled_head = g_regex_replace_eval(re, head, -1, 0, 0,
+                                       scale_font_size_eval, &fs, NULL);
     g_regex_unref(re);
+    g_free(head);
+
+    if (pos)
+        out = g_strconcat(scaled_head, pos, NULL);
+    else
+        out = scaled_head;
+    g_free(scaled_head);
     return out;
 }
 
@@ -254,21 +270,11 @@ char *build_theme_css(const ThemePalette *p) {
         p->node, p->locked_bg, p->locked_border);
     char *rules = read_css_file();
     char *scaled = scale_font_sizes(rules, app_ui_scale);
-    char *base;
-    char *css;
-
-    if (app_ui_scale > 1.0001)
-        base = g_strdup_printf("window { font-size: %dpx; }\n",
-                               (int)(14.0 * app_ui_scale + 0.5));
-    else
-        base = g_strdup("");
-
-    css = g_strconcat(palette, base, scaled, NULL);
+    char *css = g_strconcat(palette, scaled, NULL);
 
     g_free(palette);
     g_free(rules);
     g_free(scaled);
-    g_free(base);
     return css;
 }
 

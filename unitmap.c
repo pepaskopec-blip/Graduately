@@ -286,6 +286,7 @@ static GtkWidget *make_branch_bubble(UnitCtx *u) {
     star = gtk_label_new("★");
     gtk_widget_set_halign(star, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(star, "bubble-number");
+    gtk_widget_add_css_class(star, "branch-star");
     gtk_box_append(GTK_BOX(vbox), star);
 
     icon = icon_area_new(draw_check_icon, 0.1176, 0.1176, 0.1804, 16);
