@@ -4,15 +4,16 @@
 
 
 NetLesson net_lessons[NET_LESSONS] = {
-    { .n_slides = NET_SLIDES,  .unit_page = "netunit1", .ex_page = "netex"  },
-    { .n_slides = NET2_SLIDES, .unit_page = "netunit2", .ex_page = "netex2" },
-    { .n_slides = NET3_SLIDES, .unit_page = "netunit3", .ex_page = "netex3" },
-    { .n_slides = NET4_SLIDES, .unit_page = "netunit4", .ex_page = "netex4" },
-    { .n_slides = NET5_SLIDES, .unit_page = "netunit5", .ex_page = "netex5" },
-    { .n_slides = NET6_SLIDES, .unit_page = "netunit6", .ex_page = "netex6" },
-    { .n_slides = NET7_SLIDES, .unit_page = "netunit7", .ex_page = "netex7" },
-    { .n_slides = NET8_SLIDES, .unit_page = "netunit8", .ex_page = "netex8" },
-    { .n_slides = NET9_SLIDES, .unit_page = "netunit9", .ex_page = "netex9" },
+    { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex"   },
+    { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
+    { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
+    { .n_slides = NET4_SLIDES,  .unit_page = "netunit4",  .ex_page = "netex4"  },
+    { .n_slides = NET5_SLIDES,  .unit_page = "netunit5",  .ex_page = "netex5"  },
+    { .n_slides = NET6_SLIDES,  .unit_page = "netunit6",  .ex_page = "netex6"  },
+    { .n_slides = NET7_SLIDES,  .unit_page = "netunit7",  .ex_page = "netex7"  },
+    { .n_slides = NET8_SLIDES,  .unit_page = "netunit8",  .ex_page = "netex8"  },
+    { .n_slides = NET9_SLIDES,  .unit_page = "netunit9",  .ex_page = "netex9"  },
+    { .n_slides = NET10_SLIDES, .unit_page = "netunit10", .ex_page = "netex10" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -440,7 +441,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
-        "net_unit6", "net_unit7", "net_unit8", "net_unit9"
+        "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10"
     };
 
     card = gtk_button_new();
@@ -1094,6 +1095,44 @@ GtkWidget *build_net_unit9_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[8], "net_unit9", slides, NET9_SLIDES);
+}
+
+GtkWidget *build_net_unit10_page(void) {
+    static const NetSlide slides[NET10_SLIDES] = {
+        {
+            "1 / 3   •   ISO/OSI", "Sedmivrstvý model",
+            NULL,
+            {
+                "ISO/OSI: 7vrstvý model.",
+                "Je univerzální – popisuje komunikaci obecně.",
+                "V praxi je ale pomalejší: každá vrstva řešila spolehlivost.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   TCP/IP", "Praktická architektura",
+            NULL,
+            {
+                "TCP/IP: architektura, která zvítězila v praxi.",
+                "Vycházela ze skutečných potřeb sítí.",
+                "Spolehlivost řeší až vyšší vrstvy.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Srovnání", "Proč zvítězil TCP/IP",
+            "Tip: méně režie na nižších vrstvách = rychlejší provoz",
+            {
+                "ISO/OSI: teoretický, univerzální, těžší a pomalejší.",
+                "TCP/IP: praktický, jednodušší dělení odpovědností.",
+                "Proto se TCP/IP stal základem dnešního internetu.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[9], "net_unit10", slides,
+                               NET10_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2536,6 +2575,132 @@ GtkWidget *build_net_unit9_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net9_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 10: ISO/OSI and TCP/IP quiz -------------------------------- */
+
+const ChoiceQ net10_qs[] = {
+    {"Model ISO/OSI má:",
+     {"4 vrstvy", "5 vrstev", "7 vrstev", "10 vrstev"}, 4, 2},
+    {"ISO/OSI je především:",
+     {"Jen typ kabelu", "Univerzální referenční model",
+      "Jen tiskový server", "Jen FDM"}, 4, 1},
+    {"Proč je ISO/OSI v praxi pomalejší?",
+     {"Nemá žádné vrstvy", "Každá vrstva řešila spolehlivost",
+      "Nepoužívá protokoly", "Nemá SAP"}, 4, 1},
+    {"TCP/IP v praxi:",
+     {"Prohrál proti ISO/OSI", "Zvítězil jako praktická architektura",
+      "Je jen analogový signál", "Je jen half-duplex"}, 4, 1},
+    {"TCP/IP vycházel z:",
+     {"Jen teoretických schémat bez praxe", "Skutečných potřeb sítí",
+      "Jen parity", "Jen trunkingu"}, 4, 1},
+    {"V TCP/IP spolehlivost řeší:",
+     {"Vždy jen fyzická vrstva", "Až vyšší vrstvy",
+      "Jen metalické kabely", "Jen mainframe"}, 4, 1},
+};
+
+const char *net10_hints[] = {
+    "ISO/OSI má 7 vrstev a je univerzální model",
+    "ISO/OSI má 7 vrstev a je univerzální model",
+    "V praxi je ISO/OSI pomalejší – spolehlivost řeší každá vrstva",
+    "TCP/IP zvítězil, protože vycházel ze skutečných potřeb",
+    "TCP/IP zvítězil, protože vycházel ze skutečných potřeb",
+    "V TCP/IP řeší spolehlivost až vyšší vrstvy",
+};
+
+GtkWidget *build_net_unit10_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net10_qs);
+    int n_opts = net10_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit10", "net_ex10_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k ISO/OSI a TCP/IP");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net10_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net10_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net10_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net10_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
