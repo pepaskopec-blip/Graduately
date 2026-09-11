@@ -12,7 +12,8 @@ An educational GTK 4 app written in C. / Vzdělávací GTK 4 aplikace napsaná v
 
 maturita.c is an educational program for high-school and gymnasium students
 preparing for their maturita exam. The UI is available in Czech and English and
-is built as a single C file (`maturita.c`) that renders a modern, CSS-styled
+is built from a set of small C modules (see
+[Project structure](#project-structure)) that render a modern, CSS-styled
 GTK 4 interface.
 
 ### Screenshots
@@ -78,7 +79,7 @@ GTK 4 interface.
   - **language**: Czech or English, applied instantly without a restart
   - all three preferences are stored in `progress/settings.conf`
 - **Keyboard quit shortcuts** – `Super/Cmd+Q` or `Alt+F4` closes the app
-- Single-file C codebase, cross-platform (Linux, macOS and Windows)
+- Modular C codebase split across several files, cross-platform (Linux, macOS and Windows)
 
 ### Installation
 
@@ -160,10 +161,10 @@ Or manually:
 
 ```bash
 # Linux / macOS
-gcc -o maturita maturita.c $(pkg-config --cflags --libs gtk4) -lm
+gcc -o maturita *.c $(pkg-config --cflags --libs gtk4) -lm
 
 # Windows (MSYS2 UCRT64)
-gcc -o maturita.exe maturita.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
+gcc -o maturita.exe *.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
 ```
 
 ##### Building with CMake (optional, Linux / macOS)
@@ -228,7 +229,7 @@ Follow these steps to compile and run on Windows.
 
    ```bash
    cd /c/Users/Josef/maturita.c
-   gcc -o maturita.exe maturita.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
+   gcc -o maturita.exe *.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
    ```
 
    Path conversion examples:
@@ -299,7 +300,25 @@ saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
 ### Project structure
 
 ```
-maturita.c              entire application (UI, navigation, themes, exercises)
+maturita.h              shared types, macros, globals and prototypes
+globals.c               shared global state (window, stack, units, theme, …)
+theme.c                 theme palettes, stylesheet injection and settings file
+i18n.c                  Czech/English translation tables and language switching
+icons.c                 Cairo-drawn vector icons (check, lock, wifi, gear, …)
+util.c                  small helpers (answer normalisation, feedback, umlaut note)
+progress.c              per-unit exercise progress (load/save/completion)
+stats.c                 statistics page and progress aggregation
+navigation.c            back button, top bar, welcome page, key shortcuts
+roadmap.c               German learning-path roadmap
+subjects.c              subjects map and subject catalogue
+unitmap.c               per-unit exercise bubble map
+exercise_common.c       shared exercise shell + combo/assembly/choice widgets
+exercise_u1.c           unit 1 ("Neue Freunde") exercises
+exercise_u2.c           unit 2 ("Aus aller Welt") exercises
+exercise_u3.c           unit 3 ("Bei uns zu Hause") exercises
+settings.c              settings popover (mode, theme, language)
+net.c                   computer-networks path, slides and practice sheet
+main.c                  application entry point and page wiring
 style.css               GTK stylesheet (palette colors are injected at runtime)
 Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` on Windows
 CMakeLists.txt          optional CMake build (Linux / macOS)
@@ -318,19 +337,19 @@ progress/               created at runtime
 
 The app ships with ten palettes – Catppuccin, Nord, Dracula, Rose Pine, Ocean,
 Gruvbox, Solarized, Everforest, Monokai and One Dark – each available in dark
-and light mode. Colors are defined as theme palettes in `maturita.c`, injected
+and light mode. Colors are defined as theme palettes in `theme.c`, injected
 as `@define-color` bindings, and combined with the rules in the external
 `style.css` stylesheet (plus matching Cairo colors for the roadmap rails and
 icons).
 
 Change the look from the in-app settings panel, or edit the palette tables in
-`maturita.c` / the rules in `style.css` and rebuild.
+`theme.c` / the rules in `style.css` and rebuild.
 
 ### Languages
 
 The interface can be switched between Czech and English from the settings
 panel; the choice takes effect immediately and is remembered between runs.
-Translations live in two tables in `maturita.c`: `tr_ui` holds interface
+Translations live in two tables in `i18n.c`: `tr_ui` holds interface
 strings under short keys, while `tr_content` translates the Czech meanings
 shown next to the German exercise items and uses the Czech text itself as the
 key. Widgets are registered with `i18n_bind()` so `apply_language()` can
@@ -353,7 +372,7 @@ German in both languages.
 - [ ] Add writing practice with feedback
 - [x] Expand progress tracking with statistics
 - [x] Move CSS styling to an external file
-- [ ] Split the UI code into multiple files
+- [x] Split the UI code into multiple files
 - [x] Add internationalization support (Czech and English)
 - [ ] Add more interface languages
 - [ ] Add unit testing framework
@@ -376,8 +395,9 @@ details.
 ### Popis
 
 maturita.c je vzdělávací program pro středoškoláky a gymnazisty připravující
-se na maturitu. Rozhraní je v češtině a angličtině a celá aplikace je v jednom
-C souboru (`maturita.c`) s moderním GTK 4 rozhraním stylovaným přes CSS.
+se na maturitu. Rozhraní je v češtině a angličtině a aplikace je rozdělena do
+několika malých C modulů (viz [Struktura projektu](#struktura-projektu)) s
+moderním GTK 4 rozhraním stylovaným přes CSS.
 
 ### Screenshoty
 
@@ -430,7 +450,7 @@ C souboru (`maturita.c`) s moderním GTK 4 rozhraním stylovaným přes CSS.
   - **jazyk**: čeština nebo angličtina, bez restartu
   - vše se ukládá do `progress/settings.conf`
 - **Klávesové zkratky pro ukončení** – `Super/Cmd+Q` nebo `Alt+F4`
-- Jeden C soubor, multiplatformní (Linux, macOS i Windows)
+- Modulární C kód v několika souborech, multiplatformní (Linux, macOS i Windows)
 
 ### Instalace
 
@@ -513,10 +533,10 @@ Nebo ručně:
 
 ```bash
 # Linux / macOS
-gcc -o maturita maturita.c $(pkg-config --cflags --libs gtk4) -lm
+gcc -o maturita *.c $(pkg-config --cflags --libs gtk4) -lm
 
 # Windows (MSYS2 UCRT64)
-gcc -o maturita.exe maturita.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
+gcc -o maturita.exe *.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
 ```
 
 ##### Sestavení přes CMake (volitelné, Linux / macOS)
@@ -581,7 +601,7 @@ Následujte tyto kroky pro rychlé zkompilování a spuštění na Windows.
 
    ```bash
    cd /c/Users/Josef/maturita.c
-   gcc -o maturita.exe maturita.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
+   gcc -o maturita.exe *.c $(pkg-config --cflags --libs gtk4) -lm -mwindows
    ```
 
    Příklady převodu cesty:
@@ -648,7 +668,25 @@ prvním dokončení).
 ### Struktura projektu
 
 ```
-maturita.c              celá aplikace (UI, navigace, témata, cvičení)
+maturita.h              sdílené typy, makra, globální proměnné a prototypy
+globals.c               sdílený globální stav (okno, stack, jednotky, téma, …)
+theme.c                 palety témat, vkládání stylu a soubor nastavení
+i18n.c                  české/anglické překlady a přepínání jazyka
+icons.c                 vektorové ikony kreslené Cairem (fajfka, zámek, wifi, …)
+util.c                  pomocné funkce (normalizace odpovědí, feedback, poznámka)
+progress.c              postup cvičení jednotek (načtení/uložení/dokončení)
+stats.c                 stránka statistik a agregace pokroku
+navigation.c            tlačítko zpět, horní lišta, úvodní stránka, zkratky
+roadmap.c               německá učební cesta
+subjects.c              mapa předmětů a katalog předmětů
+unitmap.c               mapa cvičení jednotlivých jednotek
+exercise_common.c       společné jádro cvičení + combo/skládání/výběr
+exercise_u1.c           cvičení jednotky 1 („Neue Freunde“)
+exercise_u2.c           cvičení jednotky 2 („Aus aller Welt“)
+exercise_u3.c           cvičení jednotky 3 („Bei uns zu Hause“)
+settings.c              panel nastavení (režim, téma, jazyk)
+net.c                   cesta počítačových sítí, snímky a cvičení
+main.c                  vstupní bod aplikace a zapojení stránek
 style.css               GTK styl (barvy palety se vkládají za běhu)
 Makefile                build & run (Linux, macOS, MSYS2); `make bundle` na Windows
 CMakeLists.txt          volitelný CMake build (Linux / macOS)
@@ -667,17 +705,17 @@ progress/               vzniká za běhu
 
 Aplikace má deset palet – Catppuccin, Nord, Dracula, Rose Pine, Ocean, Gruvbox,
 Solarized, Everforest, Monokai a One Dark – každou ve světlém i tmavém režimu.
-Barvy jsou v `maturita.c`, vkládají se jako `@define-color` a spojují se s
+Barvy jsou v `theme.c`, vkládají se jako `@define-color` a spojují se s
 pravidly v externím souboru `style.css` (a Cairo barvy pro koleje a ikony na
 mapě).
 
-Vzhled změníte v nastavení, nebo upravte tabulky palet v `maturita.c` / pravidla
+Vzhled změníte v nastavení, nebo upravte tabulky palet v `theme.c` / pravidla
 v `style.css` a znovu zkompilujte.
 
 ### Jazyky
 
 Rozhraní přepnete mezi češtinou a angličtinou v nastavení; změna platí hned a
-zapamatuje se. Překlady jsou ve dvou tabulkách v `maturita.c`: `tr_ui` drží
+zapamatuje se. Překlady jsou ve dvou tabulkách v `i18n.c`: `tr_ui` drží
 texty rozhraní pod krátkými klíči, `tr_content` překládá české významy u
 německých cvičení (klíčem je samotný český text). Widgety se registrují přes
 `i18n_bind()`, aby je `apply_language()` přeložila na místě.
@@ -699,7 +737,7 @@ rozhraní.
 - [ ] Psaní s feedbackem
 - [x] Statistiky postupu
 - [x] Přesunout CSS do externího souboru
-- [ ] Rozdělit UI kód do více souborů
+- [x] Rozdělit UI kód do více souborů
 - [x] Internacionalizace (čeština a angličtina)
 - [ ] Další jazyky rozhraní
 - [ ] Unit testy

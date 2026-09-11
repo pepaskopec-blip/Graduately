@@ -25,7 +25,8 @@ else
 TARGET = maturita
 endif
 
-SRC = maturita.c
+SRC = $(wildcard *.c)
+OBJ = $(SRC:.c=.o)
 
 all: $(TARGET)
 
@@ -33,7 +34,7 @@ $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC) $(LIBS)
 
 clean:
-	rm -f $(TARGET) maturita.exe
+	rm -f $(TARGET) maturita.exe $(OBJ)
 
 run: $(TARGET)
 	./$(TARGET)

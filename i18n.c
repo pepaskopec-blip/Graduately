@@ -1,0 +1,695 @@
+#include "maturita.h"
+
+/* ------------------------------------------------------------------ */
+/* i18n                                                               */
+/* ------------------------------------------------------------------ */
+
+
+void ex4_fill_sample(GtkWidget *label);
+
+GArray *i18n_binds;
+
+
+const TrEntry tr_ui[] = {
+    {"back", "Zpět", "Back"},
+    {"settings", "Nastavení", "Settings"},
+    {"settings_title", "Nastavení", "Settings"},
+    {"mode", "REŽIM", "MODE"},
+    {"mode_dark", "Tmavý", "Dark"},
+    {"mode_light", "Světlý", "Light"},
+    {"theme", "TÉMA", "THEME"},
+    {"language", "JAZYK", "LANGUAGE"},
+    {"welcome_body",
+     "maturita.C je vzdělávací program pro studenty středních škol a "
+     "gymnázií na přípravu k maturitě.\n\n"
+     "Program je napsaný v Céčku studentama ze SSŠVT!",
+     "maturita.C is an educational app for high-school and gymnasium "
+     "students to prepare for their maturita exam.\n\n"
+     "The program is written in C by students from SSŠVT!"},
+    {"continue", "Pokračuj", "Continue"},
+    {"roadmap_title", "Učební plán", "Learning path"},
+    {"roadmap_sub", "Vyberte jednotku na cestě a začněte procvičovat.",
+     "Pick a unit on the path and start practicing."},
+    {"unit1_sub", "Vyberte cvičení a dokončete je.",
+     "Choose an exercise and complete it."},
+    {"check", "Zkontrolovat", "Check"},
+    {"finish", "Dokončit", "Finish"},
+    {"show_sample", "Ukázat vzor", "Show sample"},
+    {"your_answer", "Vaše odpověď…", "Your answer…"},
+    {"feedback_ok", "Výborně!", "Great!"},
+    {"feedback_retry", "Ještě to není správně. Zkuste to znovu.",
+     "Not quite right yet. Try again."},
+    {"feedback_retry_short", "Ještě to není správně.", "Not quite right yet."},
+    {"feedback_sentences", "Některé věty nejsou správně. Zkuste to znovu.",
+     "Some sentences are not correct. Try again."},
+    {"tip_ss", "Písmeno „ß“ se dá na klávesnici zaměnit za „ss“!",
+     "You can type “ss” instead of “ß” on the keyboard!"},
+    {"hint_umlauts",
+     "Na klávesnici nemáte německé znaky? Můžete psát ä jako ae, ö jako oe, "
+     "ü jako ue a ß jako ss.",
+     "No German keyboard? You can type ä as ae, ö as oe, ü as ue and ß as "
+     "ss."},
+    {"sample_fmt", "Otázka: %s\nVzor: %s  (česky: %s)",
+     "Question: %s\nSample: %s  (English: %s)"},
+    {"sub_dialog", "Doplňte chybějící slova v dialogu.",
+     "Fill in the missing words in the dialogue."},
+    {"sub_assembly", "Přetáhněte slova do správného pořadí.",
+     "Drag the words into the correct order."},
+    {"sub_choice_num", "Vyberte správnou číslovku.",
+     "Choose the correct numeral."},
+    {"sub_free", "Odpovězte vlastními slovy, poté klikněte na Dokončit.",
+     "Answer in your own words, then click Finish."},
+    {"sub_zahlen", "Vyberte správné slovo pro dané číslo.",
+     "Choose the correct word for the given number."},
+    {"sub_wieviel", "Spočítejte předměty a vyberte počet.",
+     "Count the items and choose the amount."},
+    {"sub_reihe", "Doplňte chybějící číslovku.",
+     "Fill in the missing numeral."},
+    {"sub_verb", "Vyberte správný tvar slovesa.",
+     "Choose the correct verb form."},
+    {"sub_wer", "Vyberte správné tázací slovo.",
+     "Choose the correct question word."},
+    {"sub_bild", "Vyberte správný tvar slovesa podle obrázku.",
+     "Choose the correct verb form for the picture."},
+    {"sub_gruss", "Roztřiďte pozdravy na pozdravy a rozloučení.",
+     "Sort the phrases into greetings and farewells."},
+    {"sub_land", "Přiřaďte symboly ke správné zemi.",
+     "Match the symbols to the correct country."},
+    {"assign_hint",
+     "Vyberte skupinu a klikněte na kartu. Kliknutím na kartu ve skupině "
+     "ji vrátíte zpět.",
+     "Pick a group and click a card. Click a card inside a group to send "
+     "it back."},
+    {"unit2_sub", "Vyberte cvičení a dokončete je.",
+     "Choose an exercise and complete it."},
+    {"Bei uns zu Hause", "Bei uns zu Hause", "At Home with Us"},
+    {"unit3_sub", "Vyberte cvičení a dokončete je.",
+     "Choose an exercise and complete it."},
+    {"sub3_pair", "Přiřaďte každému slovu jeho protějšek.",
+     "Match each word with its counterpart."},
+    {"sub3_poss", "Doplňte přivlastňovací zájmena (1. pád).",
+     "Fill in the possessive pronouns (nominative)."},
+    {"sub3_haustier", "Doplňte ein/kein ve správném tvaru.",
+     "Fill in ein/kein in the correct form."},
+    {"sub3_buchst", "Doplňte chybějící písmena.",
+     "Fill in the missing letters."},
+    {"sub3_marco", "Doplňte slova z nabídky.",
+     "Fill in the words from the box."},
+    {"sub3_sort", "Roztřiďte slova do dvou skupin.",
+     "Sort the words into two groups."},
+    {"sub3_tabelle", "Doplňte přivlastňovací zájmena do tabulky.",
+     "Fill the possessive pronouns into the table."},
+    {"sub3_akk", "Doplňte přivlastňovací zájmena (4. pád).",
+     "Fill in the possessive pronouns (accusative)."},
+    {"sub3_nicht", "Vyberte kein/keine/keinen/nicht.",
+     "Choose kein/keine/keinen/nicht."},
+    {"sub3_satz", "Sestavte správné věty.",
+     "Build the correct sentences."},
+    {"sub3_sehen", "Napište větu „Ich sehe…“.",
+     "Write an “Ich sehe…” sentence."},
+    {"sub3_wem", "Komu to patří? Doplňte zájmeno.",
+     "Whose is it? Fill in the pronoun."},
+    {"sub3_gibt", "Doplňte „Es gibt“ + ein/eine/einen.",
+     "Fill in “Es gibt” + ein/eine/einen."},
+    {"sub3_saetze", "Doplňte věty podle vzoru.",
+     "Complete the sentences following the example."},
+    {"sub3_wochen", "Doplňte chybějící písmena.",
+     "Fill in the missing letters."},
+    {"wordbank", "Nabídka slov:", "Word bank:"},
+    {"sample_line", "Příklad: %s", "Sample: %s"},
+    {"sub_verben", "Doplňte sloveso ve správném tvaru.",
+     "Fill in the verb in the correct form."},
+    {"sub_ausin", "Vyberte správnou předložku: aus nebo in.",
+     "Choose the correct preposition: aus or in."},
+    {"sub_sprich", "Doplňte sloveso „sprechen“.",
+     "Fill in the verb “sprechen”."},
+    {"sub_nation", "Doplňte národnost – použijte slova z nabídky.",
+     "Fill in the nationality – use the words in the box."},
+    {"sub_woher", "Odkud lidé pocházejí? Napište zemi.",
+     "Where are the people from? Type the country."},
+    {"sub_laender", "Doplňte chybějící písmena v názvech zemí.",
+     "Type the full country name (the missing letters are shown as _)."},
+    {"sub_verb2", "Vyberte správný tvar slovesa.",
+     "Choose the correct verb form."},
+    {"sub_euro", "Napište částku slovy.",
+     "Write the amount in words."},
+    {"sub_wortsuchen", "Najděte skryté slovo a napište ho.",
+     "Find the hidden word and type it."},
+    {"sub_ordne", "Přiřaďte správné tázací slovo a odpověď.",
+     "Match each phrase with the right question word and answer."},
+    {"sub_luecke", "Doplňte chybějící slova do textu.",
+     "Fill the missing words into the text."},
+    {"sub_verbinde", "Spojte každé podstatné jméno se správným slovesem.",
+     "Match each noun with the right verb."},
+    {"sub_zahlpaar", "Spojte čísla s německými slovy.",
+     "Match the numbers with the German words."},
+    {"sub_steckbrief", "Doplňte údaje o sobě.",
+     "Complete the information about yourself."},
+    {"sub_berufe", "Hádejte povolání dřív, než bude oběšenec hotový.",
+     "Guess each job before the hangman drawing is finished."},
+    {"sub_bistdu", "Odpovězte podle vlajky – jakou máte národnost?",
+     "Answer according to the flag – what is your nationality?"},
+    {"hm_progress", "Slovo %d / %d", "Word %d / %d"},
+    {"hm_hint", "Nápověda", "Hint"},
+    {"hm_wrong", "Slovo je uhodnuto!", "Word guessed!"},
+    {"hm_fail", "Oběšenec! Slovo bylo „%s“.",
+     "Hanged! The word was “%s”."},
+    {"hm_retry", "Zkusit znovu", "Try again"},
+    {"hm_done", "Výborně! Uhodli jste všechna povolání.",
+     "Great! You guessed all the jobs."},
+    {"hm_guess", "Hádejte písmeno", "Guess a letter"},
+    {"stats", "Statistiky", "Statistics"},
+    {"stats_title", "Statistiky", "Statistics"},
+    {"stats_sub", "Přehled vašeho pokroku.", "Overview of your progress."},
+    {"stats_ex_label", "Cvičení", "Exercises"},
+    {"stats_pct_label", "Hotovo", "Done"},
+    {"stats_units_label", "Jednotky", "Units"},
+    {"stats_section", "Předměty", "Subjects"},
+    {"stats_locked", "Zamčeno", "Locked"},
+    {"stats_complete", "Hotovo", "Complete"},
+    {"stats_ex_fmt", "%d / %d", "%d / %d"},
+    {"stats_pct_fmt", "%d %%", "%d %%"},
+    {"stats_units_fmt", "%d / %d", "%d / %d"},
+    {"subjects_title", "Předměty", "Subjects"},
+    {"subjects_sub", "Zatím je dostupný předmět Deutsch.",
+     "Only Deutsch is available so far."},
+    {"Český jazyk a literatura", "Český jazyk a literatura",
+     "Czech Language and Literature"},
+    {"Občanská nauka", "Občanská nauka", "Civics"},
+    {"English", "English", "English"},
+    {"Deutsch", "Deutsch", "Deutsch"},
+    {"Matematika", "Matematika", "Mathematics"},
+    {"Fyzika", "Fyzika", "Physics"},
+    {"Základy Přírodopisných věd", "Základy Přírodopisných věd",
+     "Fundamentals of Natural Sciences"},
+    {"Technická grafika", "Technická grafika", "Technical Drawing"},
+    {"Prezentační grafika", "Prezentační grafika", "Presentation Graphics"},
+    {"Správa počítačových sítí", "Správa počítačových sítí",
+     "Computer Network Administration"},
+    {"Programování", "Programování", "Programming"},
+    {"Technické vybavení", "Technické vybavení", "Computer Hardware"},
+    {"Programové vybavení", "Programové vybavení", "Software"},
+    {"net_sub", "Vyberte lekci na cestě a začněte procvičovat.",
+     "Pick a unit on the path and start practicing."},
+    {"net_unit1", "Výpočet IP adres", "IP Address Calculation"},
+    {"net_unit1_sub", "4 snímky s postupem a pak cvičení.",
+     "4 slides with the method, then an exercise."},
+    {"net_ex_title", "Cvičení: výpočet IP adres",
+     "Exercise: IP address calculation"},
+    {"net_slide_next", "Další", "Next"},
+    {"net_slide_prev", "Zpět", "Back"},
+    {"net_slide_start", "Přejít na cvičení", "Go to the exercise"},
+    {"net_solution", "Ukázat řešení", "Show solution"},
+    {NULL, NULL, NULL}
+};
+
+/* Exercise content: the Czech text doubles as the lookup key, so `cs`
+ * stays NULL and tr() falls back to the key itself. */
+const TrEntry tr_content[] = {
+    {"Ahoj! Jmenuji se Anna.", NULL, "Hi! My name is Anna."},
+    {"Ahoj! Jmenuji se Petr.", NULL, "Hi! My name is Petr."},
+    {"Jmenuji se Anna.", NULL, "My name is Anna."},
+    {"Jmenuji se Petr.", NULL, "My name is Petr."},
+    {"Odkud jsi?", NULL, "Where are you from?"},
+    {"Odkud pocházíš?", NULL, "Where do you come from?"},
+    {"Pocházím z Česka.", NULL, "I come from Czechia."},
+    {"Dobré ráno!", NULL, "Good morning!"},
+    {"Jak se máš?", NULL, "How are you?"},
+    {"Mám se dobře, děkuji.", NULL, "I am fine, thank you."},
+    {"Musím jít. Na shledanou!", NULL, "I have to go. Goodbye!"},
+    {"Brzy na viděnou!", NULL, "See you soon!"},
+    {"Čau!", NULL, "Bye!"},
+    {"Jak se jmenuješ?", NULL, "What is your name?"},
+    {"Kde bydlíš?", NULL, "Where do you live?"},
+    {"Kdo to je?", NULL, "Who is that?"},
+    {"Kolik je ti let?", NULL, "How old are you?"},
+    {"Je mi šestnáct let.", NULL, "I am sixteen years old."},
+    {"Bydlím v Praze.", NULL, "I live in Prague."},
+    {"Hraji fotbal.", NULL, "I play football."},
+    {"Co rád/a děláš?", NULL, "What do you like to do?"},
+    {"Kolik je hodin?", NULL, "What time is it?"},
+    {"Na shledanou.", NULL, "Goodbye."},
+    {"Moc děkuji.", NULL, "Thank you very much."},
+    {"„vierzehn“ = čtrnáct (14)", NULL, "“vierzehn” = fourteen (14)"},
+    {"„siebzehn“ = sedmnáct (17)", NULL, "“siebzehn” = seventeen (17)"},
+    {"„zwanzig“ = dvacet (20)", NULL, "“zwanzig” = twenty (20)"},
+    {"„sechs“ = šest (6)", NULL, "“sechs” = six (6)"},
+    {"čtrnáct", NULL, "fourteen"},
+    {"sedmnáct", NULL, "seventeen"},
+    {"dvacet", NULL, "twenty"},
+    {"šest", NULL, "six"},
+    {"třináct", NULL, "thirteen"},
+    {"dvě jablka", NULL, "two apples"},
+    {"pět hvězd", NULL, "five stars"},
+    {"sedm koček", NULL, "seven cats"},
+    {"devět květin", NULL, "nine flowers"},
+    {"tři auta", NULL, "three cars"},
+    {"jedenáct knih", NULL, "eleven books"},
+    {"čtyři svíčky", NULL, "four candles"},
+    {"osm míčů", NULL, "eight balls"},
+    {"šest ptáků", NULL, "six birds"},
+    {"šest, sedm, osm, devět", NULL, "six, seven, eight, nine"},
+    {"dvanáct, třináct, čtrnáct, patnáct", NULL,
+     "twelve, thirteen, fourteen, fifteen"},
+    {"osmnáct, devatenáct, dvacet, dvacet jedna", NULL,
+     "eighteen, nineteen, twenty, twenty-one"},
+    {"čtyři, pět, šest, sedm", NULL, "four, five, six, seven"},
+    {"deset, jedenáct, dvanáct, třináct", NULL,
+     "ten, eleven, twelve, thirteen"},
+    {"Plave v jezeře.", NULL, "He/She is swimming in the lake."},
+    {"Zpívá píseň.", NULL, "He/She is singing a song."},
+    {"Vaří polévku.", NULL, "He/She is cooking soup."},
+    {"Čte knihu.", NULL, "He/She is reading a book."},
+    {"Řídí auto.", NULL, "He/She is driving a car."},
+    {"Maluje obraz.", NULL, "He/She is painting a picture."},
+    {"Hraje fotbal.", NULL, "He/She is playing football."},
+    {"Spí.", NULL, "He/She is sleeping."},
+    {"Ahoj", NULL, "Hi"},
+    {"Dobré ráno", NULL, "Good morning"},
+    {"Dobrý den", NULL, "Good day"},
+    {"Dobrý večer", NULL, "Good evening"},
+    {"Dobrý den (Bavorsko, Rakousko)", NULL, "Good day (Bavaria, Austria)"},
+    {"Ahoj / Čau", NULL, "Hi / Hey"},
+    {"Čau", NULL, "Bye"},
+    {"Na shledanou", NULL, "Goodbye"},
+    {"Brzy na viděnou", NULL, "See you soon"},
+    {"Do zítřka", NULL, "See you tomorrow"},
+    {"Dobrou noc", NULL, "Good night"},
+    {"Zatím / Na viděnou", NULL, "See you later"},
+    {"Preclík", NULL, "Pretzel"},
+    {"Klobása", NULL, "Sausage"},
+    {"Braniborská brána", NULL, "Brandenburg Gate"},
+    {"Značka aut", NULL, "Car brand"},
+    {"Rakouský skladatel", NULL, "Austrian composer"},
+    {"Čokoládový dort (Vídeň)", NULL, "Chocolate cake (Vienna)"},
+    {"Vídeňský řízek", NULL, "Viennese schnitzel"},
+    {"Sýr", NULL, "Cheese"},
+    {"Švýcarská hora", NULL, "Swiss mountain"},
+    {"Čokoláda", NULL, "Chocolate"},
+    /* ---- unit 2: grammar & vocabulary meanings ---- */
+    {"Pochází z Rakouska.", NULL, "He is from Austria."},
+    {"Bydlí ve Štýrském Hradci (Graz).", NULL, "He lives in Graz."},
+    {"Rád hraje golf.", NULL, "He likes playing golf."},
+    {"Mluví německy, anglicky a italsky.", NULL,
+     "He speaks German, English and Italian."},
+    {"Pocházejí ze Slovenska.", NULL, "They are from Slovakia."},
+    {"Bydlí v Bratislavě (ona).", NULL, "She lives in Bratislava."},
+    {"Ona ráda tancuje.", NULL, "She likes dancing."},
+    {"On rád cestuje.", NULL, "He likes travelling."},
+    {"Jsou dobří přátelé.", NULL, "They are good friends."},
+    {"Pocházím z Atén.", NULL, "I am from Athens."},
+    {"Petr bydlí v Salcburku.", NULL, "Peter lives in Salzburg."},
+    {"Berlín leží v Německu.", NULL, "Berlin is in Germany."},
+    {"Bydlíme v Paříži.", NULL, "We live in Paris."},
+    {"Pocházejí z Řecka.", NULL, "They are from Greece."},
+    {"Odkud je? – Z Londýna.", NULL, "Where is he from? – From London."},
+    {"Jak se jmenuje? – Andrea.", NULL, "What is her name? – Andrea."},
+    {"Kdo pochází z Ruska? – Alexandr.", NULL,
+     "Who comes from Russia? – Alexander."},
+    {"Kde leží Praha? – V Česku.", NULL, "Where is Prague? – In Czechia."},
+    {"Kde bydlí? – V Bratislavě.", NULL, "Where do they live? – In Bratislava."},
+    {"Co děláte? – Studujeme germanistiku.", NULL,
+     "What are you doing? – We're studying German studies."},
+    {"Mluvím německy. A ty?", NULL, "I speak German. And you?"},
+    {"Kterými jazyky mluvíte?", NULL, "Which languages do you speak?"},
+    {"Mluvíš francouzsky? – Ano, trochu.", NULL,
+     "Do you speak French? – Yes, a little."},
+    {"My mluvíme polsky a vy?", NULL, "We speak Polish and you?"},
+    {"Mluvíte anglicky? – Ano, velmi dobře.", NULL,
+     "Do you speak English? – Yes, very well."},
+    {"Nemluví ani slovo turecky.", NULL,
+     "He doesn't speak a word of Turkish."},
+    {"Čech", NULL, "Czech man"},
+    {"Španělka", NULL, "Spanish woman"},
+    {"Turek", NULL, "Turk (man)"},
+    {"Chorvatka", NULL, "Croatian woman"},
+    {"Němka", NULL, "German woman"},
+    {"Rakušanka", NULL, "Austrian woman"},
+    {"Slovák", NULL, "Slovak man"},
+    {"Švýcarka", NULL, "Swiss woman"},
+    {"Němec", NULL, "German man"},
+    {"Německo", NULL, "Germany"},
+    {"Deutschland – Německo", NULL, "Deutschland – Germany"},
+    {"Slowakei – Slovensko", NULL, "Slowakei – Slovakia"},
+    {"Österreich – Rakousko", NULL, "Österreich – Austria"},
+    {"Spanien – Španělsko", NULL, "Spanien – Spain"},
+    {"England – Anglie", NULL, "England – England"},
+    {"Polen – Polsko", NULL, "Polen – Poland"},
+    {"Slovensko", NULL, "Slovakia"},
+    {"Rakousko", NULL, "Austria"},
+    {"Španělsko", NULL, "Spain"},
+    {"Anglie", NULL, "England"},
+    {"Polsko", NULL, "Poland"},
+    {"Rusko", NULL, "Russia"},
+    {"Russland – Rusko", NULL, "Russland – Russia"},
+    {"Türkei – Turecko", NULL, "Türkei – Turkey"},
+    {"Slowakei – Slovensko", NULL, "Slowakei – Slovakia"},
+    {"Kroatien – Chorvatsko", NULL, "Kroatien – Croatia"},
+    {"Griechenland – Řecko", NULL, "Griechenland – Greece"},
+    {"Italien – Itálie", NULL, "Italien – Italy"},
+    {"Turecko", NULL, "Turkey"},
+    {"Chorvatsko", NULL, "Croatia"},
+    {"Řecko", NULL, "Greece"},
+    {"Itálie", NULL, "Italy"},
+    {"otec", NULL, "father"},
+    {"rodiče", NULL, "parents"},
+    {"Češka", NULL, "Czech woman"},
+    {"student", NULL, "student"},
+    {"Co čte? – Knihu.", NULL, "What is he reading? – A book."},
+    {"Co studuje? – Medicínu.", NULL, "What is she studying? – Medicine."},
+    {"Čím Jan rád jezdí? – Autem.", NULL,
+     "What does Jan like to drive? – A car."},
+    {"Kde bydlíte? – Ve Vídni.", NULL, "Where do you live? – In Vienna."},
+    {"Kdo pracuje u Siemensu? – Moje kamarádka Věra.", NULL,
+     "Who works at Siemens? – My friend Vera."},
+    {"Kam jedeš?", NULL, "Where are you going?"},
+    {"Co rád/a čteš?", NULL, "What do you like to read?"},
+    {"Co rád/a hraješ?", NULL, "What do you like to play?"},
+    {"Jmenuji se Lukáš.", NULL, "My name is Lukáš."},
+    {"Jedu do Německa.", NULL, "I'm going to Germany."},
+    {"Rád/a čtu detektivky.", NULL, "I like reading crime novels."},
+    {"Rád/a hraju golf.", NULL, "I like playing golf."},
+    {"šedesát tři eur", NULL, "sixty-three euros"},
+    {"třicet osm eur", NULL, "thirty-eight euros"},
+    {"čtyřicet pět eur", NULL, "forty-five euros"},
+    {"padesát sedm eur", NULL, "fifty-seven euros"},
+    {"devadesát devět eur", NULL, "ninety-nine euros"},
+    {"Agnieszka Kowalski pochází z Polska, z Krakova.", NULL,
+     "Agnieszka Kowalski is from Kraków, Poland."},
+    {"Je jí 18 let a letos dělá maturitu.", NULL,
+     "She is 18 years old and is taking her A-levels this year."},
+    {"Ráda chatuje se svým německým přítelem.", NULL,
+     "She likes chatting with her German friend."},
+    {"Jmenuje se Stefan Böhmermann a bydlí v Drážďanech.", NULL,
+     "His name is Stefan Böhmermann and he lives in Dresden."},
+    {"Agnieszce přijde ten jazyk super.", NULL,
+     "Agnieszka thinks the language is cool."},
+    {"Už mluví velmi dobře německy.", NULL,
+     "She already speaks German very well."},
+    {"potřebovat mobil", NULL, "to need a mobile phone"},
+    {"pracovat ve BMW", NULL, "to work at BMW"},
+    {"řídit auto", NULL, "to drive a car"},
+    {"navštěvovat gymnázium", NULL, "to attend a grammar school"},
+    {"mluvit španělsky", NULL, "to speak Spanish"},
+    {"číst detektivky", NULL, "to read crime novels"},
+    {"padesát čtyři", NULL, "fifty-four"},
+    {"čtyřicet pět", NULL, "forty-five"},
+    {"tři sta šedesát devět", NULL, "three hundred and sixty-nine"},
+    {"sto dvanáct", NULL, "one hundred and twelve"},
+    {"sto dvacet dva", NULL, "one hundred and twenty-two"},
+    {"šedesát osm", NULL, "sixty-eight"},
+    {"Petr rád čte knihy.", NULL, "Peter likes reading books."},
+    {"Filip pracuje v Salcburku.", NULL, "Filip works in Salzburg."},
+    {"Magda dobře mluví anglicky.", NULL, "Magda speaks English well."},
+    {"Marek navštěvuje gymnázium.", NULL, "Marek attends the grammar school."},
+    {"Dominice je 15 let.", NULL, "Dominika is 15 years old."},
+    {"Moje sestra se jmenuje Marta.", NULL, "My sister is called Marta."},
+    {"Jak se jmenují? – Jana a Michael.", NULL,
+     "What are their names? – Jana and Michael."},
+    {"Kdo mluví polsky? – Jacek.", NULL, "Who speaks Polish? – Jacek."},
+    {"Kde bydlí Eva? – V Plzni.", NULL, "Where does Eva live? – In Plzeň."},
+    {"Odkud pochází Markus? – Z Německa.", NULL,
+     "Where is Markus from? – From Germany."},
+    {"Jakým jazykem mluví Jana? – Slovensky.", NULL,
+     "What language does Jana speak? – Slovak."},
+    /* ---- unit 2: hangman hints ---- */
+    {"vaří v restauraci", NULL, "he cooks in a restaurant"},
+    {"léčí nemocné lidi", NULL, "he treats sick people"},
+    {"učí ve škole", NULL, "he teaches at school"},
+    {"pracuje u policie", NULL, "he works for the police"},
+    {"prodává v obchodě", NULL, "he sells in a shop"},
+    /* ---- unit 2: word-level glosses for ex14/ex15 ---- */
+    {"z", NULL, "from"},
+    {"dělá", NULL, "does"},
+    {"kamarád", NULL, "friend"},
+    {"žije", NULL, "lives"},
+    {"jazyk", NULL, "language"},
+    {"dobře", NULL, "well"},
+    {"potřebovat", NULL, "to need"},
+    {"pracovat", NULL, "to work"},
+    {"řídit", NULL, "to drive"},
+    {"navštěvovat", NULL, "to attend"},
+    {"mluvit", NULL, "to speak"},
+    {"číst", NULL, "to read"},
+    /* ---- unit 3: Bei uns zu Hause ---- */
+    /* ex1 family word pairs */
+    {"bratranec / sestřenice", NULL, "male cousin / female cousin"},
+    {"strýc / teta", NULL, "uncle / aunt"},
+    {"dědeček / babička", NULL, "grandfather / grandmother"},
+    {"sestra / bratr", NULL, "sister / brother"},
+    {"kamarád / kamarádka", NULL, "friend (m) / friend (f)"},
+    {"dcera / syn", NULL, "daughter / son"},
+    /* ex2 possessive pronouns (nominative) */
+    {"Je to tvoje matka? – Ne, to není moje matka. To je jeho teta.", NULL,
+     "Is that your mother? – No, that is not my mother. That is his aunt."},
+    /* ex2 word-level glosses for the selected possessive pronouns */
+    {"tvůj", NULL, "yours (m.)"},
+    {"tvoje", NULL, "yours (f.)"},
+    {"můj", NULL, "mine (m.)"},
+    {"moje", NULL, "mine (f.)"},
+    {"jeho", NULL, "his"},
+    {"Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec.", NULL,
+     "Is that your brother? – No, that is not my brother. That is his cousin."},
+    {"Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče Markuse.",
+     NULL, "Are those your parents? – No, those are not my parents. "
+           "Those are Markus's parents."},
+    /* ex3 ein/kein (pets) */
+    {"Máš křečka? – Ne, nemám křečka. Mám želvu.", NULL,
+     "Have you got a hamster? – No, I haven't got a hamster. I have a tortoise."},
+    {"Máš koně? – Ne, nemám koně. Mám králíka.", NULL,
+     "Have you got a horse? – No, I haven't got a horse. I have a rabbit."},
+    {"Máš rybu? – Ne, nemám rybu. Mám ptáka.", NULL,
+     "Have you got a fish? – No, I haven't got a fish. I have a bird."},
+    {"Máš morče? – Ne, nemám morče. Mám andulku.", NULL,
+     "Have you got a guinea pig? – No, I haven't got a guinea pig. I have a budgie."},
+    /* ex4 missing letters (text) */
+    {"Máme přátele v Rakousku. Bydlí ve Vídni.", NULL,
+     "We have friends in Austria. They live in Vienna."},
+    {"Jmenují se Elfriede a Jiří. Mají také děti.", NULL,
+     "They are called Elfriede and Jiri. They also have children."},
+    {"Jejich syn se jmenuje Philipp a jejich dcera Sabine.", NULL,
+     "Their son is called Philipp and their daughter Sabine."},
+    {"Rodina ráda cestuje.", NULL, "The family likes travelling."},
+    {"Často je u nás na návštěvě v Česku.", NULL,
+     "They often visit us in Czechia."},
+    {"Rodina ráda cestuje. Často je u nás na návštěvě v Česku.", NULL,
+     "The family likes travelling. They often visit us in Czechia."},
+    {"Děti se učí také česky.", NULL,
+     "The children are also learning Czech."},
+    /* ex4 word-level glosses for the gapped words */
+    {"mít", NULL, "to have"},
+    {"přátelé", NULL, "friends"},
+    {"bydlet", NULL, "to live"},
+    {"jmenovat se", NULL, "to be called"},
+    {"děti", NULL, "children"},
+    {"syn", NULL, "son"},
+    {"jejich", NULL, "their"},
+    {"rodina", NULL, "family"},
+    {"cestuje", NULL, "travels"},
+    {"často", NULL, "often"},
+    {"návštěva", NULL, "visit"},
+    {"Česko", NULL, "Czechia"},
+    {"učit se", NULL, "to learn"},
+    {"čeština", NULL, "Czech"},
+    /* ex5 Marco's family */
+    {"Máme mužskou domácnost: Můj otec Johann (50), Ivo (16) a já.", NULL,
+     "We live in an all-male household: my father Johann (50), Ivo (16) and me."},
+    {"Ivo a já jsme stejně staří – jsme totiž dvojčata.", NULL,
+     "Ivo and I are the same age – we are twins."},
+    {"Náš otec tu má novou práci.", NULL,
+     "Our father has a new job here."},
+    {"Naši rodiče jsou rozvedení.", NULL,
+     "Our parents are divorced."},
+    {"Naše matka Maja (50) žije ve Vídni, ale pochází z Chorvatska.", NULL,
+     "Our mother Maja (50) lives in Vienna, but she comes from Croatia."},
+    {"Máme v Chorvatsku hodně strýců, tet, sestřenic a bratranců.", NULL,
+     "We have many uncles, aunts, male and female cousins in Croatia."},
+    {"Vídáme je někdy o prázdninách.", NULL,
+     "We sometimes see them on holiday."},
+    /* ex6 sorting vocabulary */
+    {"křeček", NULL, "hamster"},
+    {"babička", NULL, "grandmother"},
+    {"kůň", NULL, "horse"},
+    {"bratr", NULL, "brother"},
+    {"kočka", NULL, "cat"},
+    {"dědeček", NULL, "grandfather"},
+    {"dcera", NULL, "daughter"},
+    {"pes", NULL, "dog"},
+    {"teta", NULL, "aunt"},
+    {"andulka", NULL, "budgerigar"},
+    /* ex8 possessive pronouns (accusative) */
+    {"Potřebuješ svůj mobil.", NULL, "You need your mobile."},
+    {"Má svého koně.", NULL, "He has his horse."},
+    {"Dělá svou párty.", NULL, "She is throwing her party."},
+    {"Ptá se svého učitele.", NULL, "It is asking its teacher."},
+    {"Navštěvujeme náš víkendový dům.", NULL,
+     "We are visiting our weekend house."},
+    {"Vy vidíte svého psa.", NULL, "You see your dog."},
+    {"Mají své nástroje.", NULL, "They have their instruments."},
+    /* ex8 grey notes showing which possessive is expected */
+    {"u3g_dein", "(tvůj)", "(your)"},
+    {"u3g_sein", "(jeho)", "(his)"},
+    {"u3g_ihr_sie", "(její)", "(her)"},
+    {"u3g_sein_es", "(jeho)", "(its)"},
+    {"u3g_unser", "(náš)", "(our)"},
+    {"u3g_euer", "(váš)", "(your)"},
+    {"u3g_ihr_sie_pl", "(jejich)", "(their)"},
+    /* ex9 kein / nicht */
+    {"Mluvíš španělsky? – Ne, nemluvím španělsky.", NULL,
+     "Do you speak Spanish? – No, I don't speak any Spanish."},
+    {"Máš bratra? – Ne, nemám bratra.", NULL,
+     "Have you got a brother? – No, I haven't got a brother."},
+    {"Je v Opavě zoo? – Ne, v Opavě žádná zoo není.", NULL,
+     "Is there a zoo in Opava? – No, there is no zoo in Opava."},
+    {"Jdeš do bazénu? – Ne, do bazénu nejdu.", NULL,
+     "Are you going to the swimming pool? – No, I am not going to the swimming pool."},
+    {"Rád chodí na túry? – Ne, nerad chodí na túry.", NULL,
+     "Does he like hiking? – No, he does not like hiking."},
+    {"Navštívíš dnes zámek? – Ne, dnes nenavštívím žádný zámek.", NULL,
+     "Are you visiting a castle today? – No, I am not visiting a castle today."},
+    /* ex10 sentence order */
+    {"Mají želvu.", NULL, "They have a tortoise."},
+    {"Co dělá tvoje kamarádka o víkendu?", NULL,
+     "What does your friend do at the weekend?"},
+    {"Můj otec je povoláním učitel.", NULL,
+     "My father is a teacher by profession."},
+    {"Je vás doma hodně?", NULL, "Are there many of you at home?"},
+    {"Julie představuje svého psa Trixiho.", NULL,
+     "Julia is introducing her dog Trixi."},
+    /* ex11 what do you see */
+    {"Vidím hrad / zámek.", NULL, "I see a castle."},
+    {"Vidím jezero.", NULL, "I see a lake."},
+    {"Vidím rodinu.", NULL, "I see a family."},
+    /* ex12 whose is it */
+    {"To je jeho mobil.", NULL, "That is his mobile."},
+    {"To je její králík.", NULL, "That is her rabbit."},
+    {"To jsou jejich brusle.", NULL, "Those are their inline skates."},
+    {"To je její dort.", NULL, "That is her cake."},
+    {"To je jeho dům.", NULL, "That is his house."},
+    {"To jsou jejich děti.", NULL, "Those are their children."},
+    /* ex13 es gibt */
+    {"Je tu koncert.", NULL, "There is a concert."},
+    {"Je tu výstava.", NULL, "There is an exhibition."},
+    {"Je tu sportovní slavnost.", NULL, "There is a sports festival."},
+    {"Je tu rodinné setkání.", NULL, "There is a family reunion."},
+    {"Je tu divadelní představení.", NULL, "There is a theatre performance."},
+    {"Je tu bleší trh.", NULL, "There is a flea market."},
+    /* ex14 describe (sentence pairs) */
+    {"Vidím ženu.", NULL, "I see a woman."},
+    {"Jezdí na kole.", NULL, "She is riding a bike."},
+    {"Vidím muže.", NULL, "I see a man."},
+    {"Chodí po lese.", NULL, "He is hiking in the forest."},
+    {"Vidím dvě děti.", NULL, "I see two children."},
+    {"Hrají fotbal.", NULL, "They are playing football."},
+    /* ex15 missing letters (weekend) */
+    {"Moji prarodiče jedou o víkendu do víkendového domu.", NULL,
+     "My grandparents are driving to their weekend house."},
+    {"Můj otec a moje matka navštíví koncert.", NULL,
+     "My father and my mother are going to a concert."},
+    {"Moje sestra jde do kina.", NULL,
+     "My sister is going to the cinema."},
+    {"Můj bratr jede k jezeru.", NULL,
+     "My brother is driving to a lake."},
+    {"A já? Navštívím obchodní centrum.", NULL,
+     "And me? I am going to a shopping centre."},
+    {NULL, NULL, NULL}
+};
+
+const char *tr(const char *key) {
+    static GHashTable *idx;
+    const TrEntry *e;
+    int i;
+
+    if (!key)
+        return NULL;
+
+    if (!idx) {
+        idx = g_hash_table_new(g_str_hash, g_str_equal);
+        for (i = 0; tr_ui[i].key; i++)
+            g_hash_table_insert(idx, (gpointer)tr_ui[i].key,
+                                (gpointer)&tr_ui[i]);
+        for (i = 0; tr_content[i].key; i++)
+            g_hash_table_insert(idx, (gpointer)tr_content[i].key,
+                                (gpointer)&tr_content[i]);
+    }
+
+    e = g_hash_table_lookup(idx, key);
+    if (!e)
+        return key;
+    if (app_lang == LANG_EN)
+        return e->en;
+    return e->cs ? e->cs : e->key;
+}
+
+void i18n_ensure(void) {
+    if (!i18n_binds)
+        i18n_binds = g_array_new(FALSE, FALSE, sizeof(I18nBind));
+}
+
+void i18n_apply_one(const I18nBind *b) {
+    if (!b->widget || !b->key)
+        return;
+    switch (b->kind) {
+        case 0:
+            gtk_label_set_text(GTK_LABEL(b->widget), tr(b->key));
+            break;
+        case 1:
+            gtk_button_set_label(GTK_BUTTON(b->widget), tr(b->key));
+            break;
+        case 2:
+            gtk_widget_set_tooltip_text(b->widget, tr(b->key));
+            break;
+        case 3:
+            gtk_entry_set_placeholder_text(GTK_ENTRY(b->widget), tr(b->key));
+            break;
+        case 4:
+            ex4_fill_sample(b->widget);
+            break;
+        default:
+            break;
+    }
+}
+
+void i18n_bind(GtkWidget *widget, const char *key, int kind) {
+    I18nBind b;
+
+    i18n_ensure();
+    b.widget = widget;
+    b.key = key;
+    b.kind = kind;
+    g_array_append_val(i18n_binds, b);
+
+    i18n_apply_one(&b);
+}
+
+void refresh_welcome_heading(void) {
+    char *markup;
+
+    if (!welcome_heading)
+        return;
+    if (app_lang == LANG_EN)
+        markup = g_strdup_printf(
+            "Welcome to <span color=\"#%06x\">maturita.C</span>!",
+            app_theme.accent);
+    else
+        markup = g_strdup_printf(
+            "Vítejte ve <span color=\"#%06x\">maturita.C</span>!",
+            app_theme.accent);
+    gtk_label_set_markup(GTK_LABEL(welcome_heading), markup);
+    g_free(markup);
+}
+
+void refresh_stats_ui(void);
+void net_slide_apply(void);
+void net_rail_theme_reset(void);
+
+void apply_language(void) {
+    guint i;
+
+    i18n_ensure();
+    for (i = 0; i < i18n_binds->len; i++)
+        i18n_apply_one(&g_array_index(i18n_binds, I18nBind, i));
+    refresh_welcome_heading();
+    refresh_stats_ui();
+    net_slide_apply();
+}

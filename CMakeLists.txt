@@ -44,10 +44,11 @@ endif()
 
 # WIN32 suppresses the console window on Windows; the app still uses main(),
 # so MSVC needs mainCRTStartup as the entry point.
+file(GLOB MATURITA_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
 if(WIN32)
-    add_executable(maturita WIN32 maturita.c)
+    add_executable(maturita WIN32 ${MATURITA_SOURCES})
 else()
-    add_executable(maturita maturita.c)
+    add_executable(maturita ${MATURITA_SOURCES})
 endif()
 
 if(MSVC)
