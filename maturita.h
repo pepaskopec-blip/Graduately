@@ -46,6 +46,8 @@
 #define NET_UNITS      30
 #define NET_GRID_COLS    6
 #define NET_SLIDES      4
+#define NET2_SLIDES     5
+#define NET_LESSONS     2
 
 typedef enum {
     THEME_CATPPUCCIN = 0,
@@ -469,6 +471,29 @@ typedef struct {
     int id;
     gboolean infeasible;
 } NetQz;
+typedef struct {
+    GtkWidget *stack;
+    GtkWidget *prev_btn;
+    GtkWidget *next_btn;
+    guint idx;
+    guint n_slides;
+    const char *unit_page;
+    const char *ex_page;
+} NetLesson;
+typedef struct {
+    const char *kicker;
+    const char *title;
+    const char *tip;
+    const char *line[8];
+} NetSlide;
+typedef struct {
+    const ChoiceQ *qs;
+    int n;
+    int n_opts;
+    GtkWidget *feedback;
+    GtkToggleButton **toggles;
+    GtkWidget **hints;
+} NetMcqCtx;
 
 extern GtkStack *main_stack;
 extern GtkWindow *main_window;
@@ -628,10 +653,7 @@ extern const char *ex13_u3_pool[];
 extern const U3Fill ex13_u3_rows[];
 extern const U3Kw ex14_u3_qs[];
 extern const U3Let ex15_u3_rows[];
-extern GtkWidget *net_slide_stack;
-extern GtkWidget *net_prev_btn;
-extern GtkWidget *net_next_btn;
-extern guint net_slide_idx;
+extern NetLesson net_lessons[NET_LESSONS];
 extern GtkWidget *net_note_host;
 extern GArray *net_note_kicks;
 extern GArray *net_note_titles;
@@ -670,7 +692,7 @@ void i18n_apply_one(const I18nBind *b);
 void i18n_bind(GtkWidget *widget, const char *key, int kind);
 void refresh_welcome_heading(void);
 void refresh_stats_ui(void);
-void net_slide_apply(void);
+void net_lessons_apply_lang(void);
 void net_rail_theme_reset(void);
 void apply_language(void);
 char *read_css_file(void);
@@ -961,7 +983,8 @@ GtkWidget *net_slide_card(const char *cls);
 void net_note_kicker(GtkWidget *box, const char *text);
 void net_note_title(GtkWidget *box, const char *text);
 void net_note_line(GtkWidget *box, const char *text, gboolean tip);
-void net_slide_apply(void);
+void net_slide_apply(NetLesson *L);
+void net_lessons_apply_lang(void);
 void net_open_unit(GtkButton *button, gpointer data);
 void net_slide_prev(GtkButton *button, gpointer data);
 void net_slide_next(GtkButton *button, gpointer data);
@@ -980,7 +1003,10 @@ void net_draw_rail(GtkDrawingArea *area, cairo_t *cr,
 void net_rail_theme_reset(void);
 void net_add_node(GtkFixed *fixed, int index);
 GtkWidget *build_netmap_page(void);
+GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
+                               const NetSlide *slides, guint n_slides);
 GtkWidget *build_net_unit1_page(void);
+GtkWidget *build_net_unit2_page(void);
 GtkWidget *net_qz_combo(void);
 void net_qz_set_prefix(GtkComboBoxText *c, int pfx);
 int net_qz_prefix(GtkComboBoxText *c);
@@ -991,6 +1017,8 @@ void net_qz_fill(GtkButton *button, gpointer data);
 void net_qz_header(GtkWidget *box, const char *text);
 GtkWidget *net_qz_make_entry(void);
 GtkWidget *build_net_exercise_page(void);
+void net_mcq_check(GtkButton *button, gpointer data);
+GtkWidget *build_net_unit2_exercise_page(void);
 void activate(GtkApplication *app, gpointer user_data);
 int main(int argc, char **argv);
 

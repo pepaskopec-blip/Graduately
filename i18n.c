@@ -199,6 +199,12 @@ const TrEntry tr_ui[] = {
      "4 slides with the method, then an exercise."},
     {"net_ex_title", "Cvičení: výpočet IP adres",
      "Exercise: IP address calculation"},
+    {"net_unit2", "Základní pojmy a rozdělení sítí",
+     "Basic concepts and network types"},
+    {"net_unit2_sub", "5 snímků s pojmy a pak kvíz.",
+     "5 slides with the concepts, then a quiz."},
+    {"net_ex2_title", "Kvíz: základní pojmy sítí",
+     "Quiz: basic networking concepts"},
     {"net_slide_next", "Další", "Next"},
     {"net_slide_prev", "Zpět", "Back"},
     {"net_slide_start", "Přejít na cvičení", "Go to the exercise"},
@@ -237,6 +243,20 @@ const TrEntry tr_content[] = {
     {"„siebzehn“ = sedmnáct (17)", NULL, "“siebzehn” = seventeen (17)"},
     {"„zwanzig“ = dvacet (20)", NULL, "“zwanzig” = twenty (20)"},
     {"„sechs“ = šest (6)", NULL, "“sechs” = six (6)"},
+    {"1 B = 8 b", NULL, "1 B = 8 b"},
+    {"2⁸ = 256 hodnot (0–255)", NULL, "2⁸ = 256 values (0–255)"},
+    {"Kabely – síť zůstává připojená i po přenosu", NULL,
+     "Cables – the network stays connected after transfer"},
+    {"WAN = Wide Area Network, např. internet", NULL,
+     "WAN = Wide Area Network, e.g. the internet"},
+    {"Např. hvězda, kruh, sběrnice", NULL,
+     "E.g. star, ring, bus"},
+    {"Architektura = topologie + standard", NULL,
+     "Architecture = topology + standard"},
+    {"Bez centrálního serveru – stanice si sdílejí data a tiskárny", NULL,
+     "No central server – stations share data and printers"},
+    {"Server řídí a poskytuje služby, má vyšší výkon", NULL,
+     "A server controls and provides services; higher performance"},
     {"čtrnáct", NULL, "fourteen"},
     {"sedmnáct", NULL, "seventeen"},
     {"dvacet", NULL, "twenty"},
@@ -807,7 +827,7 @@ void refresh_welcome_heading(void) {
 }
 
 void refresh_stats_ui(void);
-void net_slide_apply(void);
+void net_lessons_apply_lang(void);
 void net_rail_theme_reset(void);
 
 void apply_language(void) {
@@ -818,5 +838,5 @@ void apply_language(void) {
         i18n_apply_one(&g_array_index(i18n_binds, I18nBind, i));
     refresh_welcome_heading();
     refresh_stats_ui();
-    net_slide_apply();
+    net_lessons_apply_lang();
 }

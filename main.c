@@ -173,6 +173,8 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
     gtk_stack_add_named(main_stack, build_net_unit1_page(), "netunit1");
     gtk_stack_add_named(main_stack, build_net_exercise_page(), "netex");
+    gtk_stack_add_named(main_stack, build_net_unit2_page(), "netunit2");
+    gtk_stack_add_named(main_stack, build_net_unit2_exercise_page(), "netex2");
 
     for (int i = 0; i < NUM_UNLOCKED; i++) {
         UnitCtx *u = &units[i];

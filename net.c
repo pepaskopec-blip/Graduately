@@ -3,10 +3,10 @@
 /* ---- Computer networks: subject path, lesson & exercise ------------ */
 
 
-GtkWidget *net_slide_stack;
-GtkWidget *net_prev_btn;
-GtkWidget *net_next_btn;
-guint net_slide_idx;
+NetLesson net_lessons[NET_LESSONS] = {
+    { .n_slides = NET_SLIDES,  .unit_page = "netunit1", .ex_page = "netex"  },
+    { .n_slides = NET2_SLIDES, .unit_page = "netunit2", .ex_page = "netex2" },
+};
 
 void net_paragraph(GtkWidget *box, const char *text) {
     GtkWidget *l = gtk_label_new(text);
@@ -34,6 +34,14 @@ GArray *net_note_titles;
 GArray *net_note_bodies;
 int net_note_last_w = -1;
 
+void net_notes_ensure(void) {
+    if (net_note_kicks)
+        return;
+    net_note_kicks = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    net_note_titles = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    net_note_bodies = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+}
+
 void net_note_font(GtkWidget *l, int px) {
     PangoAttrList *attrs = pango_attr_list_new();
 
@@ -46,6 +54,8 @@ void net_rescale_notes(void) {
     int w = net_note_host ? gtk_widget_get_allocated_width(net_note_host) : 0;
     int body, head, kick;
 
+    if (!net_note_kicks)
+        return;
     if (w < 160)
         w = 160;
     body = w / 46;
@@ -112,52 +122,66 @@ void net_note_line(GtkWidget *box, const char *text, gboolean tip) {
     g_array_append_val(net_note_bodies, l);
 }
 
-void net_slide_apply(void) {
+void net_slide_apply(NetLesson *L) {
     char name[16];
 
-    if (!net_slide_stack)
+    if (!L || !L->stack)
         return;
 
-    g_snprintf(name, sizeof(name), "net_slide%u", net_slide_idx);
-    gtk_stack_set_visible_child_name(GTK_STACK(net_slide_stack), name);
+    g_snprintf(name, sizeof(name), "net_slide%u", L->idx);
+    gtk_stack_set_visible_child_name(GTK_STACK(L->stack), name);
 
-    if (net_prev_btn) {
-        gtk_button_set_label(GTK_BUTTON(net_prev_btn), tr("net_slide_prev"));
-        gtk_widget_set_sensitive(net_prev_btn, net_slide_idx > 0);
+    if (L->prev_btn) {
+        gtk_button_set_label(GTK_BUTTON(L->prev_btn), tr("net_slide_prev"));
+        gtk_widget_set_sensitive(L->prev_btn, L->idx > 0);
     }
-    if (net_next_btn) {
+    if (L->next_btn) {
         gtk_button_set_label(
-            GTK_BUTTON(net_next_btn),
-            net_slide_idx + 1 >= NET_SLIDES ? tr("net_slide_start")
-                                            : tr("net_slide_next"));
+            GTK_BUTTON(L->next_btn),
+            L->idx + 1 >= L->n_slides ? tr("net_slide_start")
+                                      : tr("net_slide_next"));
     }
+}
+
+void net_lessons_apply_lang(void) {
+    for (int i = 0; i < NET_LESSONS; i++)
+        net_slide_apply(&net_lessons[i]);
 }
 
 void net_open_unit(GtkButton *button, gpointer data) {
+    NetLesson *L = data;
+
     (void)button;
-    (void)data;
-    net_slide_idx = 0;
-    net_slide_apply();
-    gtk_stack_set_visible_child_name(main_stack, "netunit1");
+    if (!L)
+        return;
+    L->idx = 0;
+    net_slide_apply(L);
+    gtk_stack_set_visible_child_name(main_stack, L->unit_page);
 }
 
 void net_slide_prev(GtkButton *button, gpointer data) {
+    NetLesson *L = data;
+
     (void)button;
-    (void)data;
-    if (net_slide_idx > 0) {
-        net_slide_idx--;
-        net_slide_apply();
+    if (!L)
+        return;
+    if (L->idx > 0) {
+        L->idx--;
+        net_slide_apply(L);
     }
 }
 
 void net_slide_next(GtkButton *button, gpointer data) {
+    NetLesson *L = data;
+
     (void)button;
-    (void)data;
-    if (net_slide_idx + 1 < NET_SLIDES) {
-        net_slide_idx++;
-        net_slide_apply();
+    if (!L)
+        return;
+    if (L->idx + 1 < L->n_slides) {
+        L->idx++;
+        net_slide_apply(L);
     } else {
-        gtk_stack_set_visible_child_name(main_stack, "netex");
+        gtk_stack_set_visible_child_name(main_stack, L->ex_page);
     }
 }
 
@@ -400,13 +424,14 @@ void net_rail_theme_reset(void) {
 
 void net_add_node(GtkFixed *fixed, int index) {
     int num = index + 1;
-    gboolean locked = index != 0;
+    gboolean locked = index >= NET_LESSONS;
     GtkWidget *card;
     GtkWidget *vbox;
     GtkWidget *number;
     GtkWidget *icon;
     GtkWidget *name;
     char *text;
+    static const char *unit_keys[NET_LESSONS] = { "net_unit1", "net_unit2" };
 
     card = gtk_button_new();
     gtk_widget_add_css_class(card, "unit-node");
@@ -437,7 +462,8 @@ void net_add_node(GtkFixed *fixed, int index) {
         icon = icon_area_new(draw_check_icon, 0.1176, 0.1176, 0.1804, 18);
         gtk_widget_set_visible(icon, FALSE);
         gtk_box_append(GTK_BOX(vbox), icon);
-        g_signal_connect(card, "clicked", G_CALLBACK(net_open_unit), NULL);
+        g_signal_connect(card, "clicked", G_CALLBACK(net_open_unit),
+                         &net_lessons[index]);
     }
 
     net_nodes[index] = card;
@@ -449,8 +475,8 @@ void net_add_node(GtkFixed *fixed, int index) {
     gtk_label_set_justify(GTK_LABEL(name), GTK_JUSTIFY_CENTER);
     gtk_label_set_wrap(GTK_LABEL(name), TRUE);
     gtk_widget_add_css_class(name, "unit-name");
-    if (index == 0) {
-        i18n_bind(name, "net_unit1", 0);
+    if (index < NET_LESSONS) {
+        i18n_bind(name, unit_keys[index], 0);
     } else {
         gtk_widget_add_css_class(name, "unit-name-locked");
     }
@@ -522,13 +548,86 @@ GtkWidget *build_netmap_page(void) {
     return page;
 }
 
+GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
+                               const NetSlide *slides, guint n_slides) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *nav;
+
+    net_notes_ensure();
+    L->n_slides = n_slides;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 28);
+    gtk_widget_set_margin_end(page, 28);
+    gtk_widget_set_margin_top(page, 20);
+    gtk_widget_set_margin_bottom(page, 20);
+
+    gtk_box_append(GTK_BOX(page), top_bar("netmap", title_key, NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 10);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    L->stack = gtk_stack_new();
+    gtk_stack_set_transition_type(GTK_STACK(L->stack),
+                                  GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), L->stack);
+    net_note_host = L->stack;
+
+    for (guint s = 0; s < n_slides; s++) {
+        GtkWidget *stage = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *card;
+        char name[16];
+
+        gtk_widget_set_vexpand(stage, TRUE);
+        g_snprintf(name, sizeof(name), "net_slide%u", s);
+        gtk_stack_add_named(GTK_STACK(L->stack), stage, name);
+
+        card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 16);
+        gtk_widget_add_css_class(card, "notes-card");
+        gtk_widget_set_valign(card, GTK_ALIGN_CENTER);
+        gtk_box_append(GTK_BOX(stage), card);
+
+        net_note_kicker(card, slides[s].kicker);
+        net_note_title(card, slides[s].title);
+
+        for (int i = 0; i < 8 && slides[s].line[i]; i++)
+            net_note_line(card, slides[s].line[i], FALSE);
+
+        if (slides[s].tip)
+            net_note_line(card, slides[s].tip, TRUE);
+    }
+
+    gtk_widget_add_tick_callback(L->stack, net_note_tick, NULL, NULL);
+    net_note_last_w = -1;
+    net_rescale_notes();
+
+    nav = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_box_set_homogeneous(GTK_BOX(nav), TRUE);
+    gtk_widget_set_margin_top(nav, 10);
+    gtk_box_append(GTK_BOX(page), nav);
+
+    L->prev_btn = gtk_button_new_with_label(tr("net_slide_prev"));
+    gtk_widget_add_css_class(L->prev_btn, "btn-primary");
+    g_signal_connect(L->prev_btn, "clicked", G_CALLBACK(net_slide_prev), L);
+    gtk_box_append(GTK_BOX(nav), L->prev_btn);
+
+    L->next_btn = gtk_button_new_with_label(tr("net_slide_next"));
+    gtk_widget_add_css_class(L->next_btn, "btn-primary");
+    g_signal_connect(L->next_btn, "clicked", G_CALLBACK(net_slide_next), L);
+    gtk_box_append(GTK_BOX(nav), L->next_btn);
+
+    L->idx = 0;
+    net_slide_apply(L);
+
+    return page;
+}
+
 GtkWidget *build_net_unit1_page(void) {
-    typedef struct {
-        const char *kicker;
-        const char *title;
-        const char *tip;
-        const char *line[7];
-    } NetSlide;
     static const NetSlide slides[NET_SLIDES] = {
         {
             "1 / 4   •   VLSM", "Podsíťování sítí",
@@ -586,84 +685,74 @@ GtkWidget *build_net_unit1_page(void) {
             },
         },
     };
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *nav;
 
-    net_note_kicks = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
-    net_note_titles = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
-    net_note_bodies = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    return build_net_unit_page(&net_lessons[0], "net_unit1", slides, NET_SLIDES);
+}
 
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 28);
-    gtk_widget_set_margin_end(page, 28);
-    gtk_widget_set_margin_top(page, 20);
-    gtk_widget_set_margin_bottom(page, 20);
+GtkWidget *build_net_unit2_page(void) {
+    static const NetSlide slides[NET2_SLIDES] = {
+        {
+            "1 / 5   •   Jednotky", "Bit, byte a počítačová síť",
+            "Tip: 1 B = 8 b  →  2⁸ = 256 možných hodnot",
+            {
+                "Bit (1 b): základní jednotka informace – 0 nebo 1.",
+                "0 = nevede proud, 1 = vede proud.",
+                "Byte (1 B): 1 B = 8 b, nabývá 256 hodnot.",
+                "Počítačová síť: propojení uzlů (PC a dalších prvků).",
+                "Vyžaduje hardwarové i softwarové prostředky.",
+                NULL,
+            },
+        },
+        {
+            "2 / 5   •   Propojení", "Trvalé, dočasné a důvody zapojení",
+            NULL,
+            {
+                "Trvalé propojení: kabely – síť zůstává připojená i po přenosu.",
+                "Dočasné propojení: modem, Wi‑Fi – po přenosu se odpojuje.",
+                "Důvody zapojení do sítě:",
+                "sdílení dat (nutná podpora aplikací)",
+                "sdílení HW (tiskárny, disky) a SW (databáze)",
+                "vyšší spolehlivost, bezpečnost (přístupová práva)",
+                "komunikace (e‑mail, hlas)",
+                NULL,
+            },
+        },
+        {
+            "3 / 5   •   Pojmy", "Terminologie sítí",
+            "Architektura = topologie + standard",
+            {
+                "Uzel: jakékoli zařízení (stanice, server, aktivní prvek).",
+                "Topologie: způsob propojení (hvězda, kruh, sběrnice).",
+                "Standard: normy pro zpracování dat.",
+                "Architektura: topologie + standard.",
+                NULL,
+            },
+        },
+        {
+            "4 / 5   •   Rozlehlost", "WAN, MAN a LAN",
+            NULL,
+            {
+                "WAN: rozsáhlé sítě (státy, kontinenty), např. internet.",
+                "MAN: městské sítě – propojují lokální sítě.",
+                "LAN: lokální sítě (budova), kabeláž v řádu km,",
+                "jednotná architektura.",
+                NULL,
+            },
+        },
+        {
+            "5 / 5   •   Uzly", "Server, stanice a peer‑to‑peer",
+            NULL,
+            {
+                "Server: nadřazený, řídící, poskytuje služby, vyšší výkon.",
+                "Pracovní stanice: pro uživatele, jednodušší konfigurace.",
+                "Peer‑to‑peer: síť bez serverů – jen stanice,",
+                "které sdílejí data a tiskárny.",
+                NULL,
+            },
+        },
+    };
 
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netmap", "net_unit1", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 10);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    net_slide_stack = gtk_stack_new();
-    gtk_stack_set_transition_type(GTK_STACK(net_slide_stack),
-                                  GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll),
-                                  net_slide_stack);
-    net_note_host = net_slide_stack;
-
-    for (int s = 0; s < NET_SLIDES; s++) {
-        GtkWidget *stage = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        GtkWidget *card;
-        char name[16];
-
-        gtk_widget_set_vexpand(stage, TRUE);
-        g_snprintf(name, sizeof(name), "net_slide%d", s);
-        gtk_stack_add_named(GTK_STACK(net_slide_stack), stage, name);
-
-        card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 16);
-        gtk_widget_add_css_class(card, "notes-card");
-        gtk_widget_set_valign(card, GTK_ALIGN_CENTER);
-        gtk_box_append(GTK_BOX(stage), card);
-
-        net_note_kicker(card, slides[s].kicker);
-        net_note_title(card, slides[s].title);
-
-        for (int i = 0; i < 7 && slides[s].line[i]; i++)
-            net_note_line(card, slides[s].line[i], FALSE);
-
-        if (slides[s].tip)
-            net_note_line(card, slides[s].tip, TRUE);
-    }
-
-    gtk_widget_add_tick_callback(net_slide_stack, net_note_tick, NULL, NULL);
-    net_note_last_w = -1;
-    net_rescale_notes();
-
-    nav = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    gtk_box_set_homogeneous(GTK_BOX(nav), TRUE);
-    gtk_widget_set_margin_top(nav, 10);
-    gtk_box_append(GTK_BOX(page), nav);
-
-    net_prev_btn = gtk_button_new_with_label(tr("net_slide_prev"));
-    gtk_widget_add_css_class(net_prev_btn, "btn-primary");
-    g_signal_connect(net_prev_btn, "clicked", G_CALLBACK(net_slide_prev), NULL);
-    gtk_box_append(GTK_BOX(nav), net_prev_btn);
-
-    net_next_btn = gtk_button_new_with_label(tr("net_slide_next"));
-    gtk_widget_add_css_class(net_next_btn, "btn-primary");
-    g_signal_connect(net_next_btn, "clicked", G_CALLBACK(net_slide_next), NULL);
-    gtk_box_append(GTK_BOX(nav), net_next_btn);
-
-    net_slide_idx = 0;
-    net_slide_apply();
-
-    return page;
+    return build_net_unit_page(&net_lessons[1], "net_unit2", slides, NET2_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -1012,6 +1101,175 @@ GtkWidget *build_net_exercise_page(void) {
         gtk_box_append(GTK_BOX(task), sol);
         q->note = sol;
     }
+
+    return page;
+}
+
+/* ---- Unit 2: multiple-choice quiz on basic networking concepts ---- */
+
+const ChoiceQ net2_qs[] = {
+    {"Kolik bitů má jeden byte?",
+     {"4", "8", "16", "32"}, 4, 1},
+    {"Kolik různých hodnot nabývá jeden byte?",
+     {"128", "255", "256", "512"}, 4, 2},
+    {"Co je trvalé propojení sítě?",
+     {"Modem", "Wi‑Fi", "Kabely", "Bluetooth"}, 4, 2},
+    {"Co označuje zkratka WAN?",
+     {"Lokální síť v budově", "Městskou síť",
+      "Rozsáhlou síť (státy, kontinenty)", "Bezdrátovou síť"}, 4, 2},
+    {"Co je topologie sítě?",
+     {"Norma pro zpracování dat", "Způsob propojení uzlů",
+      "Název serveru", "Rychlost přenosu"}, 4, 1},
+    {"Architektura sítě je:",
+     {"Jen topologie", "Jen standard", "Topologie + standard",
+      "Pouze typ kabelu"}, 4, 2},
+    {"Peer‑to‑peer síť znamená:",
+     {"Síť s jedním výkonným serverem",
+      "Síť bez serverů – stanice sdílejí data",
+      "Jen internetovou síť", "Síť pouze s tiskárnami"}, 4, 1},
+    {"Server v síti je:",
+     {"Jednoduchá stanice pro uživatele",
+      "Nadřazený uzel poskytující služby",
+      "Jen aktivní prvek kabeláže", "Dočasné Wi‑Fi připojení"}, 4, 1},
+};
+
+const char *net2_hints[] = {
+    "1 B = 8 b",
+    "2⁸ = 256 hodnot (0–255)",
+    "Kabely – síť zůstává připojená i po přenosu",
+    "WAN = Wide Area Network, např. internet",
+    "Např. hvězda, kruh, sběrnice",
+    "Architektura = topologie + standard",
+    "Bez centrálního serveru – stanice si sdílejí data a tiskárny",
+    "Server řídí a poskytuje služby, má vyšší výkon",
+};
+
+void net_mcq_check(GtkButton *button, gpointer data) {
+    NetMcqCtx *ctx = data;
+    int ok = 0;
+
+    (void)button;
+
+    for (int i = 0; i < ctx->n; i++) {
+        int active = -1;
+
+        for (int o = 0; o < ctx->n_opts; o++) {
+            GtkToggleButton *tb = ctx->toggles[i * ctx->n_opts + o];
+
+            gtk_widget_remove_css_class(GTK_WIDGET(tb), "ok");
+            gtk_widget_remove_css_class(GTK_WIDGET(tb), "wrong");
+            if (gtk_toggle_button_get_active(tb))
+                active = o;
+        }
+        if (active == ctx->qs[i].correct) {
+            ok++;
+            gtk_widget_add_css_class(
+                GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "ok");
+        } else if (active >= 0) {
+            gtk_widget_add_css_class(
+                GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "wrong");
+        }
+        if (ctx->hints && ctx->hints[i])
+            gtk_widget_set_visible(ctx->hints[i], TRUE);
+    }
+
+    if (ok == ctx->n)
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+    else
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry_short"));
+}
+
+GtkWidget *build_net_unit2_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net2_qs);
+    int n_opts = net2_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit2", "net_ex2_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k základním pojmům sítí");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net2_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net2_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net2_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net2_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
 
     return page;
 }
