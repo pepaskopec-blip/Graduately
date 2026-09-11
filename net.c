@@ -10,6 +10,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET4_SLIDES, .unit_page = "netunit4", .ex_page = "netex4" },
     { .n_slides = NET5_SLIDES, .unit_page = "netunit5", .ex_page = "netex5" },
     { .n_slides = NET6_SLIDES, .unit_page = "netunit6", .ex_page = "netex6" },
+    { .n_slides = NET7_SLIDES, .unit_page = "netunit7", .ex_page = "netex7" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -437,7 +438,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
-        "net_unit6"
+        "net_unit6", "net_unit7"
     };
 
     card = gtk_button_new();
@@ -956,6 +957,51 @@ GtkWidget *build_net_unit6_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[5], "net_unit6", slides, NET6_SLIDES);
+}
+
+GtkWidget *build_net_unit7_page(void) {
+    static const NetSlide slides[NET7_SLIDES] = {
+        {
+            "1 / 4   •   Multiplex", "Rozdělení kanálu",
+            NULL,
+            {
+                "Multiplex: rozdělení jednoho kanálu",
+                "na více logických podkanálů.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Typy", "FDM, TDM a STDM",
+            NULL,
+            {
+                "FDM (frekvenční): každému kanálu část frekvenčního pásma.",
+                "TDM (časový): každému kanálu vyhrazený časový slot.",
+                "STDM (statistický): kapacita dle potřeby (paketový přenos),",
+                "negarantuje 100% dostupnost.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Směry", "Simplex, poloduplex a duplex",
+            NULL,
+            {
+                "Simplex: jen jeden směr (např. optické vlákno).",
+                "Poloduplex (half-duplex): oběma směry, ne současně.",
+                "Duplex (full-duplex): oběma směry současně.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Agregace", "Sdílení kapacity",
+            NULL,
+            {
+                "Agregace: sdílení kapacity kanálu více uživateli.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[6], "net_unit7", slides, NET7_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -1990,6 +2036,143 @@ GtkWidget *build_net_unit6_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net6_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 7: multiplexing and transmission directions quiz ---------- */
+
+const ChoiceQ net7_qs[] = {
+    {"Multiplex znamená:",
+     {"Jen jeden uživatel na kanál",
+      "Rozdělení jednoho kanálu na více logických podkanálů",
+      "Jen CRC kontrolu", "Jen digitální 0 a 1"}, 4, 1},
+    {"FDM přiděluje každému kanálu:",
+     {"Časový slot", "Část frekvenčního pásma", "Jen start-bit",
+      "Jen mainframe"}, 4, 1},
+    {"TDM přiděluje každému kanálu:",
+     {"Část frekvenčního pásma", "Vyhrazený časový slot",
+      "Jen SaaS účet", "Jen paritu"}, 4, 1},
+    {"STDM:",
+     {"Garantuje vždy 100% dostupnost",
+      "Přiděluje kapacitu dle potřeby a negarantuje 100%",
+      "Je jen simplex", "Je jen trunking kabelů"}, 4, 1},
+    {"Simplex umožňuje přenos:",
+     {"Oběma směry současně", "Jen jedním směrem",
+      "Oběma směry, ale ne současně", "Jen přes CRC"}, 4, 1},
+    {"Half-duplex znamená:",
+     {"Jen jeden směr", "Oběma směry, ne současně",
+      "Oběma směry současně", "Jen FDM"}, 4, 1},
+    {"Full-duplex znamená:",
+     {"Jen jeden směr", "Oběma směry, ne současně",
+      "Oběma směry současně", "Jen STDM"}, 4, 2},
+    {"Agregace je:",
+     {"Sdílení kapacity kanálu více uživateli", "Jen fázová modulace",
+      "Jen dvoubodový spoj", "Jen stop-bit"}, 4, 0},
+};
+
+const char *net7_hints[] = {
+    "Multiplex dělí jeden kanál na více logických podkanálů",
+    "FDM: každému kanálu část frekvenčního pásma",
+    "TDM: každému kanálu vyhrazený časový slot",
+    "STDM přiděluje kapacitu dle potřeby, negarantuje 100 %",
+    "Simplex = jen jeden směr přenosu",
+    "Half-duplex = oběma směry, ale ne současně",
+    "Full-duplex = oběma směry současně",
+    "Agregace = sdílení kapacity kanálu více uživateli",
+};
+
+GtkWidget *build_net_unit7_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net7_qs);
+    int n_opts = net7_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit7", "net_ex7_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k multiplexu a směrům přenosu");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net7_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net7_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net7_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net7_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
