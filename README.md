@@ -352,7 +352,7 @@ German in both languages.
 - [ ] Add listening and reading comprehension exercises
 - [ ] Add writing practice with feedback
 - [x] Expand progress tracking with statistics
-- [ ] Move CSS styling to an external file
+- [x] Move CSS styling to an external file
 - [ ] Split the UI code into multiple files
 - [x] Add internationalization support (Czech and English)
 - [ ] Add more interface languages
@@ -698,7 +698,7 @@ rozhraní.
 - [ ] Poslech a čtení s porozuměním
 - [ ] Psaní s feedbackem
 - [x] Statistiky postupu
-- [ ] Přesunout CSS do externího souboru
+- [x] Přesunout CSS do externího souboru
 - [ ] Rozdělit UI kód do více souborů
 - [x] Internacionalizace (čeština a angličtina)
 - [ ] Další jazyky rozhraní
