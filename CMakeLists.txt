@@ -60,3 +60,10 @@ else()
     target_compile_options(maturita PRIVATE
         -Wall -Wextra -Wno-deprecated-declarations)
 endif()
+
+# The GTK stylesheet is loaded at runtime from the working directory, so keep
+# a copy next to the built binary as well.
+add_custom_command(TARGET maturita POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_SOURCE_DIR}/style.css
+            $<TARGET_FILE_DIR:maturita>/style.css)

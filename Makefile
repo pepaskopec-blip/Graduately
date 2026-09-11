@@ -46,6 +46,7 @@ bundle: $(TARGET)
 	@rm -rf dist
 	@mkdir -p dist
 	@cp $(TARGET) dist/
+	@cp style.css dist/
 	@ldd $(TARGET) | grep -Ei '/(ucrt64|mingw64)/bin/' | awk '{print $$3}' \
 		| xargs -r -I{} cp -f {} dist/
 	@echo "Bundled into dist/ - run dist/$(TARGET)"

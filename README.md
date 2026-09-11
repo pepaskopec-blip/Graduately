@@ -300,6 +300,7 @@ saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
 
 ```
 maturita.c              entire application (UI, navigation, themes, exercises)
+style.css               GTK stylesheet (palette colors are injected at runtime)
 Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` on Windows
 CMakeLists.txt          optional CMake build (Linux / macOS)
 build-windows.bat       legacy MSVC build (requires Visual Studio + gvsbuild GTK)
@@ -317,12 +318,13 @@ progress/               created at runtime
 
 The app ships with ten palettes – Catppuccin, Nord, Dracula, Rose Pine, Ocean,
 Gruvbox, Solarized, Everforest, Monokai and One Dark – each available in dark
-and light mode. Colors are defined as theme palettes in `maturita.c` and
-applied through a generated CSS stylesheet (plus matching Cairo colors for the
-roadmap rails and icons).
+and light mode. Colors are defined as theme palettes in `maturita.c`, injected
+as `@define-color` bindings, and combined with the rules in the external
+`style.css` stylesheet (plus matching Cairo colors for the roadmap rails and
+icons).
 
-Change the look from the in-app settings panel, or edit the palette tables /
-`build_theme_css()` in `maturita.c` and rebuild.
+Change the look from the in-app settings panel, or edit the palette tables in
+`maturita.c` / the rules in `style.css` and rebuild.
 
 ### Languages
 
@@ -647,6 +649,7 @@ prvním dokončení).
 
 ```
 maturita.c              celá aplikace (UI, navigace, témata, cvičení)
+style.css               GTK styl (barvy palety se vkládají za běhu)
 Makefile                build & run (Linux, macOS, MSYS2); `make bundle` na Windows
 CMakeLists.txt          volitelný CMake build (Linux / macOS)
 build-windows.bat       legacy MSVC build (vyžaduje Visual Studio + gvsbuild GTK)
@@ -664,11 +667,12 @@ progress/               vzniká za běhu
 
 Aplikace má deset palet – Catppuccin, Nord, Dracula, Rose Pine, Ocean, Gruvbox,
 Solarized, Everforest, Monokai a One Dark – každou ve světlém i tmavém režimu.
-Barvy jsou v `maturita.c` a aplikují se přes generované CSS (a Cairo barvy pro
-koleje a ikony na mapě).
+Barvy jsou v `maturita.c`, vkládají se jako `@define-color` a spojují se s
+pravidly v externím souboru `style.css` (a Cairo barvy pro koleje a ikony na
+mapě).
 
-Vzhled změníte v nastavení, nebo upravte tabulky palet / `build_theme_css()` v
-`maturita.c` a znovu zkompilujte.
+Vzhled změníte v nastavení, nebo upravte tabulky palet v `maturita.c` / pravidla
+v `style.css` a znovu zkompilujte.
 
 ### Jazyky
 
