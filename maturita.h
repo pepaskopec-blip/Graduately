@@ -524,6 +524,7 @@ extern ThemeId   app_theme_id;
 extern ColorMode app_color_mode;
 extern UiLang    app_lang;
 extern ThemePalette app_theme;
+extern double app_ui_scale;
 extern const char *theme_names[THEME_COUNT];
 extern GtkWidget *theme_swatch_areas[THEME_COUNT];
 extern UnitCtx units[NUM_UNITS];

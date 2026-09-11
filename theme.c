@@ -188,6 +188,42 @@ char *read_css_file(void) {
     return contents;
 }
 
+typedef struct {
+    double scale;
+} FontScale;
+
+static gboolean scale_font_size_eval(const GMatchInfo *info, GString *result,
+                                     gpointer user_data) {
+    const FontScale *fs = user_data;
+    char *space = g_match_info_fetch(info, 1);
+    char *num = g_match_info_fetch(info, 2);
+    int px = (int)g_ascii_strtoll(num, NULL, 10);
+    int scaled = (int)(px * fs->scale + 0.5);
+
+    g_string_append_printf(result, "font-size:%s%dpx", space, scaled);
+    g_free(space);
+    g_free(num);
+    return FALSE;
+}
+
+/* Scale every explicit `font-size: Npx` declaration so the interface grows on
+ * large (e.g. maximised / high-DPI) windows. Layout metrics stay untouched. */
+static char *scale_font_sizes(const char *css, double scale) {
+    GRegex *re;
+    char *out;
+    FontScale fs;
+
+    if (scale <= 1.0001)
+        return g_strdup(css);
+
+    fs.scale = scale;
+    re = g_regex_new("font-size:([ \t]*)([0-9]+)px", 0, 0, NULL);
+    out = g_regex_replace_eval(re, css, -1, 0, 0,
+                               scale_font_size_eval, &fs, NULL);
+    g_regex_unref(re);
+    return out;
+}
+
 /* The palette is data-driven, so its @define-color bindings are generated
  * here and prepended to the rules loaded from the external stylesheet. */
 char *build_theme_css(const ThemePalette *p) {
@@ -217,10 +253,22 @@ char *build_theme_css(const ThemePalette *p) {
         p->success, p->success2, p->warning, p->error, p->on_accent,
         p->node, p->locked_bg, p->locked_border);
     char *rules = read_css_file();
-    char *css = g_strconcat(palette, rules, NULL);
+    char *scaled = scale_font_sizes(rules, app_ui_scale);
+    char *base;
+    char *css;
+
+    if (app_ui_scale > 1.0001)
+        base = g_strdup_printf("window { font-size: %dpx; }\n",
+                               (int)(14.0 * app_ui_scale + 0.5));
+    else
+        base = g_strdup("");
+
+    css = g_strconcat(palette, base, scaled, NULL);
 
     g_free(palette);
     g_free(rules);
+    g_free(scaled);
+    g_free(base);
     return css;
 }
 

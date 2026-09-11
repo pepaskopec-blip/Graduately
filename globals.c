@@ -16,6 +16,8 @@ UiLang    app_lang = LANG_CS;
 
 ThemePalette app_theme;
 
+double app_ui_scale = 1.0;
+
 const char *theme_names[THEME_COUNT] = {
     "Catppuccin",
     "Nord",

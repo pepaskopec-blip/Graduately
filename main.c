@@ -126,6 +126,47 @@ GtkWidget *build_exercise_page(UnitCtx *u, int n) {
     }
 }
 
+static int ui_scale_last_w = -1;
+static guint ui_scale_timer = 0;
+static int ui_scale_pending_w = 0;
+
+static gboolean ui_scale_apply(gpointer data) {
+    double scale;
+
+    (void)data;
+    ui_scale_timer = 0;
+    scale = 1.0 + (ui_scale_pending_w - 760) / 1900.0;
+    if (scale < 1.0)
+        scale = 1.0;
+    if (scale > 1.5)
+        scale = 1.5;
+    scale = (double)((int)(scale * 20.0 + 0.5)) / 20.0;
+    if (scale != app_ui_scale) {
+        app_ui_scale = scale;
+        apply_theme();
+    }
+    return G_SOURCE_REMOVE;
+}
+
+/* Grow the interface's text as the window gets wider, so it stays comfortable
+ * when maximised on a large or high-DPI display. Debounced to avoid reloading
+ * the stylesheet on every frame while dragging. */
+static gboolean ui_scale_tick(GtkWidget *w, GdkFrameClock *clock,
+                              gpointer data) {
+    int width = gtk_widget_get_allocated_width(w);
+
+    (void)clock;
+    (void)data;
+    if (width < 200 || width == ui_scale_last_w)
+        return G_SOURCE_CONTINUE;
+    ui_scale_last_w = width;
+    ui_scale_pending_w = width;
+    if (ui_scale_timer)
+        g_source_remove(ui_scale_timer);
+    ui_scale_timer = g_timeout_add(120, ui_scale_apply, NULL);
+    return G_SOURCE_CONTINUE;
+}
+
 void activate(GtkApplication *app, gpointer user_data) {
     GtkWindow *window;
     GtkWidget *headerbar;
@@ -242,6 +283,8 @@ void activate(GtkApplication *app, gpointer user_data) {
 
     apply_theme();
     apply_language();
+
+    gtk_widget_add_tick_callback(GTK_WIDGET(window), ui_scale_tick, NULL, NULL);
 
     gtk_window_present(window);
 }
