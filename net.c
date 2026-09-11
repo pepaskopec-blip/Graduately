@@ -4,6 +4,8 @@
 
 
 NetLesson net_lessons[NET_LESSONS] = {
+    /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
+     * units 2–10 = source topics 01–09 (Základní pojmy … ISO/OSI). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex"   },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -58,8 +60,7 @@ void net_note_font(GtkWidget *l, int px) {
     pango_attr_list_unref(attrs);
 }
 
-void net_rescale_notes(void) {
-    int w = net_note_host ? gtk_widget_get_allocated_width(net_note_host) : 0;
+void net_rescale_notes_at(int w) {
     int body, head, kick;
 
     if (!net_note_kicks)
@@ -74,11 +75,18 @@ void net_rescale_notes(void) {
     kick = body - 3;
     if (kick < 11) kick = 11;
 
-    for (guint i = 0; i < net_note_kicks->len; i++) {
+    for (guint i = 0; i < net_note_kicks->len; i++)
         net_note_font(g_array_index(net_note_kicks, GtkWidget *, i), kick);
+    for (guint i = 0; i < net_note_titles->len; i++)
         net_note_font(g_array_index(net_note_titles, GtkWidget *, i), head);
+    for (guint i = 0; i < net_note_bodies->len; i++)
         net_note_font(g_array_index(net_note_bodies, GtkWidget *, i), body);
-    }
+}
+
+void net_rescale_notes(void) {
+    int w = net_note_host ? gtk_widget_get_allocated_width(net_note_host) : 0;
+
+    net_rescale_notes_at(w);
 }
 
 gboolean net_note_tick(GtkWidget *w, GdkFrameClock *clock,
@@ -89,7 +97,7 @@ gboolean net_note_tick(GtkWidget *w, GdkFrameClock *clock,
     (void)data;
     if (width != net_note_last_w) {
         net_note_last_w = width;
-        net_rescale_notes();
+        net_rescale_notes_at(width);
     }
     return G_SOURCE_CONTINUE;
 }

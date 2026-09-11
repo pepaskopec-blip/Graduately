@@ -984,6 +984,7 @@ GtkWidget *build_exercise_page(UnitCtx *u, int n);
 void net_paragraph(GtkWidget *box, const char *text);
 void net_heading(GtkWidget *box, const char *text);
 void net_note_font(GtkWidget *l, int px);
+void net_rescale_notes_at(int w);
 void net_rescale_notes(void);
 gboolean net_note_tick(GtkWidget *w, GdkFrameClock *clock,
                               gpointer data);

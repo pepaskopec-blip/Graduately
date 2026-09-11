@@ -30,9 +30,8 @@ GTK 4 interface.
   - **Deutsch** is open (round bubble with the German flag) and opens the
     German learning path
   - **Správa počítačových sítí / Computer Network Administration** is open too
-    (shown with a Wi-Fi icon) and leads to a 30-unit computer-networks path
-    whose first unit, **Výpočet IP adres / IP Address Calculation**, is
-    playable; the rest are locked placeholders
+    (shown with a Wi-Fi icon) and leads to a 30-unit computer-networks path;
+    **units 1–10 are playable**, units 11–30 are locked placeholders
   - the remaining subjects are dimmed/locked placeholders until their content
     is added
   - layout folds into multiple rows when the window is narrow
@@ -60,18 +59,30 @@ GTK 4 interface.
 - **Hints & model answers** – in exercises where you write or complete a German
   sentence the Czech meaning is shown right away as a hint, and clicking the
   check button also reveals the correct German sentence so you can compare
-- **Computer networks ("Výpočet IP adres")** – the first networks unit contains
-  a 4-slide walkthrough of IP subnetting (masks, host ranges, VLSM) followed by
-  a practice sheet with four subnetting tasks; each task has a "show solution"
-  button with a worked answer key
+- **Computer networks path** – ten unlocked units (theory slides + practice):
+  1. **Výpočet IP adres / IP Address Calculation** – 4-slide VLSM walkthrough
+     and four interactive subnetting tasks (prefix, network, broadcast, host
+     range) with check and “show solution”
+  2. Základní pojmy a rozdělení sítí – slides + multiple-choice quiz
+  3. Sítě Klient–Server a Cloud – slides + quiz
+  4. Přenos dat a jeho zabezpečení – slides + quiz
+  5. Signály a modulace – slides + quiz
+  6. Cesta, kanál a okruh – slides + quiz
+  7. Multiplex a směry přenosu – slides + quiz
+  8. Přepojování – slides + quiz
+  9. Vrstevnaté modely a protokoly – slides + quiz
+  10. Model ISO/OSI a TCP/IP – slides + quiz  
+  Progress for networks is **not** saved yet (unlike Deutsch); the Statistics
+  page still treats networks as without tracked units
 - **Progress tracking** – completed exercises are marked green; progress is
   saved per unit to `progress/unit1.conf`, `progress/unit2.conf` and
   `progress/unit3.conf` and restored on startup
 - **Statistics** – chart icon in the header opens a per-subject progress
   overview: summary totals (exercises done, percent, finished units) at the
-  top, then every subject with its own progress bar (subjects without content
-  yet are shown as locked), and a per-unit breakdown with progress bars for
-  Deutsch; numbers update as soon as you finish an exercise
+  top, then every subject with its own progress bar (subjects without tracked
+  content yet — including networks for now — are shown as locked), and a
+  per-unit breakdown with progress bars for Deutsch; numbers update as soon
+  as you finish an exercise
 - **Settings** – gear icon in the top-right header opens a panel where you can
   choose:
   - **mode**: dark or light, as a segmented control
@@ -274,21 +285,25 @@ When launched, the application shows the welcome screen. From there:
    unit 2 or **"Bei uns zu Hause"** for unit 3, then pick any bubble to start
    an exercise. Units 2 and 3 are available even if the earlier units are not
    finished yet.
-5. On the networks path, open **"Výpočet IP adres"** (the first unit) to walk
-   through four slides on IP subnetting; the final slide leads to the practice
-   sheet with four subnetting tasks and per-task "show solution" answers.
+5. On the networks path, units **1–10** are open. Unit 1 (**Výpočet IP adres**)
+   walks through four VLSM slides and then four interactive subnetting tasks
+   with check / “show solution”. Units 2–10 each have theory slides followed by
+   a multiple-choice quiz (basic concepts, client–server/cloud, transmission
+   security, signals, path/channel/circuit, multiplexing, switching, layered
+   models, ISO/OSI & TCP/IP). Units 11–30 stay locked placeholders.
 6. Use the **back button** in the top-left corner to return to the previous
    screen.
 7. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
    grouped per subject (overall totals plus, for Deutsch, a per-unit
-   breakdown).
+   breakdown). Network progress is not tracked in Statistics yet.
 8. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
-Units 1–3 are currently implemented. Locked units do nothing – they are
-placeholders until lessons are added. Completed exercises stay green and are
-saved per unit to `progress/unit1.conf` / `progress/unit2.conf` /
-`progress/unit3.conf` (created next to the app on first finish).
+German units 1–3 and network units 1–10 are currently implemented. Locked
+nodes do nothing – they are placeholders until lessons are added. Completed
+Deutsch exercises stay green and are saved per unit to `progress/unit1.conf` /
+`progress/unit2.conf` / `progress/unit3.conf` (created next to the app on first
+finish).
 
 #### Keyboard shortcuts
 
@@ -317,7 +332,8 @@ exercise_u1.c           unit 1 ("Neue Freunde") exercises
 exercise_u2.c           unit 2 ("Aus aller Welt") exercises
 exercise_u3.c           unit 3 ("Bei uns zu Hause") exercises
 settings.c              settings popover (mode, theme, language)
-net.c                   computer-networks path, slides and practice sheet
+net.c                   computer-networks path (30 nodes), units 1–10 slides
+                        and exercises (unit 1: VLSM practice; 2–10: MC quizzes)
 main.c                  application entry point and page wiring
 style.css               GTK stylesheet (palette colors are injected at runtime)
 Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` on Windows
@@ -326,6 +342,7 @@ build-windows.bat       legacy MSVC build (requires Visual Studio + gvsbuild GTK
 run-windows.bat         legacy launcher for the MSVC build with GTK DLLs on PATH
 README.md               this file
 LICENSE                 GPL-3.0 license
+assets/                 README screenshots (welcome, subjects, German roadmap)
 progress/               created at runtime
   unit1.conf            unit 1 exercise completion state
   unit2.conf            unit 2 exercise completion state
@@ -364,6 +381,8 @@ German in both languages.
   - [x] Unit 1 ("Neue Freunde") – 13 interactive exercises with progress saving
   - [x] Unit 2 ("Aus aller Welt") – 19 interactive exercises (incl. Hangman)
   - [x] Unit 3 ("Bei uns zu Hause") – 15 interactive exercises
+- [x] Computer networks units 1–10 (IP/VLSM + nine theory units with quizzes)
+- [ ] Progress tracking / statistics for the networks path
 - [ ] Lesson progression and unlock system for the remaining units
 - [ ] Add audio pronunciation features
 - [x] Add user settings panel (theme, dark/light mode, language)
@@ -412,8 +431,8 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   - **Deutsch** je otevřený (bublina s německou vlajkou) a vede na německou
     učební cestu
   - **Správa počítačových sítí** je také otevřená (ikona Wi‑Fi) a vede na cestu
-    s 30 jednotkami; první jednotka **Výpočet IP adres** je hratelná, zbytek
-    je zatím zamčený
+    s 30 jednotkami; **jednotky 1–10 jsou hratelné**, 11–30 jsou zamčené
+    placeholdery
   - ostatní předměty jsou ztmavené / zamčené placeholdery
   - při úzkém okně se mapa zalomí do více řad
 - **Učební cesta** – přizpůsobivá cesta s 10 jednotkami
@@ -435,14 +454,26 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   „Was siehst du?“, řazení vět, chybějící písmena)
 - **Nápovědy a vzorové odpovědi** – u psaných / doplňovaných vět je hned
   český význam; po kontrole se ukáže i správná německá věta
-- **Počítačové sítě („Výpočet IP adres“)** – 4 slidová vysvětlení IP subnettingu
-  (masky, rozsahy hostitelů, VLSM) a pak 4 praktické úlohy s tlačítkem
-  „ukázat řešení“
+- **Cesta počítačových sítí** – deset odemčených jednotek (snímky + cvičení):
+  1. **Výpočet IP adres** – 4 snímky VLSM a čtyři interaktivní úlohy
+     (prefix, síť, broadcast, rozsah uzlů) s kontrolou a „ukázat řešení“
+  2. Základní pojmy a rozdělení sítí – snímky + kvíz
+  3. Sítě Klient–Server a Cloud – snímky + kvíz
+  4. Přenos dat a jeho zabezpečení – snímky + kvíz
+  5. Signály a modulace – snímky + kvíz
+  6. Cesta, kanál a okruh – snímky + kvíz
+  7. Multiplex a směry přenosu – snímky + kvíz
+  8. Přepojování – snímky + kvíz
+  9. Vrstevnaté modely a protokoly – snímky + kvíz
+  10. Model ISO/OSI a TCP/IP – snímky + kvíz  
+  Postup u sítí se **zatím neukládá** (na rozdíl od Deutsch); ve Statistikách
+  se sítě stále berou jako předmět bez trackovaných jednotek
 - **Ukládání postupu** – hotová cvičení zezelenají; stav se ukládá do
   `progress/unit1.conf`, `progress/unit2.conf` a `progress/unit3.conf` a při
   startu se načte zpět
 - **Statistiky** – ikona grafu v hlavičce ukáže postup po předmětech (součty,
-  procenta, dokončené jednotky), progress bary u každého předmětu a rozpad
+  procenta, dokončené jednotky), progress bary u každého předmětu (předměty
+  bez trackovaného obsahu — včetně sítí — jsou zatím jako zamčené) a rozpad
   po jednotkách u Deutsch
 - **Nastavení** – ozubené kolečko vpravo nahoře:
   - **režim**: tmavý / světlý
@@ -645,18 +676,23 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
 4. Otevřete **"Neue Freunde"** (jednotka 1), **"Aus aller Welt"** (2) nebo
    **"Bei uns zu Hause"** (3) a vyberte bublinu cvičení. Jednotky 2 a 3 jdou
    otevřít i bez dokončení předchozích.
-5. Na síťové cestě otevřete **"Výpočet IP adres"** – 4 slidová vysvětlení
-   subnettingu a pak 4 úlohy s „ukázat řešení“.
+5. Na síťové cestě jsou otevřené jednotky **1–10**. Jednotka 1 (**Výpočet IP
+   adres**) má 4 snímky VLSM a pak 4 interaktivní úlohy s kontrolou /
+   „ukázat řešení“. Jednotky 2–10 mají snímky teorie a kvíz s výběrem
+   (základní pojmy, klient–server/cloud, zabezpečení přenosu, signály, cesta/
+   kanál/okruh, multiplex, přepojování, vrstevnaté modely, ISO/OSI a TCP/IP).
+   Jednotky 11–30 zůstávají zamčené.
 6. Tlačítkem **zpět** vlevo nahoře se vrátíte na předchozí obrazovku.
 7. **Statistiky** (ikona grafu vpravo nahoře) ukazují postup po předmětech
-   (u Deutsch i po jednotkách).
+   (u Deutsch i po jednotkách). Postup sítí se ve Statistikách zatím
+   nesleduje.
 8. **Nastavení** (ozubené kolečko) – tmavý/světlý režim, barevné téma nebo
    jazyk rozhraní.
 
-Jednotky 1–3 jsou hotové. Zamčené jednotky nic nedělají – jsou to placeholdery.
-Dokončená cvičení zůstanou zelená a ukládají se do `progress/unit1.conf` /
-`progress/unit2.conf` / `progress/unit3.conf` (vzniknou vedle aplikace při
-prvním dokončení).
+Hotové jsou německé jednotky 1–3 a síťové jednotky 1–10. Zamčené uzly nic
+nedělají – jsou to placeholdery. Dokončená německá cvičení zůstanou zelená a
+ukládají se do `progress/unit1.conf` / `progress/unit2.conf` /
+`progress/unit3.conf` (vzniknou vedle aplikace při prvním dokončení).
 
 #### Klávesové zkratky
 
@@ -685,7 +721,8 @@ exercise_u1.c           cvičení jednotky 1 („Neue Freunde“)
 exercise_u2.c           cvičení jednotky 2 („Aus aller Welt“)
 exercise_u3.c           cvičení jednotky 3 („Bei uns zu Hause“)
 settings.c              panel nastavení (režim, téma, jazyk)
-net.c                   cesta počítačových sítí, snímky a cvičení
+net.c                   cesta počítačových sítí (30 uzlů), jednotky 1–10
+                        (1: VLSM cvičení; 2–10: kvízy s výběrem)
 main.c                  vstupní bod aplikace a zapojení stránek
 style.css               GTK styl (barvy palety se vkládají za běhu)
 Makefile                build & run (Linux, macOS, MSYS2); `make bundle` na Windows
@@ -694,6 +731,7 @@ build-windows.bat       legacy MSVC build (vyžaduje Visual Studio + gvsbuild GT
 run-windows.bat         legacy spouštění MSVC buildu s GTK DLL na PATH
 README.md               tento soubor
 LICENSE                 licence GPL-3.0
+assets/                 screenshoty do README (úvod, předměty, německá cesta)
 progress/               vzniká za běhu
   unit1.conf            stav cvičení jednotky 1
   unit2.conf            stav cvičení jednotky 2
@@ -729,6 +767,8 @@ rozhraní.
   - [x] Jednotka 1 („Neue Freunde“) – 13 interaktivních cvičení s ukládáním
   - [x] Jednotka 2 („Aus aller Welt“) – 19 cvičení (včetně Hangmana)
   - [x] Jednotka 3 („Bei uns zu Hause“) – 15 cvičení
+- [x] Počítačové sítě: jednotky 1–10 (IP/VLSM + 9 teoretických s kvízy)
+- [ ] Ukládání postupu / statistiky pro síťovou cestu
 - [ ] Postupné odemykání zbývajících jednotek
 - [ ] Audio / výslovnost
 - [x] Panel nastavení (téma, režim, jazyk)

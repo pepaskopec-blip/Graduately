@@ -5,7 +5,7 @@
 /* ------------------------------------------------------------------ */
 
 
-/* Index 0 is Deutsch and is the only unlocked subject for now. */
+/* Index 0 (Deutsch) and NET_SUBJ (computer networks) are unlocked. */
 const char *sub_keys[NUM_SUBJECTS] = {
     "Deutsch",
     "Správa počítačových sítí",
