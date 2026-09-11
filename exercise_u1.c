@@ -1261,12 +1261,9 @@ static void translate_check(GtkButton *button, gpointer data) {
 }
 
 GtkWidget *build_translate(UnitCtx *unit) {
-    GtkWidget *body, *feedback, *check;
-    GtkWidget *page = ex_page_shell(unit->page, "Vokabeltraining",
-                                    "sub_translate", "check",
-                                    &body, &feedback, &check);
+    GtkWidget *page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *wrap, *card, *bottom, *feedback, *check;
     TransCtx *ctx = g_new0(TransCtx, 1);
-    GtkWidget *wrap, *card;
     int total = 0;
     int k = 0;
 
@@ -1275,8 +1272,6 @@ GtkWidget *build_translate(UnitCtx *unit) {
 
     ctx->unit = unit;
     ctx->ex_num = unit->branch_ex;
-    ctx->feedback = feedback;
-    ctx->check = check;
     ctx->total = total;
     ctx->qn = total;
     ctx->qs = g_new0(TypedQ, total);
@@ -1293,16 +1288,24 @@ GtkWidget *build_translate(UnitCtx *unit) {
         }
     }
 
-    wrap = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_hexpand(page, TRUE);
+    gtk_widget_set_vexpand(page, TRUE);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+    gtk_box_append(GTK_BOX(page),
+                   top_bar(unit->page, "Vokabeltraining", "sub_translate"));
+
+    wrap = gtk_center_box_new();
+    gtk_widget_set_hexpand(wrap, TRUE);
     gtk_widget_set_vexpand(wrap, TRUE);
-    gtk_box_append(GTK_BOX(body), wrap);
+    gtk_box_append(GTK_BOX(page), wrap);
 
     card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
-    gtk_widget_add_css_class(card, "notes-card");
-    gtk_widget_set_halign(card, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(card, GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(card, 380, -1);
-    gtk_box_append(GTK_BOX(wrap), card);
+    gtk_widget_set_valign(card, GTK_ALIGN_CENTER);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), card);
 
     ctx->header = gtk_label_new(NULL);
     gtk_widget_set_halign(ctx->header, GTK_ALIGN_CENTER);
@@ -1327,6 +1330,24 @@ GtkWidget *build_translate(UnitCtx *unit) {
     gtk_entry_set_placeholder_text(GTK_ENTRY(ctx->entry), tr("your_answer"));
     gtk_widget_set_halign(ctx->entry, GTK_ALIGN_FILL);
     gtk_box_append(GTK_BOX(card), ctx->entry);
+
+    bottom = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
+    gtk_widget_set_margin_top(bottom, 4);
+    gtk_box_append(GTK_BOX(page), bottom);
+
+    feedback = gtk_label_new("");
+    gtk_widget_set_halign(feedback, GTK_ALIGN_START);
+    gtk_widget_set_valign(feedback, GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand(feedback, TRUE);
+    gtk_box_append(GTK_BOX(bottom), feedback);
+    ctx->feedback = feedback;
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "btn-primary");
+    gtk_widget_set_valign(check, GTK_ALIGN_CENTER);
+    gtk_box_append(GTK_BOX(bottom), check);
+    ctx->check = check;
 
     g_signal_connect(check, "clicked", G_CALLBACK(translate_check), ctx);
     g_signal_connect(ctx->entry, "activate", G_CALLBACK(translate_check), ctx);
