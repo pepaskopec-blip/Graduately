@@ -40,6 +40,7 @@
 #define EX_GAP     200.0   /* vertical space between folded rows        */
 #define EX_WAVE    26.0    /* wavy vertical offset of the bubbles       */
 #define EX_BRANCH_LIFT 150.0  /* extra top space for an off-path branch  */
+#define EX_BRANCH_DX   64.0   /* sideways offset so the branch link slants */
 #define HM_WORDS 5
 #define HM_MAX_MISSES 6
 #define HM_N_LETTERS 29   /* QWERTY rows + Ä/Ö/Ü (see hm_letters[]) */

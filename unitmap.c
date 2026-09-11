@@ -42,9 +42,10 @@ void ex_layout_geometry(UnitCtx *u, double avail) {
         }
     }
 
-    /* The branch hangs straight above exercise 2 (index 1). */
+    /* The branch hangs above exercise 2 (index 1), nudged sideways so its
+     * connector is a slanted link rather than a dead-straight vertical line. */
     if (u->has_branch && n > 1) {
-        u->branch_cx = u->ex_cx[1];
+        u->branch_cx = u->ex_cx[1] + EX_BRANCH_DX;
         u->branch_cy = u->ex_cy[1] - EX_BRANCH_LIFT;
     }
 }
@@ -93,6 +94,19 @@ void ex_path(UnitCtx *u, cairo_t *cr, double t0, double t1) {
     }
 }
 
+/* Wavy link from an exercise bubble up to the off-path branch. */
+static void branch_path(cairo_t *cr, double x0, double y0,
+                        double x1, double y1) {
+    double dy = y0 - y1;
+    double c1x = x0 + EX_WAVE * 1.3;
+    double c1y = y0 - dy * 0.45;
+    double c2x = x1 - EX_WAVE * 1.3;
+    double c2y = y1 + dy * 0.45;
+
+    cairo_move_to(cr, x0, y0);
+    cairo_curve_to(cr, c1x, c1y, c2x, c2y, x1, y1);
+}
+
 void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
                          int width, int height, gpointer user_data) {
     UnitCtx *u = user_data;
@@ -138,15 +152,13 @@ void draw_ex_rail(GtkDrawingArea *area, cairo_t *cr,
         gboolean bdone = u->done[u->branch_ex];
 
         cairo_new_path(cr);
-        cairo_move_to(cr, u->ex_cx[1], u->ex_cy[1]);
-        cairo_line_to(cr, u->branch_cx, u->branch_cy);
+        branch_path(cr, u->ex_cx[1], u->ex_cy[1], u->branch_cx, u->branch_cy);
         cairo_set_line_width(cr, 14);
         cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
         cairo_stroke(cr);
 
         cairo_new_path(cr);
-        cairo_move_to(cr, u->ex_cx[1], u->ex_cy[1]);
-        cairo_line_to(cr, u->branch_cx, u->branch_cy);
+        branch_path(cr, u->ex_cx[1], u->ex_cy[1], u->branch_cx, u->branch_cy);
         cairo_set_line_width(cr, 9);
         if (bdone)
             cairo_set_source_rgba(cr, green.r, green.g, green.b, 0.85);
