@@ -18,6 +18,7 @@
 #define PROGRESS_U2   "progress/unit2.conf"
 #define PROGRESS_U3   "progress/unit3.conf"
 #define SETTINGS_FILE "progress/settings.conf"
+#define PROGRESS_NET  "progress/net.conf"
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -44,7 +45,6 @@
 #define HM_ROW3 19   /* start of the ZXCV row   */
 #define HM_ROW4 26   /* start of the umlaut row */
 #define NET_UNITS      30
-#define NET_GRID_COLS    6
 #define NET_SLIDES      4
 #define NET2_SLIDES     5
 #define NET3_SLIDES     4
@@ -487,6 +487,11 @@ typedef struct {
     guint n_slides;
     const char *unit_page;
     const char *ex_page;
+    GArray *note_kicks;
+    GArray *note_titles;
+    GArray *note_bodies;
+    GtkWidget *done_icon;
+    gboolean done;
 } NetLesson;
 typedef struct {
     const char *kicker;
@@ -498,6 +503,7 @@ typedef struct {
     const ChoiceQ *qs;
     int n;
     int n_opts;
+    int lesson_id;
     GtkWidget *feedback;
     GtkToggleButton **toggles;
     GtkWidget **hints;
@@ -663,9 +669,6 @@ extern const U3Kw ex14_u3_qs[];
 extern const U3Let ex15_u3_rows[];
 extern NetLesson net_lessons[NET_LESSONS];
 extern GtkWidget *net_note_host;
-extern GArray *net_note_kicks;
-extern GArray *net_note_titles;
-extern GArray *net_note_bodies;
 extern int net_note_last_w;
 extern GtkWidget *net_scroll;
 extern GtkWidget *net_fixed;
@@ -700,7 +703,6 @@ void i18n_apply_one(const I18nBind *b);
 void i18n_bind(GtkWidget *widget, const char *key, int kind);
 void refresh_welcome_heading(void);
 void refresh_stats_ui(void);
-void net_lessons_apply_lang(void);
 void net_rail_theme_reset(void);
 void apply_language(void);
 char *read_css_file(void);
@@ -738,6 +740,11 @@ void load_progress(void);
 void all_rails_redraw(void);
 void refresh_completion_ui(void);
 void mark_done(UnitCtx *u, int n);
+void net_load_progress(void);
+void net_save_progress(void);
+void mark_net_done(int lesson_id);
+void refresh_net_completion_ui(void);
+void progress_for_net(ProgressSum *out);
 GtkWidget *make_back_button(const char *target);
 void on_nav_clicked(GtkButton *button, gpointer user_data);
 int unit_done_count(const UnitCtx *u);
@@ -1035,6 +1042,9 @@ void net_qz_header(GtkWidget *box, const char *text);
 GtkWidget *net_qz_make_entry(void);
 GtkWidget *build_net_exercise_page(void);
 void net_mcq_check(GtkButton *button, gpointer data);
+GtkWidget *build_net_mcq_page(int lesson_id, const char *back_page,
+                              const char *title_key, const char *heading_key,
+                              const ChoiceQ *qs, const char **hints, int n);
 GtkWidget *build_net_unit2_exercise_page(void);
 GtkWidget *build_net_unit3_exercise_page(void);
 GtkWidget *build_net_unit4_exercise_page(void);

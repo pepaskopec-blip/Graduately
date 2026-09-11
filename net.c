@@ -6,7 +6,7 @@
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
      * units 2–10 = source topics 01–09 (Základní pojmy … ISO/OSI). */
-    { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex"   },
+    { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
     { .n_slides = NET4_SLIDES,  .unit_page = "netunit4",  .ex_page = "netex4"  },
@@ -39,17 +39,15 @@ void net_heading(GtkWidget *box, const char *text) {
 
 /* Note-card slides with text that scales with the window. */
 GtkWidget *net_note_host;
-GArray *net_note_kicks;
-GArray *net_note_titles;
-GArray *net_note_bodies;
 int net_note_last_w = -1;
+static NetLesson *net_notes_target;
 
-void net_notes_ensure(void) {
-    if (net_note_kicks)
+void net_lesson_notes_ensure(NetLesson *L) {
+    if (L->note_kicks)
         return;
-    net_note_kicks = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
-    net_note_titles = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
-    net_note_bodies = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    L->note_kicks = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    L->note_titles = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
+    L->note_bodies = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
 }
 
 void net_note_font(GtkWidget *l, int px) {
@@ -60,11 +58,20 @@ void net_note_font(GtkWidget *l, int px) {
     pango_attr_list_unref(attrs);
 }
 
+void net_rescale_lesson_notes(NetLesson *L, int body, int head, int kick) {
+    if (!L || !L->note_kicks)
+        return;
+    for (guint i = 0; i < L->note_kicks->len; i++)
+        net_note_font(g_array_index(L->note_kicks, GtkWidget *, i), kick);
+    for (guint i = 0; i < L->note_titles->len; i++)
+        net_note_font(g_array_index(L->note_titles, GtkWidget *, i), head);
+    for (guint i = 0; i < L->note_bodies->len; i++)
+        net_note_font(g_array_index(L->note_bodies, GtkWidget *, i), body);
+}
+
 void net_rescale_notes_at(int w) {
     int body, head, kick;
 
-    if (!net_note_kicks)
-        return;
     if (w < 160)
         w = 160;
     body = w / 46;
@@ -75,12 +82,8 @@ void net_rescale_notes_at(int w) {
     kick = body - 3;
     if (kick < 11) kick = 11;
 
-    for (guint i = 0; i < net_note_kicks->len; i++)
-        net_note_font(g_array_index(net_note_kicks, GtkWidget *, i), kick);
-    for (guint i = 0; i < net_note_titles->len; i++)
-        net_note_font(g_array_index(net_note_titles, GtkWidget *, i), head);
-    for (guint i = 0; i < net_note_bodies->len; i++)
-        net_note_font(g_array_index(net_note_bodies, GtkWidget *, i), body);
+    for (int i = 0; i < NET_LESSONS; i++)
+        net_rescale_lesson_notes(&net_lessons[i], body, head, kick);
 }
 
 void net_rescale_notes(void) {
@@ -118,7 +121,8 @@ void net_note_kicker(GtkWidget *box, const char *text) {
 
     gtk_label_set_text(GTK_LABEL(l), text);
     gtk_box_append(GTK_BOX(box), l);
-    g_array_append_val(net_note_kicks, l);
+    if (net_notes_target)
+        g_array_append_val(net_notes_target->note_kicks, l);
 }
 
 void net_note_title(GtkWidget *box, const char *text) {
@@ -126,7 +130,8 @@ void net_note_title(GtkWidget *box, const char *text) {
 
     gtk_label_set_text(GTK_LABEL(l), text);
     gtk_box_append(GTK_BOX(box), l);
-    g_array_append_val(net_note_titles, l);
+    if (net_notes_target)
+        g_array_append_val(net_notes_target->note_titles, l);
 }
 
 void net_note_line(GtkWidget *box, const char *text, gboolean tip) {
@@ -135,7 +140,8 @@ void net_note_line(GtkWidget *box, const char *text, gboolean tip) {
     gtk_label_set_text(GTK_LABEL(l), text);
     gtk_widget_set_margin_top(l, 2);
     gtk_box_append(GTK_BOX(box), l);
-    g_array_append_val(net_note_bodies, l);
+    if (net_notes_target)
+        g_array_append_val(net_notes_target->note_bodies, l);
 }
 
 void net_slide_apply(NetLesson *L) {
@@ -481,6 +487,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         icon = icon_area_new(draw_check_icon, 0.1176, 0.1176, 0.1804, 18);
         gtk_widget_set_visible(icon, FALSE);
         gtk_box_append(GTK_BOX(vbox), icon);
+        net_lessons[index].done_icon = icon;
         g_signal_connect(card, "clicked", G_CALLBACK(net_open_unit),
                          &net_lessons[index]);
     }
@@ -563,6 +570,7 @@ GtkWidget *build_netmap_page(void) {
                      G_CALLBACK(net_adjust_notify), NULL);
 
     net_relayout_later();
+    refresh_net_completion_ui();
 
     return page;
 }
@@ -572,9 +580,12 @@ GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
     GtkWidget *page;
     GtkWidget *scroll;
     GtkWidget *nav;
+    char sub_key[64];
 
-    net_notes_ensure();
+    net_lesson_notes_ensure(L);
+    net_notes_target = L;
     L->n_slides = n_slides;
+    g_snprintf(sub_key, sizeof(sub_key), "%s_sub", title_key);
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_margin_start(page, 28);
@@ -582,7 +593,7 @@ GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
     gtk_widget_set_margin_top(page, 20);
     gtk_widget_set_margin_bottom(page, 20);
 
-    gtk_box_append(GTK_BOX(page), top_bar("netmap", title_key, NULL));
+    gtk_box_append(GTK_BOX(page), top_bar("netmap", title_key, sub_key));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -624,6 +635,7 @@ GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
     gtk_widget_add_tick_callback(L->stack, net_note_tick, NULL, NULL);
     net_note_last_w = -1;
     net_rescale_notes();
+    net_notes_target = NULL;
 
     nav = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     gtk_box_set_homogeneous(GTK_BOX(nav), TRUE);
@@ -1294,6 +1306,8 @@ gboolean net_qz_entry_ok(GtkWidget *entry, const char *want) {
     return got && net_txt_eq(got, want);
 }
 
+static gboolean net_u1_task_ok[4];
+
 void net_qz_check(GtkButton *button, gpointer data) {
     NetQz *q = data;
     int ok = 0;
@@ -1325,10 +1339,15 @@ void net_qz_check(GtkButton *button, gpointer data) {
             ok++;
     }
 
-    if (ok == 4)
+    if (ok == 4) {
         set_feedback(q->feed, TRUE, tr("feedback_ok"));
-    else
+        net_u1_task_ok[q->id] = TRUE;
+        if (net_u1_task_ok[0] && net_u1_task_ok[1] && net_u1_task_ok[2] &&
+            net_u1_task_ok[3])
+            mark_net_done(0);
+    } else {
         set_feedback(q->feed, FALSE, tr("feedback_retry"));
+    }
 }
 
 void net_qz_fill(GtkButton *button, gpointer data) {
@@ -1348,6 +1367,12 @@ void net_qz_fill(GtkButton *button, gpointer data) {
     }
     if (q->note)
         gtk_widget_set_visible(q->note, TRUE);
+    if (q->infeasible) {
+        net_u1_task_ok[q->id] = TRUE;
+        if (net_u1_task_ok[0] && net_u1_task_ok[1] && net_u1_task_ok[2] &&
+            net_u1_task_ok[3])
+            mark_net_done(0);
+    }
 }
 
 void net_qz_header(GtkWidget *box, const char *text) {
@@ -1493,7 +1518,151 @@ GtkWidget *build_net_exercise_page(void) {
     return page;
 }
 
-/* ---- Unit 2: multiple-choice quiz on basic networking concepts ---- */
+/* ---- Units 2–10: shared multiple-choice quizzes -------------------- */
+
+void net_mcq_check(GtkButton *button, gpointer data) {
+    NetMcqCtx *ctx = data;
+    int ok = 0;
+
+    (void)button;
+
+    for (int i = 0; i < ctx->n; i++) {
+        int active = -1;
+
+        for (int o = 0; o < ctx->n_opts; o++) {
+            GtkToggleButton *tb = ctx->toggles[i * ctx->n_opts + o];
+
+            gtk_widget_remove_css_class(GTK_WIDGET(tb), "ok");
+            gtk_widget_remove_css_class(GTK_WIDGET(tb), "wrong");
+            if (gtk_toggle_button_get_active(tb))
+                active = o;
+        }
+        if (active == ctx->qs[i].correct) {
+            ok++;
+            gtk_widget_add_css_class(
+                GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "ok");
+        } else if (active >= 0) {
+            gtk_widget_add_css_class(
+                GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "wrong");
+        }
+        if (ctx->hints && ctx->hints[i])
+            gtk_widget_set_visible(ctx->hints[i], TRUE);
+    }
+
+    if (ok == ctx->n) {
+        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
+        mark_net_done(ctx->lesson_id);
+    } else {
+        set_feedback(ctx->feedback, FALSE, tr("feedback_retry_short"));
+    }
+}
+
+GtkWidget *build_net_mcq_page(int lesson_id, const char *back_page,
+                              const char *title_key, const char *heading_key,
+                              const ChoiceQ *qs, const char **hints, int n) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    GtkWidget *head;
+    GtkWidget *intro;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n_opts = qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page), top_bar(back_page, title_key, NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    head = gtk_label_new(NULL);
+    i18n_bind(head, heading_key, 0);
+    gtk_widget_set_halign(head, GTK_ALIGN_START);
+    gtk_label_set_wrap(GTK_LABEL(head), TRUE);
+    gtk_widget_set_margin_top(head, 6);
+    gtk_widget_add_css_class(head, "ex-sub");
+    gtk_box_append(GTK_BOX(body), head);
+
+    intro = gtk_label_new(NULL);
+    i18n_bind(intro, "net_quiz_intro", 0);
+    gtk_widget_set_halign(intro, GTK_ALIGN_START);
+    gtk_label_set_wrap(GTK_LABEL(intro), TRUE);
+    gtk_widget_add_css_class(intro, "ex-prompt");
+    gtk_box_append(GTK_BOX(body), intro);
+
+    ctx->qs = qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->lesson_id = lesson_id;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb = gtk_toggle_button_new_with_label(qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
 
 const ChoiceQ net2_qs[] = {
     {"Kolik bitů má jeden byte?",
@@ -1532,137 +1701,11 @@ const char *net2_hints[] = {
     "Server řídí a poskytuje služby, má vyšší výkon",
 };
 
-void net_mcq_check(GtkButton *button, gpointer data) {
-    NetMcqCtx *ctx = data;
-    int ok = 0;
-
-    (void)button;
-
-    for (int i = 0; i < ctx->n; i++) {
-        int active = -1;
-
-        for (int o = 0; o < ctx->n_opts; o++) {
-            GtkToggleButton *tb = ctx->toggles[i * ctx->n_opts + o];
-
-            gtk_widget_remove_css_class(GTK_WIDGET(tb), "ok");
-            gtk_widget_remove_css_class(GTK_WIDGET(tb), "wrong");
-            if (gtk_toggle_button_get_active(tb))
-                active = o;
-        }
-        if (active == ctx->qs[i].correct) {
-            ok++;
-            gtk_widget_add_css_class(
-                GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "ok");
-        } else if (active >= 0) {
-            gtk_widget_add_css_class(
-                GTK_WIDGET(ctx->toggles[i * ctx->n_opts + active]), "wrong");
-        }
-        if (ctx->hints && ctx->hints[i])
-            gtk_widget_set_visible(ctx->hints[i], TRUE);
-    }
-
-    if (ok == ctx->n)
-        set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
-    else
-        set_feedback(ctx->feedback, FALSE, tr("feedback_retry_short"));
-}
-
 GtkWidget *build_net_unit2_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net2_qs);
-    int n_opts = net2_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit2", "net_ex2_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k základním pojmům sítí");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net2_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net2_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net2_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net2_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(1, "netunit2", "net_ex2_title", "net_quiz2_head",
+                              net2_qs, net2_hints,
+                              (int)G_N_ELEMENTS(net2_qs));
 }
-
-/* ---- Unit 3: client–server and cloud quiz --------------------------- */
 
 const ChoiceQ net3_qs[] = {
     {"Co typicky dělají servery v síti?",
@@ -1704,101 +1747,10 @@ const char *net3_hints[] = {
 };
 
 GtkWidget *build_net_unit3_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net3_qs);
-    int n_opts = net3_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit3", "net_ex3_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz ke klient–server a cloudu");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net3_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net3_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net3_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net3_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(2, "netunit3", "net_ex3_title", "net_quiz3_head",
+                              net3_qs, net3_hints,
+                              (int)G_N_ELEMENTS(net3_qs));
 }
-
-/* ---- Unit 4: data transmission and security quiz -------------------- */
 
 const ChoiceQ net4_qs[] = {
     {"Paralelní přenos znamená:",
@@ -1838,101 +1790,10 @@ const char *net4_hints[] = {
 };
 
 GtkWidget *build_net_unit4_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net4_qs);
-    int n_opts = net4_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit4", "net_ex4_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k přenosu dat a zabezpečení");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net4_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net4_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net4_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net4_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(3, "netunit4", "net_ex4_title", "net_quiz4_head",
+                              net4_qs, net4_hints,
+                              (int)G_N_ELEMENTS(net4_qs));
 }
-
-/* ---- Unit 5: signals and modulation quiz ---------------------------- */
 
 const ChoiceQ net5_qs[] = {
     {"Digitální signál nabývá:",
@@ -1970,101 +1831,10 @@ const char *net5_hints[] = {
 };
 
 GtkWidget *build_net_unit5_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net5_qs);
-    int n_opts = net5_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit5", "net_ex5_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k signálům a modulaci");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net5_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net5_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net5_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net5_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(4, "netunit5", "net_ex5_title", "net_quiz5_head",
+                              net5_qs, net5_hints,
+                              (int)G_N_ELEMENTS(net5_qs));
 }
-
-/* ---- Unit 6: path, channel and circuit quiz ------------------------- */
 
 const ChoiceQ net6_qs[] = {
     {"Datový spoj slouží k:",
@@ -2101,101 +1871,10 @@ const char *net6_hints[] = {
 };
 
 GtkWidget *build_net_unit6_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net6_qs);
-    int n_opts = net6_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit6", "net_ex6_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k cestě, kanálu a okruhu");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net6_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net6_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net6_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net6_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(5, "netunit6", "net_ex6_title", "net_quiz6_head",
+                              net6_qs, net6_hints,
+                              (int)G_N_ELEMENTS(net6_qs));
 }
-
-/* ---- Unit 7: multiplexing and transmission directions quiz ---------- */
 
 const ChoiceQ net7_qs[] = {
     {"Multiplex znamená:",
@@ -2238,101 +1917,10 @@ const char *net7_hints[] = {
 };
 
 GtkWidget *build_net_unit7_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net7_qs);
-    int n_opts = net7_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit7", "net_ex7_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k multiplexu a směrům přenosu");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net7_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net7_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net7_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net7_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(6, "netunit7", "net_ex7_title", "net_quiz7_head",
+                              net7_qs, net7_hints,
+                              (int)G_N_ELEMENTS(net7_qs));
 }
-
-/* ---- Unit 8: switching quiz ----------------------------------------- */
 
 const ChoiceQ net8_qs[] = {
     {"Přepojování okruhů znamená:",
@@ -2376,101 +1964,10 @@ const char *net8_hints[] = {
 };
 
 GtkWidget *build_net_unit8_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net8_qs);
-    int n_opts = net8_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit8", "net_ex8_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k přepojování");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net8_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net8_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net8_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net8_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(7, "netunit8", "net_ex8_title", "net_quiz8_head",
+                              net8_qs, net8_hints,
+                              (int)G_N_ELEMENTS(net8_qs));
 }
-
-/* ---- Unit 9: layered models and protocols quiz ---------------------- */
 
 const ChoiceQ net9_qs[] = {
     {"Standardizace v sítích především:",
@@ -2509,101 +2006,10 @@ const char *net9_hints[] = {
 };
 
 GtkWidget *build_net_unit9_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net9_qs);
-    int n_opts = net9_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit9", "net_ex9_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k vrstevnatým modelům a protokolům");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net9_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net9_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net9_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net9_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(8, "netunit9", "net_ex9_title", "net_quiz9_head",
+                              net9_qs, net9_hints,
+                              (int)G_N_ELEMENTS(net9_qs));
 }
-
-/* ---- Unit 10: ISO/OSI and TCP/IP quiz -------------------------------- */
 
 const ChoiceQ net10_qs[] = {
     {"Model ISO/OSI má:",
@@ -2635,96 +2041,8 @@ const char *net10_hints[] = {
 };
 
 GtkWidget *build_net_unit10_exercise_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *body;
-    GtkWidget *check;
-    GtkWidget *btns;
-    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
-    int n = (int)G_N_ELEMENTS(net10_qs);
-    int n_opts = net10_qs[0].n_options;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("netunit10", "net_ex10_title", NULL));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 12);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
-
-    net_heading(body, "Kvíz k ISO/OSI a TCP/IP");
-    net_paragraph(body,
-                  "Vyberte u každé otázky jednu správnou odpověď "
-                  "a stiskněte Zkontrolovat.");
-
-    ctx->qs = net10_qs;
-    ctx->n = n;
-    ctx->n_opts = n_opts;
-    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
-    ctx->hints = g_new0(GtkWidget *, n);
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
-
-        qtext = g_strdup_printf("%d.) %s", i + 1, net10_qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb =
-                gtk_toggle_button_new_with_label(net10_qs[i].options[o]);
-
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-
-        ctx->hints[i] = meaning_add(body, net10_hints[i]);
-    }
-
-    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
-    gtk_box_append(GTK_BOX(body), btns);
-
-    check = gtk_button_new();
-    i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
-    gtk_widget_set_halign(check, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(btns), check);
-    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
-
-    ctx->feedback = gtk_label_new("");
-    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
-    gtk_box_append(GTK_BOX(body), ctx->feedback);
-
-    return page;
+    return build_net_mcq_page(9, "netunit10", "net_ex10_title", "net_quiz10_head",
+                              net10_qs, net10_hints,
+                              (int)G_N_ELEMENTS(net10_qs));
 }
+

@@ -171,26 +171,33 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, roadmap_page, "roadmap");
     gtk_stack_add_named(main_stack, build_stats_page(), "stats");
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
-    gtk_stack_add_named(main_stack, build_net_unit1_page(), "netunit1");
-    gtk_stack_add_named(main_stack, build_net_exercise_page(), "netex");
-    gtk_stack_add_named(main_stack, build_net_unit2_page(), "netunit2");
-    gtk_stack_add_named(main_stack, build_net_unit2_exercise_page(), "netex2");
-    gtk_stack_add_named(main_stack, build_net_unit3_page(), "netunit3");
-    gtk_stack_add_named(main_stack, build_net_unit3_exercise_page(), "netex3");
-    gtk_stack_add_named(main_stack, build_net_unit4_page(), "netunit4");
-    gtk_stack_add_named(main_stack, build_net_unit4_exercise_page(), "netex4");
-    gtk_stack_add_named(main_stack, build_net_unit5_page(), "netunit5");
-    gtk_stack_add_named(main_stack, build_net_unit5_exercise_page(), "netex5");
-    gtk_stack_add_named(main_stack, build_net_unit6_page(), "netunit6");
-    gtk_stack_add_named(main_stack, build_net_unit6_exercise_page(), "netex6");
-    gtk_stack_add_named(main_stack, build_net_unit7_page(), "netunit7");
-    gtk_stack_add_named(main_stack, build_net_unit7_exercise_page(), "netex7");
-    gtk_stack_add_named(main_stack, build_net_unit8_page(), "netunit8");
-    gtk_stack_add_named(main_stack, build_net_unit8_exercise_page(), "netex8");
-    gtk_stack_add_named(main_stack, build_net_unit9_page(), "netunit9");
-    gtk_stack_add_named(main_stack, build_net_unit9_exercise_page(), "netex9");
-    gtk_stack_add_named(main_stack, build_net_unit10_page(), "netunit10");
-    gtk_stack_add_named(main_stack, build_net_unit10_exercise_page(), "netex10");
+    {
+        typedef GtkWidget *(*NetBuilder)(void);
+        static const struct {
+            const char *unit_name;
+            const char *ex_name;
+            NetBuilder build_unit;
+            NetBuilder build_ex;
+        } net_pages[] = {
+            {"netunit1",  "netex1",  build_net_unit1_page,  build_net_exercise_page},
+            {"netunit2",  "netex2",  build_net_unit2_page,  build_net_unit2_exercise_page},
+            {"netunit3",  "netex3",  build_net_unit3_page,  build_net_unit3_exercise_page},
+            {"netunit4",  "netex4",  build_net_unit4_page,  build_net_unit4_exercise_page},
+            {"netunit5",  "netex5",  build_net_unit5_page,  build_net_unit5_exercise_page},
+            {"netunit6",  "netex6",  build_net_unit6_page,  build_net_unit6_exercise_page},
+            {"netunit7",  "netex7",  build_net_unit7_page,  build_net_unit7_exercise_page},
+            {"netunit8",  "netex8",  build_net_unit8_page,  build_net_unit8_exercise_page},
+            {"netunit9",  "netex9",  build_net_unit9_page,  build_net_unit9_exercise_page},
+            {"netunit10", "netex10", build_net_unit10_page, build_net_unit10_exercise_page},
+        };
+
+        for (guint i = 0; i < G_N_ELEMENTS(net_pages); i++) {
+            gtk_stack_add_named(main_stack, net_pages[i].build_unit(),
+                                net_pages[i].unit_name);
+            gtk_stack_add_named(main_stack, net_pages[i].build_ex(),
+                                net_pages[i].ex_name);
+        }
+    }
 
     for (int i = 0; i < NUM_UNLOCKED; i++) {
         UnitCtx *u = &units[i];

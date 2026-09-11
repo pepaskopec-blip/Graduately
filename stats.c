@@ -53,8 +53,12 @@ void refresh_stats_ui(void) {
     if (!stats_ui.ex_value)
         return;
 
-    for (int s = 0; s < NUM_SUBJECTS; s++)
-        progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
+    for (int s = 0; s < NUM_SUBJECTS; s++) {
+        if (s == NET_SUBJ)
+            progress_for_net(&all);
+        else
+            progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
+    }
 
     pct = all.total_ex > 0 ? (all.done_ex * 100) / all.total_ex : 0;
 
@@ -79,11 +83,15 @@ void refresh_stats_ui(void) {
         GtkWidget *count = stats_ui.subj[s].count;
         GtkWidget *bar = stats_ui.subj[s].bar;
         ProgressSum sp = {0};
+        gboolean has_content = (s == NET_SUBJ) || sub_unit_count[s] > 0;
 
         if (!count || !bar)
             continue;
-        progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
-        if (sub_unit_count[s] > 0) {
+        if (s == NET_SUBJ)
+            progress_for_net(&sp);
+        else
+            progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
+        if (has_content) {
             tmp = g_strdup_printf(tr("stats_ex_fmt"), sp.done_ex, sp.total_ex);
             gtk_label_set_text(GTK_LABEL(count), tmp);
             g_free(tmp);
@@ -345,7 +353,8 @@ GtkWidget *build_stats_page(void) {
         GtkWidget *name;
         GtkWidget *count;
         GtkWidget *bar;
-        gboolean has_units = sub_unit_count[s] > 0;
+        gboolean has_units = (s == NET_SUBJ) || sub_unit_count[s] > 0;
+        gboolean has_deutsch_units = sub_unit_count[s] > 0;
 
         subject = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
         gtk_widget_add_css_class(subject, "stats-subject");
@@ -379,7 +388,7 @@ GtkWidget *build_stats_page(void) {
         gtk_box_append(GTK_BOX(subject), bar);
         stats_ui.subj[s].bar = bar;
 
-        if (has_units) {
+        if (has_deutsch_units) {
             GtkWidget *units_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
             gtk_widget_add_css_class(units_box, "stats-units");

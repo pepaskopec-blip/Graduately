@@ -72,17 +72,17 @@ GTK 4 interface.
   8. Přepojování – slides + quiz
   9. Vrstevnaté modely a protokoly – slides + quiz
   10. Model ISO/OSI a TCP/IP – slides + quiz  
-  Progress for networks is **not** saved yet (unlike Deutsch); the Statistics
-  page still treats networks as without tracked units
+  Progress for networks is saved to `progress/net.conf` (one flag per unit);
+  completed network units show a checkmark on the path and count in Statistics
 - **Progress tracking** – completed exercises are marked green; progress is
   saved per unit to `progress/unit1.conf`, `progress/unit2.conf` and
   `progress/unit3.conf` and restored on startup
 - **Statistics** – chart icon in the header opens a per-subject progress
   overview: summary totals (exercises done, percent, finished units) at the
   top, then every subject with its own progress bar (subjects without tracked
-  content yet — including networks for now — are shown as locked), and a
-  per-unit breakdown with progress bars for Deutsch; numbers update as soon
-  as you finish an exercise
+  content yet are shown as locked; **networks** use lesson completion from
+  `progress/net.conf`), and a per-unit breakdown with progress bars for
+  Deutsch; numbers update as soon as you finish an exercise
 - **Settings** – gear icon in the top-right header opens a panel where you can
   choose:
   - **mode**: dark or light, as a segmented control
@@ -295,15 +295,15 @@ When launched, the application shows the welcome screen. From there:
    screen.
 7. Open **Statistiky / Statistics** (chart icon, top-right) to see progress
    grouped per subject (overall totals plus, for Deutsch, a per-unit
-   breakdown). Network progress is not tracked in Statistics yet.
+   breakdown). Network lesson completion is included in the subject totals.
 8. Open **Nastavení / Settings** (gear icon, top-right) to switch dark/light
    mode, pick a color theme, or change the interface language.
 
 German units 1–3 and network units 1–10 are currently implemented. Locked
 nodes do nothing – they are placeholders until lessons are added. Completed
 Deutsch exercises stay green and are saved per unit to `progress/unit1.conf` /
-`progress/unit2.conf` / `progress/unit3.conf` (created next to the app on first
-finish).
+`progress/unit2.conf` / `progress/unit3.conf`. Completed network units are
+saved to `progress/net.conf`.
 
 #### Keyboard shortcuts
 
@@ -347,6 +347,7 @@ progress/               created at runtime
   unit1.conf            unit 1 exercise completion state
   unit2.conf            unit 2 exercise completion state
   unit3.conf            unit 3 exercise completion state
+  net.conf              computer-networks lesson completion
   settings.conf         theme, dark/light mode and language preference
 ```
 
@@ -382,7 +383,7 @@ German in both languages.
   - [x] Unit 2 ("Aus aller Welt") – 19 interactive exercises (incl. Hangman)
   - [x] Unit 3 ("Bei uns zu Hause") – 15 interactive exercises
 - [x] Computer networks units 1–10 (IP/VLSM + nine theory units with quizzes)
-- [ ] Progress tracking / statistics for the networks path
+- [x] Progress tracking / statistics for the networks path
 - [ ] Lesson progression and unlock system for the remaining units
 - [ ] Add audio pronunciation features
 - [x] Add user settings panel (theme, dark/light mode, language)
@@ -466,15 +467,15 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   8. Přepojování – snímky + kvíz
   9. Vrstevnaté modely a protokoly – snímky + kvíz
   10. Model ISO/OSI a TCP/IP – snímky + kvíz  
-  Postup u sítí se **zatím neukládá** (na rozdíl od Deutsch); ve Statistikách
-  se sítě stále berou jako předmět bez trackovaných jednotek
+  Postup u sítí se ukládá do `progress/net.conf` (příznak na jednotku);
+  dokončené jednotky mají fajfku na cestě a počítají se ve Statistikách
 - **Ukládání postupu** – hotová cvičení zezelenají; stav se ukládá do
   `progress/unit1.conf`, `progress/unit2.conf` a `progress/unit3.conf` a při
   startu se načte zpět
 - **Statistiky** – ikona grafu v hlavičce ukáže postup po předmětech (součty,
   procenta, dokončené jednotky), progress bary u každého předmětu (předměty
-  bez trackovaného obsahu — včetně sítí — jsou zatím jako zamčené) a rozpad
-  po jednotkách u Deutsch
+  bez trackovaného obsahu jsou zamčené; **sítě** berou dokončení lekcí z
+  `progress/net.conf`) a rozpad po jednotkách u Deutsch
 - **Nastavení** – ozubené kolečko vpravo nahoře:
   - **režim**: tmavý / světlý
   - **téma**: 10 barevných palet
@@ -684,15 +685,16 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
    Jednotky 11–30 zůstávají zamčené.
 6. Tlačítkem **zpět** vlevo nahoře se vrátíte na předchozí obrazovku.
 7. **Statistiky** (ikona grafu vpravo nahoře) ukazují postup po předmětech
-   (u Deutsch i po jednotkách). Postup sítí se ve Statistikách zatím
-   nesleduje.
+   (u Deutsch i po jednotkách). Dokončené síťové lekce se započítávají do
+   součů předmětu.
 8. **Nastavení** (ozubené kolečko) – tmavý/světlý režim, barevné téma nebo
    jazyk rozhraní.
 
 Hotové jsou německé jednotky 1–3 a síťové jednotky 1–10. Zamčené uzly nic
 nedělají – jsou to placeholdery. Dokončená německá cvičení zůstanou zelená a
 ukládají se do `progress/unit1.conf` / `progress/unit2.conf` /
-`progress/unit3.conf` (vzniknou vedle aplikace při prvním dokončení).
+`progress/unit3.conf`. Dokončené síťové jednotky se ukládají do
+`progress/net.conf`.
 
 #### Klávesové zkratky
 
@@ -736,6 +738,7 @@ progress/               vzniká za běhu
   unit1.conf            stav cvičení jednotky 1
   unit2.conf            stav cvičení jednotky 2
   unit3.conf            stav cvičení jednotky 3
+  net.conf              dokončení síťových lekcí
   settings.conf         téma, režim a jazyk
 ```
 
@@ -768,7 +771,7 @@ rozhraní.
   - [x] Jednotka 2 („Aus aller Welt“) – 19 cvičení (včetně Hangmana)
   - [x] Jednotka 3 („Bei uns zu Hause“) – 15 cvičení
 - [x] Počítačové sítě: jednotky 1–10 (IP/VLSM + 9 teoretických s kvízy)
-- [ ] Ukládání postupu / statistiky pro síťovou cestu
+- [x] Ukládání postupu / statistiky pro síťovou cestu
 - [ ] Postupné odemykání zbývajících jednotek
 - [ ] Audio / výslovnost
 - [x] Panel nastavení (téma, režim, jazyk)
