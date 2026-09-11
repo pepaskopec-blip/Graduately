@@ -290,6 +290,13 @@ const TrEntry tr_ui[] = {
      "Quiz: computer architecture"},
     {"hw_quiz1_head", "Kvíz k architektuře počítače",
      "Quiz on computer architecture"},
+    {"hw_unit2", "Historie počítačů", "History of computers"},
+    {"hw_unit2_sub", "6 snímků o generacích počítačů a pak kvíz.",
+     "6 slides about computer generations, then a quiz."},
+    {"hw_ex2_title", "Kvíz: historie počítačů",
+     "Quiz: history of computers"},
+    {"hw_quiz2_head", "Kvíz k historii počítačů",
+     "Quiz on the history of computers"},
     {NULL, NULL, NULL}
 };
 
@@ -937,6 +944,19 @@ const TrEntry tr_content[] = {
     {"Operační paměť uchovává program i data", NULL,
      "Main memory stores both the program and data"},
     {"Byl tvůrcem teorie her", NULL, "He created game theory"},
+    {"Nultá generace: 1938–1944", NULL, "Zeroth generation: 1938–1944"},
+    {"Jen několik počítačů, většinou vojenský účel", NULL,
+     "Only a few computers, mostly for military use"},
+    {"1. generace – objev elektronky", NULL,
+     "1st generation – invention of the vacuum tube"},
+    {"1. generace – děrné štítky", NULL, "1st generation – punch cards"},
+    {"2. generace – objev tranzistoru", NULL,
+     "2nd generation – invention of the transistor"},
+    {"3. generace – integrovaný obvod", NULL,
+     "3rd generation – integrated circuit"},
+    {"4. generace – programovatelné mikroprocesory", NULL,
+     "4th generation – programmable microprocessors"},
+    {"1972 – první počítačová hra", NULL, "1972 – first computer game"},
     {NULL, NULL, NULL}
 };
 

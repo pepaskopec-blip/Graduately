@@ -3,7 +3,8 @@
 /* ---- Technical equipment (Technické vybavení) --------------------- */
 
 NetLesson hw_lessons[HW_LESSONS] = {
-    { .n_slides = HW_SLIDES, .unit_page = "hwunit1", .ex_page = "hwex1" },
+    { .n_slides = HW_SLIDES,  .unit_page = "hwunit1", .ex_page = "hwex1" },
+    { .n_slides = HW2_SLIDES, .unit_page = "hwunit2", .ex_page = "hwex2" },
 };
 
 void hw_rail_theme_reset(void);
@@ -256,7 +257,7 @@ void hw_add_node(GtkFixed *fixed, int index) {
     GtkWidget *name;
     char *text;
     static const char *unit_keys[HW_LESSONS] = {
-        "hw_unit1"
+        "hw_unit1", "hw_unit2"
     };
 
     card = gtk_button_new();
@@ -762,4 +763,114 @@ GtkWidget *build_hw_unit1_exercise_page(void) {
     };
     return build_hw_mcq_page(0, "hwunit1", "hw_ex1_title", "hw_quiz1_head",
                              qs, hints, 6);
+}
+
+GtkWidget *build_hw_unit2_page(void) {
+    static const NetSlide slides[HW2_SLIDES] = {
+        {
+            "1 / 6   •   Přehled", "Historie počítačů",
+            "Generace se dělí podle klíčové technologie své doby.",
+            {
+                "1. Předchůdci – do 30. let 19. století",
+                "2. Nultá generace – 1938–1944",
+                "3. První generace – 1944–1955",
+                "4. Druhá generace – 1955–1964",
+                "5. Třetí generace – 1964–1971",
+                "Další snímky shrnují znaky jednotlivých generací.",
+                NULL,
+            },
+        },
+        {
+            "2 / 6   •   0. generace", "Počítače 0. generace (1938–1944)",
+            "Tip: počítačů bylo málo a často sloužily armádě.",
+            {
+                "Existovalo jen několik počítačů na světě.",
+                "Většinou měly vojenský účel.",
+                NULL,
+            },
+        },
+        {
+            "3 / 6   •   1. generace", "Počítače 1. generace (1944–1955)",
+            "Klíčový objev: elektronka",
+            {
+                "Objev elektronky umožnil tuto generaci.",
+                "Ještě neexistoval software v dnešním smyslu.",
+                "Data a programy se zadávaly pomocí děrných štítků.",
+                NULL,
+            },
+        },
+        {
+            "4 / 6   •   2. generace", "Počítače 2. generace (1955–1964)",
+            "Klíčový objev: tranzistor",
+            {
+                "Objev tranzistoru nahradil elektronky.",
+                "Používala se hlavní externí paměť.",
+                "Počítače měly menší rozměry než v 1. generaci.",
+                NULL,
+            },
+        },
+        {
+            "5 / 6   •   3. generace", "Počítače 3. generace (1964–1971)",
+            "Klíčový objev: integrovaný obvod",
+            {
+                "Objev integrovaného obvodu.",
+                "Stále se používala hlavní externí paměť.",
+                "Rozměry počítačů se dál zmenšovaly.",
+                NULL,
+            },
+        },
+        {
+            "6 / 6   •   4. generace", "Počítače 4. generace",
+            "Klíčové: programovatelné mikroprocesory",
+            {
+                "Nastupují programovatelné mikroprocesory.",
+                "1972 – první počítačová hra",
+                "1973 – první disketa",
+                "1979 – první CD",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[1], "hw_unit2", "hw_unit2_sub",
+                               slides, HW2_SLIDES);
+}
+
+GtkWidget *build_hw_unit2_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Kdy probíhala nultá generace počítačů?",
+         {"1938–1944", "1944–1955", "1955–1964", "1964–1971"}, 4, 0},
+        {"Co bylo typické pro počítače 0. generace?",
+         {"Byly v každé domácnosti", "Jen několik kusů, často vojenský účel",
+          "Měly mikroprocesory", "Používaly CD"},
+         4, 1},
+        {"Která technologie patří k 1. generaci?",
+         {"Tranzistor", "Elektronka", "Integrovaný obvod", "Mikroprocesor"},
+         4, 1},
+        {"Čím se zadávaly data v 1. generaci?",
+         {"USB fleškou", "Děrnými štítky", "CD", "Disketou"}, 4, 1},
+        {"Která technologie patří k 2. generaci?",
+         {"Elektronka", "Tranzistor", "Mikroprocesor", "CD"}, 4, 1},
+        {"Která technologie patří k 3. generaci?",
+         {"Elektronka", "Tranzistor", "Integrovaný obvod", "Disketa"},
+         4, 2},
+        {"Co je typické pro 4. generaci?",
+         {"Jen děrné štítky", "Programovatelné mikroprocesory",
+          "Jen vojenské použití", "Žádný software"},
+         4, 1},
+        {"Kdy vznikla první počítačová hra (podle lekce)?",
+         {"1964", "1972", "1973", "1979"}, 4, 1},
+    };
+    static const char *hints[] = {
+        "Nultá generace: 1938–1944",
+        "Jen několik počítačů, většinou vojenský účel",
+        "1. generace – objev elektronky",
+        "1. generace – děrné štítky",
+        "2. generace – objev tranzistoru",
+        "3. generace – integrovaný obvod",
+        "4. generace – programovatelné mikroprocesory",
+        "1972 – první počítačová hra",
+    };
+    return build_hw_mcq_page(1, "hwunit2", "hw_ex2_title", "hw_quiz2_head",
+                             qs, hints, 8);
 }

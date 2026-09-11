@@ -59,8 +59,9 @@
 #define NET10_SLIDES    3
 #define NET_LESSONS     10
 #define HW_UNITS        10
-#define HW_LESSONS       1
+#define HW_LESSONS       2
 #define HW_SLIDES        3
+#define HW2_SLIDES       6
 
 typedef enum {
     THEME_CATPPUCCIN = 0,
@@ -763,6 +764,8 @@ void hw_lessons_apply_lang(void);
 GtkWidget *build_hwmap_page(void);
 GtkWidget *build_hw_unit1_page(void);
 GtkWidget *build_hw_unit1_exercise_page(void);
+GtkWidget *build_hw_unit2_page(void);
+GtkWidget *build_hw_unit2_exercise_page(void);
 void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data);
 void net_lesson_notes_ensure(NetLesson *L);
