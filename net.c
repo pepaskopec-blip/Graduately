@@ -12,6 +12,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET6_SLIDES, .unit_page = "netunit6", .ex_page = "netex6" },
     { .n_slides = NET7_SLIDES, .unit_page = "netunit7", .ex_page = "netex7" },
     { .n_slides = NET8_SLIDES, .unit_page = "netunit8", .ex_page = "netex8" },
+    { .n_slides = NET9_SLIDES, .unit_page = "netunit9", .ex_page = "netex9" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -439,7 +440,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
-        "net_unit6", "net_unit7", "net_unit8"
+        "net_unit6", "net_unit7", "net_unit8", "net_unit9"
     };
 
     card = gtk_button_new();
@@ -1049,6 +1050,50 @@ GtkWidget *build_net_unit8_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[7], "net_unit8", slides, NET8_SLIDES);
+}
+
+GtkWidget *build_net_unit9_page(void) {
+    static const NetSlide slides[NET9_SLIDES] = {
+        {
+            "1 / 4   •   Proč", "Standardizace a dekompozice",
+            NULL,
+            {
+                "Standardizace zajišťuje kompatibilitu mezi výrobci.",
+                "Dekompozice: rozklad složitého problému přenosu na vrstvy.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Vrstvy", "Komunikace mezi vrstvami",
+            "Tip: SAP = Service Access Point",
+            {
+                "Vrstvy komunikují jen se sousedy přes rozhraní (SAP).",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Protokol", "Pravidla komunikace",
+            NULL,
+            {
+                "Protokol: pravidla komunikace mezi stejnými vrstvami",
+                "na různých uzlech.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Jednotky", "Hlavičky a PDU",
+            NULL,
+            {
+                "Každá vrstva přidá k datům hlavičku (header).",
+                "Rámec – linková vrstva.",
+                "Paket – síťová vrstva.",
+                "Segment – transportní vrstva.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[8], "net_unit9", slides, NET9_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2358,6 +2403,139 @@ GtkWidget *build_net_unit8_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net8_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 9: layered models and protocols quiz ---------------------- */
+
+const ChoiceQ net9_qs[] = {
+    {"Standardizace v sítích především:",
+     {"Zvyšuje nekompatibilitu", "Zajišťuje kompatibilitu mezi výrobci",
+      "Ruší protokoly", "Nahrazuje kabely"}, 4, 1},
+    {"Dekompozice znamená:",
+     {"Spojení všeho do jedné vrstvy",
+      "Rozklad složitého přenosu na vrstvy",
+      "Jen FDM", "Jen CRC"}, 4, 1},
+    {"Vrstvy komunikují:",
+     {"Se všemi vrstvami najednou", "Jen se sousedy přes rozhraní (SAP)",
+      "Jen přes satelit", "Jen bez protokolu"}, 4, 1},
+    {"Protokol je:",
+     {"Fyzický kabel", "Pravidla komunikace mezi stejnými vrstvami",
+      "Jen amplituda signálu", "Jen tiskový server"}, 4, 1},
+    {"Každá vrstva k datům typicky přidá:",
+     {"Jen stop-bit", "Hlavičku (header)", "Jen šířku pásma",
+      "Jen mainframe"}, 4, 1},
+    {"Jednotka linkové vrstvy se nazývá:",
+     {"Segment", "Paket", "Rámec", "Baud"}, 4, 2},
+    {"Jednotka síťové vrstvy se nazývá:",
+     {"Rámec", "Paket", "Segment", "Simplex"}, 4, 1},
+    {"Jednotka transportní vrstvy se nazývá:",
+     {"Rámec", "Paket", "Segment", "Trunk"}, 4, 2},
+};
+
+const char *net9_hints[] = {
+    "Standardizace zajišťuje kompatibilitu mezi výrobci",
+    "Dekompozice rozkládá přenos na jednotlivé vrstvy",
+    "Vrstvy komunikují jen se sousedy přes rozhraní SAP",
+    "Protokol = pravidla mezi stejnými vrstvami na různých uzlech",
+    "Každá vrstva přidává k datům hlavičku (header)",
+    "Rámec = linková, paket = síťová, segment = transportní",
+    "Rámec = linková, paket = síťová, segment = transportní",
+    "Rámec = linková, paket = síťová, segment = transportní",
+};
+
+GtkWidget *build_net_unit9_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net9_qs);
+    int n_opts = net9_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit9", "net_ex9_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k vrstevnatým modelům a protokolům");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net9_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net9_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net9_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net9_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
