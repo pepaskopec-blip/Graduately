@@ -5,34 +5,59 @@
 /* ------------------------------------------------------------------ */
 
 char *normalize_answer(const char *input) {
+    GString *pre = g_string_new(NULL);
     GString *out = g_string_new(NULL);
-    const gchar *down = g_utf8_strdown(input, -1);
-    const gchar *p = down;
+    const gchar *down = g_utf8_strdown(input ? input : "", -1);
+    gchar *decomp;
+    const gchar *p;
     gboolean prev_space = FALSE;
 
-    while (*p) {
+    /* German special letters first, so ä/ö/ü/ß keep their two-letter
+     * keyboard fallbacks (ae/oe/ue/ss). */
+    for (p = down; *p; p = g_utf8_next_char(p)) {
         gunichar ch = g_utf8_get_char(p);
-        p = g_utf8_next_char(p);
+
+        switch (ch) {
+            case 0x00e4: g_string_append(pre, "ae"); break; /* ä */
+            case 0x00f6: g_string_append(pre, "oe"); break; /* ö */
+            case 0x00fc: g_string_append(pre, "ue"); break; /* ü */
+            case 0x00df: g_string_append(pre, "ss"); break; /* ß */
+            default:     g_string_append_unichar(pre, ch); break;
+        }
+    }
+
+    /* Decompose and drop combining accent marks so Czech letters such as
+     * é/ě/ř/ů/ž/š/č are treated as their base letters. */
+    decomp = g_utf8_normalize(pre->str, -1, G_NORMALIZE_NFD);
+    if (!decomp)
+        decomp = g_strdup(pre->str);
+
+    for (p = decomp; *p; p = g_utf8_next_char(p)) {
+        gunichar ch = g_utf8_get_char(p);
+
+        if (g_unichar_combining_class(ch) != 0)
+            continue;   /* accent mark */
+
         if (g_unichar_isspace(ch)) {
             if (out->len > 0 && !prev_space)
                 g_string_append_c(out, ' ');
             prev_space = TRUE;
             continue;
         }
+
+        if (!g_unichar_isalnum(ch))
+            continue;   /* ignore punctuation and symbols */
+
         prev_space = FALSE;
-        switch (ch) {
-            case 0x00e4: g_string_append(out, "ae"); break; /* ä */
-            case 0x00f6: g_string_append(out, "oe"); break; /* ö */
-            case 0x00fc: g_string_append(out, "ue"); break; /* ü */
-            case 0x00df: g_string_append(out, "ss"); break; /* ß */
-            default:     g_string_append_unichar(out, ch); break;
-        }
+        g_string_append_unichar(out, ch);
     }
 
     if (out->len > 0 && out->str[out->len - 1] == ' ')
         g_string_truncate(out, out->len - 1);
 
+    g_free(decomp);
     g_free((gpointer)down);
+    g_string_free(pre, TRUE);
     return g_string_free(out, FALSE);
 }
 
