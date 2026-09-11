@@ -11,6 +11,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET5_SLIDES, .unit_page = "netunit5", .ex_page = "netex5" },
     { .n_slides = NET6_SLIDES, .unit_page = "netunit6", .ex_page = "netex6" },
     { .n_slides = NET7_SLIDES, .unit_page = "netunit7", .ex_page = "netex7" },
+    { .n_slides = NET8_SLIDES, .unit_page = "netunit8", .ex_page = "netex8" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -438,7 +439,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
-        "net_unit6", "net_unit7"
+        "net_unit6", "net_unit7", "net_unit8"
     };
 
     card = gtk_button_new();
@@ -1002,6 +1003,52 @@ GtkWidget *build_net_unit7_page(void) {
     };
 
     return build_net_unit_page(&net_lessons[6], "net_unit7", slides, NET7_SLIDES);
+}
+
+GtkWidget *build_net_unit8_page(void) {
+    static const NetSlide slides[NET8_SLIDES] = {
+        {
+            "1 / 4   •   Okruhy", "Přepojování okruhů",
+            "Tip: spojovaná služba – jako telefon",
+            {
+                "Cesta se vytýčí předem (spojovaná služba).",
+                "Kapacita je garantována.",
+                "Přenos probíhá v reálném čase.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Pakety", "Přepojování paketů",
+            NULL,
+            {
+                "Data se dělí na pakety s adresami.",
+                "Každý paket může jít jinou cestou.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Hodnocení", "Výhody a nevýhody paketů",
+            NULL,
+            {
+                "Výhody: reakce na zátěž, lepší využití kapacity.",
+                "Nevýhody: negarantuje pořadí ani plynulost.",
+                "Nevhodné pro video v reálném čase.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Virtuální", "Virtuální spoje",
+            NULL,
+            {
+                "Cesta je vytýčena předem,",
+                "ale prostředky se využívají jen při průchodu paketu.",
+                "Výsledek: zrychlení datagramů.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[7], "net_unit8", slides, NET8_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2173,6 +2220,144 @@ GtkWidget *build_net_unit7_exercise_page(void) {
         }
 
         ctx->hints[i] = meaning_add(body, net7_hints[i]);
+    }
+
+    btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    gtk_widget_set_margin_top(btns, 12);
+    gtk_box_append(GTK_BOX(body), btns);
+
+    check = gtk_button_new();
+    i18n_bind(check, "check", 1);
+    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_set_halign(check, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(btns), check);
+    g_signal_connect(check, "clicked", G_CALLBACK(net_mcq_check), ctx);
+
+    ctx->feedback = gtk_label_new("");
+    gtk_widget_set_halign(ctx->feedback, GTK_ALIGN_START);
+    gtk_box_append(GTK_BOX(body), ctx->feedback);
+
+    return page;
+}
+
+/* ---- Unit 8: switching quiz ----------------------------------------- */
+
+const ChoiceQ net8_qs[] = {
+    {"Přepojování okruhů znamená:",
+     {"Pakety jdou vždy jinou cestou",
+      "Cesta se vytýčí předem a kapacita je garantována",
+      "Jen FDM multiplex", "Jen half-duplex"}, 4, 1},
+    {"Přepojování okruhů je vhodné pro:",
+     {"Jen náhodné datagramy bez cesty", "Přenos v reálném čase (jako telefon)",
+      "Jen CRC", "Jen peer‑to‑peer tisk"}, 4, 1},
+    {"Při přepojování paketů:",
+     {"Vždy existuje jedna pevná cesta",
+      "Každý paket může jít jinou cestou",
+      "Kapacita je vždy garantována", "Neexistují adresy"}, 4, 1},
+    {"Výhoda přepojování paketů je:",
+     {"Garantované pořadí vždy", "Reakce na zátěž a využití kapacity",
+      "Jen simplex", "Jen trunking"}, 4, 1},
+    {"Nevýhoda přepojování paketů je:",
+     {"Nereaguje na zátěž", "Negarantuje pořadí ani plynulost",
+      "Nelze použít adresy", "Vždy blokuje kanál jako telefon"}, 4, 1},
+    {"Pro video v reálném čase je přepojování paketů:",
+     {"Ideální vždy", "Spíše nevhodné kvůli plynulosti",
+      "Jediná možná metoda", "Stejné jako AM modulace"}, 4, 1},
+    {"Virtuální spoje:",
+     {"Nemají předem žádnou cestu",
+      "Mají cestu předem, prostředky jen při průchodu paketu",
+      "Jsou jen FDM", "Jsou jen parita"}, 4, 1},
+    {"Virtuální spoje slouží hlavně k:",
+     {"Zrušení paketů", "Zrychlení datagramů", "Jen simplexu",
+      "Jen analogovému signálu"}, 4, 1},
+};
+
+const char *net8_hints[] = {
+    "Cesta se vytýčí předem, kapacita je garantována",
+    "Cesta se vytýčí předem, kapacita je garantována",
+    "Data se dělí na pakety, každý může jít jinou cestou",
+    "Výhody: reakce na zátěž a lepší využití kapacity",
+    "Negarantuje pořadí ani plynulost – nevhodné pro živé video",
+    "Negarantuje pořadí ani plynulost – nevhodné pro živé video",
+    "Cesta je předem, prostředky se použijí jen při průchodu paketu",
+    "Virtuální spoje zrychlují přenos datagramů",
+};
+
+GtkWidget *build_net_unit8_exercise_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *body;
+    GtkWidget *check;
+    GtkWidget *btns;
+    NetMcqCtx *ctx = g_new0(NetMcqCtx, 1);
+    int n = (int)G_N_ELEMENTS(net8_qs);
+    int n_opts = net8_qs[0].n_options;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("netunit8", "net_ex8_title", NULL));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 12);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    net_heading(body, "Kvíz k přepojování");
+    net_paragraph(body,
+                  "Vyberte u každé otázky jednu správnou odpověď "
+                  "a stiskněte Zkontrolovat.");
+
+    ctx->qs = net8_qs;
+    ctx->n = n;
+    ctx->n_opts = n_opts;
+    ctx->toggles = g_new0(GtkToggleButton *, n * n_opts);
+    ctx->hints = g_new0(GtkWidget *, n);
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *prompt;
+        GtkWidget *row;
+        GtkToggleButton *first = NULL;
+        char *qtext;
+
+        qtext = g_strdup_printf("%d.) %s", i + 1, net8_qs[i].prompt);
+        prompt = gtk_label_new(qtext);
+        g_free(qtext);
+        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+        gtk_widget_add_css_class(prompt, "ex-prompt");
+        gtk_widget_set_margin_top(prompt, 8);
+        gtk_box_append(GTK_BOX(body), prompt);
+
+        row = gtk_flow_box_new();
+        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
+        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
+        gtk_widget_set_halign(row, GTK_ALIGN_START);
+        gtk_box_append(GTK_BOX(body), row);
+
+        for (int o = 0; o < n_opts; o++) {
+            GtkWidget *tb =
+                gtk_toggle_button_new_with_label(net8_qs[i].options[o]);
+
+            gtk_widget_add_css_class(tb, "pill");
+            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
+            if (!first)
+                first = GTK_TOGGLE_BUTTON(tb);
+            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
+            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
+        }
+
+        ctx->hints[i] = meaning_add(body, net8_hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
