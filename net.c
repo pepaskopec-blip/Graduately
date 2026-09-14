@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–12 = source topics 01–11 (Základní pojmy … TCP/IP). */
+     * units 2–13 = source topics 01–12 (Základní pojmy … topologie). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -18,6 +18,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET10_SLIDES, .unit_page = "netunit10", .ex_page = "netex10" },
     { .n_slides = NET11_SLIDES, .unit_page = "netunit11", .ex_page = "netex11" },
     { .n_slides = NET12_SLIDES, .unit_page = "netunit12", .ex_page = "netex12" },
+    { .n_slides = NET13_SLIDES, .unit_page = "netunit13", .ex_page = "netex13" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -458,7 +459,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
-        "net_unit11", "net_unit12"
+        "net_unit11", "net_unit12", "net_unit13"
     };
 
     card = gtk_button_new();
@@ -1318,6 +1319,54 @@ GtkWidget *build_net_unit12_page(void) {
 
     return build_net_unit_page(&net_lessons[11], "net_unit12", "net_unit12_sub",
                                slides, NET12_SLIDES);
+}
+
+GtkWidget *build_net_unit13_page(void) {
+    static const NetSlide slides[NET13_SLIDES] = {
+        {
+            "1 / 4   •   Přehled", "Topologie sítě",
+            NULL,
+            {
+                "Topologie popisuje, jak jsou uzly propojené.",
+                "Základní typy: sběrnice, hvězda a kruh.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Sběrnice", "Bus",
+            "Tip: dříve typicky koaxiální kabel",
+            {
+                "Médium sdílí všichni – jednoduchá a levná topologie.",
+                "Malá délka kabelů.",
+                "Nevýhody: nízká bezpečnost (všichni slyší vše).",
+                "Přerušení kabelu nebo terminátoru vyřadí celou síť.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   Hvězda", "Star",
+            "Tip: kroucená dvoulinka nebo optika",
+            {
+                "Uzly jdou přes centrální prvek (hub nebo switch).",
+                "Výhody: odolnost proti poruchám kabelů k uzlům,",
+                "snadná diagnostika.",
+                "Nevýhody: aktivní prvky a více kabeláže.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   Kruh", "Ring",
+            "Tip: často zdvojený kruh pro odolnost",
+            {
+                "Kabely tvoří souvislý kruh.",
+                "Zprávy obíhají, dokud nenajdou adresáta.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[12], "net_unit13", "net_unit13_sub",
+                               slides, NET13_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2290,5 +2339,46 @@ GtkWidget *build_net_unit12_exercise_page(void) {
     return build_net_mcq_page(11, "netunit12", "net_ex12_title", "net_quiz12_head",
                               net12_qs, net12_hints,
                               (int)G_N_ELEMENTS(net12_qs));
+}
+
+const ChoiceQ net13_qs[] = {
+    {"Topologie sběrnice (bus) znamená, že:",
+     {"Každý uzel má vlastní centrální switch", "Médium sdílí všichni",
+      "Kabely tvoří jen zdvojený kruh", "Používá jen OSPF"}, 4, 1},
+    {"Nevýhoda sběrnice je hlavně:",
+     {"Že potřebuje hub u každého uzlu",
+      "Nízká bezpečnost a náchylnost na poruchu kabelu",
+      "Že nelze použít koaxiál", "Že zprávy neobíhají"}, 4, 1},
+    {"Topologie hvězda propojuje uzly přes:",
+     {"Jen jeden společný koaxiál bez centra",
+      "Centrální prvek (hub nebo switch)",
+      "Jen Token Ring", "Jen ATM"}, 4, 1},
+    {"Výhoda hvězdy je:",
+     {"Že přerušení jednoho kabelu k uzlu nevyřadí celou síť",
+      "Že všichni slyší vše", "Že nepotřebuje žádnou kabeláž",
+      "Že nemá aktivní prvky"}, 4, 0},
+    {"Hvězda typicky používá:",
+     {"Jen koaxiální kabel", "Kroucenou dvoulinku nebo optiku",
+      "Jen simplexní rádio", "Jen FDM"}, 4, 1},
+    {"V topologii kruh (ring):",
+     {"Zprávy obíhají, dokud nenajdou adresáta",
+      "Každý paket jde jen přes DNS",
+      "Médium sdílí hub bez kabelů",
+      "Neexistuje žádná kabeláž"}, 4, 0},
+};
+
+const char *net13_hints[] = {
+    "Sběrnice: médium sdílí všichni",
+    "Sběrnice: nízká bezpečnost a porucha kabelu vyřadí síť",
+    "Hvězda: uzly jdou přes hub nebo switch",
+    "Hvězda: porucha kabelu k uzlu nevyřadí celou síť",
+    "Hvězda používá kroucenou dvoulinku nebo optiku",
+    "V kruhu zprávy obíhají, dokud nenajdou adresáta",
+};
+
+GtkWidget *build_net_unit13_exercise_page(void) {
+    return build_net_mcq_page(12, "netunit13", "net_ex13_title", "net_quiz13_head",
+                              net13_qs, net13_hints,
+                              (int)G_N_ELEMENTS(net13_qs));
 }
 
