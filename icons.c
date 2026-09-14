@@ -142,6 +142,195 @@ void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
     }
 }
 
+/* Open book icon – used for the reading list and overview sections. */
+void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data) {
+    const double w = width;
+    const double h = height;
+    const double mid = w * 0.5;
+    const double left = w * 0.13;
+    const double right = w * 0.87;
+    const double top = h * 0.24;
+    const double bot = h * 0.80;
+    const Rgb c = mix_rgb(color_from_hex(app_theme.accent2),
+                          color_from_hex(app_theme.accent3), 0.35);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, mid, top);
+    cairo_curve_to(cr, w * 0.40, top - h * 0.07,
+                   w * 0.24, top - h * 0.02, left, top + h * 0.07);
+    cairo_line_to(cr, left, bot - h * 0.05);
+    cairo_curve_to(cr, w * 0.24, bot - h * 0.11,
+                   w * 0.40, bot - h * 0.05, mid, bot);
+    cairo_close_path(cr);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, mid, top);
+    cairo_curve_to(cr, w * 0.60, top - h * 0.07,
+                   w * 0.76, top - h * 0.02, right, top + h * 0.07);
+    cairo_line_to(cr, right, bot - h * 0.05);
+    cairo_curve_to(cr, w * 0.76, bot - h * 0.11,
+                   w * 0.60, bot - h * 0.05, mid, bot);
+    cairo_close_path(cr);
+    cairo_fill(cr);
+}
+
+/* Question mark in a circle – quiz. */
+void draw_quiz_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data) {
+    const Rgb c = color_from_hex(app_theme.accent);
+    PangoLayout *layout;
+    PangoFontDescription *fd;
+    int tw, th;
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    layout = pango_cairo_create_layout(cr);
+    fd = pango_font_description_new();
+    pango_font_description_set_weight(fd, PANGO_WEIGHT_HEAVY);
+    pango_font_description_set_absolute_size(
+        fd, MIN(width, height) * 1.05 * PANGO_SCALE);
+    pango_layout_set_font_description(layout, fd);
+    pango_layout_set_text(layout, "?", -1);
+    pango_layout_get_pixel_size(layout, &tw, &th);
+    cairo_move_to(cr, (width - tw) / 2.0, (height - th) / 2.0);
+    pango_cairo_show_layout(cr, layout);
+    pango_font_description_free(fd);
+    g_object_unref(layout);
+}
+
+/* Two opposing arrows – ordering / drag & drop. */
+void draw_order_icon(GtkDrawingArea *area, cairo_t *cr,
+                     int width, int height, gpointer data) {
+    const double w = width;
+    const double h = height;
+    const Rgb c = color_from_hex(app_theme.success2);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_width(cr, MAX(1.6, MIN(w, h) * 0.11));
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, w * 0.36, h * 0.80);
+    cairo_line_to(cr, w * 0.36, h * 0.24);
+    cairo_move_to(cr, w * 0.22, h * 0.40);
+    cairo_line_to(cr, w * 0.36, h * 0.24);
+    cairo_line_to(cr, w * 0.50, h * 0.40);
+    cairo_stroke(cr);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, w * 0.64, h * 0.20);
+    cairo_line_to(cr, w * 0.64, h * 0.76);
+    cairo_move_to(cr, w * 0.50, h * 0.60);
+    cairo_line_to(cr, w * 0.64, h * 0.76);
+    cairo_line_to(cr, w * 0.78, h * 0.60);
+    cairo_stroke(cr);
+}
+
+/* Globe – the world / superpowers. */
+void draw_globe_icon(GtkDrawingArea *area, cairo_t *cr,
+                     int width, int height, gpointer data) {
+    const double cx = width / 2.0;
+    const double cy = height / 2.0;
+    const double r = MIN(width, height) * 0.36;
+    const Rgb c = color_from_hex(app_theme.accent2);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_width(cr, MAX(1.4, r * 0.13));
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_stroke(cr);
+
+    cairo_save(cr);
+    cairo_translate(cr, cx, cy);
+    cairo_scale(cr, 0.52, 1.0);
+    cairo_new_path(cr);
+    cairo_arc(cr, 0.0, 0.0, r, 0.0, 2.0 * G_PI);
+    cairo_stroke(cr);
+    cairo_restore(cr);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, cx - r, cy);
+    cairo_line_to(cr, cx + r, cy);
+    cairo_move_to(cr, cx - r * 0.86, cy - r * 0.52);
+    cairo_line_to(cr, cx + r * 0.86, cy - r * 0.52);
+    cairo_move_to(cr, cx - r * 0.86, cy + r * 0.52);
+    cairo_line_to(cr, cx + r * 0.86, cy + r * 0.52);
+    cairo_stroke(cr);
+}
+
+/* Two people – characters. */
+void draw_people_icon(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer data) {
+    const Rgb c = color_from_hex(app_theme.accent3);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, width * 0.38, height * 0.36, width * 0.15,
+              0.0, 2.0 * G_PI);
+    cairo_fill(cr);
+    cairo_new_path(cr);
+    cairo_arc(cr, width * 0.38, height * 1.02, width * 0.30,
+              G_PI, 2.0 * G_PI);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, width * 0.67, height * 0.42, width * 0.13,
+              0.0, 2.0 * G_PI);
+    cairo_fill(cr);
+    cairo_new_path(cr);
+    cairo_arc(cr, width * 0.67, height * 1.06, width * 0.27,
+              G_PI, 2.0 * G_PI);
+    cairo_fill(cr);
+}
+
+/* Light bulb – key terms / ideas. */
+void draw_bulb_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data) {
+    const double cx = width / 2.0;
+    const double r = MIN(width, height) * 0.30;
+    const double cy = height * 0.40;
+    const Rgb c = color_from_hex(app_theme.warning);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, cx - r * 0.45, cy + r * 0.72,
+                    r * 0.90, r * 0.66);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy + r * 1.72, r * 0.52, 0.0, G_PI);
+    cairo_fill(cr);
+}
+
 void draw_back_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data) {
     const double size = 15.0;      /* fixed logical icon size            */

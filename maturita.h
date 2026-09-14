@@ -800,6 +800,10 @@ void czech_rail_theme_reset(void);
 void hw_lessons_apply_lang(void);
 GtkWidget *build_hwmap_page(void);
 GtkWidget *build_czechmap_page(void);
+GtkWidget *build_readinglist_page(void);
+GtkWidget *build_cetba1984_page(void);
+GtkWidget *build_cetba1984_quiz_page(void);
+GtkWidget *build_cetba1984_plot_page(void);
 GtkWidget *build_hw_unit1_page(void);
 GtkWidget *build_hw_unit1_exercise_page(void);
 GtkWidget *build_hw_unit2_page(void);
@@ -810,6 +814,18 @@ void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data);
 void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data);
+void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data);
+void draw_quiz_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data);
+void draw_order_icon(GtkDrawingArea *area, cairo_t *cr,
+                     int width, int height, gpointer data);
+void draw_globe_icon(GtkDrawingArea *area, cairo_t *cr,
+                     int width, int height, gpointer data);
+void draw_people_icon(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer data);
+void draw_bulb_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data);
 void net_lesson_notes_ensure(NetLesson *L);
 void net_rescale_lesson_notes(NetLesson *L, int body, int head, int kick);
 GtkWidget *make_back_button(const char *target);

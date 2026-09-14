@@ -129,6 +129,12 @@ GtkWidget *build_czechmap_page(void) {
         GtkWidget *btn = cz_make_node(i);
         GtkWidget *name = gtk_label_new(NULL);
 
+        if (i == 2) {
+            g_object_set_data_full(G_OBJECT(btn), "target",
+                                   g_strdup("readinglist"), g_free);
+            g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+        }
+
         i18n_bind(name, cz_keys[i], 0);
         gtk_widget_set_size_request(name, (int)CZ_LABEL_W, -1);
         gtk_widget_set_halign(name, GTK_ALIGN_CENTER);

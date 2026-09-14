@@ -233,6 +233,12 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
     gtk_stack_add_named(main_stack, build_hwmap_page(), "hwmap");
     gtk_stack_add_named(main_stack, build_czechmap_page(), "czechmap");
+    gtk_stack_add_named(main_stack, build_readinglist_page(), "readinglist");
+    gtk_stack_add_named(main_stack, build_cetba1984_page(), "cetba1984");
+    gtk_stack_add_named(main_stack, build_cetba1984_quiz_page(),
+                        "cetba1984quiz");
+    gtk_stack_add_named(main_stack, build_cetba1984_plot_page(),
+                        "cetba1984dej");
     gtk_stack_add_named(main_stack, build_hw_unit1_page(), "hwunit1");
     gtk_stack_add_named(main_stack, build_hw_unit1_exercise_page(), "hwex1");
     gtk_stack_add_named(main_stack, build_hw_unit2_page(), "hwunit2");

@@ -371,6 +371,129 @@ windowcontrols button:not(:hover) image {
    padding: 1px 6px;
    border-radius: 8px;
 }
+.book-card {
+   background-image: none;
+   background-color: alpha(@bg_surface0, 0.92);
+   border: 1px solid @bg_surface1;
+   border-radius: 18px;
+   padding: 20px 26px;
+   color: @fg_text;
+   box-shadow: 0 6px 18px alpha(@bg_crust, 0.22);
+   transition: box-shadow 160ms ease, border-color 160ms ease,
+               background-color 160ms ease;
+}
+.book-card:hover {
+   border-color: @accent;
+   background-color: alpha(@accent, 0.10);
+   box-shadow: 0 12px 30px alpha(@accent, 0.32);
+}
+.book-card:active {
+   background-color: alpha(@accent, 0.18);
+   box-shadow: 0 4px 12px alpha(@accent, 0.25);
+}
+.reading-hero {
+   opacity: 0.22;
+}
+.book-title {
+   color: @fg_text;
+   font-size: 24px;
+   font-weight: 800;
+}
+.book-author {
+   color: @accent2;
+   font-size: 15px;
+   font-weight: 700;
+}
+.book-sub {
+   color: @fg_subtext;
+   font-size: 14px;
+}
+.lit-link {
+   background-image: none;
+   background-color: alpha(@bg_surface0, 0.92);
+   border: 1px solid @bg_surface1;
+   border-radius: 16px;
+   padding: 14px 18px;
+   color: @fg_text;
+   box-shadow: 0 5px 16px alpha(@bg_crust, 0.18);
+   transition: box-shadow 160ms ease, border-color 160ms ease,
+               background-color 160ms ease;
+}
+.lit-link:hover {
+   border-color: @accent;
+   background-color: alpha(@accent, 0.10);
+   box-shadow: 0 10px 26px alpha(@accent, 0.30);
+}
+.lit-link:active {
+   background-color: alpha(@accent, 0.18);
+   box-shadow: 0 4px 12px alpha(@accent, 0.25);
+}
+.lit-link-title {
+   color: @fg_text;
+   font-size: 17px;
+   font-weight: 800;
+}
+.lit-link-sub {
+   color: @fg_subtext;
+   font-size: 13px;
+}
+.lit-progress {
+   color: @accent2;
+   font-size: 13px;
+   font-weight: 800;
+   letter-spacing: 1px;
+}
+.lit-score {
+   color: @fg_subtext;
+   font-size: 13px;
+   font-weight: 700;
+}
+.lit-prompt {
+   color: @fg_text;
+   font-size: 20px;
+   font-weight: 800;
+}
+.lit-expl {
+   color: @success2;
+   font-size: 15px;
+   font-weight: 600;
+   background-color: alpha(@bg_surface0, 0.85);
+   border-left: 4px solid @success;
+   border-radius: 8px;
+   padding: 10px 14px;
+}
+.kahoot-opt {
+   background-image: none;
+   color: @on_accent;
+   font-size: 15px;
+   font-weight: 700;
+   padding: 16px;
+   border: 3px solid transparent;
+   border-radius: 14px;
+   box-shadow: 0 4px 14px alpha(@bg_crust, 0.30);
+}
+.kahoot-opt:hover {
+   box-shadow: 0 7px 22px alpha(@bg_crust, 0.42);
+}
+.kahoot-0 {
+   background-color: @accent;
+}
+.kahoot-1 {
+   background-color: @error;
+}
+.kahoot-2 {
+   background-color: @warning;
+}
+.kahoot-3 {
+   background-color: @success;
+}
+.kahoot-opt.ok {
+   border-color: @fg_text;
+   box-shadow: 0 0 0 3px alpha(@fg_text, 0.35);
+}
+.kahoot-opt.wrong {
+   opacity: 0.35;
+}
 .ex-prompt {
    color: @fg_text;
    font-size: 16px;
