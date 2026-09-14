@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–24 = source topics (Základní pojmy … ARP). */
+     * units 2–25 = source topics (Základní pojmy … TCP/UDP). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -30,6 +30,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET22_SLIDES, .unit_page = "netunit22", .ex_page = "netex22" },
     { .n_slides = NET23_SLIDES, .unit_page = "netunit23", .ex_page = "netex23" },
     { .n_slides = NET24_SLIDES, .unit_page = "netunit24", .ex_page = "netex24" },
+    { .n_slides = NET25_SLIDES, .unit_page = "netunit25", .ex_page = "netex25" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -472,7 +473,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
         "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
-        "net_unit21", "net_unit22", "net_unit23", "net_unit24"
+        "net_unit21", "net_unit22", "net_unit23", "net_unit24", "net_unit25"
     };
 
     card = gtk_button_new();
@@ -2096,6 +2097,76 @@ GtkWidget *build_net_unit24_page(void) {
                                slides, NET24_SLIDES);
 }
 
+GtkWidget *build_net_unit25_page(void) {
+    static const NetSlide slides[NET25_SLIDES] = {
+        {
+            "1 / 6   •   TCP vs UDP", "Základní rozdíly",
+            NULL,
+            {
+                "TCP: spolehlivý a spojovaný přenos.",
+                "Potvrzování, kontrola pořadí a řízení toku.",
+                "UDP: nespolehlivý a nespojovaný.",
+                "Minimální režie – neřeší potvrzení ani pořadí.",
+                NULL,
+            },
+        },
+        {
+            "2 / 6   •   Porty", "Multiplex a demultiplex",
+            NULL,
+            {
+                "Porty rozlišují aplikace (procesy) na jednom uzlu.",
+                "Multiplex: sběr dat od aplikací do segmentů/datagramů.",
+                "Demultiplex: doručení příchozích dat správné aplikaci",
+                "podle čísla portu.",
+                NULL,
+            },
+        },
+        {
+            "3 / 6   •   TCP", "Spojení a vlastnosti",
+            "Tip: three-way handshake",
+            {
+                "Navázání spojení: třícestné podání ruky.",
+                "Streamově orientovaný a full duplex.",
+                "Jen unicast – bez multicastu a broadcastu.",
+                NULL,
+            },
+        },
+        {
+            "4 / 6   •   Nevýhody TCP", "Režie a real-time",
+            NULL,
+            {
+                "Větší režie: hlavička 20 B (UDP má 8 B).",
+                "Nevhodný pro real-time média: ztráta segmentu",
+                "zastaví proud a čeká se na znovudoručení.",
+                "Bez multihomingu – výpadek rozhraní shodí spojení.",
+                NULL,
+            },
+        },
+        {
+            "5 / 6   •   Alternativy", "SCTP a DCCP",
+            NULL,
+            {
+                "SCTP: multihoming a multistreaming (až 64k proudů).",
+                "DCCP: datagramy s řízením zahlcení",
+                "(streaming, IP telefonie).",
+                NULL,
+            },
+        },
+        {
+            "6 / 6   •   Shrnutí", "Kdy co použít",
+            NULL,
+            {
+                "TCP: spolehlivá data (web, pošta, soubory).",
+                "UDP: rychlost a nízká režie (DNS, hry, real-time).",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[24], "net_unit25", "net_unit25_sub",
+                               slides, NET25_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3535,5 +3606,46 @@ GtkWidget *build_net_unit24_exercise_page(void) {
     return build_net_mcq_page(23, "netunit24", "net_ex24_title", "net_quiz24_head",
                               net24_qs, net24_hints,
                               (int)G_N_ELEMENTS(net24_qs));
+}
+
+const ChoiceQ net25_qs[] = {
+    {"TCP je:",
+     {"Spolehlivý a spojovaný", "Nespolehlivý a nespojovaný",
+      "Jen fyzická vrstva", "Jen ARP cache"}, 4, 0},
+    {"UDP je:",
+     {"Nespolehlivý a nespojovaný s malou režií",
+      "Spolehlivý se třícestným handshake", "Jen store-and-forward",
+      "Jen ICMP Time Exceeded"}, 4, 0},
+    {"Porty slouží k:",
+     {"Rozlišení aplikací na jednom uzlu", "Jen směrování IP",
+      "Jen MAC učení", "Jen lámání vlákna"}, 4, 0},
+    {"Navázání TCP spojení používá:",
+     {"Třícestné podání ruky (three-way handshake)",
+      "Jen broadcast ARP", "Jen Source Quench", "Jen cut-through"}, 4, 0},
+    {"Hlavička TCP má typicky:",
+     {"20 B (UDP 8 B)", "8 B (UDP 20 B)", "1500 B", "64 B min. rámec"}, 4, 0},
+    {"TCP není vhodný pro real-time média hlavně proto, že:",
+     {"Ztráta segmentu zastaví proud a čeká se na znovudoručení",
+      "Nemá žádné porty", "Nepodporuje unicast",
+      "Nemá hlavičku"}, 4, 0},
+    {"SCTP oproti TCP nabízí:",
+     {"Multihoming a multistreaming", "Jen Ethernet II",
+      "Jen RARP", "Jen hub flooding"}, 4, 0},
+};
+
+const char *net25_hints[] = {
+    "TCP = spolehlivý a spojovaný",
+    "UDP = nespolehlivý, nespojovaný, malá režie",
+    "Porty rozlišují aplikace na uzlu",
+    "TCP se navazuje three-way handshake",
+    "TCP hlavička 20 B, UDP 8 B",
+    "TCP čeká na znovudoručení – špatné pro real-time",
+    "SCTP: multihoming a multistreaming",
+};
+
+GtkWidget *build_net_unit25_exercise_page(void) {
+    return build_net_mcq_page(24, "netunit25", "net_ex25_title", "net_quiz25_head",
+                              net25_qs, net25_hints,
+                              (int)G_N_ELEMENTS(net25_qs));
 }
 
