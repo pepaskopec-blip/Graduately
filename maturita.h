@@ -13,6 +13,7 @@
 #define NUM_SUBJECTS  13
 #define NET_SUBJ       1    /* index of "Správa počítačových sítí"     */
 #define HW_SUBJ        2    /* index of "Technické vybavení"          */
+#define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define CSS_FILE      "style.css"
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_U1   "progress/unit1.conf"
@@ -786,8 +787,10 @@ void mark_hw_done(int lesson_id);
 void refresh_hw_completion_ui(void);
 void progress_for_hw(ProgressSum *out);
 void hw_rail_theme_reset(void);
+void czech_rail_theme_reset(void);
 void hw_lessons_apply_lang(void);
 GtkWidget *build_hwmap_page(void);
+GtkWidget *build_czechmap_page(void);
 GtkWidget *build_hw_unit1_page(void);
 GtkWidget *build_hw_unit1_exercise_page(void);
 GtkWidget *build_hw_unit2_page(void);
@@ -796,6 +799,8 @@ GtkWidget *build_hw_unit3_page(void);
 GtkWidget *build_hw_unit3_exercise_page(void);
 void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data);
+void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
+                            int width, int height, gpointer data);
 void net_lesson_notes_ensure(NetLesson *L);
 void net_rescale_lesson_notes(NetLesson *L, int body, int head, int kick);
 GtkWidget *make_back_button(const char *target);

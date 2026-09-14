@@ -369,6 +369,11 @@ const TrEntry tr_ui[] = {
      "Quiz: data representation"},
     {"hw_quiz3_head", "Kvíz k zobrazování dat v počítači",
      "Quiz on data representation in computers"},
+    {"czech_sub", "Vyberte oblast a začněte procvičovat.",
+     "Pick an area and start practicing."},
+    {"Literatura", "Literatura", "Literature"},
+    {"Mluvnice", "Mluvnice", "Grammar"},
+    {"Maturitní četba", "Maturitní četba", "Maturita reading list"},
     {NULL, NULL, NULL}
 };
 

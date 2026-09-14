@@ -366,6 +366,11 @@ windowcontrols button:not(:hover) image {
    font-size: 12px;
    font-weight: 600;
 }
+.cz-label {
+   background-color: @bg_base;
+   padding: 1px 6px;
+   border-radius: 8px;
+}
 .ex-prompt {
    color: @fg_text;
    font-size: 16px;

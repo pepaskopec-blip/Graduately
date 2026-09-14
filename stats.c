@@ -86,7 +86,7 @@ void refresh_stats_ui(void) {
         GtkWidget *bar = stats_ui.subj[s].bar;
         ProgressSum sp = {0};
         gboolean has_content = (s == NET_SUBJ) || (s == HW_SUBJ)
-                               || sub_unit_count[s] > 0;
+                               || (s == CZ_SUBJ) || sub_unit_count[s] > 0;
 
         if (!count || !bar)
             continue;
@@ -359,7 +359,7 @@ GtkWidget *build_stats_page(void) {
         GtkWidget *count;
         GtkWidget *bar;
         gboolean has_units = (s == NET_SUBJ) || (s == HW_SUBJ)
-                             || sub_unit_count[s] > 0;
+                             || (s == CZ_SUBJ) || sub_unit_count[s] > 0;
         gboolean has_deutsch_units = sub_unit_count[s] > 0;
 
         subject = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

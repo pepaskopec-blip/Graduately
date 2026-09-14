@@ -5,11 +5,13 @@
 /* ------------------------------------------------------------------ */
 
 
-/* Index 0 (Deutsch), NET_SUBJ (networks) and HW_SUBJ (hardware) are unlocked. */
+/* Index 0 (Deutsch), NET_SUBJ (networks), HW_SUBJ (hardware) and CZ_SUBJ
+ * (Czech) are unlocked. */
 const char *sub_keys[NUM_SUBJECTS] = {
     "Deutsch",
     "Správa počítačových sítí",
     "Technické vybavení",
+    "Český jazyk a literatura",
     "Občanská nauka",
     "English",
     "Matematika",
@@ -17,7 +19,6 @@ const char *sub_keys[NUM_SUBJECTS] = {
     "Základy Přírodopisných věd",
     "Technická grafika",
     "Prezentační grafika",
-    "Český jazyk a literatura",
     "Programování",
     "Programové vybavení",
 };
@@ -245,6 +246,47 @@ void draw_german_flag(GtkDrawingArea *area, cairo_t *cr,
     cairo_restore(cr);
 }
 
+/* Czech flag (white / red with a blue triangle) drawn in a clipped circle. */
+void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
+                            int width, int height, gpointer data) {
+    double cx = width / 2.0;
+    double cy = height / 2.0;
+    double r = MIN(width, height) / 2.0 - 2.0;
+
+    (void)area;
+    (void)data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+
+    cairo_save(cr);
+    cairo_new_path(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_clip(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, 0.0, 0.0, (double)width, (double)height);
+    cairo_set_source_rgb(cr, 0.98, 0.98, 0.98);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_rectangle(cr, 0.0, (double)height / 2.0,
+                    (double)width, (double)height / 2.0);
+    cairo_set_source_rgb(cr, 0.83, 0.16, 0.18);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, 0.0, 0.0);
+    cairo_line_to(cr, (double)width * 0.55, (double)height / 2.0);
+    cairo_line_to(cr, 0.0, (double)height);
+    cairo_close_path(cr);
+    cairo_set_source_rgb(cr, 0.07, 0.24, 0.55);
+    cairo_fill(cr);
+
+    cairo_restore(cr);
+}
+
 GtkWidget *build_subjects_page(void) {
     GtkWidget *page;
     GtkWidget *scroll;
@@ -337,6 +379,17 @@ GtkWidget *build_subjects_page(void) {
             g_object_set_data_full(G_OBJECT(card), "target",
                                    g_strdup("hwmap"), g_free);
             g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+        } else if (i == CZ_SUBJ) {
+            GtkWidget *flag = gtk_drawing_area_new();
+            gtk_widget_add_css_class(card, "current");
+            gtk_widget_set_size_request(flag, (int)SUB_BUBBLE,
+                                        (int)SUB_BUBBLE);
+            gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(flag),
+                                           draw_czech_flag, NULL, NULL);
+            gtk_button_set_child(GTK_BUTTON(card), flag);
+            g_object_set_data_full(G_OBJECT(card), "target",
+                                   g_strdup("czechmap"), g_free);
+            g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
         } else {
             GtkWidget *lock;
             gtk_widget_add_css_class(card, "locked");
@@ -356,7 +409,7 @@ GtkWidget *build_subjects_page(void) {
         gtk_label_set_justify(GTK_LABEL(lbl), GTK_JUSTIFY_CENTER);
         gtk_label_set_wrap(GTK_LABEL(lbl), TRUE);
         gtk_widget_add_css_class(lbl, "unit-name");
-        if (i != 0 && i != NET_SUBJ && i != HW_SUBJ)
+        if (i != 0 && i != NET_SUBJ && i != HW_SUBJ && i != CZ_SUBJ)
             gtk_widget_add_css_class(lbl, "unit-name-locked");
         sub_labels[i] = lbl;
         gtk_fixed_put(GTK_FIXED(fixed), lbl, 0, 0);
