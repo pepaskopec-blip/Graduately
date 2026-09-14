@@ -882,6 +882,10 @@ GtkWidget *ex_page_shell(const char *back_target, const char *title,
                                 GtkWidget **body_out, GtkWidget **feedback_out,
                                 GtkWidget **btn_out);
 GtkWidget *meaning_add(GtkWidget *body, const char *text);
+GtkWidget *mcq_option_toggle(const char *text, int index,
+                             GtkToggleButton **group_first);
+GtkWidget *mcq_append_question(GtkWidget *parent, int num, const ChoiceQ *q,
+                               GtkToggleButton **out_toggles);
 GtkWidget *model_answer_add(GtkWidget *body, const char *german);
 void meaning_reveal_all(GtkWidget **labels, int n);
 ComboListCtx *combo_list_ctx_new(UnitCtx *unit, int ex_num,

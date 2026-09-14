@@ -88,33 +88,11 @@ GtkWidget *build_choice(UnitCtx *unit, const char *title,
     ctx->trans = g_new0(GtkWidget *, n);
 
     for (int i = 0; i < n; i++) {
-        GtkWidget *prompt = gtk_label_new(qs[i].prompt);
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < qs[i].n_options; o++) {
-            GtkWidget *tb = gtk_toggle_button_new_with_label(qs[i].options[o]);
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
+        GtkWidget *card = mcq_append_question(body, i + 1, &qs[i],
+                                              &ctx->toggles[i * n_opts]);
 
         if (meanings[i])
-            ctx->trans[i] = meaning_add(body, meanings[i]);
+            ctx->trans[i] = meaning_add(card, meanings[i]);
     }
 
     g_signal_connect(check, "clicked", G_CALLBACK(choice_check), ctx);

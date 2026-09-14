@@ -78,6 +78,73 @@ GtkWidget *meaning_add(GtkWidget *body, const char *text) {
     return lbl;
 }
 
+GtkWidget *mcq_option_toggle(const char *text, int index,
+                             GtkToggleButton **group_first) {
+    GtkWidget *tb;
+    GtkWidget *lab;
+    char *labeled;
+
+    labeled = g_strdup_printf("%c   %s", 'A' + index, text);
+    tb = gtk_toggle_button_new();
+    lab = gtk_label_new(labeled);
+    g_free(labeled);
+
+    gtk_label_set_wrap(GTK_LABEL(lab), TRUE);
+    gtk_label_set_wrap_mode(GTK_LABEL(lab), PANGO_WRAP_WORD_CHAR);
+    gtk_label_set_xalign(GTK_LABEL(lab), 0.0);
+    gtk_widget_set_halign(lab, GTK_ALIGN_FILL);
+    gtk_widget_set_hexpand(lab, TRUE);
+    gtk_button_set_child(GTK_BUTTON(tb), lab);
+
+    gtk_widget_add_css_class(tb, "pill");
+    gtk_widget_add_css_class(tb, "quiz-pill");
+    gtk_widget_set_hexpand(tb, TRUE);
+    gtk_widget_set_halign(tb, GTK_ALIGN_FILL);
+
+    gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), *group_first);
+    if (!*group_first)
+        *group_first = GTK_TOGGLE_BUTTON(tb);
+
+    return tb;
+}
+
+GtkWidget *mcq_append_question(GtkWidget *parent, int num, const ChoiceQ *q,
+                               GtkToggleButton **out_toggles) {
+    GtkWidget *card;
+    GtkWidget *prompt;
+    GtkWidget *opts;
+    GtkToggleButton *first = NULL;
+    char *qtext;
+    int o;
+
+    card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_widget_add_css_class(card, "quiz-card");
+    gtk_widget_set_hexpand(card, TRUE);
+    gtk_box_append(GTK_BOX(parent), card);
+
+    qtext = g_strdup_printf("%d.)  %s", num, q->prompt);
+    prompt = gtk_label_new(qtext);
+    g_free(qtext);
+    gtk_widget_set_halign(prompt, GTK_ALIGN_START);
+    gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
+    gtk_label_set_xalign(GTK_LABEL(prompt), 0.0);
+    gtk_widget_add_css_class(prompt, "quiz-q");
+    gtk_box_append(GTK_BOX(card), prompt);
+
+    opts = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
+    gtk_widget_add_css_class(opts, "quiz-options");
+    gtk_box_append(GTK_BOX(card), opts);
+
+    for (o = 0; o < q->n_options; o++) {
+        GtkWidget *tb = mcq_option_toggle(q->options[o], o, &first);
+
+        gtk_box_append(GTK_BOX(opts), tb);
+        out_toggles[o] = GTK_TOGGLE_BUTTON(tb);
+    }
+
+    return card;
+}
+
 /* A hidden green label that shows the model German sentence after Check. */
 GtkWidget *model_answer_add(GtkWidget *body, const char *german) {
     GtkWidget *lbl = gtk_label_new(german);

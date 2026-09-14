@@ -653,22 +653,27 @@ static GtkWidget *build_hw_mcq_page(int lesson_id, const char *back_page,
     gtk_widget_set_margin_top(scroll, 12);
     gtk_box_append(GTK_BOX(page), scroll);
 
-    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
+    gtk_widget_set_halign(body, GTK_ALIGN_FILL);
+    gtk_widget_set_hexpand(body, TRUE);
+    gtk_widget_set_margin_start(body, 4);
+    gtk_widget_set_margin_end(body, 4);
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
 
     head = gtk_label_new(NULL);
     i18n_bind(head, heading_key, 0);
     gtk_widget_set_halign(head, GTK_ALIGN_START);
     gtk_label_set_wrap(GTK_LABEL(head), TRUE);
-    gtk_widget_set_margin_top(head, 6);
-    gtk_widget_add_css_class(head, "ex-sub");
+    gtk_widget_set_margin_top(head, 4);
+    gtk_widget_add_css_class(head, "quiz-heading");
     gtk_box_append(GTK_BOX(body), head);
 
     intro = gtk_label_new(NULL);
     i18n_bind(intro, "net_quiz_intro", 0);
     gtk_widget_set_halign(intro, GTK_ALIGN_START);
     gtk_label_set_wrap(GTK_LABEL(intro), TRUE);
-    gtk_widget_add_css_class(intro, "ex-prompt");
+    gtk_widget_add_css_class(intro, "quiz-intro");
+    gtk_widget_set_margin_bottom(intro, 4);
     gtk_box_append(GTK_BOX(body), intro);
 
     ctx->qs = qs;
@@ -679,46 +684,20 @@ static GtkWidget *build_hw_mcq_page(int lesson_id, const char *back_page,
     ctx->hints = g_new0(GtkWidget *, n);
 
     for (int i = 0; i < n; i++) {
-        GtkWidget *prompt;
-        GtkWidget *row;
-        GtkToggleButton *first = NULL;
-        char *qtext;
+        GtkWidget *card = mcq_append_question(body, i + 1, &qs[i],
+                                              &ctx->toggles[i * n_opts]);
 
-        qtext = g_strdup_printf("%d.) %s", i + 1, qs[i].prompt);
-        prompt = gtk_label_new(qtext);
-        g_free(qtext);
-        gtk_widget_set_halign(prompt, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(prompt), TRUE);
-        gtk_widget_add_css_class(prompt, "ex-prompt");
-        gtk_widget_set_margin_top(prompt, 8);
-        gtk_box_append(GTK_BOX(body), prompt);
-
-        row = gtk_flow_box_new();
-        gtk_flow_box_set_selection_mode(GTK_FLOW_BOX(row), GTK_SELECTION_NONE);
-        gtk_flow_box_set_min_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_flow_box_set_max_children_per_line(GTK_FLOW_BOX(row), n_opts);
-        gtk_widget_set_halign(row, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), row);
-
-        for (int o = 0; o < n_opts; o++) {
-            GtkWidget *tb = gtk_toggle_button_new_with_label(qs[i].options[o]);
-            gtk_widget_add_css_class(tb, "pill");
-            gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(tb), first);
-            if (!first)
-                first = GTK_TOGGLE_BUTTON(tb);
-            gtk_flow_box_append(GTK_FLOW_BOX(row), tb);
-            ctx->toggles[i * n_opts + o] = GTK_TOGGLE_BUTTON(tb);
-        }
-        ctx->hints[i] = meaning_add(body, hints[i]);
+        ctx->hints[i] = meaning_add(card, hints[i]);
     }
 
     btns = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
-    gtk_widget_set_margin_top(btns, 12);
+    gtk_widget_set_margin_top(btns, 8);
+    gtk_widget_set_margin_bottom(btns, 8);
     gtk_box_append(GTK_BOX(body), btns);
 
     check = gtk_button_new();
     i18n_bind(check, "check", 1);
-    gtk_widget_add_css_class(check, "pill");
+    gtk_widget_add_css_class(check, "btn-primary");
     gtk_widget_set_halign(check, GTK_ALIGN_START);
     gtk_box_append(GTK_BOX(btns), check);
     g_signal_connect(check, "clicked", G_CALLBACK(hw_mcq_check), ctx);
