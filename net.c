@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–21 = source topics (Základní pojmy … ethernet adresy/rámce). */
+     * units 2–22 = source topics (Základní pojmy … IP paket). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -27,6 +27,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET19_SLIDES, .unit_page = "netunit19", .ex_page = "netex19" },
     { .n_slides = NET20_SLIDES, .unit_page = "netunit20", .ex_page = "netex20" },
     { .n_slides = NET21_SLIDES, .unit_page = "netunit21", .ex_page = "netex21" },
+    { .n_slides = NET22_SLIDES, .unit_page = "netunit22", .ex_page = "netex22" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -469,7 +470,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
         "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
-        "net_unit21"
+        "net_unit21", "net_unit22"
     };
 
     card = gtk_button_new();
@@ -1888,6 +1889,98 @@ GtkWidget *build_net_unit21_page(void) {
                                slides, NET21_SLIDES);
 }
 
+GtkWidget *build_net_unit22_page(void) {
+    static const NetSlide slides[NET22_SLIDES] = {
+        {
+            "1 / 8   •   Paket", "Header a data",
+            NULL,
+            {
+                "Paket/segment: hlavička (pro partnerskou vrstvu) + data.",
+                "Protokol určuje strukturu a pravidla stejnolehlých vrstev.",
+                "Může běžet na různých platformách.",
+                NULL,
+            },
+        },
+        {
+            "2 / 8   •   TCP/IP", "Protokoly po vrstvách",
+            NULL,
+            {
+                "Aplikační: aplikační protokoly.",
+                "Transportní: TCP, UDP.",
+                "Síťová: IP, ARP, RARP, ICMP, IGMP, RIP, OSPF.",
+                "Síťové rozhraní: Ethernet, Token Ring, ATM, PPP…",
+                NULL,
+            },
+        },
+        {
+            "3 / 8   •   IP", "Univerzální přenos",
+            "Tip: nespojovaný a nespolehlivý",
+            {
+                "Jediný přenosový protokol TCP/IP nad libovolnou technologií.",
+                "Pracuje s virtuálními pakety – IP datagramy.",
+                "Stará se o směrování a přenos; velikost volí odesílatel.",
+                "Nezaručuje pořadí, dobu ani nepoškozené doručení.",
+                NULL,
+            },
+        },
+        {
+            "4 / 8   •   Routing", "Routing vs forwarding",
+            NULL,
+            {
+                "Routing: rozhodnutí o dalším směru datagramu.",
+                "Forwarding: vložení do linkového rámce a odeslání.",
+                "Linkové adresy se mění podle konkrétní sítě.",
+                NULL,
+            },
+        },
+        {
+            "5 / 8   •   Datagram", "Velikost a HLEN",
+            "Tip: Length 5 = 20 B hlavičky",
+            {
+                "Velikost: od 576 B do 64 kB.",
+                "Části: hlavička + data.",
+                "HLEN: délka hlavičky ve 32bitových slovech.",
+                "TOTAL LENGTH: délka celého paketu v bytech.",
+                NULL,
+            },
+        },
+        {
+            "6 / 8   •   Hlavička", "Klíčová pole",
+            NULL,
+            {
+                "VERSION (IPv4 = 4), LENGTH, TOTAL LENGTH.",
+                "IDENTIFICATION + FLAGS + OFFSET = fragmentace.",
+                "TTL: čítač směrovačů proti zacyklení.",
+                "PROTOCOL, HEADER CHECKSUM, zdrojová/cílová IP.",
+                NULL,
+            },
+        },
+        {
+            "7 / 8   •   PROTOCOL", "Čísla protokolů",
+            NULL,
+            {
+                "1 = ICMP, 2 = IGMP, 6 = TCP.",
+                "17 = UDP, 89 = OSPF.",
+                "Položka je 8bitová → max. 256 hodnot.",
+                NULL,
+            },
+        },
+        {
+            "8 / 8   •   Fragmentace", "MTU a Ethernet",
+            "Tip: Ethernet MTU = 1500 B",
+            {
+                "Fragmentace, když se datagram nevejde do menšího rámce.",
+                "MTU udává max. velikost rámce podle hardwaru.",
+                "DF = nefragmentuj; MF = další fragmenty.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[21], "net_unit22", "net_unit22_sub",
+                               slides, NET22_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3211,5 +3304,47 @@ GtkWidget *build_net_unit21_exercise_page(void) {
     return build_net_mcq_page(20, "netunit21", "net_ex21_title", "net_quiz21_head",
                               net21_qs, net21_hints,
                               (int)G_N_ELEMENTS(net21_qs));
+}
+
+const ChoiceQ net22_qs[] = {
+    {"IP protokol je:",
+     {"Nespojovaný a nespolehlivý přenos datagramů",
+      "Spolehlivý a spojovaný jako TCP", "Jen fyzické kódování",
+      "Jen EtherType bez IP"}, 4, 0},
+    {"Routing u IP znamená:",
+     {"Rozhodnutí o dalším směru datagramu", "Jen CRC na lince",
+      "Jen MAC učení ve switchi", "Jen lámání vlákna"}, 4, 0},
+    {"Forwarding u IP znamená:",
+     {"Vložení do linkového rámce a odeslání", "Jen výpočet metriky OSPF",
+      "Jen DNS překlad", "Jen Aloha"}, 4, 0},
+    {"HLEN (LENGTH) s hodnotou 5 znamená:",
+     {"Hlavičku dlouhou 20 B", "TTL 5", "PROTOCOL = 5", "MTU 5"}, 4, 0},
+    {"TTL v IP hlavičce:",
+     {"Počítá průchody směrovači a brání zacyklení",
+      "Udává EtherType", "Nahrazuje MAC adresu",
+      "Je vždy 1500"}, 4, 0},
+    {"Číslo protokolu 6 v IP hlavičce znamená:",
+     {"TCP", "UDP", "ICMP", "OSPF"}, 4, 0},
+    {"Číslo protokolu 17 znamená:",
+     {"UDP", "TCP", "IGMP", "ARP"}, 4, 0},
+    {"Ethernet MTU je typicky:",
+     {"1500 B", "64 kB", "576 B bez dat", "20 B hlavičky"}, 4, 0},
+};
+
+const char *net22_hints[] = {
+    "IP je nespojovaný a nespolehlivý",
+    "Routing = rozhodnutí o směru datagramu",
+    "Forwarding = vložení do rámce a odeslání",
+    "HLEN 5 = 5 × 4 B = 20 B hlavičky",
+    "TTL snižují směrovače proti zacyklení",
+    "PROTOCOL 6 = TCP",
+    "PROTOCOL 17 = UDP",
+    "Ethernet MTU = 1500 B",
+};
+
+GtkWidget *build_net_unit22_exercise_page(void) {
+    return build_net_mcq_page(21, "netunit22", "net_ex22_title", "net_quiz22_head",
+                              net22_qs, net22_hints,
+                              (int)G_N_ELEMENTS(net22_qs));
 }
 
