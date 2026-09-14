@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–13 = source topics 01–12 (Základní pojmy … topologie). */
+     * units 2–14 = source topics 01–… (Základní pojmy … optika). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -19,6 +19,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET11_SLIDES, .unit_page = "netunit11", .ex_page = "netex11" },
     { .n_slides = NET12_SLIDES, .unit_page = "netunit12", .ex_page = "netex12" },
     { .n_slides = NET13_SLIDES, .unit_page = "netunit13", .ex_page = "netex13" },
+    { .n_slides = NET14_SLIDES, .unit_page = "netunit14", .ex_page = "netex14" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -459,7 +460,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
-        "net_unit11", "net_unit12", "net_unit13"
+        "net_unit11", "net_unit12", "net_unit13", "net_unit14"
     };
 
     card = gtk_button_new();
@@ -1367,6 +1368,64 @@ GtkWidget *build_net_unit13_page(void) {
 
     return build_net_unit_page(&net_lessons[12], "net_unit13", "net_unit13_sub",
                                slides, NET13_SLIDES);
+}
+
+GtkWidget *build_net_unit14_page(void) {
+    static const NetSlide slides[NET14_SLIDES] = {
+        {
+            "1 / 5   •   Princip", "Světlo místo proudu",
+            "Tip: obousměrný provoz = dvě vlákna",
+            {
+                "Elektrické impulsy se převádí na světlo (LED nebo laser).",
+                "Zpět je zachytí fotodioda.",
+                "Přenos jedním vláknem je jednosměrný.",
+                NULL,
+            },
+        },
+        {
+            "2 / 5   •   Výhody", "Proč optika",
+            NULL,
+            {
+                "Imunita vůči elektromagnetickému rušení.",
+                "Obrovská šířka pásma a dosah až kolem 100 km.",
+                "Lepší bezpečnost proti odposlechu.",
+                "Malý průměr a nízká váha.",
+                NULL,
+            },
+        },
+        {
+            "3 / 5   •   Nevýhody", "Cena a montáž",
+            NULL,
+            {
+                "Náročná montáž.",
+                "Dražší aktivní prvky a konektory.",
+                NULL,
+            },
+        },
+        {
+            "4 / 5   •   MM", "Mnohovidová vlákna",
+            NULL,
+            {
+                "Větší jádro: 50 / 62,5 µm.",
+                "Více cest světla (vidů).",
+                "Levnější zdroje – typicky LED.",
+                NULL,
+            },
+        },
+        {
+            "5 / 5   •   SM", "Jednovidová vlákna",
+            NULL,
+            {
+                "Malé jádro: 7–10 µm.",
+                "Jen jeden paprsek osou vlákna.",
+                "Velký dosah, vyžaduje laser.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[13], "net_unit14", "net_unit14_sub",
+                               slides, NET14_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2380,5 +2439,42 @@ GtkWidget *build_net_unit13_exercise_page(void) {
     return build_net_mcq_page(12, "netunit13", "net_ex13_title", "net_quiz13_head",
                               net13_qs, net13_hints,
                               (int)G_N_ELEMENTS(net13_qs));
+}
+
+const ChoiceQ net14_qs[] = {
+    {"Princip optiky je:",
+     {"Převod el. impulsů na světlo a zpět fotodiodou",
+      "Jen směrování paketů OSPF", "Jen sdílená sběrnice",
+      "Jen UDP spojení"}, 4, 0},
+    {"Jedním vláknem je přenos:",
+     {"Vždy plně duplexní bez výjimky", "Jednosměrný (obousměrně dvě vlákna)",
+      "Jen poloviční kruh", "Jen Token Ring"}, 4, 1},
+    {"Výhoda optiky není:",
+     {"Imunita vůči el.mag. rušení", "Velký dosah a šířka pásma",
+      "Levná a snadná montáž konektorů", "Lepší ochrana proti odposlechu"}, 4, 2},
+    {"Mnohovidové vlákno (MM) má:",
+     {"Jádro 7–10 µm a vyžaduje laser", "Větší jádro 50/62,5 µm a více vidů",
+      "Jen koaxiální stínění", "Jen jednu MAC adresu"}, 4, 1},
+    {"Jednovidové vlákno (SM):",
+     {"Má větší jádro a LED zdroj", "Má malé jádro, jeden paprsek a laser",
+      "Nepřenáší světlo", "Funguje jen jako hub"}, 4, 1},
+    {"Levnější zdroje (LED) typicky patří k:",
+     {"Jednovidovým vláknům", "Mnohovidovým vláknům",
+      "Jen kruhové topologii", "Jen ATM"}, 4, 1},
+};
+
+const char *net14_hints[] = {
+    "Optika: el. impulsy → světlo (LED/laser) → fotodioda",
+    "Jedno vlákno = jednosměrný přenos; obousměrně dvě vlákna",
+    "Nevýhody: náročná montáž a cena prvků/konektorů",
+    "MM: jádro 50/62,5 µm a více vidů",
+    "SM: jádro 7–10 µm, jeden paprsek, laser",
+    "MM typicky používá levnější LED zdroje",
+};
+
+GtkWidget *build_net_unit14_exercise_page(void) {
+    return build_net_mcq_page(13, "netunit14", "net_ex14_title", "net_quiz14_head",
+                              net14_qs, net14_hints,
+                              (int)G_N_ELEMENTS(net14_qs));
 }
 
