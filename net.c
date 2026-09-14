@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–16 = source topics (Základní pojmy … metody přístupu). */
+     * units 2–17 = source topics (Základní pojmy … aktivní prvky). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -22,6 +22,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET14_SLIDES, .unit_page = "netunit14", .ex_page = "netex14" },
     { .n_slides = NET15_SLIDES, .unit_page = "netunit15", .ex_page = "netex15" },
     { .n_slides = NET16_SLIDES, .unit_page = "netunit16", .ex_page = "netex16" },
+    { .n_slides = NET17_SLIDES, .unit_page = "netunit17", .ex_page = "netex17" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -463,7 +464,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
-        "net_unit16"
+        "net_unit16", "net_unit17"
     };
 
     card = gtk_button_new();
@@ -1512,6 +1513,74 @@ GtkWidget *build_net_unit16_page(void) {
 
     return build_net_unit_page(&net_lessons[15], "net_unit16", "net_unit16_sub",
                                slides, NET16_SLIDES);
+}
+
+GtkWidget *build_net_unit17_page(void) {
+    static const NetSlide slides[NET17_SLIDES] = {
+        {
+            "1 / 7   •   Přehled", "Aktivní prvky",
+            NULL,
+            {
+                "Aktivní prvky zpracovávají nebo převádí signál / data.",
+                "Liší se podle vrstvy ISO/OSI, na které pracují.",
+                NULL,
+            },
+        },
+        {
+            "2 / 7   •   Repeater", "Opakovač",
+            "Tip: fyzická vrstva",
+            {
+                "Zesiluje signál a tím zvyšuje dosah.",
+                NULL,
+            },
+        },
+        {
+            "3 / 7   •   Transceiver", "Konvertor",
+            "Tip: fyzická vrstva",
+            {
+                "Převádí signál mezi různými médii.",
+                "Například metaliku na optiku.",
+                NULL,
+            },
+        },
+        {
+            "4 / 7   •   Hub", "Rozbočovač",
+            "Tip: fyzická vrstva – „hloupý“ prvek",
+            {
+                "Co přijme na jednom portu, rozešle do všech ostatních.",
+                NULL,
+            },
+        },
+        {
+            "5 / 7   •   Bridge/Switch", "Most a přepínač",
+            "Tip: linková vrstva – rámce a MAC",
+            {
+                "Pracují s rámci a MAC adresami.",
+                "Switch dělí síť na kolizní domény.",
+                NULL,
+            },
+        },
+        {
+            "6 / 7   •   Router", "Směrovač",
+            "Tip: síťová vrstva – pakety a IP",
+            {
+                "Pracuje s pakety a IP adresami.",
+                "Propojuje různé sítě.",
+                NULL,
+            },
+        },
+        {
+            "7 / 7   •   Gateway", "Brána",
+            "Tip: vyšší vrstvy",
+            {
+                "Převádí mezi odlišnými architekturami nebo protokoly.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[16], "net_unit17", "net_unit17_sub",
+                               slides, NET17_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2634,5 +2703,46 @@ GtkWidget *build_net_unit16_exercise_page(void) {
     return build_net_mcq_page(15, "netunit16", "net_ex16_title", "net_quiz16_head",
                               net16_qs, net16_hints,
                               (int)G_N_ELEMENTS(net16_qs));
+}
+
+const ChoiceQ net17_qs[] = {
+    {"Repeater (opakovač) hlavně:",
+     {"Zesiluje signál a zvyšuje dosah", "Směruje IP pakety",
+      "Převádí mezi protokoly vyšších vrstev", "Rezervuje médium RTS/CTS"}, 4, 0},
+    {"Transceiver typicky:",
+     {"Převádí signál mezi různými médii", "Dělí síť jen podle DNS",
+      "Je vždy jen brána", "Pracuje jen s UDP"}, 4, 0},
+    {"Hub (rozbočovač) je:",
+     {"„Hloupý“ prvek – data z jednoho portu pošle všem ostatním",
+      "Směrovač na síťové vrstvě", "Jen laserový zdroj",
+      "Jen MAC filtr bez portů"}, 4, 0},
+    {"Bridge a switch pracují na vrstvě:",
+     {"Fyzické", "Linkové (rámce a MAC)", "Aplikační", "Jen transportní"}, 4, 1},
+    {"Switch mimo jiné:",
+     {"Dělí síť na kolizní domény", "Nikdy nepoužívá MAC adresy",
+      "Funguje jen jako hub bez portů", "Převádí jen ASCII"}, 4, 0},
+    {"Router pracuje s:",
+     {"Pakety a IP adresami a propojuje sítě", "Jen koaxiálem bez IP",
+      "Jen huby bez směrování", "Jen RTS/CTS"}, 4, 0},
+    {"Gateway (brána) především:",
+     {"Převádí mezi odlišnými architekturami/protokoly",
+      "Jen zesiluje bitový signál", "Jen tvoří kolize",
+      "Jen lámání vlákna"}, 4, 0},
+};
+
+const char *net17_hints[] = {
+    "Repeater zesiluje signál na fyzické vrstvě",
+    "Transceiver převádí mezi médii (např. metalika ↔ optika)",
+    "Hub rozešle přijatá data do všech ostatních portů",
+    "Bridge/switch = linková vrstva, rámce a MAC",
+    "Switch dělí síť na kolizní domény",
+    "Router = síťová vrstva, pakety a IP, propojuje sítě",
+    "Gateway převádí mezi odlišnými architekturami/protokoly",
+};
+
+GtkWidget *build_net_unit17_exercise_page(void) {
+    return build_net_mcq_page(16, "netunit17", "net_ex17_title", "net_quiz17_head",
+                              net17_qs, net17_hints,
+                              (int)G_N_ELEMENTS(net17_qs));
 }
 

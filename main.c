@@ -261,6 +261,7 @@ void activate(GtkApplication *app, gpointer user_data) {
             {"netunit14", "netex14", build_net_unit14_page, build_net_unit14_exercise_page},
             {"netunit15", "netex15", build_net_unit15_page, build_net_unit15_exercise_page},
             {"netunit16", "netex16", build_net_unit16_page, build_net_unit16_exercise_page},
+            {"netunit17", "netex17", build_net_unit17_page, build_net_unit17_exercise_page},
         };
 
         for (guint i = 0; i < G_N_ELEMENTS(net_pages); i++) {
