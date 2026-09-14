@@ -48,7 +48,7 @@
 #define HM_ROW2 10   /* start of the ASDF row */
 #define HM_ROW3 19   /* start of the ZXCV row   */
 #define HM_ROW4 26   /* start of the umlaut row */
-#define NET_UNITS      30
+#define NET_UNITS      27
 #define NET_SLIDES      4
 #define NET2_SLIDES     5
 #define NET3_SLIDES     4

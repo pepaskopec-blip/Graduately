@@ -31,8 +31,8 @@ GTK 4 interface.
     German learning path
   - **Správa počítačových sítí / Computer Network Administration** is open too
     (shown with a Wi-Fi icon) and opens a year picker (years 1–4); **year 1**
-    has a 30-unit path where **units 1–27 are playable**, units 28–30 are
-    locked; years 2–4 are locked placeholders until content is added
+    has a **27-unit** path (all playable); years 2–4 are locked placeholders
+    until content is added
   - **Technické vybavení / Computer Hardware** is open (chip icon) and leads
     to a 10-unit hardware path; **units 1–3 are playable**, units 4–10 are
     locked placeholders
@@ -320,8 +320,7 @@ When launched, the application shows the welcome screen. From there:
    are open. Unit 1 (**Výpočet IP adres**) walks through four VLSM slides and
    then four interactive subnetting tasks with check / “show solution”.
    Units 2–27 each have theory slides followed by a multiple-choice quiz
-   (basic concepts through wireless networks). Units 28–30 stay locked
-   placeholders.
+   (basic concepts through wireless networks).
 6. On the hardware path, units **1–3** are open (architecture / von Neumann,
    computer history generations, bit & byte), each with slides and a quiz.
    Units 4–10 stay locked.
@@ -472,8 +471,8 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   - **Deutsch** je otevřený (bublina s německou vlajkou) a vede na německou
     učební cestu
   - **Správa počítačových sítí** je také otevřená (ikona Wi‑Fi) a otevře výběr
-    ročníku (1–4); **1. ročník** má cestu s 30 jednotkami, z nichž **1–27 jsou
-    hratelné**, 28–30 zamčené; ročníky 2–4 jsou zatím zamčené placeholdery
+    ročníku (1–4); **1. ročník** má cestu s **27 jednotkami** (všechny
+    hratelné); ročníky 2–4 jsou zatím zamčené placeholdery
   - **Technické vybavení** je otevřené (ikona čipu) a vede na cestu
     s 10 jednotkami; **jednotky 1–3 jsou hratelné**, 4–10 jsou zamčené
     placeholdery
@@ -752,7 +751,6 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
    jsou jednotky **1–27**. Jednotka 1 (**Výpočet IP adres**) má 4 snímky VLSM
    a pak 4 interaktivní úlohy s kontrolou / „ukázat řešení“. Jednotky 2–27 mají
    snímky teorie a kvíz s výběrem (od základních pojmů po bezdrátové sítě).
-   Jednotky 28–30 zůstávají zamčené.
 6. Na cestě technického vybavení jsou otevřené jednotky **1–3** (architektura /
    von Neumann, historie generací, bit a byte), každá se snímky a kvízem.
    Jednotky 4–10 zůstávají zamčené.
@@ -796,8 +794,8 @@ exercise_u1.c           cvičení jednotky 1 („Neue Freunde“)
 exercise_u2.c           cvičení jednotky 2 („Aus aller Welt“)
 exercise_u3.c           cvičení jednotky 3 („Bei uns zu Hause“)
 settings.c              panel nastavení (režim, téma, jazyk)
-net.c                   výběr ročníku + cesta sítí (30 uzlů), 1. ročník:
-                        jednotky 1–27 (1: VLSM cvičení; 2–27: kvízy)
+net.c                   výběr ročníku + cesta sítí (27 uzlů v 1. ročníku;
+                        1: VLSM cvičení; 2–27: kvízy)
 hw.c                    cesta technického vybavení (10 uzlů), jednotky 1–3
                         (architektura, historie, bit/byte + kvízy)
 main.c                  vstupní bod aplikace a zapojení stránek
