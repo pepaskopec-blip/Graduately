@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–26 = source topics (Základní pojmy … aplikační protokoly). */
+     * units 2–27 = source topics (Základní pojmy … bezdrátové sítě). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -32,6 +32,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET24_SLIDES, .unit_page = "netunit24", .ex_page = "netex24" },
     { .n_slides = NET25_SLIDES, .unit_page = "netunit25", .ex_page = "netex25" },
     { .n_slides = NET26_SLIDES, .unit_page = "netunit26", .ex_page = "netex26" },
+    { .n_slides = NET27_SLIDES, .unit_page = "netunit27", .ex_page = "netex27" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -475,7 +476,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
         "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
         "net_unit21", "net_unit22", "net_unit23", "net_unit24", "net_unit25",
-        "net_unit26"
+        "net_unit26", "net_unit27"
     };
 
     card = gtk_button_new();
@@ -2248,6 +2249,96 @@ GtkWidget *build_net_unit26_page(void) {
                                slides, NET26_SLIDES);
 }
 
+GtkWidget *build_net_unit27_page(void) {
+    static const NetSlide slides[NET27_SLIDES] = {
+        {
+            "1 / 8   •   Úvod", "Bezdrátové sítě",
+            NULL,
+            {
+                "Patří sem hlavně: družicové, mikrovlnné a optické spoje.",
+                "Dále Wi-Fi (LAN), WiMAX/LTE (MAN/WAN) a další.",
+                NULL,
+            },
+        },
+        {
+            "2 / 8   •   Družice", "Geostacionární spoje",
+            NULL,
+            {
+                "Geostacionární družice: ~36 000 km, stále nad stejným bodem.",
+                "Pasivní odrážejí; aktivní mají transpondéry (převod + zisk).",
+                "C-band ~6/4 GHz; KU-band 12–14 GHz (menší antény).",
+                "Nevýhoda: zpoždění ~250–300 ms (RTT až ~600 ms).",
+                NULL,
+            },
+        },
+        {
+            "3 / 8   •   VSAT", "Přístup a topologie",
+            NULL,
+            {
+                "Bod–bod, broadcast (TV) i multiple access.",
+                "VSAT: terminály + centrální hub.",
+                "Komunikace jen terminál ↔ hub (ne přímo mezi terminály).",
+                NULL,
+            },
+        },
+        {
+            "4 / 8   •   Mikrovlny", "Pozemní spoje",
+            "Tip: přímá viditelnost",
+            {
+                "Frekvence 1–12 GHz, směrování parabolou, malý rozptyl.",
+                "Dosah typicky do ~50 km; retranslační stanice.",
+                "Troposférické spoje: odraz ve ~16 km, dosah až ~500 km.",
+                NULL,
+            },
+        },
+        {
+            "5 / 8   •   Wi-Fi pojmy", "AP, BSS, ESS",
+            NULL,
+            {
+                "AP = přístupový bod; STA komunikují přes AP (ne přímo).",
+                "BSS = stanice v buňce BSA; ESS = více buněk přes DS.",
+                "Roaming při překrytí; ad-hoc = P2P bez AP; hotspot = Wi-Fi.",
+                "ESSID identifikuje síť při přístupu k AP.",
+                NULL,
+            },
+        },
+        {
+            "6 / 8   •   Standardy", "802.11 a … ax",
+            NULL,
+            {
+                "b: 11 Mb/s, 2,4 GHz; a/g: 54 Mb/s; n: MIMO, až 600 Mb/s.",
+                "ac (Wi-Fi 5): 256-QAM, široké kanály; ax (Wi-Fi 6): OFDMA.",
+                "OFDM: mnoho ortogonálních subnosných v kanálu.",
+                NULL,
+            },
+        },
+        {
+            "7 / 8   •   Zabezpečení", "WEP → WPA3",
+            NULL,
+            {
+                "WEP: RC4, krátký IV – prolomeno (2001), nepoužívat.",
+                "WPA: TKIP; WPA2: AES (doporučený základ).",
+                "WPA3: SAE místo PSK, silnější ochrana hesla.",
+                "802.1X/EAP: ověření klienta přes AP (RADIUS).",
+                NULL,
+            },
+        },
+        {
+            "8 / 8   •   Shrnutí", "Dosahy a další",
+            NULL,
+            {
+                "PAN <10 m (Bluetooth); LAN = Wi-Fi; MAN = WiMAX.",
+                "WAN/mobilita: 802.16e, LTE; licencovaná pásma = méně rušení.",
+                "Používej WPA2/WPA3 + AES, ne WEP.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[26], "net_unit27", "net_unit27_sub",
+                               slides, NET27_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3767,5 +3858,50 @@ GtkWidget *build_net_unit26_exercise_page(void) {
     return build_net_mcq_page(25, "netunit26", "net_ex26_title", "net_quiz26_head",
                               net26_qs, net26_hints,
                               (int)G_N_ELEMENTS(net26_qs));
+}
+
+const ChoiceQ net27_qs[] = {
+    {"Geostacionární družice létají asi:",
+     {"36 000 km nad Zemí", "16 km v troposféře", "50 km nad povrchem",
+      "Jen v nízké orbitě LEO"}, 4, 0},
+    {"Hlavní nevýhoda družicového spoje je:",
+     {"Velké zpoždění (~250–300 ms)", "Žádný broadcast",
+      "Jen kabelové médium", "Absence portů"}, 4, 0},
+    {"V síti VSAT komunikace probíhá:",
+     {"Jen mezi terminálem a hubem", "Přímo mezi dvěma terminály",
+      "Jen přes ARP", "Jen přes WEP"}, 4, 0},
+    {"Mikrovlnný spoj typicky vyžaduje:",
+     {"Přímou viditelnost (dosah ~50 km)", "Jen metalický kabel",
+      "Jen port 80", "Jen WEP klíč"}, 4, 0},
+    {"V infrastruktuře Wi-Fi stanice (STA):",
+     {"Komunikují přes AP, ne přímo mezi sebou",
+      "Vždy jen ad-hoc bez AP", "Nepoužívají ESSID",
+      "Běží jen na 36 000 km"}, 4, 0},
+    {"802.11ax (Wi-Fi 6) přináší zejména:",
+     {"OFDMA a vysokou kapacitu", "Jen WEP", "Jen C-band 4/6 GHz",
+      "Jen troposférický odraz"}, 4, 0},
+    {"WEP je dnes:",
+     {"Prolomený a nevhodný", "Nejbezpečnější volba",
+      "Totéž co WPA3-SAE", "Povinný od roku 2006"}, 4, 0},
+    {"Doporučené zabezpečení Wi-Fi je:",
+     {"WPA2/WPA3 s AES (ne WEP)", "Jen Open system WEP",
+      "Jen Shared key WEP", "Bez hesla vždy"}, 4, 0},
+};
+
+const char *net27_hints[] = {
+    "Geostacionární družice ~36 000 km",
+    "Družice: zpoždění stovky ms",
+    "VSAT: jen terminál ↔ hub",
+    "Mikrovlny: přímá viditelnost ~50 km",
+    "STA komunikují přes AP",
+    "Wi-Fi 6 (ax): OFDMA",
+    "WEP prolomen – nepoužívat",
+    "Používej WPA2/WPA3 + AES",
+};
+
+GtkWidget *build_net_unit27_exercise_page(void) {
+    return build_net_mcq_page(26, "netunit27", "net_ex27_title", "net_quiz27_head",
+                              net27_qs, net27_hints,
+                              (int)G_N_ELEMENTS(net27_qs));
 }
 
