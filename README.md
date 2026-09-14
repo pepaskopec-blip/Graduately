@@ -31,7 +31,7 @@ GTK 4 interface.
     German learning path
   - **Správa počítačových sítí / Computer Network Administration** is open too
     (shown with a Wi-Fi icon) and leads to a 30-unit computer-networks path;
-    **units 1–11 are playable**, units 12–30 are locked placeholders
+    **units 1–12 are playable**, units 13–30 are locked placeholders
   - **Technické vybavení / Computer Hardware** is open (chip icon) and leads
     to a 10-unit hardware path; **units 1–3 are playable**, units 4–10 are
     locked placeholders
@@ -62,7 +62,7 @@ GTK 4 interface.
 - **Hints & model answers** – in exercises where you write or complete a German
   sentence the Czech meaning is shown right away as a hint, and clicking the
   check button also reveals the correct German sentence so you can compare
-- **Computer networks path** – eleven unlocked units (theory slides + practice):
+- **Computer networks path** – twelve unlocked units (theory slides + practice):
   1. **Výpočet IP adres / IP Address Calculation** – 4-slide VLSM walkthrough
      and four interactive subnetting tasks (prefix, network, broadcast, host
      range) with check and “show solution”
@@ -75,7 +75,8 @@ GTK 4 interface.
   8. Přepojování – slides + quiz
   9. Vrstevnaté modely a protokoly – slides + quiz
   10. Model ISO/OSI a TCP/IP – slides + quiz
-  11. Podrobný rozbor 7 vrstev ISO/OSI – slides + quiz  
+  11. Podrobný rozbor 7 vrstev ISO/OSI – slides + quiz
+  12. Základy architektury TCP/IP – slides + quiz  
   Progress for networks is saved to `progress/net.conf` (one flag per unit);
   completed network units show a checkmark on the path and count in Statistics
 - **Computer hardware path** – three unlocked units (theory slides + quiz):
@@ -298,13 +299,13 @@ When launched, the application shows the welcome screen. From there:
    unit 2 or **"Bei uns zu Hause"** for unit 3, then pick any bubble to start
    an exercise. Units 2 and 3 are available even if the earlier units are not
    finished yet.
-5. On the networks path, units **1–11** are open. Unit 1 (**Výpočet IP adres**)
+5. On the networks path, units **1–12** are open. Unit 1 (**Výpočet IP adres**)
    walks through four VLSM slides and then four interactive subnetting tasks
-   with check / “show solution”. Units 2–11 each have theory slides followed by
+   with check / “show solution”. Units 2–12 each have theory slides followed by
    a multiple-choice quiz (basic concepts, client–server/cloud, transmission
    security, signals, path/channel/circuit, multiplexing, switching, layered
-   models, ISO/OSI & TCP/IP, and the seven ISO/OSI layers). Units 12–30 stay
-   locked placeholders.
+   models, ISO/OSI & TCP/IP, the seven ISO/OSI layers, and TCP/IP architecture).
+   Units 13–30 stay locked placeholders.
 6. On the hardware path, units **1–3** are open (architecture / von Neumann,
    computer history generations, bit & byte), each with slides and a quiz.
    Units 4–10 stay locked.
@@ -455,7 +456,7 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   - **Deutsch** je otevřený (bublina s německou vlajkou) a vede na německou
     učební cestu
   - **Správa počítačových sítí** je také otevřená (ikona Wi‑Fi) a vede na cestu
-    s 30 jednotkami; **jednotky 1–11 jsou hratelné**, 12–30 jsou zamčené
+    s 30 jednotkami; **jednotky 1–12 jsou hratelné**, 13–30 jsou zamčené
     placeholdery
   - **Technické vybavení** je otevřené (ikona čipu) a vede na cestu
     s 10 jednotkami; **jednotky 1–3 jsou hratelné**, 4–10 jsou zamčené
@@ -481,7 +482,7 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   „Was siehst du?“, řazení vět, chybějící písmena)
 - **Nápovědy a vzorové odpovědi** – u psaných / doplňovaných vět je hned
   český význam; po kontrole se ukáže i správná německá věta
-- **Cesta počítačových sítí** – jedenáct odemčených jednotek (snímky + cvičení):
+- **Cesta počítačových sítí** – dvanáct odemčených jednotek (snímky + cvičení):
   1. **Výpočet IP adres** – 4 snímky VLSM a čtyři interaktivní úlohy
      (prefix, síť, broadcast, rozsah uzlů) s kontrolou a „ukázat řešení“
   2. Základní pojmy a rozdělení sítí – snímky + kvíz
@@ -493,7 +494,8 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   8. Přepojování – snímky + kvíz
   9. Vrstevnaté modely a protokoly – snímky + kvíz
   10. Model ISO/OSI a TCP/IP – snímky + kvíz
-  11. Podrobný rozbor 7 vrstev ISO/OSI – snímky + kvíz  
+  11. Podrobný rozbor 7 vrstev ISO/OSI – snímky + kvíz
+  12. Základy architektury TCP/IP – snímky + kvíz  
   Postup u sítí se ukládá do `progress/net.conf` (příznak na jednotku);
   dokončené jednotky mají fajfku na cestě a počítají se ve Statistikách
 - **Cesta technického vybavení** – tři odemčené jednotky (snímky + kvíz):
@@ -714,12 +716,13 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
 4. Otevřete **"Neue Freunde"** (jednotka 1), **"Aus aller Welt"** (2) nebo
    **"Bei uns zu Hause"** (3) a vyberte bublinu cvičení. Jednotky 2 a 3 jdou
    otevřít i bez dokončení předchozích.
-5. Na síťové cestě jsou otevřené jednotky **1–11**. Jednotka 1 (**Výpočet IP
+5. Na síťové cestě jsou otevřené jednotky **1–12**. Jednotka 1 (**Výpočet IP
    adres**) má 4 snímky VLSM a pak 4 interaktivní úlohy s kontrolou /
-   „ukázat řešení“. Jednotky 2–11 mají snímky teorie a kvíz s výběrem
+   „ukázat řešení“. Jednotky 2–12 mají snímky teorie a kvíz s výběrem
    (základní pojmy, klient–server/cloud, zabezpečení přenosu, signály, cesta/
    kanál/okruh, multiplex, přepojování, vrstevnaté modely, ISO/OSI a TCP/IP,
-   rozbor 7 vrstev ISO/OSI). Jednotky 12–30 zůstávají zamčené.
+   rozbor 7 vrstev ISO/OSI, architektura TCP/IP). Jednotky 13–30 zůstávají
+   zamčené.
 6. Na cestě technického vybavení jsou otevřené jednotky **1–3** (architektura /
    von Neumann, historie generací, bit a byte), každá se snímky a kvízem.
    Jednotky 4–10 zůstávají zamčené.
@@ -763,8 +766,8 @@ exercise_u1.c           cvičení jednotky 1 („Neue Freunde“)
 exercise_u2.c           cvičení jednotky 2 („Aus aller Welt“)
 exercise_u3.c           cvičení jednotky 3 („Bei uns zu Hause“)
 settings.c              panel nastavení (režim, téma, jazyk)
-net.c                   cesta počítačových sítí (30 uzlů), jednotky 1–11
-                        (1: VLSM cvičení; 2–11: kvízy s výběrem)
+net.c                   cesta počítačových sítí (30 uzlů), jednotky 1–12
+                        (1: VLSM cvičení; 2–12: kvízy s výběrem)
 hw.c                    cesta technického vybavení (10 uzlů), jednotky 1–3
                         (architektura, historie, bit/byte + kvízy)
 main.c                  vstupní bod aplikace a zapojení stránek

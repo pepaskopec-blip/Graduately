@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–11 = source topics 01–10 (Základní pojmy … 7 vrstev ISO/OSI). */
+     * units 2–12 = source topics 01–11 (Základní pojmy … TCP/IP). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -17,6 +17,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET9_SLIDES,  .unit_page = "netunit9",  .ex_page = "netex9"  },
     { .n_slides = NET10_SLIDES, .unit_page = "netunit10", .ex_page = "netex10" },
     { .n_slides = NET11_SLIDES, .unit_page = "netunit11", .ex_page = "netex11" },
+    { .n_slides = NET12_SLIDES, .unit_page = "netunit12", .ex_page = "netex12" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -457,7 +458,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
-        "net_unit11"
+        "net_unit11", "net_unit12"
     };
 
     card = gtk_button_new();
@@ -1251,6 +1252,72 @@ GtkWidget *build_net_unit11_page(void) {
 
     return build_net_unit_page(&net_lessons[10], "net_unit11", "net_unit11_sub",
                                slides, NET11_SLIDES);
+}
+
+GtkWidget *build_net_unit12_page(void) {
+    static const NetSlide slides[NET12_SLIDES] = {
+        {
+            "1 / 6   •   Mapování", "TCP/IP vs ISO/OSI",
+            NULL,
+            {
+                "Aplikační TCP/IP = aplikační + prezentační + relační ISO/OSI.",
+                "Transportní TCP/IP = transportní ISO/OSI.",
+                "Síťová (internetová) = síťová ISO/OSI.",
+                "Vrstva síťového rozhraní = linková + fyzická ISO/OSI.",
+                NULL,
+            },
+        },
+        {
+            "2 / 6   •   Vznik", "Nejprve protokoly",
+            "Tip: opačný postup než u ISO/OSI",
+            {
+                "Nejprve vznikly protokoly pro Internet.",
+                "Až poté byl definován model TCP/IP.",
+                "U ISO/OSI to bylo naopak: nejdřív model, pak protokoly.",
+                NULL,
+            },
+        },
+        {
+            "3 / 6   •   Aplikace", "Aplikační protokoly",
+            NULL,
+            {
+                "HTTP, HTTPS, FTP, DHCP, DNS.",
+                "Pošta: POP3, IMAP, SMTP.",
+                NULL,
+            },
+        },
+        {
+            "4 / 6   •   Transport", "TCP a UDP",
+            NULL,
+            {
+                "TCP: spolehlivý, spojovaný.",
+                "UDP: nespolehlivý, rychlý.",
+                NULL,
+            },
+        },
+        {
+            "5 / 6   •   Síť", "Internetové protokoly",
+            NULL,
+            {
+                "IP – základní přenos paketů.",
+                "ICMP, ARP.",
+                "Směrování: RIP, OSPF.",
+                NULL,
+            },
+        },
+        {
+            "6 / 6   •   Rozhraní", "Síťové rozhraní",
+            NULL,
+            {
+                "Ethernet, Token Ring, PPP, ATM.",
+                "Odpovídá linkové a fyzické vrstvě ISO/OSI.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[11], "net_unit12", "net_unit12_sub",
+                               slides, NET12_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2181,5 +2248,47 @@ GtkWidget *build_net_unit11_exercise_page(void) {
     return build_net_mcq_page(10, "netunit11", "net_ex11_title", "net_quiz11_head",
                               net11_qs, net11_hints,
                               (int)G_N_ELEMENTS(net11_qs));
+}
+
+const ChoiceQ net12_qs[] = {
+    {"Aplikační vrstva TCP/IP odpovídá v ISO/OSI:",
+     {"Jen aplikační vrstvě", "Aplikační + prezentační + relační",
+      "Jen fyzické vrstvě", "Linkové + síťové"}, 4, 1},
+    {"Vrstva síťového rozhraní TCP/IP odpovídá:",
+     {"Jen síťové ISO/OSI", "Linkové + fyzické ISO/OSI",
+      "Jen transportní ISO/OSI", "Jen aplikační ISO/OSI"}, 4, 1},
+    {"Model TCP/IP vznikl:",
+     {"Nejdřív model, pak protokoly", "Nejdřív protokoly, pak model",
+      "Současně s Token Ring", "Jen jako náhrada za ATM"}, 4, 1},
+    {"TCP je:",
+     {"Nespolehlivý a rychlý", "Spolehlivý a spojovaný",
+      "Jen směrovací protokol", "Jen fyzické kódování"}, 4, 1},
+    {"UDP je:",
+     {"Spolehlivý a spojovaný", "Nespolehlivý a rychlý",
+      "Jen e-mailový protokol", "Jen ARP"}, 4, 1},
+    {"HTTP, DNS a SMTP patří do vrstvy:",
+     {"Aplikační", "Transportní", "Síťové", "Síťového rozhraní"}, 4, 0},
+    {"IP, ICMP a OSPF patří do vrstvy:",
+     {"Aplikační", "Transportní", "Síťové (internetové)",
+      "Síťového rozhraní"}, 4, 2},
+    {"Ethernet a PPP patří do vrstvy:",
+     {"Aplikační", "Transportní", "Síťové", "Síťového rozhraní"}, 4, 3},
+};
+
+const char *net12_hints[] = {
+    "Aplikační TCP/IP = aplikační + prezentační + relační ISO/OSI",
+    "Síťové rozhraní TCP/IP = linková + fyzická ISO/OSI",
+    "U TCP/IP vznikly nejdřív protokoly, až pak model",
+    "TCP je spolehlivý a spojovaný",
+    "UDP je nespolehlivý a rychlý",
+    "HTTP, DNS a SMTP jsou aplikační protokoly",
+    "IP, ICMP a OSPF patří na síťovou (internetovou) vrstvu",
+    "Ethernet a PPP patří na vrstvu síťového rozhraní",
+};
+
+GtkWidget *build_net_unit12_exercise_page(void) {
+    return build_net_mcq_page(11, "netunit12", "net_ex12_title", "net_quiz12_head",
+                              net12_qs, net12_hints,
+                              (int)G_N_ELEMENTS(net12_qs));
 }
 
