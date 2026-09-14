@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–25 = source topics (Základní pojmy … TCP/UDP). */
+     * units 2–26 = source topics (Základní pojmy … aplikační protokoly). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -31,6 +31,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET23_SLIDES, .unit_page = "netunit23", .ex_page = "netex23" },
     { .n_slides = NET24_SLIDES, .unit_page = "netunit24", .ex_page = "netex24" },
     { .n_slides = NET25_SLIDES, .unit_page = "netunit25", .ex_page = "netex25" },
+    { .n_slides = NET26_SLIDES, .unit_page = "netunit26", .ex_page = "netex26" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -473,7 +474,8 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
         "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
-        "net_unit21", "net_unit22", "net_unit23", "net_unit24", "net_unit25"
+        "net_unit21", "net_unit22", "net_unit23", "net_unit24", "net_unit25",
+        "net_unit26"
     };
 
     card = gtk_button_new();
@@ -2167,6 +2169,85 @@ GtkWidget *build_net_unit25_page(void) {
                                slides, NET25_SLIDES);
 }
 
+GtkWidget *build_net_unit26_page(void) {
+    static const NetSlide slides[NET26_SLIDES] = {
+        {
+            "1 / 7   •   Úvod", "Aplikační protokoly",
+            NULL,
+            {
+                "Na uzlu běží více síťových aplikací současně.",
+                "Běžící aplikace = v operační paměti (1+ procesů).",
+                "Pracují podle pravidel – protokolů aplikační vrstvy.",
+                "Data posílají po síti přes TCP nebo UDP.",
+                NULL,
+            },
+        },
+        {
+            "2 / 7   •   Porty", "Procesy a porty",
+            NULL,
+            {
+                "Port v TCP/UDP říká, které aplikaci data patří.",
+                "Jeden proces může používat více portů.",
+                "Dva procesy nesmí používat stejný port.",
+                NULL,
+            },
+        },
+        {
+            "3 / 7   •   Rozsahy", "Well-known, registrované, dynamické",
+            "Tip: IANA",
+            {
+                "Well-known: 0–1023 – vyhrazené službám (norma IANA).",
+                "Registrované: 1024–49151 – IANA jen registruje použití.",
+                "Dynamické/privátní: 49152–65535 – volně k použití.",
+                NULL,
+            },
+        },
+        {
+            "4 / 7   •   Spojení", "Pětice hodnot",
+            NULL,
+            {
+                "Aplikační spojení určuje pětice:",
+                "(transport, IP1, port1, IP2, port2).",
+                "Klient osloví server na well-known portu.",
+                NULL,
+            },
+        },
+        {
+            "5 / 7   •   Více spojení", "Stejný server, různí klienti",
+            NULL,
+            {
+                "Na jeden uzel (např. web server) může být",
+                "více aplikačních spojení z různých klientů.",
+                "Rozlišují je IP a porty klientů (i transport).",
+                NULL,
+            },
+        },
+        {
+            "6 / 7   •   Porty I", "Časté well-known služby",
+            NULL,
+            {
+                "20/21 FTP, 22 SSH, 23 Telnet, 25 SMTP, 53 DNS.",
+                "67/68 DHCP, 80 HTTP, 110 POP3, 143 IMAP.",
+                "123 NTP, 161 SNMP, 389 LDAP, 443 HTTPS.",
+                NULL,
+            },
+        },
+        {
+            "7 / 7   •   Porty II", "Zabezpečené a registrované",
+            NULL,
+            {
+                "587 SMTPS, 636 LDAPS, 993 IMAPS, 995 POP3S.",
+                "Registrované: 3306 MySQL, 3389 RDP, 5900 VNC.",
+                "Dynamické porty: 49152–65535.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[25], "net_unit26", "net_unit26_sub",
+                               slides, NET26_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3647,5 +3728,44 @@ GtkWidget *build_net_unit25_exercise_page(void) {
     return build_net_mcq_page(24, "netunit25", "net_ex25_title", "net_quiz25_head",
                               net25_qs, net25_hints,
                               (int)G_N_ELEMENTS(net25_qs));
+}
+
+const ChoiceQ net26_qs[] = {
+    {"Aplikační protokoly typicky posílají data přes:",
+     {"TCP nebo UDP", "Jen fyzickou vrstvu", "Jen ARP",
+      "Jen CAM tabulku"}, 4, 0},
+    {"Dva běžící procesy:",
+     {"Nesmí používat stejný port", "Musí sdílet jeden port",
+      "Nesmí mít žádný port", "Používají jen MAC"}, 4, 0},
+    {"Well-known porty mají rozsah:",
+     {"0–1023", "1024–49151", "49152–65535", "Jen 80–443"}, 4, 0},
+    {"Dynamické (privátní) porty jsou:",
+     {"49152–65535", "0–1023", "Jen 20–21", "Jen 3306"}, 4, 0},
+    {"Aplikační spojení určuje:",
+     {"Pětice (transport, IP1, port1, IP2, port2)",
+      "Jen MAC adresa", "Jen název souboru", "Jen VLAN ID"}, 4, 0},
+    {"HTTP a HTTPS používají porty:",
+     {"80 a 443", "22 a 23", "25 a 110", "53 a 67"}, 4, 0},
+    {"SSH a DNS mají porty:",
+     {"22 a 53", "80 a 443", "3389 a 5900", "20 a 21"}, 4, 0},
+    {"MySQL a RDP jsou typicky na portech:",
+     {"3306 a 3389", "80 a 443", "67 a 68", "161 a 162"}, 4, 0},
+};
+
+const char *net26_hints[] = {
+    "Aplikace posílají data přes TCP/UDP",
+    "Dva procesy nesmí sdílet stejný port",
+    "Well-known: 0–1023 (IANA)",
+    "Dynamické porty: 49152–65535",
+    "Spojení = pětice hodnot",
+    "HTTP 80, HTTPS 443",
+    "SSH 22, DNS 53",
+    "MySQL 3306, RDP 3389",
+};
+
+GtkWidget *build_net_unit26_exercise_page(void) {
+    return build_net_mcq_page(25, "netunit26", "net_ex26_title", "net_quiz26_head",
+                              net26_qs, net26_hints,
+                              (int)G_N_ELEMENTS(net26_qs));
 }
 
