@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–20 = source topics (Základní pojmy … směrovač a brána). */
+     * units 2–21 = source topics (Základní pojmy … ethernet adresy/rámce). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -26,6 +26,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET18_SLIDES, .unit_page = "netunit18", .ex_page = "netex18" },
     { .n_slides = NET19_SLIDES, .unit_page = "netunit19", .ex_page = "netex19" },
     { .n_slides = NET20_SLIDES, .unit_page = "netunit20", .ex_page = "netex20" },
+    { .n_slides = NET21_SLIDES, .unit_page = "netunit21", .ex_page = "netex21" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -467,7 +468,8 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
-        "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20"
+        "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
+        "net_unit21"
     };
 
     card = gtk_button_new();
@@ -1800,6 +1802,92 @@ GtkWidget *build_net_unit20_page(void) {
                                slides, NET20_SLIDES);
 }
 
+GtkWidget *build_net_unit21_page(void) {
+    static const NetSlide slides[NET21_SLIDES] = {
+        {
+            "1 / 8   •   Ethernet", "Síťový hardware",
+            NULL,
+            {
+                "Jeden ze standardů síťového hardware.",
+                "Dnes nejpoužívanější.",
+                NULL,
+            },
+        },
+        {
+            "2 / 8   •   Adresy", "48bitová MAC",
+            "Tip: IEEE přidělí první 3 B, výrobce další 3 B",
+            {
+                "Adresa má 48 bitů (6 bytů) a je celosvětově jedinečná.",
+                "Je pevně v síťové kartě už od výroby.",
+                "Výrobci dostávají bloky adres od IEEE.",
+                NULL,
+            },
+        },
+        {
+            "3 / 8   •   Rámce", "Typy hlaviček",
+            NULL,
+            {
+                "Rámec = skupina bitů na linkové vrstvě.",
+                "Hlavička má adresy odesílatele/příjemce a typ obsahu.",
+                "Typy: Ethernet II, IEEE 802.3, 802.3 SNAP, raw 802.3.",
+                NULL,
+            },
+        },
+        {
+            "4 / 8   •   Ethernet II", "DIX + EtherType",
+            "Tip: EtherType > 1500 (např. IP = 0800h)",
+            {
+                "Původní DIX Ethernet.",
+                "Hlavička: příjemce 6 B, odesílatel 6 B, EtherType 2 B.",
+                "EtherType identifikuje protokol (IP, IPX…).",
+                NULL,
+            },
+        },
+        {
+            "5 / 8   •   IEEE 802.3", "Délka místo typu",
+            NULL,
+            {
+                "Místo EtherType je údaj o délce (vždy ≤ 1500).",
+                "Uvnitř je rámec 802.2 (stejný i pro Token Ring).",
+                "Typ protokolu je v SAP mezi linkovou a síťovou vrstvou.",
+                NULL,
+            },
+        },
+        {
+            "6 / 8   •   Raw 802.3", "Novell / IPX",
+            NULL,
+            {
+                "„Holý“ rámec 802.3 bez 802.2 (Novell).",
+                "Funguje jen v prostředí IPX.",
+                "Paket začíná dvěma byty FFFFh.",
+                NULL,
+            },
+        },
+        {
+            "7 / 8   •   SNAP", "802.2 SNAP",
+            "Tip: byty 15–16 za délkou = AAAAh",
+            {
+                "Vložen do rámce 802.3.",
+                "Rozšiřuje identifikaci protokolu až na 5 bytů.",
+                NULL,
+            },
+        },
+        {
+            "8 / 8   •   Velikost", "Min / max / MTU",
+            NULL,
+            {
+                "Max. Ethernet II: 1500 + 18 = 1518 B.",
+                "Min. velikost: 64 B (kolizní okénko).",
+                "MTU je obvyklé omezení velikosti na routerech.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[20], "net_unit21", "net_unit21_sub",
+                               slides, NET21_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3083,5 +3171,45 @@ GtkWidget *build_net_unit20_exercise_page(void) {
     return build_net_mcq_page(19, "netunit20", "net_ex20_title", "net_quiz20_head",
                               net20_qs, net20_hints,
                               (int)G_N_ELEMENTS(net20_qs));
+}
+
+const ChoiceQ net21_qs[] = {
+    {"Ethernetová adresa má:",
+     {"48 bitů (6 bytů) a je jedinečná", "Jen 16 bitů", "Jen 32 bitů IP",
+      "Jen 8 bitů SAP"}, 4, 0},
+    {"První 3 byty MAC adresy přiděluje:",
+     {"IEEE výrobci", "Jen uživatel v BIOS", "Jen DNS server",
+      "Jen Aloha"}, 4, 0},
+    {"Ethernet II v hlavičce používá:",
+     {"EtherType (např. IP = 0800h, hodnota > 1500)",
+      "Jen délku ≤ 1500 bez typu", "Jen FFFFh bez adres",
+      "Jen AAAAh bez MAC"}, 4, 0},
+    {"IEEE 802.3 místo EtherType má:",
+     {"Údaj o délce (≤ 1500) a uvnitř 802.2", "Jen cut-through",
+      "Jen 64 B MTU bez délky", "Jen laserovou hlavičku"}, 4, 0},
+    {"Raw 802.3 (Novell):",
+     {"Bez 802.2, jen IPX, začíná FFFFh", "Funguje jen s HTTP",
+      "Má vždy EtherType 0800h", "Nemá žádné adresy"}, 4, 0},
+    {"Maximální rámec Ethernet II je:",
+     {"1518 B (1500 + 18)", "64 B", "900 µm", "250 µm"}, 4, 0},
+    {"Minimální velikost rámce plyne z:",
+     {"Kolizního okénka (64 B)", "Jen z MTU routeru", "Jen z SNAP AAAAh",
+      "Jen z Token Ring"}, 4, 0},
+};
+
+const char *net21_hints[] = {
+    "MAC adresa Ethernetu má 48 bitů a je unikátní",
+    "IEEE přidělí výrobci první 3 byty adresy",
+    "Ethernet II: EtherType > 1500 (IP = 0800h)",
+    "IEEE 802.3: délka ≤ 1500 a rámec 802.2",
+    "Raw 802.3: Novell/IPX, začíná FFFFh",
+    "Max. Ethernet II = 1518 B",
+    "Min. rámec 64 B kvůli koliznímu okénku",
+};
+
+GtkWidget *build_net_unit21_exercise_page(void) {
+    return build_net_mcq_page(20, "netunit21", "net_ex21_title", "net_quiz21_head",
+                              net21_qs, net21_hints,
+                              (int)G_N_ELEMENTS(net21_qs));
 }
 
