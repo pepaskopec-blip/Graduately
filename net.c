@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–22 = source topics (Základní pojmy … IP paket). */
+     * units 2–23 = source topics (Základní pojmy … ICMP). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -28,6 +28,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET20_SLIDES, .unit_page = "netunit20", .ex_page = "netex20" },
     { .n_slides = NET21_SLIDES, .unit_page = "netunit21", .ex_page = "netex21" },
     { .n_slides = NET22_SLIDES, .unit_page = "netunit22", .ex_page = "netex22" },
+    { .n_slides = NET23_SLIDES, .unit_page = "netunit23", .ex_page = "netex23" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -470,7 +471,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
         "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
-        "net_unit21", "net_unit22"
+        "net_unit21", "net_unit22", "net_unit23"
     };
 
     card = gtk_button_new();
@@ -1981,6 +1982,63 @@ GtkWidget *build_net_unit22_page(void) {
                                slides, NET22_SLIDES);
 }
 
+GtkWidget *build_net_unit23_page(void) {
+    static const NetSlide slides[NET23_SLIDES] = {
+        {
+            "1 / 5   •   ICMP", "Řídicí zprávy",
+            "Tip: síťová vrstva, ale nese se v IP datagramu",
+            {
+                "Zasílá informace o chybách a stavu přenosu.",
+                "ICMP paket jede přímo v IP datagramu.",
+                "Směrovače s ním pracují i bez transportní vrstvy.",
+                NULL,
+            },
+        },
+        {
+            "2 / 5   •   Zprávy I", "Quench, TTL, Unreachable",
+            NULL,
+            {
+                "Source Quench: hrozí zahlcení – zpomal odesílání.",
+                "Time Exceeded: TTL kleslo na 0, paket zahozen (tracert).",
+                "Destination Unreachable: cíl (síť/uzel/protokol/port)",
+                "není dostupný.",
+                NULL,
+            },
+        },
+        {
+            "3 / 5   •   Zprávy II", "Redirect a Echo",
+            NULL,
+            {
+                "Redirect: přesměruj přenos na jiný (rychlejší) router.",
+                "Echo Request / Echo Reply: test dostupnosti (ping).",
+                NULL,
+            },
+        },
+        {
+            "4 / 5   •   Traceroute", "Princip TTL",
+            "Tip: typicky max. 30 skoků",
+            {
+                "Odešle paket s TTL = 1; první router odpoví Time Exceeded.",
+                "Pak TTL = 2, 3… a tak se zjišťují skoky na cestě.",
+                "Pokračuje, dokud paket nedorazí do cíle nebo nevyprší limit.",
+                NULL,
+            },
+        },
+        {
+            "5 / 5   •   Shrnutí", "K čemu ICMP slouží",
+            NULL,
+            {
+                "Diagnostika a hlášení chyb na síťové vrstvě.",
+                "Základ příkazů ping a traceroute / tracert.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[22], "net_unit23", "net_unit23_sub",
+                               slides, NET23_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3346,5 +3404,42 @@ GtkWidget *build_net_unit22_exercise_page(void) {
     return build_net_mcq_page(21, "netunit22", "net_ex22_title", "net_quiz22_head",
                               net22_qs, net22_hints,
                               (int)G_N_ELEMENTS(net22_qs));
+}
+
+const ChoiceQ net23_qs[] = {
+    {"ICMP slouží především k:",
+     {"Zasílání informací o chybách a stavu přenosu",
+      "Jen směrování OSPF tabulek", "Jen lámání optiky",
+      "Jen EtherType 0800h"}, 4, 0},
+    {"ICMP paket se přenáší:",
+     {"Přímo v IP datagramu", "Jen jako Ethernet II bez IP",
+      "Jen v UDP bez IP", "Jen jako MAC bez datagramu"}, 4, 0},
+    {"Source Quench znamená:",
+     {"Varování před zahlcením – zpomal odesílání",
+      "TTL kleslo na 0", "Cíl je nedostupný", "Echo Reply"}, 4, 0},
+    {"Time Exceeded nastane, když:",
+     {"TTL v IP hlavičce klesne na 0", "Router nemá firewall",
+      "Použijeme jen SNAP", "MTU je 1500"}, 4, 0},
+    {"Echo Request / Reply využívá příkaz:",
+     {"ping", "lámačka", "cut-through", "hub"}, 4, 0},
+    {"Traceroute zjišťuje cestu tak, že:",
+     {"Postupně zvyšuje TTL a čeká na Time Exceeded",
+      "Posílá jen ARP bez IP", "Ignoruje směrovače",
+      "Používá jen CAM tabulku"}, 4, 0},
+};
+
+const char *net23_hints[] = {
+    "ICMP posílá informace o chybách a stavu přenosu",
+    "ICMP jede uvnitř IP datagramu",
+    "Source Quench = zpomal odesílání kvůli zahlcení",
+    "Time Exceeded = TTL kleslo na 0",
+    "Echo Request/Reply = ping",
+    "Traceroute zvyšuje TTL a čte Time Exceeded",
+};
+
+GtkWidget *build_net_unit23_exercise_page(void) {
+    return build_net_mcq_page(22, "netunit23", "net_ex23_title", "net_quiz23_head",
+                              net23_qs, net23_hints,
+                              (int)G_N_ELEMENTS(net23_qs));
 }
 
