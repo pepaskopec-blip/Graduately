@@ -47,6 +47,14 @@ void unit_meta_init(void) {
     units[1].branch_ex = MAX_UNIT_EX;
     units[1].trans_sections = u2_trans_sections;
     units[1].n_trans_sections = u2_trans_sections_n;
+
+    /* Same vocabulary-training branch for unit 3 ("Bei uns zu Hause"). */
+    units[2].has_branch = TRUE;
+    units[2].branch_name = "Vokabeltraining";
+    units[2].branch_target = "u3vocab";
+    units[2].branch_ex = MAX_UNIT_EX;
+    units[2].trans_sections = u3_trans_sections;
+    units[2].n_trans_sections = u3_trans_sections_n;
 }
 
 void unit_configure(int idx, const char *const *names, int n) {

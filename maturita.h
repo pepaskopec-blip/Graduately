@@ -618,6 +618,8 @@ extern const TransSection u1_trans_sections[];
 extern const int u1_trans_sections_n;
 extern const TransSection u2_trans_sections[];
 extern const int u2_trans_sections_n;
+extern const TransSection u3_trans_sections[];
+extern const int u3_trans_sections_n;
 extern const VerbQ g01_peter[];
 extern const VerbQ g01_jana[];
 extern const char *g01_pool[];
