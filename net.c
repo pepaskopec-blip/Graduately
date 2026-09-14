@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–19 = source topics (Základní pojmy … směrování). */
+     * units 2–20 = source topics (Základní pojmy … směrovač a brána). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -25,6 +25,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET17_SLIDES, .unit_page = "netunit17", .ex_page = "netex17" },
     { .n_slides = NET18_SLIDES, .unit_page = "netunit18", .ex_page = "netex18" },
     { .n_slides = NET19_SLIDES, .unit_page = "netunit19", .ex_page = "netex19" },
+    { .n_slides = NET20_SLIDES, .unit_page = "netunit20", .ex_page = "netex20" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -466,7 +467,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
-        "net_unit16", "net_unit17", "net_unit18", "net_unit19"
+        "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20"
     };
 
     card = gtk_button_new();
@@ -1721,6 +1722,84 @@ GtkWidget *build_net_unit19_page(void) {
                                slides, NET19_SLIDES);
 }
 
+GtkWidget *build_net_unit20_page(void) {
+    static const NetSlide slides[NET20_SLIDES] = {
+        {
+            "1 / 7   •   Router", "Síťová vrstva",
+            "Tip: má vlastní IP a je vidět např. pingen",
+            {
+                "Pracuje na 3. (síťové) vrstvě.",
+                "Segmentuje síť na podsítě nebo propojuje LAN do většího celku.",
+                "Umožňuje přístup na WAN (např. internet).",
+                "Podporuje soustavy protokolů (např. TCP/IP) a má vlastní adresu.",
+                NULL,
+            },
+        },
+        {
+            "2 / 7   •   Bezpečnost", "Firewall na routeru",
+            NULL,
+            {
+                "Router s firewallem filtruje pakety.",
+                "Může zakázat nebo povolit určité síťové služby.",
+                NULL,
+            },
+        },
+        {
+            "3 / 7   •   Multiprotokol", "Různé standardy",
+            NULL,
+            {
+                "Multiprotokolový router spojuje různé soustavy protokolů.",
+                "Například TCP/IP se sítěmi IPX/SPX.",
+                "Umí i různý síťový hardware (Ethernet ↔ Token Ring).",
+                "Konvertuje formát rámců i paketů.",
+                NULL,
+            },
+        },
+        {
+            "4 / 7   •   Routing", "Směrování a tabulky",
+            NULL,
+            {
+                "Každému paketu hledá vhodnou cestu k cíli.",
+                "Zohledňuje např. okamžité zatížení sítí.",
+                "Používá směrovací tabulky a musí znát topologii.",
+                "Směrovače si tabulky vyměňují (např. broadcastem).",
+                NULL,
+            },
+        },
+        {
+            "5 / 7   •   Broadcast", "Broadcastové domény",
+            NULL,
+            {
+                "Router rozděluje síť na broadcastové domény.",
+                "Broadcasty lze filtrovat – nešíří se na všechny porty.",
+                NULL,
+            },
+        },
+        {
+            "6 / 7   •   Gateway", "Brána",
+            "Tip: pracuje až na aplikační vrstvě (i nižších)",
+            {
+                "Připojuje LAN na zcela odlišné prostředí.",
+                "Například mainframe nebo GSM síť.",
+                "Často PC s kartou/emulací terminálu nebo s modemem na WAN.",
+                NULL,
+            },
+        },
+        {
+            "7 / 7   •   Poznámka", "Gateway vs router",
+            NULL,
+            {
+                "Někdy se pod pojmem brána rozumí spíše router.",
+                "Gateway také označuje připojení LAN na WAN / internet.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[19], "net_unit20", "net_unit20_sub",
+                               slides, NET20_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -2963,5 +3042,46 @@ GtkWidget *build_net_unit19_exercise_page(void) {
     return build_net_mcq_page(18, "netunit19", "net_ex19_title", "net_quiz19_head",
                               net19_qs, net19_hints,
                               (int)G_N_ELEMENTS(net19_qs));
+}
+
+const ChoiceQ net20_qs[] = {
+    {"Směrovač (router) pracuje na vrstvě:",
+     {"Fyzické", "Síťové (3.)", "Jen aplikační", "Jen prezentační"}, 4, 1},
+    {"Router mimo jiné umožňuje:",
+     {"Segmentaci na podsítě a přístup na WAN", "Jen lámání optiky",
+      "Jen Aloha bez IP", "Jen cut-through bez MAC"}, 4, 0},
+    {"Firewall na routeru dokáže:",
+     {"Filtrovat pakety a řídit služby", "Jen zesílit bitový signál",
+      "Jen uložit CAM bez IP", "Jen nahradit fotodiodu"}, 4, 0},
+    {"Multiprotokolový router:",
+     {"Propojí sítě různých protokolů/standardů", "Umí jen jeden protokol",
+      "Nepracuje s IP adresou", "Nikdy nekonvertuje rámce"}, 4, 0},
+    {"Router rozděluje síť na:",
+     {"Broadcastové domény", "Jen fyzické kabely bez domén",
+      "Jen aplikační servery", "Jen Token Ring bez Ethernetu"}, 4, 0},
+    {"Brána (gateway) typicky:",
+     {"Připojuje LAN na odlišné prostředí (mainframe, GSM, WAN)",
+      "Pracuje jen jako hub", "Nikdy nemá software",
+      "Funguje jen na fyzické vrstvě"}, 4, 0},
+    {"Poznámka k pojmu brána:",
+     {"Někdy se jí myslí spíše router / LAN–WAN připojení",
+      "Vždy znamená jen fotodiodu", "Nikdy nesouvisí s internetem",
+      "Nahrazuje jen lámačku vláken"}, 4, 0},
+};
+
+const char *net20_hints[] = {
+    "Router pracuje na síťové (3.) vrstvě",
+    "Router segmentuje podsítě a zajišťuje WAN přístup",
+    "Firewall filtruje pakety a služby",
+    "Multiprotokolový router spojuje různé protokoly/standardy",
+    "Router dělí síť na broadcastové domény",
+    "Gateway připojuje LAN na odlišné prostředí",
+    "Pojem brána někdy označuje router nebo LAN–WAN připojení",
+};
+
+GtkWidget *build_net_unit20_exercise_page(void) {
+    return build_net_mcq_page(19, "netunit20", "net_ex20_title", "net_quiz20_head",
+                              net20_qs, net20_hints,
+                              (int)G_N_ELEMENTS(net20_qs));
 }
 
