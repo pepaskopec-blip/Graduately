@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–14 = source topics 01–… (Základní pojmy … optika). */
+     * units 2–15 = source topics (Základní pojmy … montáž optiky). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -20,6 +20,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET12_SLIDES, .unit_page = "netunit12", .ex_page = "netex12" },
     { .n_slides = NET13_SLIDES, .unit_page = "netunit13", .ex_page = "netex13" },
     { .n_slides = NET14_SLIDES, .unit_page = "netunit14", .ex_page = "netex14" },
+    { .n_slides = NET15_SLIDES, .unit_page = "netunit15", .ex_page = "netex15" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -460,7 +461,7 @@ void net_add_node(GtkFixed *fixed, int index) {
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
-        "net_unit11", "net_unit12", "net_unit13", "net_unit14"
+        "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15"
     };
 
     card = gtk_button_new();
@@ -1426,6 +1427,42 @@ GtkWidget *build_net_unit14_page(void) {
 
     return build_net_unit_page(&net_lessons[13], "net_unit14", "net_unit14_sub",
                                slides, NET14_SLIDES);
+}
+
+GtkWidget *build_net_unit15_page(void) {
+    static const NetSlide slides[NET15_SLIDES] = {
+        {
+            "1 / 3   •   Primární", "Ochrana 250 µm",
+            NULL,
+            {
+                "Primární ochrana má průměr 250 µm.",
+                "Chrání samotné vlákno hned po výrobě.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Sekundární", "Ochrana 900 µm",
+            "Tip: těsná pro svislé, volná pro vodorovné instalace",
+            {
+                "Sekundární ochrana má průměr 900 µm.",
+                "Těsná varianta: vhodné pro svislé instalace.",
+                "Volná varianta: vhodné pro vodorovné instalace.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Montáž", "Lámání a sváření",
+            "Tip: kolmost lomu do 0,5°",
+            {
+                "Vyžaduje precizní lámání lámačkou.",
+                "Spojování se dělá svářečkou optických vláken.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[14], "net_unit15", "net_unit15_sub",
+                               slides, NET15_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2476,5 +2513,38 @@ GtkWidget *build_net_unit14_exercise_page(void) {
     return build_net_mcq_page(13, "netunit14", "net_ex14_title", "net_quiz14_head",
                               net14_qs, net14_hints,
                               (int)G_N_ELEMENTS(net14_qs));
+}
+
+const ChoiceQ net15_qs[] = {
+    {"Primární ochrana optického vlákna má průměr:",
+     {"900 µm", "250 µm", "50 µm", "7–10 µm"}, 4, 1},
+    {"Sekundární ochrana má průměr:",
+     {"250 µm", "900 µm", "62,5 µm", "1 km"}, 4, 1},
+    {"Těsná sekundární ochrana je vhodná hlavně:",
+     {"Pro svislé instalace", "Jen pro kruhovou topologii",
+      "Jen pro UDP", "Jen pro hub"}, 4, 0},
+    {"Volná sekundární ochrana je vhodná hlavně:",
+     {"Pro vodorovné instalace", "Jen pro ATM",
+      "Jen pro LED bez vlákna", "Jen pro sběrnici"}, 4, 0},
+    {"Montáž optiky vyžaduje:",
+     {"Jen nůžky na koaxiál", "Precizní lámání a svářečku vláken",
+      "Jen hub bez konektorů", "Jen Token Ring"}, 4, 1},
+    {"Při lámání se požaduje kolmost zhruba:",
+     {"Do 0,5°", "Do 45°", "Přesně 90° bez tolerance", "Bez významu"}, 4, 0},
+};
+
+const char *net15_hints[] = {
+    "Primární ochrana: 250 µm",
+    "Sekundární ochrana: 900 µm",
+    "Těsná sekundární ochrana: svislé instalace",
+    "Volná sekundární ochrana: vodorovné instalace",
+    "Montáž: lámačka a svářečka optických vláken",
+    "Lámání vyžaduje kolmost asi 0,5°",
+};
+
+GtkWidget *build_net_unit15_exercise_page(void) {
+    return build_net_mcq_page(14, "netunit15", "net_ex15_title", "net_quiz15_head",
+                              net15_qs, net15_hints,
+                              (int)G_N_ELEMENTS(net15_qs));
 }
 
