@@ -30,8 +30,9 @@ GTK 4 interface.
   - **Deutsch** is open (round bubble with the German flag) and opens the
     German learning path
   - **Správa počítačových sítí / Computer Network Administration** is open too
-    (shown with a Wi-Fi icon) and leads to a 30-unit computer-networks path;
-    **units 1–27 are playable**, units 28–30 are locked placeholders
+    (shown with a Wi-Fi icon) and opens a year picker (years 1–4); **year 1**
+    has a 30-unit path where **units 1–27 are playable**, units 28–30 are
+    locked; years 2–4 are locked placeholders until content is added
   - **Technické vybavení / Computer Hardware** is open (chip icon) and leads
     to a 10-unit hardware path; **units 1–3 are playable**, units 4–10 are
     locked placeholders
@@ -62,7 +63,8 @@ GTK 4 interface.
 - **Hints & model answers** – in exercises where you write or complete a German
   sentence the Czech meaning is shown right away as a hint, and clicking the
   check button also reveals the correct German sentence so you can compare
-- **Computer networks path** – twenty-seven unlocked units (theory slides + practice):
+- **Computer networks path** – pick a school year first; **year 1** has
+  twenty-seven unlocked units (theory slides + practice); years 2–4 are locked:
   1. **Výpočet IP adres / IP Address Calculation** – 4-slide VLSM walkthrough
      and four interactive subnetting tasks (prefix, network, broadcast, host
      range) with check and “show solution”
@@ -314,11 +316,12 @@ When launched, the application shows the welcome screen. From there:
    unit 2 or **"Bei uns zu Hause"** for unit 3, then pick any bubble to start
    an exercise. Units 2 and 3 are available even if the earlier units are not
    finished yet.
-5. On the networks path, units **1–27** are open. Unit 1 (**Výpočet IP adres**)
-   walks through four VLSM slides and then four interactive subnetting tasks
-   with check / “show solution”. Units 2–27 each have theory slides followed by
-   a multiple-choice quiz (basic concepts through wireless networks).
-   Units 28–30 stay locked placeholders.
+5. On the networks path, pick **year 1** (years 2–4 are locked). Units **1–27**
+   are open. Unit 1 (**Výpočet IP adres**) walks through four VLSM slides and
+   then four interactive subnetting tasks with check / “show solution”.
+   Units 2–27 each have theory slides followed by a multiple-choice quiz
+   (basic concepts through wireless networks). Units 28–30 stay locked
+   placeholders.
 6. On the hardware path, units **1–3** are open (architecture / von Neumann,
    computer history generations, bit & byte), each with slides and a quiz.
    Units 4–10 stay locked.
@@ -468,9 +471,9 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
 - **Předměty** – přizpůsobivá „hadí“ mapa s 13 předměty
   - **Deutsch** je otevřený (bublina s německou vlajkou) a vede na německou
     učební cestu
-  - **Správa počítačových sítí** je také otevřená (ikona Wi‑Fi) a vede na cestu
-    s 30 jednotkami; **jednotky 1–27 jsou hratelné**, 28–30 jsou zamčené
-    placeholdery
+  - **Správa počítačových sítí** je také otevřená (ikona Wi‑Fi) a otevře výběr
+    ročníku (1–4); **1. ročník** má cestu s 30 jednotkami, z nichž **1–27 jsou
+    hratelné**, 28–30 zamčené; ročníky 2–4 jsou zatím zamčené placeholdery
   - **Technické vybavení** je otevřené (ikona čipu) a vede na cestu
     s 10 jednotkami; **jednotky 1–3 jsou hratelné**, 4–10 jsou zamčené
     placeholdery
@@ -495,7 +498,8 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   „Was siehst du?“, řazení vět, chybějící písmena)
 - **Nápovědy a vzorové odpovědi** – u psaných / doplňovaných vět je hned
   český význam; po kontrole se ukáže i správná německá věta
-- **Cesta počítačových sítí** – sedmadvacet odemčených jednotek (snímky + cvičení):
+- **Cesta počítačových sítí** – nejdřív výběr ročníku; **1. ročník** má
+  sedmadvacet odemčených jednotek (snímky + cvičení); ročníky 2–4 jsou zamčené:
   1. **Výpočet IP adres** – 4 snímky VLSM a čtyři interaktivní úlohy
      (prefix, síť, broadcast, rozsah uzlů) s kontrolou a „ukázat řešení“
   2. Základní pojmy a rozdělení sítí – snímky + kvíz
@@ -744,10 +748,11 @@ Po spuštění se zobrazí úvodní obrazovka. Odtud:
 4. Otevřete **"Neue Freunde"** (jednotka 1), **"Aus aller Welt"** (2) nebo
    **"Bei uns zu Hause"** (3) a vyberte bublinu cvičení. Jednotky 2 a 3 jdou
    otevřít i bez dokončení předchozích.
-5. Na síťové cestě jsou otevřené jednotky **1–27**. Jednotka 1 (**Výpočet IP
-   adres**) má 4 snímky VLSM a pak 4 interaktivní úlohy s kontrolou /
-   „ukázat řešení“. Jednotky 2–27 mají snímky teorie a kvíz s výběrem
-   (od základních pojmů po bezdrátové sítě). Jednotky 28–30 zůstávají zamčené.
+5. Na síťové cestě nejdřív vyberte **1. ročník** (2.–4. jsou zamčené). Otevřené
+   jsou jednotky **1–27**. Jednotka 1 (**Výpočet IP adres**) má 4 snímky VLSM
+   a pak 4 interaktivní úlohy s kontrolou / „ukázat řešení“. Jednotky 2–27 mají
+   snímky teorie a kvíz s výběrem (od základních pojmů po bezdrátové sítě).
+   Jednotky 28–30 zůstávají zamčené.
 6. Na cestě technického vybavení jsou otevřené jednotky **1–3** (architektura /
    von Neumann, historie generací, bit a byte), každá se snímky a kvízem.
    Jednotky 4–10 zůstávají zamčené.
@@ -791,8 +796,8 @@ exercise_u1.c           cvičení jednotky 1 („Neue Freunde“)
 exercise_u2.c           cvičení jednotky 2 („Aus aller Welt“)
 exercise_u3.c           cvičení jednotky 3 („Bei uns zu Hause“)
 settings.c              panel nastavení (režim, téma, jazyk)
-net.c                   cesta počítačových sítí (30 uzlů), jednotky 1–27
-                        (1: VLSM cvičení; 2–27: kvízy s výběrem)
+net.c                   výběr ročníku + cesta sítí (30 uzlů), 1. ročník:
+                        jednotky 1–27 (1: VLSM cvičení; 2–27: kvízy)
 hw.c                    cesta technického vybavení (10 uzlů), jednotky 1–3
                         (architektura, historie, bit/byte + kvízy)
 main.c                  vstupní bod aplikace a zapojení stránek

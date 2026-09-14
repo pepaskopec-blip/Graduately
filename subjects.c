@@ -366,7 +366,7 @@ GtkWidget *build_subjects_page(void) {
                                            draw_wifi_icon, NULL, NULL);
             gtk_button_set_child(GTK_BUTTON(card), wifi);
             g_object_set_data_full(G_OBJECT(card), "target",
-                                   g_strdup("netmap"), g_free);
+                                   g_strdup("netyears"), g_free);
             g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
         } else if (i == HW_SUBJ) {
             GtkWidget *chip = gtk_drawing_area_new();

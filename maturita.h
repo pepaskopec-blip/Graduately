@@ -1087,6 +1087,7 @@ void net_draw_rail(GtkDrawingArea *area, cairo_t *cr,
 void net_rail_theme_reset(void);
 void net_add_node(GtkFixed *fixed, int index);
 GtkWidget *build_netmap_page(void);
+GtkWidget *build_netyears_page(void);
 GtkWidget *build_net_unit_page(NetLesson *L, const char *title_key,
                                const char *sub_key, const NetSlide *slides,
                                guint n_slides);
