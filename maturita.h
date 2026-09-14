@@ -86,6 +86,7 @@ typedef enum {
     LANG_CS = 0,
     LANG_EN
 } UiLang;
+typedef struct TransSection TransSection; /* vocabulary word list for a branch */
 typedef struct {
     unsigned crust;
     unsigned base;
@@ -145,6 +146,8 @@ typedef struct {
     GtkWidget *branch_icon;
     double branch_cx;
     double branch_cy;
+    const struct TransSection *trans_sections; /* branch vocabulary content */
+    int n_trans_sections;
 } UnitCtx;
 typedef struct { double r, g, b; } Rgb;
 typedef struct {
@@ -337,6 +340,11 @@ typedef struct {
     const char *answers;   /* accepted answers separated by '|'         */
     const char *meaning;   /* i18n key of the revealed meaning or NULL  */
 } TypedQ;
+struct TransSection {
+    const char *header;   /* page label shown above the word, e.g. "Strana 22" */
+    const TypedQ *rows;
+    int n;
+};
 typedef struct {
     const TypedQ *qs;
     int n;
@@ -606,6 +614,10 @@ extern const TypedQ g06_rows[];
 extern const TypedQ g07_rows[];
 extern const TypedQ g11_rows[];
 extern const TypedQ s03_rows[];
+extern const TransSection u1_trans_sections[];
+extern const int u1_trans_sections_n;
+extern const TransSection u2_trans_sections[];
+extern const int u2_trans_sections_n;
 extern const VerbQ g01_peter[];
 extern const VerbQ g01_jana[];
 extern const char *g01_pool[];

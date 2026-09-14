@@ -1156,13 +1156,7 @@ const TypedQ trans_p15[] = {
     {"Auf Wiedersehen!", "na shledanou|na viděnou|goodbye", "Na shledanou!"},
 };
 
-typedef struct {
-    const char *header;   /* i18n key, e.g. "Strana 10" */
-    const TypedQ *rows;
-    int n;
-} TransSection;
-
-static const TransSection trans_sections[] = {
+const TransSection u1_trans_sections[] = {
     {"Strana 10", trans_p10, (int)G_N_ELEMENTS(trans_p10)},
     {"Strana 11", trans_p11, (int)G_N_ELEMENTS(trans_p11)},
     {"Strana 12", trans_p12, (int)G_N_ELEMENTS(trans_p12)},
@@ -1170,6 +1164,7 @@ static const TransSection trans_sections[] = {
     {"Strana 14", trans_p14, (int)G_N_ELEMENTS(trans_p14)},
     {"Strana 15", trans_p15, (int)G_N_ELEMENTS(trans_p15)},
 };
+const int u1_trans_sections_n = (int)G_N_ELEMENTS(u1_trans_sections);
 
 typedef struct {
     UnitCtx *unit;
@@ -1296,8 +1291,8 @@ GtkWidget *build_translate(UnitCtx *unit) {
     int total = 0;
     int k = 0;
 
-    for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++)
-        total += trans_sections[s].n;
+    for (int s = 0; s < unit->n_trans_sections; s++)
+        total += unit->trans_sections[s].n;
 
     ctx->unit = unit;
     ctx->ex_num = unit->branch_ex;
@@ -1307,8 +1302,8 @@ GtkWidget *build_translate(UnitCtx *unit) {
     ctx->headers = g_new0(const char *, total);
     ctx->order = g_new0(int, total);
 
-    for (guint s = 0; s < G_N_ELEMENTS(trans_sections); s++) {
-        const TransSection *sec = &trans_sections[s];
+    for (int s = 0; s < unit->n_trans_sections; s++) {
+        const TransSection *sec = &unit->trans_sections[s];
 
         for (int i = 0; i < sec->n; i++, k++) {
             ctx->qs[k] = sec->rows[i];
