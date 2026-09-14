@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–18 = source topics (Základní pojmy … switch podrobně). */
+     * units 2–19 = source topics (Základní pojmy … směrování). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -24,6 +24,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET16_SLIDES, .unit_page = "netunit16", .ex_page = "netex16" },
     { .n_slides = NET17_SLIDES, .unit_page = "netunit17", .ex_page = "netex17" },
     { .n_slides = NET18_SLIDES, .unit_page = "netunit18", .ex_page = "netex18" },
+    { .n_slides = NET19_SLIDES, .unit_page = "netunit19", .ex_page = "netex19" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -465,7 +466,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
-        "net_unit16", "net_unit17", "net_unit18"
+        "net_unit16", "net_unit17", "net_unit18", "net_unit19"
     };
 
     card = gtk_button_new();
@@ -1639,6 +1640,85 @@ GtkWidget *build_net_unit18_page(void) {
 
     return build_net_unit_page(&net_lessons[17], "net_unit18", "net_unit18_sub",
                                slides, NET18_SLIDES);
+}
+
+GtkWidget *build_net_unit19_page(void) {
+    static const NetSlide slides[NET19_SLIDES] = {
+        {
+            "1 / 7   •   Princip", "Směrování paketů",
+            "Tip: 3. vrstva ISO/OSI – síťová",
+            {
+                "Rozhodování o dalším směru přenosu paketů do cílové sítě.",
+                "Probíhá na síťové vrstvě modelu ISO/OSI.",
+                "K rozhodování se používají směrovací algoritmy.",
+                NULL,
+            },
+        },
+        {
+            "2 / 7   •   Adaptivní", "Dynamické algoritmy",
+            NULL,
+            {
+                "Reagují na změny v síti (výpadek linky, přetížení).",
+                "Vyžadují pravidelnou výměnu informací mezi směrovači.",
+                NULL,
+            },
+        },
+        {
+            "3 / 7   •   Neadaptivní", "Statické algoritmy",
+            NULL,
+            {
+                "Nereagují na změny v síti.",
+                "Cesty pevně definuje správce.",
+                "Při výpadku části sítě může spojení spadnout.",
+                NULL,
+            },
+        },
+        {
+            "4 / 7   •   Řízení", "Centralizované a izolované",
+            NULL,
+            {
+                "Centralizované: centrum počítá cesty pro všechny směrovače.",
+                "Výpadek centra = pád směrování; v praxi skoro nepoužívané.",
+                "Izolované: směrovač se rozhoduje sám z lokálních informací.",
+                "Izolované se používá spíš jako doplněk při přetížení.",
+                NULL,
+            },
+        },
+        {
+            "5 / 7   •   Distribuované", "Výměna mezi směrovači",
+            NULL,
+            {
+                "Směrovače si vyměňují informace.",
+                "Každý si udržuje vlastní směrovací tabulku.",
+                NULL,
+            },
+        },
+        {
+            "6 / 7   •   Tabulka", "Next Hop a metrika",
+            "Tip: nižší metrika = lepší / rychlejší trasa",
+            {
+                "Záznam: cílová síť, next hop a metrika.",
+                "Next hop = nejbližší soused, kterému paket předáme.",
+                "Metrika číselně ohodnocuje cestu.",
+                "Při více cestách se volí ta s nejnižší metrikou.",
+                NULL,
+            },
+        },
+        {
+            "7 / 7   •   Distance Vector", "Příklad algoritmu",
+            "Tip: např. výměna tabulek každých 30 s",
+            {
+                "Směrovače znají jen své přímé sousedy.",
+                "Pravidelně si posílají kopie směrovacích tabulek.",
+                "Informace se šíří krok za krokem po celé síti.",
+                "Každý směrovač si spočítá nejlepší trasu do známých sítí.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[18], "net_unit19", "net_unit19_sub",
+                               slides, NET19_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2839,5 +2919,49 @@ GtkWidget *build_net_unit18_exercise_page(void) {
     return build_net_mcq_page(17, "netunit18", "net_ex18_title", "net_quiz18_head",
                               net18_qs, net18_hints,
                               (int)G_N_ELEMENTS(net18_qs));
+}
+
+const ChoiceQ net19_qs[] = {
+    {"Směrování probíhá na vrstvě:",
+     {"Fyzické", "Síťové (3. ISO/OSI)", "Jen aplikační", "Jen linkové"}, 4, 1},
+    {"Adaptivní (dynamické) algoritmy:",
+     {"Reagují na změny a vyměňují informace mezi směrovači",
+      "Nikdy nemění cesty", "Fungují jen na fyzické vrstvě",
+      "Nepoužívají metriku"}, 4, 0},
+    {"Neadaptivní (statické) směrování:",
+     {"Má cesty pevně nastavené správcem", "Samo opraví každý výpadek",
+      "Nepotřebuje směrovací tabulku", "Běží jen na Wi-Fi"}, 4, 0},
+    {"Centralizované směrování v praxi:",
+     {"Se skoro nepoužívá – výpadek centra shodí směrování",
+      "Je jediný standard internetu", "Neexistuje žádné centrum",
+      "Pracuje jen s MAC adresami"}, 4, 0},
+    {"Distribuované směrování znamená, že:",
+     {"Směrovače si vyměňují informace a každý má vlastní tabulku",
+      "Jedno centrum řídí všechny cesty", "Směrovač nezná žádné sousedy",
+      "Pakety jdou jen přes hub"}, 4, 0},
+    {"Metrika ve směrovací tabulce:",
+     {"Číselně hodnotí cestu – nižší je lepší",
+      "Je vždy jen MAC adresa", "Nemá vliv na výběr trasy",
+      "Nahrazuje next hop"}, 4, 0},
+    {"Distance Vector typicky:",
+     {"Posílá sousedům kopie tabulek a šíří informace krok za krokem",
+      "Počítá cesty jen v jednom centru", "Ignoruje přímé sousedy",
+      "Pracuje jen na aplikační vrstvě"}, 4, 0},
+};
+
+const char *net19_hints[] = {
+    "Směrování běží na síťové (3.) vrstvě ISO/OSI",
+    "Adaptivní algoritmy reagují na změny a sdílí stav sítě",
+    "Statické cesty nastaví správce a samy se nemění",
+    "Centralizované směrování padá s výpadkem centra",
+    "Distribuované: výměna informací a vlastní tabulky",
+    "Nižší metrika = lepší / rychlejší trasa",
+    "Distance Vector: výměna tabulek se sousedy (např. každých 30 s)",
+};
+
+GtkWidget *build_net_unit19_exercise_page(void) {
+    return build_net_mcq_page(18, "netunit19", "net_ex19_title", "net_quiz19_head",
+                              net19_qs, net19_hints,
+                              (int)G_N_ELEMENTS(net19_qs));
 }
 
