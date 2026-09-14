@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–23 = source topics (Základní pojmy … ICMP). */
+     * units 2–24 = source topics (Základní pojmy … ARP). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -29,6 +29,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET21_SLIDES, .unit_page = "netunit21", .ex_page = "netex21" },
     { .n_slides = NET22_SLIDES, .unit_page = "netunit22", .ex_page = "netex22" },
     { .n_slides = NET23_SLIDES, .unit_page = "netunit23", .ex_page = "netex23" },
+    { .n_slides = NET24_SLIDES, .unit_page = "netunit24", .ex_page = "netex24" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -471,7 +472,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
         "net_unit16", "net_unit17", "net_unit18", "net_unit19", "net_unit20",
-        "net_unit21", "net_unit22", "net_unit23"
+        "net_unit21", "net_unit22", "net_unit23", "net_unit24"
     };
 
     card = gtk_button_new();
@@ -2039,6 +2040,62 @@ GtkWidget *build_net_unit23_page(void) {
                                slides, NET23_SLIDES);
 }
 
+GtkWidget *build_net_unit24_page(void) {
+    static const NetSlide slides[NET24_SLIDES] = {
+        {
+            "1 / 5   •   ARP / RARP", "Převod adres",
+            NULL,
+            {
+                "ARP: z IP adresy na MAC (fyzickou) adresu.",
+                "RARP: z MAC adresy na IP adresu.",
+                NULL,
+            },
+        },
+        {
+            "2 / 5   •   Způsoby", "Jak zjistit MAC",
+            NULL,
+            {
+                "Tabulkový převod: ruční správa (malé sítě).",
+                "Výpočet: funkce, kde MAC plyne z IP.",
+                "Dotaz a odpověď: dynamické zjišťování (nejčastější).",
+                NULL,
+            },
+        },
+        {
+            "3 / 5   •   Mechanismus", "Broadcast a unicast",
+            "Tip: „Kdo má IP x.x.x.x?“",
+            {
+                "ARP využívá broadcast v Ethernetu.",
+                "Odpoví jen uzel s danou IP.",
+                "Odpověď jde unicastem a obsahuje MAC adresu.",
+                NULL,
+            },
+        },
+        {
+            "4 / 5   •   Cache", "Dočasná paměť",
+            "Tip: zobrazení příkazem arp -a",
+            {
+                "Výsledky se ukládají do ARP cache.",
+                "Dotazy se tak nemusí stále opakovat.",
+                "Položky: dynamické (učené) nebo statické (ruční).",
+                NULL,
+            },
+        },
+        {
+            "5 / 5   •   Shrnutí", "K čemu ARP slouží",
+            NULL,
+            {
+                "Propojuje síťovou adresu (IP) s linkovou (MAC).",
+                "Bez ARP by IP datagram nešel vložit do Ethernet rámce.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[23], "net_unit24", "net_unit24_sub",
+                               slides, NET24_SLIDES);
+}
+
 /* Solutions below are the canonical "largest subnet first, in order A–D"
  * allocation. Scenario 3 does not fit into a /24 as written, which is why
  * its "solution" explains that instead. */
@@ -3441,5 +3498,42 @@ GtkWidget *build_net_unit23_exercise_page(void) {
     return build_net_mcq_page(22, "netunit23", "net_ex23_title", "net_quiz23_head",
                               net23_qs, net23_hints,
                               (int)G_N_ELEMENTS(net23_qs));
+}
+
+const ChoiceQ net24_qs[] = {
+    {"ARP převádí:",
+     {"IP adresu na MAC adresu", "MAC adresu na IP adresu",
+      "TCP na UDP", "TTL na MTU"}, 4, 0},
+    {"RARP převádí:",
+     {"MAC adresu na IP adresu", "IP adresu na MAC adresu",
+      "EtherType na SAP", "OSPF na RIP"}, 4, 0},
+    {"Nejčastější způsob ARP je:",
+     {"Dotaz a odpověď v síti", "Jen ruční tabulka bez sítě",
+      "Jen cut-through", "Jen ICMP Echo"}, 4, 0},
+    {"ARP dotaz v Ethernetu používá:",
+     {"Broadcast", "Jen unicast bez broadcastu", "Jen laser",
+      "Jen Token Ring bez IP"}, 4, 0},
+    {"ARP odpověď typicky přichází jako:",
+     {"Unicast s MAC adresou uzlu", "Broadcast bez MAC",
+      "Jen Time Exceeded", "Jen Source Quench"}, 4, 0},
+    {"ARP cache slouží k tomu, aby:",
+     {"Se nemusely stále opakovat stejné dotazy",
+      "Se nahradil směrovač", "Se zrušila IP adresa",
+      "Se vypnul Ethernet"}, 4, 0},
+};
+
+const char *net24_hints[] = {
+    "ARP: IP → MAC",
+    "RARP: MAC → IP",
+    "Nejčastější je dynamický dotaz a odpověď",
+    "ARP dotaz jde broadcastem",
+    "ARP odpověď je unicast s MAC",
+    "ARP cache ukládá výsledky dočasně (arp -a)",
+};
+
+GtkWidget *build_net_unit24_exercise_page(void) {
+    return build_net_mcq_page(23, "netunit24", "net_ex24_title", "net_quiz24_head",
+                              net24_qs, net24_hints,
+                              (int)G_N_ELEMENTS(net24_qs));
 }
 
