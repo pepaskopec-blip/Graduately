@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–17 = source topics (Základní pojmy … aktivní prvky). */
+     * units 2–18 = source topics (Základní pojmy … switch podrobně). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -23,6 +23,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET15_SLIDES, .unit_page = "netunit15", .ex_page = "netex15" },
     { .n_slides = NET16_SLIDES, .unit_page = "netunit16", .ex_page = "netex16" },
     { .n_slides = NET17_SLIDES, .unit_page = "netunit17", .ex_page = "netex17" },
+    { .n_slides = NET18_SLIDES, .unit_page = "netunit18", .ex_page = "netex18" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -464,7 +465,7 @@ void net_add_node(GtkFixed *fixed, int index) {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
         "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
-        "net_unit16", "net_unit17"
+        "net_unit16", "net_unit17", "net_unit18"
     };
 
     card = gtk_button_new();
@@ -1581,6 +1582,63 @@ GtkWidget *build_net_unit17_page(void) {
 
     return build_net_unit_page(&net_lessons[16], "net_unit17", "net_unit17_sub",
                                slides, NET17_SLIDES);
+}
+
+GtkWidget *build_net_unit18_page(void) {
+    static const NetSlide slides[NET18_SLIDES] = {
+        {
+            "1 / 5   •   Funkce", "Učení MAC adres",
+            "Tip: CAM tabulka = adresa → port",
+            {
+                "Switch se učí MAC adresy odesílatelů.",
+                "Ukládá je do CAM tabulky.",
+                "Rámce pak posílá jen na konkrétní port.",
+                NULL,
+            },
+        },
+        {
+            "2 / 5   •   Metody", "Tři způsoby přepínání",
+            NULL,
+            {
+                "Cut-through, store-and-forward a fragment-free.",
+                "Liší se rychlostí a kontrolou chyb.",
+                NULL,
+            },
+        },
+        {
+            "3 / 5   •   Cut-through", "Hned po adrese",
+            NULL,
+            {
+                "Čte jen adresu příjemce a hned posílá dál.",
+                "Nejrychlejší metoda.",
+                "Nevýhoda: posílá i chybné rámce.",
+                NULL,
+            },
+        },
+        {
+            "4 / 5   •   Store-and-forward", "Celý rámec + CRC",
+            NULL,
+            {
+                "Přijme celý rámec a zkontroluje CRC.",
+                "Teprve pak rámec pošle.",
+                "Nejpomalejší, ale nejbezpečnější metoda.",
+                NULL,
+            },
+        },
+        {
+            "5 / 5   •   Fragment-free", "Modifikovaný cut-through",
+            "Tip: prvních 64 bytů = detekce kolizí",
+            {
+                "Čte prvních 64 bytů rámce.",
+                "To stačí k odhalení kolizních fragmentů.",
+                "Kompromis mezi rychlostí a bezpečností.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[17], "net_unit18", "net_unit18_sub",
+                               slides, NET18_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2744,5 +2802,42 @@ GtkWidget *build_net_unit17_exercise_page(void) {
     return build_net_mcq_page(16, "netunit17", "net_ex17_title", "net_quiz17_head",
                               net17_qs, net17_hints,
                               (int)G_N_ELEMENTS(net17_qs));
+}
+
+const ChoiceQ net18_qs[] = {
+    {"Switch se učí MAC adresy a ukládá je do:",
+     {"CAM tabulky", "Jen DNS cache", "Jen ARP bez portů", "Jen OSPF"}, 4, 0},
+    {"Díky CAM tabulce switch posílá rámce:",
+     {"Jen na konkrétní port", "Vždy na všechny porty jako hub",
+      "Jen na routery", "Jen přes laser"}, 4, 0},
+    {"Cut-through přepínání:",
+     {"Čte jen adresu příjemce a hned posílá",
+      "Vždy čeká na celé CRC", "Nikdy neposílá rámce",
+      "Pracuje jen s IP směrováním"}, 4, 0},
+    {"Nevýhoda cut-through je:",
+     {"Že posílá i chybné rámce", "Že je nejpomalejší",
+      "Že nemá MAC adresy", "Že vyžaduje gateway"}, 4, 0},
+    {"Store-and-forward:",
+     {"Přijme celý rámec, zkontroluje CRC a pak pošle",
+      "Čte jen první 2 byty", "Nikdy nekontroluje chyby",
+      "Funguje jen jako Aloha"}, 4, 0},
+    {"Fragment-free (modifikovaný cut-through) čte:",
+     {"Prvních 64 bytů (detekce kolizí)", "Jen poslední byte",
+      "Celý paket IP včetně směrování", "Jen SMTP hlavičku"}, 4, 0},
+};
+
+const char *net18_hints[] = {
+    "MAC adresy switch ukládá do CAM tabulky",
+    "Podle CAM tabulky posílá rámec jen na cílový port",
+    "Cut-through čte adresu příjemce a hned přeposílá",
+    "Cut-through je rychlý, ale propustí i chyby",
+    "Store-and-forward kontroluje celý rámec včetně CRC",
+    "Fragment-free čte prvních 64 bytů kvůli kolizím",
+};
+
+GtkWidget *build_net_unit18_exercise_page(void) {
+    return build_net_mcq_page(17, "netunit18", "net_ex18_title", "net_quiz18_head",
+                              net18_qs, net18_hints,
+                              (int)G_N_ELEMENTS(net18_qs));
 }
 
