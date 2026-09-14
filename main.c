@@ -239,6 +239,11 @@ void activate(GtkApplication *app, gpointer user_data) {
                         "cetba1984quiz");
     gtk_stack_add_named(main_stack, build_cetba1984_plot_page(),
                         "cetba1984dej");
+    gtk_stack_add_named(main_stack, build_cetba_fuks_page(), "cetbaFuks");
+    gtk_stack_add_named(main_stack, build_cetba_fuks_quiz_page(),
+                        "cetbaFuksQuiz");
+    gtk_stack_add_named(main_stack, build_cetba_fuks_plot_page(),
+                        "cetbaFuksDej");
     gtk_stack_add_named(main_stack, build_hw_unit1_page(), "hwunit1");
     gtk_stack_add_named(main_stack, build_hw_unit1_exercise_page(), "hwex1");
     gtk_stack_add_named(main_stack, build_hw_unit2_page(), "hwunit2");

@@ -415,4 +415,5 @@ void apply_theme(void) {
     net_rail_theme_reset();
     hw_rail_theme_reset();
     czech_rail_theme_reset();
+    book_rail_theme_reset();
 }

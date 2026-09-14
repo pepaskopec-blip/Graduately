@@ -804,6 +804,10 @@ GtkWidget *build_readinglist_page(void);
 GtkWidget *build_cetba1984_page(void);
 GtkWidget *build_cetba1984_quiz_page(void);
 GtkWidget *build_cetba1984_plot_page(void);
+GtkWidget *build_cetba_fuks_page(void);
+GtkWidget *build_cetba_fuks_quiz_page(void);
+GtkWidget *build_cetba_fuks_plot_page(void);
+void book_rail_theme_reset(void);
 GtkWidget *build_hw_unit1_page(void);
 GtkWidget *build_hw_unit1_exercise_page(void);
 GtkWidget *build_hw_unit2_page(void);
@@ -816,6 +820,8 @@ void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data);
 void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,
                     int width, int height, gpointer data);
+void draw_book_badge_icon(GtkDrawingArea *area, cairo_t *cr,
+                          int width, int height, gpointer data);
 void draw_quiz_icon(GtkDrawingArea *area, cairo_t *cr,
                     int width, int height, gpointer data);
 void draw_order_icon(GtkDrawingArea *area, cairo_t *cr,

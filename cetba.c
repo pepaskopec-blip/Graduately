@@ -395,6 +395,451 @@ static const LitQ lit_qs[] = {
 
 #define LIT_NQ ((int)G_N_ELEMENTS(lit_qs))
 
+static const LitQ fuks_qs[] = {
+    {
+        "Kdo je hlavní postava románu a jaké je jeho povolání?",
+        {
+            "Pan Kopfrkingl – zaměstnanec krematoria",
+            "Willi Reinke – nacistický důstojník",
+            "Dr. Bettelheim – psychiatr",
+            "Pan Kopfrkingl – ředitel školy",
+        },
+        0,
+        "Hlavní postavou je pan Kopfrkingl, spořádaný zaměstnanec krematoria, "
+        "který svou práci vnímá jako poslání.",
+    },
+    {
+        "V jakém prostředí pan Kopfrkingl pracuje?",
+        {"V nemocnici", "V krematoriu", "V divadle", "Ve škole"},
+        1,
+        "Kopfrkingl pracuje v krematoriu, kde má na starosti zpopelňování "
+        "zemřelých.",
+    },
+    {
+        "V jaké historické době se děj románu odehrává?",
+        {
+            "Za první republiky",
+            "Za protektorátu Čechy a Morava (před a během 2. světové války)",
+            "Po roce 1989",
+            "V 19. století",
+        },
+        1,
+        "Román se odehrává v době nastupujícího nacismu a protektorátu, "
+        "který umožňuje Kopfrkinglovu proměnu.",
+    },
+    {
+        "Jak se proměňuje hlavní hrdina v průběhu příběhu?",
+        {
+            "Z laskavého spořádaného muže v chladnokrevného vraha a fanatika",
+            "Z vraha v kajícníka",
+            "Z chudáka v boháče",
+            "Vůbec se nemění",
+        },
+        0,
+        "Kopfrkingl se postupně mění v člověka, který vraždí své blízké a "
+        "ospravedlňuje to vyšším dobrem.",
+    },
+    {
+        "Jaký je vztah pana Kopfrkingla k jeho rodině na začátku knihy?",
+        {
+            "Nenávidí je",
+            "Je starostlivý, zdvořilý a především spořádaný",
+            "S rodinou se nezná",
+            "Týrá je",
+        },
+        1,
+        "Na začátku působí jako vzorný manžel a otec, posedlý řádem a "
+        "zdvořilostí.",
+    },
+    {
+        "Jak se jmenuje manželka pana Kopfrkingla a jaký je jejich vztah?",
+        {
+            "Marie – milují se",
+            "Lakmé – formálně zdvořilý, chladný vztah",
+            "Zina – nenávidí se",
+            "Julie – jsou rozvedení",
+        },
+        1,
+        "Manželka se jmenuje Lakmé. Jejich vztah je spíš zdvořilá forma než "
+        "opravdová láska.",
+    },
+    {
+        "Jaký je vztah pana Kopfrkingla k dětem, Zině a Mílovi?",
+        {
+            "Miluje je víc než sebe",
+            "Chová se k nim odtažitě, jako k součásti řádu",
+            "Nevidí je",
+            "Jsou adoptované",
+        },
+        1,
+        "K dětem je odměřený; vnímá je spíš jako součást svého spořádaného "
+        "světa než jako milované bytosti.",
+    },
+    {
+        "Kdo je Willi Reinke a jakou roli hraje v proměně hlavního hrdiny?",
+        {
+            "Soused z krematoria",
+            "Německý úředník a bývalý voják, který Kopfrkingla ovlivní",
+            "Kopfrkinglův bratr",
+            "Lékař v nemocnici",
+        },
+        1,
+        "Reinke je Němec, který v Kopfrkinglovi probudí touhu po árijském "
+        "původu a kariéře.",
+    },
+    {
+        "Jak Willi Reinke ovlivňuje Kopfrkinglovo smýšlení?",
+        {
+            "Přesvědčí ho, aby se přidal k nacistům a byl „lepší“",
+            "Nabádá ho k odchodu do zahraničí",
+            "Učí ho tibetštinu",
+            "Nijak ho neovlivní",
+        },
+        0,
+        "Reinke v něm posiluje antisemitismus a touhu po moci a uznání "
+        "v novém režimu.",
+    },
+    {
+        "Jaký je Kopfrkinglův vztah ke krematoriu a smrti obecně?",
+        {
+            "Bojí se jich",
+            "Má je rád, kremaci vnímá jako krásný obřad osvobození",
+            "Nechce tam pracovat",
+            "Je mu to lhostejné",
+        },
+        1,
+        "Smrt a kremace jsou pro něj estetickým a filozofickým rituálem, ne "
+        "něčím hrůzným.",
+    },
+    {
+        "Jak pan Kopfrkingl vnímá a popisuje proces kremace?",
+        {
+            "Jako nutné zlo",
+            "Jako vznešený, očistný obřad, o kterém rád mluví",
+            "Jako hroznou povinnost",
+            "Nikdy o něm nemluví",
+        },
+        1,
+        "Kopfrkingl o kremaci hovoří básnivě a s nadšením, což ostře "
+        "kontrastuje s hrůzou jeho činů.",
+    },
+    {
+        "Jaká je symbolika krematoria v celém románu?",
+        {
+            "Symbol naděje",
+            "Smrt, odlidštění a zvrácená ideologie, která z lidí dělá jen těla",
+            "Symbol lásky",
+            "Symbol mládí",
+        },
+        1,
+        "Krematorium je ústředním symbolem – odhaluje chladnou mašinerii "
+        "smrti, do níž se ideologie snaží proměnit člověka.",
+    },
+    {
+        "Co symbolizuje Kopfrkinglova záliba v tibetské Knize mrtvých?",
+        {
+            "Jeho touhu po vědění a zvrácenou víru ve vlastní výjimečnost",
+            "Historický zájem o Asii",
+            "Strach ze smrti",
+            "Lásku k manželce",
+        },
+        0,
+        "Kopfrkingl si z ní vybírá jen to, co se hodí k ospravedlnění jeho "
+        "činů a jeho pocitu vyvolenosti.",
+    },
+    {
+        "Jak se v knize projevuje motiv buddhismu a reinkarnace?",
+        {
+            "Kopfrkingl jimi ospravedlňuje smrt jako „osvobození duše“",
+            "Postavy se modlí k Bohu",
+            "Nikde se neobjevuje",
+            "Je to hlavní téma manželky",
+        },
+        0,
+        "Reinkarnace a „osvobození od utrpení“ se v jeho mysli zvrhávají "
+        "v právo zabíjet.",
+    },
+    {
+        "Jak Kopfrkingl zneužívá filozofické a náboženské myšlenky?",
+        {
+            "Ospravedlňuje jimi vlastní vraždy jako službu vyššímu dobru",
+            "Pomáhá jimi druhým",
+            "Odmítá je",
+            "Používá je jen v práci",
+        },
+        0,
+        "Z vznešených idejí si staví masku, za kterou skrývá krutost a touhu "
+        "po moci.",
+    },
+    {
+        "Jak se postupně mění Kopfrkinglova mluva a způsob vyjadřování?",
+        {
+            "Začíná mluvit vulgárně",
+            "Mění se v patetickou, ráznou řeč plnou frází o řádu a osvobození",
+            "Přestane mluvit",
+            "Od začátku mluví jen německy",
+        },
+        1,
+        "Jeho zdvořilá mluvnost se postupně mění v ideologické fráze a "
+        "bezcitný patos.",
+    },
+    {
+        "Jaké opakující se fráze nebo návyky pana Kopfrkingla si všímáš?",
+        {
+            "Neustále se ptá na počasí",
+            "Opakuje „to je takové“, „vidíte“ a lpí na zdvořilosti",
+            "Zpívá si",
+            "Mluví jen o jídle",
+        },
+        1,
+        "Opakující se fráze a zdvořilostní obraty vytvářejí rytmus, který je "
+        "čím dál tím děsivější.",
+    },
+    {
+        "Jaký je vypravěčský styl románu (ich-forma, er-forma)?",
+        {
+            "Er-forma bez vnitřního světa",
+            "Ich-forma – vypráví sám Kopfrkingl",
+            "Deníková forma",
+            "Forma dopisů",
+        },
+        1,
+        "Ich-forma je klíčová: čtenář sleduje svět zkreslený Kopfrkinglovou "
+        "myslí a sám postupně propadá jeho logice.",
+    },
+    {
+        "Jak se v knize projevuje černý humor a groteska?",
+        {
+            "Vážné scény jsou líčeny s odstupem a absurditou",
+            "Kniha je čistě vážná",
+            "Humor je jediný žánr",
+            "V knize se neprojevuje",
+        },
+        0,
+        "Groteskní kontrast mezi slavnostním vyprávěním a hrůzou vytváří "
+        "mrazivý černý humor.",
+    },
+    {
+        "Jak kontrastuje banalita každodenního života s hrůzností činů?",
+        {
+            "Vůbec nesouvisí",
+            "Všední detaily a zdvořilost činí hrůzu ještě děsivější",
+            "Hrůza je potlačena",
+            "Den je popsán jen jednou",
+        },
+        1,
+        "Fuks zesiluje otřes tím, že vraždění je popisováno stejně klidně "
+        "jako ranní káva nebo kremace.",
+    },
+    {
+        "Jak se v knize projevuje antisemitismus?",
+        {
+            "Od začátku otevřeně",
+            "Postupně, nejdřív v náznacích a vlivem Reinkeho",
+            "Nikdy",
+            "Jen mimochodem v závěru",
+        },
+        1,
+        "Kopfrkinglův antisemitismus se rodí pozvolna a je živen dobovou "
+        "atmosférou i Reinkem.",
+    },
+    {
+        "Jak nacistická ideologie postupně prostupuje Kopfrkinglovo myšlení?",
+        {
+            "Odmítá ji",
+            "Přijímá ji jako vyšší řád a ospravedlnění vlastní výjimečnosti",
+            "Nerozumí jí",
+            "Zajímá ho jen hudba",
+        },
+        1,
+        "Ideologie se mu stává nástrojem kariéry i vnitřním ospravedlněním "
+        "vražd.",
+    },
+    {
+        "Jak se mění Kopfrkinglův vztah k manželce kvůli jejímu původu?",
+        {
+            "Začne ji milovat víc",
+            "Odcizí se jí, protože je židovského původu",
+            "Nijak se nemění",
+            "Odstěhují se od sebe",
+        },
+        1,
+        "Kvůli jejímu původu ji přestane vnímat jako rovnocennou a nakonec "
+        "ji zabije.",
+    },
+    {
+        "Co se stane s Kopfrkinglovou rodinou ve druhé polovině románu?",
+        {
+            "Odstěhují se",
+            "Kopfrkingl svou ženu i děti zabije",
+            "Všichni přežijí",
+            "Zachrání je Reinke",
+        },
+        1,
+        "Pod vlivem ideologie Kopfrkingl vyvraždí vlastní rodinu a považuje "
+        "to za „osvobození“.",
+    },
+    {
+        "Jak Kopfrkingl zdůvodňuje vraždu vlastní ženy?",
+        {
+            "Zlobila se na něj",
+            "Že je židovského původu a překáží jeho kariéře",
+            "Že ho podváděla",
+            "Nijak ji nezdůvodňuje",
+        },
+        1,
+        "Svou ženu zabije mimo jiné proto, že je židovského původu, tedy "
+        "„méněcenná“ pro nový režim.",
+    },
+    {
+        "Jakým způsobem Kopfrkingl vraždí své blízké?",
+        {
+            "Ve zlosti a afektu",
+            "Chladně a s pocitem, že je „osvobozuje od utrpení“",
+            "Omylem",
+            "Na příkaz úřadů",
+        },
+        1,
+        "Vraždí klidně, jako by vykonával bohulibý úkon, a svou krutost si "
+        "vykládá jako soucit.",
+    },
+    {
+        "Jak souvisí přesvědčení o „osvobození“ s jeho vražednými činy?",
+        {
+            "Dává mu zdání vyššího smyslu, kterým si vraždy ospravedlňuje",
+            "Nemá s nimi nic společného",
+            "Brání mu v zabíjení",
+            "Je to jen náhodná fráze",
+        },
+        0,
+        "Zvrácená víra v osvobození od utrpení mu slouží jako mravní alibi "
+        "pro vraždy.",
+    },
+    {
+        "Jaký je vztah pana Kopfrkingla k postavě Dr. Bettelheima?",
+        {
+            "Obdivuje ho a rád s ním mluví",
+            "Nenávidí ho",
+            "Nikdy se nepotkají",
+            "Je to jeho nadřízený",
+        },
+        0,
+        "S doktorem Bettelheimem vede Kopfrkingl své „filozofické“ rozhovory "
+        "o smrti a lidskosti.",
+    },
+    {
+        "Jak se mění společenské postavení pana Kopfrkingla v době okupace?",
+        {
+            "Upadá",
+            "Stoupá – díky režimu a touze po árijském původu",
+            "Nemění se",
+            "Odchází do penze",
+        },
+        1,
+        "Spolu s nacistickou mocí roste i Kopfrkinglova kariéra a "
+        "sebevědomí.",
+    },
+    {
+        "Jaký je symbolický význam jména Kopfrkingl?",
+        {
+            "Zdánlivě úřednické, ale zní hrozivě – naznačuje zvrácenost",
+            "Je to běžné české jméno",
+            "Znamená „laskavý“",
+            "Je to pseudonym",
+        },
+        0,
+        "Zvukomalebné jméno působí úředně a zároveň hrozivě, což podtrhuje "
+        "dvojí tvář postavy.",
+    },
+    {
+        "Jak funguje motiv masek, divadla a přetvářky?",
+        {
+            "Postavy nosí masky dobroty, pod nimiž se skrývá krutost",
+            "V knize jsou jen skutečné divadelní masky",
+            "Motiv se neobjevuje",
+            "Masky symbolizují lásku",
+        },
+        0,
+        "Přetvářka a předstíraná spořádanost jsou ústřední – zlo se tváří "
+        "jako slušnost.",
+    },
+    {
+        "Jaký je vztah mezi soukromým a kolektivním šílenstvím doby?",
+        {
+            "Kopfrkinglovo osobní šílenství roste spolu s ideologií doby",
+            "Nijak nesouvisí",
+            "Doba je klidná a šťastná",
+            "Lidé režim jednomyslně odmítají",
+        },
+        0,
+        "Fuks ukazuje, jak se individuální porucha napojí na kolektivní "
+        "ideologii a čerpá z ní sílu.",
+    },
+    {
+        "Jak končí román a co se stane s panem Kopfrkinglem na konci?",
+        {
+            "Uteče do zahraničí",
+            "Je zatčen a zničen",
+            "Stane se hrdinou",
+            "Věří, že je vtělením Dalajlámy, a zůstává zaslepený",
+        },
+        3,
+        "Kopfrkinglova zaslepenost vrcholí přesvědčením o vlastní božskosti; "
+        "jeho zvrácená víra ho neopouští.",
+    },
+    {
+        "Jak je Spalovač mrtvol adaptován filmově?",
+        {
+            "Film Juraje Herze je vizuálně expresivní a patří k vrcholům "
+            "české kinematografie",
+            "Byl zfilmován jen v zahraničí",
+            "Film neexistuje",
+            "Vznikl jako animovaný seriál",
+        },
+        0,
+        "Známá filmová verze je od režiséra Juraje Herze z roku 1968.",
+    },
+    {
+        "Které další dílo Ladislava Fukse se dá srovnat s touto knihou?",
+        {
+            "Pan Theodor Mundstock nebo Myši Natálie Mooshabrové",
+            "Farma zvířat",
+            "R.U.R.",
+            "Babička",
+        },
+        0,
+        "Fuks se opakovaně zabýval osudem židovských postav a atmosférou "
+        "strachu; srovnat lze např. Pana Theodora Mundstocka.",
+    },
+    {
+        "Jaká jsou hlavní témata románu?",
+        {
+            "Moc, manipulace, ideologie, násilí a přetvářka",
+            "Láska a dobrodružství",
+            "Sport a přátelství",
+            "Příroda a vesmír",
+        },
+        0,
+        "Kniha zkoumá, jak se obyčejný člověk přizpůsobí zlu a stane se jeho "
+        "nástrojem.",
+    },
+    {
+        "Jaké poselství podle tebe chtěl Ladislav Fuks knihou předat?",
+        {
+            "Varování před manipulací a tím, jak se zlo rodí z banality a "
+            "lhostejnosti",
+            "Oslavu války",
+            "Návod k podnikání",
+            "Kritiku školství",
+        },
+        0,
+        "Fuks ukazuje, že hrůza může vzniknout z poslušnosti a touhy být "
+        "„lepší“ než ostatní.",
+    },
+};
+
+#define FUKS_NQ ((int)G_N_ELEMENTS(fuks_qs))
+
 typedef struct {
     const LitQ *qs;
     int n;
@@ -500,15 +945,16 @@ static void lit_next_clicked(GtkButton *button, gpointer data) {
     lit_quiz_show(z);
 }
 
-GtkWidget *build_cetba1984_quiz_page(void) {
+static GtkWidget *lit_quiz_page(const LitQ *qs, int n, const char *back,
+                                const char *title, const char *sub) {
     GtkWidget *page;
     GtkWidget *scroll;
     GtkWidget *box;
     GtkWidget *head;
     LitQuiz *z = g_new0(LitQuiz, 1);
 
-    z->qs = lit_qs;
-    z->n = LIT_NQ;
+    z->qs = qs;
+    z->n = n;
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_margin_start(page, 32);
@@ -516,8 +962,7 @@ GtkWidget *build_cetba1984_quiz_page(void) {
     gtk_widget_set_margin_top(page, 24);
     gtk_widget_set_margin_bottom(page, 24);
 
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("cetba1984", "lit_quiz_title", "lit_quiz_sub"));
+    gtk_box_append(GTK_BOX(page), top_bar(back, title, sub));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -607,6 +1052,16 @@ GtkWidget *build_cetba1984_quiz_page(void) {
     return page;
 }
 
+GtkWidget *build_cetba1984_quiz_page(void) {
+    return lit_quiz_page(lit_qs, LIT_NQ, "cetba1984",
+                         "lit_quiz_title", "lit_quiz_sub");
+}
+
+GtkWidget *build_cetba_fuks_quiz_page(void) {
+    return lit_quiz_page(fuks_qs, FUKS_NQ, "cetbaFuks",
+                         "lit_fuks_quiz_title", "lit_fuks_quiz_sub");
+}
+
 /* ------------------------------------------------------------------ */
 /* Sestavte děj (drag & drop)                                         */
 /* ------------------------------------------------------------------ */
@@ -639,6 +1094,35 @@ GtkWidget *build_cetba1984_plot_page(void) {
     return build_assembly(&lit_plot_unit, tr("lit_plot_title"),
                           "lit_plot_sub", 1, lit_plot_items,
                           lit_plot_meaning, 1);
+}
+
+static const AssemblyItem fuks_plot_items[] = {
+    {
+        "Přetáhněte části příběhu do správného pořadí:",
+        {
+            "Kopfrkingl je spořádaným zaměstnancem krematoria",
+            "Seznámí se s Willim Reinkem",
+            "Začne věřit v árijskou nadřazenost",
+            "Postupně se odcizí své rodině",
+            "Zabije ženu a děti jako „osvobození“",
+            "Na konci se považuje za vtělení Dalajlámy",
+        },
+        6,
+    },
+};
+
+static const char *fuks_plot_meaning[] = {
+    "Správné pořadí: spořádaný úředník → setkání s Reinkem → árijská "
+    "ideologie → odcizení rodině → vraždy → přesvědčení o vlastní "
+    "božskosti.",
+};
+
+GtkWidget *build_cetba_fuks_plot_page(void) {
+    lit_plot_unit.page = "cetbaFuks";
+    lit_plot_unit.progress_file = "progress/cetba.conf";
+    return build_assembly(&lit_plot_unit, tr("lit_fuks_plot_title"),
+                          "lit_fuks_plot_sub", 1, fuks_plot_items,
+                          fuks_plot_meaning, 1);
 }
 
 /* ------------------------------------------------------------------ */
@@ -723,21 +1207,175 @@ static void lit_note_card(GtkWidget *parent, const char *title,
     }
 }
 
+/* ------------------------------------------------------------------ */
+/* Reading roadmap (Maturitní četba)                                  */
+/* ------------------------------------------------------------------ */
+
+#define BOOK_NODES 2
+
+typedef struct {
+    const char *title;
+    const char *target;
+} BookDef;
+
+static const BookDef book_defs[BOOK_NODES] = {
+    {"George Orwell – 1984", "cetba1984"},
+    {"Ladislav Fuks – Spalovač mrtvol", "cetbaFuks"},
+};
+
+static GtkWidget *book_rail;
+static GtkWidget *book_nodes[BOOK_NODES];
+static GtkWidget *book_labels[BOOK_NODES];
+static double book_cx[BOOK_NODES];
+static double book_cy[BOOK_NODES];
+static int book_cw = 540;
+static int book_ch = 300;
+
+static void book_point(double t, double *ox, double *oy) {
+    int k = (int)t;
+    double u = t - (double)k;
+    double u2, u3;
+    double p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+
+    if (k < 0) { k = 0; u = 0.0; }
+    if (k >= BOOK_NODES - 1) { k = BOOK_NODES - 2; u = 1.0; }
+
+    p1x = book_cx[k];     p1y = book_cy[k];
+    p2x = book_cx[k + 1]; p2y = book_cy[k + 1];
+    if (k - 1 >= 0) { p0x = book_cx[k - 1]; p0y = book_cy[k - 1]; }
+    else            { p0x = p1x - (p2x - p1x); p0y = p1y - (p2y - p1y); }
+    if (k + 2 < BOOK_NODES) { p3x = book_cx[k + 2]; p3y = book_cy[k + 2]; }
+    else                    { p3x = p2x + (p2x - p1x); p3y = p2y + (p2y - p1y); }
+
+    u2 = u * u;
+    u3 = u2 * u;
+    *ox = 0.5 * (2.0 * p1x + (-p0x + p2x) * u
+                 + (2.0 * p0x - 5.0 * p1x + 4.0 * p2x - p3x) * u2
+                 + (-p0x + 3.0 * p1x - 3.0 * p2x + p3x) * u3);
+    *oy = 0.5 * (2.0 * p1y + (-p0y + p2y) * u
+                 + (2.0 * p0y - 5.0 * p1y + 4.0 * p2y - p3y) * u2
+                 + (-p0y + 3.0 * p1y - 3.0 * p2y + p3y) * u3);
+}
+
+static void book_path(cairo_t *cr, double t0, double t1) {
+    const double steps_per_unit = 48.0;
+    int n = (int)((t1 - t0) * steps_per_unit);
+    double x, y;
+
+    if (n < 1)
+        n = 1;
+    book_point(t0, &x, &y);
+    cairo_move_to(cr, x, y);
+    for (int s = 1; s <= n; s++) {
+        book_point(t0 + (t1 - t0) * (double)s / (double)n, &x, &y);
+        cairo_line_to(cr, x, y);
+    }
+}
+
+static void book_geometry(double avail) {
+    const double phase = 2.0 * G_PI * 1.7 / (double)(BOOK_NODES - 1);
+    int rows;
+    int r, c, i;
+
+    for (rows = 1; rows <= BOOK_NODES; rows++) {
+        int cols = (BOOK_NODES + rows - 1) / rows;
+        if (2.0 * ROAD_MX + (cols - 1) * PATH_SPAC <= avail + 1.0)
+            break;
+    }
+    if (rows > BOOK_NODES)
+        rows = BOOK_NODES;
+    int cols = (BOOK_NODES + rows - 1) / rows;
+    if (cols < 1)
+        cols = 1;
+    book_cw = (int)(2.0 * ROAD_MX + (cols - 1) * PATH_SPAC);
+    book_ch = (int)(2.0 * ROAD_MY + (rows - 1) * ROAD_GAP);
+
+    for (r = 0; r < rows; r++) {
+        int base = r * cols;
+        int len = MIN(cols, BOOK_NODES - base);
+        int fwd = (r % 2) == 0;
+        for (c = 0; c < len; c++) {
+            i = base + c;
+            int cc = fwd ? c : (cols - 1 - c);
+            book_cx[i] = ROAD_MX + cc * PATH_SPAC;
+            book_cy[i] = ROAD_MY + r * ROAD_GAP
+                         + ROAD_WAVE * sin((double)i * phase);
+        }
+    }
+}
+
+static void draw_book_rail(GtkDrawingArea *area, cairo_t *cr,
+                           int width, int height, gpointer data) {
+    const double t_end = (double)(BOOK_NODES - 1);
+    const Rgb rail = color_from_hex(app_theme.rail);
+    const Rgb mauve = color_from_hex(app_theme.accent);
+    const Rgb muted = color_from_hex(app_theme.subtext);
+    double hx, hy;
+
+    (void)area;
+    (void)width;
+    (void)height;
+    (void)data;
+
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint(cr);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+
+    book_point(0.0, &hx, &hy);
+    draw_node_halo(cr, hx, hy, NODE_SIZE * 1.05,
+                   mauve.r, mauve.g, mauve.b, 0.18);
+
+    cairo_new_path(cr);
+    book_path(cr, 0.0, t_end);
+    cairo_set_line_width(cr, 16);
+    cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
+    cairo_stroke(cr);
+
+    cairo_set_source_rgba(cr, muted.r, muted.g, muted.b, 0.17);
+    cairo_set_dash(cr, (double[]){2.0, 40.0}, 2, 0.0);
+    cairo_new_path(cr);
+    book_path(cr, 0.0, t_end);
+    cairo_stroke(cr);
+    cairo_set_dash(cr, NULL, 0, 0.0);
+}
+
+void book_rail_theme_reset(void) {
+    if (book_rail)
+        gtk_widget_queue_draw(book_rail);
+}
+
+static GtkWidget *book_make_node(int i) {
+    GtkWidget *btn = gtk_button_new();
+    GtkWidget *icon = icon_area_new(draw_book_badge_icon, 0, 0, 0, 48);
+
+    gtk_widget_add_css_class(btn, "unit-node");
+    gtk_widget_add_css_class(btn, "current");
+    gtk_widget_set_can_focus(btn, FALSE);
+    gtk_widget_set_size_request(btn, (int)NODE_SIZE, (int)NODE_SIZE);
+
+    gtk_button_set_child(GTK_BUTTON(btn), icon);
+
+    g_object_set_data_full(G_OBJECT(btn), "target",
+                           g_strdup(book_defs[i].target), g_free);
+    g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+    return btn;
+}
+
 GtkWidget *build_readinglist_page(void) {
     GtkWidget *page;
     GtkWidget *scroll;
     GtkWidget *wrap;
-    GtkWidget *col;
-    GtkWidget *hero;
-    GtkWidget *card;
-    GtkWidget *row;
-    GtkWidget *ic;
-    GtkWidget *texts;
-    GtkWidget *title;
-    GtkWidget *author;
-    GtkWidget *sub;
+    GtkWidget *fixed;
+    GtkWidget *rail;
+    int i;
+
+    book_geometry(1000.0);
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_hexpand(page, TRUE);
+    gtk_widget_set_vexpand(page, TRUE);
     gtk_widget_set_margin_start(page, 32);
     gtk_widget_set_margin_end(page, 32);
     gtk_widget_set_margin_top(page, 24);
@@ -748,7 +1386,7 @@ GtkWidget *build_readinglist_page(void) {
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 14);
     gtk_box_append(GTK_BOX(page), scroll);
@@ -758,51 +1396,45 @@ GtkWidget *build_readinglist_page(void) {
     gtk_widget_set_hexpand(wrap, TRUE);
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), wrap);
 
-    col = gtk_box_new(GTK_ORIENTATION_VERTICAL, 18);
-    gtk_widget_set_valign(col, GTK_ALIGN_CENTER);
-    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), col);
+    fixed = gtk_fixed_new();
+    gtk_widget_set_halign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(fixed, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(fixed, book_cw, book_ch);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(wrap), fixed);
+    gtk_widget_set_margin_start(fixed, 24);
+    gtk_widget_set_margin_end(fixed, 24);
 
-    hero = icon_area_new(draw_book_icon, 0, 0, 0, 92);
-    gtk_widget_add_css_class(hero, "reading-hero");
-    gtk_box_append(GTK_BOX(col), hero);
+    rail = gtk_drawing_area_new();
+    gtk_widget_set_size_request(rail, book_cw, book_ch);
+    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(rail), draw_book_rail,
+                                   NULL, NULL);
+    gtk_fixed_put(GTK_FIXED(fixed), rail, 0, 0);
+    book_rail = rail;
 
-    card = gtk_button_new();
-    gtk_widget_add_css_class(card, "book-card");
-    gtk_widget_set_hexpand(card, TRUE);
+    for (i = 0; i < BOOK_NODES; i++) {
+        GtkWidget *btn = book_make_node(i);
+        GtkWidget *name = gtk_label_new(book_defs[i].title);
 
-    row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 16);
-    gtk_button_set_child(GTK_BUTTON(card), row);
+        gtk_widget_set_size_request(name, (int)(PATH_SPAC - 20.0), -1);
+        gtk_widget_set_halign(name, GTK_ALIGN_CENTER);
+        gtk_label_set_justify(GTK_LABEL(name), GTK_JUSTIFY_CENTER);
+        gtk_label_set_wrap(GTK_LABEL(name), TRUE);
+        gtk_widget_add_css_class(name, "unit-name");
+        gtk_widget_add_css_class(name, "cz-label");
 
-    ic = icon_area_new(draw_book_icon, 0, 0, 0, 54);
-    gtk_widget_set_valign(ic, GTK_ALIGN_CENTER);
-    gtk_box_append(GTK_BOX(row), ic);
+        gtk_fixed_put(GTK_FIXED(fixed), btn, 0, 0);
+        gtk_fixed_put(GTK_FIXED(fixed), name, 0, 0);
 
-    texts = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
-    gtk_widget_set_valign(texts, GTK_ALIGN_CENTER);
-    gtk_widget_set_hexpand(texts, TRUE);
-    gtk_box_append(GTK_BOX(row), texts);
+        gtk_fixed_move(GTK_FIXED(fixed), btn,
+                       (int)(book_cx[i] - NODE_SIZE / 2.0),
+                       (int)(book_cy[i] - NODE_SIZE / 2.0));
+        gtk_fixed_move(GTK_FIXED(fixed), name,
+                       (int)(book_cx[i] - (PATH_SPAC - 20.0) / 2.0),
+                       (int)(book_cy[i] + NODE_SIZE / 2.0 + 10.0));
 
-    title = gtk_label_new("1984");
-    gtk_widget_set_halign(title, GTK_ALIGN_START);
-    gtk_widget_add_css_class(title, "book-title");
-    gtk_box_append(GTK_BOX(texts), title);
-
-    author = gtk_label_new("George Orwell");
-    gtk_widget_set_halign(author, GTK_ALIGN_START);
-    gtk_widget_add_css_class(author, "book-author");
-    gtk_box_append(GTK_BOX(texts), author);
-
-    sub = gtk_label_new(NULL);
-    gtk_widget_set_halign(sub, GTK_ALIGN_START);
-    gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
-    gtk_widget_add_css_class(sub, "book-sub");
-    i18n_bind(sub, "book_1984_sub", 0);
-    gtk_box_append(GTK_BOX(texts), sub);
-
-    g_object_set_data_full(G_OBJECT(card), "target", g_strdup("cetba1984"),
-                           g_free);
-    g_signal_connect(card, "clicked", G_CALLBACK(on_nav_clicked), NULL);
-    gtk_box_append(GTK_BOX(col), card);
+        book_nodes[i] = btn;
+        book_labels[i] = name;
+    }
 
     return page;
 }
@@ -885,6 +1517,85 @@ GtkWidget *build_cetba1984_page(void) {
     lit_note_card(box, "Svět a strana", draw_globe_icon, world);
     lit_note_card(box, "Postavy", draw_people_icon, people);
     lit_note_card(box, "Klíčové pojmy", draw_bulb_icon, terms);
+
+    return page;
+}
+
+GtkWidget *build_cetba_fuks_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *box;
+    GtkWidget *links;
+    static const char *about[] = {
+        "Autor: Ladislav Fuks (1923–1994)",
+        "Žánr: psychologický román s prvky grotesky a hororu",
+        "Poprvé vydáno: 1967",
+        "Děj: Praha v době protektorátu (konec 30. let)",
+        "Vyprávění: ich-forma – vypráví sám pan Kopfrkingl",
+        NULL,
+    };
+    static const char *world[] = {
+        "Děj se odehrává v protektorátu Čechy a Morava za nastupujícího "
+        "nacismu.",
+        "Atmosféru tvoří strach, přizpůsobování a touha zalíbit se moci.",
+        "Krematorium je symbolem smrti a odlidštění.",
+        "Antisemitismus a árijská ideologie postupně prostupují společnost.",
+        "Obyčejný úředník se mění v nástroj zla.",
+        NULL,
+    };
+    static const char *people[] = {
+        "Pan Kopfrkingl – zaměstnanec krematoria, vypravěč a vrah své rodiny.",
+        "Lakmé – jeho žena, židovského původu.",
+        "Zina a Mil – jeho děti.",
+        "Willi Reinke – Němec, který Kopfrkingla přivede k nacismu.",
+        "Dr. Bettelheim – lékař, s nímž Kopfrkingl rozmlouvá o smrti.",
+        NULL,
+    };
+    static const char *terms[] = {
+        "Krematorium – symbol smrti a zvrácené „očisty“.",
+        "Kniha mrtvých – tibetský text, který si Kopfrkingl překrucuje.",
+        "Reinkarnace a „osvobození“ – záminka pro vraždy.",
+        "Masky a přetvářka – zlo se tváří jako zdvořilost a řád.",
+        "Groteska a černý humor – hrůza podaná klidným, slavnostním tónem.",
+        "Voda a Vltava – motiv smrti a plynutí.",
+        NULL,
+    };
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("readinglist", "Ladislav Fuks – Spalovač mrtvol",
+                           "cetbaFuks_sub"));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 14);
+    gtk_widget_set_margin_bottom(scroll, 14);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), box);
+
+    links = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+    gtk_widget_set_margin_bottom(links, 14);
+    gtk_box_append(GTK_BOX(box), links);
+    gtk_box_append(GTK_BOX(links),
+                   lit_link_card("cetbaFuksQuiz", "lit_fuks_quiz_title",
+                                 "lit_fuks_quiz_sub", draw_quiz_icon));
+    gtk_box_append(GTK_BOX(links),
+                   lit_link_card("cetbaFuksDej", "lit_fuks_plot_title",
+                                 "lit_fuks_plot_sub", draw_order_icon));
+
+    lit_note_card(box, "O knize", draw_book_icon, about);
+    lit_note_card(box, "Doba a svět", draw_globe_icon, world);
+    lit_note_card(box, "Postavy", draw_people_icon, people);
+    lit_note_card(box, "Klíčové motivy", draw_bulb_icon, terms);
 
     return page;
 }

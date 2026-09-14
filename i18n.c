@@ -476,6 +476,15 @@ const TrEntry tr_ui[] = {
     {"lit_finished", "Hotovo!", "Done!"},
     {"lit_finished_text", "Prošli jste všemi otázkami.",
      "You have finished all the questions."},
+    {"cetbaFuks_sub", "Přehled knihy, klíčové pojmy a cvičení.",
+     "Book overview, key terms and exercises."},
+    {"lit_fuks_quiz_title", "Kvíz: Spalovač mrtvol",
+     "Quiz: The Cremator"},
+    {"lit_fuks_quiz_sub", "U každé otázky vyberte jednu správnou odpověď.",
+     "Pick one correct answer for each question."},
+    {"lit_fuks_plot_title", "Sestavte děj", "Order the plot"},
+    {"lit_fuks_plot_sub", "Přetáhněte části příběhu do správného pořadí.",
+     "Drag the story parts into the correct order."},
     {NULL, NULL, NULL}
 };
 

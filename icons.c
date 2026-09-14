@@ -142,43 +142,63 @@ void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
     }
 }
 
-/* Open book icon – used for the reading list and overview sections. */
-void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,
-                    int width, int height, gpointer data) {
+/* Open book glyph, painted in the given colour. */
+static void book_paint(cairo_t *cr, int width, int height, Rgb c) {
     const double w = width;
     const double h = height;
     const double mid = w * 0.5;
+    const double gap = w * 0.045;      /* spine gap so the pages read apart */
+    const double lmid = mid - gap;
+    const double rmid = mid + gap;
     const double left = w * 0.13;
     const double right = w * 0.87;
     const double top = h * 0.24;
     const double bot = h * 0.80;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, lmid, top);
+    cairo_curve_to(cr, w * 0.40, top - h * 0.07,
+                   w * 0.24, top - h * 0.02, left, top + h * 0.07);
+    cairo_line_to(cr, left, bot - h * 0.05);
+    cairo_curve_to(cr, w * 0.24, bot - h * 0.11,
+                   w * 0.40, bot - h * 0.05, lmid, bot);
+    cairo_close_path(cr);
+    cairo_fill(cr);
+
+    cairo_new_path(cr);
+    cairo_move_to(cr, rmid, top);
+    cairo_curve_to(cr, w * 0.60, top - h * 0.07,
+                   w * 0.76, top - h * 0.02, right, top + h * 0.07);
+    cairo_line_to(cr, right, bot - h * 0.05);
+    cairo_curve_to(cr, w * 0.76, bot - h * 0.11,
+                   w * 0.60, bot - h * 0.05, rmid, bot);
+    cairo_close_path(cr);
+    cairo_fill(cr);
+}
+
+/* Open book icon – used on light surfaces (cards, section headers). */
+void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data) {
     const Rgb c = mix_rgb(color_from_hex(app_theme.accent2),
                           color_from_hex(app_theme.accent3), 0.35);
 
     (void)area;
     (void)data;
+    book_paint(cr, width, height, c);
+}
 
-    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+/* Open book icon for the accent-gradient roadmap bubbles: uses the
+ * contrasting on-accent colour so it stays visible on the gradient. */
+void draw_book_badge_icon(GtkDrawingArea *area, cairo_t *cr,
+                          int width, int height, gpointer data) {
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
 
-    cairo_new_path(cr);
-    cairo_move_to(cr, mid, top);
-    cairo_curve_to(cr, w * 0.40, top - h * 0.07,
-                   w * 0.24, top - h * 0.02, left, top + h * 0.07);
-    cairo_line_to(cr, left, bot - h * 0.05);
-    cairo_curve_to(cr, w * 0.24, bot - h * 0.11,
-                   w * 0.40, bot - h * 0.05, mid, bot);
-    cairo_close_path(cr);
-    cairo_fill(cr);
-
-    cairo_new_path(cr);
-    cairo_move_to(cr, mid, top);
-    cairo_curve_to(cr, w * 0.60, top - h * 0.07,
-                   w * 0.76, top - h * 0.02, right, top + h * 0.07);
-    cairo_line_to(cr, right, bot - h * 0.05);
-    cairo_curve_to(cr, w * 0.76, bot - h * 0.11,
-                   w * 0.60, bot - h * 0.05, mid, bot);
-    cairo_close_path(cr);
-    cairo_fill(cr);
+    (void)area;
+    (void)data;
+    book_paint(cr, width, height, c);
 }
 
 /* Question mark in a circle – quiz. */
