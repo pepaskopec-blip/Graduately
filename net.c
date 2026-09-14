@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–10 = source topics 01–09 (Základní pojmy … ISO/OSI). */
+     * units 2–11 = source topics 01–10 (Základní pojmy … 7 vrstev ISO/OSI). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -16,6 +16,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET8_SLIDES,  .unit_page = "netunit8",  .ex_page = "netex8"  },
     { .n_slides = NET9_SLIDES,  .unit_page = "netunit9",  .ex_page = "netex9"  },
     { .n_slides = NET10_SLIDES, .unit_page = "netunit10", .ex_page = "netex10" },
+    { .n_slides = NET11_SLIDES, .unit_page = "netunit11", .ex_page = "netex11" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -455,7 +456,8 @@ void net_add_node(GtkFixed *fixed, int index) {
     char *text;
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
-        "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10"
+        "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
+        "net_unit11"
     };
 
     card = gtk_button_new();
@@ -1162,6 +1164,93 @@ GtkWidget *build_net_unit10_page(void) {
 
     return build_net_unit_page(&net_lessons[9], "net_unit10", "net_unit10_sub",
                                slides, NET10_SLIDES);
+}
+
+GtkWidget *build_net_unit11_page(void) {
+    static const NetSlide slides[NET11_SLIDES] = {
+        {
+            "1 / 8   •   Přehled", "Tři skupiny vrstev",
+            "Tip: přenos → přizpůsobení → aplikace",
+            {
+                "Vrstvy orientované na přenos: fyzická, spojová, síťová.",
+                "Přizpůsobovací vrstva: transportní.",
+                "Vrstvy orientované na aplikace: relační, prezentační,",
+                "aplikační.",
+                NULL,
+            },
+        },
+        {
+            "2 / 8   •   Fyzická", "Přenos bitů",
+            NULL,
+            {
+                "Přenos bitů po médiu.",
+                "Definuje napětí, kabely, konektory, kódování a modulaci.",
+                "Řeší také duplex / simplex.",
+                NULL,
+            },
+        },
+        {
+            "3 / 8   •   Spojová", "Rámce a MAC",
+            "Tip: podvrstvy MAC (přístup k médiu) a LLC (logické řízení)",
+            {
+                "Tvorba rámců a fyzické (MAC) adresy.",
+                "Kontrola chyb (CRC) a řízení toku mezi sousedními uzly.",
+                "Podvrstvy: MAC a LLC.",
+                NULL,
+            },
+        },
+        {
+            "4 / 8   •   Síťová", "Směrování paketů",
+            NULL,
+            {
+                "Směrování (routing) paketů.",
+                "Funguje i v sítích bez přímého spojení mezi uzly.",
+                NULL,
+            },
+        },
+        {
+            "5 / 8   •   Transportní", "Segmenty end-to-end",
+            "Tip: v routerech transportní vrstva není",
+            {
+                "Rozklad zpráv na segmenty a jejich zpětné složení.",
+                "Kontrola pořadí a náprava chyb.",
+                "Existuje jen v koncových uzlech – není v routerech.",
+                NULL,
+            },
+        },
+        {
+            "6 / 8   •   Relační", "Relace a dialog",
+            NULL,
+            {
+                "Navazuje, udržuje a ukončuje relace.",
+                "Řídí dialog („neskákat si do řeči“).",
+                "Synchronizace – navázání po přerušení.",
+                NULL,
+            },
+        },
+        {
+            "7 / 8   •   Prezentační", "Formát dat",
+            NULL,
+            {
+                "Formátování dat (např. ASCII).",
+                "Komprese a šifrování.",
+                "Převod mezi různými standardy.",
+                NULL,
+            },
+        },
+        {
+            "8 / 8   •   Aplikační", "Rozhraní pro programy",
+            NULL,
+            {
+                "Rozhraní pro aplikace a služby.",
+                "Například e-mail, HTTP, FTP nebo terminál.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[10], "net_unit11", "net_unit11_sub",
+                               slides, NET11_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2053,5 +2142,44 @@ GtkWidget *build_net_unit10_exercise_page(void) {
     return build_net_mcq_page(9, "netunit10", "net_ex10_title", "net_quiz10_head",
                               net10_qs, net10_hints,
                               (int)G_N_ELEMENTS(net10_qs));
+}
+
+const ChoiceQ net11_qs[] = {
+    {"Fyzická vrstva se stará o:",
+     {"Přenos bitů", "Směrování paketů", "Navazování relací",
+      "Formátování ASCII"}, 4, 0},
+    {"MAC a LLC jsou podvrstvy:",
+     {"Síťové vrstvy", "Spojové (linkové) vrstvy", "Transportní vrstvy",
+      "Aplikační vrstvy"}, 4, 1},
+    {"Směrování paketů v sítích bez přímého spojení řeší:",
+     {"Fyzická vrstva", "Relační vrstva", "Síťová vrstva",
+      "Prezentační vrstva"}, 4, 2},
+    {"Transportní vrstva existuje:",
+     {"Jen v koncových uzlech", "I v routerech", "Jen ve switchech",
+      "Jen na hubu"}, 4, 0},
+    {"Relační vrstva především:",
+     {"Definuje napětí a kabely", "Navazuje, udržuje a ukončuje relace",
+      "Přidává MAC adresy", "Směruje pakety"}, 4, 1},
+    {"Komprese a šifrování patří do vrstvy:",
+     {"Fyzické", "Spojové", "Prezentační", "Síťové"}, 4, 2},
+    {"Aplikační vrstva poskytuje:",
+     {"CRC mezi sousedy", "Rozhraní pro programy (HTTP, FTP, e-mail…)",
+      "Jen duplex/simplex", "Jen směrování"}, 4, 1},
+};
+
+const char *net11_hints[] = {
+    "Fyzická vrstva přenáší bity a řeší médium",
+    "Spojová vrstva má podvrstvy MAC a LLC",
+    "Síťová vrstva směruje pakety i bez přímého spojení",
+    "Transportní vrstva je jen v koncových uzlech, ne v routerech",
+    "Relační vrstva řídí relace, dialog a synchronizaci",
+    "Prezentační vrstva formátuje data, komprimuje a šifruje",
+    "Aplikační vrstva je rozhraní pro programy a služby",
+};
+
+GtkWidget *build_net_unit11_exercise_page(void) {
+    return build_net_mcq_page(10, "netunit11", "net_ex11_title", "net_quiz11_head",
+                              net11_qs, net11_hints,
+                              (int)G_N_ELEMENTS(net11_qs));
 }
 
