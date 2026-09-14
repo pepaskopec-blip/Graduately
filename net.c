@@ -5,7 +5,7 @@
 
 NetLesson net_lessons[NET_LESSONS] = {
     /* UI unit N maps to lesson content: unit 1 = IP/VLSM (extra);
-     * units 2–15 = source topics (Základní pojmy … montáž optiky). */
+     * units 2–16 = source topics (Základní pojmy … metody přístupu). */
     { .n_slides = NET_SLIDES,   .unit_page = "netunit1",  .ex_page = "netex1"  },
     { .n_slides = NET2_SLIDES,  .unit_page = "netunit2",  .ex_page = "netex2"  },
     { .n_slides = NET3_SLIDES,  .unit_page = "netunit3",  .ex_page = "netex3"  },
@@ -21,6 +21,7 @@ NetLesson net_lessons[NET_LESSONS] = {
     { .n_slides = NET13_SLIDES, .unit_page = "netunit13", .ex_page = "netex13" },
     { .n_slides = NET14_SLIDES, .unit_page = "netunit14", .ex_page = "netex14" },
     { .n_slides = NET15_SLIDES, .unit_page = "netunit15", .ex_page = "netex15" },
+    { .n_slides = NET16_SLIDES, .unit_page = "netunit16", .ex_page = "netex16" },
 };
 
 void net_paragraph(GtkWidget *box, const char *text) {
@@ -461,7 +462,8 @@ void net_add_node(GtkFixed *fixed, int index) {
     static const char *unit_keys[NET_LESSONS] = {
         "net_unit1", "net_unit2", "net_unit3", "net_unit4", "net_unit5",
         "net_unit6", "net_unit7", "net_unit8", "net_unit9", "net_unit10",
-        "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15"
+        "net_unit11", "net_unit12", "net_unit13", "net_unit14", "net_unit15",
+        "net_unit16"
     };
 
     card = gtk_button_new();
@@ -1463,6 +1465,53 @@ GtkWidget *build_net_unit15_page(void) {
 
     return build_net_unit_page(&net_lessons[14], "net_unit15", "net_unit15_sub",
                                slides, NET15_SLIDES);
+}
+
+GtkWidget *build_net_unit16_page(void) {
+    static const NetSlide slides[NET16_SLIDES] = {
+        {
+            "1 / 4   •   Kolize", "Sdílené médium",
+            NULL,
+            {
+                "Kolize nastane, když na sdíleném médiu vysílá více uzlů najednou.",
+                NULL,
+            },
+        },
+        {
+            "2 / 4   •   Aloha", "Vysílej kdykoliv",
+            "Tip: časté kolize, primitivní metoda",
+            {
+                "Uzel vysílá kdykoliv chce.",
+                "Když nepřijde potvrzení, pošle data znovu.",
+                "Kolize jsou časté.",
+                NULL,
+            },
+        },
+        {
+            "3 / 4   •   CSMA/CD", "Ethernet",
+            "Tip: Carrier Sense + Collision Detection",
+            {
+                "Nejdřív se poslouchá nosná (Carrier Sense).",
+                "Je-li ticho, uzel vysílá.",
+                "Při kolizi se vysílání zastaví a zkusí se znovu",
+                "po náhodném čase.",
+                NULL,
+            },
+        },
+        {
+            "4 / 4   •   CSMA/CA", "Wi-Fi",
+            "Tip: Collision Avoidance přes RTS/CTS",
+            {
+                "Předchází kolizím (Collision Avoidance).",
+                "RTS (Request to Send) a CTS (Clear to Send)",
+                "rezervují médium před vysíláním.",
+                NULL,
+            },
+        },
+    };
+
+    return build_net_unit_page(&net_lessons[15], "net_unit16", "net_unit16_sub",
+                               slides, NET16_SLIDES);
 }
 
 /* Solutions below are the canonical "largest subnet first, in order A–D"
@@ -2546,5 +2595,44 @@ GtkWidget *build_net_unit15_exercise_page(void) {
     return build_net_mcq_page(14, "netunit15", "net_ex15_title", "net_quiz15_head",
                               net15_qs, net15_hints,
                               (int)G_N_ELEMENTS(net15_qs));
+}
+
+const ChoiceQ net16_qs[] = {
+    {"Kolize nastane, když:",
+     {"Na sdíleném médiu vysílá více uzlů najednou",
+      "Router vypne OSPF", "Vlákno má ochranu 250 µm",
+      "Použijeme jen TCP"}, 4, 0},
+    {"Metoda Aloha znamená především:",
+     {"Vysílej kdykoliv; bez potvrzení pošli znovu",
+      "Vždy rezervuj médium RTS/CTS",
+      "Nikdy nevysílej při tichu",
+      "Jen směrování RIP"}, 4, 0},
+    {"CSMA/CD se typicky pojí s:",
+     {"Wi-Fi", "Ethernetem", "Jen SMTP", "Jen ATM"}, 4, 1},
+    {"Při CSMA/CD uzel před vysíláním:",
+     {"Ignoruje médium", "Monitoruje nosnou (Carrier Sense)",
+      "Vždy čeká přesně 1 hodinu", "Použije jen laser"}, 4, 1},
+    {"Když CSMA/CD detekuje kolizi:",
+     {"Pokračuje vysíláním bez změny",
+      "Zastaví vysílání a zkusí to po náhodném čase",
+      "Přepne síť na sběrnici",
+      "Smaže IP adresu"}, 4, 1},
+    {"CSMA/CA na Wi-Fi předchází kolizím pomocí:",
+     {"RTS a CTS", "Jen CRC bez nosné", "Jen hubu", "Jen koaxiálu"}, 4, 0},
+};
+
+const char *net16_hints[] = {
+    "Kolize = více uzlů vysílá na sdíleném médiu najednou",
+    "Aloha: vysílej kdykoliv, při chybě znovu",
+    "CSMA/CD patří k Ethernetu",
+    "CSMA/CD nejdřív poslouchá nosnou (Carrier Sense)",
+    "Po kolizi CSMA/CD čeká náhodný čas a zkusí znovu",
+    "CSMA/CA rezervuje médium přes RTS/CTS",
+};
+
+GtkWidget *build_net_unit16_exercise_page(void) {
+    return build_net_mcq_page(15, "netunit16", "net_ex16_title", "net_quiz16_head",
+                              net16_qs, net16_hints,
+                              (int)G_N_ELEMENTS(net16_qs));
 }
 

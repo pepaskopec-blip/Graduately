@@ -63,7 +63,8 @@
 #define NET13_SLIDES    4
 #define NET14_SLIDES    5
 #define NET15_SLIDES    3
-#define NET_LESSONS     15
+#define NET16_SLIDES    4
+#define NET_LESSONS     16
 #define HW_UNITS        10
 #define HW_LESSONS       3
 #define HW_SLIDES        3
@@ -1088,6 +1089,7 @@ GtkWidget *build_net_unit12_page(void);
 GtkWidget *build_net_unit13_page(void);
 GtkWidget *build_net_unit14_page(void);
 GtkWidget *build_net_unit15_page(void);
+GtkWidget *build_net_unit16_page(void);
 GtkWidget *net_qz_combo(void);
 void net_qz_set_prefix(GtkComboBoxText *c, int pfx);
 int net_qz_prefix(GtkComboBoxText *c);
@@ -1116,6 +1118,7 @@ GtkWidget *build_net_unit12_exercise_page(void);
 GtkWidget *build_net_unit13_exercise_page(void);
 GtkWidget *build_net_unit14_exercise_page(void);
 GtkWidget *build_net_unit15_exercise_page(void);
+GtkWidget *build_net_unit16_exercise_page(void);
 void activate(GtkApplication *app, gpointer user_data);
 int main(int argc, char **argv);
 
