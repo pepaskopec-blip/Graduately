@@ -201,6 +201,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     unit_configure(1, u2_ex_names, 19);
     unit_configure(2, u3_ex_names, 15);
     load_progress();
+    mluvnice_init();
     app_theme = theme_palette(app_theme_id, app_color_mode);
 
     window = GTK_WINDOW(gtk_application_window_new(app));
@@ -233,6 +234,14 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
     gtk_stack_add_named(main_stack, build_hwmap_page(), "hwmap");
     gtk_stack_add_named(main_stack, build_czechmap_page(), "czechmap");
+    gtk_stack_add_named(main_stack, build_mluvnice_page(), "mluvnice");
+    for (int n = 1; n <= 20; n++) {
+        char name[16];
+
+        g_snprintf(name, sizeof(name), "mluv%d", n);
+        gtk_stack_add_named(main_stack,
+                            build_mluvnice_exercise_page(n), name);
+    }
     gtk_stack_add_named(main_stack, build_readinglist_page(), "readinglist");
     gtk_stack_add_named(main_stack, build_cetba1984_page(), "cetba1984");
     gtk_stack_add_named(main_stack, build_cetba1984_quiz_page(),
