@@ -185,6 +185,28 @@ static gboolean ui_scale_tick(GtkWidget *w, GdkFrameClock *clock,
     return G_SOURCE_CONTINUE;
 }
 
+/* GTK4 has no gtk_window_set_icon_from_file(); register a local hicolor
+ * theme dir and set the window icon by name instead. */
+static void setup_window_icon(GtkWindow *window) {
+    GtkIconTheme *theme;
+    static const char *dirs[] = { ICON_THEME_DIR, ICON_THEME_DIR_ALT, NULL };
+
+    theme = gtk_icon_theme_get_for_display(gdk_display_get_default());
+    for (int i = 0; dirs[i]; i++) {
+        if (g_file_test(dirs[i], G_FILE_TEST_IS_DIR))
+            gtk_icon_theme_add_search_path(theme, dirs[i]);
+    }
+
+    if (!gtk_icon_theme_has_icon(theme, ICON_NAME)) {
+        g_warning("App icon '%s' not found (tried %s/ and %s/)",
+                  ICON_NAME, ICON_THEME_DIR, ICON_THEME_DIR_ALT);
+        return;
+    }
+
+    gtk_window_set_default_icon_name(ICON_NAME);
+    gtk_window_set_icon_name(window, ICON_NAME);
+}
+
 void activate(GtkApplication *app, gpointer user_data) {
     GtkWindow *window;
     GtkWidget *headerbar;
@@ -208,6 +230,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     main_window = window;
     gtk_window_set_title(window, "maturita.c");
     gtk_window_set_default_size(window, 760, 560);
+    setup_window_icon(window);
 
     headerbar = gtk_header_bar_new();
     gtk_widget_add_css_class(headerbar, "titlebar");

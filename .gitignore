@@ -16,6 +16,9 @@ progress/
 dist/
 build/
 
+# Generated from assets/app-icon.png (Makefile / CMake POST_BUILD)
+assets/icons/
+
 # Object files
 *.o
 *.ko

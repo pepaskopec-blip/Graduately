@@ -62,9 +62,19 @@ else()
         -Wall -Wextra -Wno-deprecated-declarations)
 endif()
 
-# The GTK stylesheet is loaded at runtime from the working directory, so keep
-# a copy next to the built binary as well.
+# The GTK stylesheet and window icon are loaded at runtime from the working
+# directory (or next to the binary), so keep copies beside the built binary.
 add_custom_command(TARGET maturita POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_CURRENT_SOURCE_DIR}/style.css
-            $<TARGET_FILE_DIR:maturita>/style.css)
+            $<TARGET_FILE_DIR:maturita>/style.css
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+            $<TARGET_FILE_DIR:maturita>/icons/hicolor/512x512/apps
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_SOURCE_DIR}/assets/app-icon.png
+            $<TARGET_FILE_DIR:maturita>/icons/hicolor/512x512/apps/maturita.png
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_SOURCE_DIR}/assets/app-icon.png
+            ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps/maturita.png)

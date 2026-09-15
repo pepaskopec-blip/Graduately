@@ -28,9 +28,16 @@ endif
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 
+ICON_SRC = assets/app-icon.png
+ICON_DST = assets/icons/hicolor/512x512/apps/maturita.png
+
 all: $(TARGET)
 
-$(TARGET): $(SRC)
+$(ICON_DST): $(ICON_SRC)
+	mkdir -p $(dir $@)
+	cp "$(ICON_SRC)" "$@"
+
+$(TARGET): $(SRC) $(ICON_DST)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC) $(LIBS)
 
 clean:
@@ -48,6 +55,8 @@ bundle: $(TARGET)
 	@mkdir -p dist
 	@cp $(TARGET) dist/
 	@cp style.css dist/
+	@mkdir -p dist/icons/hicolor/512x512/apps
+	@cp "$(ICON_DST)" dist/icons/hicolor/512x512/apps/
 	@ldd $(TARGET) | grep -Ei '/(ucrt64|mingw64)/bin/' | awk '{print $$3}' \
 		| xargs -r -I{} cp -f {} dist/
 	@echo "Bundled into dist/ - run dist/$(TARGET)"

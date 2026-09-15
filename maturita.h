@@ -15,6 +15,9 @@
 #define HW_SUBJ        2    /* index of "Technické vybavení"          */
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define CSS_FILE      "style.css"
+#define ICON_NAME     "maturita"
+#define ICON_THEME_DIR "assets/icons"   /* cwd when run from source tree */
+#define ICON_THEME_DIR_ALT "icons"      /* next to the binary after install */
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_U1   "progress/unit1.conf"
 #define PROGRESS_U2   "progress/unit2.conf"
