@@ -23,6 +23,10 @@ TARGET = maturita.exe
 LIBS += -mwindows
 else
 TARGET = maturita
+# macOS Dock icon is set via AppKit (see macos_dock.c).
+ifeq ($(shell uname -s 2>/dev/null),Darwin)
+LIBS += -framework AppKit -framework Foundation
+endif
 endif
 
 SRC = $(wildcard *.c)

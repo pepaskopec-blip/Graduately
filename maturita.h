@@ -16,8 +16,10 @@
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define CSS_FILE      "style.css"
 #define ICON_NAME     "maturita"
+#define ICON_FILE     "assets/app-icon.png"
 #define ICON_THEME_DIR "assets/icons"   /* cwd when run from source tree */
 #define ICON_THEME_DIR_ALT "icons"      /* next to the binary after install */
+#define ICON_FILE_ALT "icons/hicolor/512x512/apps/maturita.png"
 #define PROGRESS_DIR  "progress"
 #define PROGRESS_U1   "progress/unit1.conf"
 #define PROGRESS_U2   "progress/unit2.conf"
@@ -1192,6 +1194,7 @@ GtkWidget *build_net_unit24_exercise_page(void);
 GtkWidget *build_net_unit25_exercise_page(void);
 GtkWidget *build_net_unit26_exercise_page(void);
 GtkWidget *build_net_unit27_exercise_page(void);
+void macos_set_dock_icon(const char *path);
 void activate(GtkApplication *app, gpointer user_data);
 int main(int argc, char **argv);
 

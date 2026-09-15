@@ -185,26 +185,51 @@ static gboolean ui_scale_tick(GtkWidget *w, GdkFrameClock *clock,
     return G_SOURCE_CONTINUE;
 }
 
+static const char *find_app_icon_file(void) {
+    static const char *paths[] = {
+        ICON_FILE,
+        ICON_THEME_DIR "/hicolor/512x512/apps/" ICON_NAME ".png",
+        ICON_FILE_ALT,
+        NULL,
+    };
+    int i;
+
+    for (i = 0; paths[i]; i++) {
+        if (g_file_test(paths[i], G_FILE_TEST_IS_REGULAR))
+            return paths[i];
+    }
+    return NULL;
+}
+
 /* GTK4 has no gtk_window_set_icon_from_file(); register a local hicolor
- * theme dir and set the window icon by name instead. */
+ * theme dir and set the window icon by name instead. On macOS the Dock
+ * tile ignores that, so also push the PNG through AppKit. */
 static void setup_window_icon(GtkWindow *window) {
     GtkIconTheme *theme;
     static const char *dirs[] = { ICON_THEME_DIR, ICON_THEME_DIR_ALT, NULL };
+    const char *icon_file;
+    int i;
 
     theme = gtk_icon_theme_get_for_display(gdk_display_get_default());
-    for (int i = 0; dirs[i]; i++) {
+    for (i = 0; dirs[i]; i++) {
         if (g_file_test(dirs[i], G_FILE_TEST_IS_DIR))
             gtk_icon_theme_add_search_path(theme, dirs[i]);
     }
 
-    if (!gtk_icon_theme_has_icon(theme, ICON_NAME)) {
+    if (gtk_icon_theme_has_icon(theme, ICON_NAME)) {
+        gtk_window_set_default_icon_name(ICON_NAME);
+        gtk_window_set_icon_name(window, ICON_NAME);
+    } else {
         g_warning("App icon '%s' not found (tried %s/ and %s/)",
                   ICON_NAME, ICON_THEME_DIR, ICON_THEME_DIR_ALT);
-        return;
     }
 
-    gtk_window_set_default_icon_name(ICON_NAME);
-    gtk_window_set_icon_name(window, ICON_NAME);
+    icon_file = find_app_icon_file();
+    if (icon_file)
+        macos_set_dock_icon(icon_file);
+    else
+        g_warning("Dock icon PNG not found (tried %s and %s)",
+                  ICON_FILE, ICON_FILE_ALT);
 }
 
 void activate(GtkApplication *app, gpointer user_data) {

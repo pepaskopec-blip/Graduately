@@ -60,6 +60,10 @@ else()
     target_link_libraries(maturita PRIVATE PkgConfig::GTK4 m)
     target_compile_options(maturita PRIVATE
         -Wall -Wextra -Wno-deprecated-declarations)
+    if(APPLE)
+        target_link_libraries(maturita PRIVATE
+            "-framework AppKit" "-framework Foundation")
+    endif()
 endif()
 
 # The GTK stylesheet and window icon are loaded at runtime from the working
