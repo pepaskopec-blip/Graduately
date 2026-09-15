@@ -1357,7 +1357,7 @@ const TrEntry tr_content[] = {
      "John von Neumann – American mathematician"},
     {"Americký matematik s objevy v digitálních počítačích", NULL,
      "American mathematician with discoveries in digital computers"},
-    {"ALS = aritmeticko-logická jednotka", NULL,
+    {"ALU = aritmeticko-logická jednotka", NULL,
      "ALU = arithmetic-logic unit"},
     {"Řadič řídí činnost ostatních částí", NULL,
      "The control unit directs the other parts"},
