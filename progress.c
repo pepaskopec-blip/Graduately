@@ -126,6 +126,7 @@ void refresh_completion_ui(void) {
     all_rails_redraw();
     refresh_net_completion_ui();
     refresh_hw_completion_ui();
+    mluvnice_refresh_ui();
     refresh_stats_ui();
 }
 

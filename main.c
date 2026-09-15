@@ -238,7 +238,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     for (int n = 1; n <= 20; n++) {
         char name[16];
 
-        g_snprintf(name, sizeof(name), "mluv%d", n);
+        g_snprintf(name, sizeof(name), "mluve%d", n);
         gtk_stack_add_named(main_stack,
                             build_mluvnice_exercise_page(n), name);
     }

@@ -136,6 +136,7 @@ typedef struct {
     const char *page;          /* roadmap-stack child name, e.g. "unit1"  */
     const char *ex_tag;        /* exercise page prefix, e.g. "u1"         */
     const char *sub_key;       /* i18n key for the exercise-map subtitle   */
+    const char *back_target;   /* page the exercise map returns to         */
     const char *progress_file;
     gboolean unlocked;
     gboolean done[MAX_UNIT_EX + 1];         /* exercise state, 1..n_ex    */
@@ -803,6 +804,7 @@ GtkWidget *build_czechmap_page(void);
 void mluvnice_init(void);
 GtkWidget *build_mluvnice_page(void);
 GtkWidget *build_mluvnice_exercise_page(int n);
+void mluvnice_refresh_ui(void);
 GtkWidget *build_readinglist_page(void);
 GtkWidget *build_cetba1984_page(void);
 GtkWidget *build_cetba1984_quiz_page(void);

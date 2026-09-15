@@ -49,11 +49,47 @@ typedef struct {
 
 static UnitCtx mluv_unit;
 
+static const char *mluv_names[MLUV_N_EX] = {
+    "i/y", "Velká písmena", "Slovní druhy", "Podst. jména", "Slovesa",
+    "Slovotvorba", "Větné členy", "Vedlejší věty", "Synonyma", "Antonyma",
+    "s/z", "Najdi chybu", "Tvary", "Test A–D", "Přímá řeč",
+    "Rozdíly", "Interpunkce", "Obrazná pojmen.", "Slohové útvary",
+    "Opakování",
+};
+
 void mluvnice_init(void) {
+    mluv_unit.title = "Mluvnice";
     mluv_unit.page = "mluvnice";
+    mluv_unit.ex_tag = "mluv";
+    mluv_unit.sub_key = "Cvičení z mluvnice – styl maturita / "
+                        "přijímačky z ČJL";
+    mluv_unit.back_target = "czechmap";
     mluv_unit.progress_file = "progress/mluvnice.conf";
     mluv_unit.n_ex = MLUV_N_EX;
+    for (int i = 0; i < MLUV_N_EX; i++)
+        mluv_unit.ex_names[i + 1] = mluv_names[i];
     unit_load_progress(&mluv_unit);
+}
+
+void mluvnice_refresh_ui(void) {
+    for (int i = 0; i < mluv_unit.n_ex; i++) {
+        GtkWidget *btn = mluv_unit.ex_cells[i];
+
+        if (!btn)
+            continue;
+        if (mluv_unit.done[i + 1]) {
+            gtk_widget_add_css_class(btn, "done");
+            if (mluv_unit.ex_icons[i + 1])
+                gtk_widget_set_visible(mluv_unit.ex_icons[i + 1], TRUE);
+        } else {
+            gtk_widget_remove_css_class(btn, "done");
+            if (mluv_unit.ex_icons[i + 1])
+                gtk_widget_set_visible(mluv_unit.ex_icons[i + 1], FALSE);
+        }
+    }
+
+    if (mluv_unit.ex_rail)
+        gtk_widget_queue_draw(mluv_unit.ex_rail);
 }
 
 static void mluv_check(GtkButton *button, gpointer data) {
@@ -742,103 +778,6 @@ GtkWidget *build_mluvnice_exercise_page(int n) {
     }
 }
 
-static const struct {
-    const char *title;
-    const char *sub;
-} mluv_defs[MLUV_N_EX] = {
-    {"Pravopis – i/y po obojetných souhláskách", "Doplňte i/í nebo y/ý."},
-    {"Pravopis – velká/malá písmena", "Vyberte správnou variantu."},
-    {"Slovní druhy", "Určete slovní druh podtržených slov."},
-    {"Mluvnické kategorie – podstatná jména",
-     "Určete rod, číslo a pád."},
-    {"Mluvnické kategorie – slovesa",
-     "Určete osobu, číslo, čas a způsob."},
-    {"Slovotvorba", "Rozeberte slova na morfémy."},
-    {"Větné členy", "Určete větný člen podtržených výrazů."},
-    {"Druhy vedlejších vět", "Určete druh vedlejší věty."},
-    {"Synonyma", "Ke každému slovu napište synonymum."},
-    {"Antonyma", "Napište opak."},
-    {"Pravopis – s/z na začátku slova",
-     "Vyberte správnou předponu s-/z-."},
-    {"Skladba – najděte chybu", "Najděte a opravte chybu ve větě."},
-    {"Tvarosloví – správný tvar", "Dejte slovo do správného tvaru."},
-    {"Výběr ze čtyř možností", "Vyberte správnou odpověď."},
-    {"Přímá a nepřímá řeč", "Přepište přímou řeč na nepřímou."},
-    {"Slovní zásoba – rozdíly", "Vysvětlete rozdíl mezi dvojicemi slov."},
-    {"Interpunkce", "Doplňte čárky tam, kde patří."},
-    {"Obrazná pojmenování", "Určete druh obrazného pojmenování."},
-    {"Stylistika – slohové útvary", "Přiřaďte ukázku ke slohovému útvaru."},
-    {"Souhrnné opakování", "Vyberte správnou odpověď."},
-};
-
-static GtkWidget *mluv_card(int n) {
-    GtkWidget *btn = gtk_button_new();
-    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
-    GtkWidget *t = gtk_label_new(NULL);
-    GtkWidget *s = gtk_label_new(mluv_defs[n - 1].sub);
-    char *full = g_strdup_printf("%d.  %s", n, mluv_defs[n - 1].title);
-    char target[16];
-
-    gtk_widget_add_css_class(btn, "lit-link");
-    gtk_widget_set_hexpand(btn, TRUE);
-
-    gtk_widget_set_halign(t, GTK_ALIGN_START);
-    gtk_label_set_xalign(GTK_LABEL(t), 0.0);
-    gtk_label_set_wrap(GTK_LABEL(t), TRUE);
-    gtk_label_set_max_width_chars(GTK_LABEL(t), 52);
-    gtk_widget_add_css_class(t, "lit-link-title");
-    gtk_label_set_text(GTK_LABEL(t), full);
-    g_free(full);
-    gtk_box_append(GTK_BOX(box), t);
-
-    gtk_widget_set_halign(s, GTK_ALIGN_START);
-    gtk_label_set_xalign(GTK_LABEL(s), 0.0);
-    gtk_label_set_wrap(GTK_LABEL(s), TRUE);
-    gtk_label_set_max_width_chars(GTK_LABEL(s), 58);
-    gtk_widget_add_css_class(s, "lit-link-sub");
-    gtk_box_append(GTK_BOX(box), s);
-
-    gtk_widget_set_margin_top(box, 4);
-    gtk_widget_set_margin_bottom(box, 4);
-    gtk_widget_set_margin_start(box, 6);
-    gtk_widget_set_margin_end(box, 6);
-    gtk_button_set_child(GTK_BUTTON(btn), box);
-
-    g_snprintf(target, sizeof(target), "mluv%d", n);
-    g_object_set_data_full(G_OBJECT(btn), "target", g_strdup(target), g_free);
-    g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
-    return btn;
-}
-
 GtkWidget *build_mluvnice_page(void) {
-    GtkWidget *page;
-    GtkWidget *scroll;
-    GtkWidget *box;
-
-    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_margin_start(page, 32);
-    gtk_widget_set_margin_end(page, 32);
-    gtk_widget_set_margin_top(page, 24);
-    gtk_widget_set_margin_bottom(page, 24);
-
-    gtk_box_append(GTK_BOX(page),
-                   top_bar("czechmap", "Mluvnice",
-                           "Cvičení z mluvnice – styl maturita / "
-                           "přijímačky z ČJL"));
-
-    scroll = gtk_scrolled_window_new();
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_vexpand(scroll, TRUE);
-    gtk_widget_set_margin_top(scroll, 14);
-    gtk_widget_set_margin_bottom(scroll, 14);
-    gtk_box_append(GTK_BOX(page), scroll);
-
-    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), box);
-
-    for (int i = 1; i <= MLUV_N_EX; i++)
-        gtk_box_append(GTK_BOX(box), mluv_card(i));
-
-    return page;
+    return build_unit_page(&mluv_unit);
 }
