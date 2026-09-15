@@ -1,0 +1,3 @@
+/* Windows application icon embedded into maturita.exe.
+ * The first ICON resource becomes the Explorer / taskbar icon. */
+1 ICON "assets/app-icon.ico"

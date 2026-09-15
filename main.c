@@ -189,6 +189,7 @@ static const char *find_app_icon_file(void) {
     static const char *paths[] = {
         ICON_FILE,
         ICON_THEME_DIR "/hicolor/512x512/apps/" ICON_NAME ".png",
+        SHARE_DIR "/icons/hicolor/512x512/apps/" ICON_NAME ".png",
         ICON_FILE_ALT,
         NULL,
     };
@@ -201,12 +202,84 @@ static const char *find_app_icon_file(void) {
     return NULL;
 }
 
-/* GTK4 has no gtk_window_set_icon_from_file(); register a local hicolor
- * theme dir and set the window icon by name instead. On macOS the Dock
- * tile ignores that, so also push the PNG through AppKit. */
+/* Kept alive for gdk_toplevel_set_icon_list() which does not take ownership. */
+static GList *app_icon_textures;
+
+static void clear_app_icon_textures(void) {
+    g_list_free_full(app_icon_textures, g_object_unref);
+    app_icon_textures = NULL;
+}
+
+/* X11 / some compositors use the toplevel icon list for the taskbar tile. */
+static void apply_toplevel_icon(GtkWindow *window) {
+    GdkSurface *surface;
+    const char *path;
+    GError *err = NULL;
+    GdkTexture *tex;
+
+    surface = gtk_native_get_surface(GTK_NATIVE(window));
+    if (!surface || !GDK_IS_TOPLEVEL(surface))
+        return;
+
+    path = find_app_icon_file();
+    if (!path)
+        return;
+
+    tex = gdk_texture_new_from_filename(path, &err);
+    if (!tex) {
+        g_clear_error(&err);
+        return;
+    }
+
+    clear_app_icon_textures();
+    app_icon_textures = g_list_append(NULL, tex);
+    gdk_toplevel_set_icon_list(GDK_TOPLEVEL(surface), app_icon_textures);
+}
+
+static void on_window_realize_icon(GtkWidget *widget, gpointer data) {
+    (void)data;
+    apply_toplevel_icon(GTK_WINDOW(widget));
+}
+
+/* Prepend ./share to XDG_DATA_DIRS so Wayland can find our .desktop file and
+ * hicolor icons without a system install (matches APP_ID). */
+static void setup_portable_share_dir(void) {
+    char *abs;
+    const char *old;
+    char *neu;
+
+    if (!g_file_test(SHARE_DIR "/applications", G_FILE_TEST_IS_DIR) &&
+        !g_file_test(SHARE_DIR "/icons", G_FILE_TEST_IS_DIR))
+        return;
+
+    abs = g_canonicalize_filename(SHARE_DIR, NULL);
+    if (!abs)
+        return;
+
+    old = g_getenv("XDG_DATA_DIRS");
+    if (old && old[0])
+        neu = g_strconcat(abs, G_SEARCHPATH_SEPARATOR_S, old, NULL);
+    else
+        neu = g_strconcat(abs,
+                          G_SEARCHPATH_SEPARATOR_S "/usr/local/share"
+                          G_SEARCHPATH_SEPARATOR_S "/usr/share",
+                          NULL);
+    g_setenv("XDG_DATA_DIRS", neu, TRUE);
+    g_free(neu);
+    g_free(abs);
+}
+
+/* Register icon theme paths + window icon-name (Linux), AppKit Dock (macOS),
+ * and toplevel textures (X11 / fallbacks). Windows uses the .ico embedded
+ * via maturita.rc at link time. */
 static void setup_window_icon(GtkWindow *window) {
     GtkIconTheme *theme;
-    static const char *dirs[] = { ICON_THEME_DIR, ICON_THEME_DIR_ALT, NULL };
+    static const char *dirs[] = {
+        ICON_THEME_DIR,
+        ICON_THEME_DIR_ALT,
+        SHARE_DIR "/icons",
+        NULL,
+    };
     const char *icon_file;
     int i;
 
@@ -220,16 +293,21 @@ static void setup_window_icon(GtkWindow *window) {
         gtk_window_set_default_icon_name(ICON_NAME);
         gtk_window_set_icon_name(window, ICON_NAME);
     } else {
-        g_warning("App icon '%s' not found (tried %s/ and %s/)",
-                  ICON_NAME, ICON_THEME_DIR, ICON_THEME_DIR_ALT);
+        g_warning("App icon '%s' not found (tried %s/, %s/, %s/icons/)",
+                  ICON_NAME, ICON_THEME_DIR, ICON_THEME_DIR_ALT, SHARE_DIR);
     }
 
     icon_file = find_app_icon_file();
     if (icon_file)
         macos_set_dock_icon(icon_file);
+#ifdef __APPLE__
     else
         g_warning("Dock icon PNG not found (tried %s and %s)",
                   ICON_FILE, ICON_FILE_ALT);
+#endif
+
+    g_signal_connect(window, "realize",
+                     G_CALLBACK(on_window_realize_icon), NULL);
 }
 
 void activate(GtkApplication *app, gpointer user_data) {
@@ -398,9 +476,14 @@ int main(int argc, char **argv) {
     GtkApplication *app;
     int status;
 
-    app = gtk_application_new("org.example.maturita", G_APPLICATION_DEFAULT_FLAGS);
+    /* Must run before GtkApplication so Wayland can resolve our .desktop
+     * file / icons via the application id. */
+    setup_portable_share_dir();
+
+    app = gtk_application_new(APP_ID, G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     status = g_application_run(G_APPLICATION(app), argc, argv);
+    clear_app_icon_textures();
     g_object_unref(app);
 
     return status;

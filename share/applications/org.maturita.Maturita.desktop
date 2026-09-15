@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=maturita.c
+GenericName=Maturita study app
+GenericName[cs]=Příprava na maturitu
+Comment=Educational GTK app for maturita exam preparation
+Comment[cs]=Vzdělávací GTK aplikace pro přípravu na maturitu
+Exec=maturita
+Icon=maturita
+Terminal=false
+Categories=Education;GTK;
+StartupNotify=true
+StartupWMClass=org.maturita.Maturita

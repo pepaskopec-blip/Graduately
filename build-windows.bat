@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal EnableExtensions
 
 REM ---------------------------------------------------------------------------
 REM Native Windows build with MSVC. No MSYS2 or MinGW shell required.
@@ -67,10 +67,22 @@ if not defined GTK_CFLAGS (
     exit /b 1
 )
 
-REM --- 4. Compile -----------------------------------------------------------
+if not exist "assets\app-icon.ico" (
+    echo [error] assets\app-icon.ico is missing.
+    echo         Generate it with: python scripts\gen-icons.py
+    exit /b 1
+)
+
+REM --- 4. Compile resources + sources ---------------------------------------
 echo Building maturita.exe with MSVC...
+rc /nologo /fo maturita.res maturita.rc
+if errorlevel 1 (
+    echo [error] Resource compile failed.
+    exit /b 1
+)
+
 cl /nologo /O2 /MD /W3 /std:c11 /D_CRT_SECURE_NO_WARNINGS ^
-   %GTK_CFLAGS% maturita.c ^
+   %GTK_CFLAGS% *.c maturita.res ^
    /Fe:maturita.exe ^
    /link /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup %GTK_LIBS%
 
@@ -79,7 +91,10 @@ if errorlevel 1 (
     exit /b 1
 )
 
+if not exist icons\hicolor\512x512\apps mkdir icons\hicolor\512x512\apps
+copy /Y assets\app-icon.png icons\hicolor\512x512\apps\maturita.png >nul
+
 echo.
-echo Built maturita.exe
+echo Built maturita.exe ^(icon embedded from assets\app-icon.ico^)
 echo Run it from this terminal with:  maturita.exe
 echo Or use run-windows.bat / double-click maturita.exe.

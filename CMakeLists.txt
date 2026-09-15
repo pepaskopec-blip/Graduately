@@ -46,7 +46,8 @@ endif()
 # so MSVC needs mainCRTStartup as the entry point.
 file(GLOB MATURITA_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
 if(WIN32)
-    add_executable(maturita WIN32 ${MATURITA_SOURCES})
+    add_executable(maturita WIN32 ${MATURITA_SOURCES}
+                   "${CMAKE_CURRENT_SOURCE_DIR}/maturita.rc")
 else()
     add_executable(maturita ${MATURITA_SOURCES})
 endif()
@@ -66,8 +67,8 @@ else()
     endif()
 endif()
 
-# The GTK stylesheet and window icon are loaded at runtime from the working
-# directory (or next to the binary), so keep copies beside the built binary.
+# The GTK stylesheet, window icon and Freedesktop share/ tree are loaded at
+# runtime from the working directory (or next to the binary).
 add_custom_command(TARGET maturita POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_CURRENT_SOURCE_DIR}/style.css
@@ -81,4 +82,7 @@ add_custom_command(TARGET maturita POST_BUILD
             ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_CURRENT_SOURCE_DIR}/assets/app-icon.png
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps/maturita.png)
+            ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps/maturita.png
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/share
+            $<TARGET_FILE_DIR:maturita>/share)
