@@ -530,7 +530,7 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   Postup u sítí se ukládá do `progress/net.conf` (příznak na jednotku);
   dokončené jednotky mají fajfku na cestě a počítají se ve Statistikách
 - **Cesta technického vybavení** – tři odemčené jednotky (snímky + kvíz):
-  1. **Architektura počítače** – von Neumann, Von Neumannovo schéma (ALS,
+  1. **Architektura počítače** – von Neumann, Von Neumannovo schéma (ALU,
      řadič, paměť, V/V) a kvíz
   2. **Historie počítačů** – generace 0–4 (elektronky, tranzistory, IO,
      mikroprocesory a milníky) a kvíz
