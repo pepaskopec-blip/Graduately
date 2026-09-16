@@ -1,0 +1,125 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    name: Linux AppImage
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential pkg-config curl \
+            libgtk-4-dev librsvg2-dev \
+            desktop-file-utils \
+            appstream
+
+      - name: Build AppImage
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          chmod +x scripts/bundle-linux.sh
+          ./scripts/bundle-linux.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maturita-linux
+          path: dist/maturita-linux-*.AppImage
+
+  windows:
+    name: Windows zip
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            make
+            zip
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-gtk4
+            mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-make
+
+      - name: Build and bundle
+        run: |
+          make bundle
+          cd dist
+          zip -qry ../maturita-windows-x64.zip .
+          cd ..
+          mkdir -p dist-out
+          mv maturita-windows-x64.zip dist-out/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maturita-windows
+          path: dist-out/maturita-windows-x64.zip
+
+  macos:
+    name: macOS app
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew install gtk4 pkg-config dylibbundler
+
+      - name: Build .app zip
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          chmod +x scripts/bundle-macos.sh
+          ./scripts/bundle-macos.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maturita-macos
+          path: dist/maturita-macos-*.zip
+
+  publish:
+    name: Publish GitHub Release
+    needs: [linux, windows, macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: List assets
+        run: find release-assets -type f -print
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release-assets/maturita-linux-*.AppImage
+            release-assets/maturita-windows-x64.zip
+            release-assets/maturita-macos-*.zip
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

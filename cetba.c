@@ -1090,7 +1090,7 @@ static UnitCtx lit_plot_unit;
 
 GtkWidget *build_cetba1984_plot_page(void) {
     lit_plot_unit.page = "cetba1984";
-    lit_plot_unit.progress_file = "progress/cetba.conf";
+    lit_plot_unit.progress_file = app_progress_cetba;
     return build_assembly(&lit_plot_unit, tr("lit_plot_title"),
                           "lit_plot_sub", 1, lit_plot_items,
                           lit_plot_meaning, 1);
@@ -1119,7 +1119,7 @@ static const char *fuks_plot_meaning[] = {
 
 GtkWidget *build_cetba_fuks_plot_page(void) {
     lit_plot_unit.page = "cetbaFuks";
-    lit_plot_unit.progress_file = "progress/cetba.conf";
+    lit_plot_unit.progress_file = app_progress_cetba;
     return build_assembly(&lit_plot_unit, tr("lit_fuks_plot_title"),
                           "lit_fuks_plot_sub", 1, fuks_plot_items,
                           fuks_plot_meaning, 1);

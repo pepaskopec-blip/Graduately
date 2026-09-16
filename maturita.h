@@ -22,13 +22,24 @@
 #define ICON_THEME_DIR_ALT "icons"      /* next to the binary after install */
 #define ICON_FILE_ALT "icons/hicolor/512x512/apps/maturita.png"
 #define SHARE_DIR     "share"           /* portable Freedesktop data root */
-#define PROGRESS_DIR  "progress"
-#define PROGRESS_U1   "progress/unit1.conf"
-#define PROGRESS_U2   "progress/unit2.conf"
-#define PROGRESS_U3   "progress/unit3.conf"
-#define SETTINGS_FILE "progress/settings.conf"
-#define PROGRESS_NET  "progress/net.conf"
-#define PROGRESS_HW   "progress/hw.conf"
+/* Relative leaf names; absolute paths are filled by setup_portable_paths(). */
+#define PROGRESS_DIR_NAME "progress"
+extern char *app_progress_dir;
+extern char *app_progress_u1;
+extern char *app_progress_u2;
+extern char *app_progress_u3;
+extern char *app_settings_file;
+extern char *app_progress_net;
+extern char *app_progress_hw;
+extern char *app_progress_mluvnice;
+extern char *app_progress_cetba;
+#define PROGRESS_DIR  app_progress_dir
+#define PROGRESS_U1   app_progress_u1
+#define PROGRESS_U2   app_progress_u2
+#define PROGRESS_U3   app_progress_u3
+#define SETTINGS_FILE app_settings_file
+#define PROGRESS_NET  app_progress_net
+#define PROGRESS_HW   app_progress_hw
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -779,6 +790,7 @@ void draw_stats_icon(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data);
 GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
                                 double r, double g, double b, int px);
+void setup_portable_paths(void);
 char *normalize_answer(const char *input);
 void shuffle_indices(int *arr, int n);
 void flow_clear(GtkFlowBox *fb);

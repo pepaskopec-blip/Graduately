@@ -476,6 +476,10 @@ int main(int argc, char **argv) {
     GtkApplication *app;
     int status;
 
+    /* Resolve style.css / icons next to the binary (or AppImage / .app) and
+     * point progress files at a writable location before any I/O. */
+    setup_portable_paths();
+
     /* Must run before GtkApplication so Wayland can resolve our .desktop
      * file / icons via the application id. */
     setup_portable_share_dir();

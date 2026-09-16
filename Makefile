@@ -23,11 +23,13 @@ TARGET = maturita.exe
 LIBS += -mwindows
 WINDRES ?= windres
 RC_OBJ = maturita_rc.o
+UNAME_S :=
 else
 TARGET = maturita
 RC_OBJ =
+UNAME_S := $(shell uname -s 2>/dev/null)
 # macOS Dock icon is set via AppKit (see macos_dock.c).
-ifeq ($(shell uname -s 2>/dev/null),Darwin)
+ifeq ($(UNAME_S),Darwin)
 LIBS += -framework AppKit -framework Foundation
 endif
 endif
@@ -62,9 +64,7 @@ clean:
 run: $(TARGET)
 	./$(TARGET)
 
-# Windows only: copy the executable and every non-system (MinGW/GTK) DLL it
-# needs into dist/ so the app can be started by double-clicking, without an
-# MSYS2 shell on PATH.
+# Self-contained package for the current platform into dist/.
 ifeq ($(OS),Windows_NT)
 bundle: $(TARGET)
 	@rm -rf dist
@@ -77,9 +77,14 @@ bundle: $(TARGET)
 	@ldd $(TARGET) | grep -Ei '/(ucrt64|mingw64)/bin/' | awk '{print $$3}' \
 		| xargs -r -I{} cp -f {} dist/
 	@echo "Bundled into dist/ - run dist/$(TARGET)"
+else ifeq ($(UNAME_S),Darwin)
+bundle:
+	@chmod +x scripts/bundle-macos.sh
+	@./scripts/bundle-macos.sh
 else
 bundle:
-	@echo "make bundle is only needed on Windows (MSYS2/MinGW)."
+	@chmod +x scripts/bundle-linux.sh
+	@./scripts/bundle-linux.sh
 endif
 
 .PHONY: all clean run bundle

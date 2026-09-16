@@ -64,7 +64,7 @@ void mluvnice_init(void) {
     mluv_unit.sub_key = "Cvičení z mluvnice – styl maturita / "
                         "přijímačky z ČJL";
     mluv_unit.back_target = "czechmap";
-    mluv_unit.progress_file = "progress/mluvnice.conf";
+    mluv_unit.progress_file = app_progress_mluvnice;
     mluv_unit.n_ex = MLUV_N_EX;
     for (int i = 0; i < MLUV_N_EX; i++)
         mluv_unit.ex_names[i + 1] = mluv_names[i];

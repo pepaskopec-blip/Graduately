@@ -123,6 +123,35 @@ GTK 4 interface.
 - **Keyboard quit shortcuts** – `Super/Cmd+Q` or `Alt+F4` closes the app
 - Modular C codebase split across several files, cross-platform (Linux, macOS and Windows)
 
+### Downloads (prebuilt)
+
+Precompiled, self-contained builds are published on the
+**GitHub Releases** page of this project (enable Actions on a GitHub remote)
+when a version tag (`v*`) is pushed. No compiler or GTK development packages
+are required:
+
+| Platform | Asset | How to run |
+| -------- | ----- | ---------- |
+| Linux (x86_64) | `maturita-linux-x86_64.AppImage` | `chmod +x` the file, then double-click or run it |
+| macOS (Apple Silicon) | `maturita-macos-arm64.zip` | Unzip and open `Maturita.app` |
+| Windows (x64) | `maturita-windows-x64.zip` | Unzip and run `maturita.exe` |
+
+Progress and settings are saved next to the AppImage / `.app` / unzipped
+folder in a `progress/` directory.
+
+To cut a release yourself (needs a GitHub remote with Actions enabled):
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Local packaging (same scripts the CI uses):
+
+```bash
+make bundle   # Linux AppImage, macOS .app zip, or Windows DLL folder
+```
+
 ### Installation
 
 #### Prerequisites
@@ -373,7 +402,10 @@ hw.c                    computer-hardware path (10 nodes), units 1–3 slides
                         and quizzes (architecture, history, bit/byte)
 main.c                  application entry point and page wiring
 style.css               GTK stylesheet (palette colors are injected at runtime)
-Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` on Windows
+Makefile                build & run targets (Linux, macOS, MSYS2); `make bundle` packs a release
+scripts/bundle-linux.sh Linux AppImage (linuxdeploy + GTK plugin)
+scripts/bundle-macos.sh macOS Maturita.app with relocated GTK dylibs
+.github/workflows/      GitHub Actions release on tag `v*`
 CMakeLists.txt          optional CMake build (Linux / macOS)
 build-windows.bat       legacy MSVC build (requires Visual Studio + gvsbuild GTK)
 run-windows.bat         legacy launcher for the MSVC build with GTK DLLs on PATH
@@ -552,6 +584,34 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
   - vše se ukládá do `progress/settings.conf`
 - **Klávesové zkratky pro ukončení** – `Super/Cmd+Q` nebo `Alt+F4`
 - Modulární C kód v několika souborech, multiplatformní (Linux, macOS i Windows)
+
+### Stažení (předkompilované)
+
+Hotové self-contained buildy vycházejí na stránce
+**GitHub Releases** tohoto projektu (Actions na GitHub remote)
+při pushi tagu `v*`. Kompilátor ani vývojové balíčky GTK nejsou potřeba:
+
+| Platforma | Soubor | Spuštění |
+| --------- | ------ | -------- |
+| Linux (x86_64) | `maturita-linux-x86_64.AppImage` | `chmod +x` a spustit / dvojklik |
+| macOS (Apple Silicon) | `maturita-macos-arm64.zip` | Rozbalit a otevřít `Maturita.app` |
+| Windows (x64) | `maturita-windows-x64.zip` | Rozbalit a spustit `maturita.exe` |
+
+Postup a nastavení se ukládají vedle AppImage / `.app` / rozbalené složky
+do adresáře `progress/`.
+
+Vytvoření releasu (GitHub remote s Actions):
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Lokální balíček (stejné skripty jako CI):
+
+```bash
+make bundle   # Linux AppImage, macOS .app zip, nebo Windows složka s DLL
+```
 
 ### Instalace
 
@@ -800,7 +860,10 @@ hw.c                    cesta technického vybavení (10 uzlů), jednotky 1–3
                         (architektura, historie, bit/byte + kvízy)
 main.c                  vstupní bod aplikace a zapojení stránek
 style.css               GTK styl (barvy palety se vkládají za běhu)
-Makefile                build & run (Linux, macOS, MSYS2); `make bundle` na Windows
+Makefile                build & run (Linux, macOS, MSYS2); `make bundle` vytvoří release balíček
+scripts/bundle-linux.sh Linux AppImage (linuxdeploy + GTK plugin)
+scripts/bundle-macos.sh macOS Maturita.app s přbalenými GTK dylibs
+.github/workflows/      GitHub Actions release při tagu `v*`
 CMakeLists.txt          volitelný CMake build (Linux / macOS)
 build-windows.bat       legacy MSVC build (vyžaduje Visual Studio + gvsbuild GTK)
 run-windows.bat         legacy spouštění MSVC buildu s GTK DLL na PATH
