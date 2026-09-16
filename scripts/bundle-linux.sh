@@ -87,7 +87,6 @@ export LDAI_OUTPUT="$ROOT/dist/$OUT_NAME"
 export LINUXDEPLOY_OUTPUT_VERSION="${VERSION:-continuous}"
 # Place plugin on PATH so linuxdeploy can find it.
 export PATH="$TOOLS:$PATH"
-cp -f "$GTK_PLUGIN" "$TOOLS/linuxdeploy-plugin-gtk.sh"
 
 run_linuxdeploy \
   --appdir "$APPDIR" \
