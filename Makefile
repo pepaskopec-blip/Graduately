@@ -38,23 +38,26 @@ SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 
 ICON_SRC = assets/app-icon.png
-ICON_DST = assets/icons/hicolor/512x512/apps/maturita.png
+# Always use the real 512×512 asset — copying app-icon.png (1024×1024) breaks
+# linuxdeploy, which rejects non-standard icon resolutions.
+ICON_DST = share/icons/hicolor/512x512/apps/maturita.png
+ICON_RUNTIME = assets/icons/hicolor/512x512/apps/maturita.png
 ICON_ICO = assets/app-icon.ico
 
 all: $(TARGET)
 
-$(ICON_DST): $(ICON_SRC)
+$(ICON_RUNTIME): $(ICON_DST)
 	mkdir -p $(dir $@)
-	cp "$(ICON_SRC)" "$@"
+	cp "$(ICON_DST)" "$@"
 
 ifeq ($(OS),Windows_NT)
 $(RC_OBJ): maturita.rc $(ICON_ICO)
 	$(WINDRES) maturita.rc -o $(RC_OBJ)
 
-$(TARGET): $(SRC) $(ICON_DST) $(RC_OBJ)
+$(TARGET): $(SRC) $(ICON_RUNTIME) $(RC_OBJ)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC) $(RC_OBJ) $(LIBS)
 else
-$(TARGET): $(SRC) $(ICON_DST)
+$(TARGET): $(SRC) $(ICON_RUNTIME)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC) $(LIBS)
 endif
 
