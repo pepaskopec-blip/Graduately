@@ -97,20 +97,27 @@ run_linuxdeploy \
   --plugin gtk \
   --output appimage
 
-# linuxdeploy may write the AppImage into the cwd; normalise the name/location.
-shopt -s nullglob
-for f in "$ROOT"/*.AppImage "$ROOT/dist"/*.AppImage; do
-  case "$(basename "$f")" in
-    linuxdeploy*|appimagetool*) continue ;;
-  esac
-  mv -f "$f" "$ROOT/dist/$OUT_NAME"
-done
-shopt -u nullglob
+# linuxdeploy may write the AppImage into the cwd under another name;
+# only rename when it is not already at the expected path (mv same→same
+# fails under `set -e` and was aborting an otherwise successful build).
+DEST="$ROOT/dist/$OUT_NAME"
+if [[ ! -f "$DEST" ]]; then
+  shopt -s nullglob
+  for f in "$ROOT"/*.AppImage "$ROOT/dist"/*.AppImage; do
+    case "$(basename "$f")" in
+      linuxdeploy*|appimagetool*) continue ;;
+    esac
+    mv -f "$f" "$DEST"
+    break
+  done
+  shopt -u nullglob
+fi
 
-if [[ ! -f "$ROOT/dist/$OUT_NAME" ]]; then
+if [[ ! -f "$DEST" ]]; then
   echo "AppImage was not created" >&2
+  find "$ROOT" "$ROOT/dist" -maxdepth 2 -name '*.AppImage' -print >&2 || true
   exit 1
 fi
 
-chmod +x "$ROOT/dist/$OUT_NAME"
+chmod +x "$DEST"
 echo "Created dist/$OUT_NAME"
