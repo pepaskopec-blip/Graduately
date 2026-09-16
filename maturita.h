@@ -7,6 +7,11 @@
 #include <pango/pangocairo.h>
 #include <math.h>
 
+/* GLib on Ubuntu 22.04 predates G_APPLICATION_DEFAULT_FLAGS. */
+#ifndef G_APPLICATION_DEFAULT_FLAGS
+#define G_APPLICATION_DEFAULT_FLAGS G_APPLICATION_FLAGS_NONE
+#endif
+
 #define NUM_UNITS     10
 #define NUM_UNLOCKED   3   /* first NUM_UNLOCKED units (index 0..2) are open */
 #define MAX_UNIT_EX   20   /* largest exercise count any unit may have       */

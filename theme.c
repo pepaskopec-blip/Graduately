@@ -394,7 +394,12 @@ void apply_theme(void) {
             GTK_STYLE_PROVIDER_PRIORITY_USER);
     }
 
+    #if GTK_CHECK_VERSION(4, 12, 0)
     gtk_css_provider_load_from_string(theme_provider, css);
+#else
+    /* GTK 4.6 (Ubuntu 22.04) — load_from_string arrived in 4.12. */
+    gtk_css_provider_load_from_data(theme_provider, css, -1);
+#endif
     g_free(css);
 
     refresh_welcome_heading();
