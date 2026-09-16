@@ -81,7 +81,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install gtk4 pkg-config dylibbundler
+          brew install gtk4 pkg-config
 
       - name: Build .app zip
         env:

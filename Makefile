@@ -79,6 +79,14 @@ bundle: $(TARGET)
 	@cp -R share dist/
 	@ldd $(TARGET) | grep -Ei '/(ucrt64|mingw64)/bin/' | awk '{print $$3}' \
 		| xargs -r -I{} cp -f {} dist/
+	@# GTK runtime data (schemas / pixbuf loaders) next to the exe.
+	@GTK_PREFIX="$$($(PKG_CONFIG) --variable=prefix gtk4)"; \
+	  if [ -d "$$GTK_PREFIX/share/glib-2.0" ]; then \
+	    mkdir -p dist/share && cp -R "$$GTK_PREFIX/share/glib-2.0" dist/share/; \
+	  fi; \
+	  if [ -d "$$GTK_PREFIX/lib/gdk-pixbuf-2.0" ]; then \
+	    mkdir -p dist/lib && cp -R "$$GTK_PREFIX/lib/gdk-pixbuf-2.0" dist/lib/; \
+	  fi
 	@echo "Bundled into dist/ - run dist/$(TARGET)"
 else ifeq ($(UNAME_S),Darwin)
 bundle:
