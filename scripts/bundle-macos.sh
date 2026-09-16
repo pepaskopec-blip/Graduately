@@ -44,10 +44,21 @@ cp -R "$ROOT/share/." "$RES/share/"
 
 # Bundle Homebrew / MacPorts GTK stack next to the binary.
 echo "==> Relocating dylibs with dylibbundler"
+BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
+DYLIB_SEARCH=()
+if [[ -n "$BREW_PREFIX" ]]; then
+  DYLIB_SEARCH+=(-s "$BREW_PREFIX/lib")
+  # Common keg-only / versioned lib dirs dylibbundler otherwise prompts for.
+  for sub in librsvg glib gettext; do
+    [[ -d "$BREW_PREFIX/opt/$sub/lib" ]] && DYLIB_SEARCH+=(-s "$BREW_PREFIX/opt/$sub/lib")
+  done
+fi
+
 dylibbundler -od -b \
   -x "$MACOS/maturita-bin" \
   -d "$FW" \
-  -p "@executable_path/../Frameworks"
+  -p "@executable_path/../Frameworks" \
+  "${DYLIB_SEARCH[@]+"${DYLIB_SEARCH[@]}"}" </dev/null
 
 # Copy GLib / GTK runtime data (schemas, modules, icons themes used by GTK).
 copy_pkg_share() {
@@ -67,7 +78,7 @@ copy_pkg_share() {
 copy_pkg_share gtk4
 copy_pkg_share glib-2.0
 
-# gdk-pixbuf loaders (PNG may be built-in; copy others for GIF/SVG/etc.).
+# gdk-pixbuf loaders (PNG may be built-in; copy others for GIF/ICO/etc.).
 PIXBUF_DIR="$(pkg-config --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0 2>/dev/null || true)"
 LOADERS_DST="$RES/lib/gdk-pixbuf-2.0/2.10.0/loaders"
 if [[ -n "$PIXBUF_DIR" && -d "$PIXBUF_DIR" ]]; then
@@ -78,12 +89,19 @@ if [[ -n "$PIXBUF_DIR" && -d "$PIXBUF_DIR" ]]; then
   else
     cp -R -L "$PIXBUF_DIR"/. "$LOADERS_DST"/
   fi
+  # SVG loader pulls librsvg; not needed (app assets are PNG). Drop it so
+  # dylibbundler never blocks on an interactive "locate this library" prompt.
+  rm -f "$LOADERS_DST"/libpixbufloader_svg.* "$LOADERS_DST"/libpixbufloader-svg.*
   # Drop broken leftovers and relocate real loader modules.
   find "$LOADERS_DST" -type l ! -exec test -e {} \; -delete 2>/dev/null || true
   shopt -s nullglob
   for loader in "$LOADERS_DST"/*; do
     [[ -f "$loader" ]] || continue
-    dylibbundler -od -b -x "$loader" -d "$FW" -p "@executable_path/../Frameworks" || true
+    # stdin closed → if a dep is still missing, fail instead of hanging CI.
+    dylibbundler -od -b -x "$loader" -d "$FW" \
+      -p "@executable_path/../Frameworks" \
+      "${DYLIB_SEARCH[@]+"${DYLIB_SEARCH[@]}"}" </dev/null \
+      || echo "warning: could not fully relocate $(basename "$loader")" >&2
   done
   shopt -u nullglob
   if command -v gdk-pixbuf-query-loaders >/dev/null 2>&1; then
