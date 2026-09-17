@@ -94,9 +94,41 @@ jobs:
         run: |
           brew install gtk4 pkg-config
 
+      # Developer ID lives in repo secrets. Without it the bundle is only
+      # ad-hoc signed and Gatekeeper still blocks downloaded copies.
+      - name: Import Developer ID certificate
+        if: ${{ secrets.MACOS_CERTIFICATE != '' }}
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          cert="$RUNNER_TEMP/certificate.p12"
+          keychain="$RUNNER_TEMP/signing.keychain-db"
+          pass="$(openssl rand -base64 32)"
+          echo "$MACOS_CERTIFICATE" | base64 --decode > "$cert"
+          security create-keychain -p "$pass" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$pass" "$keychain"
+          security import "$cert" -k "$keychain" \
+            -P "$MACOS_CERTIFICATE_PASSWORD" \
+            -T /usr/bin/codesign -T /usr/bin/security
+          security set-key-partition-list -S apple-tool:,apple: -s \
+            -k "$pass" "$keychain"
+          security list-keychains -d user -s "$keychain" \
+            $(security list-keychains -d user | tr -d '"')
+          rm -f "$cert"
+
       - name: Build .app zip
         env:
           COMMIT: ${{ github.sha }}
+          MACOS_SIGN_IDENTITY: ${{ secrets.MACOS_SIGN_IDENTITY }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
         run: |
           chmod +x scripts/bundle-macos.sh
           ./scripts/bundle-macos.sh

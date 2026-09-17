@@ -243,8 +243,120 @@ if command -v sips >/dev/null 2>&1 && command -v iconutil >/dev/null 2>&1; then
   iconutil -c icns -o "$RES/AppIcon.icns" "$ICONSET" && rm -rf "$ICONSET" || true
 fi
 
-# Ad-hoc sign the .app so Gatekeeper is less likely to kill dyld loads.
-codesign --force --deep --sign - "$APP" >/dev/null 2>&1 || true
+# Developer ID + notarization is what lets a downloaded app open without
+# System Settings. Without a certificate the bundle stays ad-hoc signed, which
+# is enough for local runs but Gatekeeper still blocks internet downloads.
+ENTITLEMENTS="$ROOT/macos/Maturita.entitlements"
+
+pick_sign_identity() {
+  if [[ -n "${MACOS_SIGN_IDENTITY:-}" ]]; then
+    printf '%s\n' "$MACOS_SIGN_IDENTITY"
+    return
+  fi
+  local found
+  found="$(security find-identity -v -p codesigning 2>/dev/null \
+    | awk -F'"' '/Developer ID Application/ { print $2; exit }')"
+  if [[ -n "$found" ]]; then
+    printf '%s\n' "$found"
+    return
+  fi
+  printf '%s\n' "-"
+}
+
+sign_one() {
+  local path="$1"
+  local use_entitlements="${2:-}"
+  local args=(--force --sign "$IDENTITY")
+
+  if [[ "$IDENTITY" != "-" ]]; then
+    args+=(--options runtime --timestamp)
+  fi
+  if [[ "$use_entitlements" == "entitlements" && -f "$ENTITLEMENTS" ]]; then
+    args+=(--entitlements "$ENTITLEMENTS")
+  fi
+  codesign "${args[@]}" "$path"
+}
+
+sign_bundle() {
+  local f
+
+  echo "==> Signing $APP_NAME"
+  IDENTITY="$(pick_sign_identity)"
+  if [[ "$IDENTITY" == "-" ]]; then
+    echo "  identity: ad-hoc (downloaded copies will still need Gatekeeper approval)"
+  else
+    echo "  identity: $IDENTITY"
+  fi
+
+  shopt -s nullglob
+  for f in "$FW"/*.dylib; do
+    sign_one "$f"
+  done
+  shopt -u nullglob
+
+  sign_one "$MACOS/maturita-bin" entitlements
+  sign_one "$MACOS/maturita" entitlements
+  sign_one "$APP" entitlements
+
+  codesign --verify --strict --verbose=2 "$APP"
+}
+
+can_notarize() {
+  [[ "$IDENTITY" != "-" ]] || return 1
+  if [[ -n "${APPLE_API_KEY:-}" && -n "${APPLE_API_KEY_ID:-}" &&
+        -n "${APPLE_API_ISSUER:-}" ]]; then
+    return 0
+  fi
+  if [[ -n "${APPLE_ID:-}" && -n "${APPLE_APP_SPECIFIC_PASSWORD:-}" &&
+        -n "${APPLE_TEAM_ID:-}" ]]; then
+    return 0
+  fi
+  return 1
+}
+
+notarize_bundle() {
+  local zip notary_args keyfile
+
+  if [[ "$IDENTITY" == "-" ]]; then
+    return 0
+  fi
+  if ! can_notarize; then
+    if [[ -n "${GITHUB_ACTIONS:-}${CI:-}" ]]; then
+      echo "error: Developer ID is present but notarization secrets are missing." >&2
+      echo "Set APPLE_API_KEY + APPLE_API_KEY_ID + APPLE_API_ISSUER, or" >&2
+      echo "APPLE_ID + APPLE_APP_SPECIFIC_PASSWORD + APPLE_TEAM_ID." >&2
+      exit 1
+    fi
+    echo "  warning: signed, but not notarized — Gatekeeper will still block downloads"
+    return 0
+  fi
+
+  echo "==> Notarizing $APP_NAME"
+  zip="$ROOT/dist/.notarize-$OUT_ZIP"
+  rm -f "$zip"
+  ditto -c -k --keepParent "$APP" "$zip"
+
+  notary_args=(submit "$zip" --wait)
+  keyfile=""
+  if [[ -n "${APPLE_API_KEY:-}" ]]; then
+    keyfile="$(mktemp)"
+    printf '%s\n' "$APPLE_API_KEY" > "$keyfile"
+    notary_args+=(--key "$keyfile" --key-id "$APPLE_API_KEY_ID"
+                  --issuer "$APPLE_API_ISSUER")
+  else
+    notary_args+=(--apple-id "$APPLE_ID"
+                  --password "$APPLE_APP_SPECIFIC_PASSWORD"
+                  --team-id "$APPLE_TEAM_ID")
+  fi
+
+  xcrun notarytool "${notary_args[@]}"
+  [[ -n "$keyfile" ]] && rm -f "$keyfile"
+  rm -f "$zip"
+  xcrun stapler staple "$APP"
+  echo "  stapled notarization ticket"
+}
+
+sign_bundle
 
 echo "==> Smoke-testing launch"
 if [[ -n "${GITHUB_ACTIONS:-}${CI:-}" ]]; then
@@ -269,6 +381,8 @@ else
   rm -f "$SMOKE_LOG"
   echo "  smoke test OK (process stayed up)"
 fi
+
+notarize_bundle
 
 echo "==> Zipping"
 rm -f "$ROOT/dist/$OUT_ZIP"

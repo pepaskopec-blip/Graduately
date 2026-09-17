@@ -33,10 +33,11 @@ build, takže soubor nikdy nezestárne.
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
 
-Buildy nejsou podepsané, proto je při **prvním** spuštění potřeba výše uvedený
-krok navíc. Aplikace se pak udržuje sama: po startu porovná svůj commit se
-souborem `VERSION` ve větvi `builds` a aktualizaci nabídne v pruhu nahoře.
-Ruční kontrola je v **Nastavení → Aktualizace**.
+Buildy zatím nejsou notarizované (chybí Apple Developer ID), proto je při
+**prvním** spuštění potřeba výše uvedený krok navíc. Aplikace se pak udržuje
+sama: po startu porovná svůj commit se souborem `VERSION` ve větvi `builds`
+a aktualizaci nabídne v pruhu nahoře. Ruční kontrola je
+v **Nastavení → Aktualizace**.
 
 #### Bez instalátoru
 
@@ -94,6 +95,16 @@ make bundle       # AppImage / .app zip / Windows složka s DLL
 ```
 
 Volitelně CMake: `cmake -S . -B build && cmake --build build`.
+
+Aby stažená aplikace na macOS šla otevřít bez potvrzení v Nastavení, CI
+potřebuje **Apple Developer Program** a GitHub Secrets:
+
+- `MACOS_CERTIFICATE` — Developer ID Application `.p12` v base64
+- `MACOS_CERTIFICATE_PASSWORD`
+- `APPLE_API_KEY`, `APPLE_API_KEY_ID`, `APPLE_API_ISSUER` — notarizace
+  (nebo `APPLE_ID` + `APPLE_APP_SPECIFIC_PASSWORD` + `APPLE_TEAM_ID`)
+
+Bez toho zůstane jen ad-hoc podpis a Gatekeeper stažený build zablokuje.
 
 #### Windows (MSYS2 UCRT64, bez Visual Studia)
 
@@ -154,10 +165,10 @@ the current build when you run it, so the file never goes stale.
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
 
-The builds are unsigned, so the first launch needs the extra step above.
-After that the app stays current: it compares its commit to `VERSION` on
-`builds` and offers an update in a banner. Manual check:
-**Settings → Updates**.
+The builds are not notarized yet (no Apple Developer ID), so the first
+launch still needs the extra step above. After that the app stays current:
+it compares its commit to `VERSION` on `builds` and offers an update in a
+banner. Manual check: **Settings → Updates**.
 
 #### Packages without the installer
 
@@ -215,6 +226,16 @@ make bundle       # AppImage / .app zip / Windows DLL folder
 ```
 
 Optional CMake: `cmake -S . -B build && cmake --build build`.
+
+Skipping Gatekeeper on a downloaded macOS build needs an
+**Apple Developer Program** membership and these GitHub Secrets:
+
+- `MACOS_CERTIFICATE` — Developer ID Application `.p12`, base64-encoded
+- `MACOS_CERTIFICATE_PASSWORD`
+- `APPLE_API_KEY`, `APPLE_API_KEY_ID`, `APPLE_API_ISSUER` for notarization
+  (or `APPLE_ID` + `APPLE_APP_SPECIFIC_PASSWORD` + `APPLE_TEAM_ID`)
+
+Without them the bundle stays ad-hoc signed and Gatekeeper still blocks it.
 
 #### Windows (MSYS2 UCRT64, no Visual Studio)
 
