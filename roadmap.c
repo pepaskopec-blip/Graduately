@@ -4,19 +4,6 @@
 /* Roadmap page                                                       */
 /* ------------------------------------------------------------------ */
 
-void draw_node_halo(cairo_t *cr, double cx, double cy,
-                           double radius, double r, double g, double b,
-                           double alpha) {
-    cairo_pattern_t *grad;
-    grad = cairo_pattern_create_radial(cx, cy, 6.0, cx, cy, radius);
-    cairo_pattern_add_color_stop_rgba(grad, 0.0, r, g, b, alpha);
-    cairo_pattern_add_color_stop_rgba(grad, 0.55, r, g, b, alpha * 0.30);
-    cairo_pattern_add_color_stop_rgba(grad, 1.0, r, g, b, 0.0);
-    cairo_set_source(cr, grad);
-    cairo_paint(cr);
-    cairo_pattern_destroy(grad);
-}
-
 /* Draw the checkered "finish line" node: checkerboard behind the unit
  * number and the same lock glyph the locked units use. */
 void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
@@ -236,13 +223,9 @@ void draw_rail(GtkDrawingArea *area, cairo_t *cr,
                       int width, int height, gpointer user_data) {
     const double t_lit = (double)(NUM_UNLOCKED - 1);
     const double t_end = (double)(NUM_UNITS - 1);
-    const double x0 = ROAD_MX;
-    const double x1 = (double)road_cw - ROAD_MX;
-    const Rgb mauve = color_from_hex(app_theme.accent);
-    const Rgb blue = color_from_hex(app_theme.accent3);
+    const Rgb accent = color_from_hex(app_theme.accent);
     const Rgb rail = color_from_hex(app_theme.rail);
     const Rgb muted = color_from_hex(app_theme.subtext);
-    double hx, hy;
 
     (void)area;
     (void)width;
@@ -255,41 +238,18 @@ void draw_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
-    road_point((double)(NUM_UNLOCKED - 1), &hx, &hy);
-    draw_node_halo(cr, hx, hy, NODE_SIZE * 1.05,
-                   mauve.r, mauve.g, mauve.b, 0.18);
-
     cairo_new_path(cr);
     road_path(cr, 0.0, t_end);
-    cairo_set_line_width(cr, 16);
+    cairo_set_line_width(cr, 12);
     cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
     cairo_stroke(cr);
 
     if (t_lit > 0.0) {
-        cairo_pattern_t *grad;
-
         cairo_new_path(cr);
         road_path(cr, 0.0, t_lit);
-
-        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
-        cairo_pattern_add_color_stop_rgba(grad, 0.0,
-                                          mauve.r, mauve.g, mauve.b, 0.16);
-        cairo_pattern_add_color_stop_rgba(grad, 1.0,
-                                          blue.r, blue.g, blue.b, 0.16);
-        cairo_set_source(cr, grad);
-        cairo_set_line_width(cr, 34);
-        cairo_stroke_preserve(cr);
-        cairo_pattern_destroy(grad);
-
-        grad = cairo_pattern_create_linear(x0, 0.0, x1, 0.0);
-        cairo_pattern_add_color_stop_rgba(grad, 0.0,
-                                          mauve.r, mauve.g, mauve.b, 1.0);
-        cairo_pattern_add_color_stop_rgba(grad, 1.0,
-                                          blue.r, blue.g, blue.b, 1.0);
-        cairo_set_source(cr, grad);
-        cairo_set_line_width(cr, 16);
-        cairo_stroke_preserve(cr);
-        cairo_pattern_destroy(grad);
+        cairo_set_source_rgb(cr, accent.r, accent.g, accent.b);
+        cairo_set_line_width(cr, 12);
+        cairo_stroke(cr);
     }
 
     {

@@ -1,153 +1,27 @@
+/* Interface stylesheet.
+ *
+ * theme.c prepends the @define-color bindings of the active palette before
+ * this file is parsed, so nothing here names a literal colour: the rules
+ * describe shape, spacing and type only, and every palette stays swappable.
+ *
+ * Keep to the scales below when adding rules.
+ *
+ *   type     12 caption | 13 small | 15 body | 17 lead | 20 26 30 headings
+ *   weight   400 body | 500 emphasis | 600 controls and labels | 700 headings
+ *   radius   8 controls | 12 rows and cards | 16 popovers | 999 circles
+ *   motion   120ms colour | 150ms elevation
+ *
+ * Fills are flat and elevation is neutral; accent colour marks state, never
+ * decoration. Rules below the no-scale marker at the end of the file keep a
+ * fixed font size while the rest grows with the window.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Window chrome                                                      */
+/* ------------------------------------------------------------------ */
+
 window {
    background-color: @bg_base;
-   background-image: linear-gradient(160deg, @bg_crust 0%, @bg_base 40%, @bg_surface0 100%);
-}
-button {
-   background-image: none;
-}
-.app-title {
-   color: @fg_text;
-   font-weight: 700;
-   font-size: 14px;
-}
-.settings-btn,
-.settings-btn:hover,
-.settings-btn:active,
-.settings-btn:checked,
-.settings-btn:focus,
-.settings-btn:focus-visible {
-   min-width: 34px;
-   min-height: 34px;
-   padding: 0;
-   border-radius: 999px;
-   background: transparent;
-   background-color: transparent;
-   background-image: none;
-   border: none;
-   outline: none;
-   box-shadow: none;
-   color: @fg_text;
-}
-.settings-btn:hover {
-   color: @accent;
-   background-color: alpha(@bg_surface0, 0.55);
-}
-.settings-btn:active {
-   color: @accent;
-   background-color: alpha(@bg_surface1, 0.4);
-}
-popover,
-popover.background,
-.settings-popover {
-   background: @bg_mantle;
-   background-color: @bg_mantle;
-   color: @fg_text;
-   border: 1px solid @bg_surface1;
-   border-radius: 18px;
-   box-shadow: 0 18px 40px alpha(@bg_crust, 0.45);
-}
-popover > contents,
-.settings-popover > contents {
-   background: transparent;
-   background-color: transparent;
-   border: none;
-   border-radius: 18px;
-   box-shadow: none;
-   padding: 0;
-}
-.settings-box {
-   background-color: transparent;
-   color: @fg_text;
-   min-width: 292px;
-   padding: 16px 16px 14px 16px;
-}
-.settings-title {
-   color: @fg_text;
-   font-size: 17px;
-   font-weight: 800;
-   letter-spacing: -0.2px;
-}
-.settings-label {
-   color: @fg_overlay;
-   font-size: 11px;
-   font-weight: 700;
-   letter-spacing: 0.8px;
-}
-.settings-seg {
-   background-color: alpha(@bg_surface0, 0.55);
-   border: none;
-   border-radius: 12px;
-   padding: 3px;
-}
-.mode-chip {
-   background-image: none;
-   background-color: transparent;
-   color: @fg_subtext;
-   border: none;
-   border-radius: 10px;
-   padding: 9px 12px;
-   font-size: 13px;
-   font-weight: 600;
-   min-width: 0;
-   box-shadow: none;
-   transition: background-color 140ms ease, color 140ms ease,
-                box-shadow 140ms ease;
-}
-.mode-chip:hover {
-   background-color: alpha(@bg_surface1, 0.28);
-   color: @fg_text;
-}
-.mode-chip:checked {
-   background-image: linear-gradient(135deg, @accent 0%, @accent2 100%);
-   color: @on_accent;
-   font-weight: 800;
-   box-shadow: 0 4px 12px alpha(@accent, 0.25);
-}
-.mode-chip:checked:hover {
-   background-image: linear-gradient(135deg, @accent 0%, @accent2 100%);
-   color: @on_accent;
-}
-.theme-grid {
-   background-color: transparent;
-   border: none;
-   padding: 0;
-}
-flowboxchild {
-   padding: 0;
-   margin: 0;
-   background: transparent;
-   border: none;
-   box-shadow: none;
-}
-.theme-card {
-   background-image: none;
-   background-color: transparent;
-   color: @fg_text;
-   border: none;
-   border-radius: 12px;
-   padding: 6px 4px;
-   min-width: 0;
-   box-shadow: none;
-   transition: background-color 140ms ease;
-}
-.theme-card:hover {
-   background-color: alpha(@bg_surface0, 0.45);
-}
-.theme-card:checked {
-   background-color: transparent;
-   box-shadow: none;
-}
-.theme-card:checked:hover {
-   background-color: alpha(@bg_surface0, 0.35);
-}
-.theme-card-name {
-   color: @fg_subtext;
-   font-size: 11px;
-   font-weight: 600;
-}
-.theme-card:checked .theme-card-name {
-   color: @fg_text;
-   font-weight: 700;
 }
 headerbar,
 headerbar.titlebar,
@@ -155,325 +29,391 @@ headerbar.titlebar,
    background-color: @bg_base;
    background-image: none;
    color: @fg_text;
-   box-shadow: none;
    border: none;
+   box-shadow: inset 0 -1px 0 alpha(@fg_text, 0.07);
 }
-windowcontrols button:not(:hover) {
+.app-title {
    color: @fg_text;
+   font-size: 13px;
+   font-weight: 600;
 }
+windowcontrols button:not(:hover),
 windowcontrols button:not(:hover) image {
+   color: @fg_subtext;
+}
+button {
+   background-image: none;
+}
+tooltip {
+   background-color: @bg_crust;
+   border: 1px solid alpha(@fg_text, 0.10);
+   border-radius: 8px;
    color: @fg_text;
 }
+
+/* Keyboard focus stays visible on every real control; the map nodes below
+ * are canvas items and opt out explicitly. */
+.btn-primary:focus-visible,
+.back-btn:focus-visible,
+.settings-btn:focus-visible,
+.pill:focus-visible,
+.chip:focus-visible,
+.group-btn:focus-visible,
+.mode-chip:focus-visible,
+.theme-card:focus-visible,
+.kahoot-opt:focus-visible {
+   outline-style: solid;
+   outline-width: 2px;
+   outline-color: alpha(@accent, 0.65);
+   outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Type                                                               */
+/* ------------------------------------------------------------------ */
+
 .heading {
    color: @fg_text;
-   font-size: 32px;
-   font-weight: 800;
-}
-.card {
-   background-color: alpha(@bg_surface0, 0.92);
-   border: 1px solid @bg_surface1;
-   border-radius: 18px;
-   padding: 30px 34px;
-   color: @fg_text;
-   font-size: 16px;
-}
-.btn-primary {
-   background-image: linear-gradient(135deg, @accent 0%, @accent2 100%);
-   color: @on_accent;
-   font-size: 16px;
+   font-size: 30px;
    font-weight: 700;
-   padding: 12px 40px;
-   border: none;
-   border-radius: 999px;
-   box-shadow: 0 6px 18px alpha(@accent, 0.25);
-   transition: box-shadow 150ms ease, background-image 150ms ease;
-}
-.btn-primary:hover {
-   box-shadow: 0 8px 24px alpha(@accent, 0.45);
-   background-image: linear-gradient(135deg, @accent2 0%, @accent3 100%);
-}
-.btn-primary:active {
-   box-shadow: 0 3px 10px alpha(@accent, 0.35);
+   letter-spacing: -0.5px;
 }
 .roadmap-title {
    color: @fg_text;
-   font-size: 28px;
-   font-weight: 800;
+   font-size: 26px;
+   font-weight: 700;
+   letter-spacing: -0.3px;
 }
 .roadmap-sub {
    color: @fg_subtext;
-   font-size: 14px;
+   font-size: 15px;
 }
-.back-btn {
-   min-width: 42px;
-   min-height: 42px;
-   padding: 0;
-   border-radius: 999px;
-   background-color: alpha(@bg_surface0, 0.9);
-   border: 1px solid @bg_surface1;
-   color: @fg_text;
-   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);
-   transition: background-color 150ms ease, color 150ms ease,
-                border-color 150ms ease, box-shadow 150ms ease;
+.welcome-body {
+   color: @fg_subtext;
+   font-size: 15px;
 }
-.back-btn:hover {
-   background-color: @bg_surface1;
-   border-color: @bg_surface2;
-   color: @accent;
-   box-shadow: 0 6px 20px alpha(@accent, 0.35);
-}
-.back-btn:active {
-   background-color: @bg_surface0;
-   box-shadow: 0 2px 8px alpha(@bg_crust, 0.35);
-}
-.unit-node {
-   background-image: none;
-   background-color: @node_bg;
-   color: @fg_text;
-   border: 2px solid @locked_border;
-   border-radius: 999px;
-   padding: 0;
-   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);
-   transition: transform 150ms ease, box-shadow 150ms ease,
-                border-color 150ms ease;
-}
-.unit-node.done {
-   background-image: linear-gradient(135deg, @success 0%, @success2 100%);
-   border-color: @success;
-   color: @on_accent;
-   box-shadow: 0 4px 16px alpha(@success, 0.35);
-}
-.unit-node.current {
-   background-image: linear-gradient(135deg, @accent 0%, @accent2 55%, @accent3 100%);
-   border-color: @accent;
-   color: @on_accent;
-   box-shadow: 0 4px 18px alpha(@accent, 0.5),
-               0 0 0 4px alpha(@bg_base, 0.9),
-               0 0 0 7px alpha(@accent, 0.45);
-}
-.unit-node.done:hover,
-.unit-node.current:hover {
-   transition: box-shadow 150ms ease, border-color 150ms ease;
-}
-.unit-node.done:hover {
-   box-shadow: 0 8px 22px alpha(@success, 0.5);
-}
-.unit-node.current:hover {
-   box-shadow: 0 8px 26px alpha(@accent, 0.65),
-               0 0 0 4px alpha(@bg_base, 0.9),
-               0 0 0 7px alpha(@accent, 0.55);
-}
-.unit-node.locked {
-   background-image: none;
-   background-color: @locked_bg;
-   border: 2px solid @locked_border;
+.welcome-meta {
    color: @fg_overlay;
-   box-shadow: none;
+   font-size: 12px;
 }
-.unit-node.locked:hover {
-   transform: none;
-   box-shadow: none;
-}
-.unit-node.finish {
-   background-color: transparent;
-   background-image: none;
-   border: none;
-   color: @fg_overlay;
-   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);
-}
-.unit-node.finish:hover {
-   transform: none;
-   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);
-}
-.unit-node:focus,
-.unit-node:focus-visible,
-.unit-node:hover {
-   outline: none;
-}
-.unit-number {
-   font-size: 24px;
-   font-weight: 800;
-}
-.unit-node.done .unit-number,
-.unit-node.current .unit-number {
-   color: @on_accent;
-}
-.unit-node.locked .unit-number {
-   color: @fg_overlay;
-}
-.state-icon {
-   color: @on_accent;
-}
-.unit-node.locked .lock-icon {
-   color: @bg_surface2;
-}
-.unit-name {
-   color: @fg_text;
-   font-size: 13px;
-   font-weight: 600;
-}
-.unit-name-locked {
-   color: @fg_overlay;
-}
-.ex-bubble {
-   min-width: 64px;
-   min-height: 64px;
-   padding: 0;
-   border-radius: 999px;
-   background-color: @node_bg;
-   color: @fg_text;
-   border: 2px solid @locked_border;
-   box-shadow: 0 4px 14px alpha(@bg_crust, 0.35);
-   transition: border-color 150ms ease, box-shadow 150ms ease;
-}
-.ex-bubble:hover {
-   background-image: none;
-   border-color: @accent;
-   box-shadow: 0 6px 20px alpha(@accent, 0.35);
-}
-.ex-bubble.done {
-   background-image: linear-gradient(135deg, @success 0%, @success2 100%);
-   border-color: @success;
-   color: @on_accent;
-   box-shadow: 0 4px 16px alpha(@success, 0.35);
-}
-.ex-bubble.done:hover {
-   box-shadow: 0 8px 22px alpha(@success, 0.5);
-}
-.ex-bubble:focus,
-.ex-bubble:focus-visible {
-   outline: none;
-}
-.ex-branch {
-   border-style: dashed;
-   border-color: @accent;
-}
-.ex-branch:hover {
-   border-style: solid;
-}
-.bubble-number {
-   font-size: 22px;
-   font-weight: 800;
-}
-.ex-bubble.done .bubble-number {
-   color: @on_accent;
-}
-.bubble-icon {
-   color: @on_accent;
-}
-.ex-label {
-   color: @fg_text;
+
+/* Small all-caps-ish section markers. */
+.settings-label,
+.stats-section,
+.stats-metric-label,
+.notes-kicker,
+.group-panel-label {
+   color: @fg_subtext;
    font-size: 12px;
    font-weight: 600;
 }
-.cz-label {
-   background-color: @bg_base;
-   padding: 1px 6px;
-   border-radius: 8px;
+.notes-kicker {
+   color: @accent;
+   letter-spacing: 0.6px;
 }
-.book-card {
-   background-image: none;
-   background-color: alpha(@bg_surface0, 0.92);
-   border: 1px solid @bg_surface1;
-   border-radius: 18px;
-   padding: 20px 26px;
+
+.hint,
+.meaning {
+   color: @fg_subtext;
+   font-size: 13px;
+}
+.ex-prompt {
    color: @fg_text;
-   box-shadow: 0 6px 18px alpha(@bg_crust, 0.22);
-   transition: box-shadow 160ms ease, border-color 160ms ease,
-               background-color 160ms ease;
+   font-size: 15px;
+   font-weight: 400;
 }
-.book-card:hover {
-   border-color: @accent;
-   background-color: alpha(@accent, 0.10);
-   box-shadow: 0 12px 30px alpha(@accent, 0.32);
+.ex-sub {
+   color: @fg_subtext;
+   font-size: 13px;
+   font-weight: 500;
 }
-.book-card:active {
-   background-color: alpha(@accent, 0.18);
-   box-shadow: 0 4px 12px alpha(@accent, 0.25);
-}
-.reading-hero {
-   opacity: 0.22;
-}
-.book-title {
+.trans-word {
    color: @fg_text;
    font-size: 24px;
-   font-weight: 800;
+   font-weight: 600;
 }
-.book-author {
-   color: @accent2;
+.dlg-speaker {
+   color: @accent;
    font-size: 15px;
+   font-weight: 600;
+}
+.number-big {
+   color: @fg_text;
+   font-size: 24px;
+   font-weight: 600;
+}
+.hm-word {
+   color: @fg_text;
+   font-family: monospace;
+   font-size: 26px;
+   font-weight: 600;
+   letter-spacing: 2px;
+}
+.chain {
+   color: @fg_text;
+   font-size: 17px;
+   font-weight: 500;
+   letter-spacing: 0.5px;
+}
+.u3-answer {
+   color: @success;
+   font-size: 13px;
+   font-weight: 600;
+}
+.feedback-ok {
+   color: @success;
+   font-size: 14px;
+   font-weight: 600;
+}
+.feedback-err {
+   color: @error;
+   font-size: 14px;
+   font-weight: 600;
+}
+.feedback-warn {
+   color: @warning;
+   font-size: 14px;
+   font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Surfaces                                                           */
+/* ------------------------------------------------------------------ */
+
+.quiz-card,
+.notes-card,
+.stats-metric,
+.stats-unit-row,
+.book-card,
+.lit-link {
+   background-color: mix(@bg_base, @bg_surface0, 0.55);
+   background-image: none;
+   border: 1px solid alpha(@fg_text, 0.09);
+   border-radius: 12px;
+   color: @fg_text;
+   box-shadow: none;
+}
+.quiz-card {
+   padding: 16px 18px;
+}
+.notes-card {
+   padding: 22px 26px;
+}
+.notes-title {
+   color: @fg_text;
+   font-size: 20px;
    font-weight: 700;
 }
-.book-sub {
+.notes-body {
+   color: @fg_text;
+   font-size: 15px;
+}
+.notes-tip {
+   color: @success;
+   font-size: 14px;
+   font-weight: 500;
+}
+.group-panel,
+.sent-group {
+   background-color: alpha(@fg_text, 0.04);
+   border: 1px solid alpha(@fg_text, 0.09);
+   border-radius: 12px;
+   padding: 12px;
+}
+.sent-group.ok {
+   border-color: @success;
+}
+.sent-group.wrong {
+   border-color: @error;
+}
+
+popover,
+popover.background,
+.settings-popover {
+   background-color: @bg_mantle;
+   color: @fg_text;
+   border: 1px solid alpha(@fg_text, 0.12);
+   border-radius: 16px;
+   box-shadow: 0 12px 32px alpha(@bg_crust, 0.45);
+}
+popover > contents,
+.settings-popover > contents {
+   background-color: transparent;
+   border: none;
+   border-radius: 16px;
+   box-shadow: none;
+   padding: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                            */
+/* ------------------------------------------------------------------ */
+
+.btn-primary {
+   background-image: none;
+   background-color: @accent;
+   color: @on_accent;
+   font-size: 15px;
+   font-weight: 600;
+   padding: 10px 22px;
+   border: none;
+   border-radius: 8px;
+   box-shadow: none;
+   transition: background-color 120ms ease;
+}
+.btn-primary:hover {
+   background-color: shade(@accent, 1.1);
+}
+.btn-primary:active {
+   background-color: shade(@accent, 0.92);
+}
+.btn-primary:disabled {
+   background-color: alpha(@fg_text, 0.10);
+   color: @fg_overlay;
+}
+
+/* Flat icon buttons in the header bar and above each page. */
+.back-btn,
+.settings-btn,
+.settings-btn:hover,
+.settings-btn:active,
+.settings-btn:checked,
+.settings-btn:focus {
+   min-width: 32px;
+   min-height: 32px;
+   padding: 0;
+   border-radius: 8px;
+   background-color: transparent;
+   background-image: none;
+   border: none;
+   box-shadow: none;
+   color: @fg_subtext;
+   transition: background-color 120ms ease, color 120ms ease;
+}
+.back-btn:hover,
+.settings-btn:hover {
+   background-color: alpha(@fg_text, 0.09);
+   color: @fg_text;
+}
+.back-btn:active,
+.settings-btn:active {
+   background-color: alpha(@fg_text, 0.15);
+   color: @fg_text;
+}
+
+/* Word / answer chips. */
+.pill,
+.chip,
+.group-btn {
+   background-image: none;
+   background-color: mix(@bg_base, @bg_surface0, 0.7);
+   color: @fg_text;
+   border: 1px solid alpha(@fg_text, 0.12);
+   border-radius: 8px;
+   padding: 7px 14px;
+   font-size: 14px;
+   font-weight: 500;
+   box-shadow: none;
+   transition: background-color 120ms ease, border-color 120ms ease;
+}
+.pill:hover,
+.chip:hover,
+.group-btn:hover {
+   background-image: none;
+   background-color: mix(@bg_base, @bg_surface0, 1.0);
+   border-color: alpha(@accent, 0.7);
+}
+.pill:active,
+.chip:active,
+.group-btn:active {
+   background-image: none;
+   background-color: @bg_surface1;
+}
+.pill:checked,
+.group-btn:checked {
+   background-image: none;
+   background-color: @accent;
+   border-color: @accent;
+   color: @on_accent;
+   font-weight: 600;
+}
+.pill.ok,
+.pill.ok:checked,
+.pill.ok:hover {
+   background-image: none;
+   background-color: @success;
+   border-color: @success;
+   color: @on_accent;
+}
+.pill.wrong,
+.pill.wrong:checked,
+.pill.wrong:hover {
+   background-image: none;
+   background-color: @error;
+   border-color: @error;
+   color: @on_accent;
+}
+.pill.hm-key {
+   min-width: 32px;
+   padding: 5px 6px;
+   font-size: 13px;
+}
+.chip {
+   border-radius: 999px;
+}
+.chip.ghost-host {
+   opacity: 0;
+}
+.group-panel-label {
+   margin-bottom: 4px;
+}
+
+/* Multiple-choice rows read as list items rather than as chips. They are
+ * outlined instead of filled, so they do not have to be lighter than the card
+ * in dark mode and darker in light mode. */
+.quiz-pill {
+   background-color: transparent;
+   border-color: alpha(@fg_text, 0.13);
+   border-radius: 10px;
+   padding: 11px 14px;
+   min-height: 40px;
+}
+.quiz-pill label {
+   font-weight: 400;
+}
+.quiz-pill:checked label {
+   font-weight: 600;
+}
+.quiz-heading {
+   color: @fg_text;
+   font-size: 17px;
+   font-weight: 600;
+}
+.quiz-intro {
    color: @fg_subtext;
    font-size: 14px;
 }
-.lit-link {
-   background-image: none;
-   background-color: alpha(@bg_surface0, 0.92);
-   border: 1px solid @bg_surface1;
-   border-radius: 16px;
-   padding: 14px 18px;
+.quiz-q {
    color: @fg_text;
-   box-shadow: 0 5px 16px alpha(@bg_crust, 0.18);
-   transition: box-shadow 160ms ease, border-color 160ms ease,
-               background-color 160ms ease;
-}
-.lit-link:hover {
-   border-color: @accent;
-   background-color: alpha(@accent, 0.10);
-   box-shadow: 0 10px 26px alpha(@accent, 0.30);
-}
-.lit-link:active {
-   background-color: alpha(@accent, 0.18);
-   box-shadow: 0 4px 12px alpha(@accent, 0.25);
-}
-.lit-link-title {
-   color: @fg_text;
-   font-size: 17px;
-   font-weight: 800;
-}
-.lit-link-sub {
-   color: @fg_subtext;
-   font-size: 13px;
-}
-.lit-progress {
-   color: @accent2;
-   font-size: 13px;
-   font-weight: 800;
-   letter-spacing: 1px;
-}
-.lit-score {
-   color: @fg_subtext;
-   font-size: 13px;
-   font-weight: 700;
-}
-.lit-prompt {
-   color: @fg_text;
-   font-size: 20px;
-   font-weight: 800;
-}
-.lit-expl {
-   color: @success2;
    font-size: 15px;
    font-weight: 600;
-   background-color: alpha(@bg_surface0, 0.85);
-   border-left: 4px solid @success;
-   border-radius: 8px;
-   padding: 10px 14px;
 }
+.quiz-options {
+   margin-top: 4px;
+}
+
+/* Four-colour quiz board: the colours are the mechanic, so they stay, but
+ * they are flat and the answer state is shown by the border alone. */
 .kahoot-opt {
    background-image: none;
    color: @on_accent;
    font-size: 15px;
-   font-weight: 700;
-   padding: 16px;
-   border: 3px solid transparent;
-   border-radius: 14px;
-   box-shadow: 0 4px 14px alpha(@bg_crust, 0.30);
-}
-.kahoot-opt:hover {
-   box-shadow: 0 7px 22px alpha(@bg_crust, 0.42);
+   font-weight: 600;
+   padding: 14px 16px;
+   border: 2px solid transparent;
+   border-radius: 12px;
+   box-shadow: none;
+   transition: border-color 120ms ease, opacity 120ms ease;
 }
 .kahoot-0 {
    background-color: @accent;
@@ -487,451 +427,444 @@ windowcontrols button:not(:hover) image {
 .kahoot-3 {
    background-color: @success;
 }
+.kahoot-opt:hover {
+   border-color: alpha(@fg_text, 0.35);
+}
 .kahoot-opt.ok {
    border-color: @fg_text;
-   box-shadow: 0 0 0 3px alpha(@fg_text, 0.35);
 }
 .kahoot-opt.wrong {
-   opacity: 0.35;
+   opacity: 0.4;
 }
-.ex-prompt {
-   color: @fg_text;
-   font-size: 16px;
-   font-weight: 500;
-}
-.trans-word {
-   color: @fg_text;
-   font-size: 24px;
-   font-weight: 700;
-}
-.ex-sub {
-   color: @fg_subtext;
-   font-size: 13px;
-   font-weight: 700;
-}
-.hint {
-   color: @fg_subtext;
-   font-size: 13px;
-   font-style: italic;
-}
-.meaning {
-   color: @fg_subtext;
-   font-size: 13px;
-   font-style: italic;
-}
-.u3-answer {
-   color: @success;
-   font-size: 13px;
-   font-weight: 700;
-}
-.notes-card {
-   background-color: alpha(@bg_surface0, 0.9);
-   border: 1px solid @bg_surface1;
-   border-radius: 24px;
-   padding: 24px 34px;
-   box-shadow: 0 10px 30px alpha(@bg_crust, 0.20);
-}
-.notes-kicker {
-   color: @accent2;
-   font-weight: 800;
-   letter-spacing: 2px;
-}
-.notes-title {
-   color: @fg_text;
-   font-weight: 800;
-}
-.notes-body {
-   color: @fg_text;
-}
-.notes-tip {
-   color: @success2;
-   font-weight: 700;
-}
-.dlg-speaker {
-   color: @accent;
-   font-weight: 700;
-   font-size: 15px;
-}
-.number-big {
-   color: @warning;
-   font-size: 26px;
-   font-weight: 800;
-}
-.hm-word {
-   color: @fg_text;
-   font-family: monospace;
-   font-size: 30px;
-   font-weight: 800;
-}
-.chain {
-   color: @warning;
-   font-size: 20px;
-   font-weight: 700;
-   letter-spacing: 1px;
-}
+
+/* ------------------------------------------------------------------ */
+/* Text entry                                                         */
+/* ------------------------------------------------------------------ */
+
 entry {
    background-color: @bg_mantle;
    color: @fg_text;
-   border: 1px solid @bg_surface1;
-   border-radius: 10px;
-   padding: 8px 12px;
+   border: 1px solid alpha(@fg_text, 0.14);
+   border-radius: 8px;
+   padding: 7px 11px;
    font-size: 15px;
    caret-color: @accent;
+   box-shadow: none;
 }
 entry:focus {
    border-color: @accent;
+   box-shadow: 0 0 0 2px alpha(@accent, 0.22);
+}
+entry.answer-ok {
+   border-color: @success;
+   background-color: alpha(@success, 0.10);
+}
+entry.answer-wrong {
+   border-color: @error;
+   background-color: alpha(@error, 0.10);
 }
 combobox {
-   background-color: @bg_mantle;
+   background-color: transparent;
    color: @fg_text;
 }
 combobox button {
    background-image: none;
    background-color: @bg_mantle;
    color: @fg_text;
-   border: 1px solid @bg_surface1;
-   border-radius: 10px;
+   border: 1px solid alpha(@fg_text, 0.14);
+   border-radius: 8px;
    padding: 4px 10px;
+   box-shadow: none;
 }
 combobox button:hover {
    background-image: none;
-   border-color: @accent;
+   border-color: alpha(@accent, 0.7);
 }
 combobox.answer-ok button {
    border-color: @success;
-   background-color: alpha(@success, 0.12);
+   background-color: alpha(@success, 0.10);
 }
 combobox.answer-wrong button {
    border-color: @error;
-   background-color: alpha(@error, 0.12);
+   background-color: alpha(@error, 0.10);
 }
-entry.answer-ok {
-   border-color: @success;
-   background-color: alpha(@success, 0.08);
-}
-entry.answer-wrong {
-   border-color: @error;
-   background-color: alpha(@error, 0.08);
-}
-.pill {
+
+/* ------------------------------------------------------------------ */
+/* Progress maps                                                      */
+/* ------------------------------------------------------------------ */
+
+.unit-node,
+.ex-bubble {
    background-image: none;
    background-color: @node_bg;
    color: @fg_text;
    border: 2px solid @locked_border;
    border-radius: 999px;
-   padding: 6px 18px;
-   font-size: 15px;
-   transition: border-color 150ms ease, box-shadow 150ms ease,
-                background-color 150ms ease;
-}
-.pill:hover {
-   background-image: none;
-   background-color: @node_bg;
-   border-color: @accent;
+   padding: 0;
    box-shadow: none;
+   transition: background-color 120ms ease, border-color 120ms ease,
+               box-shadow 150ms ease;
 }
-.pill:active {
-   background-image: none;
-   background-color: @bg_surface1;
-   box-shadow: none;
+.ex-bubble {
+   min-width: 64px;
+   min-height: 64px;
 }
-.pill:checked {
-   background-image: linear-gradient(135deg, @accent 0%, @accent2 100%);
-   color: @on_accent;
-   border-color: @accent;
-   font-weight: 700;
-}
-.pill.ok,
-.pill.ok:checked {
-   background-image: linear-gradient(135deg, @success 0%, @success2 100%);
-   color: @on_accent;
+.unit-node.done,
+.ex-bubble.done {
+   background-color: @success;
    border-color: @success;
-   box-shadow: 0 0 0 2px alpha(@success, 0.35);
-}
-.pill.wrong,
-.pill.wrong:checked {
-   background-image: linear-gradient(135deg, @error 0%, #c45c5c 100%);
    color: @on_accent;
-   border-color: @error;
-   box-shadow: 0 0 0 2px alpha(@error, 0.35);
 }
-.pill.hm-key {
-   padding: 4px 5px;
-   min-width: 32px;
+.unit-node.current {
+   background-color: @accent;
+   border-color: @accent;
+   color: @on_accent;
+   box-shadow: 0 0 0 4px alpha(@accent, 0.2);
+}
+.unit-node.locked {
+   background-color: @locked_bg;
+   border-color: @locked_border;
+   color: @fg_overlay;
+}
+.unit-node.finish {
+   background-color: transparent;
+   border: none;
+   color: @fg_overlay;
+}
+.unit-node:hover,
+.ex-bubble:hover {
+   border-color: @accent;
+}
+.unit-node.locked:hover {
+   border-color: @locked_border;
+}
+.unit-node.done:hover,
+.ex-bubble.done:hover {
+   border-color: shade(@success, 1.15);
+}
+.unit-node.current:hover {
+   box-shadow: 0 0 0 5px alpha(@accent, 0.3);
+}
+.unit-node:focus,
+.unit-node:focus-visible,
+.ex-bubble:focus,
+.ex-bubble:focus-visible {
+   outline-style: none;
+}
+.ex-branch {
+   border-style: dashed;
+   border-color: @accent;
+}
+.ex-branch:hover {
+   border-style: solid;
+}
+
+.unit-number {
+   font-size: 22px;
+   font-weight: 700;
+}
+.bubble-number {
+   font-size: 20px;
+   font-weight: 700;
+}
+.unit-node.done .unit-number,
+.unit-node.current .unit-number,
+.ex-bubble.done .bubble-number,
+.state-icon,
+.bubble-icon {
+   color: @on_accent;
+}
+.unit-node.locked .unit-number {
+   color: @fg_overlay;
+}
+.unit-node.locked .lock-icon {
+   color: @fg_overlay;
+}
+
+/* Node captions sit on top of the rail, so they carry the page background. */
+.unit-name,
+.ex-label {
+   color: @fg_text;
    font-size: 13px;
-}
-.quiz-card {
-   background-color: alpha(@bg_surface0, 0.85);
-   border: 1px solid @bg_surface1;
-   border-radius: 18px;
-   padding: 16px 18px 14px 18px;
-   box-shadow: 0 6px 18px alpha(@bg_crust, 0.18);
-}
-.quiz-heading {
-   color: @fg_text;
-   font-size: 18px;
-   font-weight: 700;
-}
-.quiz-intro {
-   color: @fg_subtext;
-   font-size: 14px;
-   font-style: italic;
-}
-.quiz-q {
-   color: @fg_text;
-   font-size: 16px;
-   font-weight: 700;
-}
-.quiz-options {
-   margin-top: 2px;
-}
-.quiz-pill {
-   border-radius: 14px;
-   padding: 12px 16px;
-   min-height: 44px;
-}
-.quiz-pill label {
    font-weight: 500;
 }
-.quiz-pill:checked label {
+.unit-name-locked {
+   color: @fg_overlay;
+}
+.cz-label {
+   background-color: @bg_base;
+   border-radius: 6px;
+   padding: 2px 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reading list and literature                                        */
+/* ------------------------------------------------------------------ */
+
+.book-card,
+.lit-link {
+   padding: 16px 20px;
+   transition: background-color 120ms ease, border-color 120ms ease;
+}
+.book-card:hover,
+.lit-link:hover {
+   background-color: mix(@bg_base, @bg_surface0, 0.9);
+   border-color: alpha(@accent, 0.6);
+}
+.book-card:active,
+.lit-link:active {
+   background-color: alpha(@accent, 0.14);
+}
+.reading-hero {
+   opacity: 0.18;
+}
+.book-title {
+   color: @fg_text;
+   font-size: 20px;
    font-weight: 700;
 }
-.chip {
-   background-image: none;
-   background-color: @bg_surface1;
-   color: @fg_text;
-   border: 1px solid @bg_surface2;
-   border-radius: 999px;
-   padding: 6px 14px;
-   font-size: 14px;
-   font-weight: 600;
-   transition: background-color 150ms ease, border-color 150ms ease;
+.book-author {
+   color: @fg_subtext;
+   font-size: 15px;
+   font-weight: 500;
 }
-.chip:hover {
-   background-image: none;
-   background-color: @bg_surface2;
-   border-color: @accent;
-   box-shadow: none;
-}
-.chip:active {
-   background-image: none;
-   background-color: @bg_surface2;
-   box-shadow: none;
-}
-.chip.ghost-host {
-   opacity: 0;
-}
-.group-btn {
-   background-image: none;
-   background-color: @node_bg;
-   color: @fg_text;
-   border: 2px solid @locked_border;
-   border-radius: 12px;
-   padding: 8px 18px;
-   font-size: 14px;
-   font-weight: 700;
-   transition: border-color 150ms ease, box-shadow 150ms ease;
-}
-.group-btn:hover {
-   background-image: none;
-   background-color: @node_bg;
-   border-color: @accent;
-   box-shadow: none;
-}
-.group-btn:active {
-   background-image: none;
-   background-color: @bg_surface1;
-   box-shadow: none;
-}
-.group-btn:checked {
-   background-image: linear-gradient(135deg, @accent3 0%, @success2 100%);
-   color: @on_accent;
-   border-color: @accent3;
-}
-.group-panel {
-   background-color: alpha(@bg_surface0, 0.5);
-   border: 2px dashed @bg_surface1;
-   border-radius: 14px;
-   padding: 10px;
-}
-.group-panel-label {
+.book-sub,
+.lit-link-sub {
    color: @fg_subtext;
    font-size: 13px;
+}
+.lit-link-title {
+   color: @fg_text;
+   font-size: 17px;
+   font-weight: 600;
+}
+.lit-progress {
+   color: @accent;
+   font-size: 13px;
+   font-weight: 600;
+}
+.lit-score {
+   color: @fg_subtext;
+   font-size: 13px;
+   font-weight: 500;
+}
+.lit-prompt {
+   color: @fg_text;
+   font-size: 17px;
+   font-weight: 600;
+}
+.lit-expl {
+   color: @fg_text;
+   font-size: 14px;
+   background-color: alpha(@success, 0.10);
+   border-left: 3px solid @success;
+   border-radius: 6px;
+   padding: 10px 14px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Settings popover                                                   */
+/* ------------------------------------------------------------------ */
+
+.settings-box {
+   background-color: transparent;
+   color: @fg_text;
+   min-width: 292px;
+   padding: 16px;
+}
+.settings-title {
+   color: @fg_text;
+   font-size: 17px;
    font-weight: 700;
 }
-.sent-group {
-   background-color: alpha(@bg_surface0, 0.5);
-   border: 1px solid @bg_surface1;
-   border-radius: 14px;
-   padding: 12px;
+.settings-seg {
+   background-color: alpha(@fg_text, 0.06);
+   border: none;
+   border-radius: 8px;
+   padding: 3px;
 }
-.sent-group.ok {
-   border-color: @success;
+.mode-chip {
+   background-image: none;
+   background-color: transparent;
+   color: @fg_subtext;
+   border: none;
+   border-radius: 6px;
+   padding: 7px 12px;
+   font-size: 13px;
+   font-weight: 500;
+   min-width: 0;
+   box-shadow: none;
+   transition: background-color 120ms ease, color 120ms ease;
 }
-.sent-group.wrong {
-   border-color: @error;
+.mode-chip:hover {
+   background-color: alpha(@fg_text, 0.07);
+   color: @fg_text;
 }
-.feedback-ok {
-   color: @success;
-   font-size: 15px;
-   font-weight: 700;
+.mode-chip:checked,
+.mode-chip:checked:hover {
+   background-image: none;
+   background-color: @accent;
+   color: @on_accent;
+   font-weight: 600;
 }
-.feedback-err {
-   color: @error;
-   font-size: 15px;
-   font-weight: 700;
+.theme-grid,
+flowboxchild {
+   background-color: transparent;
+   border: none;
+   box-shadow: none;
+   padding: 0;
+   margin: 0;
 }
-.feedback-warn {
-   color: @warning;
-   font-size: 15px;
-   font-weight: 700;
+.theme-card {
+   background-image: none;
+   background-color: transparent;
+   color: @fg_text;
+   border: none;
+   border-radius: 8px;
+   padding: 6px 4px;
+   min-width: 0;
+   box-shadow: none;
+   transition: background-color 120ms ease;
 }
+.theme-card:hover,
+.theme-card:checked:hover {
+   background-color: alpha(@fg_text, 0.07);
+}
+.theme-card:checked {
+   background-color: alpha(@fg_text, 0.04);
+}
+.theme-card-name {
+   color: @fg_subtext;
+   font-size: 12px;
+   font-weight: 500;
+}
+.theme-card:checked .theme-card-name {
+   color: @fg_text;
+   font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Statistics                                                         */
+/* ------------------------------------------------------------------ */
+
 .stats-page {
    padding: 8px 28px 24px 28px;
 }
 .stats-summary {
-   margin-top: 8px;
-   margin-bottom: 18px;
+   margin-top: 10px;
+   margin-bottom: 16px;
 }
 .stats-metric {
-   background-color: alpha(@bg_surface0, 0.92);
-   border: 1px solid @bg_surface1;
-   border-radius: 16px;
-   padding: 16px 18px;
+   padding: 14px 16px;
    min-width: 120px;
 }
 .stats-metric-value {
    color: @fg_text;
-   font-size: 26px;
-   font-weight: 800;
-   letter-spacing: -0.4px;
+   font-size: 24px;
+   font-weight: 700;
+   letter-spacing: -0.5px;
 }
 .stats-metric-label {
-   color: @fg_overlay;
-   font-size: 11px;
-   font-weight: 700;
-   letter-spacing: 0.8px;
-   margin-top: 4px;
-}
-.stats-overall-bar,
-.stats-overall-bar trough,
-.stats-unit-bar,
-.stats-unit-bar trough {
-   min-height: 10px;
-   min-width: 1px;
-   border-radius: 6px;
-   background-color: alpha(@bg_surface1, 0.85);
-   border: none;
-   padding: 0;
-}
-.stats-overall-bar {
-   margin-bottom: 22px;
-   min-height: 12px;
-}
-.stats-overall-bar progress,
-.stats-unit-bar progress {
-   min-width: 1px;
-   min-height: 10px;
-   border-radius: 6px;
-   background-image: linear-gradient(90deg, @accent 0%, @accent2 100%);
-   background-color: @accent;
-   border: none;
-}
-.stats-unit-bar.done progress {
-   background-image: linear-gradient(90deg, @success 0%, @success2 100%);
-   background-color: @success;
+   margin-top: 2px;
 }
 .stats-section {
-   color: @fg_overlay;
-   font-size: 11px;
-   font-weight: 700;
-   letter-spacing: 0.8px;
-   margin-bottom: 10px;
+   margin-bottom: 8px;
 }
 .stats-subject {
    margin-bottom: 20px;
 }
 .stats-subject-name {
    color: @fg_text;
-   font-size: 16px;
-   font-weight: 800;
+   font-size: 15px;
+   font-weight: 600;
 }
 .stats-subject-count {
    color: @fg_subtext;
    font-size: 13px;
-   font-weight: 700;
+   font-weight: 500;
 }
 .stats-subject-count.locked {
    color: @fg_overlay;
 }
-.stats-subject-bar,
-.stats-subject-bar trough {
-   min-height: 12px;
-   min-width: 1px;
-   border-radius: 6px;
-   background-color: alpha(@bg_surface1, 0.85);
-   border: none;
-   padding: 0;
-}
-.stats-subject-bar {
-   margin: 4px 0 0 0;
-}
-.stats-subject-bar progress {
-   min-width: 1px;
-   min-height: 10px;
-   border-radius: 6px;
-   background-image: linear-gradient(90deg, @accent 0%, @accent2 100%);
-   background-color: @accent;
-   border: none;
-}
 .stats-units {
    margin-top: 8px;
-   border-left: 2px solid alpha(@fg_overlay, 0.22);
-   padding-left: 12px;
+   padding-left: 14px;
 }
 .stats-unit-row {
-   background-color: alpha(@bg_surface0, 0.72);
-   border: 1px solid @bg_surface1;
-   border-radius: 14px;
-   padding: 12px 14px;
-   margin-bottom: 8px;
+   padding: 13px 14px;
+   margin-bottom: 6px;
 }
 .stats-unit-row.locked {
-   opacity: 0.55;
+   opacity: 0.5;
 }
 .stats-unit-row.done {
-   border-color: alpha(@success, 0.55);
+   border-color: alpha(@success, 0.5);
 }
 .stats-unit-index {
    color: @fg_overlay;
    font-size: 13px;
-   font-weight: 700;
-   min-width: 22px;
+   font-weight: 500;
+   min-width: 20px;
 }
 .stats-unit-name {
    color: @fg_text;
    font-size: 15px;
-   font-weight: 700;
+   font-weight: 500;
 }
 .stats-unit-count {
    color: @fg_subtext;
    font-size: 13px;
-   font-weight: 600;
+   font-weight: 500;
 }
 .stats-unit-badge {
    color: @success;
    font-size: 12px;
-   font-weight: 700;
+   font-weight: 600;
 }
-tooltip {
-   background-color: @bg_mantle;
-   border: 1px solid @bg_surface1;
-   border-radius: 10px;
-   color: @fg_text;
+
+/* One shared bar geometry; only the fill colour differs. */
+.stats-overall-bar,
+.stats-overall-bar trough,
+.stats-subject-bar,
+.stats-subject-bar trough,
+.stats-unit-bar,
+.stats-unit-bar trough {
+   min-height: 6px;
+   min-width: 6px;
+   border: none;
+   border-radius: 3px;
+   padding: 0;
+   background-color: alpha(@fg_text, 0.11);
+}
+.stats-overall-bar progress,
+.stats-subject-bar progress,
+.stats-unit-bar progress {
+   min-height: 6px;
+   min-width: 6px;
+   border: none;
+   border-radius: 3px;
+   background-image: none;
+   background-color: @accent;
+}
+.stats-unit-bar.done progress {
+   background-color: @success;
+}
+/* stats_set_fraction() marks bars at zero, whose fill GTK would otherwise
+ * still paint at its minimum width. */
+.stats-overall-bar.empty progress,
+.stats-subject-bar.empty progress,
+.stats-unit-bar.empty progress {
+   background-color: transparent;
+}
+.stats-overall-bar {
+   margin-bottom: 20px;
+}
+.stats-subject-bar {
+   margin-top: 6px;
 }
 
 /* no-scale */
 /* Rules below keep a fixed size (symbols/icons) even when the window grows. */
 .bubble-number.branch-star {
-   font-size: 22px;
+   font-size: 20px;
 }

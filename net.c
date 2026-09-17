@@ -394,10 +394,8 @@ void net_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
 
 void net_render_rail_to(cairo_t *cr) {
     const double t_end = (double)(NET_UNITS - 1);
-    const Rgb mauve = color_from_hex(app_theme.accent);
     const Rgb rail = color_from_hex(app_theme.rail);
     const Rgb muted = color_from_hex(app_theme.subtext);
-    double hx, hy;
 
     cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
     cairo_paint(cr);
@@ -405,13 +403,9 @@ void net_render_rail_to(cairo_t *cr) {
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
-    net_point(0.0, &hx, &hy);
-    draw_node_halo(cr, hx, hy, NODE_SIZE * 1.05,
-                   mauve.r, mauve.g, mauve.b, 0.18);
-
     cairo_new_path(cr);
     net_path(cr, 0.0, t_end);
-    cairo_set_line_width(cr, 16);
+    cairo_set_line_width(cr, 12);
     cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
     cairo_stroke(cr);
 

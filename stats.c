@@ -45,6 +45,17 @@ void progress_for_units(int first, int n, ProgressSum *out) {
     }
 }
 
+/* GTK gives the progress node a minimum width, so a fraction of zero would
+ * still paint a short stub of accent colour. Mark those bars so the
+ * stylesheet can hide the fill entirely. */
+static void stats_set_fraction(GtkWidget *bar, double fraction) {
+    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(bar), fraction);
+    if (fraction > 0.0)
+        gtk_widget_remove_css_class(bar, "empty");
+    else
+        gtk_widget_add_css_class(bar, "empty");
+}
+
 void refresh_stats_ui(void) {
     ProgressSum all = {0};
     int pct;
@@ -77,9 +88,10 @@ void refresh_stats_ui(void) {
     gtk_label_set_text(GTK_LABEL(stats_ui.units_value), tmp);
     g_free(tmp);
 
-    gtk_progress_bar_set_fraction(
-        GTK_PROGRESS_BAR(stats_ui.overall_bar),
-        all.total_ex > 0 ? (double)all.done_ex / (double)all.total_ex : 0.0);
+    stats_set_fraction(stats_ui.overall_bar,
+                       all.total_ex > 0
+                           ? (double)all.done_ex / (double)all.total_ex
+                           : 0.0);
 
     for (int s = 0; s < NUM_SUBJECTS; s++) {
         GtkWidget *count = stats_ui.subj[s].count;
@@ -100,13 +112,13 @@ void refresh_stats_ui(void) {
             tmp = g_strdup_printf(tr("stats_ex_fmt"), sp.done_ex, sp.total_ex);
             gtk_label_set_text(GTK_LABEL(count), tmp);
             g_free(tmp);
-            gtk_progress_bar_set_fraction(
-                GTK_PROGRESS_BAR(bar),
-                sp.total_ex > 0 ? (double)sp.done_ex / (double)sp.total_ex
-                                : 0.0);
+            stats_set_fraction(bar,
+                               sp.total_ex > 0
+                                   ? (double)sp.done_ex / (double)sp.total_ex
+                                   : 0.0);
         } else {
             gtk_label_set_text(GTK_LABEL(count), tr("stats_locked"));
-            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(bar), 0.0);
+            stats_set_fraction(bar, 0.0);
         }
     }
 
@@ -130,7 +142,7 @@ void refresh_stats_ui(void) {
         if (!unlocked) {
             gtk_widget_add_css_class(row, "locked");
             gtk_label_set_text(GTK_LABEL(count), tr("stats_locked"));
-            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(bar), 0.0);
+            stats_set_fraction(bar, 0.0);
             if (badge)
                 gtk_widget_set_visible(badge, FALSE);
             continue;
@@ -139,9 +151,8 @@ void refresh_stats_ui(void) {
         tmp = g_strdup_printf(tr("stats_ex_fmt"), d, u->n_ex);
         gtk_label_set_text(GTK_LABEL(count), tmp);
         g_free(tmp);
-        gtk_progress_bar_set_fraction(
-            GTK_PROGRESS_BAR(bar),
-            u->n_ex > 0 ? (double)d / (double)u->n_ex : 0.0);
+        stats_set_fraction(bar,
+                           u->n_ex > 0 ? (double)d / (double)u->n_ex : 0.0);
 
         if (complete) {
             gtk_widget_add_css_class(row, "done");
@@ -328,6 +339,9 @@ GtkWidget *build_stats_page(void) {
     summary = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     gtk_widget_add_css_class(summary, "stats-summary");
     gtk_widget_set_halign(summary, GTK_ALIGN_FILL);
+    /* Equal columns; hexpand alone only shares the leftover space, which
+     * leaves the cards at different widths. */
+    gtk_box_set_homogeneous(GTK_BOX(summary), TRUE);
     gtk_box_append(GTK_BOX(page), summary);
 
     gtk_box_append(GTK_BOX(summary),

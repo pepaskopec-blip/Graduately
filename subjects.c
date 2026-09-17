@@ -125,8 +125,6 @@ void draw_sub_rail(GtkDrawingArea *area, cairo_t *cr,
                           int width, int height, gpointer user_data) {
     const double t_end = (double)(NUM_SUBJECTS - 1);
     const Rgb rail = color_from_hex(app_theme.rail);
-    const Rgb mauve = color_from_hex(app_theme.accent);
-    double hx, hy;
 
     (void)area;
     (void)width;
@@ -139,13 +137,9 @@ void draw_sub_rail(GtkDrawingArea *area, cairo_t *cr,
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
-    sub_point(0.0, &hx, &hy);
-    draw_node_halo(cr, hx, hy, SUB_BUBBLE * 1.05,
-                   mauve.r, mauve.g, mauve.b, 0.18);
-
     cairo_new_path(cr);
     sub_path(cr, 0.0, t_end);
-    cairo_set_line_width(cr, 14);
+    cairo_set_line_width(cr, 12);
     cairo_set_source_rgb(cr, rail.r, rail.g, rail.b);
     cairo_stroke(cr);
 }

@@ -95,15 +95,22 @@ gboolean on_window_key_pressed(GtkEventControllerKey *controller,
 
 GtkWidget *build_welcome_page(void) {
     GtkWidget *box;
+    GtkWidget *icon;
     GtkWidget *heading;
-    GtkWidget *card;
+    GtkWidget *body;
     GtkWidget *button;
 
-    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 18);
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
     gtk_widget_set_margin_top(box, 40);
     gtk_widget_set_margin_bottom(box, 40);
+
+    icon = gtk_image_new_from_icon_name(ICON_NAME);
+    gtk_image_set_pixel_size(GTK_IMAGE(icon), 88);
+    gtk_widget_set_halign(icon, GTK_ALIGN_CENTER);
+    gtk_widget_set_margin_bottom(icon, 22);
+    gtk_box_append(GTK_BOX(box), icon);
 
     heading = gtk_label_new(NULL);
     welcome_heading = heading;
@@ -111,18 +118,19 @@ GtkWidget *build_welcome_page(void) {
     gtk_widget_add_css_class(heading, "heading");
     gtk_box_append(GTK_BOX(box), heading);
 
-    card = gtk_label_new(NULL);
-    i18n_bind(card, "welcome_body", 0);
-    gtk_label_set_justify(GTK_LABEL(card), GTK_JUSTIFY_CENTER);
-    gtk_label_set_wrap(GTK_LABEL(card), TRUE);
-    gtk_label_set_max_width_chars(GTK_LABEL(card), 48);
-    gtk_widget_add_css_class(card, "card");
-    gtk_box_append(GTK_BOX(box), card);
+    body = gtk_label_new(NULL);
+    i18n_bind(body, "welcome_body", 0);
+    gtk_label_set_justify(GTK_LABEL(body), GTK_JUSTIFY_CENTER);
+    gtk_label_set_wrap(GTK_LABEL(body), TRUE);
+    gtk_label_set_max_width_chars(GTK_LABEL(body), 46);
+    gtk_widget_set_margin_top(body, 10);
+    gtk_widget_add_css_class(body, "welcome-body");
+    gtk_box_append(GTK_BOX(box), body);
 
     button = gtk_button_new();
     i18n_bind(button, "continue", 1);
     gtk_widget_set_halign(button, GTK_ALIGN_CENTER);
-    gtk_widget_set_margin_top(button, 6);
+    gtk_widget_set_margin_top(button, 28);
     gtk_widget_add_css_class(button, "btn-primary");
     gtk_box_append(GTK_BOX(box), button);
 

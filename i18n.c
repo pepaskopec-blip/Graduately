@@ -1454,20 +1454,11 @@ void i18n_bind(GtkWidget *widget, const char *key, int kind) {
 }
 
 void refresh_welcome_heading(void) {
-    char *markup;
-
     if (!welcome_heading)
         return;
-    if (app_lang == LANG_EN)
-        markup = g_strdup_printf(
-            "Welcome to <span color=\"#%06x\">maturita.C</span>!",
-            app_theme.accent);
-    else
-        markup = g_strdup_printf(
-            "Vítejte ve <span color=\"#%06x\">maturita.C</span>!",
-            app_theme.accent);
-    gtk_label_set_markup(GTK_LABEL(welcome_heading), markup);
-    g_free(markup);
+    gtk_label_set_text(GTK_LABEL(welcome_heading),
+                       app_lang == LANG_EN ? "Welcome to maturita.C"
+                                           : "Vítejte v maturita.C");
 }
 
 void refresh_stats_ui(void);

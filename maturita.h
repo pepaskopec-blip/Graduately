@@ -883,9 +883,6 @@ gboolean on_window_key_pressed(GtkEventControllerKey *controller,
                                       GdkModifierType state,
                                       gpointer user_data);
 GtkWidget *build_welcome_page(void);
-void draw_node_halo(cairo_t *cr, double cx, double cy,
-                           double radius, double r, double g, double b,
-                           double alpha);
 void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data);
 void road_point(double t, double *ox, double *oy);

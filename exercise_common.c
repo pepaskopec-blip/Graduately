@@ -4,6 +4,27 @@
 /* Exercise page shell                                                */
 /* ------------------------------------------------------------------ */
 
+/* Exercise text would otherwise run the full width of a maximised window,
+ * which is tiring to read. Keep the body at a comfortable measure and centre
+ * it once there is room to spare; below that it still fills the page. */
+#define EX_BODY_MAX_WIDTH 880
+
+static void ex_body_clamp(GtkAdjustment *adj, GParamSpec *ps, gpointer data) {
+    GtkWidget *body = data;
+    double avail = gtk_adjustment_get_page_size(adj);
+
+    (void)ps;
+    if (avail < 1.0)
+        return;
+    if (avail < (double)EX_BODY_MAX_WIDTH) {
+        gtk_widget_set_halign(body, GTK_ALIGN_FILL);
+        gtk_widget_set_size_request(body, -1, -1);
+    } else {
+        gtk_widget_set_halign(body, GTK_ALIGN_CENTER);
+        gtk_widget_set_size_request(body, EX_BODY_MAX_WIDTH, -1);
+    }
+}
+
 GtkWidget *ex_page_shell(const char *back_target, const char *title,
                                 const char *subtitle, const char *btn_label,
                                 GtkWidget **body_out, GtkWidget **feedback_out,
@@ -33,6 +54,9 @@ GtkWidget *ex_page_shell(const char *back_target, const char *title,
     body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
     gtk_widget_set_vexpand(body, TRUE);
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+    g_signal_connect(gtk_scrolled_window_get_hadjustment(
+                         GTK_SCROLLED_WINDOW(scroll)),
+                     "notify::page-size", G_CALLBACK(ex_body_clamp), body);
     *body_out = body;
 
     bottom = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
