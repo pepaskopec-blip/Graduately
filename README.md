@@ -116,7 +116,7 @@ C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-u
 V terminálu **MSYS2 UCRT64**:
 
 ```bash
-cd /c/Users/Josef/maturita.c    # C:\Users\Josef\maturita.c → /c/Users/Josef/maturita.c
+cd /c/Users/<jméno>/maturita.c  # C:\Users\<jméno>\maturita.c v MSYS2
 make
 ./maturita.exe
 make bundle                     # dist/maturita.exe jde spustit i z Průzkumníka
@@ -247,7 +247,7 @@ C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-u
 In an **MSYS2 UCRT64** terminal:
 
 ```bash
-cd /c/Users/Josef/maturita.c    # C:\Users\Josef\maturita.c → /c/Users/Josef/maturita.c
+cd /c/Users/<name>/maturita.c   # C:\Users\<name>\maturita.c in MSYS2
 make
 ./maturita.exe
 make bundle                     # dist/maturita.exe can be double-clicked
