@@ -1,9 +1,9 @@
 #!/bin/sh
 # maturita.c installer for macOS.
 #
-# Carries no application of its own: it downloads the current build straight
-# from the repository's `builds` branch, which CI rewrites whenever main
-# changes. This file therefore never goes stale.
+# Carries no application of its own. Fastly caches branch-named URLs on
+# raw.githubusercontent.com, so this script looks up the tip of `builds`
+# and downloads that commit — not a stale zip from the last five minutes.
 #
 # Double-click the file to run it. The app updates itself from then on.
 
@@ -12,15 +12,21 @@ set -eu
 REPO="pepaskopec-blip/maturita.c"
 BRANCH="builds"
 ASSET="maturita-macos-arm64.zip"
-URL="https://raw.githubusercontent.com/$REPO/$BRANCH/$ASSET"
 
 say() { printf '%s\n' "$*"; }
 die() { printf '\nError: %s\n' "$*" >&2; printf 'Press Return to close. '; read -r _; exit 1; }
 
+# Atom feed of the builds branch: curl only, no GitHub API token.
+builds_sha() {
+    curl -fsSL --max-time 20 \
+        "https://github.com/$REPO/commits/$BRANCH.atom" |
+        sed -n 's/.*Commit\/\([0-9a-f]\{40\}\).*/\1/p' |
+        head -n 1
+}
+
 say "Installing maturita.C"
 say "---------------------"
 
-# Only Apple Silicon builds are published; Rosetta cannot run an arm64 app.
 arch=$(uname -m)
 if [ "$arch" != "arm64" ]; then
     die "this build is for Apple Silicon Macs, but this one reports '$arch'.
@@ -29,7 +35,6 @@ fi
 
 command -v curl >/dev/null 2>&1 || die "curl was not found."
 
-# Prefer the shared folder, fall back to the user's own when it is locked down.
 if [ -w /Applications ]; then
     dest_dir="/Applications"
 else
@@ -40,13 +45,17 @@ fi
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
-say "Downloading the latest build..."
-curl -fL --progress-bar -o "$tmp/$ASSET" "$URL" ||
+say "Looking up the latest build..."
+sha=$(builds_sha)
+[ ${#sha} -eq 40 ] || die "could not find the latest build on GitHub."
+URL="https://raw.githubusercontent.com/$REPO/$sha/$ASSET"
+
+say "Downloading build $(printf '%.7s' "$sha")..."
+curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
     die "the download failed. Check your internet connection."
 
 say "Unpacking..."
 mkdir -p "$tmp/new"
-# ditto keeps bundle symlinks and permissions intact, unlike plain unzip.
 ditto -x -k "$tmp/$ASSET" "$tmp/new" || die "the archive could not be unpacked."
 
 app=$(find "$tmp/new" -maxdepth 1 -name '*.app' -print -quit)
@@ -61,13 +70,10 @@ fi
 if mv "$app" "$dest_dir/$name"; then
     rm -rf "$dest_dir/$name.old"
 else
-    # Put the previous copy back rather than leaving nothing installed.
     [ -e "$dest_dir/$name.old" ] && mv "$dest_dir/$name.old" "$dest_dir/$name"
     die "could not write to $dest_dir."
 fi
 
-# The download carries a quarantine flag, and the app is not signed, so
-# without this macOS refuses to open it.
 xattr -cr "$dest_dir/$name" 2>/dev/null || true
 
 say ""

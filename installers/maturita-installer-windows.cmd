@@ -1,23 +1,21 @@
 @echo off
 rem maturita.c installer for Windows.
 rem
-rem Carries no application of its own: it downloads the current build straight
-rem from the repository's `builds` branch, which CI rewrites whenever main
-rem changes. This file therefore never goes stale.
+rem Carries no application of its own. Fastly caches branch-named URLs on
+rem raw.githubusercontent.com, so this script looks up the tip of `builds`
+rem and downloads that commit — not a stale zip from the last five minutes.
 rem
 rem Double-click the file to run it. The app updates itself from then on.
 
-setlocal
+setlocal EnableDelayedExpansion
 set "REPO=pepaskopec-blip/maturita.c"
 set "BRANCH=builds"
 set "ASSET=maturita-windows-x64.zip"
-set "URL=https://raw.githubusercontent.com/%REPO%/%BRANCH%/%ASSET%"
 set "DEST=%LOCALAPPDATA%\Programs\Maturita"
 
 echo Installing maturita.C
 echo ---------------------
 
-rem curl and tar both ship with Windows 10 1803 and later.
 where curl >nul 2>&1 || goto :no_tools
 where tar  >nul 2>&1 || goto :no_tools
 
@@ -25,17 +23,20 @@ set "TMP_DIR=%TEMP%\maturita-installer"
 rmdir /s /q "%TMP_DIR%" 2>nul
 mkdir "%TMP_DIR%" || goto :fail_tmp
 
-echo Downloading the latest build...
-curl -fL --progress-bar -o "%TMP_DIR%\%ASSET%" "%URL%" || goto :fail_download
+echo Looking up the latest build...
+set "SHA="
+for /f "usebackq delims=" %%S in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "$r = & curl.exe -fsSL --max-time 20 'https://github.com/%REPO%/commits/%BRANCH%.atom'; if ($r -match 'Commit/([0-9a-f]{40})') { $Matches[1] }"`) do set "SHA=%%S"
+if not defined SHA goto :fail_download
+set "URL=https://raw.githubusercontent.com/%REPO%/%SHA%/%ASSET%"
+
+echo Downloading build %SHA:~0,7%...
+curl -fL --progress-bar --max-time 1800 -o "%TMP_DIR%\%ASSET%" "%URL%" || goto :fail_download
 
 echo Installing to %DEST%
 if not exist "%DEST%" mkdir "%DEST%" || goto :fail_dest
 
-rem Extracted over any existing install rather than replacing the folder, so
-rem the progress files kept inside it survive an upgrade.
 tar -xf "%TMP_DIR%\%ASSET%" -C "%DEST%" || goto :fail_extract
 
-rem Start menu entry, so the app can be found without digging for the folder.
 set "LNK=%APPDATA%\Microsoft\Windows\Start Menu\Programs\maturita.C.lnk"
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$s=(New-Object -ComObject WScript.Shell).CreateShortcut('%LNK%');" ^

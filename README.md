@@ -19,16 +19,18 @@ zatím zamčené placeholdery. Aplikace se po instalaci aktualizuje sama.
 
 Žádné releasy ani čísla verzí nejsou. CI po každém pushi na `main` uloží
 balíčky do větve [`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds).
-Instalátor samotnou aplikaci neobsahuje — při spuštění si stáhne aktuální
-build, takže soubor nikdy nezestárne.
+Instalátor samotnou aplikaci neobsahuje — při spuštění si dohledá aktuální
+commit větve `builds` a stáhne ten soubor, ne kešovanou kopii podle názvu
+větve.
 
-**Nejjednodušší je instalátor pro vaši platformu:**
+**Nejjednodušší je instalátor pro vaši platformu** (soubory z `main`, ať
+nedostanete starý skript z keše větve `builds`):
 
 | Platforma | Soubor | Jak spustit |
 | --------- | ------ | ----------- |
-| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-installer-macos.zip) | Rozbalit, pravý klik → **Otevřít** |
-| Windows (x64) | [maturita-installer-windows.cmd](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-installer-windows.cmd) | Dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
-| Linux (x86_64) | [maturita-installer-linux.sh](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-installer-linux.sh) | `sh maturita-installer-linux.sh` |
+| macOS (Apple Silicon) | [maturita-installer-macos.command](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.command) | Stáhnout, v Terminálu `chmod +x` a pak pravý klik → **Otevřít** |
+| Windows (x64) | [maturita-installer-windows.cmd](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.cmd) | Dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
+| Linux (x86_64) | [maturita-installer-linux.sh](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.sh) | `sh maturita-installer-linux.sh` |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -41,7 +43,9 @@ v **Nastavení → Aktualizace**.
 
 #### Bez instalátoru
 
-Na stejné větvi jsou i hotové balíčky:
+Na větvi [`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds)
+jsou i hotové balíčky. Odkazy podle názvu větve umí CDN kešovat, proto je
+spolehlivější instalátor výše, nebo stažení přímo z té stránky větve:
 
 - [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
@@ -152,15 +156,17 @@ placeholders. After install the app updates itself.
 There are no releases and no version numbers. CI writes packages to the
 [`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds) branch
 whenever `main` changes. The installer carries no app of its own — it fetches
-the current build when you run it, so the file never goes stale.
+the current `builds` commit when you run it, not a CDN-cached copy of the
+branch-named file.
 
-**Start with the installer for your platform:**
+**Start with the installer for your platform** (files from `main`, so you
+do not get a stale script cached from the `builds` branch):
 
 | Platform | File | How to run |
 | -------- | ---- | ---------- |
-| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-installer-macos.zip) | Unzip, then right-click → **Open** |
-| Windows (x64) | [maturita-installer-windows.cmd](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-installer-windows.cmd) | Double-click; if SmartScreen appears, **More info → Run anyway** |
-| Linux (x86_64) | [maturita-installer-linux.sh](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-installer-linux.sh) | `sh maturita-installer-linux.sh` |
+| macOS (Apple Silicon) | [maturita-installer-macos.command](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.command) | Download, `chmod +x` in Terminal, then right-click → **Open** |
+| Windows (x64) | [maturita-installer-windows.cmd](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.cmd) | Double-click; if SmartScreen appears, **More info → Run anyway** |
+| Linux (x86_64) | [maturita-installer-linux.sh](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.sh) | `sh maturita-installer-linux.sh` |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -171,6 +177,11 @@ it compares its commit to `VERSION` on `builds` and offers an update in a
 banner. Manual check: **Settings → Updates**.
 
 #### Packages without the installer
+
+The same files live on
+[`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds).
+Branch-named raw URLs can be cached by the CDN, so prefer the installer
+above, or download from that branch page:
 
 - [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)

@@ -1,9 +1,9 @@
 #!/bin/sh
 # maturita.c installer for Linux.
 #
-# Carries no application of its own: it downloads the current build straight
-# from the repository's `builds` branch, which CI rewrites whenever main
-# changes. This file therefore never goes stale.
+# Carries no application of its own. Fastly caches branch-named URLs on
+# raw.githubusercontent.com, so this script looks up the tip of `builds`
+# and downloads that commit — not a stale AppImage from the last five minutes.
 #
 # Run it with:  sh maturita-installer-linux.sh
 # The app updates itself from then on.
@@ -13,10 +13,7 @@ set -eu
 REPO="pepaskopec-blip/maturita.c"
 BRANCH="builds"
 ASSET="maturita-linux-x86_64.AppImage"
-URL="https://raw.githubusercontent.com/$REPO/$BRANCH/$ASSET"
 
-# ~/Applications is where desktop environments look for AppImages, and the app
-# keeps its progress/ directory next to its own file.
 DEST_DIR="$HOME/Applications"
 DEST="$DEST_DIR/maturita.AppImage"
 DESKTOP_DIR="$HOME/.local/share/applications"
@@ -24,6 +21,13 @@ ICON_DIR="$HOME/.local/share/icons/hicolor/512x512/apps"
 
 say() { printf '%s\n' "$*"; }
 die() { printf '\nError: %s\n' "$*" >&2; exit 1; }
+
+builds_sha() {
+    curl -fsSL --max-time 20 \
+        "https://github.com/$REPO/commits/$BRANCH.atom" |
+        sed -n 's/.*Commit\/\([0-9a-f]\{40\}\).*/\1/p' |
+        head -n 1
+}
 
 say "Installing maturita.C"
 say "---------------------"
@@ -41,16 +45,19 @@ mkdir -p "$DEST_DIR"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
-say "Downloading the latest build..."
-curl -fL --progress-bar -o "$tmp/$ASSET" "$URL" ||
+say "Looking up the latest build..."
+sha=$(builds_sha)
+[ ${#sha} -eq 40 ] || die "could not find the latest build on GitHub."
+URL="https://raw.githubusercontent.com/$REPO/$sha/$ASSET"
+
+say "Downloading build $(printf '%.7s' "$sha")..."
+curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
     die "the download failed. Check your internet connection."
 
 say "Installing to $DEST"
 chmod +x "$tmp/$ASSET"
 mv -f "$tmp/$ASSET" "$DEST" || die "could not write to $DEST_DIR."
 
-# A menu entry needs the icon as a separate file, which the AppImage can
-# unpack without FUSE. Losing the icon is not worth failing the install over.
 if (cd "$tmp" && "$DEST" --appimage-extract \
         'usr/share/icons/hicolor/512x512/apps/maturita.png' >/dev/null 2>&1); then
     icon="$tmp/squashfs-root/usr/share/icons/hicolor/512x512/apps/maturita.png"

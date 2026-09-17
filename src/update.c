@@ -1,5 +1,7 @@
 #include "maturita.h"
 
+#include <string.h>
+
 #ifdef _WIN32
 #include <process.h>
 #define update_getpid() ((long)_getpid())
@@ -23,9 +25,14 @@
  * the repository, which CI rewrites on every change to main, so an update is
  * simply whatever that branch currently holds. The branch also carries a
  * VERSION file naming the commit its packages were built from; comparing that
- * against the commit baked into this binary is the whole check. Serving it
- * from raw.githubusercontent.com avoids the REST API and its unauthenticated
- * rate limit, and needs no JSON parser.
+ * against the commit baked into this binary is the whole check.
+ *
+ * raw.githubusercontent.com is cached by Fastly by branch name, so a URL that
+ * says `/builds/VERSION` can keep serving yesterday's file after CI rewrote
+ * the branch. The check therefore reads the branch tip from the Atom feed
+ * (plain curl, no API token) and then fetches VERSION and the package from
+ * that commit SHA. Serving files from raw.githubusercontent.com still avoids
+ * the REST API and its unauthenticated rate limit, and needs no JSON parser.
  *
  * An application cannot reliably replace its own files while it is running, so
  * all three platforms follow the same shape: unpack the new version into a
@@ -34,9 +41,8 @@
  * script detached and quit. Staging beside the install keeps the final move on
  * one filesystem and proves up front that the location is writable. */
 
-#define UPDATE_BASE_URL   "https://raw.githubusercontent.com/" UPDATE_REPO \
-                          "/" UPDATE_BRANCH "/"
-#define UPDATE_VERSION_URL UPDATE_BASE_URL "VERSION"
+#define UPDATE_ATOM_URL   "https://github.com/" UPDATE_REPO \
+                          "/commits/" UPDATE_BRANCH ".atom"
 #define UPDATE_STAGING_DIR ".maturita-update"
 
 #ifdef _WIN32
@@ -68,6 +74,7 @@ typedef enum {
 static struct {
     UpdateState state;
     gboolean interactive;   /* user asked, so also report "up to date" */
+    char *tip;              /* current commit of the builds branch itself */
     char *latest;           /* commit the published packages were built from */
     char *staging;          /* scratch directory beside the install */
     char *archive;          /* asset downloaded into the staging directory */
@@ -112,6 +119,35 @@ static char *parse_commit(const char *text) {
         }
     }
     return NULL;
+}
+
+/* First Grit::Commit/<40-hex> in a GitHub Atom feed is the branch tip. */
+static char *parse_atom_commit(const char *text) {
+    const char *p;
+
+    if (!text)
+        return NULL;
+    p = strstr(text, "Commit/");
+    while (p) {
+        const char *s = p + 7;
+        size_t n = 0;
+
+        while (g_ascii_isxdigit(s[n]))
+            n++;
+        if (n == 40)
+            return g_strndup(s, 40);
+        p = strstr(s, "Commit/");
+    }
+    return NULL;
+}
+
+/* Pin raw.githubusercontent.com to a commit so Fastly cannot serve a stale
+ * branch-named file. Falls back to the branch name if the tip is unknown. */
+static char *builds_raw_url(const char *name) {
+    const char *ref = (up.tip && up.tip[0]) ? up.tip : UPDATE_BRANCH;
+
+    return g_strdup_printf("https://raw.githubusercontent.com/%s/%s/%s",
+                           UPDATE_REPO, ref, name);
 }
 
 static gboolean same_commit(const char *a, const char *b) {
@@ -614,7 +650,7 @@ static void size_probe_done(GObject *src, GAsyncResult *res, gpointer data) {
     if (up.state != UPDATE_DOWNLOADING)
         return;
 
-    url = g_strconcat(UPDATE_BASE_URL, asset_name(), NULL);
+    url = builds_raw_url(asset_name());
     argv[0] = "curl";
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
@@ -663,7 +699,7 @@ static void update_start_download(void) {
     update_set_state(UPDATE_DOWNLOADING);
 
     /* HEAD the asset with its headers on stdout, to size the progress bar. */
-    url = g_strconcat(UPDATE_BASE_URL, asset_name(), NULL);
+    url = builds_raw_url(asset_name());
     argv[0] = "curl";
     argv[1] = "-fsSLI";
     argv[2] = "--max-time";
@@ -729,9 +765,41 @@ static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
         update_set_state(UPDATE_IDLE);
 }
 
-void update_check_async(gboolean interactive) {
-    const char *argv[8];
+static void tip_done(GObject *src, GAsyncResult *res, gpointer data) {
+    GSubprocess *proc = G_SUBPROCESS(src);
+    char *out = NULL;
+    gboolean ok;
     char *url;
+    const char *argv[6];
+
+    (void)data;
+    g_subprocess_communicate_utf8_finish(proc, res, &out, NULL, NULL);
+    ok = g_subprocess_get_successful(proc);
+    g_object_unref(proc);
+
+    g_free(up.tip);
+    up.tip = (ok && out) ? parse_atom_commit(out) : NULL;
+    g_free(out);
+    if (!up.tip) {
+        check_giveup();
+        return;
+    }
+
+    url = builds_raw_url("VERSION");
+    argv[0] = "curl";
+    argv[1] = "-fsSL";
+    argv[2] = "--max-time";
+    argv[3] = "20";
+    argv[4] = url;
+    argv[5] = NULL;
+
+    if (!curl_async(argv, check_done))
+        check_giveup();
+    g_free(url);
+}
+
+void update_check_async(gboolean interactive) {
+    const char *argv[6];
 
     if (up.state == UPDATE_CHECKING || up.state == UPDATE_DOWNLOADING ||
         up.state == UPDATE_STAGED)
@@ -748,25 +816,19 @@ void update_check_async(gboolean interactive) {
 
     update_set_state(UPDATE_CHECKING);
 
-    /* raw.githubusercontent.com caches VERSION; a unique query bypasses it. */
-    url = g_strdup_printf("%s?t=%ld", UPDATE_VERSION_URL,
-                          (long)g_get_real_time());
     argv[0] = "curl";
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
     argv[3] = "20";
-    argv[4] = "-H";
-    argv[5] = "Cache-Control: no-cache";
-    argv[6] = url;
-    argv[7] = NULL;
+    argv[4] = UPDATE_ATOM_URL;
+    argv[5] = NULL;
 
-    if (!curl_async(argv, check_done)) {
+    if (!curl_async(argv, tip_done)) {
         if (interactive)
             update_fail(tr("update_err_curl"));
         else
             update_set_state(UPDATE_IDLE);
     }
-    g_free(url);
 }
 
 /* ------------------------------------------------------------------ */
