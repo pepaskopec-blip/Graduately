@@ -80,6 +80,22 @@ static gboolean dir_has_stylesheet(const char *dir) {
     return ok;
 }
 
+/* Source tree keeps runtime files in data/; installed copies put them
+ * next to the binary (or in Contents/Resources on macOS). */
+static char *stylesheet_dir(const char *dir) {
+    char *child;
+
+    if (!dir || !dir[0])
+        return NULL;
+    if (dir_has_stylesheet(dir))
+        return g_strdup(dir);
+    child = g_build_filename(dir, "data", NULL);
+    if (dir_has_stylesheet(child))
+        return child;
+    g_free(child);
+    return NULL;
+}
+
 static char *macos_resources_dir(const char *exe) {
     char *macos_dir;
     char *contents;
@@ -167,16 +183,22 @@ void setup_portable_paths(void) {
     char *write_root = NULL;
     char *cwd;
 
-    if (appdir && dir_has_stylesheet(appdir))
-        data_dir = g_strdup(appdir);
+    if (appdir)
+        data_dir = stylesheet_dir(appdir);
     if (!data_dir)
         data_dir = macos_resources_dir(exe);
-    if (!data_dir && exe_dir && dir_has_stylesheet(exe_dir))
-        data_dir = g_strdup(exe_dir);
+    if (!data_dir)
+        data_dir = stylesheet_dir(exe_dir);
+    if (!data_dir && exe_dir) {
+        char *parent = dup_dirname(exe_dir);
+
+        data_dir = stylesheet_dir(parent);
+        g_free(parent);
+    }
 
     cwd = g_get_current_dir();
-    if (!data_dir && dir_has_stylesheet(cwd))
-        data_dir = g_strdup(cwd);
+    if (!data_dir)
+        data_dir = stylesheet_dir(cwd);
     if (!data_dir && cwd)
         data_dir = g_strdup(cwd);
 
@@ -184,10 +206,26 @@ void setup_portable_paths(void) {
         write_root = dup_dirname(appimage);
     if (!write_root)
         write_root = macos_app_parent_dir(exe);
+    /* Keep progress/ at the project root when the binary lives in build/. */
+    if (!write_root && exe_dir) {
+        char *parent = dup_dirname(exe_dir);
+        char *from_parent = stylesheet_dir(parent);
+
+        if (from_parent) {
+            write_root = parent;
+            parent = NULL;
+            g_free(from_parent);
+        }
+        g_free(parent);
+    }
     if (!write_root && exe_dir)
         write_root = g_strdup(exe_dir);
-    if (!write_root && data_dir)
-        write_root = g_strdup(data_dir);
+    if (!write_root && data_dir) {
+        if (g_str_has_suffix(data_dir, G_DIR_SEPARATOR_S "data"))
+            write_root = dup_dirname(data_dir);
+        else
+            write_root = g_strdup(data_dir);
+    }
     if (!write_root)
         write_root = g_strdup(".");
 

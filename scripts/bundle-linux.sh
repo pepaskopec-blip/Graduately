@@ -20,7 +20,7 @@ OUT_NAME="maturita-linux-${ARCH}.AppImage"
 APPDIR="$ROOT/dist/AppDir"
 TOOLS="$ROOT/dist/tools"
 # Real 512×512 PNG (assets/app-icon.png is 1024×1024 and linuxdeploy rejects it).
-ICON_512="$ROOT/share/icons/hicolor/512x512/apps/maturita.png"
+ICON_512="$ROOT/data/share/icons/hicolor/512x512/apps/maturita.png"
 
 echo "==> Building maturita"
 make -C "$ROOT" clean
@@ -35,16 +35,16 @@ mkdir -p "$APPDIR/usr/bin" \
          "$APPDIR/share"
 
 cp -f "$ROOT/maturita" "$APPDIR/usr/bin/maturita"
-cp -f "$ROOT/style.css" "$APPDIR/style.css"
+cp -f "$ROOT/data/style.css" "$APPDIR/style.css"
 cp -f "$ICON_512" "$APPDIR/icons/hicolor/512x512/apps/maturita.png"
 cp -f "$ICON_512" "$APPDIR/usr/share/icons/hicolor/512x512/apps/maturita.png"
 cp -f "$ICON_512" "$APPDIR/maturita.png"
-cp -R "$ROOT/share/." "$APPDIR/share/"
-cp -R "$ROOT/share/." "$APPDIR/usr/share/"
-cp -f "$ROOT/share/applications/org.maturita.Maturita.desktop" \
+cp -R "$ROOT/data/share/." "$APPDIR/share/"
+cp -R "$ROOT/data/share/." "$APPDIR/usr/share/"
+cp -f "$ROOT/data/share/applications/org.maturita.Maturita.desktop" \
    "$APPDIR/usr/share/applications/org.maturita.Maturita.desktop"
 # AppImage desktop entry must live at AppDir root and Exec= must be AppRun-compatible.
-cp -f "$ROOT/share/applications/org.maturita.Maturita.desktop" \
+cp -f "$ROOT/data/share/applications/org.maturita.Maturita.desktop" \
    "$APPDIR/org.maturita.Maturita.desktop"
 # linuxdeploy expects Icon= without path and a matching PNG at AppDir root.
 sed -i.bak 's|^Exec=.*|Exec=maturita|' "$APPDIR/org.maturita.Maturita.desktop"

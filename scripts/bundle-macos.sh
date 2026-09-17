@@ -21,7 +21,7 @@ APP="$ROOT/dist/$APP_NAME"
 MACOS="$APP/Contents/MacOS"
 RES="$APP/Contents/Resources"
 FW="$APP/Contents/Frameworks"
-ICON_512="$ROOT/share/icons/hicolor/512x512/apps/maturita.png"
+ICON_512="$ROOT/data/share/icons/hicolor/512x512/apps/maturita.png"
 OUT_ZIP="maturita-macos-${ARCH_TAG}.zip"
 BREW_PREFIX="$(brew --prefix 2>/dev/null || echo /opt/homebrew)"
 
@@ -34,9 +34,9 @@ rm -rf "$APP"
 mkdir -p "$MACOS" "$RES/icons/hicolor/512x512/apps" "$RES/share" "$FW"
 
 cp -f "$ROOT/maturita" "$MACOS/maturita-bin"
-cp -f "$ROOT/style.css" "$RES/style.css"
+cp -f "$ROOT/data/style.css" "$RES/style.css"
 cp -f "$ICON_512" "$RES/icons/hicolor/512x512/apps/maturita.png"
-cp -R "$ROOT/share/." "$RES/share/"
+cp -R "$ROOT/data/share/." "$RES/share/"
 
 # Resolve an absolute Homebrew-style dependency to a real file on disk.
 resolve_lib() {
@@ -246,7 +246,7 @@ fi
 # Developer ID + notarization is what lets a downloaded app open without
 # System Settings. Without a certificate the bundle stays ad-hoc signed, which
 # is enough for local runs but Gatekeeper still blocks internet downloads.
-ENTITLEMENTS="$ROOT/macos/Maturita.entitlements"
+ENTITLEMENTS="$ROOT/data/macos/Maturita.entitlements"
 
 pick_sign_identity() {
   if [[ -n "${MACOS_SIGN_IDENTITY:-}" ]]; then

@@ -75,15 +75,16 @@ if not exist "assets\app-icon.ico" (
 
 REM --- 4. Compile resources + sources ---------------------------------------
 echo Building maturita.exe with MSVC...
-rc /nologo /fo maturita.res maturita.rc
+if not exist build mkdir build
+rc /nologo /fo build\maturita.res data\windows\maturita.rc
 if errorlevel 1 (
     echo [error] Resource compile failed.
     exit /b 1
 )
 
-cl /nologo /O2 /MD /W3 /std:c11 /D_CRT_SECURE_NO_WARNINGS ^
-   %GTK_CFLAGS% *.c maturita.res ^
-   /Fe:maturita.exe ^
+cl /nologo /O2 /MD /W3 /std:c11 /I src /D_CRT_SECURE_NO_WARNINGS ^
+   %GTK_CFLAGS% src\*.c build\maturita.res ^
+   /Fe:maturita.exe /Fo:build\ ^
    /link /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup %GTK_LIBS%
 
 if errorlevel 1 (

@@ -7,8 +7,6 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 # GTK4 is found through pkg-config everywhere: Linux/macOS packages, MSYS2,
 # vcpkg and the native MSVC (gvsbuild) package all ship .pc files.
 if(MSVC)
-    # On MSVC the Unix-style flags pkg-config prints are not understood, so
-    # ask for the native "/I" and ".lib" form instead.
     find_program(PKG_CONFIG_EXECUTABLE
         NAMES pkg-config pkg-config.exe pkgconf pkgconf.exe)
     if(NOT PKG_CONFIG_EXECUTABLE)
@@ -42,17 +40,18 @@ else()
     pkg_check_modules(GTK4 REQUIRED IMPORTED_TARGET gtk4)
 endif()
 
-# WIN32 suppresses the console window on Windows; the app still uses main(),
-# so MSVC needs mainCRTStartup as the entry point.
-file(GLOB MATURITA_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
+file(GLOB MATURITA_SOURCES CONFIGURE_DEPENDS
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 if(WIN32)
     add_executable(maturita WIN32 ${MATURITA_SOURCES}
-                   "${CMAKE_CURRENT_SOURCE_DIR}/maturita.rc")
+                   "${CMAKE_CURRENT_SOURCE_DIR}/data/windows/maturita.rc")
 else()
     add_executable(maturita ${MATURITA_SOURCES})
 endif()
 
-# Mirrors COMMIT in the Makefile: bakes the source commit in for the updater.
+target_include_directories(maturita PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/src")
+
 if(DEFINED APP_COMMIT AND NOT APP_COMMIT STREQUAL "")
     target_compile_definitions(maturita PRIVATE APP_COMMIT="${APP_COMMIT}")
 endif()
@@ -72,22 +71,18 @@ else()
     endif()
 endif()
 
-# The GTK stylesheet, window icon and Freedesktop share/ tree are loaded at
-# runtime from the working directory (or next to the binary).
+# Runtime assets sit next to the binary after install / cmake --build.
+set(ICON_512
+    "${CMAKE_CURRENT_SOURCE_DIR}/data/share/icons/hicolor/512x512/apps/maturita.png")
 add_custom_command(TARGET maturita POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_CURRENT_SOURCE_DIR}/style.css
+            ${CMAKE_CURRENT_SOURCE_DIR}/data/style.css
             $<TARGET_FILE_DIR:maturita>/style.css
     COMMAND ${CMAKE_COMMAND} -E make_directory
             $<TARGET_FILE_DIR:maturita>/icons/hicolor/512x512/apps
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets/app-icon.png
+            ${ICON_512}
             $<TARGET_FILE_DIR:maturita>/icons/hicolor/512x512/apps/maturita.png
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets/app-icon.png
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets/icons/hicolor/512x512/apps/maturita.png
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/share
+            ${CMAKE_CURRENT_SOURCE_DIR}/data/share
             $<TARGET_FILE_DIR:maturita>/share)

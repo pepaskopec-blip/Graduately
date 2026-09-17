@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate assets/app-icon.ico and share/icons from assets/app-icon.png.
+"""Regenerate assets/app-icon.ico and data/share/icons from assets/app-icon.png.
 
 Uses macOS `sips` when available; otherwise requires Pillow.
 Run from the repository root.
@@ -71,13 +71,9 @@ def main() -> int:
         print(f"wrote {ICO.relative_to(ROOT)}")
 
     for size in SHARE_SIZES:
-        dest = ROOT / "share" / "icons" / "hicolor" / f"{size}x{size}" / "apps" / "maturita.png"
+        dest = ROOT / "data" / "share" / "icons" / "hicolor" / f"{size}x{size}" / "apps" / "maturita.png"
         resize_png(SRC, dest, size)
         print(f"wrote {dest.relative_to(ROOT)}")
-
-    assets_icon = ROOT / "assets" / "icons" / "hicolor" / "512x512" / "apps" / "maturita.png"
-    resize_png(SRC, assets_icon, 512)
-    print(f"wrote {assets_icon.relative_to(ROOT)}")
     return 0
 
 

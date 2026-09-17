@@ -125,12 +125,12 @@ make bundle                     # dist/maturita.exe jde spustit i z Průzkumník
 ### Struktura
 
 ```
-*.c / maturita.h     zdroj aplikace
-style.css            GTK styl (barvy se vkládají za běhu)
+src/                 C zdroje a maturita.h
+data/                style.css, share/, podpisy, Windows .rc
+assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
 scripts/             balení AppImage a .app
-.github/workflows/build.yml    CI: push na main → větev builds
-assets/              ikona a screenshoty
+.github/workflows/   CI: push na main → větev builds
 progress/            vzniká za běhu (cvičení, nastavení)
 ```
 
@@ -256,12 +256,12 @@ make bundle                     # dist/maturita.exe can be double-clicked
 ### Layout
 
 ```
-*.c / maturita.h     application sources
-style.css            GTK stylesheet (palette injected at runtime)
+src/                 C sources and maturita.h
+data/                style.css, share/, signing files, Windows .rc
+assets/              source icon and screenshots
 installers/          fetch-the-latest installers
 scripts/             AppImage / .app bundlers
-.github/workflows/build.yml    CI: push to main → builds branch
-assets/              icon and screenshots
+.github/workflows/   CI: push to main → builds branch
 progress/            created at runtime (exercises, settings)
 ```
 

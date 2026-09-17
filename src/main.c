@@ -188,6 +188,7 @@ static gboolean ui_scale_tick(GtkWidget *w, GdkFrameClock *clock,
 static const char *find_app_icon_file(void) {
     static const char *paths[] = {
         ICON_FILE,
+        "../assets/app-icon.png",
         ICON_THEME_DIR "/hicolor/512x512/apps/" ICON_NAME ".png",
         SHARE_DIR "/icons/hicolor/512x512/apps/" ICON_NAME ".png",
         ICON_FILE_ALT,
