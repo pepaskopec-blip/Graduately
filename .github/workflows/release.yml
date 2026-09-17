@@ -59,6 +59,8 @@ jobs:
             mingw-w64-ucrt-x86_64-make
 
       - name: Build and bundle
+        env:
+          VERSION: ${{ github.ref_name }}
         run: |
           make bundle
           cd dist

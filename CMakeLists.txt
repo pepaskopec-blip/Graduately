@@ -52,6 +52,11 @@ else()
     add_executable(maturita ${MATURITA_SOURCES})
 endif()
 
+# Mirrors VERSION in the Makefile: bakes the release tag in for the updater.
+if(DEFINED APP_VERSION AND NOT APP_VERSION STREQUAL "")
+    target_compile_definitions(maturita PRIVATE APP_VERSION="${APP_VERSION}")
+endif()
+
 if(MSVC)
     target_compile_options(maturita PRIVATE ${GTK4_CFLAGS})
     target_link_options(maturita PRIVATE ${GTK4_LIBS})

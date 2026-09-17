@@ -35,7 +35,7 @@ static char *dup_dirname(const char *path) {
 }
 
 /* Absolute path of this process's executable, or NULL. */
-static char *executable_path(void) {
+char *app_executable_path(void) {
 #ifdef _WIN32
     wchar_t wbuf[MAX_PATH];
     DWORD n = GetModuleFileNameW(NULL, wbuf, MAX_PATH);
@@ -161,7 +161,7 @@ static void set_progress_paths(const char *write_root) {
 void setup_portable_paths(void) {
     const char *appdir = g_getenv("APPDIR");
     const char *appimage = g_getenv("APPIMAGE");
-    char *exe = executable_path();
+    char *exe = app_executable_path();
     char *exe_dir = exe ? dup_dirname(exe) : NULL;
     char *data_dir = NULL;
     char *write_root = NULL;

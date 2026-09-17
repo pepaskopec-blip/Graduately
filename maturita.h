@@ -21,6 +21,13 @@
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define CSS_FILE      "style.css"
 #define APP_ID        "org.maturita.Maturita"
+/* Release builds bake the git tag in (see VERSION in the Makefile), so the
+ * updater can tell what it is running. Plain builds stay at "dev" and never
+ * report an update as available. */
+#ifndef APP_VERSION
+#define APP_VERSION   "dev"
+#endif
+#define UPDATE_REPO   "pepaskopec-blip/maturita.c"
 #define ICON_NAME     "maturita"
 #define ICON_FILE     "assets/app-icon.png"
 #define ICON_THEME_DIR "assets/icons"   /* cwd when run from source tree */
@@ -883,6 +890,15 @@ gboolean on_window_key_pressed(GtkEventControllerKey *controller,
                                       GdkModifierType state,
                                       gpointer user_data);
 GtkWidget *build_welcome_page(void);
+/* util.c */
+char *app_executable_path(void);
+/* update.c */
+void update_init(void);
+void update_check_async(gboolean interactive);
+void update_clear_staging(void);
+void update_apply_lang(void);
+GtkWidget *build_update_banner(void);
+GtkWidget *build_update_box(void);
 void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data);
 void road_point(double t, double *ox, double *oy);

@@ -19,6 +19,35 @@ const TrEntry tr_ui[] = {
     {"mode_light", "Světlý", "Light"},
     {"theme", "TÉMA", "THEME"},
     {"language", "JAZYK", "LANGUAGE"},
+    {"updates", "AKTUALIZACE", "UPDATES"},
+    {"update_current", "Verze %s", "Version %s"},
+    {"update_checking", "Hledám aktualizace…", "Checking for updates…"},
+    {"update_uptodate", "Máte nejnovější verzi (%s).",
+     "You are up to date (%s)."},
+    {"update_available", "Je dostupná verze %s.", "Version %s is available."},
+    {"update_downloading", "Stahuji aktualizaci…", "Downloading the update…"},
+    {"update_staged", "Aktualizace je připravená — restartujte aplikaci.",
+     "The update is ready — restart the app to finish."},
+    {"update_check", "Zkontrolovat", "Check"},
+    {"update_install", "Aktualizovat", "Update"},
+    {"update_restart", "Restartovat", "Restart"},
+    {"update_later", "Později", "Later"},
+    {"update_failed", "Aktualizace se nepovedla.", "The update failed."},
+    {"update_err_network", "Nepodařilo se zjistit nejnovější verzi.",
+     "Could not find out the latest version."},
+    {"update_err_download", "Stahování se nepovedlo.", "The download failed."},
+    {"update_err_curl", "V systému chybí curl, aktualizace nejsou dostupné.",
+     "curl is missing, so updates are unavailable."},
+    {"update_err_unsupported", "Pro tuto platformu se aktualizace nevydává.",
+     "No update is published for this platform."},
+    {"update_err_readonly",
+     "Do umístění aplikace nelze zapisovat. Přesuňte ji třeba do Aplikací.",
+     "The app's location is not writable. Move it somewhere else, for "
+     "example to Applications."},
+    {"update_err_stage", "Aktualizaci nešlo připravit.",
+     "Could not prepare the update."},
+    {"update_err_devbuild", "Tento build nemá číslo verze (dev).",
+     "This build carries no version number (dev)."},
     {"welcome_body",
      "maturita.C je vzdělávací program pro studenty středních škol a "
      "gymnázií na přípravu k maturitě.\n\n"
@@ -1474,6 +1503,7 @@ void apply_language(void) {
         i18n_apply_one(&g_array_index(i18n_binds, I18nBind, i));
     refresh_welcome_heading();
     refresh_stats_ui();
+    update_apply_lang();
     net_lessons_apply_lang();
     hw_lessons_apply_lang();
 }

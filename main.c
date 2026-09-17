@@ -348,7 +348,17 @@ void activate(GtkApplication *app, gpointer user_data) {
     main_stack = GTK_STACK(gtk_stack_new());
     gtk_stack_set_transition_type(GTK_STACK(main_stack),
                                   GTK_STACK_TRANSITION_TYPE_CROSSFADE);
-    gtk_window_set_child(window, GTK_WIDGET(main_stack));
+
+    /* The update banner sits above the pages and stays hidden until there is
+     * something to report, so it never shifts the layout unprompted. */
+    {
+        GtkWidget *root = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+
+        gtk_box_append(GTK_BOX(root), build_update_banner());
+        gtk_widget_set_vexpand(GTK_WIDGET(main_stack), TRUE);
+        gtk_box_append(GTK_BOX(root), GTK_WIDGET(main_stack));
+        gtk_window_set_child(window, root);
+    }
 
     welcome_page = build_welcome_page();
     roadmap_page = build_roadmap_page();
@@ -468,6 +478,8 @@ void activate(GtkApplication *app, gpointer user_data) {
     apply_language();
 
     gtk_widget_add_tick_callback(GTK_WIDGET(window), ui_scale_tick, NULL, NULL);
+
+    update_init();
 
     gtk_window_present(window);
 }

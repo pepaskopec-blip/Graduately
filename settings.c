@@ -324,11 +324,21 @@ GtkWidget *build_settings_button(void) {
     gtk_box_append(GTK_BOX(lang_row), cs_btn);
     gtk_box_append(GTK_BOX(lang_row), en_btn);
 
+    label = gtk_label_new(NULL);
+    i18n_bind(label, "updates", 0);
+    gtk_widget_set_halign(label, GTK_ALIGN_START);
+    gtk_widget_add_css_class(label, "settings-label");
+    gtk_widget_set_margin_top(label, 4);
+    gtk_box_append(GTK_BOX(box), label);
+    gtk_box_append(GTK_BOX(box), build_update_box());
+
     {
         GtkWidget *sw = gtk_scrolled_window_new();
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw),
                                        GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-        gtk_scrolled_window_set_max_content_height(GTK_SCROLLED_WINDOW(sw), 470);
+        /* Tall enough for every section, including updates at the bottom; GTK
+         * still shrinks the popover to fit the window and scrolls the rest. */
+        gtk_scrolled_window_set_max_content_height(GTK_SCROLLED_WINDOW(sw), 820);
         gtk_scrolled_window_set_has_frame(GTK_SCROLLED_WINDOW(sw), FALSE);
         gtk_scrolled_window_set_propagate_natural_width(GTK_SCROLLED_WINDOW(sw), TRUE);
         gtk_scrolled_window_set_propagate_natural_height(GTK_SCROLLED_WINDOW(sw), TRUE);

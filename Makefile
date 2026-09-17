@@ -17,6 +17,14 @@ GTK_LIBS   := $(shell $(PKG_CONFIG) --libs gtk4)
 CFLAGS = -Wall -Wextra -Wno-deprecated-declarations $(GTK_CFLAGS)
 LIBS = $(GTK_LIBS) -lm
 
+# Release builds pass the git tag (the CI workflow exports it), which bakes the
+# version into the binary for the updater to compare against. Without it the
+# build keeps the "dev" default from maturita.h and never offers an update.
+VERSION ?=
+ifneq ($(VERSION),)
+CFLAGS += -DAPP_VERSION='"$(VERSION)"'
+endif
+
 # Windows (MSYS2 / MinGW): .exe suffix, no console window, embed .ico.
 ifeq ($(OS),Windows_NT)
 TARGET = maturita.exe
