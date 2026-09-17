@@ -6,6 +6,18 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
+# An installed .app needs a source identity for the updater, including when
+# packaged locally. CI can still supply COMMIT explicitly. Plain `make`
+# builds keep their "dev" default.
+if [[ -z "${COMMIT:-}" ]]; then
+  if [[ ! -e "$ROOT/.git" ]] ||
+     ! COMMIT="$(git -C "$ROOT" rev-parse --verify HEAD 2>/dev/null)"; then
+    echo "error: cannot determine the source commit; set COMMIT when bundling without Git metadata" >&2
+    exit 1
+  fi
+fi
+export COMMIT
+
 ARCH="$(uname -m)"
 case "$ARCH" in
   arm64|aarch64) ARCH_TAG=arm64 ;;
