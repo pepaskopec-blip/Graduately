@@ -96,13 +96,17 @@ jobs:
 
       # Developer ID lives in repo secrets. Without it the bundle is only
       # ad-hoc signed and Gatekeeper still blocks downloaded copies.
+      # Do not use `secrets` in `if:` — GitHub rejects the whole workflow.
       - name: Import Developer ID certificate
-        if: ${{ secrets.MACOS_CERTIFICATE != '' }}
         env:
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
           MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
         run: |
           set -euo pipefail
+          if [ -z "${MACOS_CERTIFICATE:-}" ]; then
+            echo "No Developer ID certificate; the bundle will be ad-hoc signed."
+            exit 0
+          fi
           cert="$RUNNER_TEMP/certificate.p12"
           keychain="$RUNNER_TEMP/signing.keychain-db"
           pass="$(openssl rand -base64 32)"

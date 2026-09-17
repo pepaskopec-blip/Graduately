@@ -92,15 +92,44 @@ static struct {
  * ever holds the current build, and anything else means this copy is behind.
  * Short and full forms count as the same commit, so the interface can show a
  * short one without confusing the check. */
-static gboolean same_commit(const char *a, const char *b) {
-    size_t la, lb, n;
+/* First 7–40 hex digits on the line; ignores comments and CDN junk. */
+static char *parse_commit(const char *text) {
+    const char *p;
+    size_t n;
 
-    if (!a || !b || !*a || !*b)
+    if (!text)
+        return NULL;
+    for (p = text; *p; p++) {
+        if (g_ascii_isxdigit(*p)) {
+            n = 0;
+            while (g_ascii_isxdigit(p[n]))
+                n++;
+            if (n >= 7 && n <= 40)
+                return g_strndup(p, n);
+            p += n;
+            if (!*p)
+                break;
+        }
+    }
+    return NULL;
+}
+
+static gboolean same_commit(const char *a, const char *b) {
+    char *ca = parse_commit(a);
+    char *cb = parse_commit(b);
+    size_t n;
+    gboolean ok;
+
+    if (!ca || !cb) {
+        g_free(ca);
+        g_free(cb);
         return FALSE;
-    la = strlen(a);
-    lb = strlen(b);
-    n = MIN(la, lb);
-    return n >= 7 && g_ascii_strncasecmp(a, b, n) == 0;
+    }
+    n = MIN(strlen(ca), strlen(cb));
+    ok = n >= 7 && g_ascii_strncasecmp(ca, cb, n) == 0;
+    g_free(ca);
+    g_free(cb);
+    return ok;
 }
 
 /* Only builds published by CI carry a commit; see APP_COMMIT in maturita.h. */
@@ -682,7 +711,12 @@ static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
     }
 
     g_free(up.latest);
-    up.latest = out;
+    up.latest = parse_commit(out);
+    g_free(out);
+    if (!up.latest) {
+        check_giveup();
+        return;
+    }
 
     if (same_commit(APP_COMMIT, up.latest))
         update_set_state(up.interactive ? UPDATE_UP_TO_DATE : UPDATE_IDLE);
@@ -697,6 +731,7 @@ static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
 
 void update_check_async(gboolean interactive) {
     const char *argv[8];
+    char *url;
 
     if (up.state == UPDATE_CHECKING || up.state == UPDATE_DOWNLOADING ||
         up.state == UPDATE_STAGED)
@@ -713,15 +748,16 @@ void update_check_async(gboolean interactive) {
 
     update_set_state(UPDATE_CHECKING);
 
-    /* The CDN in front of raw.githubusercontent.com caches for a few minutes,
-     * so ask it not to hand back a stale commit. */
+    /* raw.githubusercontent.com caches VERSION; a unique query bypasses it. */
+    url = g_strdup_printf("%s?t=%ld", UPDATE_VERSION_URL,
+                          (long)g_get_real_time());
     argv[0] = "curl";
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
     argv[3] = "20";
     argv[4] = "-H";
     argv[5] = "Cache-Control: no-cache";
-    argv[6] = UPDATE_VERSION_URL;
+    argv[6] = url;
     argv[7] = NULL;
 
     if (!curl_async(argv, check_done)) {
@@ -730,6 +766,7 @@ void update_check_async(gboolean interactive) {
         else
             update_set_state(UPDATE_IDLE);
     }
+    g_free(url);
 }
 
 /* ------------------------------------------------------------------ */
