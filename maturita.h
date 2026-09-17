@@ -21,13 +21,16 @@
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define CSS_FILE      "style.css"
 #define APP_ID        "org.maturita.Maturita"
-/* Release builds bake the git tag in (see VERSION in the Makefile), so the
- * updater can tell what it is running. Plain builds stay at "dev" and never
- * report an update as available. */
-#ifndef APP_VERSION
-#define APP_VERSION   "dev"
+/* Published builds bake in the commit they were made from (see COMMIT in the
+ * Makefile), which is what the updater compares against the build published
+ * in the repository. Local builds stay at "dev" and never offer an update. */
+#ifndef APP_COMMIT
+#define APP_COMMIT    "dev"
 #endif
 #define UPDATE_REPO   "pepaskopec-blip/maturita.c"
+/* Packages live on their own branch rather than in releases, so the update
+ * always matches whatever is on main. */
+#define UPDATE_BRANCH "builds"
 #define ICON_NAME     "maturita"
 #define ICON_FILE     "assets/app-icon.png"
 #define ICON_THEME_DIR "assets/icons"   /* cwd when run from source tree */

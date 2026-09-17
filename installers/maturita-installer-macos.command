@@ -1,17 +1,18 @@
 #!/bin/sh
 # maturita.c installer for macOS.
 #
-# Carries no application of its own: it downloads whatever the newest release
-# is at the moment you run it, so this file never goes stale. GitHub resolves
-# the /releases/latest/download/ path to the current tag on every request.
+# Carries no application of its own: it downloads the current build straight
+# from the repository's `builds` branch, which CI rewrites whenever main
+# changes. This file therefore never goes stale.
 #
 # Double-click the file to run it. The app updates itself from then on.
 
 set -eu
 
 REPO="pepaskopec-blip/maturita.c"
+BRANCH="builds"
 ASSET="maturita-macos-arm64.zip"
-URL="https://github.com/$REPO/releases/latest/download/$ASSET"
+URL="https://raw.githubusercontent.com/$REPO/$BRANCH/$ASSET"
 
 say() { printf '%s\n' "$*"; }
 die() { printf '\nError: %s\n' "$*" >&2; printf 'Press Return to close. '; read -r _; exit 1; }

@@ -17,12 +17,12 @@ GTK_LIBS   := $(shell $(PKG_CONFIG) --libs gtk4)
 CFLAGS = -Wall -Wextra -Wno-deprecated-declarations $(GTK_CFLAGS)
 LIBS = $(GTK_LIBS) -lm
 
-# Release builds pass the git tag (the CI workflow exports it), which bakes the
-# version into the binary for the updater to compare against. Without it the
-# build keeps the "dev" default from maturita.h and never offers an update.
-VERSION ?=
-ifneq ($(VERSION),)
-CFLAGS += -DAPP_VERSION='"$(VERSION)"'
+# Published builds pass the commit they were made from (the CI workflow
+# exports it), which the updater compares against the build in the repository.
+# Without it the build keeps the "dev" default and never offers an update.
+COMMIT ?=
+ifneq ($(COMMIT),)
+CFLAGS += -DAPP_COMMIT='"$(COMMIT)"'
 endif
 
 # Windows (MSYS2 / MinGW): .exe suffix, no console window, embed .ico.

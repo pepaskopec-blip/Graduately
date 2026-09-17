@@ -125,44 +125,35 @@ GTK 4 interface.
 
 ### Downloads (prebuilt)
 
-Precompiled, self-contained builds are published on the
-**GitHub Releases** page of this project (enable Actions on a GitHub remote)
-when a version tag (`v*`) is pushed. No compiler or GTK development packages
-are required:
+There are no releases and no version numbers. CI rebuilds all three platforms
+whenever `main` changes and commits the packages to the
+[`builds`](../../tree/builds) branch, so what you download is always the
+current state of the repository. No compiler or GTK development packages are
+required.
 
-| Platform | Asset | How to run |
-| -------- | ----- | ---------- |
-| Linux (x86_64) | `maturita-linux-x86_64.AppImage` | `chmod +x` the file, then double-click or run it |
-| macOS (Apple Silicon) | `maturita-macos-arm64.zip` | Unzip and open `Maturita.app` |
-| Windows (x64) | `maturita-windows-x64.zip` | Unzip and run `maturita.exe` |
+Start with the installer for your platform. It contains no application of its
+own — it fetches the current build when you run it, so the file never goes out
+of date and you only ever need this one download:
 
-Progress and settings are saved next to the AppImage / `.app` / unzipped
-folder in a `progress/` directory.
+| Platform | File | How to run |
+| -------- | ---- | ---------- |
+| macOS (Apple Silicon) | [`maturita-installer-macos.zip`](../../raw/builds/maturita-installer-macos.zip) | Unzip, then double-click the `.command` file |
+| Windows (x64) | [`maturita-installer-windows.cmd`](../../raw/builds/maturita-installer-windows.cmd) | Double-click the file |
+| Linux (x86_64) | [`maturita-installer-linux.sh`](../../raw/builds/maturita-installer-linux.sh) | `sh maturita-installer-linux.sh` |
 
-#### Installers
-
-Each release also ships a small installer that contains no application of its
-own: it downloads the newest build when you run it, so the file never goes out
-of date. Once installed, the app keeps itself up to date on its own — it checks
-shortly after startup and offers the update in a banner, and there is a manual
-check under **Settings → Updates**.
-
-| Platform | Asset | How to run |
-| -------- | ----- | ---------- |
-| macOS (Apple Silicon) | `maturita-installer-macos.zip` | Unzip, then double-click the `.command` file |
-| Windows (x64) | `maturita-installer-windows.cmd` | Double-click the file |
-| Linux (x86_64) | `maturita-installer-linux.sh` | `sh maturita-installer-linux.sh` |
+Once installed, the app keeps itself up to date: it compares the commit it was
+built from against `VERSION` on the `builds` branch shortly after startup and
+offers the update in a banner. There is a manual check under
+**Settings → Updates**.
 
 The builds are not code-signed, so the first launch needs one extra step:
 on macOS right-click the installer and pick **Open**, and on Windows choose
 **More info → Run anyway** if SmartScreen appears.
 
-To cut a release yourself (needs a GitHub remote with Actions enabled):
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+The packages themselves are on the same branch if you would rather skip the
+installer: `maturita-linux-x86_64.AppImage`, `maturita-macos-arm64.zip` and
+`maturita-windows-x64.zip`. Progress and settings are saved next to the
+AppImage / `.app` / unzipped folder in a `progress/` directory.
 
 Local packaging (same scripts the CI uses):
 
@@ -605,43 +596,37 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
 
 ### Stažení (předkompilované)
 
-Hotové self-contained buildy vycházejí na stránce
-**GitHub Releases** tohoto projektu (Actions na GitHub remote)
-při pushi tagu `v*`. Kompilátor ani vývojové balíčky GTK nejsou potřeba:
+Žádné releasy ani čísla verzí nejsou. CI přestaví všechny tři platformy
+pokaždé, když se změní `main`, a balíčky commitne do větve
+[`builds`](../../tree/builds) — stahujete tedy vždycky aktuální stav repa.
+Kompilátor ani vývojové balíčky GTK nejsou potřeba.
+
+Začněte instalátorem pro svou platformu. Samotnou aplikaci neobsahuje, stáhne
+si aktuální build až při spuštění, takže soubor nikdy nezestárne a stačí vám
+tohle jedno stažení:
 
 | Platforma | Soubor | Spuštění |
 | --------- | ------ | -------- |
-| Linux (x86_64) | `maturita-linux-x86_64.AppImage` | `chmod +x` a spustit / dvojklik |
-| macOS (Apple Silicon) | `maturita-macos-arm64.zip` | Rozbalit a otevřít `Maturita.app` |
-| Windows (x64) | `maturita-windows-x64.zip` | Rozbalit a spustit `maturita.exe` |
+| macOS (Apple Silicon) | [`maturita-installer-macos.zip`](../../raw/builds/maturita-installer-macos.zip) | Rozbalit a dvojklik na soubor `.command` |
+| Windows (x64) | [`maturita-installer-windows.cmd`](../../raw/builds/maturita-installer-windows.cmd) | Dvojklik na soubor |
+| Linux (x86_64) | [`maturita-installer-linux.sh`](../../raw/builds/maturita-installer-linux.sh) | `sh maturita-installer-linux.sh` |
 
-Postup a nastavení se ukládají vedle AppImage / `.app` / rozbalené složky
-do adresáře `progress/`.
-
-#### Instalátory
-
-Ke každému releasu vychází i malý instalátor, který samotnou aplikaci
-neobsahuje: nejnovější build si stáhne až při spuštění, takže soubor nikdy
-nezestárne. Nainstalovaná aplikace se pak udržuje aktuální sama — chvíli po
-startu zkontroluje nové verze a nabídne je v pruhu nahoře, ruční kontrola je
+Nainstalovaná aplikace se pak udržuje aktuální sama: chvíli po startu porovná
+commit, ze kterého je postavená, se souborem `VERSION` ve větvi `builds`
+a případnou aktualizaci nabídne v pruhu nahoře. Ruční kontrola je
 v **Nastavení → Aktualizace**.
-
-| Platforma | Soubor | Spuštění |
-| --------- | ------ | -------- |
-| macOS (Apple Silicon) | `maturita-installer-macos.zip` | Rozbalit a dvojklik na soubor `.command` |
-| Windows (x64) | `maturita-installer-windows.cmd` | Dvojklik na soubor |
-| Linux (x86_64) | `maturita-installer-linux.sh` | `sh maturita-installer-linux.sh` |
 
 Buildy nejsou podepsané, takže první spuštění chce jeden krok navíc: na macOS
 klikněte na instalátor pravým tlačítkem a zvolte **Otevřít**, na Windows při
 hlášce SmartScreenu **Další informace → Přesto spustit**.
 
-Vytvoření releasu (GitHub remote s Actions):
+Kdo chce instalátor přeskočit, najde na stejné větvi i samotné balíčky:
+`maturita-linux-x86_64.AppImage`, `maturita-macos-arm64.zip` a
+`maturita-windows-x64.zip`. Postup a nastavení se ukládají vedle AppImage /
+`.app` / rozbalené složky do adresáře `progress/`.
 
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+Vydání nové verze je prostý push na `main` — build i publikování do větve
+`builds` obstará CI.
 
 Lokální balíček (stejné skripty jako CI):
 

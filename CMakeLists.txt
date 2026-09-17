@@ -52,9 +52,9 @@ else()
     add_executable(maturita ${MATURITA_SOURCES})
 endif()
 
-# Mirrors VERSION in the Makefile: bakes the release tag in for the updater.
-if(DEFINED APP_VERSION AND NOT APP_VERSION STREQUAL "")
-    target_compile_definitions(maturita PRIVATE APP_VERSION="${APP_VERSION}")
+# Mirrors COMMIT in the Makefile: bakes the source commit in for the updater.
+if(DEFINED APP_COMMIT AND NOT APP_COMMIT STREQUAL "")
+    target_compile_definitions(maturita PRIVATE APP_COMMIT="${APP_COMMIT}")
 endif()
 
 if(MSVC)

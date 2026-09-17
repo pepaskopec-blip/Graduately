@@ -1,16 +1,17 @@
 @echo off
 rem maturita.c installer for Windows.
 rem
-rem Carries no application of its own: it downloads whatever the newest release
-rem is at the moment you run it, so this file never goes stale. GitHub resolves
-rem the /releases/latest/download/ path to the current tag on every request.
+rem Carries no application of its own: it downloads the current build straight
+rem from the repository's `builds` branch, which CI rewrites whenever main
+rem changes. This file therefore never goes stale.
 rem
 rem Double-click the file to run it. The app updates itself from then on.
 
 setlocal
 set "REPO=pepaskopec-blip/maturita.c"
+set "BRANCH=builds"
 set "ASSET=maturita-windows-x64.zip"
-set "URL=https://github.com/%REPO%/releases/latest/download/%ASSET%"
+set "URL=https://raw.githubusercontent.com/%REPO%/%BRANCH%/%ASSET%"
 set "DEST=%LOCALAPPDATA%\Programs\Maturita"
 
 echo Installing maturita.C
@@ -51,7 +52,7 @@ exit /b 0
 echo.
 echo Error: this installer needs curl and tar, which come with Windows 10
 echo version 1803 and later. Please update Windows, or download the zip
-echo manually from https://github.com/%REPO%/releases/latest
+echo manually from https://github.com/%REPO%/tree/%BRANCH%
 pause
 exit /b 1
 

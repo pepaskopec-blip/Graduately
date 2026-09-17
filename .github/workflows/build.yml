@@ -1,9 +1,18 @@
-name: Release
+name: Build
 
+# Packages are published to the `builds` branch instead of to a GitHub
+# Release, so everything the installers and the in-app updater fetch comes
+# straight from the repository and always matches what is on main.
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+    # Nothing to rebuild when only documentation changed.
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - ".gitignore"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -26,7 +35,7 @@ jobs:
 
       - name: Build AppImage
         env:
-          VERSION: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
         run: |
           chmod +x scripts/bundle-linux.sh
           ./scripts/bundle-linux.sh
@@ -60,7 +69,7 @@ jobs:
 
       - name: Build and bundle
         env:
-          VERSION: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
         run: |
           make bundle
           cd dist
@@ -87,7 +96,7 @@ jobs:
 
       - name: Build .app zip
         env:
-          VERSION: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
         run: |
           chmod +x scripts/bundle-macos.sh
           ./scripts/bundle-macos.sh
@@ -99,7 +108,7 @@ jobs:
           path: dist/maturita-macos-*.zip
 
   publish:
-    name: Publish GitHub Release
+    name: Publish to builds branch
     needs: [linux, windows, macos]
     runs-on: ubuntu-latest
     steps:
@@ -108,34 +117,34 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          path: release-assets
+          path: staged
           merge-multiple: true
 
-      # The installers carry no application: each downloads the newest release
-      # when the user runs it. The macOS one is zipped because a release asset
-      # loses its executable bit, which a .command needs to be double-clicked.
       - name: Collect installers
         run: |
-          cp installers/maturita-installer-linux.sh release-assets/
-          cp installers/maturita-installer-windows.cmd release-assets/
+          cp installers/maturita-installer-linux.sh staged/
+          cp installers/maturita-installer-windows.cmd staged/
           chmod +x installers/maturita-installer-macos.command
-          (cd installers && zip -q ../release-assets/maturita-installer-macos.zip \
+          (cd installers && zip -q ../staged/maturita-installer-macos.zip \
              maturita-installer-macos.command)
+          # The updater downloads this to see whether it is behind.
+          echo "${{ github.sha }}" > staged/VERSION
 
-      - name: List assets
-        run: find release-assets -type f -print
-
-      - name: Create release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            release-assets/maturita-linux-*.AppImage
-            release-assets/maturita-windows-x64.zip
-            release-assets/maturita-macos-*.zip
-            release-assets/maturita-installer-macos.zip
-            release-assets/maturita-installer-windows.cmd
-            release-assets/maturita-installer-linux.sh
-          generate_release_notes: true
-          fail_on_unmatched_files: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # The branch is rewritten from scratch every time rather than added to,
+      # so the repository keeps one copy of the packages instead of a new
+      # ~70 MB set per commit.
+      - name: Push to builds branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -rf .git/index.lock
+          git checkout --orphan builds
+          git rm -rf --cached . >/dev/null
+          find . -maxdepth 1 ! -name . ! -name .git ! -name staged \
+            -exec rm -rf {} +
+          mv staged/* .
+          rmdir staged
+          ls -la
+          git add -A
+          git commit -q -m "Build from ${{ github.sha }}"
+          git push -f origin builds

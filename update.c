@@ -19,9 +19,13 @@
  * Every call is asynchronous, so a slow or unreachable network never blocks
  * the interface.
  *
- * The newest version is read from the redirect GitHub serves for
- * /releases/latest, which points at /releases/tag/<tag>. That avoids the REST
- * API together with its unauthenticated rate limit, and needs no JSON parser.
+ * Packages are not published as releases. They live on the `builds` branch of
+ * the repository, which CI rewrites on every change to main, so an update is
+ * simply whatever that branch currently holds. The branch also carries a
+ * VERSION file naming the commit its packages were built from; comparing that
+ * against the commit baked into this binary is the whole check. Serving it
+ * from raw.githubusercontent.com avoids the REST API and its unauthenticated
+ * rate limit, and needs no JSON parser.
  *
  * An application cannot reliably replace its own files while it is running, so
  * all three platforms follow the same shape: unpack the new version into a
@@ -30,9 +34,9 @@
  * script detached and quit. Staging beside the install keeps the final move on
  * one filesystem and proves up front that the location is writable. */
 
-#define UPDATE_LATEST_URL "https://github.com/" UPDATE_REPO "/releases/latest"
-#define UPDATE_ASSET_URL  "https://github.com/" UPDATE_REPO \
-                          "/releases/latest/download/"
+#define UPDATE_BASE_URL   "https://raw.githubusercontent.com/" UPDATE_REPO \
+                          "/" UPDATE_BRANCH "/"
+#define UPDATE_VERSION_URL UPDATE_BASE_URL "VERSION"
 #define UPDATE_STAGING_DIR ".maturita-update"
 
 #ifdef _WIN32
@@ -64,7 +68,7 @@ typedef enum {
 static struct {
     UpdateState state;
     gboolean interactive;   /* user asked, so also report "up to date" */
-    char *latest;           /* newest release version, without any "v" */
+    char *latest;           /* commit the published packages were built from */
     char *staging;          /* scratch directory beside the install */
     char *archive;          /* asset downloaded into the staging directory */
     char *source;           /* unpacked version the swap script moves in */
@@ -81,39 +85,33 @@ static struct {
 } up;
 
 /* ------------------------------------------------------------------ */
-/* Versions                                                           */
+/* Build identity                                                     */
 /* ------------------------------------------------------------------ */
 
-static const char *strip_v(const char *v) {
-    return (v && (v[0] == 'v' || v[0] == 'V')) ? v + 1 : v;
+/* Commits are not ordered, so there is nothing to compare: the branch only
+ * ever holds the current build, and anything else means this copy is behind.
+ * Short and full forms count as the same commit, so the interface can show a
+ * short one without confusing the check. */
+static gboolean same_commit(const char *a, const char *b) {
+    size_t la, lb, n;
+
+    if (!a || !b || !*a || !*b)
+        return FALSE;
+    la = strlen(a);
+    lb = strlen(b);
+    n = MIN(la, lb);
+    return n >= 7 && g_ascii_strncasecmp(a, b, n) == 0;
 }
 
-/* Component-wise numeric comparison, so 1.0.10 sorts above 1.0.9. Missing
- * components count as zero, which makes 1.1 and 1.1.0 equal. */
-static int version_cmp(const char *a, const char *b) {
-    char **pa = g_strsplit(strip_v(a), ".", -1);
-    char **pb = g_strsplit(strip_v(b), ".", -1);
-    guint na = g_strv_length(pa);
-    guint nb = g_strv_length(pb);
-    guint n = MAX(na, nb);
-    int result = 0;
-
-    for (guint i = 0; i < n && result == 0; i++) {
-        gint64 va = i < na ? g_ascii_strtoll(pa[i], NULL, 10) : 0;
-        gint64 vb = i < nb ? g_ascii_strtoll(pb[i], NULL, 10) : 0;
-
-        if (va != vb)
-            result = va < vb ? -1 : 1;
-    }
-
-    g_strfreev(pa);
-    g_strfreev(pb);
-    return result;
+/* Only builds published by CI carry a commit; see APP_COMMIT in maturita.h. */
+static gboolean is_published_build(void) {
+    return g_ascii_isxdigit(APP_COMMIT[0]) && strlen(APP_COMMIT) >= 7;
 }
 
-/* Only tagged builds know their version; see APP_VERSION in maturita.h. */
-static gboolean is_release_build(void) {
-    return g_ascii_isdigit(strip_v(APP_VERSION)[0]);
+/* Commit hashes are unreadable at full length; seven characters is what git
+ * itself shows. */
+static char *short_commit(const char *sha) {
+    return g_strndup(sha ? sha : "", 7);
 }
 
 /* ------------------------------------------------------------------ */
@@ -272,22 +270,28 @@ static void update_refresh_ui(void) {
 
     switch (up.state) {
         case UPDATE_IDLE:
-            owned = g_strdup_printf(tr("update_current"), APP_VERSION);
+        case UPDATE_UP_TO_DATE: {
+            char *mine = short_commit(APP_COMMIT);
+
+            owned = g_strdup_printf(tr(up.state == UPDATE_IDLE
+                                           ? "update_current"
+                                           : "update_uptodate"), mine);
             status = owned;
+            g_free(mine);
             break;
+        }
         case UPDATE_CHECKING:
             status = tr("update_checking");
             break;
-        case UPDATE_UP_TO_DATE:
-            owned = g_strdup_printf(tr("update_uptodate"), APP_VERSION);
-            status = owned;
-            break;
-        case UPDATE_AVAILABLE:
-            owned = g_strdup_printf(tr("update_available"),
-                                    up.latest ? up.latest : "");
+        case UPDATE_AVAILABLE: {
+            char *newest = short_commit(up.latest);
+
+            owned = g_strdup_printf(tr("update_available"), newest);
             status = owned;
             action = "update_install";
+            g_free(newest);
             break;
+        }
         case UPDATE_DOWNLOADING:
             status = tr("update_downloading");
             action = "update_install";
@@ -581,7 +585,7 @@ static void size_probe_done(GObject *src, GAsyncResult *res, gpointer data) {
     if (up.state != UPDATE_DOWNLOADING)
         return;
 
-    url = g_strconcat(UPDATE_ASSET_URL, asset_name(), NULL);
+    url = g_strconcat(UPDATE_BASE_URL, asset_name(), NULL);
     argv[0] = "curl";
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
@@ -630,7 +634,7 @@ static void update_start_download(void) {
     update_set_state(UPDATE_DOWNLOADING);
 
     /* HEAD the asset with its headers on stdout, to size the progress bar. */
-    url = g_strconcat(UPDATE_ASSET_URL, asset_name(), NULL);
+    url = g_strconcat(UPDATE_BASE_URL, asset_name(), NULL);
     argv[0] = "curl";
     argv[1] = "-fsSLI";
     argv[2] = "--max-time";
@@ -651,18 +655,6 @@ static void update_start_download(void) {
 /* Check                                                              */
 /* ------------------------------------------------------------------ */
 
-/* The effective URL ends in /releases/tag/<tag>. */
-static char *tag_from_url(const char *url) {
-    const char *slash;
-
-    if (!url || !*url)
-        return NULL;
-    slash = g_strrstr(url, "/");
-    if (!slash || !slash[1])
-        return NULL;
-    return g_strdup(slash + 1);
-}
-
 /* A failed background check stays silent; only an explicit one reports. */
 static void check_giveup(void) {
     if (up.interactive)
@@ -674,7 +666,6 @@ static void check_giveup(void) {
 static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
     GSubprocess *proc = G_SUBPROCESS(src);
     char *out = NULL;
-    char *tag;
     gboolean ok;
 
     (void)data;
@@ -682,30 +673,30 @@ static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
     ok = g_subprocess_get_successful(proc);
     g_object_unref(proc);
 
-    tag = ok ? tag_from_url(g_strstrip(out ? out : "")) : NULL;
-    g_free(out);
-    if (!tag) {
+    if (out)
+        g_strstrip(out);
+    if (!ok || !out || !*out) {
+        g_free(out);
         check_giveup();
         return;
     }
 
     g_free(up.latest);
-    up.latest = g_strdup(strip_v(tag));
-    g_free(tag);
+    up.latest = out;
 
-    if (version_cmp(APP_VERSION, up.latest) >= 0)
+    if (same_commit(APP_COMMIT, up.latest))
         update_set_state(up.interactive ? UPDATE_UP_TO_DATE : UPDATE_IDLE);
     else if (update_supported())
         update_set_state(UPDATE_AVAILABLE);
     else if (up.interactive)
-        /* Newer release exists, but this copy cannot swap itself out. */
+        /* A newer build exists, but this copy cannot swap itself out. */
         update_fail(tr("update_err_unsupported"));
     else
         update_set_state(UPDATE_IDLE);
 }
 
 void update_check_async(gboolean interactive) {
-    const char *argv[10];
+    const char *argv[8];
 
     if (up.state == UPDATE_CHECKING || up.state == UPDATE_DOWNLOADING ||
         up.state == UPDATE_STAGED)
@@ -713,8 +704,8 @@ void update_check_async(gboolean interactive) {
 
     up.interactive = interactive;
 
-    /* Nothing to compare against without a baked-in version. */
-    if (!is_release_build()) {
+    /* Nothing to compare against without a baked-in commit. */
+    if (!is_published_build()) {
         if (interactive)
             update_fail(tr("update_err_devbuild"));
         return;
@@ -722,16 +713,16 @@ void update_check_async(gboolean interactive) {
 
     update_set_state(UPDATE_CHECKING);
 
+    /* The CDN in front of raw.githubusercontent.com caches for a few minutes,
+     * so ask it not to hand back a stale commit. */
     argv[0] = "curl";
-    argv[1] = "-fsSLI";
+    argv[1] = "-fsSL";
     argv[2] = "--max-time";
     argv[3] = "20";
-    argv[4] = "-o";
-    argv[5] = NULL_DEVICE;
-    argv[6] = "-w";
-    argv[7] = "%{url_effective}";
-    argv[8] = UPDATE_LATEST_URL;
-    argv[9] = NULL;
+    argv[4] = "-H";
+    argv[5] = "Cache-Control: no-cache";
+    argv[6] = UPDATE_VERSION_URL;
+    argv[7] = NULL;
 
     if (!curl_async(argv, check_done)) {
         if (interactive)

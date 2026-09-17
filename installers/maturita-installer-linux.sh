@@ -1,9 +1,9 @@
 #!/bin/sh
 # maturita.c installer for Linux.
 #
-# Carries no application of its own: it downloads whatever the newest release
-# is at the moment you run it, so this file never goes stale. GitHub resolves
-# the /releases/latest/download/ path to the current tag on every request.
+# Carries no application of its own: it downloads the current build straight
+# from the repository's `builds` branch, which CI rewrites whenever main
+# changes. This file therefore never goes stale.
 #
 # Run it with:  sh maturita-installer-linux.sh
 # The app updates itself from then on.
@@ -11,8 +11,9 @@
 set -eu
 
 REPO="pepaskopec-blip/maturita.c"
+BRANCH="builds"
 ASSET="maturita-linux-x86_64.AppImage"
-URL="https://github.com/$REPO/releases/latest/download/$ASSET"
+URL="https://raw.githubusercontent.com/$REPO/$BRANCH/$ASSET"
 
 # ~/Applications is where desktop environments look for AppImages, and the app
 # keeps its progress/ directory next to its own file.
