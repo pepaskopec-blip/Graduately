@@ -8,7 +8,7 @@ typedef struct {
     char *title;
     char *subtitle;
     char *hay;
-    const char *target;
+    char *target;
     gboolean locked;
     int rank;
     int score;
@@ -65,7 +65,7 @@ static SearchItem *item_new(const char *title, const char *subtitle,
 
     it->title = g_strdup(title ? title : "");
     it->subtitle = g_strdup(subtitle ? subtitle : "");
-    it->target = target;
+    it->target = g_strdup(target ? target : "");
     it->locked = locked;
     it->rank = rank;
     hay_add(h, title);
@@ -86,6 +86,7 @@ static void item_free(gpointer p) {
     g_free(it->title);
     g_free(it->subtitle);
     g_free(it->hay);
+    g_free(it->target);
     g_free(it);
 }
 
@@ -315,7 +316,8 @@ static void search_fill(void) {
         gtk_widget_add_css_class(row, "search-hit");
         if (it->locked)
             gtk_widget_add_css_class(row, "search-hit-locked");
-        g_object_set_data(G_OBJECT(row), "target", (gpointer)it->target);
+        g_object_set_data_full(G_OBJECT(row), "target",
+                               g_strdup(it->target), g_free);
 
         box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
         gtk_widget_set_margin_start(box, 12);
