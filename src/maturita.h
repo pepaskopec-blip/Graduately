@@ -903,6 +903,7 @@ void update_init(void);
 void update_check_async(gboolean interactive);
 void update_clear_staging(void);
 void update_apply_lang(void);
+void update_on_settings_open(void);
 GtkWidget *build_update_banner(void);
 GtkWidget *build_update_box(void);
 void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,

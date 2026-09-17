@@ -36,10 +36,10 @@
  *
  * An application cannot reliably replace its own files while it is running, so
  * all three platforms follow the same shape: unpack the new version into a
- * staging directory beside the current install, write a small script that
- * waits for this process to exit before swapping it in, then launch that
- * script detached and quit. Staging beside the install keeps the final move on
- * one filesystem and proves up front that the location is writable. */
+ * writable staging directory, write a small script that waits for this process
+ * to exit before swapping it in, then launch that script detached and quit.
+ * Staging lives in the user cache first, because /Applications is often not
+ * writable from a GUI app even when the installer could put a .app there. */
 
 #define UPDATE_ATOM_URL   "https://github.com/" UPDATE_REPO \
                           "/commits/" UPDATE_BRANCH ".atom"
@@ -49,6 +49,12 @@
 #define NULL_DEVICE "NUL"
 #else
 #define NULL_DEVICE "/dev/null"
+#endif
+
+#ifdef __APPLE__
+#define CURL_BIN "/usr/bin/curl"
+#else
+#define CURL_BIN "curl"
 #endif
 
 typedef enum {
@@ -76,6 +82,7 @@ static struct {
     gboolean interactive;   /* user asked, so also report "up to date" */
     char *tip;              /* current commit of the builds branch itself */
     char *latest;           /* commit the published packages were built from */
+    char *latest_hint;      /* "Build from <sha>" parsed from the Atom title */
     char *staging;          /* scratch directory beside the install */
     char *archive;          /* asset downloaded into the staging directory */
     char *source;           /* unpacked version the swap script moves in */
@@ -139,6 +146,27 @@ static char *parse_atom_commit(const char *text) {
         p = strstr(s, "Commit/");
     }
     return NULL;
+}
+
+/* CI commit message on the builds branch: "Build from <main-sha>". */
+static char *parse_build_from(const char *text) {
+    const char *p;
+
+    if (!text)
+        return NULL;
+    p = strstr(text, "Build from ");
+    if (!p)
+        return NULL;
+    p += 11;
+    if (strlen(p) >= 40) {
+        size_t n = 0;
+
+        while (n < 40 && g_ascii_isxdigit(p[n]))
+            n++;
+        if (n == 40)
+            return g_strndup(p, 40);
+    }
+    return parse_commit(p);
 }
 
 /* Pin raw.githubusercontent.com to a commit so Fastly cannot serve a stale
@@ -300,7 +328,11 @@ static void remove_tree(const char *path) {
 void update_clear_staging(void) {
     char *target = NULL;
     char *parent = NULL;
+    char *cache = g_build_filename(g_get_user_cache_dir(),
+                                   "maturita-update", NULL);
 
+    remove_tree(cache);
+    g_free(cache);
     if (install_target(&target, &parent) != INSTALL_UNSUPPORTED) {
         char *stale = g_build_filename(parent, UPDATE_STAGING_DIR, NULL);
 
@@ -316,6 +348,7 @@ void update_clear_staging(void) {
 /* ------------------------------------------------------------------ */
 
 static void update_set_state(UpdateState state);
+static void update_start_download(void);
 
 static void update_fail(const char *message) {
     g_free(up.error);
@@ -405,15 +438,34 @@ void update_apply_lang(void) {
 /* Running curl                                                       */
 /* ------------------------------------------------------------------ */
 
+/* Host tools (curl, tar, ditto, the swap script) must not inherit the
+ * bundle's DYLD/LD library path — that is for GTK, and it can stop system
+ * curl from talking to the network. */
+static GSubprocess *spawn_host(const char *const *argv, GSubprocessFlags flags) {
+    GSubprocessLauncher *launcher = g_subprocess_launcher_new(flags);
+    GSubprocess *proc;
+
+#ifdef __APPLE__
+    g_subprocess_launcher_unsetenv(launcher, "DYLD_LIBRARY_PATH");
+    g_subprocess_launcher_unsetenv(launcher, "DYLD_FALLBACK_LIBRARY_PATH");
+    g_subprocess_launcher_unsetenv(launcher, "DYLD_INSERT_LIBRARIES");
+#endif
+#ifdef __linux__
+    if (g_getenv("APPIMAGE"))
+        g_subprocess_launcher_unsetenv(launcher, "LD_LIBRARY_PATH");
+#endif
+    proc = g_subprocess_launcher_spawnv(launcher, argv, NULL);
+    g_object_unref(launcher);
+    return proc;
+}
+
 /* Spawn curl and hand its stdout to `done`. FALSE means curl itself could not
  * be started, the one failure worth its own message. */
 static gboolean curl_async(const char *const *argv, GAsyncReadyCallback done) {
     GSubprocess *proc;
 
-    proc = g_subprocess_newv(argv,
-                             G_SUBPROCESS_FLAGS_STDOUT_PIPE |
-                                 G_SUBPROCESS_FLAGS_STDERR_SILENCE,
-                             NULL);
+    proc = spawn_host(argv, G_SUBPROCESS_FLAGS_STDOUT_PIPE |
+                                G_SUBPROCESS_FLAGS_STDERR_SILENCE);
     if (!proc)
         return FALSE;
     g_subprocess_communicate_utf8_async(proc, NULL, NULL, done, NULL);
@@ -447,25 +499,44 @@ static char *find_app_bundle(const char *dir) {
 static const char *swap_script_body(InstallKind kind) {
     switch (kind) {
         case INSTALL_MACOS_BUNDLE:
+            /* Detach first so dropping the GSubprocess (or quitting) cannot
+             * take the swap down with us. /Applications is often not writable
+             * from a GUI app, so a failed in-place copy goes to ~/Applications.
+             * ditto keeps the .app layout and works across volumes. */
             return "#!/bin/sh\n"
+                   "if [ -z \"$MATURITA_UPDATE_DETACHED\" ]; then\n"
+                   "  MATURITA_UPDATE_DETACHED=1\n"
+                   "  export MATURITA_UPDATE_DETACHED\n"
+                   "  nohup /bin/sh \"$0\" \"$@\" >/dev/null 2>&1 &\n"
+                   "  exit 0\n"
+                   "fi\n"
                    "pid=$1; target=$2; source=$3; staging=$4\n"
                    "n=0\n"
                    "while kill -0 \"$pid\" 2>/dev/null && [ $n -lt 600 ]; do\n"
                    "  sleep 0.2; n=$((n+1))\n"
                    "done\n"
-                   "rm -rf \"$target.old\"\n"
-                   "mv \"$target\" \"$target.old\" 2>/dev/null\n"
-                   "if mv \"$source\" \"$target\" 2>/dev/null; then\n"
+                   "place=$target\n"
+                   "if /usr/bin/ditto \"$source\" \"$target\" 2>/dev/null; then\n"
                    "  xattr -cr \"$target\" 2>/dev/null\n"
-                   "  rm -rf \"$target.old\"\n"
                    "else\n"
-                   "  mv \"$target.old\" \"$target\" 2>/dev/null\n"
+                   "  alt=\"$HOME/Applications/$(basename \"$target\")\"\n"
+                   "  mkdir -p \"$HOME/Applications\"\n"
+                   "  if /usr/bin/ditto \"$source\" \"$alt\" 2>/dev/null; then\n"
+                   "    xattr -cr \"$alt\" 2>/dev/null\n"
+                   "    place=$alt\n"
+                   "  fi\n"
                    "fi\n"
-                   "open -n \"$target\"\n"
+                   "open -n \"$place\"\n"
                    "rm -rf \"$staging\"\n"
                    "rm -f \"$0\"\n";
         case INSTALL_APPIMAGE:
             return "#!/bin/sh\n"
+                   "if [ -z \"$MATURITA_UPDATE_DETACHED\" ]; then\n"
+                   "  MATURITA_UPDATE_DETACHED=1\n"
+                   "  export MATURITA_UPDATE_DETACHED\n"
+                   "  nohup /bin/sh \"$0\" \"$@\" >/dev/null 2>&1 &\n"
+                   "  exit 0\n"
+                   "fi\n"
                    "pid=$1; target=$2; source=$3; staging=$4\n"
                    "n=0\n"
                    "while kill -0 \"$pid\" 2>/dev/null && [ $n -lt 600 ]; do\n"
@@ -480,8 +551,14 @@ static const char *swap_script_body(InstallKind kind) {
         case INSTALL_WINDOWS_DIR:
             /* Copies over the install without mirroring, so the progress files
              * kept inside it survive. ping is the sleep that works without a
-             * console window. */
+             * console window. start /b detaches so quitting this process
+             * cannot terminate the swap. */
             return "@echo off\r\n"
+                   "if not defined MATURITA_UPDATE_DETACHED (\r\n"
+                   "  set MATURITA_UPDATE_DETACHED=1\r\n"
+                   "  start \"\" /b cmd /c \"%~f0\" %*\r\n"
+                   "  exit /b 0\r\n"
+                   ")\r\n"
                    "set PID=%~1\r\n"
                    "set TARGET=%~2\r\n"
                    "set SOURCE=%~3\r\n"
@@ -534,15 +611,18 @@ static void install_staged(void) {
         ok = TRUE;
     } else {
         char *unpacked = g_build_filename(up.staging, "new", NULL);
+#ifdef __APPLE__
+        const char *argv[] = {"/usr/bin/ditto", "-x", "-k", up.archive,
+                              unpacked, NULL};
+#else
         const char *argv[] = {"tar", "-xf", up.archive, "-C", unpacked, NULL};
+#endif
         GSubprocess *proc;
 
-        /* bsdtar reads zip archives and ships with both macOS and Windows 10
-         * and later, so no separate unzip tool is needed. */
+        /* macOS: ditto keeps the .app layout. Elsewhere bsdtar reads zip. */
         ok = g_mkdir_with_parents(unpacked, 0755) == 0;
         if (ok) {
-            proc = g_subprocess_newv(argv, G_SUBPROCESS_FLAGS_STDERR_SILENCE,
-                                     NULL);
+            proc = spawn_host(argv, G_SUBPROCESS_FLAGS_STDERR_SILENCE);
             ok = proc && g_subprocess_wait_check(proc, NULL, NULL);
             g_clear_object(&proc);
         }
@@ -651,7 +731,7 @@ static void size_probe_done(GObject *src, GAsyncResult *res, gpointer data) {
         return;
 
     url = builds_raw_url(asset_name());
-    argv[0] = "curl";
+    argv[0] = CURL_BIN;
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
     argv[3] = "1800";
@@ -681,11 +761,17 @@ static void update_start_download(void) {
         return;
     }
 
-    /* Staging beside the install keeps the final move on one filesystem, and
-     * fails here, before anything is downloaded, if we cannot write there. */
+    /* Stage in the user cache first: /Applications is often not writable
+     * from a GUI app even when the installer could put a .app there. */
     g_free(up.staging);
-    up.staging = g_build_filename(parent, UPDATE_STAGING_DIR, NULL);
+    up.staging = g_build_filename(g_get_user_cache_dir(),
+                                  "maturita-update", NULL);
     remove_tree(up.staging);
+    if (g_mkdir_with_parents(up.staging, 0755) != 0 && parent) {
+        g_free(up.staging);
+        up.staging = g_build_filename(parent, UPDATE_STAGING_DIR, NULL);
+        remove_tree(up.staging);
+    }
     g_free(target);
     g_free(parent);
     if (g_mkdir_with_parents(up.staging, 0755) != 0) {
@@ -700,7 +786,7 @@ static void update_start_download(void) {
 
     /* HEAD the asset with its headers on stdout, to size the progress bar. */
     url = builds_raw_url(asset_name());
-    argv[0] = "curl";
+    argv[0] = CURL_BIN;
     argv[1] = "-fsSLI";
     argv[2] = "--max-time";
     argv[3] = "20";
@@ -728,6 +814,25 @@ static void check_giveup(void) {
         update_set_state(UPDATE_IDLE);
 }
 
+static void finish_check(void) {
+    if (!up.latest) {
+        check_giveup();
+        return;
+    }
+
+    if (same_commit(APP_COMMIT, up.latest))
+        update_set_state(up.interactive ? UPDATE_UP_TO_DATE : UPDATE_IDLE);
+    else if (update_supported()) {
+        update_set_state(UPDATE_AVAILABLE);
+        /* Download without another click: the remaining action is Restart. */
+        update_start_download();
+    } else if (up.interactive)
+        /* A newer build exists, but this copy cannot swap itself out. */
+        update_fail(tr("update_err_unsupported"));
+    else
+        update_set_state(UPDATE_IDLE);
+}
+
 static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
     GSubprocess *proc = G_SUBPROCESS(src);
     char *out = NULL;
@@ -740,29 +845,12 @@ static void check_done(GObject *src, GAsyncResult *res, gpointer data) {
 
     if (out)
         g_strstrip(out);
-    if (!ok || !out || !*out) {
-        g_free(out);
-        check_giveup();
-        return;
-    }
-
     g_free(up.latest);
-    up.latest = parse_commit(out);
+    up.latest = (ok && out) ? parse_commit(out) : NULL;
     g_free(out);
-    if (!up.latest) {
-        check_giveup();
-        return;
-    }
-
-    if (same_commit(APP_COMMIT, up.latest))
-        update_set_state(up.interactive ? UPDATE_UP_TO_DATE : UPDATE_IDLE);
-    else if (update_supported())
-        update_set_state(UPDATE_AVAILABLE);
-    else if (up.interactive)
-        /* A newer build exists, but this copy cannot swap itself out. */
-        update_fail(tr("update_err_unsupported"));
-    else
-        update_set_state(UPDATE_IDLE);
+    if (!up.latest && up.latest_hint)
+        up.latest = g_strdup(up.latest_hint);
+    finish_check();
 }
 
 static void tip_done(GObject *src, GAsyncResult *res, gpointer data) {
@@ -778,15 +866,28 @@ static void tip_done(GObject *src, GAsyncResult *res, gpointer data) {
     g_object_unref(proc);
 
     g_free(up.tip);
+    g_free(up.latest_hint);
     up.tip = (ok && out) ? parse_atom_commit(out) : NULL;
+    up.latest_hint = (ok && out) ? parse_build_from(out) : NULL;
     g_free(out);
-    if (!up.tip) {
-        check_giveup();
+
+    /* The Atom title already names the main commit; that is enough to decide
+     * whether we are behind, even if the VERSION file fetch fails. */
+    if (up.latest_hint) {
+        g_free(up.latest);
+        up.latest = g_strdup(up.latest_hint);
+        finish_check();
         return;
     }
 
-    url = builds_raw_url("VERSION");
-    argv[0] = "curl";
+    if (!up.tip) {
+        url = g_strdup_printf(
+            "https://raw.githubusercontent.com/%s/%s/VERSION?t=%ld",
+            UPDATE_REPO, UPDATE_BRANCH, (long)g_get_real_time());
+    } else {
+        url = builds_raw_url("VERSION");
+    }
+    argv[0] = CURL_BIN;
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
     argv[3] = "20";
@@ -816,7 +917,7 @@ void update_check_async(gboolean interactive) {
 
     update_set_state(UPDATE_CHECKING);
 
-    argv[0] = "curl";
+    argv[0] = CURL_BIN;
     argv[1] = "-fsSL";
     argv[2] = "--max-time";
     argv[3] = "20";
@@ -866,14 +967,15 @@ static void update_restart(void) {
     argv[i++] = up.staging;
     argv[i] = NULL;
 
-    /* The child outlives us on purpose: it is what puts the new version in
-     * place once this process is gone. */
-    proc = g_subprocess_newv(argv, G_SUBPROCESS_FLAGS_NONE, NULL);
+    /* The script detaches itself and exits; wait for that so we do not
+     * quit before the grandchild is running. */
+    proc = spawn_host(argv, G_SUBPROCESS_FLAGS_NONE);
     g_free(pid);
     g_free(target);
     g_free(parent);
 
-    if (!proc) {
+    if (!proc || !g_subprocess_wait_check(proc, NULL, NULL)) {
+        g_clear_object(&proc);
         update_fail(tr("update_err_stage"));
         return;
     }
@@ -994,8 +1096,24 @@ static gboolean update_startup_check(gpointer data) {
     return G_SOURCE_REMOVE;
 }
 
+/* The first check can race CI publishing a new build after launch. */
+static gboolean update_periodic_check(gpointer data) {
+    (void)data;
+    if (up.state == UPDATE_IDLE || up.state == UPDATE_UP_TO_DATE ||
+        up.state == UPDATE_FAILED)
+        update_check_async(FALSE);
+    return G_SOURCE_CONTINUE;
+}
+
+void update_on_settings_open(void) {
+    if (up.state == UPDATE_IDLE || up.state == UPDATE_UP_TO_DATE ||
+        up.state == UPDATE_FAILED)
+        update_check_async(FALSE);
+}
+
 /* Leaves the first seconds to the interface, then looks for a new release. */
 void update_init(void) {
     update_clear_staging();
     g_timeout_add_seconds(3, update_startup_check, NULL);
+    g_timeout_add_seconds(120, update_periodic_check, NULL);
 }

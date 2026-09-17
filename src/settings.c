@@ -161,6 +161,7 @@ void on_settings_clicked(GtkButton *button, gpointer user_data) {
     GtkPopover *popover = GTK_POPOVER(user_data);
 
     (void)button;
+    update_on_settings_open();
     gtk_popover_popup(popover);
 }
 

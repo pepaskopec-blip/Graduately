@@ -74,11 +74,12 @@ fi
 
 command -v curl >/dev/null 2>&1 || die "Na Macu chybí curl, bez něj nejde nic stáhnout."
 
-if [ -w /Applications ]; then
-    dest_dir="/Applications"
-else
-    dest_dir="$HOME/Applications"
-    mkdir -p "$dest_dir"
+# ~/Applications is writable from the GUI updater later. /Applications
+# often is not, even when this installer can drop a .app there once.
+dest_dir="$HOME/Applications"
+mkdir -p "$dest_dir"
+if [ -e "/Applications/Maturita.app" ] && [ -w "/Applications/Maturita.app" ]; then
+    rm -rf "/Applications/Maturita.app"
 fi
 
 tmp=$(mktemp -d)
