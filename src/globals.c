@@ -10,7 +10,7 @@ GtkCssProvider *theme_provider;
 
 ThemeId   app_theme_id = THEME_CATPPUCCIN;
 
-ColorMode app_color_mode = MODE_DARK;
+ColorMode app_color_mode = MODE_LIGHT;
 
 UiLang    app_lang = LANG_CS;
 

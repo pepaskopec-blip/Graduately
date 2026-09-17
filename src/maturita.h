@@ -919,16 +919,12 @@ void draw_rail(GtkDrawingArea *area, cairo_t *cr,
 void add_path_node(GtkFixed *fixed, int index);
 GtkWidget *build_roadmap_page(void);
 void sub_layout_geometry(double avail);
-void sub_point(double t, double *ox, double *oy);
-void sub_path(cairo_t *cr, double t0, double t1);
 void draw_sub_rail(GtkDrawingArea *area, cairo_t *cr,
                           int width, int height, gpointer user_data);
 void sub_apply_layout(void);
 void sub_relayout(void);
 gboolean sub_relayout_idle(gpointer data);
 void sub_relayout_later(void);
-void sub_adjust_notify(GtkAdjustment *adj, GParamSpec *ps,
-                              gpointer data);
 void draw_german_flag(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data);
 GtkWidget *build_subjects_page(void);

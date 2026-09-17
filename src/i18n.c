@@ -49,13 +49,25 @@ const TrEntry tr_ui[] = {
      "Could not prepare the update."},
     {"update_err_devbuild", "Tento build nepochází z repozitáře (dev).",
      "This build did not come from the repository (dev)."},
+    {"welcome_kicker", "maturita.c", "maturita.c"},
+    {"welcome_title", "Maturita?\nTo dáte.", "Maturita?\nYou've got this."},
     {"welcome_body",
-     "maturita.C je vzdělávací program pro studenty středních škol a "
-     "gymnázií na přípravu k maturitě.\n\n"
-     "Program je napsaný v Céčku studentama ze SSŠVT!",
-     "maturita.C is an educational app for high-school and gymnasium "
-     "students to prepare for their maturita exam.\n\n"
-     "The program is written in C by students from SSŠVT!"},
+     "Procvičování k maturitě v jednom okně. Česky i anglicky, "
+     "napsané v C studenty ze SSŠVT.",
+     "Exam practice in one window. Czech and English, written in C "
+     "by students from SSŠVT."},
+    {"welcome_feat1_title", "Efektivní procvičování", "Focused practice"},
+    {"welcome_feat1_body",
+     "Cvičení, nápovědy a vokabeltraining. Aplikace si pamatuje, kde jste skončili.",
+     "Exercises, hints and vocabulary drills. The app remembers where you left off."},
+    {"welcome_feat1_link", "Začít procvičovat", "Start practicing"},
+    {"welcome_feat2_title", "Čtyři otevřené předměty", "Four open subjects"},
+    {"welcome_feat2_body",
+     "Deutsch, sítě, hardware a čeština. Ostatní předměty čekají na svůj obsah.",
+     "German, networks, hardware and Czech. The other subjects are still locked."},
+    {"welcome_feat2_link", "Jaké předměty jsou otevřené?", "Which subjects are open?"},
+    {"welcome_stat_value", "4", "4"},
+    {"welcome_stat_label", "otevřené\npředměty", "open\nsubjects"},
     {"continue", "Pokračuj", "Continue"},
     {"roadmap_title", "Učební plán", "Learning path"},
     {"roadmap_sub", "Vyberte jednotku na cestě a začněte procvičovat.",
@@ -210,6 +222,8 @@ const TrEntry tr_ui[] = {
     {"stats_pct_fmt", "%d %%", "%d %%"},
     {"stats_units_fmt", "%d / %d", "%d / %d"},
     {"subjects_title", "Předměty", "Subjects"},
+    {"subjects_sub", "Otevřený předmět spustí učební cestu. Zamčené zatím jen čekají.",
+     "An open subject opens its path. Locked ones are placeholders for now."},
     {"Český jazyk a literatura", "Český jazyk a literatura",
      "Czech Language and Literature"},
     {"Občanská nauka", "Občanská nauka", "Civics"},
@@ -1486,9 +1500,7 @@ void i18n_bind(GtkWidget *widget, const char *key, int kind) {
 void refresh_welcome_heading(void) {
     if (!welcome_heading)
         return;
-    gtk_label_set_text(GTK_LABEL(welcome_heading),
-                       app_lang == LANG_EN ? "Welcome to maturita.C"
-                                           : "Vítejte v maturita.C");
+    gtk_label_set_text(GTK_LABEL(welcome_heading), tr("welcome_title"));
 }
 
 void refresh_stats_ui(void);

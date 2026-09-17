@@ -6,9 +6,9 @@
  *
  * Keep to the scales below when adding rules.
  *
- *   type     12 caption | 13 small | 15 body | 17 lead | 20 26 30 headings
- *   weight   400 body | 500 emphasis | 600 controls and labels | 700 headings
- *   radius   8 controls | 12 rows and cards | 16 popovers | 999 circles
+ *   type     12 caption | 14 small | 16 body | 18 lead | 28 44 headings
+ *   weight   400 body | 500 emphasis | 600 controls | 700 headings
+ *   radius   999 pills | 20 cards | 16 popovers
  *   motion   120ms colour | 150ms elevation
  *
  * Fills are flat and elevation is neutral; accent colour marks state, never
@@ -34,8 +34,9 @@ headerbar.titlebar,
 }
 .app-title {
    color: @fg_text;
-   font-size: 13px;
-   font-weight: 600;
+   font-size: 15px;
+   font-weight: 700;
+   letter-spacing: -0.3px;
 }
 windowcontrols button:not(:hover),
 windowcontrols button:not(:hover) image {
@@ -74,27 +75,117 @@ tooltip {
 
 .heading {
    color: @fg_text;
-   font-size: 30px;
+   font-size: 44px;
    font-weight: 700;
-   letter-spacing: -0.5px;
+   letter-spacing: -1.4px;
+   line-height: 1.08;
 }
 .roadmap-title {
    color: @fg_text;
-   font-size: 26px;
+   font-size: 28px;
    font-weight: 700;
-   letter-spacing: -0.3px;
+   letter-spacing: -0.6px;
 }
 .roadmap-sub {
    color: @fg_subtext;
    font-size: 15px;
 }
+.welcome-kicker {
+   color: @fg_text;
+   font-size: 15px;
+   font-weight: 700;
+   letter-spacing: -0.2px;
+}
 .welcome-body {
    color: @fg_subtext;
-   font-size: 15px;
+   font-size: 16px;
 }
 .welcome-meta {
    color: @fg_overlay;
    font-size: 12px;
+}
+.welcome-page {
+   padding: 48px 48px 56px 48px;
+   min-width: 640px;
+}
+.welcome-feature {
+   background-color: @bg_mantle;
+   border: 1px solid alpha(@fg_text, 0.07);
+   border-radius: 20px;
+   padding: 22px 24px 18px 24px;
+}
+.welcome-feature-title {
+   color: @fg_text;
+   font-size: 18px;
+   font-weight: 700;
+   letter-spacing: -0.3px;
+}
+.welcome-feature-body {
+   color: @fg_subtext;
+   font-size: 15px;
+}
+.welcome-link {
+   background-image: none;
+   background-color: alpha(@fg_text, 0.05);
+   color: @fg_text;
+   border: none;
+   border-radius: 999px;
+   padding: 8px 16px;
+   font-size: 13px;
+   font-weight: 600;
+   box-shadow: none;
+   margin-top: 6px;
+}
+.welcome-link:hover {
+   background-color: alpha(@fg_text, 0.09);
+}
+.welcome-badge {
+   min-width: 116px;
+   min-height: 116px;
+   padding: 18px 16px;
+   border-radius: 999px;
+   background-color: @bg_mantle;
+   border: 1px solid alpha(@fg_text, 0.08);
+}
+.welcome-badge-value {
+   color: @fg_text;
+   font-size: 32px;
+   font-weight: 700;
+   letter-spacing: -1px;
+}
+.welcome-badge-label {
+   color: @fg_subtext;
+   font-size: 12px;
+   font-weight: 600;
+}
+.subject-grid {
+   padding: 8px 4px 24px 4px;
+}
+.subject-tile {
+   background-image: none;
+   background-color: @bg_mantle;
+   color: @fg_text;
+   border: 1px solid alpha(@fg_text, 0.08);
+   border-radius: 20px;
+   padding: 22px 16px 18px 16px;
+   min-width: 196px;
+   box-shadow: none;
+   transition: background-color 120ms ease, border-color 120ms ease;
+}
+.subject-tile:hover {
+   background-image: none;
+   border-color: alpha(@fg_text, 0.22);
+}
+.subject-tile.open:hover {
+   border-color: @accent;
+}
+.subject-tile.locked {
+   opacity: 0.48;
+}
+.subject-name {
+   color: @fg_text;
+   font-size: 13px;
+   font-weight: 600;
 }
 
 /* Small all-caps-ish section markers. */
@@ -189,7 +280,7 @@ tooltip {
    background-color: mix(@bg_base, @bg_surface0, 0.55);
    background-image: none;
    border: 1px solid alpha(@fg_text, 0.09);
-   border-radius: 12px;
+   border-radius: 20px;
    color: @fg_text;
    box-shadow: none;
 }
@@ -217,7 +308,7 @@ tooltip {
 .sent-group {
    background-color: alpha(@fg_text, 0.04);
    border: 1px solid alpha(@fg_text, 0.09);
-   border-radius: 12px;
+   border-radius: 20px;
    padding: 12px;
 }
 .sent-group.ok {
@@ -255,9 +346,9 @@ popover > contents,
    color: @on_accent;
    font-size: 15px;
    font-weight: 600;
-   padding: 10px 22px;
+   padding: 12px 28px;
    border: none;
-   border-radius: 8px;
+   border-radius: 999px;
    box-shadow: none;
    transition: background-color 120ms ease;
 }
@@ -309,7 +400,7 @@ popover > contents,
    background-color: mix(@bg_base, @bg_surface0, 0.7);
    color: @fg_text;
    border: 1px solid alpha(@fg_text, 0.12);
-   border-radius: 8px;
+   border-radius: 999px;
    padding: 7px 14px;
    font-size: 14px;
    font-weight: 500;
@@ -411,7 +502,7 @@ popover > contents,
    font-weight: 600;
    padding: 14px 16px;
    border: 2px solid transparent;
-   border-radius: 12px;
+   border-radius: 20px;
    box-shadow: none;
    transition: border-color 120ms ease, opacity 120ms ease;
 }
@@ -519,7 +610,7 @@ combobox.answer-wrong button {
    background-color: @accent;
    border-color: @accent;
    color: @on_accent;
-   box-shadow: 0 0 0 4px alpha(@accent, 0.2);
+   box-shadow: none;
 }
 .unit-node.locked {
    background-color: @locked_bg;
@@ -543,7 +634,7 @@ combobox.answer-wrong button {
    border-color: shade(@success, 1.15);
 }
 .unit-node.current:hover {
-   box-shadow: 0 0 0 5px alpha(@accent, 0.3);
+   box-shadow: none;
 }
 .unit-node:focus,
 .unit-node:focus-visible,
@@ -762,7 +853,7 @@ flowboxchild {
    background-color: @accent;
    color: @on_accent;
    border: none;
-   border-radius: 8px;
+   border-radius: 999px;
    padding: 5px 14px;
    font-size: 13px;
    font-weight: 600;
@@ -846,9 +937,9 @@ flowboxchild {
 }
 .stats-metric-value {
    color: @fg_text;
-   font-size: 24px;
+   font-size: 32px;
    font-weight: 700;
-   letter-spacing: -0.5px;
+   letter-spacing: -1px;
 }
 .stats-metric-label {
    margin-top: 2px;
