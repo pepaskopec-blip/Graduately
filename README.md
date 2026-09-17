@@ -139,6 +139,24 @@ are required:
 Progress and settings are saved next to the AppImage / `.app` / unzipped
 folder in a `progress/` directory.
 
+#### Installers
+
+Each release also ships a small installer that contains no application of its
+own: it downloads the newest build when you run it, so the file never goes out
+of date. Once installed, the app keeps itself up to date on its own — it checks
+shortly after startup and offers the update in a banner, and there is a manual
+check under **Settings → Updates**.
+
+| Platform | Asset | How to run |
+| -------- | ----- | ---------- |
+| macOS (Apple Silicon) | `maturita-installer-macos.zip` | Unzip, then double-click the `.command` file |
+| Windows (x64) | `maturita-installer-windows.cmd` | Double-click the file |
+| Linux (x86_64) | `maturita-installer-linux.sh` | `sh maturita-installer-linux.sh` |
+
+The builds are not code-signed, so the first launch needs one extra step:
+on macOS right-click the installer and pick **Open**, and on Windows choose
+**More info → Run anyway** if SmartScreen appears.
+
 To cut a release yourself (needs a GitHub remote with Actions enabled):
 
 ```bash
@@ -599,6 +617,24 @@ při pushi tagu `v*`. Kompilátor ani vývojové balíčky GTK nejsou potřeba:
 
 Postup a nastavení se ukládají vedle AppImage / `.app` / rozbalené složky
 do adresáře `progress/`.
+
+#### Instalátory
+
+Ke každému releasu vychází i malý instalátor, který samotnou aplikaci
+neobsahuje: nejnovější build si stáhne až při spuštění, takže soubor nikdy
+nezestárne. Nainstalovaná aplikace se pak udržuje aktuální sama — chvíli po
+startu zkontroluje nové verze a nabídne je v pruhu nahoře, ruční kontrola je
+v **Nastavení → Aktualizace**.
+
+| Platforma | Soubor | Spuštění |
+| --------- | ------ | -------- |
+| macOS (Apple Silicon) | `maturita-installer-macos.zip` | Rozbalit a dvojklik na soubor `.command` |
+| Windows (x64) | `maturita-installer-windows.cmd` | Dvojklik na soubor |
+| Linux (x86_64) | `maturita-installer-linux.sh` | `sh maturita-installer-linux.sh` |
+
+Buildy nejsou podepsané, takže první spuštění chce jeden krok navíc: na macOS
+klikněte na instalátor pravým tlačítkem a zvolte **Otevřít**, na Windows při
+hlášce SmartScreenu **Další informace → Přesto spustit**.
 
 Vytvoření releasu (GitHub remote s Actions):
 

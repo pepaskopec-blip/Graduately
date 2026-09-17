@@ -111,6 +111,17 @@ jobs:
           path: release-assets
           merge-multiple: true
 
+      # The installers carry no application: each downloads the newest release
+      # when the user runs it. The macOS one is zipped because a release asset
+      # loses its executable bit, which a .command needs to be double-clicked.
+      - name: Collect installers
+        run: |
+          cp installers/maturita-installer-linux.sh release-assets/
+          cp installers/maturita-installer-windows.cmd release-assets/
+          chmod +x installers/maturita-installer-macos.command
+          (cd installers && zip -q ../release-assets/maturita-installer-macos.zip \
+             maturita-installer-macos.command)
+
       - name: List assets
         run: find release-assets -type f -print
 
@@ -121,6 +132,9 @@ jobs:
             release-assets/maturita-linux-*.AppImage
             release-assets/maturita-windows-x64.zip
             release-assets/maturita-macos-*.zip
+            release-assets/maturita-installer-macos.zip
+            release-assets/maturita-installer-windows.cmd
+            release-assets/maturita-installer-linux.sh
           generate_release_notes: true
           fail_on_unmatched_files: true
         env:

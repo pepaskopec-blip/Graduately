@@ -63,6 +63,9 @@ assets/icons/
 # Kernel Module Compile Results
 *.mod*
 *.cmd
+# The rule above targets kernel build artifacts such as .foo.o.cmd; the
+# Windows installer is a source file that has to be tracked.
+!installers/*.cmd
 .tmp_versions/
 modules.order
 Module.symvers
