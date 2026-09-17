@@ -221,6 +221,19 @@ const TrEntry tr_ui[] = {
     {"stats_ex_fmt", "%d / %d", "%d / %d"},
     {"stats_pct_fmt", "%d %%", "%d %%"},
     {"stats_units_fmt", "%d / %d", "%d / %d"},
+    {"search", "Hledat", "Search"},
+    {"search_placeholder", "Hledat předmět, lekci nebo cvičení",
+     "Search a subject, lesson or exercise"},
+    {"search_empty", "Nic se nenašlo", "No matches"},
+    {"search_hint", "Zkuste předmět, lekci nebo název cvičení",
+     "Try a subject, lesson or exercise name"},
+    {"search_subject", "Předmět", "Subject"},
+    {"search_unit", "Jednotka", "Unit"},
+    {"search_lesson", "Lekce", "Lesson"},
+    {"search_exercise", "Cvičení", "Exercise"},
+    {"search_book", "Četba", "Reading"},
+    {"search_page", "Stránka", "Page"},
+    {"search_home", "Úvod", "Welcome"},
     {"subjects_title", "Předměty", "Subjects"},
     {"subjects_sub", "Otevřený předmět spustí učební cestu. Zamčené zatím jen čekají.",
      "An open subject opens its path. Locked ones are placeholders for now."},
@@ -1519,4 +1532,5 @@ void apply_language(void) {
     update_apply_lang();
     net_lessons_apply_lang();
     hw_lessons_apply_lang();
+    search_apply_lang();
 }

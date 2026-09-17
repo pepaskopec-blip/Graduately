@@ -803,6 +803,8 @@ void draw_settings_icon(GtkDrawingArea *area, cairo_t *cr,
                                int width, int height, gpointer data);
 void draw_stats_icon(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data);
+void draw_search_icon(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer data);
 GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
                                 double r, double g, double b, int px);
 void setup_portable_paths(void);
@@ -1120,7 +1122,13 @@ GtkWidget *make_mode_chip(const char *label, ColorMode mode,
 GtkWidget *make_theme_card(ThemeId id, GtkToggleButton *group);
 void on_settings_clicked(GtkButton *button, gpointer user_data);
 GtkWidget *build_stats_button(void);
+GtkWidget *build_search_button(void);
 GtkWidget *build_settings_button(void);
+void search_attach(GtkOverlay *overlay);
+void search_open(void);
+void search_close(void);
+gboolean search_is_open(void);
+void search_apply_lang(void);
 void settings_open(void);
 void unit_meta_init(void);
 void unit_configure(int idx, const char *const *names, int n);

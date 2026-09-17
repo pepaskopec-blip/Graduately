@@ -63,7 +63,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Technické vybavení** — 3 lekce (architektura, historie, bit/byte)
 - **Český jazyk a literatura** — mluvnice (20 cvičení) a maturitní četba
   (1984, Spalovač mrtvol); literatura je zatím zamčená
-- statistiky, 10 témat, tmavý/světlý režim, čeština/angličtina
+- statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
 - ukončení: `Cmd/Super+Q` nebo `Alt+F4`
 
 ### Použití
@@ -71,7 +71,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 1. **Pokračuj** otevře mapu předmětů.
 2. Otevřený předmět (vlajka, Wi‑Fi, čip, česká vlajka) vede na učební cestu.
 3. Uzly cvičení / lekcí otevřou obsah; zamčené nic nedělají.
-4. **Statistiky** (graf) a **Nastavení** (ozubené kolo) jsou vpravo nahoře.
+4. **Hledat** (lupa), **Statistiky** (graf) a **Nastavení** (ozubené kolo) jsou vpravo nahoře.
 
 ### Sestavení ze zdroje
 
@@ -200,7 +200,7 @@ Intel Mac, another architecture, or hacking on the code →
 - **Computer hardware** — 3 lessons (architecture, history, bit/byte)
 - **Czech language** — grammar (20 exercises) and required reading
   (1984, Spalovač mrtvol); literature theory is still locked
-- statistics, 10 palettes, dark/light mode, Czech/English
+- statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
 - quit with `Cmd/Super+Q` or `Alt+F4`
 
 ### Usage
@@ -208,7 +208,7 @@ Intel Mac, another architecture, or hacking on the code →
 1. **Continue** opens the subject map.
 2. An open subject (flag, Wi‑Fi, chip, Czech flag) opens its path.
 3. Exercise / lesson nodes open content; locked nodes do nothing.
-4. **Statistics** (chart) and **Settings** (gear) sit in the top-right.
+4. **Search** (magnifier), **Statistics** (chart) and **Settings** (gear) sit in the top-right.
 
 ### Build from source
 

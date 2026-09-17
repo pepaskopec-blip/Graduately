@@ -87,6 +87,18 @@ gboolean on_window_key_pressed(GtkEventControllerKey *controller,
         return GDK_EVENT_STOP;
     }
 
+    if (search_is_open() && keyval == GDK_KEY_Escape) {
+        search_close();
+        return GDK_EVENT_STOP;
+    }
+
+    if ((keyval == GDK_KEY_k || keyval == GDK_KEY_K ||
+         keyval == GDK_KEY_f || keyval == GDK_KEY_F) &&
+        (state & (GDK_CONTROL_MASK | GDK_SUPER_MASK | GDK_META_MASK)) != 0) {
+        search_open();
+        return GDK_EVENT_STOP;
+    }
+
     return GDK_EVENT_PROPAGATE;
 }
 

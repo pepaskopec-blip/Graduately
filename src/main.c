@@ -468,6 +468,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     apply_theme();
     gtk_header_bar_pack_end(GTK_HEADER_BAR(headerbar), build_settings_button());
     gtk_header_bar_pack_end(GTK_HEADER_BAR(headerbar), build_stats_button());
+    gtk_header_bar_pack_end(GTK_HEADER_BAR(headerbar), build_search_button());
 
     main_stack = GTK_STACK(gtk_stack_new());
     gtk_stack_set_transition_type(GTK_STACK(main_stack),
@@ -477,11 +478,14 @@ void activate(GtkApplication *app, gpointer user_data) {
      * something to report, so it never shifts the layout unprompted. */
     {
         GtkWidget *root = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        GtkWidget *overlay = gtk_overlay_new();
 
         gtk_box_append(GTK_BOX(root), build_update_banner());
         gtk_widget_set_vexpand(GTK_WIDGET(main_stack), TRUE);
         gtk_box_append(GTK_BOX(root), GTK_WIDGET(main_stack));
-        gtk_window_set_child(window, root);
+        gtk_overlay_set_child(GTK_OVERLAY(overlay), root);
+        gtk_window_set_child(window, overlay);
+        search_attach(GTK_OVERLAY(overlay));
     }
 
     welcome_page = build_welcome_page();

@@ -450,6 +450,30 @@ void draw_stats_icon(GtkDrawingArea *area, cairo_t *cr,
     }
 }
 
+void draw_search_icon(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer data) {
+    GtkWidget *color_w = data ? GTK_WIDGET(data)
+                              : gtk_widget_get_parent(GTK_WIDGET(area));
+    GdkRGBA color;
+    double cx = width / 2.0 - 1.4;
+    double cy = height / 2.0 - 1.4;
+    double r = MIN(width, height) * 0.28;
+
+    (void)area;
+    gtk_style_context_get_color(gtk_widget_get_style_context(color_w), &color);
+    cairo_set_source_rgb(cr, color.red, color.green, color.blue);
+    cairo_set_line_width(cr, 1.7);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+
+    cairo_new_sub_path(cr);
+    cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
+    cairo_stroke(cr);
+
+    cairo_move_to(cr, cx + r * 0.72, cy + r * 0.72);
+    cairo_line_to(cr, cx + r * 1.55, cy + r * 1.55);
+    cairo_stroke(cr);
+}
+
 GtkWidget *icon_area_new(GtkDrawingAreaDrawFunc fn,
                                 double r, double g, double b, int px) {
     Rgb *col = g_new(Rgb, 1);

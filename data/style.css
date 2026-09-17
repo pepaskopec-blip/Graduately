@@ -57,6 +57,7 @@ tooltip {
 .btn-primary:focus-visible,
 .back-btn:focus-visible,
 .settings-btn:focus-visible,
+.search-hit:focus-visible,
 .pill:focus-visible,
 .chip:focus-visible,
 .group-btn:focus-visible,
@@ -1038,6 +1039,53 @@ flowboxchild {
 }
 .stats-subject-bar {
    margin-top: 6px;
+}
+
+.search-scrim {
+   background-color: alpha(@bg_crust, 0.46);
+}
+.search-card {
+   background-color: @bg_surface0;
+   border: 1px solid alpha(@fg_text, 0.10);
+   border-radius: 20px;
+   padding: 16px;
+   min-width: 520px;
+}
+.search-entry {
+   min-height: 40px;
+   font-size: 16px;
+}
+.search-empty {
+   color: @fg_subtext;
+   font-size: 14px;
+   padding: 18px 8px 8px;
+}
+.search-results {
+   background-color: transparent;
+   background-image: none;
+   border: none;
+}
+.search-results row {
+   border-radius: 12px;
+   margin-bottom: 4px;
+   background-color: transparent;
+}
+.search-results row:hover,
+.search-results row:selected {
+   background-color: alpha(@fg_text, 0.07);
+}
+.search-hit-title {
+   color: @fg_text;
+   font-size: 16px;
+   font-weight: 600;
+}
+.search-hit-sub {
+   color: @fg_subtext;
+   font-size: 13px;
+}
+.search-hit-locked .search-hit-title,
+.search-hit-locked .search-hit-sub {
+   opacity: 0.62;
 }
 
 /* no-scale */
