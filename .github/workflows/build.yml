@@ -158,11 +158,11 @@ jobs:
 
       - name: Collect installers
         run: |
+          chmod +x installers/pack-installer-zips.sh
+          ./installers/pack-installer-zips.sh
           cp installers/maturita-installer-linux.sh staged/
           cp installers/maturita-installer-windows.cmd staged/
-          chmod +x installers/maturita-installer-macos.command
-          (cd installers && zip -q ../staged/maturita-installer-macos.zip \
-             maturita-installer-macos.command)
+          cp installers/maturita-installer-*.zip staged/
           # The updater downloads this to see whether it is behind.
           echo "${{ github.sha }}" > staged/VERSION
 

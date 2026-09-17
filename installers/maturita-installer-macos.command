@@ -5,7 +5,7 @@
 # raw.githubusercontent.com, so this script looks up the tip of `builds`
 # and downloads that commit — not a stale zip from the last five minutes.
 #
-# Double-click the file to run it. The app updates itself from then on.
+# Double-click the bundled .app (or this file). No Terminal commands needed.
 
 set -eu
 
@@ -13,10 +13,41 @@ REPO="pepaskopec-blip/maturita.c"
 BRANCH="builds"
 ASSET="maturita-macos-arm64.zip"
 
-say() { printf '%s\n' "$*"; }
-die() { printf '\nError: %s\n' "$*" >&2; printf 'Press Return to close. '; read -r _; exit 1; }
+# An .app has no TTY; show dialogs so a regular user never needs Terminal.
+GUI=0
+if [ ! -t 1 ] && command -v osascript >/dev/null 2>&1; then
+    GUI=1
+fi
 
-# Atom feed of the builds branch: curl only, no GitHub API token.
+say() { printf '%s\n' "$*"; }
+
+gui_dialog() {
+    osascript - "$1" <<'APPLESCRIPT'
+on run argv
+    display dialog (item 1 of argv) with title "maturita.C" buttons {"OK"} default button 1
+end run
+APPLESCRIPT
+}
+
+gui_alert() {
+    osascript - "$1" <<'APPLESCRIPT'
+on run argv
+    display dialog (item 1 of argv) with title "maturita.C" buttons {"OK"} default button 1 with icon stop
+end run
+APPLESCRIPT
+}
+
+die() {
+    if [ "$GUI" = 1 ]; then
+        gui_alert "$*" >/dev/null || true
+    else
+        printf '\nChyba: %s\n' "$*" >&2
+        printf 'Stiskněte Return. '
+        read -r _ || true
+    fi
+    exit 1
+}
+
 builds_sha() {
     curl -fsSL --max-time 20 \
         "https://github.com/$REPO/commits/$BRANCH.atom" |
@@ -24,16 +55,24 @@ builds_sha() {
         head -n 1
 }
 
-say "Installing maturita.C"
-say "---------------------"
+if [ "$GUI" = 1 ]; then
+    if ! osascript <<'APPLESCRIPT'
+display dialog "Nainstalovat maturita.C do složky Aplikace? Stáhne se aktuální verze." with title "maturita.C" buttons {"Zrušit", "Instalovat"} default button "Instalovat"
+APPLESCRIPT
+    then
+        exit 0
+    fi
+else
+    say "Installing maturita.C"
+    say "---------------------"
+fi
 
 arch=$(uname -m)
 if [ "$arch" != "arm64" ]; then
-    die "this build is for Apple Silicon Macs, but this one reports '$arch'.
-Build from source instead: https://github.com/$REPO"
+    die "Tento instalátor je pro Mac s čipem Apple. Tento počítač hlásí '$arch'."
 fi
 
-command -v curl >/dev/null 2>&1 || die "curl was not found."
+command -v curl >/dev/null 2>&1 || die "Na Macu chybí curl, bez něj nejde nic stáhnout."
 
 if [ -w /Applications ]; then
     dest_dir="/Applications"
@@ -45,24 +84,33 @@ fi
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
-say "Looking up the latest build..."
+if [ "$GUI" = 1 ]; then
+    osascript <<'APPLESCRIPT' >/dev/null || true
+display notification "Stahuji aktuální verzi…" with title "maturita.C"
+APPLESCRIPT
+fi
+
 sha=$(builds_sha)
-[ ${#sha} -eq 40 ] || die "could not find the latest build on GitHub."
+[ ${#sha} -eq 40 ] || die "Nepodařilo se najít aktuální verzi na GitHubu."
 URL="https://raw.githubusercontent.com/$REPO/$sha/$ASSET"
 
-say "Downloading build $(printf '%.7s' "$sha")..."
-curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
-    die "the download failed. Check your internet connection."
+if [ "$GUI" = 1 ]; then
+    curl -fsSL --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
+        die "Stažení se nezdařilo. Zkontrolujte internet a zkuste to znovu."
+else
+    say "Downloading build $(printf '%.7s' "$sha")..."
+    curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
+        die "Stažení se nezdařilo. Zkontrolujte internet a zkuste to znovu."
+    say "Unpacking..."
+fi
 
-say "Unpacking..."
 mkdir -p "$tmp/new"
-ditto -x -k "$tmp/$ASSET" "$tmp/new" || die "the archive could not be unpacked."
+ditto -x -k "$tmp/$ASSET" "$tmp/new" || die "Archiv se nepodařilo rozbalit."
 
 app=$(find "$tmp/new" -maxdepth 1 -name '*.app' -print -quit)
-[ -n "$app" ] || die "the archive did not contain an application."
+[ -n "$app" ] || die "V archivu není žádná aplikace."
 name=$(basename "$app")
 
-say "Installing to $dest_dir/$name"
 rm -rf "$dest_dir/$name.old"
 if [ -e "$dest_dir/$name" ]; then
     mv "$dest_dir/$name" "$dest_dir/$name.old"
@@ -71,11 +119,15 @@ if mv "$app" "$dest_dir/$name"; then
     rm -rf "$dest_dir/$name.old"
 else
     [ -e "$dest_dir/$name.old" ] && mv "$dest_dir/$name.old" "$dest_dir/$name"
-    die "could not write to $dest_dir."
+    die "Do $dest_dir se nepodařilo zapsat."
 fi
 
 xattr -cr "$dest_dir/$name" 2>/dev/null || true
 
-say ""
-say "Done. Starting the app..."
+if [ "$GUI" = 1 ]; then
+    gui_dialog "Hotovo. Aplikace se teď otevře." >/dev/null || true
+else
+    say ""
+    say "Done. Starting the app..."
+fi
 open "$dest_dir/$name"

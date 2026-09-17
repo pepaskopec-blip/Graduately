@@ -5,7 +5,7 @@
 # raw.githubusercontent.com, so this script looks up the tip of `builds`
 # and downloads that commit — not a stale AppImage from the last five minutes.
 #
-# Run it with:  sh maturita-installer-linux.sh
+# Double-click the file (or run: sh maturita-installer-linux.sh).
 # The app updates itself from then on.
 
 set -eu
@@ -20,7 +20,12 @@ DESKTOP_DIR="$HOME/.local/share/applications"
 ICON_DIR="$HOME/.local/share/icons/hicolor/512x512/apps"
 
 say() { printf '%s\n' "$*"; }
-die() { printf '\nError: %s\n' "$*" >&2; exit 1; }
+die() {
+    printf '\nError: %s\n' "$*" >&2
+    printf 'Press Enter to close. '
+    read -r _ || true
+    exit 1
+}
 
 builds_sha() {
     curl -fsSL --max-time 20 \

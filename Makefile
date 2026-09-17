@@ -107,11 +107,11 @@ bundle:
 endif
 
 # Browsers render .command/.sh/.cmd as text/plain. Rebuild these zips after
-# changing a script so the README download links stay in sync.
+# changing a script so the README download links stay in sync. The macOS zip
+# is a double-clickable .app — no Terminal, no chmod.
 installer-zips:
-	cd installers && zip -q -FS maturita-installer-macos.zip maturita-installer-macos.command
-	cd installers && zip -q -FS maturita-installer-windows.zip maturita-installer-windows.cmd
-	cd installers && zip -q -FS maturita-installer-linux.zip maturita-installer-linux.sh
+	chmod +x installers/pack-installer-zips.sh
+	./installers/pack-installer-zips.sh
 
 -include $(DEP)
 
