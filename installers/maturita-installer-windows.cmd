@@ -25,7 +25,7 @@ set "TMP_DIR=%TEMP%\maturita-installer"
 rmdir /s /q "%TMP_DIR%" 2>nul
 mkdir "%TMP_DIR%" || goto :fail_tmp
 
-echo Downloading the latest release...
+echo Downloading the latest build...
 curl -fL --progress-bar -o "%TMP_DIR%\%ASSET%" "%URL%" || goto :fail_download
 
 echo Installing to %DEST%

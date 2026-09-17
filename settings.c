@@ -4,6 +4,13 @@
 /* Settings                                                           */
 /* ------------------------------------------------------------------ */
 
+static GtkWidget *settings_popover;
+
+void settings_open(void) {
+    if (settings_popover)
+        gtk_popover_popup(GTK_POPOVER(settings_popover));
+}
+
 void draw_theme_swatch(GtkDrawingArea *area, cairo_t *cr,
                               int width, int height, gpointer data) {
     ThemeId id = (ThemeId)GPOINTER_TO_INT(data);
@@ -215,6 +222,7 @@ GtkWidget *build_settings_button(void) {
                              G_CALLBACK(gtk_widget_queue_draw), icon);
 
     popover = gtk_popover_new();
+    settings_popover = popover;
     gtk_widget_add_css_class(popover, "settings-popover");
     gtk_popover_set_has_arrow(GTK_POPOVER(popover), TRUE);
     gtk_popover_set_position(GTK_POPOVER(popover), GTK_POS_BOTTOM);

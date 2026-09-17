@@ -366,6 +366,7 @@ GtkWidget *build_hwmap_page(void) {
     g_signal_connect(va, "notify::page-size",
                      G_CALLBACK(hw_adjust_notify), NULL);
 
+    hw_apply_layout();
     hw_relayout_later();
     refresh_hw_completion_ui();
 

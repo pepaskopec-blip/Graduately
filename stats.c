@@ -69,6 +69,8 @@ void refresh_stats_ui(void) {
             progress_for_net(&all);
         else if (s == HW_SUBJ)
             progress_for_hw(&all);
+        else if (s == CZ_SUBJ)
+            progress_for_mluvnice(&all);
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
     }
@@ -106,6 +108,8 @@ void refresh_stats_ui(void) {
             progress_for_net(&sp);
         else if (s == HW_SUBJ)
             progress_for_hw(&sp);
+        else if (s == CZ_SUBJ)
+            progress_for_mluvnice(&sp);
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
         if (has_content) {

@@ -687,6 +687,7 @@ GtkWidget *build_netmap_page(void) {
     g_signal_connect(va, "notify::page-size",
                      G_CALLBACK(net_adjust_notify), NULL);
 
+    net_apply_layout();
     net_relayout_later();
     refresh_net_completion_ui();
 

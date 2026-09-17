@@ -71,6 +71,19 @@ void mluvnice_init(void) {
     unit_load_progress(&mluv_unit);
 }
 
+void progress_for_mluvnice(ProgressSum *out) {
+    int d;
+
+    if (!out || mluv_unit.n_ex <= 0)
+        return;
+    d = unit_done_count(&mluv_unit);
+    out->total_ex += mluv_unit.n_ex;
+    out->open_units += 1;
+    out->done_ex += d;
+    if (d == mluv_unit.n_ex)
+        out->done_units++;
+}
+
 void mluvnice_refresh_ui(void) {
     for (int i = 0; i < mluv_unit.n_ex; i++) {
         GtkWidget *btn = mluv_unit.ex_cells[i];

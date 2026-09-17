@@ -62,19 +62,27 @@ void czech_rail_theme_reset(void) {
         gtk_widget_queue_draw(cz_rail);
 }
 
-static GtkWidget *cz_make_node(int index) {
+static GtkWidget *cz_make_node(int index, gboolean locked) {
     GtkWidget *btn;
-    GtkWidget *label;
 
     btn = gtk_button_new();
     gtk_widget_add_css_class(btn, "unit-node");
-    gtk_widget_add_css_class(btn, "current");
     gtk_widget_set_can_focus(btn, FALSE);
     gtk_widget_set_size_request(btn, (int)CZ_BUBBLE, (int)CZ_BUBBLE);
 
-    label = gtk_label_new(cz_initials[index]);
-    gtk_widget_add_css_class(label, "unit-number");
-    gtk_button_set_child(GTK_BUTTON(btn), label);
+    if (locked) {
+        gtk_widget_add_css_class(btn, "locked");
+        gtk_widget_set_sensitive(btn, FALSE);
+        gtk_button_set_child(GTK_BUTTON(btn),
+                             icon_area_new(draw_lock_icon,
+                                           0.3451, 0.3569, 0.4392, 26));
+    } else {
+        GtkWidget *label = gtk_label_new(cz_initials[index]);
+
+        gtk_widget_add_css_class(btn, "current");
+        gtk_widget_add_css_class(label, "unit-number");
+        gtk_button_set_child(GTK_BUTTON(btn), label);
+    }
 
     return btn;
 }
@@ -126,7 +134,9 @@ GtkWidget *build_czechmap_page(void) {
     cz_rail = rail;
 
     for (int i = 0; i < CZ_NODES; i++) {
-        GtkWidget *btn = cz_make_node(i);
+        /* Literatura has no lessons yet; keep the node visible but locked. */
+        gboolean locked = (i == 0);
+        GtkWidget *btn = cz_make_node(i, locked);
         GtkWidget *name = gtk_label_new(NULL);
 
         if (i == 2) {
@@ -146,6 +156,8 @@ GtkWidget *build_czechmap_page(void) {
         gtk_label_set_wrap(GTK_LABEL(name), TRUE);
         gtk_widget_add_css_class(name, "unit-name");
         gtk_widget_add_css_class(name, "cz-label");
+        if (locked)
+            gtk_widget_add_css_class(name, "unit-name-locked");
 
         gtk_fixed_put(GTK_FIXED(fixed), btn, 0, 0);
         gtk_fixed_put(GTK_FIXED(fixed), name, 0, 0);

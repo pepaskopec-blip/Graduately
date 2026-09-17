@@ -401,6 +401,7 @@ GtkWidget *build_roadmap_page(void) {
     g_signal_connect(va, "notify::page-size",
                      G_CALLBACK(road_adjust_notify), NULL);
 
+    road_apply_layout();
     road_relayout_later();
 
     return page;

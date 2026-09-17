@@ -310,6 +310,129 @@ static void setup_window_icon(GtkWindow *window) {
                      G_CALLBACK(on_window_realize_icon), NULL);
 }
 
+static gboolean open_settings_later(gpointer data) {
+    (void)data;
+    settings_open();
+    return G_SOURCE_REMOVE;
+}
+
+static gboolean save_window_png(const char *path) {
+    GtkWidget *widget;
+    int width, height;
+    GdkPaintable *paintable;
+    GtkSnapshot *snapshot;
+    GskRenderNode *node;
+    cairo_surface_t *surface;
+    cairo_t *cr;
+    cairo_status_t st;
+
+    if (!main_window || !path || !path[0])
+        return FALSE;
+
+    widget = GTK_WIDGET(main_window);
+    width = gtk_widget_get_width(widget);
+    height = gtk_widget_get_height(widget);
+    if (width < 80 || height < 80)
+        return FALSE;
+
+    paintable = gtk_widget_paintable_new(widget);
+    snapshot = gtk_snapshot_new();
+    gdk_paintable_snapshot(paintable, snapshot, width, height);
+    node = gtk_snapshot_free_to_node(snapshot);
+    g_object_unref(paintable);
+    if (!node)
+        return FALSE;
+
+    surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cr = cairo_create(surface);
+    gsk_render_node_draw(node, cr);
+    gsk_render_node_unref(node);
+    cairo_destroy(cr);
+    st = cairo_surface_write_to_png(surface, path);
+    cairo_surface_destroy(surface);
+    return st == CAIRO_STATUS_SUCCESS;
+}
+
+static void smoke_quit(int code) {
+    GtkApplication *app = main_window
+        ? gtk_window_get_application(main_window) : NULL;
+
+    if (app)
+        g_application_quit(G_APPLICATION(app));
+    else
+        exit(code);
+}
+
+static gboolean shot_later(gpointer data) {
+    const char *path = g_getenv("MATURITA_SHOT");
+    int *tries = data;
+
+    if (!save_window_png(path)) {
+        if (tries && *tries < 20) {
+            (*tries)++;
+            return G_SOURCE_CONTINUE;
+        }
+        g_printerr("MATURITA_SHOT: could not capture window\n");
+        smoke_quit(1);
+        return G_SOURCE_REMOVE;
+    }
+    if (g_getenv("MATURITA_SHOT_QUIT"))
+        smoke_quit(0);
+    return G_SOURCE_REMOVE;
+}
+
+static gboolean run_smoke_test(gpointer data) {
+    static const char *pages[] = {
+        "welcome", "subjects", "roadmap", "stats",
+        "netyears", "netmap", "hwmap", "czechmap",
+        "mluvnice", "readinglist",
+        "cetba1984", "cetba1984quiz", "cetba1984dej",
+        "cetbaFuks", "cetbaFuksQuiz", "cetbaFuksDej",
+        "hwunit1", "hwex1", "hwunit2", "hwex2", "hwunit3", "hwex3",
+        "unit1", "unit2", "unit3",
+        "u1e1", "u1e13", "u2e1", "u2e19", "u3e1", "u3e15",
+        "u1vocab", "u2vocab", "u3vocab",
+        "mluve1", "mluve20",
+        "netunit1", "netex1", "netunit10", "netex10",
+        "netunit27", "netex27",
+        NULL
+    };
+    const char *report = g_getenv("MATURITA_SMOKE");
+    FILE *f;
+    int missing = 0;
+    int i;
+
+    (void)data;
+    f = report && report[0] ? fopen(report, "w") : stdout;
+    if (!f) {
+        g_printerr("MATURITA_SMOKE: cannot write %s\n", report);
+        smoke_quit(1);
+        return G_SOURCE_REMOVE;
+    }
+
+    fprintf(f, "commit=%s\n", APP_COMMIT);
+    fprintf(f, "css=%s\n",
+            g_file_test(CSS_FILE, G_FILE_TEST_IS_REGULAR) ? "ok" : "MISSING");
+    fprintf(f, "progress_dir=%s\n", app_progress_dir ? app_progress_dir : "?");
+
+    for (i = 0; pages[i]; i++) {
+        GtkWidget *child = gtk_stack_get_child_by_name(main_stack, pages[i]);
+
+        if (child) {
+            fprintf(f, "OK %s\n", pages[i]);
+        } else {
+            fprintf(f, "MISSING %s\n", pages[i]);
+            missing++;
+        }
+    }
+
+    fprintf(f, "missing=%d\n", missing);
+    if (f != stdout)
+        fclose(f);
+    smoke_quit(missing ? 1 : 0);
+    return G_SOURCE_REMOVE;
+}
+
 void activate(GtkApplication *app, gpointer user_data) {
     GtkWindow *window;
     GtkWidget *headerbar;
@@ -463,7 +586,18 @@ void activate(GtkApplication *app, gpointer user_data) {
         }
     }
 
-    gtk_stack_set_visible_child_name(main_stack, "welcome");
+    {
+        const char *start = g_getenv("MATURITA_PAGE");
+        const char *size = g_getenv("MATURITA_SIZE");
+        int w, h;
+
+        if (start && *start)
+            gtk_stack_set_visible_child_name(main_stack, start);
+        else
+            gtk_stack_set_visible_child_name(main_stack, "welcome");
+        if (size && sscanf(size, "%dx%d", &w, &h) == 2)
+            gtk_window_set_default_size(window, w, h);
+    }
 
     refresh_completion_ui();
 
@@ -482,6 +616,18 @@ void activate(GtkApplication *app, gpointer user_data) {
     update_init();
 
     gtk_window_present(window);
+
+    if (g_getenv("MATURITA_SETTINGS"))
+        g_timeout_add(350, open_settings_later, NULL);
+    if (g_getenv("MATURITA_SMOKE"))
+        g_timeout_add(200, run_smoke_test, NULL);
+    if (g_getenv("MATURITA_SHOT")) {
+        static int shot_tries;
+
+        shot_tries = 0;
+        g_timeout_add(g_getenv("MATURITA_SETTINGS") ? 700 : 400,
+                      shot_later, &shot_tries);
+    }
 }
 
 int main(int argc, char **argv) {

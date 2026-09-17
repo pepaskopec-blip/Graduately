@@ -41,7 +41,7 @@ mkdir -p "$DEST_DIR"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
-say "Downloading the latest release..."
+say "Downloading the latest build..."
 curl -fL --progress-bar -o "$tmp/$ASSET" "$URL" ||
     die "the download failed. Check your internet connection."
 
