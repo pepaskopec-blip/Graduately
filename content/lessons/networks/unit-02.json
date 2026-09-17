@@ -1,0 +1,173 @@
+{
+  "id": "unit-02",
+  "subject": "networks",
+  "number": 2,
+  "titleKey": "net_unit2",
+  "subtitleKey": "net_unit2_sub",
+  "slides": [
+    {
+      "kicker": "1 / 5   •   Jednotky",
+      "title": "Bit, byte a počítačová síť",
+      "tip": "Tip: 1 B = 8 b  →  2⁸ = 256 možných hodnot",
+      "lines": [
+        "Bit (1 b): základní jednotka informace – 0 nebo 1.",
+        "0 = nevede proud, 1 = vede proud.",
+        "Byte (1 B): 1 B = 8 b, nabývá 256 hodnot.",
+        "Počítačová síť: propojení uzlů (PC a dalších prvků).",
+        "Vyžaduje hardwarové i softwarové prostředky."
+      ]
+    },
+    {
+      "kicker": "2 / 5   •   Propojení",
+      "title": "Trvalé, dočasné a důvody zapojení",
+      "tip": null,
+      "lines": [
+        "Trvalé propojení: kabely – síť zůstává připojená i po přenosu.",
+        "Dočasné propojení: modem, Wi‑Fi – po přenosu se odpojuje.",
+        "Důvody zapojení do sítě:",
+        "sdílení dat (nutná podpora aplikací)",
+        "sdílení HW (tiskárny, disky) a SW (databáze)",
+        "vyšší spolehlivost, bezpečnost (přístupová práva)",
+        "komunikace (e‑mail, hlas)"
+      ]
+    },
+    {
+      "kicker": "3 / 5   •   Pojmy",
+      "title": "Terminologie sítí",
+      "tip": "Architektura = topologie + standard",
+      "lines": [
+        "Uzel: jakékoli zařízení (stanice, server, aktivní prvek).",
+        "Topologie: způsob propojení (hvězda, kruh, sběrnice).",
+        "Standard: normy pro zpracování dat.",
+        "Architektura: topologie + standard."
+      ]
+    },
+    {
+      "kicker": "4 / 5   •   Rozlehlost",
+      "title": "WAN, MAN a LAN",
+      "tip": null,
+      "lines": [
+        "WAN: rozsáhlé sítě (státy, kontinenty), např. internet.",
+        "MAN: městské sítě – propojují lokální sítě.",
+        "LAN: lokální sítě (budova), kabeláž v řádu km,",
+        "jednotná architektura."
+      ]
+    },
+    {
+      "kicker": "5 / 5   •   Uzly",
+      "title": "Server, stanice a peer‑to‑peer",
+      "tip": null,
+      "lines": [
+        "Server: nadřazený, řídící, poskytuje služby, vyšší výkon.",
+        "Pracovní stanice: pro uživatele, jednodušší konfigurace.",
+        "Peer‑to‑peer: síť bez serverů – jen stanice,",
+        "které sdílejí data a tiskárny."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz2_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Kolik bitů má jeden byte?",
+          "options": [
+            "4",
+            "8",
+            "16",
+            "32"
+          ],
+          "correct": 1,
+          "hint": "1 B = 8 b"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Kolik různých hodnot nabývá jeden byte?",
+          "options": [
+            "128",
+            "255",
+            "256",
+            "512"
+          ],
+          "correct": 2,
+          "hint": "2⁸ = 256 hodnot (0–255)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co je trvalé propojení sítě?",
+          "options": [
+            "Modem",
+            "Wi‑Fi",
+            "Kabely",
+            "Bluetooth"
+          ],
+          "correct": 2,
+          "hint": "Kabely – síť zůstává připojená i po přenosu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co označuje zkratka WAN?",
+          "options": [
+            "Lokální síť v budově",
+            "Městskou síť",
+            "Rozsáhlou síť (státy, kontinenty)",
+            "Bezdrátovou síť"
+          ],
+          "correct": 2,
+          "hint": "WAN = Wide Area Network, např. internet"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co je topologie sítě?",
+          "options": [
+            "Norma pro zpracování dat",
+            "Způsob propojení uzlů",
+            "Název serveru",
+            "Rychlost přenosu"
+          ],
+          "correct": 1,
+          "hint": "Např. hvězda, kruh, sběrnice"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Architektura sítě je:",
+          "options": [
+            "Jen topologie",
+            "Jen standard",
+            "Topologie + standard",
+            "Pouze typ kabelu"
+          ],
+          "correct": 2,
+          "hint": "Architektura = topologie + standard"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Peer‑to‑peer síť znamená:",
+          "options": [
+            "Síť s jedním výkonným serverem",
+            "Síť bez serverů – stanice sdílejí data",
+            "Jen internetovou síť",
+            "Síť pouze s tiskárnami"
+          ],
+          "correct": 1,
+          "hint": "Bez centrálního serveru – stanice si sdílejí data a tiskárny"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Server v síti je:",
+          "options": [
+            "Jednoduchá stanice pro uživatele",
+            "Nadřazený uzel poskytující služby",
+            "Jen aktivní prvek kabeláže",
+            "Dočasné Wi‑Fi připojení"
+          ],
+          "correct": 1,
+          "hint": "Server řídí a poskytuje služby, má vyšší výkon"
+        }
+      ]
+    }
+  ]
+}

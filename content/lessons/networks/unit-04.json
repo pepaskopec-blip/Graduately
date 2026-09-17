@@ -1,0 +1,156 @@
+{
+  "id": "unit-04",
+  "subject": "networks",
+  "number": 4,
+  "titleKey": "net_unit4",
+  "subtitleKey": "net_unit4_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Přenos",
+      "title": "Paralelní a sériový přenos",
+      "tip": null,
+      "lines": [
+        "Paralelní: více bitů současně po více vodičích.",
+        "Problém: přeslechy (rušení) při delších kabelech",
+        "a vysokých frekvencích.",
+        "Sériový: bit po bitu po jednom vodiči.",
+        "Umožňuje vyšší frekvence i délky – celkově rychlejší."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Časování",
+      "title": "Asynchronní přenos",
+      "tip": "Tip: Start-bit = 0, Stop-bit = 1",
+      "lines": [
+        "Data se posílají v blocích (znaky 5–8 bitů).",
+        "Start-bit (0) synchronizuje začátek znaku.",
+        "Stop-bit (1) znak ukončuje."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Časování",
+      "title": "Synchronní přenos",
+      "tip": null,
+      "lines": [
+        "Řízeno společným hodinovým signálem.",
+        "Přesné časování mezi vysílačem a přijímačem."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Zabezpečení",
+      "title": "Parita, checksum a CRC",
+      "tip": "Tip: CRC je nejbezpečnější z těchto tří metod",
+      "lines": [
+        "Parita: nejslabší – přidá bit pro sudý/lichý počet jedniček.",
+        "Checksum: součet znaků jako dvojkových čísel.",
+        "CRC (cyklické kódy): nejbezpečnější,",
+        "počítá se z jednotlivých bitů v bloku."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz4_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Paralelní přenos znamená:",
+          "options": [
+            "Bit po bitu po jednom vodiči",
+            "Více bitů současně po více vodičích",
+            "Jen Wi‑Fi bez kabelů",
+            "Jen cloudové ukládání"
+          ],
+          "correct": 1,
+          "hint": "Více bitů najednou po více vodičích; problém jsou přeslechy"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Hlavní problém paralelního přenosu při delších kabelech je:",
+          "options": [
+            "Absence serveru",
+            "Přeslechy (rušení)",
+            "Chybějící SaaS",
+            "Peer‑to‑peer režim"
+          ],
+          "correct": 1,
+          "hint": "Přeslechy vznikají při delších kabelech a vysokých frekvencích"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Sériový přenos je oproti paralelnímu celkově:",
+          "options": [
+            "Vždy pomalejší",
+            "Rychlejší díky vyšším frekvencím a délkám",
+            "Jen pro tiskárny",
+            "Bez jakéhokoli kabelu"
+          ],
+          "correct": 1,
+          "hint": "Bit po bitu po jednom vodiči – vyšší frekvence i délky"
+        },
+        {
+          "kind": "choice",
+          "prompt": "V asynchronním přenosu start-bit má hodnotu:",
+          "options": [
+            "1",
+            "0",
+            "8",
+            "255"
+          ],
+          "correct": 1,
+          "hint": "Start-bit (0) synchronizuje, Stop-bit (1) ukončuje znak"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Synchronní přenos je řízen:",
+          "options": [
+            "Jen stop-bitem",
+            "Společným hodinovým signálem",
+            "Jen paritou",
+            "Jen checksumem"
+          ],
+          "correct": 1,
+          "hint": "Řízeno společným hodinovým signálem a přesným časováním"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Nejslabší metoda zabezpečení z uvedených je:",
+          "options": [
+            "CRC",
+            "Checksum",
+            "Parita",
+            "Mainframe"
+          ],
+          "correct": 2,
+          "hint": "Nejslabší – přidá bit pro sudý/lichý počet jedniček"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Checksum spočívá v:",
+          "options": [
+            "Přidání start-bitu",
+            "Součtu znaků jako dvojkových čísel",
+            "Jen Wi‑Fi šifrování",
+            "Výměně kabelů"
+          ],
+          "correct": 1,
+          "hint": "Součet znaků jako dvojkových čísel"
+        },
+        {
+          "kind": "choice",
+          "prompt": "CRC (cyklické kódy) je z uvedených metod:",
+          "options": [
+            "Nejslabší",
+            "Stejně slabá jako parita",
+            "Nejbezpečnější",
+            "Jen pro paralelní přenos"
+          ],
+          "correct": 2,
+          "hint": "Nejbezpečnější – počítá se z jednotlivých bitů v bloku"
+        }
+      ]
+    }
+  ]
+}

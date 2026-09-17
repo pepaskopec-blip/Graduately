@@ -27,6 +27,7 @@ jobs:
       - name: Build AppImage
         env:
           VERSION: ${{ github.ref_name }}
+        working-directory: desktop
         run: |
           chmod +x scripts/bundle-linux.sh
           ./scripts/bundle-linux.sh
@@ -35,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: maturita-linux
-          path: dist/maturita-linux-*.AppImage
+          path: desktop/dist/maturita-linux-*.AppImage
 
   windows:
     name: Windows zip
@@ -59,6 +60,7 @@ jobs:
             mingw-w64-ucrt-x86_64-make
 
       - name: Build and bundle
+        working-directory: desktop
         run: |
           make bundle
           cd dist
@@ -71,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: maturita-windows
-          path: dist-out/maturita-windows-x64.zip
+          path: desktop/dist-out/maturita-windows-x64.zip
 
   macos:
     name: macOS app
@@ -86,6 +88,7 @@ jobs:
       - name: Build .app zip
         env:
           VERSION: ${{ github.ref_name }}
+        working-directory: desktop
         run: |
           chmod +x scripts/bundle-macos.sh
           ./scripts/bundle-macos.sh
@@ -94,7 +97,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: maturita-macos
-          path: dist/maturita-macos-*.zip
+          path: desktop/dist/maturita-macos-*.zip
 
   publish:
     name: Publish GitHub Release

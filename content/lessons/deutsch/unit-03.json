@@ -1,0 +1,2731 @@
+{
+  "id": "unit-03",
+  "subject": "deutsch",
+  "number": 3,
+  "title": {
+    "cs": "Bei uns zu Hause",
+    "en": "Bei uns zu Hause"
+  },
+  "slides": [],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Familienpaare",
+      "subtitleKey": "sub3_pair",
+      "example": "Beispiel: der Vater ↔ die Mutter",
+      "pool": [
+        "die Cousine",
+        "die Tante",
+        "die Oma",
+        "der Bruder",
+        "die Freundin",
+        "der Sohn"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "der Cousin",
+            ""
+          ],
+          "answers": [
+            "die Cousine"
+          ],
+          "input": "select",
+          "label": "1.",
+          "meaning": "bratranec / sestřenice"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "der Onkel",
+            ""
+          ],
+          "answers": [
+            "die Tante"
+          ],
+          "input": "select",
+          "label": "2.",
+          "meaning": "strýc / teta"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "der Opa",
+            ""
+          ],
+          "answers": [
+            "die Oma"
+          ],
+          "input": "select",
+          "label": "3.",
+          "meaning": "dědeček / babička"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "die Schwester",
+            ""
+          ],
+          "answers": [
+            "der Bruder"
+          ],
+          "input": "select",
+          "label": "4.",
+          "meaning": "sestra / bratr"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "der Freund",
+            ""
+          ],
+          "answers": [
+            "die Freundin"
+          ],
+          "input": "select",
+          "label": "5.",
+          "meaning": "kamarád / kamarádka"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "die Tochter",
+            ""
+          ],
+          "answers": [
+            "der Sohn"
+          ],
+          "input": "select",
+          "label": "6.",
+          "meaning": "dcera / syn"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "mein oder dein",
+      "subtitleKey": "sub3_poss",
+      "example": "Beispiel: Ist das dein Vater? – Nein, das ist nicht mein Vater. Das ist sein Onkel.",
+      "pool": [
+        "dein",
+        "deine",
+        "mein",
+        "meine",
+        "sein",
+        "seine"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Ist das ",
+            " Mutter? – Nein, das ist nicht ",
+            " Mutter."
+          ],
+          "answers": [
+            "deine",
+            "meine"
+          ],
+          "input": "select",
+          "label": "2.",
+          "meaning": "Je to tvoje matka? – Ne, to není moje matka. To je jeho teta."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das ist ",
+            " Tante."
+          ],
+          "answers": [
+            "seine"
+          ],
+          "input": "select",
+          "meaning": "Je to tvoje matka? – Ne, to není moje matka. To je jeho teta."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ist das ",
+            " Bruder? – Nein, das ist nicht ",
+            " Bruder."
+          ],
+          "answers": [
+            "dein",
+            "mein"
+          ],
+          "input": "select",
+          "label": "3.",
+          "meaning": "Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das ist ",
+            " Cousin."
+          ],
+          "answers": [
+            "sein"
+          ],
+          "input": "select",
+          "meaning": "Je to tvůj bratr? – Ne, to není můj bratr. To je jeho bratranec."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sind das ",
+            " Eltern? – Nein, das sind nicht ",
+            " Eltern. Das sind die Eltern von Markus."
+          ],
+          "answers": [
+            "deine",
+            "meine"
+          ],
+          "input": "select",
+          "label": "4.",
+          "meaning": "Jsou to tvoji rodiče? – Ne, to nejsou moji rodiče. To jsou rodiče Markuse."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "ein / kein",
+      "subtitleKey": "sub3_haustier",
+      "example": "Beispiel: Hast du eine Katze? – Nein, ich habe keine Katze. Ich habe einen Hund.",
+      "pool": [
+        "ein",
+        "eine",
+        "einen",
+        "kein",
+        "keine",
+        "keinen"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Hast du ",
+            " Hamster? – Nein, ich habe ",
+            " Hamster."
+          ],
+          "answers": [
+            "einen",
+            "keinen"
+          ],
+          "input": "select",
+          "label": "2."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich habe ",
+            " Schildkröte."
+          ],
+          "answers": [
+            "eine"
+          ],
+          "input": "select",
+          "meaning": "Máš křečka? – Ne, nemám křečka. Mám želvu."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Hast du ",
+            " Pferd? – Nein, ich habe ",
+            " Pferd."
+          ],
+          "answers": [
+            "ein",
+            "kein"
+          ],
+          "input": "select",
+          "label": "3."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich habe ",
+            " Kaninchen."
+          ],
+          "answers": [
+            "ein"
+          ],
+          "input": "select",
+          "meaning": "Máš koně? – Ne, nemám koně. Mám králíka."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Hast du ",
+            " Fisch? – Nein, ich habe ",
+            " Fisch."
+          ],
+          "answers": [
+            "einen",
+            "keinen"
+          ],
+          "input": "select",
+          "label": "4."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich habe ",
+            " Vogel."
+          ],
+          "answers": [
+            "einen"
+          ],
+          "input": "select",
+          "meaning": "Máš rybu? – Ne, nemám rybu. Mám ptáka."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Hast du ",
+            " Meerschweinchen? – Nein, ich habe ",
+            " Meerschweinchen."
+          ],
+          "answers": [
+            "ein",
+            "kein"
+          ],
+          "input": "select",
+          "label": "5."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich habe ",
+            " Wellensittich."
+          ],
+          "answers": [
+            "einen"
+          ],
+          "input": "select",
+          "meaning": "Máš morče? – Ne, nemám morče. Mám andulku."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Lückentext",
+      "subtitleKey": "sub3_buchst",
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Wir hab",
+            "n Fre",
+            "nde in Öster",
+            "ich. Sie wo",
+            "nen in Wien."
+          ],
+          "answers": [
+            "e",
+            "u",
+            "re",
+            "h"
+          ],
+          "input": "text",
+          "letters": true,
+          "meaning": "Máme přátele v Rakousku. Bydlí ve Vídni.",
+          "glosses": [
+            "haben — mít",
+            "Freunde — přátelé",
+            "Österreich — Rakousko",
+            "wohnen — bydlet"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie hei",
+            "en Elfriede und Jiri. Sie haben auch ",
+            "inder."
+          ],
+          "answers": [
+            "ß",
+            "K"
+          ],
+          "input": "text",
+          "letters": true,
+          "meaning": "Jmenují se Elfriede a Jiří. Mají také děti.",
+          "glosses": [
+            "heißen — jmenovat se",
+            "Kinder — děti"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ihr S",
+            "hn heißt Philipp und ihr",
+            " Tochter heißt Sabine."
+          ],
+          "answers": [
+            "o",
+            "e"
+          ],
+          "input": "text",
+          "letters": true,
+          "meaning": "Jejich syn se jmenuje Philipp a jejich dcera Sabine.",
+          "glosses": [
+            "Sohn — syn",
+            "ihre — jejich"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Die Famili",
+            " re",
+            "st gern."
+          ],
+          "answers": [
+            "e",
+            "i"
+          ],
+          "input": "text",
+          "letters": true,
+          "meaning": "Rodina ráda cestuje.",
+          "glosses": [
+            "Familie — rodina",
+            "reist — cestuje"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ist o",
+            "t bei uns zu Bes",
+            "ch in Tsche",
+            "ien."
+          ],
+          "answers": [
+            "f",
+            "u",
+            "ch"
+          ],
+          "input": "text",
+          "letters": true,
+          "meaning": "Často je u nás na návštěvě v Česku.",
+          "glosses": [
+            "oft — často",
+            "Besuch — návštěva",
+            "Tschechien — Česko"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Die Kinder ler",
+            "en auch Tsche",
+            "isch."
+          ],
+          "answers": [
+            "n",
+            "ch"
+          ],
+          "input": "text",
+          "letters": true,
+          "meaning": "Děti se učí také česky.",
+          "glosses": [
+            "lernen — učit se",
+            "Tschechisch — čeština"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Marcos Familie",
+      "subtitleKey": "sub3_marco",
+      "note": "Tanten | Job | Vater | Ferien | Zwillinge | Eltern | Kroatien",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "Wir haben eine Männer-Wohngemeinschaft: Mein ________ Johann (50), Ivo (16) und ich.",
+          "answers": [
+            "vater"
+          ],
+          "meaning": "Máme mužskou domácnost: Můj otec Johann (50), Ivo (16) a já."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ivo und ich sind gleich alt – wir sind nämlich ________.",
+          "answers": [
+            "zwillinge"
+          ],
+          "meaning": "Ivo a já jsme stejně staří – jsme totiž dvojčata."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Jetzt wohnen wir in Hannover, unser Vater hat hier einen neuen ________.",
+          "answers": [
+            "job"
+          ],
+          "meaning": "Náš otec tu má novou práci."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Unsere ________ sind geschieden.",
+          "answers": [
+            "eltern"
+          ],
+          "meaning": "Naši rodiče jsou rozvedení."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Unsere Mutter Maja (50) lebt in Wien, aber sie kommt aus ________.",
+          "answers": [
+            "kroatien"
+          ],
+          "meaning": "Naše matka Maja (50) žije ve Vídni, ale pochází z Chorvatska."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Wir haben viele Onkel, ________, Cousinen und Cousins in Kroatien.",
+          "answers": [
+            "tanten"
+          ],
+          "meaning": "Máme v Chorvatsku hodně strýců, tet, sestřenic a bratranců."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Wir sehen sie manchmal in den ________.",
+          "answers": [
+            "ferien"
+          ],
+          "meaning": "Vídáme je někdy o prázdninách."
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Sortieren",
+      "subtitleKey": "sub3_sort",
+      "items": [
+        {
+          "kind": "assign",
+          "groups": [
+            "Familienmitglieder",
+            "Haustiere"
+          ],
+          "items": [
+            {
+              "emoji": null,
+              "label": "die Oma",
+              "group": 0,
+              "meaning": "babička"
+            },
+            {
+              "emoji": null,
+              "label": "der Bruder",
+              "group": 0,
+              "meaning": "bratr"
+            },
+            {
+              "emoji": null,
+              "label": "der Opa",
+              "group": 0,
+              "meaning": "dědeček"
+            },
+            {
+              "emoji": null,
+              "label": "die Tochter",
+              "group": 0,
+              "meaning": "dcera"
+            },
+            {
+              "emoji": null,
+              "label": "die Tante",
+              "group": 0,
+              "meaning": "teta"
+            },
+            {
+              "emoji": null,
+              "label": "der Hamster",
+              "group": 1,
+              "meaning": "křeček"
+            },
+            {
+              "emoji": null,
+              "label": "das Pferd",
+              "group": 1,
+              "meaning": "kůň"
+            },
+            {
+              "emoji": null,
+              "label": "die Katze",
+              "group": 1,
+              "meaning": "kočka"
+            },
+            {
+              "emoji": null,
+              "label": "der Hund",
+              "group": 1,
+              "meaning": "pes"
+            },
+            {
+              "emoji": null,
+              "label": "der Wellensittich",
+              "group": 1,
+              "meaning": "andulka"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Possessivtabelle",
+      "subtitleKey": "sub3_tabelle",
+      "items": [
+        {
+          "kind": "table",
+          "columns": [
+            "ich",
+            "du",
+            "er",
+            "sie",
+            "es",
+            "wir",
+            "ihr",
+            "sie / Sie"
+          ],
+          "rows": [
+            "der Garten",
+            "die Idee",
+            "das Fest",
+            "die Geschwister"
+          ],
+          "answers": [
+            [
+              {
+                "value": "mein"
+              },
+              {
+                "value": "dein"
+              },
+              {
+                "value": "sein"
+              },
+              {
+                "value": "ihr"
+              },
+              {
+                "value": "sein"
+              },
+              {
+                "value": "unser"
+              },
+              {
+                "value": "euer"
+              },
+              {
+                "value": "ihr"
+              }
+            ],
+            [
+              {
+                "value": "meine"
+              },
+              {
+                "value": "deine"
+              },
+              {
+                "value": "seine"
+              },
+              {
+                "value": "ihre"
+              },
+              {
+                "value": "seine"
+              },
+              {
+                "value": "unsere"
+              },
+              {
+                "value": "eure"
+              },
+              {
+                "value": "ihre"
+              }
+            ],
+            [
+              {
+                "value": "mein"
+              },
+              {
+                "value": "dein"
+              },
+              {
+                "value": "sein"
+              },
+              {
+                "value": "ihr"
+              },
+              {
+                "value": "sein"
+              },
+              {
+                "value": "unser"
+              },
+              {
+                "value": "euer"
+              },
+              {
+                "value": "ihr"
+              }
+            ],
+            [
+              {
+                "value": "meine"
+              },
+              {
+                "value": "deine"
+              },
+              {
+                "value": "seine"
+              },
+              {
+                "value": "ihre"
+              },
+              {
+                "value": "seine"
+              },
+              {
+                "value": "unsere"
+              },
+              {
+                "value": "eure"
+              },
+              {
+                "value": "ihre"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Akkusativ",
+      "subtitleKey": "sub3_akk",
+      "example": "Beispiel: die Inliner (ich) → Ich brauche meine Inliner.",
+      "pool": [
+        "mein",
+        "meine",
+        "meinen",
+        "dein",
+        "deine",
+        "deinen",
+        "sein",
+        "seine",
+        "seinen",
+        "ihr",
+        "ihre",
+        "ihren",
+        "unser",
+        "unsere",
+        "unseren",
+        "euer",
+        "eure",
+        "euren"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "das Handy → Du brauchst ",
+            " Handy."
+          ],
+          "answers": [
+            "dein"
+          ],
+          "input": "select",
+          "label": "2.",
+          "meaning": "Potřebuješ svůj mobil.",
+          "glosses": [
+            "u3g_dein"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "das Pferd → Er hat ",
+            " Pferd."
+          ],
+          "answers": [
+            "sein"
+          ],
+          "input": "select",
+          "label": "3.",
+          "meaning": "Má svého koně.",
+          "glosses": [
+            "u3g_sein"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "die Party → Sie macht ",
+            " Party."
+          ],
+          "answers": [
+            "ihre"
+          ],
+          "input": "select",
+          "label": "4.",
+          "meaning": "Dělá svou párty.",
+          "glosses": [
+            "u3g_ihr_sie"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "der Lehrer → Es fragt ",
+            " Lehrer."
+          ],
+          "answers": [
+            "seinen"
+          ],
+          "input": "select",
+          "label": "5.",
+          "meaning": "Ptá se svého učitele.",
+          "glosses": [
+            "u3g_sein_es"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "das Wochenendhaus → Wir besuchen ",
+            " Wochenendhaus."
+          ],
+          "answers": [
+            "unser"
+          ],
+          "input": "select",
+          "label": "6.",
+          "meaning": "Navštěvujeme náš víkendový dům.",
+          "glosses": [
+            "u3g_unser"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "der Hund → Ihr seht ",
+            " Hund."
+          ],
+          "answers": [
+            "euren"
+          ],
+          "input": "select",
+          "label": "7.",
+          "meaning": "Vy vidíte svého psa.",
+          "glosses": [
+            "u3g_euer"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "die Instrumente → Sie haben ",
+            " Instrumente."
+          ],
+          "answers": [
+            "ihre"
+          ],
+          "input": "select",
+          "label": "8.",
+          "meaning": "Mají své nástroje.",
+          "glosses": [
+            "u3g_ihr_sie_pl"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "kein / nicht",
+      "subtitleKey": "sub3_nicht",
+      "pool": [
+        "kein",
+        "keine",
+        "keinen",
+        "nicht"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "● Sprichst du Spanisch?  ○ Nein, ich spreche ",
+            " Spanisch."
+          ],
+          "answers": [
+            "kein"
+          ],
+          "input": "select",
+          "label": "1.",
+          "meaning": "Mluvíš španělsky? – Ne, nemluvím španělsky."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "● Hast du einen Bruder?  ○ Nein, ich habe ",
+            " Bruder."
+          ],
+          "answers": [
+            "keinen"
+          ],
+          "input": "select",
+          "label": "2.",
+          "meaning": "Máš bratra? – Ne, nemám bratra."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "● Gibt es in Opava einen Zoo?  ○ Nein, in Opava gibt es ",
+            " Zoo."
+          ],
+          "answers": [
+            "keinen"
+          ],
+          "input": "select",
+          "label": "3.",
+          "meaning": "Je v Opavě zoo? – Ne, v Opavě žádná zoo není."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "● Gehst du ins Schwimmbad?  ○ Nein, ich gehe ",
+            " ins Schwimmbad."
+          ],
+          "answers": [
+            "nicht"
+          ],
+          "input": "select",
+          "label": "4.",
+          "meaning": "Jdeš do bazénu? – Ne, do bazénu nejdu."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "● Wandert er gern?  ○ Nein, er wandert ",
+            " gern."
+          ],
+          "answers": [
+            "nicht"
+          ],
+          "input": "select",
+          "label": "5.",
+          "meaning": "Rád chodí na túry? – Ne, nerad chodí na túry."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "● Besuchst du heute ein Schloss?  ○ Nein, heute besuche ich ",
+            " Schloss."
+          ],
+          "answers": [
+            "kein"
+          ],
+          "input": "select",
+          "label": "6.",
+          "meaning": "Navštívíš dnes zámek? – Ne, dnes nenavštívím žádný zámek."
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Sätze bauen",
+      "subtitleKey": "sub3_satz",
+      "items": [
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Sie",
+            "haben",
+            "eine",
+            "Schildkröte",
+            "."
+          ],
+          "meaning": "Mají želvu."
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Was",
+            "macht",
+            "deine",
+            "Freundin",
+            "am",
+            "Wochenende?"
+          ],
+          "meaning": "Co dělá tvoje kamarádka o víkendu?"
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Mein",
+            "Vater",
+            "ist",
+            "Lehrer",
+            "von",
+            "Beruf."
+          ],
+          "meaning": "Můj otec je povoláním učitel."
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Seid",
+            "ihr",
+            "viele",
+            "zu",
+            "Hause?"
+          ],
+          "meaning": "Je vás doma hodně?"
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Julia",
+            "stellt",
+            "ihren",
+            "Hund",
+            "Trixi",
+            "vor."
+          ],
+          "meaning": "Julie představuje svého psa Trixiho."
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Was siehst du?",
+      "subtitleKey": "sub3_sehen",
+      "example": "Beispiel: Ich sehe eine Burg. / Ich sehe ein Schloss.",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "Ein altes Gebäude aus dem Mittelalter. Es steht auf einem Berg.",
+          "answers": [
+            "burg",
+            "schloss"
+          ],
+          "substring": true,
+          "meaning": "Vidím hrad / zámek.",
+          "model": "Ich sehe eine Burg. / Ich sehe ein Schloss."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Wasser, Bäume und Berge. Es ist sehr ruhig.",
+          "answers": [
+            "see"
+          ],
+          "substring": true,
+          "meaning": "Vidím jezero.",
+          "model": "Ich sehe einen See."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Eine Frau, ein Mann und zwei Kinder essen zusammen.",
+          "answers": [
+            "familie"
+          ],
+          "substring": true,
+          "meaning": "Vidím rodinu.",
+          "model": "Ich sehe eine Familie."
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Wem gehört das?",
+      "subtitleKey": "sub3_wem",
+      "pool": [
+        "mein",
+        "meine",
+        "dein",
+        "deine",
+        "sein",
+        "seine",
+        "ihr",
+        "ihre",
+        "unser",
+        "unsere",
+        "euer",
+        "eure"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Das ist Tom. → Das ist ",
+            " Handy."
+          ],
+          "answers": [
+            "sein"
+          ],
+          "input": "select",
+          "label": "1.",
+          "meaning": "To je jeho mobil."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das ist Maria. → Das ist ",
+            " Kaninchen."
+          ],
+          "answers": [
+            "ihr"
+          ],
+          "input": "select",
+          "label": "2.",
+          "meaning": "To je její králík."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das sind Max und Lisa. → Das sind ",
+            " Inliner."
+          ],
+          "answers": [
+            "ihre"
+          ],
+          "input": "select",
+          "label": "3.",
+          "meaning": "To jsou jejich brusle."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das ist Frau Berger. → Das ist ",
+            " Kuchen."
+          ],
+          "answers": [
+            "ihr"
+          ],
+          "input": "select",
+          "label": "4.",
+          "meaning": "To je její dort."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das ist Herr Müller. → Das ist ",
+            " Haus."
+          ],
+          "answers": [
+            "sein"
+          ],
+          "input": "select",
+          "label": "5.",
+          "meaning": "To je jeho dům."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Das sind die Schmidts. → Das sind ",
+            " Kinder."
+          ],
+          "answers": [
+            "ihre"
+          ],
+          "input": "select",
+          "label": "6.",
+          "meaning": "To jsou jejich děti."
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Es gibt …",
+      "subtitleKey": "sub3_gibt",
+      "pool": [
+        "ein",
+        "eine",
+        "einen"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "(das Konzert) → Es gibt ",
+            " Konzert."
+          ],
+          "answers": [
+            "ein"
+          ],
+          "input": "select",
+          "label": "1.",
+          "meaning": "Je tu koncert."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "(die Ausstellung) → Es gibt ",
+            " Ausstellung."
+          ],
+          "answers": [
+            "eine"
+          ],
+          "input": "select",
+          "label": "2.",
+          "meaning": "Je tu výstava."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "(das Sportfest) → Es gibt ",
+            " Sportfest."
+          ],
+          "answers": [
+            "ein"
+          ],
+          "input": "select",
+          "label": "3.",
+          "meaning": "Je tu sportovní slavnost."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "(das Familientreffen) → Es gibt ",
+            " Familientreffen."
+          ],
+          "answers": [
+            "ein"
+          ],
+          "input": "select",
+          "label": "4.",
+          "meaning": "Je tu rodinné setkání."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "(die Theatervorstellung) → Es gibt ",
+            " Theatervorstellung."
+          ],
+          "answers": [
+            "eine"
+          ],
+          "input": "select",
+          "label": "5.",
+          "meaning": "Je tu divadelní představení."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "(der Flohmarkt) → Es gibt ",
+            " Flohmarkt."
+          ],
+          "answers": [
+            "einen"
+          ],
+          "input": "select",
+          "label": "6.",
+          "meaning": "Je tu bleší trh."
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "title": "Beschreiben",
+      "subtitleKey": "sub3_saetze",
+      "example": "Beispiel: Ich sehe einen Jungen. Er liest ein Buch.",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "Eine Frau fährt Fahrrad.  →  Ich sehe ________.",
+          "answers": [
+            "eine frau",
+            "frau"
+          ],
+          "substring": true,
+          "meaning": "Vidím ženu.",
+          "model": "Ich sehe eine Frau."
+        },
+        {
+          "kind": "typed",
+          "prompt": "→ Sie ________.",
+          "answers": [
+            "sie fährt fahrrad",
+            "sie fährt",
+            "fährt fahrrad",
+            "fährt"
+          ],
+          "substring": true,
+          "meaning": "Jezdí na kole.",
+          "model": "Sie fährt Fahrrad."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ein Mann wandert im Wald.  →  Ich sehe ________.",
+          "answers": [
+            "einen mann",
+            "mann"
+          ],
+          "substring": true,
+          "meaning": "Vidím muže.",
+          "model": "Ich sehe einen Mann."
+        },
+        {
+          "kind": "typed",
+          "prompt": "→ Er ________.",
+          "answers": [
+            "er wandert im wald",
+            "er wandert",
+            "wandert im wald",
+            "wandert"
+          ],
+          "substring": true,
+          "meaning": "Chodí po lese.",
+          "model": "Er wandert im Wald."
+        },
+        {
+          "kind": "typed",
+          "prompt": "Zwei Kinder spielen Fußball.  →  Ich sehe ________.",
+          "answers": [
+            "zwei kinder",
+            "kinder"
+          ],
+          "substring": true,
+          "meaning": "Vidím dvě děti.",
+          "model": "Ich sehe zwei Kinder."
+        },
+        {
+          "kind": "typed",
+          "prompt": "→ Sie ________.",
+          "answers": [
+            "sie spielen fußball",
+            "sie spielen fussball",
+            "spielen fußball",
+            "spielen fussball",
+            "spielen"
+          ],
+          "substring": true,
+          "meaning": "Hrají fotbal.",
+          "model": "Sie spielen Fußball."
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "title": "Wochenende",
+      "subtitleKey": "sub3_wochen",
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Meine Gr",
+            "eltern fahr",
+            " ins Wochen",
+            "haus."
+          ],
+          "answers": [
+            "oß",
+            "en",
+            "end"
+          ],
+          "input": "text",
+          "letters": true,
+          "label": "1.",
+          "meaning": "Moji prarodiče jedou o víkendu do víkendového domu."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Mein ",
+            "ter und mein",
+            " Mutter besuch",
+            " ein Konz",
+            "t."
+          ],
+          "answers": [
+            "Va",
+            "e",
+            "en",
+            "er"
+          ],
+          "input": "text",
+          "letters": true,
+          "label": "2.",
+          "meaning": "Můj otec a moje matka navštíví koncert."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Mein",
+            " Sch",
+            "ester geh",
+            " ins K",
+            "o."
+          ],
+          "answers": [
+            "e",
+            "w",
+            "t",
+            "in"
+          ],
+          "input": "text",
+          "letters": true,
+          "label": "3.",
+          "meaning": "Moje sestra jde do kina."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Mein Bru",
+            "er f",
+            "rt an ",
+            "nen S",
+            "."
+          ],
+          "answers": [
+            "d",
+            "äh",
+            "ei",
+            "ee"
+          ],
+          "input": "text",
+          "letters": true,
+          "label": "4.",
+          "meaning": "Můj bratr jede k jezeru."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Und ich? Ich besuch",
+            " ein Einka",
+            "zentrum."
+          ],
+          "answers": [
+            "e",
+            "ufs"
+          ],
+          "input": "text",
+          "letters": true,
+          "label": "5.",
+          "meaning": "A já? Navštívím obchodní centrum."
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    {
+      "header": "Strana 32",
+      "items": [
+        {
+          "prompt": "die Geburtstagsparty, -s",
+          "answers": [
+            "narozeninová slavnost",
+            "narozeninová oslava",
+            "birthday party"
+          ],
+          "meaning": "narozeninová slavnost"
+        },
+        {
+          "prompt": "das Haustier, -e",
+          "answers": [
+            "domácí zvíře",
+            "domácí mazlíček",
+            "pet"
+          ],
+          "meaning": "domácí zvíře"
+        }
+      ]
+    },
+    {
+      "header": "Strana 33",
+      "items": [
+        {
+          "prompt": "die Aktivität, -en",
+          "answers": [
+            "aktivita",
+            "činnost",
+            "activity"
+          ],
+          "meaning": "aktivita"
+        },
+        {
+          "prompt": "der Stammbaum, Stammbäume",
+          "answers": [
+            "rodokmen",
+            "family tree"
+          ],
+          "meaning": "rodokmen"
+        }
+      ]
+    },
+    {
+      "header": "Strana 34",
+      "items": [
+        {
+          "prompt": "der Bruder, Brüder",
+          "answers": [
+            "bratr",
+            "brother"
+          ],
+          "meaning": "bratr"
+        },
+        {
+          "prompt": "der Cousin, -s",
+          "answers": [
+            "bratranec",
+            "cousin"
+          ],
+          "meaning": "bratranec"
+        },
+        {
+          "prompt": "die Cousine, -n",
+          "answers": [
+            "sestřenice",
+            "cousin"
+          ],
+          "meaning": "sestřenice"
+        },
+        {
+          "prompt": "die Ehefrau, -en",
+          "answers": [
+            "manželka",
+            "žena",
+            "wife"
+          ],
+          "meaning": "manželka"
+        },
+        {
+          "prompt": "der Ehemann, Ehemänner",
+          "answers": [
+            "manžel",
+            "muž",
+            "husband"
+          ],
+          "meaning": "manžel"
+        },
+        {
+          "prompt": "das Einzelkind, -er",
+          "answers": [
+            "jedináček",
+            "only child"
+          ],
+          "meaning": "jedináček"
+        },
+        {
+          "prompt": "die Eltern (mn. č.)",
+          "answers": [
+            "rodiče",
+            "parents"
+          ],
+          "meaning": "rodiče"
+        },
+        {
+          "prompt": "die Familie, -n",
+          "answers": [
+            "rodina",
+            "family"
+          ],
+          "meaning": "rodina"
+        },
+        {
+          "prompt": "feiern (Infinitiv)",
+          "answers": [
+            "slavit",
+            "oslavovat",
+            "to celebrate"
+          ],
+          "meaning": "slavit, oslavovat"
+        },
+        {
+          "prompt": "das Fest, -e",
+          "answers": [
+            "oslava",
+            "slavnost",
+            "svátek",
+            "celebration",
+            "festival"
+          ],
+          "meaning": "oslava, slavnost"
+        },
+        {
+          "prompt": "der Garten, Gärten",
+          "answers": [
+            "zahrada",
+            "garden"
+          ],
+          "meaning": "zahrada"
+        },
+        {
+          "prompt": "gehören (Infinitiv)",
+          "answers": [
+            "patřit",
+            "to belong"
+          ],
+          "meaning": "patřit"
+        },
+        {
+          "prompt": "Er gehört zur Familie.",
+          "answers": [
+            "patří k rodině",
+            "he belongs to the family"
+          ],
+          "meaning": "Patří k rodině."
+        },
+        {
+          "prompt": "geschieden",
+          "answers": [
+            "rozvedený",
+            "rozvedená",
+            "divorced"
+          ],
+          "meaning": "rozvedený"
+        },
+        {
+          "prompt": "Meine Eltern sind geschieden.",
+          "answers": [
+            "moji rodiče jsou rozvedení",
+            "my parents are divorced"
+          ],
+          "meaning": "Moji rodiče jsou rozvedení."
+        },
+        {
+          "prompt": "die Geschwister (mn. č.)",
+          "answers": [
+            "sourozenci",
+            "siblings"
+          ],
+          "meaning": "sourozenci"
+        },
+        {
+          "prompt": "gleich",
+          "answers": [
+            "stejný",
+            "rovný",
+            "same",
+            "equal"
+          ],
+          "meaning": "stejný"
+        },
+        {
+          "prompt": "groß",
+          "answers": [
+            "velký",
+            "big",
+            "large",
+            "tall"
+          ],
+          "meaning": "velký"
+        },
+        {
+          "prompt": "haben (Infinitiv)",
+          "answers": [
+            "mít",
+            "to have"
+          ],
+          "meaning": "mít"
+        },
+        {
+          "prompt": "Unser Haus hat einen großen Garten.",
+          "answers": [
+            "náš dům má velkou zahradu",
+            "our house has a big garden"
+          ],
+          "meaning": "Náš dům má velkou zahradu."
+        },
+        {
+          "prompt": "das Haus, Häuser",
+          "answers": [
+            "dům",
+            "house"
+          ],
+          "meaning": "dům"
+        },
+        {
+          "prompt": "hier",
+          "answers": [
+            "zde",
+            "tady",
+            "tu",
+            "here"
+          ],
+          "meaning": "zde, tady"
+        },
+        {
+          "prompt": "der Hund, -e",
+          "answers": [
+            "pes",
+            "dog"
+          ],
+          "meaning": "pes"
+        },
+        {
+          "prompt": "ihr, ihre, ihr",
+          "answers": [
+            "její",
+            "jejich",
+            "její, jejich",
+            "her",
+            "their"
+          ],
+          "meaning": "její"
+        },
+        {
+          "prompt": "der Iran",
+          "answers": [
+            "írán",
+            "iran"
+          ],
+          "meaning": "Írán"
+        },
+        {
+          "prompt": "der Job, -s",
+          "answers": [
+            "pracovní místo",
+            "zaměstnání",
+            "práce",
+            "job"
+          ],
+          "meaning": "(pracovní) místo, zaměstnání"
+        },
+        {
+          "prompt": "der Kater, -",
+          "answers": [
+            "kocour",
+            "tomcat"
+          ],
+          "meaning": "kocour"
+        },
+        {
+          "prompt": "lange",
+          "answers": [
+            "dlouho",
+            "long"
+          ],
+          "meaning": "dlouho"
+        },
+        {
+          "prompt": "manchmal",
+          "answers": [
+            "někdy",
+            "občas",
+            "sometimes"
+          ],
+          "meaning": "někdy, občas"
+        },
+        {
+          "prompt": "mehr",
+          "answers": [
+            "více",
+            "víc",
+            "již",
+            "more"
+          ],
+          "meaning": "více, již"
+        },
+        {
+          "prompt": "Ich bin kein Einzelkind mehr.",
+          "answers": [
+            "již nejsem jedináček",
+            "už nejsem jedináček",
+            "i am no longer an only child"
+          ],
+          "meaning": "Již nejsem jedináček."
+        },
+        {
+          "prompt": "nämlich",
+          "answers": [
+            "totiž",
+            "namely"
+          ],
+          "meaning": "totiž"
+        },
+        {
+          "prompt": "natürlich",
+          "answers": [
+            "samozřejmě",
+            "přirozeně",
+            "of course",
+            "naturally"
+          ],
+          "meaning": "samozřejmě"
+        },
+        {
+          "prompt": "neu",
+          "answers": [
+            "nový",
+            "new"
+          ],
+          "meaning": "nový"
+        },
+        {
+          "prompt": "die Oma, -s",
+          "answers": [
+            "babička",
+            "babi",
+            "grandma",
+            "grandmother"
+          ],
+          "meaning": "babička"
+        },
+        {
+          "prompt": "der Onkel, -",
+          "answers": [
+            "strýc",
+            "uncle"
+          ],
+          "meaning": "strýc"
+        },
+        {
+          "prompt": "der Opa, -s",
+          "answers": [
+            "dědeček",
+            "děda",
+            "grandpa",
+            "grandfather"
+          ],
+          "meaning": "dědeček"
+        },
+        {
+          "prompt": "die Patchworkfamilie, -n",
+          "answers": [
+            "patchworková rodina",
+            "patchwork family",
+            "blended family"
+          ],
+          "meaning": "patchworková rodina"
+        },
+        {
+          "prompt": "Persisch",
+          "answers": [
+            "perština",
+            "persky",
+            "persian"
+          ],
+          "meaning": "perština, persky"
+        },
+        {
+          "prompt": "die Person, -en",
+          "answers": [
+            "osoba",
+            "person"
+          ],
+          "meaning": "osoba"
+        },
+        {
+          "prompt": "die Schwester, -n",
+          "answers": [
+            "sestra",
+            "sister"
+          ],
+          "meaning": "sestra"
+        },
+        {
+          "prompt": "sehen (Infinitiv)",
+          "answers": [
+            "vidět",
+            "to see"
+          ],
+          "meaning": "vidět"
+        },
+        {
+          "prompt": "Wir sehen sie manchmal in den Ferien.",
+          "answers": [
+            "vídáme je občas o prázdninách",
+            "vidíme je někdy o prázdninách",
+            "we see them sometimes during the holidays"
+          ],
+          "meaning": "Vídáme je občas o prázdninách."
+        },
+        {
+          "prompt": "die Stiefmutter, Stiefmütter",
+          "answers": [
+            "nevlastní matka",
+            "macecha",
+            "stepmother"
+          ],
+          "meaning": "nevlastní matka"
+        },
+        {
+          "prompt": "die Stiefschwester, -n",
+          "answers": [
+            "nevlastní sestra",
+            "stepsister"
+          ],
+          "meaning": "nevlastní sestra"
+        },
+        {
+          "prompt": "die Tante, -n",
+          "answers": [
+            "teta",
+            "téta",
+            "aunt"
+          ],
+          "meaning": "teta"
+        },
+        {
+          "prompt": "die Tochter, Töchter",
+          "answers": [
+            "dcera",
+            "daughter"
+          ],
+          "meaning": "dcera"
+        },
+        {
+          "prompt": "tot",
+          "answers": [
+            "mrtvý",
+            "dead"
+          ],
+          "meaning": "mrtvý"
+        },
+        {
+          "prompt": "Er ist leider schon tot.",
+          "answers": [
+            "on je již bohužel mrtvý",
+            "je bohužel už mrtvý",
+            "he is unfortunately already dead"
+          ],
+          "meaning": "(On) Je již bohužel mrtvý."
+        },
+        {
+          "prompt": "typisch",
+          "answers": [
+            "typický",
+            "klasický",
+            "typical"
+          ],
+          "meaning": "typický, klasický"
+        },
+        {
+          "prompt": "unser, unsere, unser",
+          "answers": [
+            "náš",
+            "naše",
+            "our"
+          ],
+          "meaning": "náš, naše, naše"
+        },
+        {
+          "prompt": "der Vater, Väter",
+          "answers": [
+            "otec",
+            "táta",
+            "father",
+            "dad"
+          ],
+          "meaning": "otec"
+        },
+        {
+          "prompt": "verstehen sich",
+          "answers": [
+            "rozumět si",
+            "rozumí si",
+            "to get along",
+            "to understand each other"
+          ],
+          "meaning": "rozumět si"
+        },
+        {
+          "prompt": "Wir verstehen uns alle sehr gut.",
+          "answers": [
+            "všichni si moc dobře rozumíme",
+            "všichni si velmi dobře rozumíme",
+            "we all get along very well"
+          ],
+          "meaning": "Všichni si moc dobře rozumíme."
+        },
+        {
+          "prompt": "der/die Verwandte, -n",
+          "answers": [
+            "příbuzný",
+            "příbuzná",
+            "relative"
+          ],
+          "meaning": "příbuzný/příbuzná"
+        },
+        {
+          "prompt": "die Wohngemeinschaft, -en",
+          "answers": [
+            "společné bydlení",
+            "spolubydlení",
+            "flat share",
+            "shared apartment"
+          ],
+          "meaning": "společné bydlení (studentů)"
+        },
+        {
+          "prompt": "die Männer-Wohngemeinschaft",
+          "answers": [
+            "mužská domácnost",
+            "mužské spolubydlení",
+            "men's shared flat"
+          ],
+          "meaning": "mužská domácnost"
+        },
+        {
+          "prompt": "zusammen",
+          "answers": [
+            "spolu",
+            "dohromady",
+            "together"
+          ],
+          "meaning": "spolu, dohromady"
+        },
+        {
+          "prompt": "der Zwilling, -e",
+          "answers": [
+            "dvojče",
+            "dvojčata",
+            "twin",
+            "twins"
+          ],
+          "meaning": "dvojče"
+        }
+      ]
+    },
+    {
+      "header": "Strana 35",
+      "items": [
+        {
+          "prompt": "dein, deine, dein",
+          "answers": [
+            "tvůj",
+            "tvoje",
+            "your"
+          ],
+          "meaning": "tvůj, tvoje, tvoje"
+        },
+        {
+          "prompt": "euer, eure, euer",
+          "answers": [
+            "váš",
+            "vaše",
+            "your"
+          ],
+          "meaning": "váš, vaše, vaše"
+        },
+        {
+          "prompt": "ihr, ihre, ihr",
+          "answers": [
+            "jejich",
+            "její",
+            "their",
+            "her"
+          ],
+          "meaning": "jejich"
+        },
+        {
+          "prompt": "sein, seine, sein",
+          "answers": [
+            "jeho",
+            "his"
+          ],
+          "meaning": "jeho"
+        }
+      ]
+    },
+    {
+      "header": "Strana 36",
+      "items": [
+        {
+          "prompt": "bitte",
+          "answers": [
+            "prosím",
+            "please"
+          ],
+          "meaning": "prosím"
+        },
+        {
+          "prompt": "dann",
+          "answers": [
+            "tak",
+            "pak",
+            "then"
+          ],
+          "meaning": "tak, pak"
+        },
+        {
+          "prompt": "dauern (Infinitiv)",
+          "answers": [
+            "trvat",
+            "to last",
+            "to take"
+          ],
+          "meaning": "trvat"
+        },
+        {
+          "prompt": "Die Vorbereitung dauert nicht so lange.",
+          "answers": [
+            "příprava netrvá moc dlouho",
+            "příprava netrvá tak dlouho",
+            "the preparation doesn't take that long"
+          ],
+          "meaning": "Příprava netrvá moc dlouho."
+        },
+        {
+          "prompt": "doch",
+          "answers": [
+            "přece",
+            "přeci",
+            "ale ano",
+            "yet",
+            "but"
+          ],
+          "meaning": "přece"
+        },
+        {
+          "prompt": "einladen (Infinitiv)",
+          "answers": [
+            "pozvat",
+            "zvát",
+            "to invite"
+          ],
+          "meaning": "pozvat"
+        },
+        {
+          "prompt": "Wir laden Oma und Opa ein.",
+          "answers": [
+            "pozveme babičku a dědečka",
+            "zveme babičku a dědečka",
+            "we invite grandma and grandpa"
+          ],
+          "meaning": "Pozveme babičku a dědečka."
+        },
+        {
+          "prompt": "die Feier, -n",
+          "answers": [
+            "oslava",
+            "slavnost",
+            "celebration",
+            "party"
+          ],
+          "meaning": "oslava, slavnost"
+        },
+        {
+          "prompt": "fragen (Infinitiv)",
+          "answers": [
+            "ptát se",
+            "zeptat se",
+            "to ask"
+          ],
+          "meaning": "ptát se, zeptat se"
+        },
+        {
+          "prompt": "Ich frage meine Schwester.",
+          "answers": [
+            "zeptám se své sestry",
+            "ptám se své sestry",
+            "i ask my sister"
+          ],
+          "meaning": "Zeptám se své sestry."
+        },
+        {
+          "prompt": "der Geburtstag, -e",
+          "answers": [
+            "narozeniny",
+            "birthday"
+          ],
+          "meaning": "narozeniny"
+        },
+        {
+          "prompt": "grillen (Infinitiv)",
+          "answers": [
+            "grilovat",
+            "to grill",
+            "to barbecue"
+          ],
+          "meaning": "grilovat"
+        },
+        {
+          "prompt": "die Idee, -n",
+          "answers": [
+            "nápad",
+            "myšlenka",
+            "idea"
+          ],
+          "meaning": "nápad, myšlenka"
+        },
+        {
+          "prompt": "die Köchin, -nen",
+          "answers": [
+            "kuchařka",
+            "cook",
+            "chef"
+          ],
+          "meaning": "kuchařka"
+        },
+        {
+          "prompt": "der Kuchen, -",
+          "answers": [
+            "koláč",
+            "moučník",
+            "dort",
+            "cake"
+          ],
+          "meaning": "koláč, moučník"
+        },
+        {
+          "prompt": "das Menü, -s",
+          "answers": [
+            "menu",
+            "jídelní lístek"
+          ],
+          "meaning": "menu"
+        },
+        {
+          "prompt": "5-Gänge-Menü",
+          "answers": [
+            "pětichodové menu",
+            "pětchodové menu",
+            "five-course menu"
+          ],
+          "meaning": "pětichodové menu"
+        },
+        {
+          "prompt": "ob",
+          "answers": [
+            "zda",
+            "jestli",
+            "whether",
+            "if"
+          ],
+          "meaning": "zda, jestli"
+        },
+        {
+          "prompt": "der Papa, -s",
+          "answers": [
+            "tatínek",
+            "táta",
+            "dad",
+            "daddy"
+          ],
+          "meaning": "tatínek"
+        },
+        {
+          "prompt": "die Party, -s",
+          "answers": [
+            "party",
+            "večírek",
+            "oslava"
+          ],
+          "meaning": "party, večírek"
+        },
+        {
+          "prompt": "das Restaurant",
+          "answers": [
+            "restaurace",
+            "restaurant"
+          ],
+          "meaning": "restaurace"
+        },
+        {
+          "prompt": "schrecklich",
+          "answers": [
+            "strašný",
+            "hrozný",
+            "terrible",
+            "awful"
+          ],
+          "meaning": "strašný, hrozný"
+        },
+        {
+          "prompt": "die Schwarzwälder Kirschtorte",
+          "answers": [
+            "schwarzwaldský dort",
+            "black forest cake"
+          ],
+          "meaning": "Schwarzwaldský dort"
+        },
+        {
+          "prompt": "singen (Infinitiv)",
+          "answers": [
+            "zpívat",
+            "to sing"
+          ],
+          "meaning": "zpívat"
+        },
+        {
+          "prompt": "Wir singen Happy Birthday.",
+          "answers": [
+            "zpíváme happy birthday",
+            "we sing happy birthday"
+          ],
+          "meaning": "Zpíváme Happy Birthday."
+        },
+        {
+          "prompt": "stimmen (Infinitiv)",
+          "answers": [
+            "souhlasit",
+            "to be right",
+            "to be correct"
+          ],
+          "meaning": "souhlasit"
+        },
+        {
+          "prompt": "Ja, stimmt.",
+          "answers": [
+            "ano, správně",
+            "ano, souhlasí",
+            "yes, that's right",
+            "yes, right"
+          ],
+          "meaning": "Ano, správně."
+        },
+        {
+          "prompt": "die Vorbereitung, -en",
+          "answers": [
+            "příprava",
+            "preparation"
+          ],
+          "meaning": "příprava"
+        },
+        {
+          "prompt": "wieder",
+          "answers": [
+            "opět",
+            "zase",
+            "again"
+          ],
+          "meaning": "opět, zase"
+        },
+        {
+          "prompt": "zu Hause",
+          "answers": [
+            "doma",
+            "at home"
+          ],
+          "meaning": "doma"
+        }
+      ]
+    },
+    {
+      "header": "Strana 37",
+      "items": [
+        {
+          "prompt": "das Chamäleon, -s",
+          "answers": [
+            "chameleon",
+            "chameleón"
+          ],
+          "meaning": "chameleon"
+        },
+        {
+          "prompt": "der Goldfisch, -e",
+          "answers": [
+            "zlatá rybka",
+            "karas",
+            "goldfish"
+          ],
+          "meaning": "zlatá rybka (karas)"
+        },
+        {
+          "prompt": "der Hamster, -",
+          "answers": [
+            "křeček",
+            "hamster"
+          ],
+          "meaning": "křeček"
+        },
+        {
+          "prompt": "der Kanarienvogel, Kanarienvögel",
+          "answers": [
+            "kanárek",
+            "kanár",
+            "canary"
+          ],
+          "meaning": "kanárek"
+        },
+        {
+          "prompt": "das Kaninchen, -",
+          "answers": [
+            "králík",
+            "rabbit"
+          ],
+          "meaning": "králík"
+        },
+        {
+          "prompt": "die Katze, -n",
+          "answers": [
+            "kočka",
+            "cat"
+          ],
+          "meaning": "kočka"
+        },
+        {
+          "prompt": "das Meerschweinchen, -",
+          "answers": [
+            "morče",
+            "guinea pig"
+          ],
+          "meaning": "morče"
+        },
+        {
+          "prompt": "das Pferd, -e",
+          "answers": [
+            "kůň",
+            "horse"
+          ],
+          "meaning": "kůň"
+        },
+        {
+          "prompt": "die Schildkröte, -n",
+          "answers": [
+            "želva",
+            "turtle",
+            "tortoise"
+          ],
+          "meaning": "želva"
+        },
+        {
+          "prompt": "das Tier, -e",
+          "answers": [
+            "zvíře",
+            "animal"
+          ],
+          "meaning": "zvíře"
+        }
+      ]
+    },
+    {
+      "header": "Strana 38",
+      "items": [
+        {
+          "prompt": "der Ausflug, Ausflüge",
+          "answers": [
+            "výlet",
+            "trip",
+            "excursion"
+          ],
+          "meaning": "výlet"
+        },
+        {
+          "prompt": "die Ausstellung, -en",
+          "answers": [
+            "výstava",
+            "exhibition"
+          ],
+          "meaning": "výstava"
+        },
+        {
+          "prompt": "die Burg, -en",
+          "answers": [
+            "hrad",
+            "castle"
+          ],
+          "meaning": "hrad"
+        },
+        {
+          "prompt": "cool",
+          "answers": [
+            "cool",
+            "skvělý",
+            "super"
+          ],
+          "meaning": "cool, skvělý"
+        },
+        {
+          "prompt": "es gibt",
+          "answers": [
+            "je",
+            "existuje",
+            "there is",
+            "there are"
+          ],
+          "meaning": "je, existuje"
+        },
+        {
+          "prompt": "das Hochzeitsfest, -e",
+          "answers": [
+            "svatební party",
+            "svatební oslava",
+            "wedding party"
+          ],
+          "meaning": "svatební party"
+        },
+        {
+          "prompt": "die Hochzeitstorte, -n",
+          "answers": [
+            "svatební dort",
+            "wedding cake"
+          ],
+          "meaning": "svatební dort"
+        },
+        {
+          "prompt": "nach",
+          "answers": [
+            "do",
+            "to"
+          ],
+          "meaning": "do"
+        },
+        {
+          "prompt": "Ich fahre nach Wien.",
+          "answers": [
+            "jedu do vídně",
+            "i go to vienna",
+            "i'm going to vienna"
+          ],
+          "meaning": "Jedu do Vídně."
+        },
+        {
+          "prompt": "nächster, nächste, nächstes",
+          "answers": [
+            "příští",
+            "next"
+          ],
+          "meaning": "příští"
+        },
+        {
+          "prompt": "nächsten Monat / nächste Woche / nächstes Jahr",
+          "answers": [
+            "příští měsíc / příští týden / příští rok",
+            "příští měsíc, příští týden, příští rok",
+            "next month / next week / next year",
+            "next month, next week, next year"
+          ],
+          "meaning": "příští měsíc / příští týden / příští rok"
+        },
+        {
+          "prompt": "das Schloss, Schlösser",
+          "answers": [
+            "zámek",
+            "castle",
+            "palace"
+          ],
+          "meaning": "zámek"
+        },
+        {
+          "prompt": "das Schwimmbad, Schwimmbäder",
+          "answers": [
+            "koupaliště",
+            "plavecký bazén",
+            "swimming pool"
+          ],
+          "meaning": "koupaliště, plavecký bazén"
+        },
+        {
+          "prompt": "der Schwimmbadbesuch, -e",
+          "answers": [
+            "návštěva koupaliště",
+            "návštěva plaveckého bazénu",
+            "visit to the swimming pool"
+          ],
+          "meaning": "návštěva koupaliště, plaveckého bazénu"
+        },
+        {
+          "prompt": "schwimmen (Infinitiv)",
+          "answers": [
+            "plavat",
+            "to swim"
+          ],
+          "meaning": "plavat"
+        },
+        {
+          "prompt": "Meine Mutter schwimmt gern.",
+          "answers": [
+            "moje matka ráda plave",
+            "my mother likes swimming"
+          ],
+          "meaning": "Moje matka ráda plave."
+        },
+        {
+          "prompt": "shoppen (Infinitiv)",
+          "answers": [
+            "nakupovat",
+            "to shop"
+          ],
+          "meaning": "nakupovat"
+        },
+        {
+          "prompt": "Wir gehen shoppen.",
+          "answers": [
+            "jdeme nakupovat",
+            "jdem nakupovat",
+            "we go shopping"
+          ],
+          "meaning": "Jdeme nakupovat."
+        },
+        {
+          "prompt": "das Sportevent, -s",
+          "answers": [
+            "sportovní akce",
+            "sportovní událost",
+            "sports event"
+          ],
+          "meaning": "sportovní akce (zápas, závody)"
+        },
+        {
+          "prompt": "der Vergnügungspark, -s",
+          "answers": [
+            "zábavní park",
+            "amusement park",
+            "theme park"
+          ],
+          "meaning": "zábavní park"
+        },
+        {
+          "prompt": "Wir gehen in den Vergnügungspark.",
+          "answers": [
+            "jdeme do zábavního parku",
+            "we go to the amusement park"
+          ],
+          "meaning": "Jdeme do zábavního parku."
+        },
+        {
+          "prompt": "wandern (Infinitiv)",
+          "answers": [
+            "putovat",
+            "cestovat",
+            "to hike",
+            "to wander"
+          ],
+          "meaning": "putovat, cestovat"
+        },
+        {
+          "prompt": "Ich wandere gern.",
+          "answers": [
+            "rád(a) putuji",
+            "rád putuji",
+            "ráda putuji",
+            "i like hiking"
+          ],
+          "meaning": "Rád(a) putuji."
+        },
+        {
+          "prompt": "die Woche, -n",
+          "answers": [
+            "týden",
+            "week"
+          ],
+          "meaning": "týden"
+        },
+        {
+          "prompt": "diese Woche",
+          "answers": [
+            "tento týden",
+            "this week"
+          ],
+          "meaning": "tento týden"
+        },
+        {
+          "prompt": "der Zoo, -s",
+          "answers": [
+            "zoo",
+            "zoologická zahrada"
+          ],
+          "meaning": "zoo"
+        },
+        {
+          "prompt": "der Zoobesuch, -e",
+          "answers": [
+            "návštěva zoo",
+            "visit to the zoo"
+          ],
+          "meaning": "návštěva zoo"
+        }
+      ]
+    },
+    {
+      "header": "Strana 39",
+      "items": [
+        {
+          "prompt": "das Einkaufszentrum",
+          "answers": [
+            "nákupní centrum",
+            "shopping centre",
+            "shopping mall",
+            "shopping center"
+          ],
+          "meaning": "nákupní centrum"
+        },
+        {
+          "prompt": "die Inliner (mn. č.)",
+          "answers": [
+            "inline brusle",
+            "inline bruslení",
+            "inliners"
+          ],
+          "meaning": "inline brusle"
+        },
+        {
+          "prompt": "Sie fährt Inliner.",
+          "answers": [
+            "(ona) jezdí na inline bruslích",
+            "jezdí na inline bruslích",
+            "she goes inline skating"
+          ],
+          "meaning": "(Ona) Jezdí na inline bruslích."
+        },
+        {
+          "prompt": "der See, -n",
+          "answers": [
+            "jezero",
+            "lake"
+          ],
+          "meaning": "jezero"
+        },
+        {
+          "prompt": "Am Wochenende fahren wir an einen See.",
+          "answers": [
+            "o víkendu pojedeme k jezeru",
+            "o víkendu jedeme k jezeru",
+            "at the weekend we drive to a lake"
+          ],
+          "meaning": "O víkendu pojedeme k (nějakému) jezeru."
+        },
+        {
+          "prompt": "das Wochenende, -n",
+          "answers": [
+            "víkend",
+            "weekend"
+          ],
+          "meaning": "víkend"
+        },
+        {
+          "prompt": "am Wochenende",
+          "answers": [
+            "o víkendu",
+            "on the weekend"
+          ],
+          "meaning": "o víkendu"
+        },
+        {
+          "prompt": "dieses Wochenende",
+          "answers": [
+            "tento víkend",
+            "this weekend"
+          ],
+          "meaning": "tento víkend"
+        },
+        {
+          "prompt": "das Wochenendhaus, Wochenendhäuser",
+          "answers": [
+            "chata",
+            "chalupa",
+            "víkendový dům",
+            "weekend house"
+          ],
+          "meaning": "chata, chalupa"
+        },
+        {
+          "prompt": "Wir fahren dieses Wochenende ins Wochenendhaus.",
+          "answers": [
+            "tento víkend jedeme na chatu",
+            "tento víkend jedeme na chalupu",
+            "this weekend we go to the cottage"
+          ],
+          "meaning": "Tento víkend jedeme na chatu."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "id": "unit-01",
+  "subject": "hardware",
+  "number": 1,
+  "titleKey": "hw_unit1",
+  "subtitleKey": "hw_unit1_sub",
+  "slides": [
+    {
+      "kicker": "1 / 3   •   Úvod",
+      "title": "Architektura počítače",
+      "tip": "Architektura popisuje, z jakých částí se počítač skládá a jak spolu spolupracují.",
+      "lines": [
+        "Architektura počítače je základní model, podle kterého jsou počítače navrhovány.",
+        "Nejznámější model je Von Neumannovo schéma.",
+        "Používá se dodnes u většiny běžných počítačů."
+      ]
+    },
+    {
+      "kicker": "2 / 3   •   Osobnost",
+      "title": "John von Neumann",
+      "tip": "Tip: zapamatuj si jméno – podle něj se jmenuje celé schéma.",
+      "lines": [
+        "John von Neumann byl americký matematik.",
+        "Pracoval na poli digitálních počítačů a operační teorie kvantové mechaniky.",
+        "Je autorem Von Neumannovy algebry.",
+        "Byl tvůrcem teorie her.",
+        "Podílel se na vývoji atomové a vodíkové bomby."
+      ]
+    },
+    {
+      "kicker": "3 / 3   •   Schéma",
+      "title": "Von Neumannovo schéma",
+      "tip": "ALU = aritmeticko-logická jednotka",
+      "lines": [
+        "Von Neumannovo schéma má pět hlavních částí:",
+        "ALU – aritmeticko-logická jednotka (výpočty a logika)",
+        "Řadič – řídí činnost ostatních částí",
+        "Operační paměť – uchovává program i data",
+        "Vstupní jednotka – přivádí data do počítače",
+        "Výstupní jednotka – předává výsledky ven"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "hw_quiz1_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Kdo je autorem Von Neumannova schématu?",
+          "options": [
+            "Alan Turing",
+            "John von Neumann",
+            "Bill Gates",
+            "Steve Jobs"
+          ],
+          "correct": 1,
+          "hint": "John von Neumann – americký matematik"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Čím byl John von Neumann?",
+          "options": [
+            "Americký matematik",
+            "Německý fyzik",
+            "Anglický chemik",
+            "Francouzský lékař"
+          ],
+          "correct": 0,
+          "hint": "Americký matematik s objevy v digitálních počítačích"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co znamená zkratka ALU?",
+          "options": [
+            "Automatická logická síť",
+            "Aritmeticko-logická jednotka",
+            "Analogová linková sestava",
+            "Adresová listová sekce"
+          ],
+          "correct": 1,
+          "hint": "ALU = aritmeticko-logická jednotka"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Která část Von Neumannova schématu řídí ostatní části?",
+          "options": [
+            "Operační paměť",
+            "Vstupní jednotka",
+            "Řadič",
+            "Výstupní jednotka"
+          ],
+          "correct": 2,
+          "hint": "Řadič řídí činnost ostatních částí"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Kde se podle Von Neumannova schématu uchovává program i data?",
+          "options": [
+            "Jen na pevném disku",
+            "V operační paměti",
+            "Jen ve vstupní jednotce",
+            "Jen v ALU"
+          ],
+          "correct": 1,
+          "hint": "Operační paměť uchovává program i data"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Čím se John von Neumann také zabýval?",
+          "options": [
+            "Jen malířstvím",
+            "Teorií her",
+            "Jen botanikou",
+            "Jen hudbou"
+          ],
+          "correct": 1,
+          "hint": "Byl tvůrcem teorie her"
+        }
+      ]
+    }
+  ]
+}

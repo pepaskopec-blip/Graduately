@@ -1,0 +1,129 @@
+{
+  "id": "unit-16",
+  "subject": "networks",
+  "number": 16,
+  "titleKey": "net_unit16",
+  "subtitleKey": "net_unit16_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Kolize",
+      "title": "Sdílené médium",
+      "tip": null,
+      "lines": [
+        "Kolize nastane, když na sdíleném médiu vysílá více uzlů najednou."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Aloha",
+      "title": "Vysílej kdykoliv",
+      "tip": "Tip: časté kolize, primitivní metoda",
+      "lines": [
+        "Uzel vysílá kdykoliv chce.",
+        "Když nepřijde potvrzení, pošle data znovu.",
+        "Kolize jsou časté."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   CSMA/CD",
+      "title": "Ethernet",
+      "tip": "Tip: Carrier Sense + Collision Detection",
+      "lines": [
+        "Nejdřív se poslouchá nosná (Carrier Sense).",
+        "Je-li ticho, uzel vysílá.",
+        "Při kolizi se vysílání zastaví a zkusí se znovu",
+        "po náhodném čase."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   CSMA/CA",
+      "title": "Wi-Fi",
+      "tip": "Tip: Collision Avoidance přes RTS/CTS",
+      "lines": [
+        "Předchází kolizím (Collision Avoidance).",
+        "RTS (Request to Send) a CTS (Clear to Send)",
+        "rezervují médium před vysíláním."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz16_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Kolize nastane, když:",
+          "options": [
+            "Na sdíleném médiu vysílá více uzlů najednou",
+            "Router vypne OSPF",
+            "Vlákno má ochranu 250 µm",
+            "Použijeme jen TCP"
+          ],
+          "correct": 0,
+          "hint": "Kolize = více uzlů vysílá na sdíleném médiu najednou"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Metoda Aloha znamená především:",
+          "options": [
+            "Vysílej kdykoliv; bez potvrzení pošli znovu",
+            "Vždy rezervuj médium RTS/CTS",
+            "Nikdy nevysílej při tichu",
+            "Jen směrování RIP"
+          ],
+          "correct": 0,
+          "hint": "Aloha: vysílej kdykoliv, při chybě znovu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "CSMA/CD se typicky pojí s:",
+          "options": [
+            "Wi-Fi",
+            "Ethernetem",
+            "Jen SMTP",
+            "Jen ATM"
+          ],
+          "correct": 1,
+          "hint": "CSMA/CD patří k Ethernetu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Při CSMA/CD uzel před vysíláním:",
+          "options": [
+            "Ignoruje médium",
+            "Monitoruje nosnou (Carrier Sense)",
+            "Vždy čeká přesně 1 hodinu",
+            "Použije jen laser"
+          ],
+          "correct": 1,
+          "hint": "CSMA/CD nejdřív poslouchá nosnou (Carrier Sense)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Když CSMA/CD detekuje kolizi:",
+          "options": [
+            "Pokračuje vysíláním bez změny",
+            "Zastaví vysílání a zkusí to po náhodném čase",
+            "Přepne síť na sběrnici",
+            "Smaže IP adresu"
+          ],
+          "correct": 1,
+          "hint": "Po kolizi CSMA/CD čeká náhodný čas a zkusí znovu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "CSMA/CA na Wi-Fi předchází kolizím pomocí:",
+          "options": [
+            "RTS a CTS",
+            "Jen CRC bez nosné",
+            "Jen hubu",
+            "Jen koaxiálu"
+          ],
+          "correct": 0,
+          "hint": "CSMA/CA rezervuje médium přes RTS/CTS"
+        }
+      ]
+    }
+  ]
+}

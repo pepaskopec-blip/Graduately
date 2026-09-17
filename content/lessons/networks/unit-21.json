@@ -1,0 +1,180 @@
+{
+  "id": "unit-21",
+  "subject": "networks",
+  "number": 21,
+  "titleKey": "net_unit21",
+  "subtitleKey": "net_unit21_sub",
+  "slides": [
+    {
+      "kicker": "1 / 8   •   Ethernet",
+      "title": "Síťový hardware",
+      "tip": null,
+      "lines": [
+        "Jeden ze standardů síťového hardware.",
+        "Dnes nejpoužívanější."
+      ]
+    },
+    {
+      "kicker": "2 / 8   •   Adresy",
+      "title": "48bitová MAC",
+      "tip": "Tip: IEEE přidělí první 3 B, výrobce další 3 B",
+      "lines": [
+        "Adresa má 48 bitů (6 bytů) a je celosvětově jedinečná.",
+        "Je pevně v síťové kartě už od výroby.",
+        "Výrobci dostávají bloky adres od IEEE."
+      ]
+    },
+    {
+      "kicker": "3 / 8   •   Rámce",
+      "title": "Typy hlaviček",
+      "tip": null,
+      "lines": [
+        "Rámec = skupina bitů na linkové vrstvě.",
+        "Hlavička má adresy odesílatele/příjemce a typ obsahu.",
+        "Typy: Ethernet II, IEEE 802.3, 802.3 SNAP, raw 802.3."
+      ]
+    },
+    {
+      "kicker": "4 / 8   •   Ethernet II",
+      "title": "DIX + EtherType",
+      "tip": "Tip: EtherType > 1500 (např. IP = 0800h)",
+      "lines": [
+        "Původní DIX Ethernet.",
+        "Hlavička: příjemce 6 B, odesílatel 6 B, EtherType 2 B.",
+        "EtherType identifikuje protokol (IP, IPX…)."
+      ]
+    },
+    {
+      "kicker": "5 / 8   •   IEEE 802.3",
+      "title": "Délka místo typu",
+      "tip": null,
+      "lines": [
+        "Místo EtherType je údaj o délce (vždy ≤ 1500).",
+        "Uvnitř je rámec 802.2 (stejný i pro Token Ring).",
+        "Typ protokolu je v SAP mezi linkovou a síťovou vrstvou."
+      ]
+    },
+    {
+      "kicker": "6 / 8   •   Raw 802.3",
+      "title": "Novell / IPX",
+      "tip": null,
+      "lines": [
+        "„Holý“ rámec 802.3 bez 802.2 (Novell).",
+        "Funguje jen v prostředí IPX.",
+        "Paket začíná dvěma byty FFFFh."
+      ]
+    },
+    {
+      "kicker": "7 / 8   •   SNAP",
+      "title": "802.2 SNAP",
+      "tip": "Tip: byty 15–16 za délkou = AAAAh",
+      "lines": [
+        "Vložen do rámce 802.3.",
+        "Rozšiřuje identifikaci protokolu až na 5 bytů."
+      ]
+    },
+    {
+      "kicker": "8 / 8   •   Velikost",
+      "title": "Min / max / MTU",
+      "tip": null,
+      "lines": [
+        "Max. Ethernet II: 1500 + 18 = 1518 B.",
+        "Min. velikost: 64 B (kolizní okénko).",
+        "MTU je obvyklé omezení velikosti na routerech."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz21_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Ethernetová adresa má:",
+          "options": [
+            "48 bitů (6 bytů) a je jedinečná",
+            "Jen 16 bitů",
+            "Jen 32 bitů IP",
+            "Jen 8 bitů SAP"
+          ],
+          "correct": 0,
+          "hint": "MAC adresa Ethernetu má 48 bitů a je unikátní"
+        },
+        {
+          "kind": "choice",
+          "prompt": "První 3 byty MAC adresy přiděluje:",
+          "options": [
+            "IEEE výrobci",
+            "Jen uživatel v BIOS",
+            "Jen DNS server",
+            "Jen Aloha"
+          ],
+          "correct": 0,
+          "hint": "IEEE přidělí výrobci první 3 byty adresy"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Ethernet II v hlavičce používá:",
+          "options": [
+            "EtherType (např. IP = 0800h, hodnota > 1500)",
+            "Jen délku ≤ 1500 bez typu",
+            "Jen FFFFh bez adres",
+            "Jen AAAAh bez MAC"
+          ],
+          "correct": 0,
+          "hint": "Ethernet II: EtherType > 1500 (IP = 0800h)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "IEEE 802.3 místo EtherType má:",
+          "options": [
+            "Údaj o délce (≤ 1500) a uvnitř 802.2",
+            "Jen cut-through",
+            "Jen 64 B MTU bez délky",
+            "Jen laserovou hlavičku"
+          ],
+          "correct": 0,
+          "hint": "IEEE 802.3: délka ≤ 1500 a rámec 802.2"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Raw 802.3 (Novell):",
+          "options": [
+            "Bez 802.2, jen IPX, začíná FFFFh",
+            "Funguje jen s HTTP",
+            "Má vždy EtherType 0800h",
+            "Nemá žádné adresy"
+          ],
+          "correct": 0,
+          "hint": "Raw 802.3: Novell/IPX, začíná FFFFh"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Maximální rámec Ethernet II je:",
+          "options": [
+            "1518 B (1500 + 18)",
+            "64 B",
+            "900 µm",
+            "250 µm"
+          ],
+          "correct": 0,
+          "hint": "Max. Ethernet II = 1518 B"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Minimální velikost rámce plyne z:",
+          "options": [
+            "Kolizního okénka (64 B)",
+            "Jen z MTU routeru",
+            "Jen z SNAP AAAAh",
+            "Jen z Token Ring"
+          ],
+          "correct": 0,
+          "hint": "Min. rámec 64 B kvůli koliznímu okénku"
+        }
+      ]
+    }
+  ]
+}

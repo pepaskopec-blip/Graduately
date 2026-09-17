@@ -1,0 +1,130 @@
+{
+  "id": "unit-13",
+  "subject": "networks",
+  "number": 13,
+  "titleKey": "net_unit13",
+  "subtitleKey": "net_unit13_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Přehled",
+      "title": "Topologie sítě",
+      "tip": null,
+      "lines": [
+        "Topologie popisuje, jak jsou uzly propojené.",
+        "Základní typy: sběrnice, hvězda a kruh."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Sběrnice",
+      "title": "Bus",
+      "tip": "Tip: dříve typicky koaxiální kabel",
+      "lines": [
+        "Médium sdílí všichni – jednoduchá a levná topologie.",
+        "Malá délka kabelů.",
+        "Nevýhody: nízká bezpečnost (všichni slyší vše).",
+        "Přerušení kabelu nebo terminátoru vyřadí celou síť."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Hvězda",
+      "title": "Star",
+      "tip": "Tip: kroucená dvoulinka nebo optika",
+      "lines": [
+        "Uzly jdou přes centrální prvek (hub nebo switch).",
+        "Výhody: odolnost proti poruchám kabelů k uzlům,",
+        "snadná diagnostika.",
+        "Nevýhody: aktivní prvky a více kabeláže."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Kruh",
+      "title": "Ring",
+      "tip": "Tip: často zdvojený kruh pro odolnost",
+      "lines": [
+        "Kabely tvoří souvislý kruh.",
+        "Zprávy obíhají, dokud nenajdou adresáta."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz13_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Topologie sběrnice (bus) znamená, že:",
+          "options": [
+            "Každý uzel má vlastní centrální switch",
+            "Médium sdílí všichni",
+            "Kabely tvoří jen zdvojený kruh",
+            "Používá jen OSPF"
+          ],
+          "correct": 1,
+          "hint": "Sběrnice: médium sdílí všichni"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Nevýhoda sběrnice je hlavně:",
+          "options": [
+            "Že potřebuje hub u každého uzlu",
+            "Nízká bezpečnost a náchylnost na poruchu kabelu",
+            "Že nelze použít koaxiál",
+            "Že zprávy neobíhají"
+          ],
+          "correct": 1,
+          "hint": "Sběrnice: nízká bezpečnost a porucha kabelu vyřadí síť"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Topologie hvězda propojuje uzly přes:",
+          "options": [
+            "Jen jeden společný koaxiál bez centra",
+            "Centrální prvek (hub nebo switch)",
+            "Jen Token Ring",
+            "Jen ATM"
+          ],
+          "correct": 1,
+          "hint": "Hvězda: uzly jdou přes hub nebo switch"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Výhoda hvězdy je:",
+          "options": [
+            "Že přerušení jednoho kabelu k uzlu nevyřadí celou síť",
+            "Že všichni slyší vše",
+            "Že nepotřebuje žádnou kabeláž",
+            "Že nemá aktivní prvky"
+          ],
+          "correct": 0,
+          "hint": "Hvězda: porucha kabelu k uzlu nevyřadí celou síť"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Hvězda typicky používá:",
+          "options": [
+            "Jen koaxiální kabel",
+            "Kroucenou dvoulinku nebo optiku",
+            "Jen simplexní rádio",
+            "Jen FDM"
+          ],
+          "correct": 1,
+          "hint": "Hvězda používá kroucenou dvoulinku nebo optiku"
+        },
+        {
+          "kind": "choice",
+          "prompt": "V topologii kruh (ring):",
+          "options": [
+            "Zprávy obíhají, dokud nenajdou adresáta",
+            "Každý paket jde jen přes DNS",
+            "Médium sdílí hub bez kabelů",
+            "Neexistuje žádná kabeláž"
+          ],
+          "correct": 0,
+          "hint": "V kruhu zprávy obíhají, dokud nenajdou adresáta"
+        }
+      ]
+    }
+  ]
+}

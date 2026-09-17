@@ -1,0 +1,198 @@
+{
+  "id": "unit-22",
+  "subject": "networks",
+  "number": 22,
+  "titleKey": "net_unit22",
+  "subtitleKey": "net_unit22_sub",
+  "slides": [
+    {
+      "kicker": "1 / 8   •   Paket",
+      "title": "Header a data",
+      "tip": null,
+      "lines": [
+        "Paket/segment: hlavička (pro partnerskou vrstvu) + data.",
+        "Protokol určuje strukturu a pravidla stejnolehlých vrstev.",
+        "Může běžet na různých platformách."
+      ]
+    },
+    {
+      "kicker": "2 / 8   •   TCP/IP",
+      "title": "Protokoly po vrstvách",
+      "tip": null,
+      "lines": [
+        "Aplikační: aplikační protokoly.",
+        "Transportní: TCP, UDP.",
+        "Síťová: IP, ARP, RARP, ICMP, IGMP, RIP, OSPF.",
+        "Síťové rozhraní: Ethernet, Token Ring, ATM, PPP…"
+      ]
+    },
+    {
+      "kicker": "3 / 8   •   IP",
+      "title": "Univerzální přenos",
+      "tip": "Tip: nespojovaný a nespolehlivý",
+      "lines": [
+        "Jediný přenosový protokol TCP/IP nad libovolnou technologií.",
+        "Pracuje s virtuálními pakety – IP datagramy.",
+        "Stará se o směrování a přenos; velikost volí odesílatel.",
+        "Nezaručuje pořadí, dobu ani nepoškozené doručení."
+      ]
+    },
+    {
+      "kicker": "4 / 8   •   Routing",
+      "title": "Routing vs forwarding",
+      "tip": null,
+      "lines": [
+        "Routing: rozhodnutí o dalším směru datagramu.",
+        "Forwarding: vložení do linkového rámce a odeslání.",
+        "Linkové adresy se mění podle konkrétní sítě."
+      ]
+    },
+    {
+      "kicker": "5 / 8   •   Datagram",
+      "title": "Velikost a HLEN",
+      "tip": "Tip: Length 5 = 20 B hlavičky",
+      "lines": [
+        "Velikost: od 576 B do 64 kB.",
+        "Části: hlavička + data.",
+        "HLEN: délka hlavičky ve 32bitových slovech.",
+        "TOTAL LENGTH: délka celého paketu v bytech."
+      ]
+    },
+    {
+      "kicker": "6 / 8   •   Hlavička",
+      "title": "Klíčová pole",
+      "tip": null,
+      "lines": [
+        "VERSION (IPv4 = 4), LENGTH, TOTAL LENGTH.",
+        "IDENTIFICATION + FLAGS + OFFSET = fragmentace.",
+        "TTL: čítač směrovačů proti zacyklení.",
+        "PROTOCOL, HEADER CHECKSUM, zdrojová/cílová IP."
+      ]
+    },
+    {
+      "kicker": "7 / 8   •   PROTOCOL",
+      "title": "Čísla protokolů",
+      "tip": null,
+      "lines": [
+        "1 = ICMP, 2 = IGMP, 6 = TCP.",
+        "17 = UDP, 89 = OSPF.",
+        "Položka je 8bitová → max. 256 hodnot."
+      ]
+    },
+    {
+      "kicker": "8 / 8   •   Fragmentace",
+      "title": "MTU a Ethernet",
+      "tip": "Tip: Ethernet MTU = 1500 B",
+      "lines": [
+        "Fragmentace, když se datagram nevejde do menšího rámce.",
+        "MTU udává max. velikost rámce podle hardwaru.",
+        "DF = nefragmentuj; MF = další fragmenty."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz22_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "IP protokol je:",
+          "options": [
+            "Nespojovaný a nespolehlivý přenos datagramů",
+            "Spolehlivý a spojovaný jako TCP",
+            "Jen fyzické kódování",
+            "Jen EtherType bez IP"
+          ],
+          "correct": 0,
+          "hint": "IP je nespojovaný a nespolehlivý"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Routing u IP znamená:",
+          "options": [
+            "Rozhodnutí o dalším směru datagramu",
+            "Jen CRC na lince",
+            "Jen MAC učení ve switchi",
+            "Jen lámání vlákna"
+          ],
+          "correct": 0,
+          "hint": "Routing = rozhodnutí o směru datagramu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Forwarding u IP znamená:",
+          "options": [
+            "Vložení do linkového rámce a odeslání",
+            "Jen výpočet metriky OSPF",
+            "Jen DNS překlad",
+            "Jen Aloha"
+          ],
+          "correct": 0,
+          "hint": "Forwarding = vložení do rámce a odeslání"
+        },
+        {
+          "kind": "choice",
+          "prompt": "HLEN (LENGTH) s hodnotou 5 znamená:",
+          "options": [
+            "Hlavičku dlouhou 20 B",
+            "TTL 5",
+            "PROTOCOL = 5",
+            "MTU 5"
+          ],
+          "correct": 0,
+          "hint": "HLEN 5 = 5 × 4 B = 20 B hlavičky"
+        },
+        {
+          "kind": "choice",
+          "prompt": "TTL v IP hlavičce:",
+          "options": [
+            "Počítá průchody směrovači a brání zacyklení",
+            "Udává EtherType",
+            "Nahrazuje MAC adresu",
+            "Je vždy 1500"
+          ],
+          "correct": 0,
+          "hint": "TTL snižují směrovače proti zacyklení"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Číslo protokolu 6 v IP hlavičce znamená:",
+          "options": [
+            "TCP",
+            "UDP",
+            "ICMP",
+            "OSPF"
+          ],
+          "correct": 0,
+          "hint": "PROTOCOL 6 = TCP"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Číslo protokolu 17 znamená:",
+          "options": [
+            "UDP",
+            "TCP",
+            "IGMP",
+            "ARP"
+          ],
+          "correct": 0,
+          "hint": "PROTOCOL 17 = UDP"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Ethernet MTU je typicky:",
+          "options": [
+            "1500 B",
+            "64 kB",
+            "576 B bez dat",
+            "20 B hlavičky"
+          ],
+          "correct": 0,
+          "hint": "Ethernet MTU = 1500 B"
+        }
+      ]
+    }
+  ]
+}

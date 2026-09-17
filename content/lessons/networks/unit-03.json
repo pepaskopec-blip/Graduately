@@ -1,0 +1,161 @@
+{
+  "id": "unit-03",
+  "subject": "networks",
+  "number": 3,
+  "titleKey": "net_unit3",
+  "subtitleKey": "net_unit3_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Servery",
+      "title": "Role serverů a typy podle služby",
+      "tip": null,
+      "lines": [
+        "Servery ověřují uživatele a povolují přístup.",
+        "Souborový server (fileserver): sdílení souborů.",
+        "Tiskový server: sdílení tiskáren.",
+        "Poštovní server: e‑mailové služby.",
+        "Databázový server: správa a přístup k databázím."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Rozložení",
+      "title": "Centralizovaný a distribuovaný server",
+      "tip": null,
+      "lines": [
+        "Centralizovaný: jeden server v síti.",
+        "Výpadek = nedostupnost služby.",
+        "Distribuovaný: více serverů, každý obsluhuje část.",
+        "Vyšší spolehlivost a rychlost."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Využití",
+      "title": "Vyhrazený, nevyhrazený a mainframe",
+      "tip": null,
+      "lines": [
+        "Nevyhrazený: slouží i jako stanice (levnější).",
+        "Vyhrazený: jen síťové služby – vysoký výkon a bezpečnost,",
+        "typicky v racku.",
+        "Mainframe: obří sálové počítače (IBM, Siemens),",
+        "stovky procesorů, OS Unix (AIX, Solaris).",
+        "Použití: banky a státní správa."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Cloud",
+      "title": "Cloudové služby",
+      "tip": "Tip: SaaS = software jako služba",
+      "lines": [
+        "Cloud: globální síť vzdálených serverů propojených internetem.",
+        "Fungují jako jeden systém: ukládání dat, SaaS,",
+        "streamování, webová pošta.",
+        "Přístup online z jakéhokoli zařízení."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz3_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Co typicky dělají servery v síti?",
+          "options": [
+            "Jen tisknou dokumenty",
+            "Ověřují uživatele a povolují přístup",
+            "Nahrazují kabely",
+            "Slouží jen jako Wi‑Fi"
+          ],
+          "correct": 1,
+          "hint": "Ověřují uživatele a povolují přístup ke službám"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Fileserver je:",
+          "options": [
+            "Tiskový server",
+            "Poštovní server",
+            "Souborový server",
+            "Databázový server"
+          ],
+          "correct": 2,
+          "hint": "Fileserver = souborový server"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Centralizovaný server znamená:",
+          "options": [
+            "Více serverů v síti",
+            "Jeden server – výpadek = nedostupnost služby",
+            "Server jen pro tisk",
+            "Cloud bez internetu"
+          ],
+          "correct": 1,
+          "hint": "Jeden server – při výpadku je služba nedostupná"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Distribuovaný model serverů nabízí hlavně:",
+          "options": [
+            "Nižší spolehlivost",
+            "Vyšší spolehlivost a rychlost",
+            "Jen levnější kabely",
+            "Odstranění uživatelů"
+          ],
+          "correct": 1,
+          "hint": "Více serverů, každý obsluhuje část – vyšší spolehlivost"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Nevyhrazený server:",
+          "options": [
+            "Slouží jen síťovým službám",
+            "Slouží i jako pracovní stanice",
+            "Je vždy mainframe",
+            "Nemůže ověřovat uživatele"
+          ],
+          "correct": 1,
+          "hint": "Slouží zároveň i jako pracovní stanice"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Vyhrazený server je určen:",
+          "options": [
+            "Jen jako stanice uživatele",
+            "Jen pro síťové služby",
+            "Jen pro Bluetooth",
+            "Jen pro dočasné Wi‑Fi"
+          ],
+          "correct": 1,
+          "hint": "Jen síťové služby – vysoký výkon a bezpečnost, často v racku"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Mainframe se typicky používá:",
+          "options": [
+            "Jen v domácnostech",
+            "V bankách a státní správě",
+            "Jen pro streamování hudby",
+            "Jen jako tiskárna"
+          ],
+          "correct": 1,
+          "hint": "Obří sálové počítače (IBM, Siemens) pro banky a státní správu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Cloud a SaaS znamenají především:",
+          "options": [
+            "Lokální síť bez internetu",
+            "Vzdálené servery a software jako služba online",
+            "Jen jeden kabel v budově",
+            "Peer‑to‑peer bez serverů"
+          ],
+          "correct": 1,
+          "hint": "SaaS = software jako služba, přístup online z libovolného zařízení"
+        }
+      ]
+    }
+  ]
+}

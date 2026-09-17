@@ -1,0 +1,172 @@
+{
+  "id": "unit-20",
+  "subject": "networks",
+  "number": 20,
+  "titleKey": "net_unit20",
+  "subtitleKey": "net_unit20_sub",
+  "slides": [
+    {
+      "kicker": "1 / 7   •   Router",
+      "title": "Síťová vrstva",
+      "tip": "Tip: má vlastní IP a je vidět např. pingen",
+      "lines": [
+        "Pracuje na 3. (síťové) vrstvě.",
+        "Segmentuje síť na podsítě nebo propojuje LAN do většího celku.",
+        "Umožňuje přístup na WAN (např. internet).",
+        "Podporuje soustavy protokolů (např. TCP/IP) a má vlastní adresu."
+      ]
+    },
+    {
+      "kicker": "2 / 7   •   Bezpečnost",
+      "title": "Firewall na routeru",
+      "tip": null,
+      "lines": [
+        "Router s firewallem filtruje pakety.",
+        "Může zakázat nebo povolit určité síťové služby."
+      ]
+    },
+    {
+      "kicker": "3 / 7   •   Multiprotokol",
+      "title": "Různé standardy",
+      "tip": null,
+      "lines": [
+        "Multiprotokolový router spojuje různé soustavy protokolů.",
+        "Například TCP/IP se sítěmi IPX/SPX.",
+        "Umí i různý síťový hardware (Ethernet ↔ Token Ring).",
+        "Konvertuje formát rámců i paketů."
+      ]
+    },
+    {
+      "kicker": "4 / 7   •   Routing",
+      "title": "Směrování a tabulky",
+      "tip": null,
+      "lines": [
+        "Každému paketu hledá vhodnou cestu k cíli.",
+        "Zohledňuje např. okamžité zatížení sítí.",
+        "Používá směrovací tabulky a musí znát topologii.",
+        "Směrovače si tabulky vyměňují (např. broadcastem)."
+      ]
+    },
+    {
+      "kicker": "5 / 7   •   Broadcast",
+      "title": "Broadcastové domény",
+      "tip": null,
+      "lines": [
+        "Router rozděluje síť na broadcastové domény.",
+        "Broadcasty lze filtrovat – nešíří se na všechny porty."
+      ]
+    },
+    {
+      "kicker": "6 / 7   •   Gateway",
+      "title": "Brána",
+      "tip": "Tip: pracuje až na aplikační vrstvě (i nižších)",
+      "lines": [
+        "Připojuje LAN na zcela odlišné prostředí.",
+        "Například mainframe nebo GSM síť.",
+        "Často PC s kartou/emulací terminálu nebo s modemem na WAN."
+      ]
+    },
+    {
+      "kicker": "7 / 7   •   Poznámka",
+      "title": "Gateway vs router",
+      "tip": null,
+      "lines": [
+        "Někdy se pod pojmem brána rozumí spíše router.",
+        "Gateway také označuje připojení LAN na WAN / internet."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz20_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Směrovač (router) pracuje na vrstvě:",
+          "options": [
+            "Fyzické",
+            "Síťové (3.)",
+            "Jen aplikační",
+            "Jen prezentační"
+          ],
+          "correct": 1,
+          "hint": "Router pracuje na síťové (3.) vrstvě"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Router mimo jiné umožňuje:",
+          "options": [
+            "Segmentaci na podsítě a přístup na WAN",
+            "Jen lámání optiky",
+            "Jen Aloha bez IP",
+            "Jen cut-through bez MAC"
+          ],
+          "correct": 0,
+          "hint": "Router segmentuje podsítě a zajišťuje WAN přístup"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Firewall na routeru dokáže:",
+          "options": [
+            "Filtrovat pakety a řídit služby",
+            "Jen zesílit bitový signál",
+            "Jen uložit CAM bez IP",
+            "Jen nahradit fotodiodu"
+          ],
+          "correct": 0,
+          "hint": "Firewall filtruje pakety a služby"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Multiprotokolový router:",
+          "options": [
+            "Propojí sítě různých protokolů/standardů",
+            "Umí jen jeden protokol",
+            "Nepracuje s IP adresou",
+            "Nikdy nekonvertuje rámce"
+          ],
+          "correct": 0,
+          "hint": "Multiprotokolový router spojuje různé protokoly/standardy"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Router rozděluje síť na:",
+          "options": [
+            "Broadcastové domény",
+            "Jen fyzické kabely bez domén",
+            "Jen aplikační servery",
+            "Jen Token Ring bez Ethernetu"
+          ],
+          "correct": 0,
+          "hint": "Router dělí síť na broadcastové domény"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Brána (gateway) typicky:",
+          "options": [
+            "Připojuje LAN na odlišné prostředí (mainframe, GSM, WAN)",
+            "Pracuje jen jako hub",
+            "Nikdy nemá software",
+            "Funguje jen na fyzické vrstvě"
+          ],
+          "correct": 0,
+          "hint": "Gateway připojuje LAN na odlišné prostředí"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Poznámka k pojmu brána:",
+          "options": [
+            "Někdy se jí myslí spíše router / LAN–WAN připojení",
+            "Vždy znamená jen fotodiodu",
+            "Nikdy nesouvisí s internetem",
+            "Nahrazuje jen lámačku vláken"
+          ],
+          "correct": 0,
+          "hint": "Pojem brána někdy označuje router nebo LAN–WAN připojení"
+        }
+      ]
+    }
+  ]
+}

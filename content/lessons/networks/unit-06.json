@@ -1,0 +1,139 @@
+{
+  "id": "unit-06",
+  "subject": "networks",
+  "number": 6,
+  "titleKey": "net_unit6",
+  "subtitleKey": "net_unit6_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Spoj",
+      "title": "Datový spoj",
+      "tip": null,
+      "lines": [
+        "Datový spoj umožňuje výměnu informací.",
+        "Může být dvoubodový nebo vícebodový."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Cesta",
+      "title": "Přenosová cesta",
+      "tip": null,
+      "lines": [
+        "Přenosová cesta je fyzické médium.",
+        "Příklady: metalické nebo optické kabely,",
+        "mikrovlny, družice."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Kanál a okruh",
+      "title": "Přenosový kanál a okruh",
+      "tip": "Tip: okruh = dva kanály → obousměrný přenos",
+      "lines": [
+        "Přenosový kanál: jednosměrný souhrn prostředků pro spojení.",
+        "Okruh: tvořen dvěma kanály – umožňuje obousměrný přenos."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Trunking",
+      "title": "Spojování cest",
+      "tip": null,
+      "lines": [
+        "Trunking spojuje více cest do jednoho okruhu.",
+        "Cíl: zvýšení šířky pásma."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz6_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Datový spoj slouží k:",
+          "options": [
+            "Jen měření amplitudy",
+            "Výměně informací",
+            "Jen FM modulaci",
+            "Jen tisku dokumentů"
+          ],
+          "correct": 1,
+          "hint": "Datový spoj umožňuje výměnu informací mezi uzly"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Přenosová cesta je:",
+          "options": [
+            "Jen softwarová služba",
+            "Fyzické médium přenosu",
+            "Jen CRC kód",
+            "Jen peer‑to‑peer účet"
+          ],
+          "correct": 1,
+          "hint": "Fyzické médium: kabely, mikrovlny nebo družice"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Mezi přenosová média patří:",
+          "options": [
+            "Jen parita",
+            "Kabely, mikrovlny a družice",
+            "Jen Baud",
+            "Jen start-bit"
+          ],
+          "correct": 1,
+          "hint": "Fyzické médium: kabely, mikrovlny nebo družice"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Přenosový kanál je:",
+          "options": [
+            "Obousměrný vždy",
+            "Jednosměrný souhrn prostředků pro spojení",
+            "Jen název serveru",
+            "Jen typ QPSK"
+          ],
+          "correct": 1,
+          "hint": "Kanál je jednosměrný souhrn prostředků pro spojení"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Okruh vzniká:",
+          "options": [
+            "Z jednoho kanálu",
+            "Ze dvou kanálů pro obousměrný přenos",
+            "Jen z parity",
+            "Jen z Wi‑Fi hesla"
+          ],
+          "correct": 1,
+          "hint": "Okruh tvoří dva kanály pro obousměrný přenos"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Trunking znamená:",
+          "options": [
+            "Odpojení všech kabelů",
+            "Spojení více cest do jednoho okruhu",
+            "Jen asynchronní stop-bit",
+            "Jen digitální 0 a 1"
+          ],
+          "correct": 1,
+          "hint": "Trunking spojuje více cest do jednoho okruhu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Hlavní cíl trunkingu je:",
+          "options": [
+            "Snížit šířku pásma",
+            "Zvýšit šířku pásma",
+            "Zrušit kanály",
+            "Nahradit mainframe"
+          ],
+          "correct": 1,
+          "hint": "Trunking zvyšuje šířku pásma spojením cest"
+        }
+      ]
+    }
+  ]
+}

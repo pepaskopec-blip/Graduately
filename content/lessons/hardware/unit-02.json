@@ -1,0 +1,177 @@
+{
+  "id": "unit-02",
+  "subject": "hardware",
+  "number": 2,
+  "titleKey": "hw_unit2",
+  "subtitleKey": "hw_unit2_sub",
+  "slides": [
+    {
+      "kicker": "1 / 6   •   Přehled",
+      "title": "Historie počítačů",
+      "tip": "Generace se dělí podle klíčové technologie své doby.",
+      "lines": [
+        "1. Předchůdci – do 30. let 19. století",
+        "2. Nultá generace – 1938–1944",
+        "3. První generace – 1944–1955",
+        "4. Druhá generace – 1955–1964",
+        "5. Třetí generace – 1964–1971",
+        "Další snímky shrnují znaky jednotlivých generací."
+      ]
+    },
+    {
+      "kicker": "2 / 6   •   0. generace",
+      "title": "Počítače 0. generace (1938–1944)",
+      "tip": "Tip: počítačů bylo málo a často sloužily armádě.",
+      "lines": [
+        "Existovalo jen několik počítačů na světě.",
+        "Většinou měly vojenský účel."
+      ]
+    },
+    {
+      "kicker": "3 / 6   •   1. generace",
+      "title": "Počítače 1. generace (1944–1955)",
+      "tip": "Klíčový objev: elektronka",
+      "lines": [
+        "Objev elektronky umožnil tuto generaci.",
+        "Ještě neexistoval software v dnešním smyslu.",
+        "Data a programy se zadávaly pomocí děrných štítků."
+      ]
+    },
+    {
+      "kicker": "4 / 6   •   2. generace",
+      "title": "Počítače 2. generace (1955–1964)",
+      "tip": "Klíčový objev: tranzistor",
+      "lines": [
+        "Objev tranzistoru nahradil elektronky.",
+        "Používala se hlavní externí paměť.",
+        "Počítače měly menší rozměry než v 1. generaci."
+      ]
+    },
+    {
+      "kicker": "5 / 6   •   3. generace",
+      "title": "Počítače 3. generace (1964–1971)",
+      "tip": "Klíčový objev: integrovaný obvod",
+      "lines": [
+        "Objev integrovaného obvodu.",
+        "Stále se používala hlavní externí paměť.",
+        "Rozměry počítačů se dál zmenšovaly."
+      ]
+    },
+    {
+      "kicker": "6 / 6   •   4. generace",
+      "title": "Počítače 4. generace",
+      "tip": "Klíčové: programovatelné mikroprocesory",
+      "lines": [
+        "Nastupují programovatelné mikroprocesory.",
+        "1972 – první počítačová hra",
+        "1973 – první disketa",
+        "1979 – první CD"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "hw_quiz2_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Kdy probíhala nultá generace počítačů?",
+          "options": [
+            "1938–1944",
+            "1944–1955",
+            "1955–1964",
+            "1964–1971"
+          ],
+          "correct": 0,
+          "hint": "Nultá generace: 1938–1944"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co bylo typické pro počítače 0. generace?",
+          "options": [
+            "Byly v každé domácnosti",
+            "Jen několik kusů, často vojenský účel",
+            "Měly mikroprocesory",
+            "Používaly CD"
+          ],
+          "correct": 1,
+          "hint": "Jen několik počítačů, většinou vojenský účel"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Která technologie patří k 1. generaci?",
+          "options": [
+            "Tranzistor",
+            "Elektronka",
+            "Integrovaný obvod",
+            "Mikroprocesor"
+          ],
+          "correct": 1,
+          "hint": "1. generace – objev elektronky"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Čím se zadávaly data v 1. generaci?",
+          "options": [
+            "USB fleškou",
+            "Děrnými štítky",
+            "CD",
+            "Disketou"
+          ],
+          "correct": 1,
+          "hint": "1. generace – děrné štítky"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Která technologie patří k 2. generaci?",
+          "options": [
+            "Elektronka",
+            "Tranzistor",
+            "Mikroprocesor",
+            "CD"
+          ],
+          "correct": 1,
+          "hint": "2. generace – objev tranzistoru"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Která technologie patří k 3. generaci?",
+          "options": [
+            "Elektronka",
+            "Tranzistor",
+            "Integrovaný obvod",
+            "Disketa"
+          ],
+          "correct": 2,
+          "hint": "3. generace – integrovaný obvod"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co je typické pro 4. generaci?",
+          "options": [
+            "Jen děrné štítky",
+            "Programovatelné mikroprocesory",
+            "Jen vojenské použití",
+            "Žádný software"
+          ],
+          "correct": 1,
+          "hint": "4. generace – programovatelné mikroprocesory"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Kdy vznikla první počítačová hra (podle lekce)?",
+          "options": [
+            "1964",
+            "1972",
+            "1973",
+            "1979"
+          ],
+          "correct": 1,
+          "hint": "1972 – první počítačová hra"
+        }
+      ]
+    }
+  ]
+}

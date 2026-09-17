@@ -1,0 +1,162 @@
+{
+  "id": "unit-17",
+  "subject": "networks",
+  "number": 17,
+  "titleKey": "net_unit17",
+  "subtitleKey": "net_unit17_sub",
+  "slides": [
+    {
+      "kicker": "1 / 7   •   Přehled",
+      "title": "Aktivní prvky",
+      "tip": null,
+      "lines": [
+        "Aktivní prvky zpracovávají nebo převádí signál / data.",
+        "Liší se podle vrstvy ISO/OSI, na které pracují."
+      ]
+    },
+    {
+      "kicker": "2 / 7   •   Repeater",
+      "title": "Opakovač",
+      "tip": "Tip: fyzická vrstva",
+      "lines": [
+        "Zesiluje signál a tím zvyšuje dosah."
+      ]
+    },
+    {
+      "kicker": "3 / 7   •   Transceiver",
+      "title": "Konvertor",
+      "tip": "Tip: fyzická vrstva",
+      "lines": [
+        "Převádí signál mezi různými médii.",
+        "Například metaliku na optiku."
+      ]
+    },
+    {
+      "kicker": "4 / 7   •   Hub",
+      "title": "Rozbočovač",
+      "tip": "Tip: fyzická vrstva – „hloupý“ prvek",
+      "lines": [
+        "Co přijme na jednom portu, rozešle do všech ostatních."
+      ]
+    },
+    {
+      "kicker": "5 / 7   •   Bridge/Switch",
+      "title": "Most a přepínač",
+      "tip": "Tip: linková vrstva – rámce a MAC",
+      "lines": [
+        "Pracují s rámci a MAC adresami.",
+        "Switch dělí síť na kolizní domény."
+      ]
+    },
+    {
+      "kicker": "6 / 7   •   Router",
+      "title": "Směrovač",
+      "tip": "Tip: síťová vrstva – pakety a IP",
+      "lines": [
+        "Pracuje s pakety a IP adresami.",
+        "Propojuje různé sítě."
+      ]
+    },
+    {
+      "kicker": "7 / 7   •   Gateway",
+      "title": "Brána",
+      "tip": "Tip: vyšší vrstvy",
+      "lines": [
+        "Převádí mezi odlišnými architekturami nebo protokoly."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz17_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Repeater (opakovač) hlavně:",
+          "options": [
+            "Zesiluje signál a zvyšuje dosah",
+            "Směruje IP pakety",
+            "Převádí mezi protokoly vyšších vrstev",
+            "Rezervuje médium RTS/CTS"
+          ],
+          "correct": 0,
+          "hint": "Repeater zesiluje signál na fyzické vrstvě"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Transceiver typicky:",
+          "options": [
+            "Převádí signál mezi různými médii",
+            "Dělí síť jen podle DNS",
+            "Je vždy jen brána",
+            "Pracuje jen s UDP"
+          ],
+          "correct": 0,
+          "hint": "Transceiver převádí mezi médii (např. metalika ↔ optika)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Hub (rozbočovač) je:",
+          "options": [
+            "„Hloupý“ prvek – data z jednoho portu pošle všem ostatním",
+            "Směrovač na síťové vrstvě",
+            "Jen laserový zdroj",
+            "Jen MAC filtr bez portů"
+          ],
+          "correct": 0,
+          "hint": "Hub rozešle přijatá data do všech ostatních portů"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Bridge a switch pracují na vrstvě:",
+          "options": [
+            "Fyzické",
+            "Linkové (rámce a MAC)",
+            "Aplikační",
+            "Jen transportní"
+          ],
+          "correct": 1,
+          "hint": "Bridge/switch = linková vrstva, rámce a MAC"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Switch mimo jiné:",
+          "options": [
+            "Dělí síť na kolizní domény",
+            "Nikdy nepoužívá MAC adresy",
+            "Funguje jen jako hub bez portů",
+            "Převádí jen ASCII"
+          ],
+          "correct": 0,
+          "hint": "Switch dělí síť na kolizní domény"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Router pracuje s:",
+          "options": [
+            "Pakety a IP adresami a propojuje sítě",
+            "Jen koaxiálem bez IP",
+            "Jen huby bez směrování",
+            "Jen RTS/CTS"
+          ],
+          "correct": 0,
+          "hint": "Router = síťová vrstva, pakety a IP, propojuje sítě"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Gateway (brána) především:",
+          "options": [
+            "Převádí mezi odlišnými architekturami/protokoly",
+            "Jen zesiluje bitový signál",
+            "Jen tvoří kolize",
+            "Jen lámání vlákna"
+          ],
+          "correct": 0,
+          "hint": "Gateway převádí mezi odlišnými architekturami/protokoly"
+        }
+      ]
+    }
+  ]
+}

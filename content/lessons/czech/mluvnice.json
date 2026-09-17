@@ -1,0 +1,1657 @@
+{
+  "id": "mluvnice",
+  "subject": "czech",
+  "number": 1,
+  "title": {
+    "cs": "Mluvnice",
+    "en": "Czech grammar"
+  },
+  "subtitle": {
+    "cs": "Vyberte cvičení a dokončete je.",
+    "en": "Pick an exercise and complete it."
+  },
+  "slides": [],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "i/y",
+      "heading": "Pravopis – i/y po obojetných souhláskách",
+      "subtitleKey": null,
+      "subtitle": "Doplňte i/í nebo y/ý.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Stará bab_čka sed_la na lav_čce.",
+          "fields": [
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "babička"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "seděla",
+                "sedla"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "lavičce"
+              ]
+            }
+          ],
+          "solution": "babička, seděla, lavičce"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Na obloze sv_tily hv_zdy.",
+          "fields": [
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "svítily"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "hvězdy"
+              ]
+            }
+          ],
+          "solution": "svítily, hvězdy"
+        },
+        {
+          "kind": "fields",
+          "prompt": "M_sl_m, že m_š pravdu.",
+          "fields": [
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "Myslím"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "myš"
+              ]
+            }
+          ],
+          "solution": "Myslím, myš"
+        },
+        {
+          "kind": "fields",
+          "prompt": "V_soký muž nes_l těžký kuf_r.",
+          "fields": [
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "Vysoký"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "nesl"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "kufr"
+              ]
+            }
+          ],
+          "solution": "Vysoký, nesl, kufr"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Ryb_ář čekal cel_ den u řek_.",
+          "fields": [
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "Rybář"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "celý"
+              ]
+            },
+            {
+              "label": "i/í/y/ý",
+              "answers": [
+                "řeky"
+              ]
+            }
+          ],
+          "solution": "Rybář, celý, řeky"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Velká písmena",
+      "heading": "Pravopis – velká/malá písmena",
+      "subtitleKey": null,
+      "subtitle": "Vyberte správnou variantu.",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Narodil se v ______ v malé vesnici.",
+          "options": [
+            "Čechách",
+            "čechách"
+          ],
+          "correct": 0
+        },
+        {
+          "kind": "choice",
+          "prompt": "Přečetl jsem román od ______.",
+          "options": [
+            "Boženy Němcové",
+            "boženy němcové"
+          ],
+          "correct": 0
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jedeme na ______.",
+          "options": [
+            "Moravu",
+            "moravu"
+          ],
+          "correct": 0
+        },
+        {
+          "kind": "choice",
+          "prompt": "V ______ žije přes milion lidí.",
+          "options": [
+            "Praze",
+            "praze"
+          ],
+          "correct": 0
+        },
+        {
+          "kind": "choice",
+          "prompt": "Navštívili jsme ______.",
+          "options": [
+            "Národní muzeum",
+            "národní muzeum"
+          ],
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Slovní druhy",
+      "heading": "Slovní druhy",
+      "subtitleKey": null,
+      "subtitle": "Určete slovní druh podtržených slov.",
+      "note": "Do pole napište název slovního druhu.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Krásný den se chýlil ke konci. — slovo „Krásný“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "přídavné jméno",
+                "přídavné jmeno",
+                "adjektivum"
+              ]
+            }
+          ],
+          "solution": "přídavné jméno"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Šel rychle domů. — slovo „rychle“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "příslovce",
+                "adverbium"
+              ]
+            }
+          ],
+          "solution": "příslovce"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Sedím před školou. — slovo „před“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "předložka",
+                "prepozice"
+              ]
+            }
+          ],
+          "solution": "předložka"
+        },
+        {
+          "kind": "fields",
+          "prompt": "To je jeho kniha. — slovo „jeho“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "zájmeno",
+                "zájmeno",
+                "pronomen"
+              ]
+            }
+          ],
+          "solution": "zájmeno"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Ach, to je škoda! — slovo „Ach“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "citoslovce",
+                "interjekce"
+              ]
+            }
+          ],
+          "solution": "citoslovce"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Přišel jsem, ale bylo pozdě. — slovo „ale“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "spojka",
+                "konjunkce"
+              ]
+            }
+          ],
+          "solution": "spojka"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Napočítal jsem pět jablek. — slovo „pět“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "číslovka",
+                "cislovka",
+                "numerale"
+              ]
+            }
+          ],
+          "solution": "číslovka"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Učitel vysvětloval látku. — slovo „Učitel“",
+          "fields": [
+            {
+              "label": "slovní druh",
+              "answers": [
+                "podstatné jméno",
+                "podstatné jmeno",
+                "substantivum"
+              ]
+            }
+          ],
+          "solution": "podstatné jméno"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Podst. jména",
+      "heading": "Mluvnické kategorie – podstatná jména",
+      "subtitleKey": null,
+      "subtitle": "Určete rod, číslo a pád podtržených slov.",
+      "note": "Vyplňte tři pole: rod, číslo a pád.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Kniha leží na stole. — slovo „stole“ (stůl)",
+          "fields": [
+            {
+              "label": "rod",
+              "answers": [
+                "mužský",
+                "mužský rod",
+                "maskulinum"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "jednotné",
+                "jednotné číslo",
+                "singulár"
+              ]
+            },
+            {
+              "label": "pád",
+              "answers": [
+                "6",
+                "lokál",
+                "šestý",
+                "6. pád"
+              ]
+            }
+          ],
+          "solution": "mužský rod, jednotné číslo, 6. pád (lokál)"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Povídám si s kamarády. — slovo „kamarády“ (kamarád)",
+          "fields": [
+            {
+              "label": "rod",
+              "answers": [
+                "mužský",
+                "mužský rod",
+                "maskulinum"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "množné",
+                "množné číslo",
+                "plurál"
+              ]
+            },
+            {
+              "label": "pád",
+              "answers": [
+                "7",
+                "instrumentál",
+                "sedmý",
+                "7. pád"
+              ]
+            }
+          ],
+          "solution": "mužský rod, množné číslo, 7. pád (instrumentál)"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Vidím krásnou horu. — slovo „horu“ (hora)",
+          "fields": [
+            {
+              "label": "rod",
+              "answers": [
+                "ženský",
+                "ženský rod",
+                "femininum"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "jednotné",
+                "jednotné číslo",
+                "singulár"
+              ]
+            },
+            {
+              "label": "pád",
+              "answers": [
+                "4",
+                "akuzativ",
+                "čtvrtý",
+                "4. pád"
+              ]
+            }
+          ],
+          "solution": "ženský rod, jednotné číslo, 4. pád (akuzativ)"
+        },
+        {
+          "kind": "fields",
+          "prompt": "To je dům mého souseda. — slovo „souseda“ (soused)",
+          "fields": [
+            {
+              "label": "rod",
+              "answers": [
+                "mužský",
+                "mužský rod",
+                "maskulinum"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "jednotné",
+                "jednotné číslo",
+                "singulár"
+              ]
+            },
+            {
+              "label": "pád",
+              "answers": [
+                "2",
+                "genitiv",
+                "druhý",
+                "2. pád"
+              ]
+            }
+          ],
+          "solution": "mužský rod, jednotné číslo, 2. pád (genitiv)"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Děti si hrají na zahradě. — slovo „Děti“ (dítě)",
+          "fields": [
+            {
+              "label": "rod",
+              "answers": [
+                "střední",
+                "střední rod",
+                "neutrum"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "množné",
+                "množné číslo",
+                "plurál"
+              ]
+            },
+            {
+              "label": "pád",
+              "answers": [
+                "1",
+                "nominativ",
+                "první",
+                "1. pád"
+              ]
+            }
+          ],
+          "solution": "střední rod, množné číslo, 1. pád (nominativ)"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Slovesa",
+      "heading": "Mluvnické kategorie – slovesa",
+      "subtitleKey": null,
+      "subtitle": "Určete osobu, číslo, čas a způsob u těchto sloves.",
+      "note": "U rozkazovacího a podmiňovacího způsobu napište do pole čas „neurčitý“.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "čteme",
+          "fields": [
+            {
+              "label": "osoba",
+              "answers": [
+                "1",
+                "1.",
+                "první",
+                "první osoba",
+                "1. osoba"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "množné",
+                "množné číslo",
+                "plurál"
+              ]
+            },
+            {
+              "label": "čas",
+              "answers": [
+                "přítomný",
+                "přítomný čas",
+                "přítomný čas"
+              ]
+            },
+            {
+              "label": "způsob",
+              "answers": [
+                "oznamovací",
+                "oznamovací způsob",
+                "indikativ"
+              ]
+            }
+          ],
+          "solution": "1. osoba, množné číslo, přítomný čas, oznamovací způsob"
+        },
+        {
+          "kind": "fields",
+          "prompt": "běžel",
+          "fields": [
+            {
+              "label": "osoba",
+              "answers": [
+                "3",
+                "3.",
+                "třetí",
+                "třetí osoba",
+                "3. osoba"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "jednotné",
+                "jednotné číslo",
+                "singulár"
+              ]
+            },
+            {
+              "label": "čas",
+              "answers": [
+                "minulý",
+                "minulý čas",
+                "minulý čas"
+              ]
+            },
+            {
+              "label": "způsob",
+              "answers": [
+                "oznamovací",
+                "oznamovací způsob",
+                "indikativ"
+              ]
+            }
+          ],
+          "solution": "3. osoba, jednotné číslo, minulý čas, oznamovací způsob"
+        },
+        {
+          "kind": "fields",
+          "prompt": "přečtěte",
+          "fields": [
+            {
+              "label": "osoba",
+              "answers": [
+                "2",
+                "2.",
+                "druhý",
+                "druhá osoba",
+                "2. osoba"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "množné",
+                "množné číslo",
+                "plurál"
+              ]
+            },
+            {
+              "label": "čas",
+              "answers": [
+                "neurčitý",
+                "nestanovený",
+                "neurčený"
+              ]
+            },
+            {
+              "label": "způsob",
+              "answers": [
+                "rozkazovací",
+                "rozkazovací způsob",
+                "imperativ"
+              ]
+            }
+          ],
+          "solution": "2. osoba, množné číslo, rozkazovací způsob (čas se neurčuje)"
+        },
+        {
+          "kind": "fields",
+          "prompt": "by zpíval",
+          "fields": [
+            {
+              "label": "osoba",
+              "answers": [
+                "3",
+                "3.",
+                "třetí",
+                "třetí osoba",
+                "3. osoba"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "jednotné",
+                "jednotné číslo",
+                "singulár"
+              ]
+            },
+            {
+              "label": "čas",
+              "answers": [
+                "neurčitý",
+                "nestanovený",
+                "přítomný"
+              ]
+            },
+            {
+              "label": "způsob",
+              "answers": [
+                "podmiňovací",
+                "podmiňovací způsob",
+                "kondicionál"
+              ]
+            }
+          ],
+          "solution": "3. osoba, jednotné číslo, podmiňovací způsob přítomný"
+        },
+        {
+          "kind": "fields",
+          "prompt": "budou pracovat",
+          "fields": [
+            {
+              "label": "osoba",
+              "answers": [
+                "3",
+                "3.",
+                "třetí",
+                "třetí osoba",
+                "3. osoba"
+              ]
+            },
+            {
+              "label": "číslo",
+              "answers": [
+                "množné",
+                "množné číslo",
+                "plurál"
+              ]
+            },
+            {
+              "label": "čas",
+              "answers": [
+                "budoucí",
+                "budoucí čas",
+                "futurum"
+              ]
+            },
+            {
+              "label": "způsob",
+              "answers": [
+                "oznamovací",
+                "oznamovací způsob",
+                "indikativ"
+              ]
+            }
+          ],
+          "solution": "3. osoba, množné číslo, budoucí čas, oznamovací způsob"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Slovotvorba",
+      "heading": "Slovotvorba",
+      "subtitleKey": null,
+      "subtitle": "Rozeberte slova na morfémy.",
+      "note": "Určete předponu, kořen, příponu a koncovku.",
+      "items": [
+        {
+          "kind": "reveal",
+          "prompt": "napsali",
+          "solution": "na- / ps- / -a- / -li"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "přečíst",
+          "solution": "pře- / číst"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "zahradník",
+          "solution": "za- / hrad- / -ník / -Ø"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "nepřátelský",
+          "solution": "ne- / přátel- / -ský / -Ø"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "výběr",
+          "solution": "vý- / bér- / -Ø / -Ø"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Větné členy",
+      "heading": "Větné členy",
+      "subtitleKey": null,
+      "subtitle": "Určete větný člen podtržených výrazů.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Malá holčička plakala. — větný člen „Malá holčička“",
+          "fields": [
+            {
+              "label": "větný člen",
+              "answers": [
+                "podmět",
+                "subjekt"
+              ]
+            }
+          ],
+          "solution": "podmět"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Otec pracuje v garáži. — větný člen „v garáži“",
+          "fields": [
+            {
+              "label": "větný člen",
+              "answers": [
+                "příslovečné určení místa",
+                "příslovečné určení místa (PU místa)",
+                "příslovečné určení",
+                "adverbiále místa"
+              ]
+            }
+          ],
+          "solution": "příslovečné určení místa"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Sestra je učitelka. — větný člen „je učitelka“",
+          "fields": [
+            {
+              "label": "větný člen",
+              "answers": [
+                "přísudek jmenný se sponou",
+                "přísudek jmenný",
+                "jmenný přísudek se sponou",
+                "přísudek se sponou"
+              ]
+            }
+          ],
+          "solution": "přísudek jmenný se sponou"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Dal jsem knihu bratrovi. — větný člen „knihu“",
+          "fields": [
+            {
+              "label": "větný člen",
+              "answers": [
+                "předmět",
+                "objekt"
+              ]
+            }
+          ],
+          "solution": "předmět"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Přišel unavený. — větný člen „unavený“",
+          "fields": [
+            {
+              "label": "větný člen",
+              "answers": [
+                "doplněk"
+              ]
+            }
+          ],
+          "solution": "doplněk"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Pomalu šel domů. — větný člen „Pomalu“",
+          "fields": [
+            {
+              "label": "větný člen",
+              "answers": [
+                "příslovečné určení způsobu",
+                "příslovečné určení způsobu (PU způsobu)",
+                "příslovečné určení",
+                "adverbiále způsobu"
+              ]
+            }
+          ],
+          "solution": "příslovečné určení způsobu"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Vedlejší věty",
+      "heading": "Druhy vedlejších vět",
+      "subtitleKey": null,
+      "subtitle": "Určete druh vedlejší věty.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Věřím, že uspěješ.",
+          "fields": [
+            {
+              "label": "druh vedlejší věty",
+              "answers": [
+                "vedlejší věta předmětná",
+                "věta předmětná",
+                "předmětná"
+              ]
+            }
+          ],
+          "solution": "vedlejší věta předmětná"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Udělám to, jak budu moci.",
+          "fields": [
+            {
+              "label": "druh vedlejší věty",
+              "answers": [
+                "vedlejší věta příslovečná způsobová",
+                "příslovečná způsobová",
+                "způsobová"
+              ]
+            }
+          ],
+          "solution": "vedlejší věta příslovečná způsobová"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Přišel, protože chtěl pomoci.",
+          "fields": [
+            {
+              "label": "druh vedlejší věty",
+              "answers": [
+                "vedlejší věta příslovečná příčinná",
+                "příslovečná příčinná",
+                "příčinná"
+              ]
+            }
+          ],
+          "solution": "vedlejší věta příslovečná příčinná"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Řekni mi, kde bydlíš.",
+          "fields": [
+            {
+              "label": "druh vedlejší věty",
+              "answers": [
+                "vedlejší věta předmětná",
+                "věta předmětná",
+                "předmětná"
+              ]
+            }
+          ],
+          "solution": "vedlejší věta předmětná"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Byl tak unavený, že usnul okamžitě.",
+          "fields": [
+            {
+              "label": "druh vedlejší věty",
+              "answers": [
+                "vedlejší věta příslovečná následková",
+                "příslovečná následková",
+                "následková"
+              ]
+            }
+          ],
+          "solution": "vedlejší věta příslovečná následková"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Synonyma",
+      "heading": "Synonyma",
+      "subtitleKey": null,
+      "subtitle": "Ke každému slovu napište synonymum.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "rychlý",
+          "fields": [
+            {
+              "label": "synonymum",
+              "answers": [
+                "hbitý",
+                "svižný",
+                "rychlý",
+                "čilý",
+                "bystrý",
+                "prudký"
+              ]
+            }
+          ],
+          "solution": "hbitý, svižný"
+        },
+        {
+          "kind": "fields",
+          "prompt": "smutný",
+          "fields": [
+            {
+              "label": "synonymum",
+              "answers": [
+                "nešťastný",
+                "zarmoucený",
+                "tesklivý",
+                "skličený",
+                "žalostný"
+              ]
+            }
+          ],
+          "solution": "nešťastný, zarmoucený"
+        },
+        {
+          "kind": "fields",
+          "prompt": "začít",
+          "fields": [
+            {
+              "label": "synonymum",
+              "answers": [
+                "zahájit",
+                "započít",
+                "začínat",
+                "rozpoutat",
+                "zahajovat"
+              ]
+            }
+          ],
+          "solution": "zahájit, započít"
+        },
+        {
+          "kind": "fields",
+          "prompt": "krásný",
+          "fields": [
+            {
+              "label": "synonymum",
+              "answers": [
+                "nádherný",
+                "překrásný",
+                "kouzelný",
+                "půvabný",
+                "okouzlující"
+              ]
+            }
+          ],
+          "solution": "nádherný, překrásný"
+        },
+        {
+          "kind": "fields",
+          "prompt": "mluvit",
+          "fields": [
+            {
+              "label": "synonymum",
+              "answers": [
+                "hovořit",
+                "promlouvat",
+                "vyprávět",
+                "říkat",
+                "povídat"
+              ]
+            }
+          ],
+          "solution": "hovořit, promlouvat"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Antonyma",
+      "heading": "Antonyma",
+      "subtitleKey": null,
+      "subtitle": "Napište opak.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "starý ×",
+          "fields": [
+            {
+              "label": "opak",
+              "answers": [
+                "nový",
+                "mladý"
+              ]
+            }
+          ],
+          "solution": "nový"
+        },
+        {
+          "kind": "fields",
+          "prompt": "začátek ×",
+          "fields": [
+            {
+              "label": "opak",
+              "answers": [
+                "konec",
+                "závěr"
+              ]
+            }
+          ],
+          "solution": "konec"
+        },
+        {
+          "kind": "fields",
+          "prompt": "přijít ×",
+          "fields": [
+            {
+              "label": "opak",
+              "answers": [
+                "odejít",
+                "odjet",
+                "odcházet"
+              ]
+            }
+          ],
+          "solution": "odejít"
+        },
+        {
+          "kind": "fields",
+          "prompt": "radost ×",
+          "fields": [
+            {
+              "label": "opak",
+              "answers": [
+                "smutek",
+                "žal",
+                "zármutek"
+              ]
+            }
+          ],
+          "solution": "smutek"
+        },
+        {
+          "kind": "fields",
+          "prompt": "vysoký ×",
+          "fields": [
+            {
+              "label": "opak",
+              "answers": [
+                "nízký",
+                "malý"
+              ]
+            }
+          ],
+          "solution": "nízký"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "s/z",
+      "heading": "Pravopis – s/z na začátku slova",
+      "subtitleKey": null,
+      "subtitle": "Vyberte správnou předponu s-/z-.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "(s/z)kočit dolů ze stromu",
+          "fields": [
+            {
+              "label": "s-/z-",
+              "answers": [
+                "skočit"
+              ]
+            }
+          ],
+          "solution": "skočit"
+        },
+        {
+          "kind": "fields",
+          "prompt": "(s/z)epsat úkol",
+          "fields": [
+            {
+              "label": "s-/z-",
+              "answers": [
+                "sepsat"
+              ]
+            }
+          ],
+          "solution": "sepsat"
+        },
+        {
+          "kind": "fields",
+          "prompt": "(s/z)budovat nový dům",
+          "fields": [
+            {
+              "label": "s-/z-",
+              "answers": [
+                "zbudovat"
+              ]
+            }
+          ],
+          "solution": "zbudovat"
+        },
+        {
+          "kind": "fields",
+          "prompt": "(s/z)vednout těžký kámen",
+          "fields": [
+            {
+              "label": "s-/z-",
+              "answers": [
+                "zvednout"
+              ]
+            }
+          ],
+          "solution": "zvednout"
+        },
+        {
+          "kind": "fields",
+          "prompt": "(s/z)pravit auto",
+          "fields": [
+            {
+              "label": "s-/z-",
+              "answers": [
+                "spravit"
+              ]
+            }
+          ],
+          "solution": "spravit"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Najdi chybu",
+      "heading": "Skladba – najděte chybu",
+      "subtitleKey": null,
+      "subtitle": "Každá věta obsahuje jednu chybu. Najděte ji a opravte.",
+      "items": [
+        {
+          "kind": "reveal",
+          "prompt": "Koupil jsem novej kabát.",
+          "solution": "nový („novej“ je nespisovné)"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Přišli jsme tam, kdy jsme měli.",
+          "solution": "kdy → když: „Přišli jsme tam, když jsme měli.“"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Ona mě o tom neřekla nic.",
+          "solution": "mě → mi (dativ): „Ona mi o tom neřekla nic.“"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Je to nejlepší film, který jsem viděl vůbec.",
+          "solution": "„vůbec nejlepší film“: „Je to vůbec nejlepší film, který jsem viděl.“"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Byl jsem na nákupu a koupil chléb.",
+          "solution": "„Byl jsem nakupovat a koupil jsem chléb.“"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Tvary",
+      "heading": "Tvarosloví – správný tvar",
+      "subtitleKey": null,
+      "subtitle": "Dejte slovo do správného tvaru.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Viděl jsem (ten starý muž) ______.",
+          "fields": [
+            {
+              "label": "správný tvar",
+              "answers": [
+                "toho starého muže",
+                "toho starého muže,"
+              ]
+            }
+          ],
+          "solution": "toho starého muže"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Mluvil jsem s (moje sestra) ______.",
+          "fields": [
+            {
+              "label": "správný tvar",
+              "answers": [
+                "mojí sestrou",
+                "mou sestrou",
+                "svou sestrou"
+              ]
+            }
+          ],
+          "solution": "mojí sestrou"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Jdu do (škola) ______.",
+          "fields": [
+            {
+              "label": "správný tvar",
+              "answers": [
+                "školy"
+              ]
+            }
+          ],
+          "solution": "školy"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Sedím vedle (kamarád) ______.",
+          "fields": [
+            {
+              "label": "správný tvar",
+              "answers": [
+                "kamaráda"
+              ]
+            }
+          ],
+          "solution": "kamaráda"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Vzpomínám na (dětství) ______.",
+          "fields": [
+            {
+              "label": "správný tvar",
+              "answers": [
+                "dětství"
+              ]
+            }
+          ],
+          "solution": "dětství"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "title": "Test A–D",
+      "heading": "Výběr ze čtyř možností",
+      "subtitleKey": null,
+      "subtitle": "Vyberte správnou odpověď.",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Slovo „záříjový“ je:",
+          "options": [
+            "správně",
+            "chybně"
+          ],
+          "correct": 1,
+          "hint": "Správně je „zářijový“ (nikoli „záříjový“)."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Které slovo je přídavné jméno?",
+          "options": [
+            "rychle",
+            "rychlost",
+            "rychlý",
+            "zrychlení"
+          ],
+          "correct": 2,
+          "hint": "„rychlý“ je přídavné jméno; „rychle“ je příslovce."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Věta „Petr čte knihu.“ je:",
+          "options": [
+            "souvětí",
+            "věta jednoduchá",
+            "věta bez podmětu",
+            "věta zvolací"
+          ],
+          "correct": 1,
+          "hint": "Věta má jen jeden přísudek („čte“), jde o větu jednoduchou."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Slovo „příroda“ je utvořeno:",
+          "options": [
+            "odvozením",
+            "skládáním",
+            "zkracováním",
+            "přejímáním"
+          ],
+          "correct": 0,
+          "hint": "„příroda“ je utvořena odvozením, není to složenina."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Která dvojice jsou synonyma?",
+          "options": [
+            "rychlý – pomalý",
+            "jít – přijít",
+            "smutný – nešťastný",
+            "velký – malý"
+          ],
+          "correct": 2,
+          "hint": "Synonyma vyjadřují stejný význam: „smutný“ a „nešťastný“."
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "title": "Přímá řeč",
+      "heading": "Přímá a nepřímá řeč",
+      "subtitleKey": null,
+      "subtitle": "Přepište přímou řeč na nepřímou.",
+      "items": [
+        {
+          "kind": "reveal",
+          "prompt": "Matka řekla: „Pojď se najíst.“",
+          "solution": "Matka řekla, abych přišel se najíst."
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Učitel řekl: „Zítra bude písemka.“",
+          "solution": "Učitel řekl, že zítra bude písemka."
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Kamarád se zeptal: „Kde bydlíš?“",
+          "solution": "Kamarád se zeptal, kde bydlím."
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "title": "Rozdíly",
+      "heading": "Slovní zásoba – rozdíly",
+      "subtitleKey": null,
+      "subtitle": "Vysvětlete rozdíl mezi těmito dvojicemi slov.",
+      "items": [
+        {
+          "kind": "reveal",
+          "prompt": "bydlet × žít",
+          "solution": "bydlet = mít domov někde; žít = existovat, prožívat život"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "říkat × vyprávět",
+          "solution": "říkat = sdělovat informaci; vyprávět = podrobně popisovat příběh"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "dívat se × vidět",
+          "solution": "dívat se = záměrně sledovat; vidět = vnímat zrakem (i neúmyslně)"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "učit × učit se",
+          "solution": "učit = předávat znalosti druhým; učit se = sám nabývat znalosti"
+        },
+        {
+          "kind": "reveal",
+          "prompt": "přinést × donést",
+          "solution": "přinést = přinést sem (k mluvčímu); donést = odnést tam (od mluvčího)"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "title": "Interpunkce",
+      "heading": "Interpunkce",
+      "subtitleKey": null,
+      "subtitle": "Doplňte čárky tam, kde patří.",
+      "items": [
+        {
+          "kind": "reveal",
+          "prompt": "Přišel jsem domů unavený hladový a promrzlý.",
+          "solution": "Přišel jsem domů unavený, hladový a promrzlý."
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Když dorazil vlak nastoupili všichni cestující.",
+          "solution": "Když dorazil vlak, nastoupili všichni cestující."
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Myslím že dnes bude pršet.",
+          "solution": "Myslím, že dnes bude pršet."
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Jana která je moje nejlepší kamarádka bydlí vedle.",
+          "solution": "Jana, která je moje nejlepší kamarádka, bydlí vedle."
+        },
+        {
+          "kind": "reveal",
+          "prompt": "Pes štěkal ale nikdo nepřicházel.",
+          "solution": "Pes štěkal, ale nikdo nepřicházel."
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "title": "Obrazná pojmen.",
+      "heading": "Obrazná pojmenování",
+      "subtitleKey": null,
+      "subtitle": "Určete, o jaký druh obrazného pojmenování jde.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Slunce se usmívalo na celé město.",
+          "fields": [
+            {
+              "label": "druh pojmenování",
+              "answers": [
+                "personifikace",
+                "zosobnění"
+              ]
+            }
+          ],
+          "solution": "personifikace"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Je silný jako býk.",
+          "fields": [
+            {
+              "label": "druh pojmenování",
+              "answers": [
+                "přirovnání",
+                "komparace"
+              ]
+            }
+          ],
+          "solution": "přirovnání"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Moře hněvu ho zaplavilo.",
+          "fields": [
+            {
+              "label": "druh pojmenování",
+              "answers": [
+                "metafora"
+              ]
+            }
+          ],
+          "solution": "metafora"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Čekal jsem na tebe věčnost.",
+          "fields": [
+            {
+              "label": "druh pojmenování",
+              "answers": [
+                "hyperbola",
+                "nadsázka"
+              ]
+            }
+          ],
+          "solution": "hyperbola"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Přečetl celého Shakespeara.",
+          "fields": [
+            {
+              "label": "druh pojmenování",
+              "answers": [
+                "metonymie"
+              ]
+            }
+          ],
+          "solution": "metonymie"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "title": "Slohové útvary",
+      "heading": "Stylistika – slohové útvary",
+      "subtitleKey": null,
+      "subtitle": "Přiřaďte ukázku ke správnému slohovému útvaru.",
+      "items": [
+        {
+          "kind": "fields",
+          "prompt": "Narodil se roku 1890 v Praze. Vystudoval práva a poté pracoval jako úředník…",
+          "fields": [
+            {
+              "label": "slohový útvar",
+              "answers": [
+                "životopis",
+                "biografie"
+              ]
+            }
+          ],
+          "solution": "životopis"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Byl to chlapec střední postavy, s hnědýma očima a klidným výrazem…",
+          "fields": [
+            {
+              "label": "slohový útvar",
+              "answers": [
+                "charakteristika"
+              ]
+            }
+          ],
+          "solution": "charakteristika"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Jednoho dne jsem šel lesem, když tu najednou jsem zaslechl podivný zvuk…",
+          "fields": [
+            {
+              "label": "slohový útvar",
+              "answers": [
+                "vyprávění"
+              ]
+            }
+          ],
+          "solution": "vyprávění"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Mnozí se ptají, zda má smysl číst knihy v době internetu. Domnívám se…",
+          "fields": [
+            {
+              "label": "slohový útvar",
+              "answers": [
+                "úvaha"
+              ]
+            }
+          ],
+          "solution": "úvaha"
+        },
+        {
+          "kind": "fields",
+          "prompt": "Místnost byla malá, se dvěma okny na jih. U zdi stála stará skříň…",
+          "fields": [
+            {
+              "label": "slohový útvar",
+              "answers": [
+                "popis"
+              ]
+            }
+          ],
+          "solution": "popis"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "title": "Opakování",
+      "heading": "Souhrnné opakování",
+      "subtitleKey": null,
+      "subtitle": "Vyberte správnou odpověď.",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Které slovo není příslovce?",
+          "options": [
+            "rychle",
+            "tam",
+            "hezký",
+            "brzy"
+          ],
+          "correct": 2
+        },
+        {
+          "kind": "choice",
+          "prompt": "Ve větě „Petr dal Pavlovi knihu“ je slovo „Pavlovi“:",
+          "options": [
+            "podmět",
+            "přísudek",
+            "předmět",
+            "příslovečné určení"
+          ],
+          "correct": 2
+        },
+        {
+          "kind": "choice",
+          "prompt": "Slovo „nejhezčí“ obsahuje:",
+          "options": [
+            "předponu a příponu",
+            "pouze předponu",
+            "kořen a příponu",
+            "pouze příponu"
+          ],
+          "correct": 0
+        },
+        {
+          "kind": "choice",
+          "prompt": "Která věta je souvětí souřadné slučovací?",
+          "options": [
+            "Přišel, protože chtěl pomoci.",
+            "Šel domů a spal.",
+            "Věřím, že přijdeš.",
+            "Udělám to, jak budeš chtít."
+          ],
+          "correct": 1
+        },
+        {
+          "kind": "choice",
+          "prompt": "Příslovce „rychle“ je stupňováno jako:",
+          "options": [
+            "rychle – rychleji – nejrychleji",
+            "rychle – více rychle – nejvíce rychle",
+            "rychle – rychlé – nejrychlejší",
+            "nelze stupňovat"
+          ],
+          "correct": 0
+        }
+      ]
+    }
+  ]
+}

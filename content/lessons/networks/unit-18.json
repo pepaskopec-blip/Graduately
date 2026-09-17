@@ -1,0 +1,139 @@
+{
+  "id": "unit-18",
+  "subject": "networks",
+  "number": 18,
+  "titleKey": "net_unit18",
+  "subtitleKey": "net_unit18_sub",
+  "slides": [
+    {
+      "kicker": "1 / 5   •   Funkce",
+      "title": "Učení MAC adres",
+      "tip": "Tip: CAM tabulka = adresa → port",
+      "lines": [
+        "Switch se učí MAC adresy odesílatelů.",
+        "Ukládá je do CAM tabulky.",
+        "Rámce pak posílá jen na konkrétní port."
+      ]
+    },
+    {
+      "kicker": "2 / 5   •   Metody",
+      "title": "Tři způsoby přepínání",
+      "tip": null,
+      "lines": [
+        "Cut-through, store-and-forward a fragment-free.",
+        "Liší se rychlostí a kontrolou chyb."
+      ]
+    },
+    {
+      "kicker": "3 / 5   •   Cut-through",
+      "title": "Hned po adrese",
+      "tip": null,
+      "lines": [
+        "Čte jen adresu příjemce a hned posílá dál.",
+        "Nejrychlejší metoda.",
+        "Nevýhoda: posílá i chybné rámce."
+      ]
+    },
+    {
+      "kicker": "4 / 5   •   Store-and-forward",
+      "title": "Celý rámec + CRC",
+      "tip": null,
+      "lines": [
+        "Přijme celý rámec a zkontroluje CRC.",
+        "Teprve pak rámec pošle.",
+        "Nejpomalejší, ale nejbezpečnější metoda."
+      ]
+    },
+    {
+      "kicker": "5 / 5   •   Fragment-free",
+      "title": "Modifikovaný cut-through",
+      "tip": "Tip: prvních 64 bytů = detekce kolizí",
+      "lines": [
+        "Čte prvních 64 bytů rámce.",
+        "To stačí k odhalení kolizních fragmentů.",
+        "Kompromis mezi rychlostí a bezpečností."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz18_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Switch se učí MAC adresy a ukládá je do:",
+          "options": [
+            "CAM tabulky",
+            "Jen DNS cache",
+            "Jen ARP bez portů",
+            "Jen OSPF"
+          ],
+          "correct": 0,
+          "hint": "MAC adresy switch ukládá do CAM tabulky"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Díky CAM tabulce switch posílá rámce:",
+          "options": [
+            "Jen na konkrétní port",
+            "Vždy na všechny porty jako hub",
+            "Jen na routery",
+            "Jen přes laser"
+          ],
+          "correct": 0,
+          "hint": "Podle CAM tabulky posílá rámec jen na cílový port"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Cut-through přepínání:",
+          "options": [
+            "Čte jen adresu příjemce a hned posílá",
+            "Vždy čeká na celé CRC",
+            "Nikdy neposílá rámce",
+            "Pracuje jen s IP směrováním"
+          ],
+          "correct": 0,
+          "hint": "Cut-through čte adresu příjemce a hned přeposílá"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Nevýhoda cut-through je:",
+          "options": [
+            "Že posílá i chybné rámce",
+            "Že je nejpomalejší",
+            "Že nemá MAC adresy",
+            "Že vyžaduje gateway"
+          ],
+          "correct": 0,
+          "hint": "Cut-through je rychlý, ale propustí i chyby"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Store-and-forward:",
+          "options": [
+            "Přijme celý rámec, zkontroluje CRC a pak pošle",
+            "Čte jen první 2 byty",
+            "Nikdy nekontroluje chyby",
+            "Funguje jen jako Aloha"
+          ],
+          "correct": 0,
+          "hint": "Store-and-forward kontroluje celý rámec včetně CRC"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Fragment-free (modifikovaný cut-through) čte:",
+          "options": [
+            "Prvních 64 bytů (detekce kolizí)",
+            "Jen poslední byte",
+            "Celý paket IP včetně směrování",
+            "Jen SMTP hlavičku"
+          ],
+          "correct": 0,
+          "hint": "Fragment-free čte prvních 64 bytů kvůli kolizím"
+        }
+      ]
+    }
+  ]
+}

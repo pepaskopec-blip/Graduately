@@ -1,0 +1,172 @@
+{
+  "id": "unit-12",
+  "subject": "networks",
+  "number": 12,
+  "titleKey": "net_unit12",
+  "subtitleKey": "net_unit12_sub",
+  "slides": [
+    {
+      "kicker": "1 / 6   •   Mapování",
+      "title": "TCP/IP vs ISO/OSI",
+      "tip": null,
+      "lines": [
+        "Aplikační TCP/IP = aplikační + prezentační + relační ISO/OSI.",
+        "Transportní TCP/IP = transportní ISO/OSI.",
+        "Síťová (internetová) = síťová ISO/OSI.",
+        "Vrstva síťového rozhraní = linková + fyzická ISO/OSI."
+      ]
+    },
+    {
+      "kicker": "2 / 6   •   Vznik",
+      "title": "Nejprve protokoly",
+      "tip": "Tip: opačný postup než u ISO/OSI",
+      "lines": [
+        "Nejprve vznikly protokoly pro Internet.",
+        "Až poté byl definován model TCP/IP.",
+        "U ISO/OSI to bylo naopak: nejdřív model, pak protokoly."
+      ]
+    },
+    {
+      "kicker": "3 / 6   •   Aplikace",
+      "title": "Aplikační protokoly",
+      "tip": null,
+      "lines": [
+        "HTTP, HTTPS, FTP, DHCP, DNS.",
+        "Pošta: POP3, IMAP, SMTP."
+      ]
+    },
+    {
+      "kicker": "4 / 6   •   Transport",
+      "title": "TCP a UDP",
+      "tip": null,
+      "lines": [
+        "TCP: spolehlivý, spojovaný.",
+        "UDP: nespolehlivý, rychlý."
+      ]
+    },
+    {
+      "kicker": "5 / 6   •   Síť",
+      "title": "Internetové protokoly",
+      "tip": null,
+      "lines": [
+        "IP – základní přenos paketů.",
+        "ICMP, ARP.",
+        "Směrování: RIP, OSPF."
+      ]
+    },
+    {
+      "kicker": "6 / 6   •   Rozhraní",
+      "title": "Síťové rozhraní",
+      "tip": null,
+      "lines": [
+        "Ethernet, Token Ring, PPP, ATM.",
+        "Odpovídá linkové a fyzické vrstvě ISO/OSI."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz12_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Aplikační vrstva TCP/IP odpovídá v ISO/OSI:",
+          "options": [
+            "Jen aplikační vrstvě",
+            "Aplikační + prezentační + relační",
+            "Jen fyzické vrstvě",
+            "Linkové + síťové"
+          ],
+          "correct": 1,
+          "hint": "Aplikační TCP/IP = aplikační + prezentační + relační ISO/OSI"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Vrstva síťového rozhraní TCP/IP odpovídá:",
+          "options": [
+            "Jen síťové ISO/OSI",
+            "Linkové + fyzické ISO/OSI",
+            "Jen transportní ISO/OSI",
+            "Jen aplikační ISO/OSI"
+          ],
+          "correct": 1,
+          "hint": "Síťové rozhraní TCP/IP = linková + fyzická ISO/OSI"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Model TCP/IP vznikl:",
+          "options": [
+            "Nejdřív model, pak protokoly",
+            "Nejdřív protokoly, pak model",
+            "Současně s Token Ring",
+            "Jen jako náhrada za ATM"
+          ],
+          "correct": 1,
+          "hint": "U TCP/IP vznikly nejdřív protokoly, až pak model"
+        },
+        {
+          "kind": "choice",
+          "prompt": "TCP je:",
+          "options": [
+            "Nespolehlivý a rychlý",
+            "Spolehlivý a spojovaný",
+            "Jen směrovací protokol",
+            "Jen fyzické kódování"
+          ],
+          "correct": 1,
+          "hint": "TCP je spolehlivý a spojovaný"
+        },
+        {
+          "kind": "choice",
+          "prompt": "UDP je:",
+          "options": [
+            "Spolehlivý a spojovaný",
+            "Nespolehlivý a rychlý",
+            "Jen e-mailový protokol",
+            "Jen ARP"
+          ],
+          "correct": 1,
+          "hint": "UDP je nespolehlivý a rychlý"
+        },
+        {
+          "kind": "choice",
+          "prompt": "HTTP, DNS a SMTP patří do vrstvy:",
+          "options": [
+            "Aplikační",
+            "Transportní",
+            "Síťové",
+            "Síťového rozhraní"
+          ],
+          "correct": 0,
+          "hint": "HTTP, DNS a SMTP jsou aplikační protokoly"
+        },
+        {
+          "kind": "choice",
+          "prompt": "IP, ICMP a OSPF patří do vrstvy:",
+          "options": [
+            "Aplikační",
+            "Transportní",
+            "Síťové (internetové)",
+            "Síťového rozhraní"
+          ],
+          "correct": 2,
+          "hint": "IP, ICMP a OSPF patří na síťovou (internetovou) vrstvu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Ethernet a PPP patří do vrstvy:",
+          "options": [
+            "Aplikační",
+            "Transportní",
+            "Síťové",
+            "Síťového rozhraní"
+          ],
+          "correct": 3,
+          "hint": "Ethernet a PPP patří na vrstvu síťového rozhraní"
+        }
+      ]
+    }
+  ]
+}

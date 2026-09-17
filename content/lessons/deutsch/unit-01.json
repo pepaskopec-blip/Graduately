@@ -1,0 +1,2200 @@
+{
+  "id": "unit-01",
+  "subject": "deutsch",
+  "number": 1,
+  "title": {
+    "cs": "Neue Freunde",
+    "en": "Neue Freunde"
+  },
+  "slides": [],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Dialog",
+      "subtitleKey": "sub_dialog",
+      "pool": [
+        "bin",
+        "heiße",
+        "kommst",
+        "aus",
+        "Morgen",
+        "geht",
+        "danke",
+        "Wiedersehen",
+        "Bis",
+        "Tschüss"
+      ],
+      "items": [
+        {
+          "kind": "dialogue",
+          "title": "Sich vorstellen",
+          "rows": [
+            {
+              "speaker": "A:",
+              "before": "Hallo! Ich ",
+              "answer": "bin|heiße",
+              "after": " Anna.",
+              "meaning": "Ahoj! Jmenuji se Anna."
+            },
+            {
+              "speaker": "B:",
+              "before": "Hallo! Ich ",
+              "answer": "bin|heiße",
+              "after": " Peter.",
+              "meaning": "Ahoj! Jmenuji se Petr."
+            },
+            {
+              "speaker": "A:",
+              "before": "Woher ",
+              "answer": "kommst",
+              "after": " du?",
+              "meaning": "Odkud jsi?"
+            },
+            {
+              "speaker": "B:",
+              "before": "Ich komme ",
+              "answer": "aus",
+              "after": " Tschechien.",
+              "meaning": "Pocházím z Česka."
+            }
+          ]
+        },
+        {
+          "kind": "dialogue",
+          "title": "Begrüßung",
+          "rows": [
+            {
+              "speaker": "A:",
+              "before": "Guten ",
+              "answer": "Morgen",
+              "after": "!",
+              "meaning": "Dobré ráno!"
+            },
+            {
+              "speaker": "B:",
+              "before": "Wie ",
+              "answer": "geht",
+              "after": " es dir?",
+              "meaning": "Jak se máš?"
+            },
+            {
+              "speaker": "A:",
+              "before": "Mir geht es gut, ",
+              "answer": "danke",
+              "after": ".",
+              "meaning": "Mám se dobře, děkuji."
+            }
+          ]
+        },
+        {
+          "kind": "dialogue",
+          "title": "Verabschiedung",
+          "rows": [
+            {
+              "speaker": "A:",
+              "before": "Ich muss gehen. Auf ",
+              "answer": "Wiedersehen",
+              "after": "!",
+              "meaning": "Musím jít. Na shledanou!"
+            },
+            {
+              "speaker": "B:",
+              "before": "",
+              "answer": "Bis",
+              "after": " bald!",
+              "meaning": "Brzy na viděnou!"
+            },
+            {
+              "speaker": "A:",
+              "before": "",
+              "answer": "Tschüss",
+              "after": "!",
+              "meaning": "Čau!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Sätze bilden",
+      "subtitleKey": "sub_assembly",
+      "items": [
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Ich",
+            "heiße",
+            "Anna",
+            "."
+          ],
+          "meaning": "Jmenuji se Anna."
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Woher",
+            "kommst",
+            "du",
+            "?"
+          ],
+          "meaning": "Odkud jsi?"
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Ich",
+            "komme",
+            "aus",
+            "Tschechien",
+            "."
+          ],
+          "meaning": "Pocházím z Česka."
+        },
+        {
+          "kind": "assembly",
+          "prompt": "",
+          "words": [
+            "Wie",
+            "geht",
+            "es",
+            "dir",
+            "?"
+          ],
+          "meaning": "Jak se máš?"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Was ist richtig?",
+      "subtitleKey": "sub_choice_num",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Welche Zahl ist „vierzehn“?",
+          "options": [
+            "4",
+            "14",
+            "40"
+          ],
+          "correct": 1,
+          "meaning": "„vierzehn“ = čtrnáct (14)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Welche Zahl ist „siebzehn“?",
+          "options": [
+            "7",
+            "17",
+            "70"
+          ],
+          "correct": 1,
+          "meaning": "„siebzehn“ = sedmnáct (17)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Welche Zahl ist „zwanzig“?",
+          "options": [
+            "2",
+            "12",
+            "20"
+          ],
+          "correct": 2,
+          "meaning": "„zwanzig“ = dvacet (20)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Welche Zahl ist „sechs“?",
+          "options": [
+            "6",
+            "16",
+            "60"
+          ],
+          "correct": 0,
+          "meaning": "„sechs“ = šest (6)"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Freie Antwort",
+      "subtitleKey": "sub_free",
+      "items": [
+        {
+          "kind": "free",
+          "question": "Wie heißt du?",
+          "questionCs": "Jak se jmenuješ?",
+          "sample": "Ich heiße Anna.",
+          "sampleCs": "Jmenuji se Anna."
+        },
+        {
+          "kind": "free",
+          "question": "Woher kommst du?",
+          "questionCs": "Odkud pocházíš?",
+          "sample": "Ich komme aus Tschechien.",
+          "sampleCs": "Pocházím z Česka."
+        },
+        {
+          "kind": "free",
+          "question": "Wie alt bist du?",
+          "questionCs": "Kolik je ti let?",
+          "sample": "Ich bin sechzehn Jahre alt.",
+          "sampleCs": "Je mi šestnáct let."
+        },
+        {
+          "kind": "free",
+          "question": "Wie geht es dir?",
+          "questionCs": "Jak se máš?",
+          "sample": "Mir geht es gut, danke.",
+          "sampleCs": "Mám se dobře, děkuji."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Zahlen",
+      "subtitleKey": "sub_zahlen",
+      "pool": [
+        "vierzehn",
+        "siebzehn",
+        "zwanzig",
+        "sechs",
+        "dreizehn"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            ""
+          ],
+          "answers": [
+            "vierzehn"
+          ],
+          "input": "select",
+          "clue": "14",
+          "meaning": "čtrnáct"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            ""
+          ],
+          "answers": [
+            "siebzehn"
+          ],
+          "input": "select",
+          "clue": "17",
+          "meaning": "sedmnáct"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            ""
+          ],
+          "answers": [
+            "zwanzig"
+          ],
+          "input": "select",
+          "clue": "20",
+          "meaning": "dvacet"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            ""
+          ],
+          "answers": [
+            "sechs"
+          ],
+          "input": "select",
+          "clue": "6",
+          "meaning": "šest"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            ""
+          ],
+          "answers": [
+            "dreizehn"
+          ],
+          "input": "select",
+          "clue": "13",
+          "meaning": "třináct"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Wie viel?",
+      "subtitleKey": "sub_wieviel",
+      "pool": [
+        "zwei",
+        "fünf",
+        "sieben",
+        "neun",
+        "drei",
+        "elf",
+        "vier",
+        "acht",
+        "sechs"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Äpfel"
+          ],
+          "answers": [
+            "zwei"
+          ],
+          "input": "select",
+          "emoji": "🍎 🍎",
+          "meaning": "dvě jablka"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Sterne"
+          ],
+          "answers": [
+            "fünf"
+          ],
+          "input": "select",
+          "emoji": "⭐ ⭐ ⭐ ⭐ ⭐",
+          "meaning": "pět hvězd"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Katzen"
+          ],
+          "answers": [
+            "sieben"
+          ],
+          "input": "select",
+          "emoji": "🐱 🐱 🐱 🐱 🐱 🐱 🐱",
+          "meaning": "sedm koček"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Blumen"
+          ],
+          "answers": [
+            "neun"
+          ],
+          "input": "select",
+          "emoji": "🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸",
+          "meaning": "devět květin"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Autos"
+          ],
+          "answers": [
+            "drei"
+          ],
+          "input": "select",
+          "emoji": "🚗 🚗 🚗",
+          "meaning": "tři auta"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Bücher"
+          ],
+          "answers": [
+            "elf"
+          ],
+          "input": "select",
+          "emoji": "📚 📚 📚 📚 📚 📚 📚 📚 📚 📚 📚",
+          "meaning": "jedenáct knih"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Kerzen"
+          ],
+          "answers": [
+            "vier"
+          ],
+          "input": "select",
+          "emoji": "🕯️ 🕯️ 🕯️ 🕯️",
+          "meaning": "čtyři svíčky"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Bälle"
+          ],
+          "answers": [
+            "acht"
+          ],
+          "input": "select",
+          "emoji": "⚽ ⚽ ⚽ ⚽ ⚽ ⚽ ⚽ ⚽",
+          "meaning": "osm míčů"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " Vögel"
+          ],
+          "answers": [
+            "sechs"
+          ],
+          "input": "select",
+          "emoji": "🐦 🐦 🐦 🐦 🐦 🐦",
+          "meaning": "šest ptáků"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Zahlenreihe",
+      "subtitleKey": "sub_reihe",
+      "pool": [
+        "acht",
+        "vierzehn",
+        "zwanzig",
+        "sechs",
+        "zwölf"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "sechs, sieben, ",
+            ", neun"
+          ],
+          "answers": [
+            "acht"
+          ],
+          "input": "select",
+          "meaning": "šest, sedm, osm, devět"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "zwölf, dreizehn, ",
+            ", fünfzehn"
+          ],
+          "answers": [
+            "vierzehn"
+          ],
+          "input": "select",
+          "meaning": "dvanáct, třináct, čtrnáct, patnáct"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "achtzehn, neunzehn, ",
+            ", einundzwanzig"
+          ],
+          "answers": [
+            "zwanzig"
+          ],
+          "input": "select",
+          "meaning": "osmnáct, devatenáct, dvacet, dvacet jedna"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "vier, fünf, ",
+            ", sieben"
+          ],
+          "answers": [
+            "sechs"
+          ],
+          "input": "select",
+          "meaning": "čtyři, pět, šest, sedm"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "zehn, elf, ",
+            ", dreizehn"
+          ],
+          "answers": [
+            "zwölf"
+          ],
+          "input": "select",
+          "meaning": "deset, jedenáct, dvanáct, třináct"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Verb einsetzen",
+      "subtitleKey": "sub_verb",
+      "pool": [
+        "heißen",
+        "kommen",
+        "wohnen",
+        "sein",
+        "spielen",
+        "machen",
+        "heiße",
+        "kommst",
+        "wohne",
+        "bist",
+        "spiele",
+        "machst"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich ",
+            " Peter."
+          ],
+          "answers": [
+            "heiße"
+          ],
+          "input": "select",
+          "meaning": "Jmenuji se Petr."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Woher ",
+            " du?"
+          ],
+          "answers": [
+            "kommst"
+          ],
+          "input": "select",
+          "meaning": "Odkud jsi?"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich ",
+            " in Prag."
+          ],
+          "answers": [
+            "wohne"
+          ],
+          "input": "select",
+          "meaning": "Bydlím v Praze."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Wie alt ",
+            " du?"
+          ],
+          "answers": [
+            "bist"
+          ],
+          "input": "select",
+          "meaning": "Kolik je ti let?"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Ich ",
+            " Fußball."
+          ],
+          "answers": [
+            "spiele"
+          ],
+          "input": "select",
+          "meaning": "Hraji fotbal."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Was ",
+            " du gern?"
+          ],
+          "answers": [
+            "machst"
+          ],
+          "input": "select",
+          "meaning": "Co rád/a děláš?"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Wer? Wie? Wo?",
+      "subtitleKey": "sub_wer",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "___ heißt du?",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo"
+          ],
+          "correct": 1,
+          "meaning": "Jak se jmenuješ?"
+        },
+        {
+          "kind": "choice",
+          "prompt": "___ kommst du?",
+          "options": [
+            "Woher",
+            "Wie",
+            "Wer"
+          ],
+          "correct": 0,
+          "meaning": "Odkud jsi?"
+        },
+        {
+          "kind": "choice",
+          "prompt": "___ wohnst du?",
+          "options": [
+            "Wo",
+            "Wer",
+            "Was"
+          ],
+          "correct": 0,
+          "meaning": "Kde bydlíš?"
+        },
+        {
+          "kind": "choice",
+          "prompt": "___ ist das?",
+          "options": [
+            "Wer",
+            "Wo",
+            "Wie"
+          ],
+          "correct": 0,
+          "meaning": "Kdo to je?"
+        },
+        {
+          "kind": "choice",
+          "prompt": "___ alt bist du?",
+          "options": [
+            "Wie",
+            "Woher",
+            "Was"
+          ],
+          "correct": 0,
+          "meaning": "Kolik je ti let?"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Wörter trennen",
+      "subtitleKey": "sub_assembly",
+      "items": [
+        {
+          "kind": "assembly",
+          "prompt": "wiespätistes",
+          "words": [
+            "wie",
+            "spät",
+            "ist",
+            "es"
+          ],
+          "meaning": "Kolik je hodin?"
+        },
+        {
+          "kind": "assembly",
+          "prompt": "ichheißeanna",
+          "words": [
+            "ich",
+            "heiße",
+            "anna"
+          ],
+          "meaning": "Jmenuji se Anna."
+        },
+        {
+          "kind": "assembly",
+          "prompt": "woherkommstdu",
+          "words": [
+            "woher",
+            "kommst",
+            "du"
+          ],
+          "meaning": "Odkud jsi?"
+        },
+        {
+          "kind": "assembly",
+          "prompt": "aufwiedersehen",
+          "words": [
+            "auf",
+            "wiedersehen"
+          ],
+          "meaning": "Na shledanou."
+        },
+        {
+          "kind": "assembly",
+          "prompt": "dankeschön",
+          "words": [
+            "danke",
+            "schön"
+          ],
+          "meaning": "Moc děkuji."
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Grußformen",
+      "subtitleKey": "sub_gruss",
+      "items": [
+        {
+          "kind": "assign",
+          "groups": [
+            "Begrüßung",
+            "Verabschiedung"
+          ],
+          "items": [
+            {
+              "emoji": null,
+              "label": "Hallo",
+              "group": 0,
+              "meaning": "Ahoj"
+            },
+            {
+              "emoji": null,
+              "label": "Guten Morgen",
+              "group": 0,
+              "meaning": "Dobré ráno"
+            },
+            {
+              "emoji": null,
+              "label": "Guten Tag",
+              "group": 0,
+              "meaning": "Dobrý den"
+            },
+            {
+              "emoji": null,
+              "label": "Guten Abend",
+              "group": 0,
+              "meaning": "Dobrý večer"
+            },
+            {
+              "emoji": null,
+              "label": "Grüß Gott",
+              "group": 0,
+              "meaning": "Dobrý den (Bavorsko, Rakousko)"
+            },
+            {
+              "emoji": null,
+              "label": "Servus",
+              "group": 0,
+              "meaning": "Ahoj / Čau"
+            },
+            {
+              "emoji": null,
+              "label": "Tschüss",
+              "group": 1,
+              "meaning": "Čau"
+            },
+            {
+              "emoji": null,
+              "label": "Auf Wiedersehen",
+              "group": 1,
+              "meaning": "Na shledanou"
+            },
+            {
+              "emoji": null,
+              "label": "Bis bald",
+              "group": 1,
+              "meaning": "Brzy na viděnou"
+            },
+            {
+              "emoji": null,
+              "label": "Bis morgen",
+              "group": 1,
+              "meaning": "Do zítřka"
+            },
+            {
+              "emoji": null,
+              "label": "Gute Nacht",
+              "group": 1,
+              "meaning": "Dobrou noc"
+            },
+            {
+              "emoji": null,
+              "label": "Bis später",
+              "group": 1,
+              "meaning": "Zatím / Na viděnou"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Was macht er/sie?",
+      "subtitleKey": "sub_bild",
+      "pool": [
+        "schwimmt",
+        "singt",
+        "kocht",
+        "liest",
+        "fährt",
+        "malt",
+        "spielt",
+        "schläft"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " im See."
+          ],
+          "answers": [
+            "schwimmt"
+          ],
+          "input": "select",
+          "meaning": "Plave v jezeře.",
+          "emoji": "🏊"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " ein Lied."
+          ],
+          "answers": [
+            "singt"
+          ],
+          "input": "select",
+          "meaning": "Zpívá píseň.",
+          "emoji": "🎤"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " Suppe."
+          ],
+          "answers": [
+            "kocht"
+          ],
+          "input": "select",
+          "meaning": "Vaří polévku.",
+          "emoji": "🍳"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " ein Buch."
+          ],
+          "answers": [
+            "liest"
+          ],
+          "input": "select",
+          "meaning": "Čte knihu.",
+          "emoji": "📖"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " Auto."
+          ],
+          "answers": [
+            "fährt"
+          ],
+          "input": "select",
+          "meaning": "Řídí auto.",
+          "emoji": "🚗"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " ein Bild."
+          ],
+          "answers": [
+            "malt"
+          ],
+          "input": "select",
+          "meaning": "Maluje obraz.",
+          "emoji": "🎨"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " Fußball."
+          ],
+          "answers": [
+            "spielt"
+          ],
+          "input": "select",
+          "meaning": "Hraje fotbal.",
+          "emoji": "⚽"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " ."
+          ],
+          "answers": [
+            "schläft"
+          ],
+          "input": "select",
+          "meaning": "Spí.",
+          "emoji": "🛏️"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Länder",
+      "subtitleKey": "sub_land",
+      "items": [
+        {
+          "kind": "assign",
+          "groups": [
+            "Deutschland (D)",
+            "Österreich (A)",
+            "Schweiz (CH)"
+          ],
+          "items": [
+            {
+              "emoji": "🥨",
+              "label": "Brezel",
+              "group": 0,
+              "meaning": "Preclík"
+            },
+            {
+              "emoji": "🌭",
+              "label": "Bratwurst",
+              "group": 0,
+              "meaning": "Klobása"
+            },
+            {
+              "emoji": "🏰",
+              "label": "Brandenburger Tor",
+              "group": 0,
+              "meaning": "Braniborská brána"
+            },
+            {
+              "emoji": "🚗",
+              "label": "Volkswagen",
+              "group": 0,
+              "meaning": "Značka aut"
+            },
+            {
+              "emoji": "🎻",
+              "label": "Mozart",
+              "group": 1,
+              "meaning": "Rakouský skladatel"
+            },
+            {
+              "emoji": "🍰",
+              "label": "Sachertorte",
+              "group": 1,
+              "meaning": "Čokoládový dort (Vídeň)"
+            },
+            {
+              "emoji": "🥩",
+              "label": "Wiener Schnitzel",
+              "group": 1,
+              "meaning": "Vídeňský řízek"
+            },
+            {
+              "emoji": "🧀",
+              "label": "Käse",
+              "group": 2,
+              "meaning": "Sýr"
+            },
+            {
+              "emoji": "⛰️",
+              "label": "Matterhorn",
+              "group": 2,
+              "meaning": "Švýcarská hora"
+            },
+            {
+              "emoji": "🍫",
+              "label": "Schokolade",
+              "group": 2,
+              "meaning": "Čokoláda"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    {
+      "header": "Strana 10",
+      "items": [
+        {
+          "prompt": "der Abend, -e",
+          "answers": [
+            "večer",
+            "evening"
+          ],
+          "meaning": "večer"
+        },
+        {
+          "prompt": "Guten Abend!",
+          "answers": [
+            "dobrý večer",
+            "good evening"
+          ],
+          "meaning": "Dobrý večer!"
+        },
+        {
+          "prompt": "du",
+          "answers": [
+            "ty",
+            "you"
+          ],
+          "meaning": "ty"
+        },
+        {
+          "prompt": "(Es) freut mich.",
+          "answers": [
+            "těší mě",
+            "nice to meet you",
+            "pleased to meet you"
+          ],
+          "meaning": "Těší mě."
+        },
+        {
+          "prompt": "gut",
+          "answers": [
+            "dobrý",
+            "dobře",
+            "good"
+          ],
+          "meaning": "dobrý"
+        },
+        {
+          "prompt": "Hallo!",
+          "answers": [
+            "ahoj",
+            "hello"
+          ],
+          "meaning": "Ahoj!"
+        },
+        {
+          "prompt": "heißen (Infinitiv)",
+          "answers": [
+            "jmenovat se",
+            "jmenuje se",
+            "to be called",
+            "to be named"
+          ],
+          "meaning": "jmenovat se"
+        },
+        {
+          "prompt": "Ich heiße Jens.",
+          "answers": [
+            "jmenuji se jens",
+            "jmenuju se jens",
+            "my name is jens"
+          ],
+          "meaning": "Jmenuji se Jens."
+        },
+        {
+          "prompt": "Hi!",
+          "answers": [
+            "ahoj",
+            "čau",
+            "hi"
+          ],
+          "meaning": "Ahoj! (neformálně)"
+        },
+        {
+          "prompt": "ich",
+          "answers": [
+            "já",
+            "i"
+          ],
+          "meaning": "já"
+        },
+        {
+          "prompt": "ihr",
+          "answers": [
+            "vy",
+            "you"
+          ],
+          "meaning": "vy"
+        },
+        {
+          "prompt": "ja",
+          "answers": [
+            "ano",
+            "jo",
+            "yes"
+          ],
+          "meaning": "ano"
+        },
+        {
+          "prompt": "der Morgen",
+          "answers": [
+            "ráno",
+            "morning"
+          ],
+          "meaning": "ráno"
+        },
+        {
+          "prompt": "Guten Morgen!",
+          "answers": [
+            "dobré ráno",
+            "good morning"
+          ],
+          "meaning": "Dobré ráno!"
+        },
+        {
+          "prompt": "der Name, -n",
+          "answers": [
+            "jméno",
+            "name"
+          ],
+          "meaning": "jméno"
+        },
+        {
+          "prompt": "nein",
+          "answers": [
+            "ne",
+            "no"
+          ],
+          "meaning": "ne"
+        },
+        {
+          "prompt": "(er/sie/es) ist",
+          "answers": [
+            "je",
+            "is"
+          ],
+          "meaning": "je"
+        },
+        {
+          "prompt": "der Tag, -e",
+          "answers": [
+            "den",
+            "day"
+          ],
+          "meaning": "den"
+        },
+        {
+          "prompt": "Guten Tag!",
+          "answers": [
+            "dobrý den",
+            "good day"
+          ],
+          "meaning": "Dobrý den!"
+        },
+        {
+          "prompt": "und",
+          "answers": [
+            "a",
+            "and"
+          ],
+          "meaning": "a"
+        },
+        {
+          "prompt": "wer",
+          "answers": [
+            "kdo",
+            "who"
+          ],
+          "meaning": "kdo"
+        },
+        {
+          "prompt": "Wer bist du?",
+          "answers": [
+            "kdo jsi",
+            "kdo jste",
+            "who are you"
+          ],
+          "meaning": "Kdo jsi?"
+        },
+        {
+          "prompt": "wie",
+          "answers": [
+            "jak",
+            "how"
+          ],
+          "meaning": "jak"
+        },
+        {
+          "prompt": "Wie heißt du?",
+          "answers": [
+            "jak se jmenuješ",
+            "jak se jmenujete",
+            "what is your name",
+            "what's your name"
+          ],
+          "meaning": "Jak se jmenuješ?"
+        },
+        {
+          "prompt": "wir",
+          "answers": [
+            "my",
+            "we"
+          ],
+          "meaning": "my"
+        }
+      ]
+    },
+    {
+      "header": "Strana 11",
+      "items": [
+        {
+          "prompt": "in",
+          "answers": [
+            "v",
+            "ve",
+            "in"
+          ],
+          "meaning": "v"
+        },
+        {
+          "prompt": "in der Nähe (von)",
+          "answers": [
+            "poblíž",
+            "v blízkosti",
+            "nedaleko",
+            "blízko",
+            "near",
+            "nearby",
+            "close to"
+          ],
+          "meaning": "poblíž, v blízkosti"
+        },
+        {
+          "prompt": "das Spiel, -e",
+          "answers": [
+            "hra",
+            "game"
+          ],
+          "meaning": "hra"
+        },
+        {
+          "prompt": "wo",
+          "answers": [
+            "kde",
+            "where"
+          ],
+          "meaning": "kde"
+        },
+        {
+          "prompt": "wohnen (Infinitiv)",
+          "answers": [
+            "bydlet",
+            "bydlí",
+            "to live"
+          ],
+          "meaning": "bydlet"
+        },
+        {
+          "prompt": "Wo wohnst du?",
+          "answers": [
+            "kde bydlíš",
+            "kde bydlíte",
+            "where do you live"
+          ],
+          "meaning": "Kde bydlíš?"
+        },
+        {
+          "prompt": "Ich wohne in Prag.",
+          "answers": [
+            "bydlím v praze",
+            "i live in prague"
+          ],
+          "meaning": "Bydlím v Praze."
+        },
+        {
+          "prompt": "null",
+          "answers": [
+            "nula",
+            "zero"
+          ],
+          "meaning": "nula"
+        },
+        {
+          "prompt": "eins",
+          "answers": [
+            "jedna",
+            "jeden",
+            "one"
+          ],
+          "meaning": "jedna"
+        },
+        {
+          "prompt": "zwei",
+          "answers": [
+            "dvě",
+            "dva",
+            "two"
+          ],
+          "meaning": "dvě"
+        },
+        {
+          "prompt": "drei",
+          "answers": [
+            "tři",
+            "three"
+          ],
+          "meaning": "tři"
+        },
+        {
+          "prompt": "vier",
+          "answers": [
+            "čtyři",
+            "four"
+          ],
+          "meaning": "čtyři"
+        },
+        {
+          "prompt": "fünf",
+          "answers": [
+            "pět",
+            "five"
+          ],
+          "meaning": "pět"
+        },
+        {
+          "prompt": "sechs",
+          "answers": [
+            "šest",
+            "six"
+          ],
+          "meaning": "šest"
+        },
+        {
+          "prompt": "sieben",
+          "answers": [
+            "sedm",
+            "seven"
+          ],
+          "meaning": "sedm"
+        },
+        {
+          "prompt": "acht",
+          "answers": [
+            "osm",
+            "eight"
+          ],
+          "meaning": "osm"
+        },
+        {
+          "prompt": "neun",
+          "answers": [
+            "devět",
+            "nine"
+          ],
+          "meaning": "devět"
+        },
+        {
+          "prompt": "zehn",
+          "answers": [
+            "deset",
+            "ten"
+          ],
+          "meaning": "deset"
+        },
+        {
+          "prompt": "elf",
+          "answers": [
+            "jedenáct",
+            "eleven"
+          ],
+          "meaning": "jedenáct"
+        },
+        {
+          "prompt": "zwölf",
+          "answers": [
+            "dvanáct",
+            "twelve"
+          ],
+          "meaning": "dvanáct"
+        },
+        {
+          "prompt": "dreizehn",
+          "answers": [
+            "třináct",
+            "thirteen"
+          ],
+          "meaning": "třináct"
+        },
+        {
+          "prompt": "vierzehn",
+          "answers": [
+            "čtrnáct",
+            "fourteen"
+          ],
+          "meaning": "čtrnáct"
+        },
+        {
+          "prompt": "fünfzehn",
+          "answers": [
+            "patnáct",
+            "fifteen"
+          ],
+          "meaning": "patnáct"
+        },
+        {
+          "prompt": "sechzehn",
+          "answers": [
+            "šestnáct",
+            "sixteen"
+          ],
+          "meaning": "šestnáct"
+        },
+        {
+          "prompt": "siebzehn",
+          "answers": [
+            "sedmnáct",
+            "seventeen"
+          ],
+          "meaning": "sedmnáct"
+        },
+        {
+          "prompt": "achtzehn",
+          "answers": [
+            "osmnáct",
+            "eighteen"
+          ],
+          "meaning": "osmnáct"
+        },
+        {
+          "prompt": "neunzehn",
+          "answers": [
+            "devatenáct",
+            "nineteen"
+          ],
+          "meaning": "devatenáct"
+        },
+        {
+          "prompt": "zwanzig",
+          "answers": [
+            "dvacet",
+            "twenty"
+          ],
+          "meaning": "dvacet"
+        }
+      ]
+    },
+    {
+      "header": "Strana 12",
+      "items": [
+        {
+          "prompt": "alt",
+          "answers": [
+            "starý",
+            "old"
+          ],
+          "meaning": "starý"
+        },
+        {
+          "prompt": "er",
+          "answers": [
+            "on",
+            "he"
+          ],
+          "meaning": "on"
+        },
+        {
+          "prompt": "der Monat, -e",
+          "answers": [
+            "měsíc",
+            "month"
+          ],
+          "meaning": "měsíc"
+        },
+        {
+          "prompt": "sie (Singular)",
+          "answers": [
+            "ona",
+            "she"
+          ],
+          "meaning": "ona"
+        },
+        {
+          "prompt": "sie (Plural)",
+          "answers": [
+            "oni",
+            "they"
+          ],
+          "meaning": "oni"
+        }
+      ]
+    },
+    {
+      "header": "Strana 13",
+      "items": [
+        {
+          "prompt": "aber",
+          "answers": [
+            "ale",
+            "but"
+          ],
+          "meaning": "ale"
+        },
+        {
+          "prompt": "das Alter",
+          "answers": [
+            "věk",
+            "age"
+          ],
+          "meaning": "věk"
+        },
+        {
+          "prompt": "auch",
+          "answers": [
+            "také",
+            "taky",
+            "also",
+            "too"
+          ],
+          "meaning": "také"
+        },
+        {
+          "prompt": "aus",
+          "answers": [
+            "z",
+            "ze",
+            "from"
+          ],
+          "meaning": "z"
+        },
+        {
+          "prompt": "die Band, -s",
+          "answers": [
+            "skupina",
+            "hudební skupina",
+            "kapela",
+            "hudební kapela",
+            "band"
+          ],
+          "meaning": "(hudební) skupina"
+        },
+        {
+          "prompt": "chatten (Infinitiv)",
+          "answers": [
+            "chatovat",
+            "chatuje",
+            "to chat"
+          ],
+          "meaning": "chatovat"
+        },
+        {
+          "prompt": "das Computerspiel, -e",
+          "answers": [
+            "počítačová hra",
+            "computer game"
+          ],
+          "meaning": "počítačová hra"
+        },
+        {
+          "prompt": "die/das E-Mail, -s",
+          "answers": [
+            "e-mail",
+            "email"
+          ],
+          "meaning": "e-mail"
+        },
+        {
+          "prompt": "das Englisch",
+          "answers": [
+            "angličtina",
+            "anglicky",
+            "english"
+          ],
+          "meaning": "angličtina, anglicky"
+        },
+        {
+          "prompt": "der Fan, -s",
+          "answers": [
+            "fanoušek",
+            "fanda",
+            "fan"
+          ],
+          "meaning": "fanoušek"
+        },
+        {
+          "prompt": "das Französisch",
+          "answers": [
+            "francouzština",
+            "francouzsky",
+            "french"
+          ],
+          "meaning": "francouzština, francouzsky"
+        },
+        {
+          "prompt": "der Freund, -e",
+          "answers": [
+            "kamarád",
+            "přítel",
+            "friend"
+          ],
+          "meaning": "kamarád"
+        },
+        {
+          "prompt": "die Freundin, -nen",
+          "answers": [
+            "kamarádka",
+            "přítelkyně",
+            "friend"
+          ],
+          "meaning": "kamarádka"
+        },
+        {
+          "prompt": "beste Freundin",
+          "answers": [
+            "nejlepší kamarádka",
+            "nejlepší přítelkyně",
+            "best friend"
+          ],
+          "meaning": "nejlepší kamarádka"
+        },
+        {
+          "prompt": "der Fußball",
+          "answers": [
+            "fotbal",
+            "football",
+            "soccer"
+          ],
+          "meaning": "fotbal"
+        },
+        {
+          "prompt": "Er ist Fußballfanatiker.",
+          "answers": [
+            "je fotbalový fanatik",
+            "he is a football fanatic"
+          ],
+          "meaning": "Je fotbalový fanatik."
+        },
+        {
+          "prompt": "gehen (Infinitiv)",
+          "answers": [
+            "jít",
+            "jde",
+            "chodit",
+            "to go"
+          ],
+          "meaning": "jít"
+        },
+        {
+          "prompt": "Ich gehe gern auf Konzerte.",
+          "answers": [
+            "rád chodím na koncerty",
+            "ráda chodím na koncerty",
+            "chodím rád na koncerty",
+            "chodím ráda na koncerty",
+            "i like going to concerts"
+          ],
+          "meaning": "Rád(a) chodím na koncerty."
+        },
+        {
+          "prompt": "gern",
+          "answers": [
+            "rád",
+            "ráda",
+            "gladly"
+          ],
+          "meaning": "rád/a"
+        },
+        {
+          "prompt": "die Gitarre, -n",
+          "answers": [
+            "kytara",
+            "guitar"
+          ],
+          "meaning": "kytara"
+        },
+        {
+          "prompt": "das Handy, -s",
+          "answers": [
+            "mobil",
+            "mobilní telefon",
+            "mobile phone"
+          ],
+          "meaning": "mobil"
+        },
+        {
+          "prompt": "das Hobby, -s",
+          "answers": [
+            "koníček",
+            "hobby"
+          ],
+          "meaning": "koníček"
+        },
+        {
+          "prompt": "hören (Infinitiv)",
+          "answers": [
+            "poslouchat",
+            "poslouchá",
+            "slyšet",
+            "to listen",
+            "to hear"
+          ],
+          "meaning": "poslouchat"
+        },
+        {
+          "prompt": "Er hört gern Musik.",
+          "answers": [
+            "rád poslouchá hudbu",
+            "he likes listening to music"
+          ],
+          "meaning": "Rád poslouchá hudbu."
+        },
+        {
+          "prompt": "im Internet surfen (Infinitiv)",
+          "answers": [
+            "surfovat na internetu",
+            "to surf the internet"
+          ],
+          "meaning": "surfovat na internetu"
+        },
+        {
+          "prompt": "immer",
+          "answers": [
+            "pořád",
+            "neustále",
+            "vždy",
+            "vždycky",
+            "always"
+          ],
+          "meaning": "pořád, neustále"
+        },
+        {
+          "prompt": "das Jahr, -e",
+          "answers": [
+            "rok",
+            "year"
+          ],
+          "meaning": "rok"
+        },
+        {
+          "prompt": "kein/keine/kein",
+          "answers": [
+            "žádný",
+            "žádná",
+            "žádné",
+            "no",
+            "none"
+          ],
+          "meaning": "žádný/žádná/žádné"
+        },
+        {
+          "prompt": "das Klavier, -e",
+          "answers": [
+            "klavír",
+            "piano"
+          ],
+          "meaning": "klavír"
+        },
+        {
+          "prompt": "kommen (Infinitiv, aus)",
+          "answers": [
+            "přicházet",
+            "přijít",
+            "přichází",
+            "pocházet",
+            "pochází",
+            "to come",
+            "to come from"
+          ],
+          "meaning": "přicházet, pocházet (z)"
+        },
+        {
+          "prompt": "Er kommt aus Wien.",
+          "answers": [
+            "pochází z vídně",
+            "he comes from vienna",
+            "he is from vienna"
+          ],
+          "meaning": "Pochází z Vídně."
+        },
+        {
+          "prompt": "das Konzert, -e",
+          "answers": [
+            "koncert",
+            "concert"
+          ],
+          "meaning": "koncert"
+        },
+        {
+          "prompt": "lernen (Infinitiv)",
+          "answers": [
+            "učit se",
+            "učí se",
+            "to learn"
+          ],
+          "meaning": "učit se"
+        },
+        {
+          "prompt": "liegen (Infinitiv)",
+          "answers": [
+            "ležet",
+            "leží",
+            "to lie",
+            "to be located"
+          ],
+          "meaning": "ležet"
+        },
+        {
+          "prompt": "der Nachname, -n",
+          "answers": [
+            "příjmení",
+            "surname",
+            "last name"
+          ],
+          "meaning": "příjmení"
+        },
+        {
+          "prompt": "nicht weit von",
+          "answers": [
+            "nedaleko od",
+            "not far from"
+          ],
+          "meaning": "nedaleko od"
+        },
+        {
+          "prompt": "reisen (Infinitiv)",
+          "answers": [
+            "cestovat",
+            "cestuje",
+            "to travel"
+          ],
+          "meaning": "cestovat"
+        },
+        {
+          "prompt": "schreiben (Infinitiv)",
+          "answers": [
+            "psát",
+            "píše",
+            "to write"
+          ],
+          "meaning": "psát"
+        },
+        {
+          "prompt": "die Schule, -n",
+          "answers": [
+            "škola",
+            "school"
+          ],
+          "meaning": "škola"
+        },
+        {
+          "prompt": "spielen (Infinitiv)",
+          "answers": [
+            "hrát",
+            "hraje",
+            "to play"
+          ],
+          "meaning": "hrát"
+        },
+        {
+          "prompt": "Sie spielt Gitarre.",
+          "answers": [
+            "hraje na kytaru",
+            "she plays the guitar"
+          ],
+          "meaning": "Hraje na kytaru."
+        },
+        {
+          "prompt": "tanzen (Infinitiv)",
+          "answers": [
+            "tancovat",
+            "tančí",
+            "tancuje",
+            "to dance"
+          ],
+          "meaning": "tancovat"
+        },
+        {
+          "prompt": "der Vorname, -n",
+          "answers": [
+            "křestní jméno",
+            "first name"
+          ],
+          "meaning": "křestní jméno"
+        },
+        {
+          "prompt": "der Wohnort, -e",
+          "answers": [
+            "bydliště",
+            "místo bydliště",
+            "place of residence"
+          ],
+          "meaning": "bydliště"
+        }
+      ]
+    },
+    {
+      "header": "Strana 14",
+      "items": [
+        {
+          "prompt": "falsch",
+          "answers": [
+            "nesprávně",
+            "chybně",
+            "špatně",
+            "nepravda",
+            "wrong",
+            "incorrect"
+          ],
+          "meaning": "nesprávně, chybně"
+        },
+        {
+          "prompt": "die Flöte, -n",
+          "answers": [
+            "flétna",
+            "flute"
+          ],
+          "meaning": "flétna"
+        },
+        {
+          "prompt": "haben (Infinitiv)",
+          "answers": [
+            "mít",
+            "má",
+            "to have"
+          ],
+          "meaning": "mít"
+        },
+        {
+          "prompt": "das Instrument, -e",
+          "answers": [
+            "nástroj",
+            "hudební nástroj",
+            "instrument"
+          ],
+          "meaning": "(hudební) nástroj"
+        },
+        {
+          "prompt": "jetzt",
+          "answers": [
+            "teď",
+            "nyní",
+            "now"
+          ],
+          "meaning": "teď"
+        },
+        {
+          "prompt": "machen (Infinitiv)",
+          "answers": [
+            "dělat",
+            "dělá",
+            "to do",
+            "to make"
+          ],
+          "meaning": "dělat"
+        },
+        {
+          "prompt": "richtig",
+          "answers": [
+            "správně",
+            "správný",
+            "correct",
+            "right"
+          ],
+          "meaning": "správně"
+        },
+        {
+          "prompt": "der Sport",
+          "answers": [
+            "sport"
+          ],
+          "meaning": "sport"
+        },
+        {
+          "prompt": "Sport treiben (Infinitiv)",
+          "answers": [
+            "sportovat",
+            "sportuje",
+            "provozovat sport",
+            "dělat sport",
+            "to do sport"
+          ],
+          "meaning": "sportovat"
+        },
+        {
+          "prompt": "das Squash",
+          "answers": [
+            "squash"
+          ],
+          "meaning": "squash"
+        },
+        {
+          "prompt": "das/der Yoga",
+          "answers": [
+            "jóga",
+            "yoga"
+          ],
+          "meaning": "jóga"
+        }
+      ]
+    },
+    {
+      "header": "Strana 15",
+      "items": [
+        {
+          "prompt": "bald",
+          "answers": [
+            "brzy",
+            "brzo",
+            "soon"
+          ],
+          "meaning": "brzy"
+        },
+        {
+          "prompt": "Bis bald!",
+          "answers": [
+            "brzy na shledanou",
+            "brzo na shledanou",
+            "brzy se uvidíme",
+            "brzo se uvidíme",
+            "see you soon"
+          ],
+          "meaning": "Brzy na shledanou!"
+        },
+        {
+          "prompt": "bis",
+          "answers": [
+            "do",
+            "až",
+            "until"
+          ],
+          "meaning": "do"
+        },
+        {
+          "prompt": "Bis zum nächsten Mal!",
+          "answers": [
+            "do příštího setkání",
+            "do příště",
+            "until next time"
+          ],
+          "meaning": "Do příštího setkání!"
+        },
+        {
+          "prompt": "die Frau, -en",
+          "answers": [
+            "paní",
+            "žena",
+            "manželka",
+            "woman",
+            "mrs",
+            "wife"
+          ],
+          "meaning": "paní"
+        },
+        {
+          "prompt": "der Herr, -en",
+          "answers": [
+            "pan",
+            "muž",
+            "man",
+            "mr"
+          ],
+          "meaning": "pan"
+        },
+        {
+          "prompt": "Mach's gut!",
+          "answers": [
+            "měj se hezky",
+            "měj se",
+            "mějte se hezky",
+            "mějte se",
+            "take care"
+          ],
+          "meaning": "Měj se hezky!"
+        },
+        {
+          "prompt": "das Museum, Museen",
+          "answers": [
+            "muzeum",
+            "museum"
+          ],
+          "meaning": "muzeum"
+        },
+        {
+          "prompt": "Sie gehen ins Museum.",
+          "answers": [
+            "jdou do muzea",
+            "they are going to the museum",
+            "they go to the museum"
+          ],
+          "meaning": "Jdou do muzea."
+        },
+        {
+          "prompt": "schön",
+          "answers": [
+            "hezký",
+            "krásný",
+            "pěkný",
+            "beautiful",
+            "nice"
+          ],
+          "meaning": "hezký"
+        },
+        {
+          "prompt": "Einen schönen Tag noch!",
+          "answers": [
+            "hezký zbytek dne",
+            "měj hezký den",
+            "have a nice day"
+          ],
+          "meaning": "Hezký zbytek dne!"
+        },
+        {
+          "prompt": "Servus!",
+          "answers": [
+            "ahoj",
+            "servus",
+            "hi"
+          ],
+          "meaning": "Ahoj! (servus)"
+        },
+        {
+          "prompt": "Tschüs!",
+          "answers": [
+            "ahoj",
+            "čau",
+            "bye"
+          ],
+          "meaning": "Ahoj! (při loučení)"
+        },
+        {
+          "prompt": "das Wiedersehen",
+          "answers": [
+            "shledání",
+            "reunion"
+          ],
+          "meaning": "shledání"
+        },
+        {
+          "prompt": "Auf Wiedersehen!",
+          "answers": [
+            "na shledanou",
+            "na viděnou",
+            "goodbye"
+          ],
+          "meaning": "Na shledanou!"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "deutsch",
+    "icon": "flag-de",
+    "route": "/deutsch",
+    "key": "Deutsch",
+    "unlocked": true
+  },
+  {
+    "id": "networks",
+    "icon": "wifi",
+    "route": "/networks",
+    "key": "Správa počítačových sítí",
+    "unlocked": true
+  },
+  {
+    "id": "hardware",
+    "icon": "chip",
+    "route": "/hardware",
+    "key": "Technické vybavení",
+    "unlocked": true
+  },
+  {
+    "id": "czech",
+    "icon": "book",
+    "route": "/czech",
+    "key": "Český jazyk a literatura",
+    "unlocked": true
+  },
+  {
+    "id": "civics",
+    "icon": null,
+    "route": null,
+    "key": "Občanská nauka",
+    "unlocked": false
+  },
+  {
+    "id": "english",
+    "icon": null,
+    "route": null,
+    "key": "English",
+    "unlocked": false
+  },
+  {
+    "id": "math",
+    "icon": null,
+    "route": null,
+    "key": "Matematika",
+    "unlocked": false
+  },
+  {
+    "id": "physics",
+    "icon": null,
+    "route": null,
+    "key": "Fyzika",
+    "unlocked": false
+  },
+  {
+    "id": "science",
+    "icon": null,
+    "route": null,
+    "key": "Základy Přírodopisných věd",
+    "unlocked": false
+  },
+  {
+    "id": "tech-graphics",
+    "icon": null,
+    "route": null,
+    "key": "Technická grafika",
+    "unlocked": false
+  },
+  {
+    "id": "presentation",
+    "icon": null,
+    "route": null,
+    "key": "Prezentační grafika",
+    "unlocked": false
+  },
+  {
+    "id": "programming",
+    "icon": null,
+    "route": null,
+    "key": "Programování",
+    "unlocked": false
+  },
+  {
+    "id": "software",
+    "icon": null,
+    "route": null,
+    "key": "Programové vybavení",
+    "unlocked": false
+  }
+]

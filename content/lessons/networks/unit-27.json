@@ -1,0 +1,196 @@
+{
+  "id": "unit-27",
+  "subject": "networks",
+  "number": 27,
+  "titleKey": "net_unit27",
+  "subtitleKey": "net_unit27_sub",
+  "slides": [
+    {
+      "kicker": "1 / 8   •   Úvod",
+      "title": "Bezdrátové sítě",
+      "tip": null,
+      "lines": [
+        "Patří sem hlavně: družicové, mikrovlnné a optické spoje.",
+        "Dále Wi-Fi (LAN), WiMAX/LTE (MAN/WAN) a další."
+      ]
+    },
+    {
+      "kicker": "2 / 8   •   Družice",
+      "title": "Geostacionární spoje",
+      "tip": null,
+      "lines": [
+        "Geostacionární družice: ~36 000 km, stále nad stejným bodem.",
+        "Pasivní odrážejí; aktivní mají transpondéry (převod + zisk).",
+        "C-band ~6/4 GHz; KU-band 12–14 GHz (menší antény).",
+        "Nevýhoda: zpoždění ~250–300 ms (RTT až ~600 ms)."
+      ]
+    },
+    {
+      "kicker": "3 / 8   •   VSAT",
+      "title": "Přístup a topologie",
+      "tip": null,
+      "lines": [
+        "Bod–bod, broadcast (TV) i multiple access.",
+        "VSAT: terminály + centrální hub.",
+        "Komunikace jen terminál ↔ hub (ne přímo mezi terminály)."
+      ]
+    },
+    {
+      "kicker": "4 / 8   •   Mikrovlny",
+      "title": "Pozemní spoje",
+      "tip": "Tip: přímá viditelnost",
+      "lines": [
+        "Frekvence 1–12 GHz, směrování parabolou, malý rozptyl.",
+        "Dosah typicky do ~50 km; retranslační stanice.",
+        "Troposférické spoje: odraz ve ~16 km, dosah až ~500 km."
+      ]
+    },
+    {
+      "kicker": "5 / 8   •   Wi-Fi pojmy",
+      "title": "AP, BSS, ESS",
+      "tip": null,
+      "lines": [
+        "AP = přístupový bod; STA komunikují přes AP (ne přímo).",
+        "BSS = stanice v buňce BSA; ESS = více buněk přes DS.",
+        "Roaming při překrytí; ad-hoc = P2P bez AP; hotspot = Wi-Fi.",
+        "ESSID identifikuje síť při přístupu k AP."
+      ]
+    },
+    {
+      "kicker": "6 / 8   •   Standardy",
+      "title": "802.11 a … ax",
+      "tip": null,
+      "lines": [
+        "b: 11 Mb/s, 2,4 GHz; a/g: 54 Mb/s; n: MIMO, až 600 Mb/s.",
+        "ac (Wi-Fi 5): 256-QAM, široké kanály; ax (Wi-Fi 6): OFDMA.",
+        "OFDM: mnoho ortogonálních subnosných v kanálu."
+      ]
+    },
+    {
+      "kicker": "7 / 8   •   Zabezpečení",
+      "title": "WEP → WPA3",
+      "tip": null,
+      "lines": [
+        "WEP: RC4, krátký IV – prolomeno (2001), nepoužívat.",
+        "WPA: TKIP; WPA2: AES (doporučený základ).",
+        "WPA3: SAE místo PSK, silnější ochrana hesla.",
+        "802.1X/EAP: ověření klienta přes AP (RADIUS)."
+      ]
+    },
+    {
+      "kicker": "8 / 8   •   Shrnutí",
+      "title": "Dosahy a další",
+      "tip": null,
+      "lines": [
+        "PAN <10 m (Bluetooth); LAN = Wi-Fi; MAN = WiMAX.",
+        "WAN/mobilita: 802.16e, LTE; licencovaná pásma = méně rušení.",
+        "Používej WPA2/WPA3 + AES, ne WEP."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz27_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Geostacionární družice létají asi:",
+          "options": [
+            "36 000 km nad Zemí",
+            "16 km v troposféře",
+            "50 km nad povrchem",
+            "Jen v nízké orbitě LEO"
+          ],
+          "correct": 0,
+          "hint": "Geostacionární družice ~36 000 km"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Hlavní nevýhoda družicového spoje je:",
+          "options": [
+            "Velké zpoždění (~250–300 ms)",
+            "Žádný broadcast",
+            "Jen kabelové médium",
+            "Absence portů"
+          ],
+          "correct": 0,
+          "hint": "Družice: zpoždění stovky ms"
+        },
+        {
+          "kind": "choice",
+          "prompt": "V síti VSAT komunikace probíhá:",
+          "options": [
+            "Jen mezi terminálem a hubem",
+            "Přímo mezi dvěma terminály",
+            "Jen přes ARP",
+            "Jen přes WEP"
+          ],
+          "correct": 0,
+          "hint": "VSAT: jen terminál ↔ hub"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Mikrovlnný spoj typicky vyžaduje:",
+          "options": [
+            "Přímou viditelnost (dosah ~50 km)",
+            "Jen metalický kabel",
+            "Jen port 80",
+            "Jen WEP klíč"
+          ],
+          "correct": 0,
+          "hint": "Mikrovlny: přímá viditelnost ~50 km"
+        },
+        {
+          "kind": "choice",
+          "prompt": "V infrastruktuře Wi-Fi stanice (STA):",
+          "options": [
+            "Komunikují přes AP, ne přímo mezi sebou",
+            "Vždy jen ad-hoc bez AP",
+            "Nepoužívají ESSID",
+            "Běží jen na 36 000 km"
+          ],
+          "correct": 0,
+          "hint": "STA komunikují přes AP"
+        },
+        {
+          "kind": "choice",
+          "prompt": "802.11ax (Wi-Fi 6) přináší zejména:",
+          "options": [
+            "OFDMA a vysokou kapacitu",
+            "Jen WEP",
+            "Jen C-band 4/6 GHz",
+            "Jen troposférický odraz"
+          ],
+          "correct": 0,
+          "hint": "Wi-Fi 6 (ax): OFDMA"
+        },
+        {
+          "kind": "choice",
+          "prompt": "WEP je dnes:",
+          "options": [
+            "Prolomený a nevhodný",
+            "Nejbezpečnější volba",
+            "Totéž co WPA3-SAE",
+            "Povinný od roku 2006"
+          ],
+          "correct": 0,
+          "hint": "WEP prolomen – nepoužívat"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Doporučené zabezpečení Wi-Fi je:",
+          "options": [
+            "WPA2/WPA3 s AES (ne WEP)",
+            "Jen Open system WEP",
+            "Jen Shared key WEP",
+            "Bez hesla vždy"
+          ],
+          "correct": 0,
+          "hint": "Používej WPA2/WPA3 + AES"
+        }
+      ]
+    }
+  ]
+}

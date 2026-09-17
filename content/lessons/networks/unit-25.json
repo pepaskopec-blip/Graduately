@@ -1,0 +1,164 @@
+{
+  "id": "unit-25",
+  "subject": "networks",
+  "number": 25,
+  "titleKey": "net_unit25",
+  "subtitleKey": "net_unit25_sub",
+  "slides": [
+    {
+      "kicker": "1 / 6   •   TCP vs UDP",
+      "title": "Základní rozdíly",
+      "tip": null,
+      "lines": [
+        "TCP: spolehlivý a spojovaný přenos.",
+        "Potvrzování, kontrola pořadí a řízení toku.",
+        "UDP: nespolehlivý a nespojovaný.",
+        "Minimální režie – neřeší potvrzení ani pořadí."
+      ]
+    },
+    {
+      "kicker": "2 / 6   •   Porty",
+      "title": "Multiplex a demultiplex",
+      "tip": null,
+      "lines": [
+        "Porty rozlišují aplikace (procesy) na jednom uzlu.",
+        "Multiplex: sběr dat od aplikací do segmentů/datagramů.",
+        "Demultiplex: doručení příchozích dat správné aplikaci",
+        "podle čísla portu."
+      ]
+    },
+    {
+      "kicker": "3 / 6   •   TCP",
+      "title": "Spojení a vlastnosti",
+      "tip": "Tip: three-way handshake",
+      "lines": [
+        "Navázání spojení: třícestné podání ruky.",
+        "Streamově orientovaný a full duplex.",
+        "Jen unicast – bez multicastu a broadcastu."
+      ]
+    },
+    {
+      "kicker": "4 / 6   •   Nevýhody TCP",
+      "title": "Režie a real-time",
+      "tip": null,
+      "lines": [
+        "Větší režie: hlavička 20 B (UDP má 8 B).",
+        "Nevhodný pro real-time média: ztráta segmentu",
+        "zastaví proud a čeká se na znovudoručení.",
+        "Bez multihomingu – výpadek rozhraní shodí spojení."
+      ]
+    },
+    {
+      "kicker": "5 / 6   •   Alternativy",
+      "title": "SCTP a DCCP",
+      "tip": null,
+      "lines": [
+        "SCTP: multihoming a multistreaming (až 64k proudů).",
+        "DCCP: datagramy s řízením zahlcení",
+        "(streaming, IP telefonie)."
+      ]
+    },
+    {
+      "kicker": "6 / 6   •   Shrnutí",
+      "title": "Kdy co použít",
+      "tip": null,
+      "lines": [
+        "TCP: spolehlivá data (web, pošta, soubory).",
+        "UDP: rychlost a nízká režie (DNS, hry, real-time)."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz25_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "TCP je:",
+          "options": [
+            "Spolehlivý a spojovaný",
+            "Nespolehlivý a nespojovaný",
+            "Jen fyzická vrstva",
+            "Jen ARP cache"
+          ],
+          "correct": 0,
+          "hint": "TCP = spolehlivý a spojovaný"
+        },
+        {
+          "kind": "choice",
+          "prompt": "UDP je:",
+          "options": [
+            "Nespolehlivý a nespojovaný s malou režií",
+            "Spolehlivý se třícestným handshake",
+            "Jen store-and-forward",
+            "Jen ICMP Time Exceeded"
+          ],
+          "correct": 0,
+          "hint": "UDP = nespolehlivý, nespojovaný, malá režie"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Porty slouží k:",
+          "options": [
+            "Rozlišení aplikací na jednom uzlu",
+            "Jen směrování IP",
+            "Jen MAC učení",
+            "Jen lámání vlákna"
+          ],
+          "correct": 0,
+          "hint": "Porty rozlišují aplikace na uzlu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Navázání TCP spojení používá:",
+          "options": [
+            "Třícestné podání ruky (three-way handshake)",
+            "Jen broadcast ARP",
+            "Jen Source Quench",
+            "Jen cut-through"
+          ],
+          "correct": 0,
+          "hint": "TCP se navazuje three-way handshake"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Hlavička TCP má typicky:",
+          "options": [
+            "20 B (UDP 8 B)",
+            "8 B (UDP 20 B)",
+            "1500 B",
+            "64 B min. rámec"
+          ],
+          "correct": 0,
+          "hint": "TCP hlavička 20 B, UDP 8 B"
+        },
+        {
+          "kind": "choice",
+          "prompt": "TCP není vhodný pro real-time média hlavně proto, že:",
+          "options": [
+            "Ztráta segmentu zastaví proud a čeká se na znovudoručení",
+            "Nemá žádné porty",
+            "Nepodporuje unicast",
+            "Nemá hlavičku"
+          ],
+          "correct": 0,
+          "hint": "TCP čeká na znovudoručení – špatné pro real-time"
+        },
+        {
+          "kind": "choice",
+          "prompt": "SCTP oproti TCP nabízí:",
+          "options": [
+            "Multihoming a multistreaming",
+            "Jen Ethernet II",
+            "Jen RARP",
+            "Jen hub flooding"
+          ],
+          "correct": 0,
+          "hint": "SCTP: multihoming a multistreaming"
+        }
+      ]
+    }
+  ]
+}

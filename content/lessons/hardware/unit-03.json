@@ -1,0 +1,86 @@
+{
+  "id": "unit-03",
+  "subject": "hardware",
+  "number": 3,
+  "titleKey": "hw_unit3",
+  "subtitleKey": "hw_unit3_sub",
+  "slides": [
+    {
+      "kicker": "1 / 2   •   Bit",
+      "title": "Bit – nejmenší jednotka informace",
+      "tip": "Bit = binary digit (dvojková číslice)",
+      "lines": [
+        "Bit je dvojková číslice – nabývá hodnoty 0 nebo 1.",
+        "Je to nejmenší zobrazitelná jednotka informace.",
+        "Z bitů se skládají větší jednotky (např. byte)."
+      ]
+    },
+    {
+      "kicker": "2 / 2   •   Byte",
+      "title": "Byte – adresovatelná jednotka paměti",
+      "tip": "Tip: 1 B = 8 b",
+      "lines": [
+        "Byte je nejmenší adresovatelná jednotka paměti.",
+        "Počítač tedy paměť adresuje po bytech, ne po jednotlivých bitech.",
+        "Jeden byte obvykle obsahuje 8 bitů."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "hw_quiz3_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Co je bit?",
+          "options": [
+            "Největší jednotka paměti",
+            "Dvojková číslice – nejmenší jednotka informace",
+            "Jen klávesa na klávesnici",
+            "Typ procesoru"
+          ],
+          "correct": 1,
+          "hint": "Bit = dvojková číslice, nejmenší jednotka informace"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaké hodnoty může nabývat bit?",
+          "options": [
+            "Jen 0",
+            "Jen 1",
+            "0 nebo 1",
+            "0 až 255"
+          ],
+          "correct": 2,
+          "hint": "Bit nabývá hodnoty 0 nebo 1"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co je byte?",
+          "options": [
+            "Nejmenší adresovatelná jednotka paměti",
+            "Nejmenší zobrazitelná jednotka informace",
+            "Jen síťový kabel",
+            "Jen grafická karta"
+          ],
+          "correct": 0,
+          "hint": "Byte = nejmenší adresovatelná jednotka paměti"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Kolik bitů má obvykle jeden byte?",
+          "options": [
+            "2",
+            "4",
+            "8",
+            "16"
+          ],
+          "correct": 2,
+          "hint": "1 B = 8 b"
+        }
+      ]
+    }
+  ]
+}

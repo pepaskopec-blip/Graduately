@@ -1,0 +1,389 @@
+[
+  {
+    "subject": "deutsch",
+    "units": [
+      {
+        "number": 1,
+        "lesson": "unit-01",
+        "title": {
+          "cs": "Neue Freunde",
+          "en": "Neue Freunde"
+        },
+        "unlocked": true
+      },
+      {
+        "number": 2,
+        "lesson": "unit-02",
+        "title": {
+          "cs": "Aus aller Welt",
+          "en": "Aus aller Welt"
+        },
+        "unlocked": true
+      },
+      {
+        "number": 3,
+        "lesson": "unit-03",
+        "title": {
+          "cs": "Bei uns zu Hause",
+          "en": "Bei uns zu Hause"
+        },
+        "unlocked": true
+      },
+      {
+        "number": 4,
+        "lesson": null,
+        "title": {
+          "cs": "Schule und Freizeit",
+          "en": "Schule und Freizeit"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 5,
+        "lesson": null,
+        "title": {
+          "cs": "Guten Appetit!",
+          "en": "Guten Appetit!"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 6,
+        "lesson": null,
+        "title": {
+          "cs": "Mein Tagesablauf",
+          "en": "Mein Tagesablauf"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 7,
+        "lesson": null,
+        "title": {
+          "cs": "Meine Freunde",
+          "en": "Meine Freunde"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 8,
+        "lesson": null,
+        "title": {
+          "cs": "Wir treffen uns in Salzburg",
+          "en": "Wir treffen uns in Salzburg"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 9,
+        "lesson": null,
+        "title": {
+          "cs": "Mein Haus ist meine Burg",
+          "en": "Mein Haus ist meine Burg"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 10,
+        "lesson": null,
+        "title": {
+          "cs": "Urlaub in Österreich",
+          "en": "Urlaub in Österreich"
+        },
+        "unlocked": false
+      }
+    ]
+  },
+  {
+    "subject": "networks",
+    "year": 1,
+    "units": [
+      {
+        "number": 1,
+        "lesson": "unit-01",
+        "titleKey": "net_unit1",
+        "unlocked": true
+      },
+      {
+        "number": 2,
+        "lesson": "unit-02",
+        "titleKey": "net_unit2",
+        "unlocked": true
+      },
+      {
+        "number": 3,
+        "lesson": "unit-03",
+        "titleKey": "net_unit3",
+        "unlocked": true
+      },
+      {
+        "number": 4,
+        "lesson": "unit-04",
+        "titleKey": "net_unit4",
+        "unlocked": true
+      },
+      {
+        "number": 5,
+        "lesson": "unit-05",
+        "titleKey": "net_unit5",
+        "unlocked": true
+      },
+      {
+        "number": 6,
+        "lesson": "unit-06",
+        "titleKey": "net_unit6",
+        "unlocked": true
+      },
+      {
+        "number": 7,
+        "lesson": "unit-07",
+        "titleKey": "net_unit7",
+        "unlocked": true
+      },
+      {
+        "number": 8,
+        "lesson": "unit-08",
+        "titleKey": "net_unit8",
+        "unlocked": true
+      },
+      {
+        "number": 9,
+        "lesson": "unit-09",
+        "titleKey": "net_unit9",
+        "unlocked": true
+      },
+      {
+        "number": 10,
+        "lesson": "unit-10",
+        "titleKey": "net_unit10",
+        "unlocked": true
+      },
+      {
+        "number": 11,
+        "lesson": "unit-11",
+        "titleKey": "net_unit11",
+        "unlocked": true
+      },
+      {
+        "number": 12,
+        "lesson": "unit-12",
+        "titleKey": "net_unit12",
+        "unlocked": true
+      },
+      {
+        "number": 13,
+        "lesson": "unit-13",
+        "titleKey": "net_unit13",
+        "unlocked": true
+      },
+      {
+        "number": 14,
+        "lesson": "unit-14",
+        "titleKey": "net_unit14",
+        "unlocked": true
+      },
+      {
+        "number": 15,
+        "lesson": "unit-15",
+        "titleKey": "net_unit15",
+        "unlocked": true
+      },
+      {
+        "number": 16,
+        "lesson": "unit-16",
+        "titleKey": "net_unit16",
+        "unlocked": true
+      },
+      {
+        "number": 17,
+        "lesson": "unit-17",
+        "titleKey": "net_unit17",
+        "unlocked": true
+      },
+      {
+        "number": 18,
+        "lesson": "unit-18",
+        "titleKey": "net_unit18",
+        "unlocked": true
+      },
+      {
+        "number": 19,
+        "lesson": "unit-19",
+        "titleKey": "net_unit19",
+        "unlocked": true
+      },
+      {
+        "number": 20,
+        "lesson": "unit-20",
+        "titleKey": "net_unit20",
+        "unlocked": true
+      },
+      {
+        "number": 21,
+        "lesson": "unit-21",
+        "titleKey": "net_unit21",
+        "unlocked": true
+      },
+      {
+        "number": 22,
+        "lesson": "unit-22",
+        "titleKey": "net_unit22",
+        "unlocked": true
+      },
+      {
+        "number": 23,
+        "lesson": "unit-23",
+        "titleKey": "net_unit23",
+        "unlocked": true
+      },
+      {
+        "number": 24,
+        "lesson": "unit-24",
+        "titleKey": "net_unit24",
+        "unlocked": true
+      },
+      {
+        "number": 25,
+        "lesson": "unit-25",
+        "titleKey": "net_unit25",
+        "unlocked": true
+      },
+      {
+        "number": 26,
+        "lesson": "unit-26",
+        "titleKey": "net_unit26",
+        "unlocked": true
+      },
+      {
+        "number": 27,
+        "lesson": "unit-27",
+        "titleKey": "net_unit27",
+        "unlocked": true
+      }
+    ]
+  },
+  {
+    "subject": "hardware",
+    "units": [
+      {
+        "number": 1,
+        "lesson": "unit-01",
+        "titleKey": "hw_unit1",
+        "unlocked": true
+      },
+      {
+        "number": 2,
+        "lesson": "unit-02",
+        "titleKey": "hw_unit2",
+        "unlocked": true
+      },
+      {
+        "number": 3,
+        "lesson": "unit-03",
+        "titleKey": "hw_unit3",
+        "unlocked": true
+      },
+      {
+        "number": 4,
+        "lesson": null,
+        "titleKey": "hw_unit4",
+        "unlocked": false
+      },
+      {
+        "number": 5,
+        "lesson": null,
+        "titleKey": "hw_unit5",
+        "unlocked": false
+      },
+      {
+        "number": 6,
+        "lesson": null,
+        "titleKey": "hw_unit6",
+        "unlocked": false
+      },
+      {
+        "number": 7,
+        "lesson": null,
+        "titleKey": "hw_unit7",
+        "unlocked": false
+      },
+      {
+        "number": 8,
+        "lesson": null,
+        "titleKey": "hw_unit8",
+        "unlocked": false
+      },
+      {
+        "number": 9,
+        "lesson": null,
+        "titleKey": "hw_unit9",
+        "unlocked": false
+      },
+      {
+        "number": 10,
+        "lesson": null,
+        "titleKey": "hw_unit10",
+        "unlocked": false
+      }
+    ]
+  },
+  {
+    "subject": "czech",
+    "units": [
+      {
+        "number": 1,
+        "lesson": null,
+        "route": null,
+        "title": {
+          "cs": "Literatura",
+          "en": "Literatura"
+        },
+        "unlocked": false
+      },
+      {
+        "number": 2,
+        "lesson": null,
+        "route": "/czech/mluvnice",
+        "title": {
+          "cs": "Mluvnice",
+          "en": "Mluvnice"
+        },
+        "unlocked": true
+      },
+      {
+        "number": 3,
+        "lesson": null,
+        "route": "/czech/reading",
+        "title": {
+          "cs": "Maturitní četba",
+          "en": "Maturitní četba"
+        },
+        "unlocked": true
+      }
+    ]
+  },
+  {
+    "subject": "czech",
+    "branch": "reading",
+    "units": [
+      {
+        "number": 1,
+        "lesson": "orwell-1984",
+        "title": {
+          "cs": "George Orwell – 1984",
+          "en": "George Orwell – 1984"
+        },
+        "unlocked": true
+      },
+      {
+        "number": 2,
+        "lesson": "fuks-spalovac-mrtvol",
+        "title": {
+          "cs": "Ladislav Fuks – Spalovač mrtvol",
+          "en": "Ladislav Fuks – Spalovač mrtvol"
+        },
+        "unlocked": true
+      }
+    ]
+  }
+]

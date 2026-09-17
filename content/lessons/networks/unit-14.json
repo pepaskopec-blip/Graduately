@@ -1,0 +1,140 @@
+{
+  "id": "unit-14",
+  "subject": "networks",
+  "number": 14,
+  "titleKey": "net_unit14",
+  "subtitleKey": "net_unit14_sub",
+  "slides": [
+    {
+      "kicker": "1 / 5   •   Princip",
+      "title": "Světlo místo proudu",
+      "tip": "Tip: obousměrný provoz = dvě vlákna",
+      "lines": [
+        "Elektrické impulsy se převádí na světlo (LED nebo laser).",
+        "Zpět je zachytí fotodioda.",
+        "Přenos jedním vláknem je jednosměrný."
+      ]
+    },
+    {
+      "kicker": "2 / 5   •   Výhody",
+      "title": "Proč optika",
+      "tip": null,
+      "lines": [
+        "Imunita vůči elektromagnetickému rušení.",
+        "Obrovská šířka pásma a dosah až kolem 100 km.",
+        "Lepší bezpečnost proti odposlechu.",
+        "Malý průměr a nízká váha."
+      ]
+    },
+    {
+      "kicker": "3 / 5   •   Nevýhody",
+      "title": "Cena a montáž",
+      "tip": null,
+      "lines": [
+        "Náročná montáž.",
+        "Dražší aktivní prvky a konektory."
+      ]
+    },
+    {
+      "kicker": "4 / 5   •   MM",
+      "title": "Mnohovidová vlákna",
+      "tip": null,
+      "lines": [
+        "Větší jádro: 50 / 62,5 µm.",
+        "Více cest světla (vidů).",
+        "Levnější zdroje – typicky LED."
+      ]
+    },
+    {
+      "kicker": "5 / 5   •   SM",
+      "title": "Jednovidová vlákna",
+      "tip": null,
+      "lines": [
+        "Malé jádro: 7–10 µm.",
+        "Jen jeden paprsek osou vlákna.",
+        "Velký dosah, vyžaduje laser."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz14_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Princip optiky je:",
+          "options": [
+            "Převod el. impulsů na světlo a zpět fotodiodou",
+            "Jen směrování paketů OSPF",
+            "Jen sdílená sběrnice",
+            "Jen UDP spojení"
+          ],
+          "correct": 0,
+          "hint": "Optika: el. impulsy → světlo (LED/laser) → fotodioda"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jedním vláknem je přenos:",
+          "options": [
+            "Vždy plně duplexní bez výjimky",
+            "Jednosměrný (obousměrně dvě vlákna)",
+            "Jen poloviční kruh",
+            "Jen Token Ring"
+          ],
+          "correct": 1,
+          "hint": "Jedno vlákno = jednosměrný přenos; obousměrně dvě vlákna"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Výhoda optiky není:",
+          "options": [
+            "Imunita vůči el.mag. rušení",
+            "Velký dosah a šířka pásma",
+            "Levná a snadná montáž konektorů",
+            "Lepší ochrana proti odposlechu"
+          ],
+          "correct": 2,
+          "hint": "Nevýhody: náročná montáž a cena prvků/konektorů"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Mnohovidové vlákno (MM) má:",
+          "options": [
+            "Jádro 7–10 µm a vyžaduje laser",
+            "Větší jádro 50/62,5 µm a více vidů",
+            "Jen koaxiální stínění",
+            "Jen jednu MAC adresu"
+          ],
+          "correct": 1,
+          "hint": "MM: jádro 50/62,5 µm a více vidů"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jednovidové vlákno (SM):",
+          "options": [
+            "Má větší jádro a LED zdroj",
+            "Má malé jádro, jeden paprsek a laser",
+            "Nepřenáší světlo",
+            "Funguje jen jako hub"
+          ],
+          "correct": 1,
+          "hint": "SM: jádro 7–10 µm, jeden paprsek, laser"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Levnější zdroje (LED) typicky patří k:",
+          "options": [
+            "Jednovidovým vláknům",
+            "Mnohovidovým vláknům",
+            "Jen kruhové topologii",
+            "Jen ATM"
+          ],
+          "correct": 1,
+          "hint": "MM typicky používá levnější LED zdroje"
+        }
+      ]
+    }
+  ]
+}

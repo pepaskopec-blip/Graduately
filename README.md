@@ -20,7 +20,7 @@ GTK 4 interface.
 
 | Welcome screen                          | Subjects ("Předměty")                    | German learning roadmap                 |
 | --------------------------------------- | ---------------------------------------- | --------------------------------------- |
-| ![Welcome screen](assets/welcomescreen.png) | ![Subjects screen](assets/subjectsscreen.png) | ![German roadmap](assets/germanlection.png) |
+| ![Welcome screen](desktop/assets/welcomescreen.png) | ![Subjects screen](desktop/assets/subjectsscreen.png) | ![German roadmap](desktop/assets/germanlection.png) |
 
 ### Features
 
@@ -218,10 +218,30 @@ sudo pacman -S base-devel pkgconf
 Windows – `gcc`, GTK 4 and `pkg-config` are installed in step 1 of the
 Windows guide below. Visual Studio is not required.
 
-#### Building the application
+#### Running the web app
+
+The web client needs Node.js 20 or newer and no GTK at all:
+
+```bash
+npm run web:install   # installs web/ dependencies
+npm run web           # dev server on http://localhost:3000
+npm run web:build     # production build
+```
+
+It reads its lessons from `content/`, which is exported from the C sources by
+`npm run content`. Themes, translations, exercises and progress tracking all
+mirror the desktop app; progress is kept in the browser's localStorage instead of
+`progress/*.conf`.
+
+Coverage matches the desktop client: German units 1–3 with their vocabulary
+trainers, all 27 network lessons, the three hardware lessons, the 20 Czech
+grammar exercises and both reading-list books.
+
+#### Building the desktop application
 
 1. Clone or download this repository
-2. Navigate to the project directory
+2. Navigate to the `desktop/` directory — every command in this section runs
+   there, since the C sources and the Makefile live inside it
 3. Build with the Makefile:
 
 ```bash
@@ -378,6 +398,22 @@ Completed network units are saved to `progress/net.conf`; hardware units to
 
 ### Project structure
 
+The repository holds three pieces: the GTK desktop app, a Next.js web app, and
+the shared lesson content both read from.
+
+```
+desktop/                GTK 4 desktop app (C)
+web/                    Next.js web app (TypeScript / React)
+content/                shared lesson content as JSON — see content/README.md
+tools/                  exports content/ from the desktop C sources
+```
+
+Run `npm run content` from the repo root to regenerate `content/` after editing
+lesson data in `desktop/`. Run `npm run web` for the web app (after
+`npm run web:install`) and `npm run desktop` for the GTK client.
+
+#### desktop/
+
 ```
 maturita.h              shared types, macros, globals and prototypes
 globals.c               shared global state (window, stack, units, theme, …)
@@ -494,7 +530,7 @@ moderním GTK 4 rozhraním stylovaným přes CSS.
 
 | Úvodní obrazovka                        | Předměty                                 | Německá učební cesta                    |
 | --------------------------------------- | ---------------------------------------- | --------------------------------------- |
-| ![Welcome screen](assets/welcomescreen.png) | ![Subjects screen](assets/subjectsscreen.png) | ![German roadmap](assets/germanlection.png) |
+| ![Welcome screen](desktop/assets/welcomescreen.png) | ![Subjects screen](desktop/assets/subjectsscreen.png) | ![German roadmap](desktop/assets/germanlection.png) |
 
 ### Funkce
 
@@ -680,10 +716,30 @@ sudo pacman -S base-devel pkgconf
 Windows – `gcc`, GTK 4 i `pkg-config` se nainstalují v kroku 1 návodu níže.
 Visual Studio není potřeba.
 
-#### Sestavení aplikace
+#### Spuštění webové aplikace
+
+Webový klient potřebuje Node.js 20 nebo novější a žádné GTK:
+
+```bash
+npm run web:install   # instalace závislostí ve web/
+npm run web           # vývojový server na http://localhost:3000
+npm run web:build     # produkční build
+```
+
+Lekce čte z `content/`, který se z C zdrojů exportuje příkazem
+`npm run content`. Témata, překlady, cvičení i sledování postupu odpovídají
+desktopové aplikaci; postup se ukládá do localStorage prohlížeče místo do
+`progress/*.conf`.
+
+Obsah odpovídá desktopovému klientovi: německé jednotky 1–3 včetně slovníkového
+tréninku, všech 27 lekcí sítí, tři lekce technického vybavení, 20 cvičení
+mluvnice a obě knihy maturitní četby.
+
+#### Sestavení desktopové aplikace
 
 1. Naklonujte nebo stáhněte tento repozitář
-2. Přejděte do složky projektu
+2. Přejděte do složky `desktop/` — všechny příkazy v této části se spouštějí
+   tam, protože C zdroje i Makefile jsou uvnitř
 3. Sestavte pomocí Makefile:
 
 ```bash
@@ -835,6 +891,22 @@ ukládají do `progress/net.conf`, hardwarové do `progress/hw.conf`.
 | `Alt` + `F4`        | Ukončit aplikaci  |
 
 ### Struktura projektu
+
+Repozitář obsahuje tři části: desktopovou aplikaci v GTK, webovou aplikaci
+v Next.js a společný obsah lekcí, který obě čtou.
+
+```
+desktop/                desktopová aplikace GTK 4 (C)
+web/                    webová aplikace Next.js (TypeScript / React)
+content/                společný obsah lekcí v JSON — viz content/README.md
+tools/                  export content/ z C zdrojů desktopové aplikace
+```
+
+Po úpravě obsahu lekcí v `desktop/` spusťte v hlavní složce repozitáře
+`npm run content` a `content/` se přegeneruje. Webovou aplikaci spustíte přes
+`npm run web` (po `npm run web:install`), desktopovou přes `npm run desktop`.
+
+#### desktop/
 
 ```
 maturita.h              sdílené typy, makra, globální proměnné a prototypy

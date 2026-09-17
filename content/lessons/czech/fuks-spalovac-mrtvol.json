@@ -1,0 +1,539 @@
+{
+  "id": "fuks-spalovac-mrtvol",
+  "subject": "czech",
+  "number": 3,
+  "title": {
+    "cs": "Ladislav Fuks – Spalovač mrtvol",
+    "en": "Ladislav Fuks – Spalovač mrtvol"
+  },
+  "subtitle": {
+    "cs": "Projděte si přehled a pak si vyzkoušejte kvíz a řazení děje.",
+    "en": "Read the overview, then try the quiz and the plot ordering."
+  },
+  "slides": [
+    {
+      "kicker": "Ladislav Fuks – Spalovač mrtvol",
+      "title": "O knize",
+      "tip": null,
+      "lines": [
+        "Autor: Ladislav Fuks (1923–1994)",
+        "Žánr: psychologický román s prvky grotesky a hororu",
+        "Poprvé vydáno: 1967",
+        "Děj: Praha v době protektorátu (konec 30. let)",
+        "Vyprávění: ich-forma – vypráví sám pan Kopfrkingl"
+      ]
+    },
+    {
+      "kicker": "Ladislav Fuks – Spalovač mrtvol",
+      "title": "Doba a svět",
+      "tip": null,
+      "lines": [
+        "Děj se odehrává v protektorátu Čechy a Morava za nastupujícího nacismu.",
+        "Atmosféru tvoří strach, přizpůsobování a touha zalíbit se moci.",
+        "Krematorium je symbolem smrti a odlidštění.",
+        "Antisemitismus a árijská ideologie postupně prostupují společnost.",
+        "Obyčejný úředník se mění v nástroj zla."
+      ]
+    },
+    {
+      "kicker": "Ladislav Fuks – Spalovač mrtvol",
+      "title": "Postavy",
+      "tip": null,
+      "lines": [
+        "Pan Kopfrkingl – zaměstnanec krematoria, vypravěč a vrah své rodiny.",
+        "Lakmé – jeho žena, židovského původu.",
+        "Zina a Mil – jeho děti.",
+        "Willi Reinke – Němec, který Kopfrkingla přivede k nacismu.",
+        "Dr. Bettelheim – lékař, s nímž Kopfrkingl rozmlouvá o smrti."
+      ]
+    },
+    {
+      "kicker": "Ladislav Fuks – Spalovač mrtvol",
+      "title": "Klíčové motivy",
+      "tip": null,
+      "lines": [
+        "Krematorium – symbol smrti a zvrácené „očisty“.",
+        "Kniha mrtvých – tibetský text, který si Kopfrkingl překrucuje.",
+        "Reinkarnace a „osvobození“ – záminka pro vraždy.",
+        "Masky a přetvářka – zlo se tváří jako zdvořilost a řád.",
+        "Groteska a černý humor – hrůza podaná klidným, slavnostním tónem.",
+        "Voda a Vltava – motiv smrti a plynutí."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Kvíz",
+      "heading": "Kvíz ke knize",
+      "subtitleKey": "lit_quiz_sub",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Kdo je hlavní postava románu a jaké je jeho povolání?",
+          "options": [
+            "Pan Kopfrkingl – zaměstnanec krematoria",
+            "Willi Reinke – nacistický důstojník",
+            "Dr. Bettelheim – psychiatr",
+            "Pan Kopfrkingl – ředitel školy"
+          ],
+          "correct": 0,
+          "hint": "Hlavní postavou je pan Kopfrkingl, spořádaný zaměstnanec krematoria, který svou práci vnímá jako poslání."
+        },
+        {
+          "kind": "choice",
+          "prompt": "V jakém prostředí pan Kopfrkingl pracuje?",
+          "options": [
+            "V nemocnici",
+            "V krematoriu",
+            "V divadle",
+            "Ve škole"
+          ],
+          "correct": 1,
+          "hint": "Kopfrkingl pracuje v krematoriu, kde má na starosti zpopelňování zemřelých."
+        },
+        {
+          "kind": "choice",
+          "prompt": "V jaké historické době se děj románu odehrává?",
+          "options": [
+            "Za první republiky",
+            "Za protektorátu Čechy a Morava (před a během 2. světové války)",
+            "Po roce 1989",
+            "V 19. století"
+          ],
+          "correct": 1,
+          "hint": "Román se odehrává v době nastupujícího nacismu a protektorátu, který umožňuje Kopfrkinglovu proměnu."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se proměňuje hlavní hrdina v průběhu příběhu?",
+          "options": [
+            "Z laskavého spořádaného muže v chladnokrevného vraha a fanatika",
+            "Z vraha v kajícníka",
+            "Z chudáka v boháče",
+            "Vůbec se nemění"
+          ],
+          "correct": 0,
+          "hint": "Kopfrkingl se postupně mění v člověka, který vraždí své blízké a ospravedlňuje to vyšším dobrem."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je vztah pana Kopfrkingla k jeho rodině na začátku knihy?",
+          "options": [
+            "Nenávidí je",
+            "Je starostlivý, zdvořilý a především spořádaný",
+            "S rodinou se nezná",
+            "Týrá je"
+          ],
+          "correct": 1,
+          "hint": "Na začátku působí jako vzorný manžel a otec, posedlý řádem a zdvořilostí."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se jmenuje manželka pana Kopfrkingla a jaký je jejich vztah?",
+          "options": [
+            "Marie – milují se",
+            "Lakmé – formálně zdvořilý, chladný vztah",
+            "Zina – nenávidí se",
+            "Julie – jsou rozvedení"
+          ],
+          "correct": 1,
+          "hint": "Manželka se jmenuje Lakmé. Jejich vztah je spíš zdvořilá forma než opravdová láska."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je vztah pana Kopfrkingla k dětem, Zině a Mílovi?",
+          "options": [
+            "Miluje je víc než sebe",
+            "Chová se k nim odtažitě, jako k součásti řádu",
+            "Nevidí je",
+            "Jsou adoptované"
+          ],
+          "correct": 1,
+          "hint": "K dětem je odměřený; vnímá je spíš jako součást svého spořádaného světa než jako milované bytosti."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Kdo je Willi Reinke a jakou roli hraje v proměně hlavního hrdiny?",
+          "options": [
+            "Soused z krematoria",
+            "Německý úředník a bývalý voják, který Kopfrkingla ovlivní",
+            "Kopfrkinglův bratr",
+            "Lékař v nemocnici"
+          ],
+          "correct": 1,
+          "hint": "Reinke je Němec, který v Kopfrkinglovi probudí touhu po árijském původu a kariéře."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak Willi Reinke ovlivňuje Kopfrkinglovo smýšlení?",
+          "options": [
+            "Přesvědčí ho, aby se přidal k nacistům a byl „lepší“",
+            "Nabádá ho k odchodu do zahraničí",
+            "Učí ho tibetštinu",
+            "Nijak ho neovlivní"
+          ],
+          "correct": 0,
+          "hint": "Reinke v něm posiluje antisemitismus a touhu po moci a uznání v novém režimu."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je Kopfrkinglův vztah ke krematoriu a smrti obecně?",
+          "options": [
+            "Bojí se jich",
+            "Má je rád, kremaci vnímá jako krásný obřad osvobození",
+            "Nechce tam pracovat",
+            "Je mu to lhostejné"
+          ],
+          "correct": 1,
+          "hint": "Smrt a kremace jsou pro něj estetickým a filozofickým rituálem, ne něčím hrůzným."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak pan Kopfrkingl vnímá a popisuje proces kremace?",
+          "options": [
+            "Jako nutné zlo",
+            "Jako vznešený, očistný obřad, o kterém rád mluví",
+            "Jako hroznou povinnost",
+            "Nikdy o něm nemluví"
+          ],
+          "correct": 1,
+          "hint": "Kopfrkingl o kremaci hovoří básnivě a s nadšením, což ostře kontrastuje s hrůzou jeho činů."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaká je symbolika krematoria v celém románu?",
+          "options": [
+            "Symbol naděje",
+            "Smrt, odlidštění a zvrácená ideologie, která z lidí dělá jen těla",
+            "Symbol lásky",
+            "Symbol mládí"
+          ],
+          "correct": 1,
+          "hint": "Krematorium je ústředním symbolem – odhaluje chladnou mašinerii smrti, do níž se ideologie snaží proměnit člověka."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co symbolizuje Kopfrkinglova záliba v tibetské Knize mrtvých?",
+          "options": [
+            "Jeho touhu po vědění a zvrácenou víru ve vlastní výjimečnost",
+            "Historický zájem o Asii",
+            "Strach ze smrti",
+            "Lásku k manželce"
+          ],
+          "correct": 0,
+          "hint": "Kopfrkingl si z ní vybírá jen to, co se hodí k ospravedlnění jeho činů a jeho pocitu vyvolenosti."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se v knize projevuje motiv buddhismu a reinkarnace?",
+          "options": [
+            "Kopfrkingl jimi ospravedlňuje smrt jako „osvobození duše“",
+            "Postavy se modlí k Bohu",
+            "Nikde se neobjevuje",
+            "Je to hlavní téma manželky"
+          ],
+          "correct": 0,
+          "hint": "Reinkarnace a „osvobození od utrpení“ se v jeho mysli zvrhávají v právo zabíjet."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak Kopfrkingl zneužívá filozofické a náboženské myšlenky?",
+          "options": [
+            "Ospravedlňuje jimi vlastní vraždy jako službu vyššímu dobru",
+            "Pomáhá jimi druhým",
+            "Odmítá je",
+            "Používá je jen v práci"
+          ],
+          "correct": 0,
+          "hint": "Z vznešených idejí si staví masku, za kterou skrývá krutost a touhu po moci."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se postupně mění Kopfrkinglova mluva a způsob vyjadřování?",
+          "options": [
+            "Začíná mluvit vulgárně",
+            "Mění se v patetickou, ráznou řeč plnou frází o řádu a osvobození",
+            "Přestane mluvit",
+            "Od začátku mluví jen německy"
+          ],
+          "correct": 1,
+          "hint": "Jeho zdvořilá mluvnost se postupně mění v ideologické fráze a bezcitný patos."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaké opakující se fráze nebo návyky pana Kopfrkingla si všímáš?",
+          "options": [
+            "Neustále se ptá na počasí",
+            "Opakuje „to je takové“, „vidíte“ a lpí na zdvořilosti",
+            "Zpívá si",
+            "Mluví jen o jídle"
+          ],
+          "correct": 1,
+          "hint": "Opakující se fráze a zdvořilostní obraty vytvářejí rytmus, který je čím dál tím děsivější."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je vypravěčský styl románu (ich-forma, er-forma)?",
+          "options": [
+            "Er-forma bez vnitřního světa",
+            "Ich-forma – vypráví sám Kopfrkingl",
+            "Deníková forma",
+            "Forma dopisů"
+          ],
+          "correct": 1,
+          "hint": "Ich-forma je klíčová: čtenář sleduje svět zkreslený Kopfrkinglovou myslí a sám postupně propadá jeho logice."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se v knize projevuje černý humor a groteska?",
+          "options": [
+            "Vážné scény jsou líčeny s odstupem a absurditou",
+            "Kniha je čistě vážná",
+            "Humor je jediný žánr",
+            "V knize se neprojevuje"
+          ],
+          "correct": 0,
+          "hint": "Groteskní kontrast mezi slavnostním vyprávěním a hrůzou vytváří mrazivý černý humor."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak kontrastuje banalita každodenního života s hrůzností činů?",
+          "options": [
+            "Vůbec nesouvisí",
+            "Všední detaily a zdvořilost činí hrůzu ještě děsivější",
+            "Hrůza je potlačena",
+            "Den je popsán jen jednou"
+          ],
+          "correct": 1,
+          "hint": "Fuks zesiluje otřes tím, že vraždění je popisováno stejně klidně jako ranní káva nebo kremace."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se v knize projevuje antisemitismus?",
+          "options": [
+            "Od začátku otevřeně",
+            "Postupně, nejdřív v náznacích a vlivem Reinkeho",
+            "Nikdy",
+            "Jen mimochodem v závěru"
+          ],
+          "correct": 1,
+          "hint": "Kopfrkinglův antisemitismus se rodí pozvolna a je živen dobovou atmosférou i Reinkem."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak nacistická ideologie postupně prostupuje Kopfrkinglovo myšlení?",
+          "options": [
+            "Odmítá ji",
+            "Přijímá ji jako vyšší řád a ospravedlnění vlastní výjimečnosti",
+            "Nerozumí jí",
+            "Zajímá ho jen hudba"
+          ],
+          "correct": 1,
+          "hint": "Ideologie se mu stává nástrojem kariéry i vnitřním ospravedlněním vražd."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se mění Kopfrkinglův vztah k manželce kvůli jejímu původu?",
+          "options": [
+            "Začne ji milovat víc",
+            "Odcizí se jí, protože je židovského původu",
+            "Nijak se nemění",
+            "Odstěhují se od sebe"
+          ],
+          "correct": 1,
+          "hint": "Kvůli jejímu původu ji přestane vnímat jako rovnocennou a nakonec ji zabije."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Co se stane s Kopfrkinglovou rodinou ve druhé polovině románu?",
+          "options": [
+            "Odstěhují se",
+            "Kopfrkingl svou ženu i děti zabije",
+            "Všichni přežijí",
+            "Zachrání je Reinke"
+          ],
+          "correct": 1,
+          "hint": "Pod vlivem ideologie Kopfrkingl vyvraždí vlastní rodinu a považuje to za „osvobození“."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak Kopfrkingl zdůvodňuje vraždu vlastní ženy?",
+          "options": [
+            "Zlobila se na něj",
+            "Že je židovského původu a překáží jeho kariéře",
+            "Že ho podváděla",
+            "Nijak ji nezdůvodňuje"
+          ],
+          "correct": 1,
+          "hint": "Svou ženu zabije mimo jiné proto, že je židovského původu, tedy „méněcenná“ pro nový režim."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jakým způsobem Kopfrkingl vraždí své blízké?",
+          "options": [
+            "Ve zlosti a afektu",
+            "Chladně a s pocitem, že je „osvobozuje od utrpení“",
+            "Omylem",
+            "Na příkaz úřadů"
+          ],
+          "correct": 1,
+          "hint": "Vraždí klidně, jako by vykonával bohulibý úkon, a svou krutost si vykládá jako soucit."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak souvisí přesvědčení o „osvobození“ s jeho vražednými činy?",
+          "options": [
+            "Dává mu zdání vyššího smyslu, kterým si vraždy ospravedlňuje",
+            "Nemá s nimi nic společného",
+            "Brání mu v zabíjení",
+            "Je to jen náhodná fráze"
+          ],
+          "correct": 0,
+          "hint": "Zvrácená víra v osvobození od utrpení mu slouží jako mravní alibi pro vraždy."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je vztah pana Kopfrkingla k postavě Dr. Bettelheima?",
+          "options": [
+            "Obdivuje ho a rád s ním mluví",
+            "Nenávidí ho",
+            "Nikdy se nepotkají",
+            "Je to jeho nadřízený"
+          ],
+          "correct": 0,
+          "hint": "S doktorem Bettelheimem vede Kopfrkingl své „filozofické“ rozhovory o smrti a lidskosti."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak se mění společenské postavení pana Kopfrkingla v době okupace?",
+          "options": [
+            "Upadá",
+            "Stoupá – díky režimu a touze po árijském původu",
+            "Nemění se",
+            "Odchází do penze"
+          ],
+          "correct": 1,
+          "hint": "Spolu s nacistickou mocí roste i Kopfrkinglova kariéra a sebevědomí."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je symbolický význam jména Kopfrkingl?",
+          "options": [
+            "Zdánlivě úřednické, ale zní hrozivě – naznačuje zvrácenost",
+            "Je to běžné české jméno",
+            "Znamená „laskavý“",
+            "Je to pseudonym"
+          ],
+          "correct": 0,
+          "hint": "Zvukomalebné jméno působí úředně a zároveň hrozivě, což podtrhuje dvojí tvář postavy."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak funguje motiv masek, divadla a přetvářky?",
+          "options": [
+            "Postavy nosí masky dobroty, pod nimiž se skrývá krutost",
+            "V knize jsou jen skutečné divadelní masky",
+            "Motiv se neobjevuje",
+            "Masky symbolizují lásku"
+          ],
+          "correct": 0,
+          "hint": "Přetvářka a předstíraná spořádanost jsou ústřední – zlo se tváří jako slušnost."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaký je vztah mezi soukromým a kolektivním šílenstvím doby?",
+          "options": [
+            "Kopfrkinglovo osobní šílenství roste spolu s ideologií doby",
+            "Nijak nesouvisí",
+            "Doba je klidná a šťastná",
+            "Lidé režim jednomyslně odmítají"
+          ],
+          "correct": 0,
+          "hint": "Fuks ukazuje, jak se individuální porucha napojí na kolektivní ideologii a čerpá z ní sílu."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak končí román a co se stane s panem Kopfrkinglem na konci?",
+          "options": [
+            "Uteče do zahraničí",
+            "Je zatčen a zničen",
+            "Stane se hrdinou",
+            "Věří, že je vtělením Dalajlámy, a zůstává zaslepený"
+          ],
+          "correct": 3,
+          "hint": "Kopfrkinglova zaslepenost vrcholí přesvědčením o vlastní božskosti; jeho zvrácená víra ho neopouští."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jak je Spalovač mrtvol adaptován filmově?",
+          "options": [
+            "Film Juraje Herze je vizuálně expresivní a patří k vrcholům české kinematografie",
+            "Byl zfilmován jen v zahraničí",
+            "Film neexistuje",
+            "Vznikl jako animovaný seriál"
+          ],
+          "correct": 0,
+          "hint": "Známá filmová verze je od režiséra Juraje Herze z roku 1968."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Které další dílo Ladislava Fukse se dá srovnat s touto knihou?",
+          "options": [
+            "Pan Theodor Mundstock nebo Myši Natálie Mooshabrové",
+            "Farma zvířat",
+            "R.U.R.",
+            "Babička"
+          ],
+          "correct": 0,
+          "hint": "Fuks se opakovaně zabýval osudem židovských postav a atmosférou strachu; srovnat lze např. Pana Theodora Mundstocka."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaká jsou hlavní témata románu?",
+          "options": [
+            "Moc, manipulace, ideologie, násilí a přetvářka",
+            "Láska a dobrodružství",
+            "Sport a přátelství",
+            "Příroda a vesmír"
+          ],
+          "correct": 0,
+          "hint": "Kniha zkoumá, jak se obyčejný člověk přizpůsobí zlu a stane se jeho nástrojem."
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jaké poselství podle tebe chtěl Ladislav Fuks knihou předat?",
+          "options": [
+            "Varování před manipulací a tím, jak se zlo rodí z banality a lhostejnosti",
+            "Oslavu války",
+            "Návod k podnikání",
+            "Kritiku školství"
+          ],
+          "correct": 0,
+          "hint": "Fuks ukazuje, že hrůza může vzniknout z poslušnosti a touhy být „lepší“ než ostatní."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Děj",
+      "heading": "Seřaďte děj",
+      "subtitleKey": "lit_plot_sub",
+      "items": [
+        {
+          "kind": "assembly",
+          "prompt": "Přetáhněte části příběhu do správného pořadí:",
+          "words": [
+            "Kopfrkingl je spořádaným zaměstnancem krematoria",
+            "Seznámí se s Willim Reinkem",
+            "Začne věřit v árijskou nadřazenost",
+            "Postupně se odcizí své rodině",
+            "Zabije ženu a děti jako „osvobození“",
+            "Na konci se považuje za vtělení Dalajlámy"
+          ],
+          "meaning": "Správné pořadí: spořádaný úředník → setkání s Reinkem → árijská ideologie → odcizení rodině → vraždy → přesvědčení o vlastní božskosti."
+        }
+      ]
+    }
+  ]
+}

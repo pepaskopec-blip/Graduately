@@ -1,0 +1,2788 @@
+{
+  "id": "unit-02",
+  "subject": "deutsch",
+  "number": 2,
+  "title": {
+    "cs": "Aus aller Welt",
+    "en": "Aus aller Welt"
+  },
+  "slides": [],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Verben konjugieren",
+      "subtitleKey": "sub_verben",
+      "pool": [
+        "kommt",
+        "kommst",
+        "komme",
+        "kommen",
+        "wohnt",
+        "wohnst",
+        "wohne",
+        "wohnen",
+        "spielt",
+        "spielst",
+        "spiele",
+        "spielen",
+        "spricht",
+        "sprichst",
+        "spreche",
+        "sprechen",
+        "tanzt",
+        "tanze",
+        "tanzen",
+        "reist",
+        "reise",
+        "reisen",
+        "ist",
+        "bist",
+        "bin",
+        "sind",
+        "seid"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " aus Österreich. (kommen)"
+          ],
+          "answers": [
+            "kommt"
+          ],
+          "input": "select",
+          "meaning": "Pochází z Rakouska.",
+          "heading": "Peter Fritsch:"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " in Graz. (wohnen)"
+          ],
+          "answers": [
+            "wohnt"
+          ],
+          "input": "select",
+          "meaning": "Bydlí ve Štýrském Hradci (Graz)."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " gern Golf. (spielen)"
+          ],
+          "answers": [
+            "spielt"
+          ],
+          "input": "select",
+          "meaning": "Rád hraje golf."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " Deutsch, Englisch und Italienisch. (sprechen)"
+          ],
+          "answers": [
+            "spricht"
+          ],
+          "input": "select",
+          "meaning": "Mluví německy, anglicky a italsky."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " aus der Slowakei. (kommen)"
+          ],
+          "answers": [
+            "kommen"
+          ],
+          "input": "select",
+          "meaning": "Pocházejí ze Slovenska.",
+          "heading": "Jana Nová und Pavol Korčák:"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " in Bratislava. (wohnen)"
+          ],
+          "answers": [
+            "wohnen"
+          ],
+          "input": "select",
+          "meaning": "Bydlí v Bratislavě (ona)."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " gern. (tanzen)"
+          ],
+          "answers": [
+            "tanzt"
+          ],
+          "input": "select",
+          "meaning": "Ona ráda tancuje."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er ",
+            " gern. (reisen)"
+          ],
+          "answers": [
+            "reist"
+          ],
+          "input": "select",
+          "meaning": "On rád cestuje."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ",
+            " gute Freunde. (sein)"
+          ],
+          "answers": [
+            "sind"
+          ],
+          "input": "select",
+          "meaning": "Jsou dobří přátelé."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "aus oder in",
+      "subtitleKey": "sub_ausin",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "1.  Ich komme ___ Athen.",
+          "options": [
+            "aus",
+            "in"
+          ],
+          "correct": 0,
+          "meaning": "Pocházím z Atén."
+        },
+        {
+          "kind": "choice",
+          "prompt": "2.  Peter wohnt ___ Salzburg.",
+          "options": [
+            "aus",
+            "in"
+          ],
+          "correct": 1,
+          "meaning": "Petr bydlí v Salcburku."
+        },
+        {
+          "kind": "choice",
+          "prompt": "3.  Berlin liegt ___ Deutschland.",
+          "options": [
+            "aus",
+            "in"
+          ],
+          "correct": 1,
+          "meaning": "Berlín leží v Německu."
+        },
+        {
+          "kind": "choice",
+          "prompt": "4.  Wir wohnen ___ Paris.",
+          "options": [
+            "aus",
+            "in"
+          ],
+          "correct": 1,
+          "meaning": "Bydlíme v Paříži."
+        },
+        {
+          "kind": "choice",
+          "prompt": "5.  Sie kommen ___ Griechenland.",
+          "options": [
+            "aus",
+            "in"
+          ],
+          "correct": 0,
+          "meaning": "Pocházejí z Řecka."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Fragewörter",
+      "subtitleKey": "sub_wer",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "1.  ___ kommt er?  →  Aus London.",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo",
+            "Woher",
+            "Was"
+          ],
+          "correct": 3,
+          "meaning": "Odkud je? – Z Londýna."
+        },
+        {
+          "kind": "choice",
+          "prompt": "2.  ___ heißt sie?  →  Andrea.",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo",
+            "Woher",
+            "Was"
+          ],
+          "correct": 1,
+          "meaning": "Jak se jmenuje? – Andrea."
+        },
+        {
+          "kind": "choice",
+          "prompt": "3.  ___ kommt aus Russland?  →  Alexander.",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo",
+            "Woher",
+            "Was"
+          ],
+          "correct": 0,
+          "meaning": "Kdo pochází z Ruska? – Alexandr."
+        },
+        {
+          "kind": "choice",
+          "prompt": "4.  ___ liegt Prag?  →  In Tschechien.",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo",
+            "Woher",
+            "Was"
+          ],
+          "correct": 2,
+          "meaning": "Kde leží Praha? – V Česku."
+        },
+        {
+          "kind": "choice",
+          "prompt": "5.  ___ wohnen sie?  →  In Bratislava.",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo",
+            "Woher",
+            "Was"
+          ],
+          "correct": 2,
+          "meaning": "Kde bydlí? – V Bratislavě."
+        },
+        {
+          "kind": "choice",
+          "prompt": "6.  ___ macht ihr?  →  Wir studieren Germanistik.",
+          "options": [
+            "Wer",
+            "Wie",
+            "Wo",
+            "Woher",
+            "Was"
+          ],
+          "correct": 4,
+          "meaning": "Co děláte? – Studujeme germanistiku."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "sprechen",
+      "subtitleKey": "sub_sprich",
+      "pool": [
+        "spreche",
+        "sprichst",
+        "spricht",
+        "sprechen",
+        "sprecht"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "• Ich ",
+            " Deutsch und du?"
+          ],
+          "answers": [
+            "spreche"
+          ],
+          "input": "select",
+          "meaning": "Mluvím německy. A ty?"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "• Welche Sprachen ",
+            " Sie?"
+          ],
+          "answers": [
+            "sprechen"
+          ],
+          "input": "select",
+          "meaning": "Kterými jazyky mluvíte?"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "• ",
+            " du Französisch?"
+          ],
+          "answers": [
+            "sprichst"
+          ],
+          "input": "select",
+          "meaning": "Mluvíš francouzsky? – Ano, trochu."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "• Wir ",
+            " Polnisch und ihr?"
+          ],
+          "answers": [
+            "sprechen"
+          ],
+          "input": "select",
+          "meaning": "My mluvíme polsky a vy?"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "• ",
+            " ihr Englisch?"
+          ],
+          "answers": [
+            "sprecht"
+          ],
+          "input": "select",
+          "meaning": "Mluvíte anglicky? – Ano, velmi dobře."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "• Er ",
+            " kein Wort Türkisch."
+          ],
+          "answers": [
+            "spricht"
+          ],
+          "input": "select",
+          "meaning": "Nemluví ani slovo turecky."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Nationalitäten",
+      "subtitleKey": "sub_nation",
+      "note": "Tscheche, Tschechin, Spanier, Spanierin, Türke, Türkin, Kroate, Kroatin, Deutscher, Deutsche, Österreicher, Österreicherin, Slowake, Slowakin",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "Er kommt aus Tschechien. Er ist _________.",
+          "answers": [
+            "tscheche"
+          ],
+          "meaning": "Čech"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Sie kommt aus Spanien. Sie ist _________.",
+          "answers": [
+            "spanierin"
+          ],
+          "meaning": "Španělka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Er kommt aus der Türkei. Er ist _________.",
+          "answers": [
+            "türke",
+            "turke"
+          ],
+          "meaning": "Turek"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Sie kommt aus Kroatien. Sie ist _________.",
+          "answers": [
+            "kroatin"
+          ],
+          "meaning": "Chorvatka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Sie kommt aus Deutschland. Sie ist _________.",
+          "answers": [
+            "deutsche"
+          ],
+          "meaning": "Němka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Sie kommt aus Österreich. Sie ist _________.",
+          "answers": [
+            "österreicherin",
+            "osterreicherin"
+          ],
+          "meaning": "Rakušanka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Er kommt aus der Slowakei. Er ist _________.",
+          "answers": [
+            "slowake"
+          ],
+          "meaning": "Slovák"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Woher?",
+      "subtitleKey": "sub_woher",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "Ich heiße Thomas. Ich spreche Deutsch. Ich komme aus D________.",
+          "answers": [
+            "deutschland",
+            "eutschland"
+          ],
+          "meaning": "Deutschland – Německo"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ich heiße Martina. Ich spreche Slowakisch. Ich komme aus der S________.",
+          "answers": [
+            "slowakei",
+            "lowakei"
+          ],
+          "meaning": "Slowakei – Slovensko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ich heiße Petra. Ich spreche Deutsch. Ich komme aus Ö________.",
+          "answers": [
+            "österreich",
+            "osterreich",
+            "sterreich"
+          ],
+          "meaning": "Österreich – Rakousko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ich heiße Miguel. Ich spreche Spanisch. Ich komme aus S________.",
+          "answers": [
+            "spanien",
+            "panien"
+          ],
+          "meaning": "Spanien – Španělsko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ich heiße George. Ich spreche Englisch. Ich komme aus E________.",
+          "answers": [
+            "england",
+            "ngland"
+          ],
+          "meaning": "England – Anglie"
+        },
+        {
+          "kind": "typed",
+          "prompt": "Ich heiße Maria. Ich spreche Polnisch. Ich komme aus P________.",
+          "answers": [
+            "polen",
+            "olen"
+          ],
+          "meaning": "Polen – Polsko"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Länder schreiben",
+      "subtitleKey": "sub_laender",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "1.  Ru__land",
+          "answers": [
+            "russland",
+            "ss"
+          ],
+          "meaning": "Russland – Rusko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "2.  T_rkei",
+          "answers": [
+            "türkei",
+            "turkei",
+            "ü",
+            "u"
+          ],
+          "meaning": "Türkei – Turecko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "3.  Slo__kei",
+          "answers": [
+            "slowakei",
+            "wa"
+          ],
+          "meaning": "Slowakei – Slovensko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "4.  Kro__ien",
+          "answers": [
+            "kroatien",
+            "at"
+          ],
+          "meaning": "Kroatien – Chorvatsko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "5.  Deut___land",
+          "answers": [
+            "deutschland",
+            "sch"
+          ],
+          "meaning": "Deutschland – Německo"
+        },
+        {
+          "kind": "typed",
+          "prompt": "6.  Öst__reich",
+          "answers": [
+            "österreich",
+            "osterreich",
+            "er"
+          ],
+          "meaning": "Österreich – Rakousko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "7.  Gr__chenland",
+          "answers": [
+            "griechenland",
+            "ie"
+          ],
+          "meaning": "Griechenland – Řecko"
+        },
+        {
+          "kind": "typed",
+          "prompt": "8.  Ita__en",
+          "answers": [
+            "italien",
+            "li"
+          ],
+          "meaning": "Italien – Itálie"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Verben einsetzen",
+      "subtitleKey": "sub_verb2",
+      "pool": [
+        "liest",
+        "lese",
+        "lest",
+        "lesen",
+        "studiert",
+        "studiere",
+        "studiert",
+        "studieren",
+        "fährt",
+        "fahre",
+        "fahrt",
+        "fahren",
+        "lebt",
+        "lebe",
+        "lebt",
+        "leben",
+        "arbeitet",
+        "arbeite",
+        "arbeitet",
+        "arbeiten"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Was ",
+            " er?  →  Ein Buch. (lesen)"
+          ],
+          "answers": [
+            "liest"
+          ],
+          "input": "select",
+          "meaning": "Co čte? – Knihu."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Was ",
+            " sie?  →  Medizin. (studieren)"
+          ],
+          "answers": [
+            "studiert"
+          ],
+          "input": "select",
+          "meaning": "Co studuje? – Medicínu."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Was ",
+            " Jan gern?  →  Auto. (fahren)"
+          ],
+          "answers": [
+            "fährt"
+          ],
+          "input": "select",
+          "meaning": "Čím Jan rád jezdí? – Autem."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Wo ",
+            " ihr?  →  In Wien. (leben)"
+          ],
+          "answers": [
+            "lebt"
+          ],
+          "input": "select",
+          "meaning": "Kde bydlíte? – Ve Vídni."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Wer ",
+            " bei Siemens?  →  Meine Freundin Vera. (arbeiten)"
+          ],
+          "answers": [
+            "arbeitet"
+          ],
+          "input": "select",
+          "meaning": "Kdo pracuje u Siemensu? – Moje kamarádka Věra."
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Freie Antwort",
+      "subtitleKey": "sub_free",
+      "items": [
+        {
+          "kind": "free",
+          "question": "Wie heißt du?",
+          "questionCs": "Jak se jmenuješ?",
+          "sample": "Ich heiße Lukas.",
+          "sampleCs": "Jmenuji se Lukáš."
+        },
+        {
+          "kind": "free",
+          "question": "Wo wohnst du?",
+          "questionCs": "Kde bydlíš?",
+          "sample": "Ich wohne in Prag.",
+          "sampleCs": "Bydlím v Praze."
+        },
+        {
+          "kind": "free",
+          "question": "Wohin fährst du?",
+          "questionCs": "Kam jedeš?",
+          "sample": "Ich fahre nach Deutschland.",
+          "sampleCs": "Jedu do Německa."
+        },
+        {
+          "kind": "free",
+          "question": "Was liest du gern?",
+          "questionCs": "Co rád/a čteš?",
+          "sample": "Ich lese gern Krimis.",
+          "sampleCs": "Rád/a čtu detektivky."
+        },
+        {
+          "kind": "free",
+          "question": "Was spielst du gern?",
+          "questionCs": "Co rád/a hraješ?",
+          "sample": "Ich spiele gern Golf.",
+          "sampleCs": "Rád/a hraju golf."
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Euro",
+      "subtitleKey": "sub_euro",
+      "pool": [
+        "dreiundsechzig",
+        "achtunddreißig",
+        "fünfundvierzig",
+        "siebenundfünfzig",
+        "neunundneunzig"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Julia hat ",
+            " Euro."
+          ],
+          "answers": [
+            "dreiundsechzig"
+          ],
+          "input": "select",
+          "meaning": "šedesát tři eur"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Tina hat ",
+            " Euro."
+          ],
+          "answers": [
+            "achtunddreißig"
+          ],
+          "input": "select",
+          "meaning": "třicet osm eur"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Peter hat ",
+            " Euro."
+          ],
+          "answers": [
+            "fünfundvierzig"
+          ],
+          "input": "select",
+          "meaning": "čtyřicet pět eur"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Hans hat ",
+            " Euro."
+          ],
+          "answers": [
+            "siebenundfünfzig"
+          ],
+          "input": "select",
+          "meaning": "padesát sedm eur"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Barbara hat ",
+            " Euro."
+          ],
+          "answers": [
+            "neunundneunzig"
+          ],
+          "input": "select",
+          "meaning": "devadesát devět eur"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Wörter suchen",
+      "subtitleKey": "sub_wortsuchen",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "tergehvatereikauwauzeh",
+          "answers": [
+            "vater"
+          ],
+          "meaning": "otec"
+        },
+        {
+          "kind": "typed",
+          "prompt": "berelternnemrerhobschaz",
+          "answers": [
+            "eltern"
+          ],
+          "meaning": "rodiče"
+        },
+        {
+          "kind": "typed",
+          "prompt": "nefrastschechinreiabtab",
+          "answers": [
+            "tschechin"
+          ],
+          "meaning": "Češka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "hejkosstudentaldwsahujoi",
+          "answers": [
+            "student"
+          ],
+          "meaning": "student"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Was ist richtig?",
+      "subtitleKey": "sub_verb2",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "1.  Peter ___ gern Bücher.",
+          "options": [
+            "liest",
+            "lest",
+            "lesen"
+          ],
+          "correct": 0,
+          "meaning": "Petr rád čte knihy."
+        },
+        {
+          "kind": "choice",
+          "prompt": "2.  Filip ___ in Salzburg.",
+          "options": [
+            "arbeit",
+            "arbeitet",
+            "arbeite"
+          ],
+          "correct": 1,
+          "meaning": "Filip pracuje v Salcburku."
+        },
+        {
+          "kind": "choice",
+          "prompt": "3.  Magda ___ gut Englisch.",
+          "options": [
+            "spricht",
+            "sprecht",
+            "sprechen"
+          ],
+          "correct": 0,
+          "meaning": "Magda dobře mluví anglicky."
+        },
+        {
+          "kind": "choice",
+          "prompt": "4.  Marek ___ das Gymnasium.",
+          "options": [
+            "besuchst",
+            "besucht",
+            "besuchen"
+          ],
+          "correct": 1,
+          "meaning": "Marek navštěvuje gymnázium."
+        },
+        {
+          "kind": "choice",
+          "prompt": "5.  Dominika ___ 15 Jahre alt.",
+          "options": [
+            "ist",
+            "seid",
+            "bin"
+          ],
+          "correct": 0,
+          "meaning": "Dominice je 15 let."
+        },
+        {
+          "kind": "choice",
+          "prompt": "6.  Meine Schwester ___ Marta.",
+          "options": [
+            "heiße",
+            "heißt",
+            "heißen"
+          ],
+          "correct": 1,
+          "meaning": "Moje sestra se jmenuje Marta."
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Ordne zu",
+      "subtitleKey": "sub_ordne",
+      "pool": [
+        "Was",
+        "Wer",
+        "Wie",
+        "Wo",
+        "Woher"
+      ],
+      "altPool": [
+        "Jana und Michael.",
+        "Jacek.",
+        "In Plzeň.",
+        "Aus Deutschland.",
+        "Wir studieren Germanistik.",
+        "Slowakisch."
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " heißen sie? → ",
+            ""
+          ],
+          "answers": [
+            "Wie",
+            "Jana und Michael."
+          ],
+          "input": "select",
+          "gapPool": [
+            "main",
+            "alt"
+          ],
+          "label": "1.",
+          "meaning": "Jak se jmenují? – Jana a Michael."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " spricht Polnisch? → ",
+            ""
+          ],
+          "answers": [
+            "Wer",
+            "Jacek."
+          ],
+          "input": "select",
+          "gapPool": [
+            "main",
+            "alt"
+          ],
+          "label": "2.",
+          "meaning": "Kdo mluví polsky? – Jacek."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " wohnt Eva? → ",
+            ""
+          ],
+          "answers": [
+            "Wo",
+            "In Plzeň."
+          ],
+          "input": "select",
+          "gapPool": [
+            "main",
+            "alt"
+          ],
+          "label": "3.",
+          "meaning": "Kde bydlí Eva? – V Plzni."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " kommt Markus? → ",
+            ""
+          ],
+          "answers": [
+            "Woher",
+            "Aus Deutschland."
+          ],
+          "input": "select",
+          "gapPool": [
+            "main",
+            "alt"
+          ],
+          "label": "4.",
+          "meaning": "Odkud pochází Markus? – Z Německa."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " macht ihr? → ",
+            ""
+          ],
+          "answers": [
+            "Was",
+            "Wir studieren Germanistik."
+          ],
+          "input": "select",
+          "gapPool": [
+            "main",
+            "alt"
+          ],
+          "label": "5.",
+          "meaning": "Co děláte? – Studujeme germanistiku."
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "",
+            " spricht Jana? → ",
+            ""
+          ],
+          "answers": [
+            "Was",
+            "Slowakisch."
+          ],
+          "input": "select",
+          "gapPool": [
+            "main",
+            "alt"
+          ],
+          "label": "6.",
+          "meaning": "Jakým jazykem mluví Jana? – Slovensky."
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "title": "Lückentext",
+      "subtitleKey": "sub_luecke",
+      "pool": [
+        "aus",
+        "macht",
+        "Freund",
+        "lebt",
+        "Sprache",
+        "gut"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "Agnieszka Kowalski kommt ",
+            " Polen, aus Kraków."
+          ],
+          "answers": [
+            "aus"
+          ],
+          "input": "select",
+          "meaning": "Agnieszka Kowalski pochází z Polska, z Krakova.",
+          "glosses": [
+            "z"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie ist 18 Jahre alt und ",
+            " dieses Jahr Abitur."
+          ],
+          "answers": [
+            "macht"
+          ],
+          "input": "select",
+          "meaning": "Je jí 18 let a letos dělá maturitu.",
+          "glosses": [
+            "dělá"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie chattet gerne mit ihrem deutschen ",
+            "."
+          ],
+          "answers": [
+            "Freund"
+          ],
+          "input": "select",
+          "meaning": "Ráda chatuje se svým německým přítelem.",
+          "glosses": [
+            "kamarád"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Er heißt Stefan Böhmermann und ",
+            " in Dresden."
+          ],
+          "answers": [
+            "lebt"
+          ],
+          "input": "select",
+          "meaning": "Jmenuje se Stefan Böhmermann a bydlí v Drážďanech.",
+          "glosses": [
+            "žije"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Agnieszka findet die ",
+            " cool."
+          ],
+          "answers": [
+            "Sprache"
+          ],
+          "input": "select",
+          "meaning": "Agnieszce přijde ten jazyk super.",
+          "glosses": [
+            "jazyk"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Sie spricht schon sehr ",
+            " Deutsch."
+          ],
+          "answers": [
+            "gut"
+          ],
+          "input": "select",
+          "meaning": "Už mluví velmi dobře německy.",
+          "glosses": [
+            "dobře"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "title": "Verbinde",
+      "subtitleKey": "sub_verbinde",
+      "pool": [
+        "brauchen",
+        "arbeiten",
+        "fahren",
+        "besuchen",
+        "sprechen",
+        "lesen"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "ein Handy ",
+            ""
+          ],
+          "answers": [
+            "brauchen"
+          ],
+          "input": "select",
+          "meaning": "potřebovat mobil",
+          "glosses": [
+            "potřebovat"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "bei BMW ",
+            ""
+          ],
+          "answers": [
+            "arbeiten"
+          ],
+          "input": "select",
+          "meaning": "pracovat ve BMW",
+          "glosses": [
+            "pracovat"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Auto ",
+            ""
+          ],
+          "answers": [
+            "fahren"
+          ],
+          "input": "select",
+          "meaning": "řídit auto",
+          "glosses": [
+            "řídit"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "das Gymnasium ",
+            ""
+          ],
+          "answers": [
+            "besuchen"
+          ],
+          "input": "select",
+          "meaning": "navštěvovat gymnázium",
+          "glosses": [
+            "navštěvovat"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Spanisch ",
+            ""
+          ],
+          "answers": [
+            "sprechen"
+          ],
+          "input": "select",
+          "meaning": "mluvit španělsky",
+          "glosses": [
+            "mluvit"
+          ]
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "Krimis ",
+            ""
+          ],
+          "answers": [
+            "lesen"
+          ],
+          "input": "select",
+          "meaning": "číst detektivky",
+          "glosses": [
+            "číst"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "title": "Zahlen",
+      "subtitleKey": "sub_zahlpaar",
+      "pool": [
+        "vierundfünfzig",
+        "fünfundvierzig",
+        "dreihundertneunundsechzig",
+        "hundertzwölf",
+        "hundertzweiundzwanzig",
+        "achtundsechzig"
+      ],
+      "items": [
+        {
+          "kind": "fill",
+          "segments": [
+            "54  =  ",
+            ""
+          ],
+          "answers": [
+            "vierundfünfzig"
+          ],
+          "input": "select",
+          "meaning": "padesát čtyři"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "45  =  ",
+            ""
+          ],
+          "answers": [
+            "fünfundvierzig"
+          ],
+          "input": "select",
+          "meaning": "čtyřicet pět"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "369  =  ",
+            ""
+          ],
+          "answers": [
+            "dreihundertneunundsechzig"
+          ],
+          "input": "select",
+          "meaning": "tři sta šedesát devět"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "112  =  ",
+            ""
+          ],
+          "answers": [
+            "hundertzwölf"
+          ],
+          "input": "select",
+          "meaning": "sto dvanáct"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "122  =  ",
+            ""
+          ],
+          "answers": [
+            "hundertzweiundzwanzig"
+          ],
+          "input": "select",
+          "meaning": "sto dvacet dva"
+        },
+        {
+          "kind": "fill",
+          "segments": [
+            "68  =  ",
+            ""
+          ],
+          "answers": [
+            "achtundsechzig"
+          ],
+          "input": "select",
+          "meaning": "šedesát osm"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "title": "Steckbrief",
+      "subtitleKey": "sub_steckbrief",
+      "items": [
+        {
+          "kind": "profile",
+          "stem": "Ich heiße …",
+          "sample": "Ich heiße Petra."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich komme …",
+          "sample": "Ich komme aus Tschechien."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich lebe …",
+          "sample": "Ich lebe in Prag."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich bin …",
+          "sample": "Ich bin fünfzehn Jahre alt."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich spreche …",
+          "sample": "Ich spreche Tschechisch und Deutsch."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich besuche …",
+          "sample": "Ich besuche das Gymnasium."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich finde …",
+          "sample": "Ich finde Deutsch toll."
+        },
+        {
+          "kind": "profile",
+          "stem": "Ich arbeite …",
+          "sample": "Ich arbeite noch nicht."
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "title": "Berufe",
+      "subtitleKey": "sub_berufe",
+      "items": [
+        {
+          "kind": "hangman",
+          "word": "KOCH",
+          "hint": "vaří v restauraci"
+        },
+        {
+          "kind": "hangman",
+          "word": "ARZT",
+          "hint": "léčí nemocné lidi"
+        },
+        {
+          "kind": "hangman",
+          "word": "LEHRER",
+          "hint": "učí ve škole"
+        },
+        {
+          "kind": "hangman",
+          "word": "POLIZIST",
+          "hint": "pracuje u policie"
+        },
+        {
+          "kind": "hangman",
+          "word": "VERKÄUFER",
+          "hint": "prodává v obchodě"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "title": "Nationalität",
+      "subtitleKey": "sub_bistdu",
+      "items": [
+        {
+          "kind": "typed",
+          "prompt": "1.  🇨🇿  Bist du Russe? – Nein, ich bin _________.",
+          "answers": [
+            "tscheche"
+          ],
+          "meaning": "Čech"
+        },
+        {
+          "kind": "typed",
+          "prompt": "2.  🇦🇹  Bist du Tschechin? – Nein, ich bin _________.",
+          "answers": [
+            "österreicherin",
+            "osterreicherin"
+          ],
+          "meaning": "Rakušanka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "3.  🇨🇭  Bist du Deutsche? – Nein, ich bin _________.",
+          "answers": [
+            "schweizerin"
+          ],
+          "meaning": "Švýcarka"
+        },
+        {
+          "kind": "typed",
+          "prompt": "4.  🇩🇪  Bist du Engländer? – Nein, ich bin _________.",
+          "answers": [
+            "deutscher"
+          ],
+          "meaning": "Němec"
+        },
+        {
+          "kind": "typed",
+          "prompt": "5.  🇨🇭  Bist du Amerikanerin? – Nein, ich bin _________.",
+          "answers": [
+            "schweizerin"
+          ],
+          "meaning": "Švýcarka"
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    {
+      "header": "Strana 22",
+      "items": [
+        {
+          "prompt": "arbeiten (Infinitiv)",
+          "answers": [
+            "pracovat",
+            "pracuje",
+            "to work"
+          ],
+          "meaning": "pracovat"
+        },
+        {
+          "prompt": "das Auto, -s",
+          "answers": [
+            "auto",
+            "car"
+          ],
+          "meaning": "auto"
+        },
+        {
+          "prompt": "brauchen (Infinitiv)",
+          "answers": [
+            "potřebovat",
+            "potřebuje",
+            "to need"
+          ],
+          "meaning": "potřebovat"
+        },
+        {
+          "prompt": "die Britin, -nen",
+          "answers": [
+            "britka",
+            "british woman"
+          ],
+          "meaning": "Britka"
+        },
+        {
+          "prompt": "britisch",
+          "answers": [
+            "britský",
+            "british"
+          ],
+          "meaning": "britský"
+        },
+        {
+          "prompt": "deutsch",
+          "answers": [
+            "německý",
+            "german"
+          ],
+          "meaning": "německý"
+        },
+        {
+          "prompt": "das Deutsch",
+          "answers": [
+            "němčina",
+            "německy",
+            "němčina, německy",
+            "german"
+          ],
+          "meaning": "němčina, německy"
+        },
+        {
+          "prompt": "die Eisschnelläuferin, -nen",
+          "answers": [
+            "rychlobruslařka",
+            "speed skater"
+          ],
+          "meaning": "rychlobruslařka"
+        },
+        {
+          "prompt": "fahren (Infinitiv)",
+          "answers": [
+            "jezdit",
+            "jet",
+            "řídit",
+            "to drive",
+            "to go"
+          ],
+          "meaning": "jezdit"
+        },
+        {
+          "prompt": "Er fährt gern Auto.",
+          "answers": [
+            "rád řídí auto",
+            "rád jezdí autem",
+            "he likes driving a car"
+          ],
+          "meaning": "Rád řídí auto."
+        },
+        {
+          "prompt": "Frankreich",
+          "answers": [
+            "francie",
+            "france"
+          ],
+          "meaning": "Francie"
+        },
+        {
+          "prompt": "für",
+          "answers": [
+            "pro",
+            "za",
+            "for"
+          ],
+          "meaning": "pro, za"
+        },
+        {
+          "prompt": "der Fußballspieler",
+          "answers": [
+            "fotbalista",
+            "footballer",
+            "football player"
+          ],
+          "meaning": "fotbalista"
+        },
+        {
+          "prompt": "das Jahrhunderttalent, -e",
+          "answers": [
+            "talent století",
+            "talent of the century"
+          ],
+          "meaning": "talent století"
+        },
+        {
+          "prompt": "das Kind, -er",
+          "answers": [
+            "dítě",
+            "child"
+          ],
+          "meaning": "dítě"
+        },
+        {
+          "prompt": "lesen (Infinitiv)",
+          "answers": [
+            "číst",
+            "to read"
+          ],
+          "meaning": "číst"
+        },
+        {
+          "prompt": "das Model, -s",
+          "answers": [
+            "model",
+            "modelka",
+            "model, modelka"
+          ],
+          "meaning": "model, modelka"
+        },
+        {
+          "prompt": "die Nummer, -n",
+          "answers": [
+            "číslo",
+            "number"
+          ],
+          "meaning": "číslo"
+        },
+        {
+          "prompt": "die Schauspielerin, -nen",
+          "answers": [
+            "herečka",
+            "actress"
+          ],
+          "meaning": "herečka"
+        },
+        {
+          "prompt": "der Schüler, -",
+          "answers": [
+            "žák",
+            "pupil",
+            "schoolboy"
+          ],
+          "meaning": "žák"
+        },
+        {
+          "prompt": "die Sportinitiative, -n",
+          "answers": [
+            "sportovní iniciativa",
+            "sports initiative"
+          ],
+          "meaning": "sportovní iniciativa"
+        },
+        {
+          "prompt": "sprechen (Infinitiv)",
+          "answers": [
+            "mluvit",
+            "to speak"
+          ],
+          "meaning": "mluvit"
+        },
+        {
+          "prompt": "Sie spricht Englisch.",
+          "answers": [
+            "mluví anglicky",
+            "ona mluví anglicky",
+            "she speaks english"
+          ],
+          "meaning": "Mluví anglicky."
+        },
+        {
+          "prompt": "der Trainer, -",
+          "answers": [
+            "trenér",
+            "coach",
+            "trainer"
+          ],
+          "meaning": "trenér"
+        }
+      ]
+    },
+    {
+      "header": "Strana 23",
+      "items": [
+        {
+          "prompt": "besuchen (Infinitiv)",
+          "answers": [
+            "navštěvovat",
+            "navštívit",
+            "to visit"
+          ],
+          "meaning": "navštěvovat, navštívit"
+        },
+        {
+          "prompt": "Er besucht das Gymnasium.",
+          "answers": [
+            "chodí na gymnázium",
+            "navštěvuje gymnázium",
+            "he attends grammar school"
+          ],
+          "meaning": "Chodí na gymnázium."
+        },
+        {
+          "prompt": "dort",
+          "answers": [
+            "tam",
+            "there"
+          ],
+          "meaning": "tam"
+        },
+        {
+          "prompt": "dreifach",
+          "answers": [
+            "trojnásobný",
+            "threefold",
+            "triple"
+          ],
+          "meaning": "trojnásobný"
+        },
+        {
+          "prompt": "gewinnen (Infinitiv)",
+          "answers": [
+            "vyhrát",
+            "vyhrávat",
+            "to win"
+          ],
+          "meaning": "vyhrát, vyhrávat"
+        },
+        {
+          "prompt": "die Goldmedaille, -n",
+          "answers": [
+            "zlatá medaile",
+            "gold medal"
+          ],
+          "meaning": "zlatá medaile"
+        },
+        {
+          "prompt": "das Gymnasium, Gymnasien",
+          "answers": [
+            "gymnázium",
+            "grammar school"
+          ],
+          "meaning": "gymnázium"
+        },
+        {
+          "prompt": "heute",
+          "answers": [
+            "dnes",
+            "dneska",
+            "today"
+          ],
+          "meaning": "dnes"
+        },
+        {
+          "prompt": "das Kroatisch",
+          "answers": [
+            "chorvatština",
+            "chorvatsky",
+            "chorvatština, chorvatsky",
+            "croatian"
+          ],
+          "meaning": "chorvatština, chorvatsky"
+        },
+        {
+          "prompt": "leben (Infinitiv)",
+          "answers": [
+            "žít",
+            "to live"
+          ],
+          "meaning": "žít"
+        },
+        {
+          "prompt": "Sie lebt in Österreich.",
+          "answers": [
+            "žije v rakousku",
+            "she lives in austria"
+          ],
+          "meaning": "Žije v Rakousku."
+        },
+        {
+          "prompt": "die Muttersprache, -n",
+          "answers": [
+            "mateřský jazyk",
+            "mother tongue"
+          ],
+          "meaning": "mateřský jazyk"
+        },
+        {
+          "prompt": "oft",
+          "answers": [
+            "často",
+            "often"
+          ],
+          "meaning": "často"
+        },
+        {
+          "prompt": "Österreich",
+          "answers": [
+            "rakousko",
+            "austria"
+          ],
+          "meaning": "Rakousko"
+        },
+        {
+          "prompt": "die Rad(renn)fahrerin, -nen",
+          "answers": [
+            "cyklistka",
+            "cyclist"
+          ],
+          "meaning": "cyklistka"
+        },
+        {
+          "prompt": "das Spanisch",
+          "answers": [
+            "španělština",
+            "španělsky",
+            "španělština, španělsky",
+            "spanish"
+          ],
+          "meaning": "španělština, španělsky"
+        },
+        {
+          "prompt": "die Sportlerin, -nen",
+          "answers": [
+            "sportovkyně",
+            "sportswoman",
+            "athlete"
+          ],
+          "meaning": "sportovkyně"
+        },
+        {
+          "prompt": "sportlich",
+          "answers": [
+            "sportovní",
+            "sporty"
+          ],
+          "meaning": "sportovní"
+        },
+        {
+          "prompt": "tschechisch",
+          "answers": [
+            "český",
+            "czech"
+          ],
+          "meaning": "český"
+        },
+        {
+          "prompt": "das Tschechisch",
+          "answers": [
+            "čeština",
+            "česky",
+            "čeština, česky",
+            "czech"
+          ],
+          "meaning": "čeština, česky"
+        }
+      ]
+    },
+    {
+      "header": "Strana 24",
+      "items": [
+        {
+          "prompt": "das Amerika",
+          "answers": [
+            "amerika",
+            "america"
+          ],
+          "meaning": "Amerika"
+        },
+        {
+          "prompt": "die Assistentin, -nen",
+          "answers": [
+            "asistentka",
+            "assistant"
+          ],
+          "meaning": "asistentka"
+        },
+        {
+          "prompt": "der Beruf, -e",
+          "answers": [
+            "povolání",
+            "profese",
+            "job",
+            "profession"
+          ],
+          "meaning": "povolání"
+        },
+        {
+          "prompt": "Was ist er von Beruf?",
+          "answers": [
+            "jaké má povolání",
+            "čím je",
+            "what is his job"
+          ],
+          "meaning": "Jaké má povolání?"
+        },
+        {
+          "prompt": "Deutschland",
+          "answers": [
+            "německo",
+            "germany"
+          ],
+          "meaning": "Německo"
+        },
+        {
+          "prompt": "England",
+          "answers": [
+            "anglie",
+            "england"
+          ],
+          "meaning": "Anglie"
+        },
+        {
+          "prompt": "die Flagge, -n",
+          "answers": [
+            "vlajka",
+            "flag"
+          ],
+          "meaning": "vlajka"
+        },
+        {
+          "prompt": "Griechenland",
+          "answers": [
+            "řecko",
+            "greece"
+          ],
+          "meaning": "Řecko"
+        },
+        {
+          "prompt": "das Griechisch",
+          "answers": [
+            "řečtina",
+            "řecky",
+            "řečtina, řecky",
+            "greek"
+          ],
+          "meaning": "řečtina, řecky"
+        },
+        {
+          "prompt": "Großbritannien",
+          "answers": [
+            "velká británie",
+            "great britain"
+          ],
+          "meaning": "Velká Británie"
+        },
+        {
+          "prompt": "die Herkunft",
+          "answers": [
+            "původ",
+            "origin"
+          ],
+          "meaning": "původ"
+        },
+        {
+          "prompt": "Italien",
+          "answers": [
+            "itálie",
+            "italy"
+          ],
+          "meaning": "Itálie"
+        },
+        {
+          "prompt": "das Italienisch",
+          "answers": [
+            "italština",
+            "italsky",
+            "italština, italsky",
+            "italian"
+          ],
+          "meaning": "italština, italsky"
+        },
+        {
+          "prompt": "Kroatien",
+          "answers": [
+            "chorvatsko",
+            "croatia"
+          ],
+          "meaning": "Chorvatsko"
+        },
+        {
+          "prompt": "das Land, Länder",
+          "answers": [
+            "země",
+            "stát",
+            "country"
+          ],
+          "meaning": "země, stát"
+        },
+        {
+          "prompt": "der Lehrer, -",
+          "answers": [
+            "učitel",
+            "teacher"
+          ],
+          "meaning": "učitel"
+        },
+        {
+          "prompt": "die Lehrerin, -nen",
+          "answers": [
+            "učitelka",
+            "teacher"
+          ],
+          "meaning": "učitelka"
+        },
+        {
+          "prompt": "der Manager, -",
+          "answers": [
+            "manažer",
+            "manager"
+          ],
+          "meaning": "manažer"
+        },
+        {
+          "prompt": "Polen",
+          "answers": [
+            "polsko",
+            "poland"
+          ],
+          "meaning": "Polsko"
+        },
+        {
+          "prompt": "das Polnisch",
+          "answers": [
+            "polština",
+            "polsky",
+            "polština, polsky",
+            "polish"
+          ],
+          "meaning": "polština, polsky"
+        },
+        {
+          "prompt": "das Russisch",
+          "answers": [
+            "ruština",
+            "rusky",
+            "ruština, rusky",
+            "russian"
+          ],
+          "meaning": "ruština, rusky"
+        },
+        {
+          "prompt": "Russland",
+          "answers": [
+            "rusko",
+            "russia"
+          ],
+          "meaning": "Rusko"
+        },
+        {
+          "prompt": "die Schweiz",
+          "answers": [
+            "švýcarsko",
+            "switzerland"
+          ],
+          "meaning": "Švýcarsko"
+        },
+        {
+          "prompt": "die Slowakei",
+          "answers": [
+            "slovensko",
+            "slovakia"
+          ],
+          "meaning": "Slovensko"
+        },
+        {
+          "prompt": "das Slowakisch",
+          "answers": [
+            "slovenština",
+            "slovensky",
+            "slovenština, slovensky",
+            "slovak"
+          ],
+          "meaning": "slovenština, slovensky"
+        },
+        {
+          "prompt": "Spanien",
+          "answers": [
+            "španělsko",
+            "spain"
+          ],
+          "meaning": "Španělsko"
+        },
+        {
+          "prompt": "die Sprache, -n",
+          "answers": [
+            "jazyk",
+            "řeč",
+            "language"
+          ],
+          "meaning": "jazyk, řeč"
+        },
+        {
+          "prompt": "der Student, -en",
+          "answers": [
+            "student",
+            "student"
+          ],
+          "meaning": "student"
+        },
+        {
+          "prompt": "die Studentin, -nen",
+          "answers": [
+            "studentka",
+            "student"
+          ],
+          "meaning": "studentka"
+        },
+        {
+          "prompt": "Tschechien",
+          "answers": [
+            "česko",
+            "czechia"
+          ],
+          "meaning": "Česko"
+        },
+        {
+          "prompt": "die Türkei",
+          "answers": [
+            "turecko",
+            "turkey"
+          ],
+          "meaning": "Turecko"
+        },
+        {
+          "prompt": "das Türkisch",
+          "answers": [
+            "turečtina",
+            "turecky",
+            "turečtina, turecky",
+            "turkish"
+          ],
+          "meaning": "turečtina, turecky"
+        },
+        {
+          "prompt": "das Ungarisch",
+          "answers": [
+            "maďarština",
+            "maďarsky",
+            "maďarština, maďarsky",
+            "hungarian"
+          ],
+          "meaning": "maďarština, maďarsky"
+        },
+        {
+          "prompt": "Ungarn",
+          "answers": [
+            "maďarsko",
+            "hungary"
+          ],
+          "meaning": "Maďarsko"
+        },
+        {
+          "prompt": "die Verkäuferin, -nen",
+          "answers": [
+            "prodavačka",
+            "shop assistant",
+            "saleswoman"
+          ],
+          "meaning": "prodavačka"
+        },
+        {
+          "prompt": "welcher/welche/welches",
+          "answers": [
+            "jaký",
+            "jaká",
+            "jaké",
+            "which"
+          ],
+          "meaning": "jaký/jaká/jaké"
+        },
+        {
+          "prompt": "Welche Sprachen spricht sie?",
+          "answers": [
+            "jakými jazyky mluví",
+            "které jazyky mluví",
+            "which languages does she speak"
+          ],
+          "meaning": "Jakými jazyky mluví?"
+        },
+        {
+          "prompt": "super",
+          "answers": [
+            "super",
+            "skvělý",
+            "great",
+            "super, skvělý"
+          ],
+          "meaning": "super, skvělý"
+        },
+        {
+          "prompt": "wenig",
+          "answers": [
+            "málo",
+            "little",
+            "few"
+          ],
+          "meaning": "málo"
+        },
+        {
+          "prompt": "ein wenig",
+          "answers": [
+            "trochu",
+            "a little",
+            "a bit"
+          ],
+          "meaning": "trochu"
+        },
+        {
+          "prompt": "das Wort, Wörter",
+          "answers": [
+            "slovo",
+            "word"
+          ],
+          "meaning": "slovo"
+        }
+      ]
+    },
+    {
+      "header": "Strana 25",
+      "items": [
+        {
+          "prompt": "das Abitur, -e",
+          "answers": [
+            "maturita",
+            "a-levels"
+          ],
+          "meaning": "maturita"
+        },
+        {
+          "prompt": "der Austausch, -e",
+          "answers": [
+            "výměna",
+            "exchange"
+          ],
+          "meaning": "výměna"
+        },
+        {
+          "prompt": "ein bisschen",
+          "answers": [
+            "trochu",
+            "a bit",
+            "a little"
+          ],
+          "meaning": "trochu"
+        },
+        {
+          "prompt": "finden (Infinitiv)",
+          "answers": [
+            "najít",
+            "považovat",
+            "shledávat",
+            "myslet si",
+            "to find"
+          ],
+          "meaning": "najít, považovat"
+        },
+        {
+          "prompt": "Sie findet den Kurs...",
+          "answers": [
+            "kurz se jí líbí",
+            "kurz shledává skvělým",
+            "she likes the course"
+          ],
+          "meaning": "Kurz se jí líbí. (Kurz shledává skvělým.)"
+        },
+        {
+          "prompt": "interessant",
+          "answers": [
+            "zajímavý",
+            "interesting"
+          ],
+          "meaning": "zajímavý"
+        },
+        {
+          "prompt": "der Kurs, -e",
+          "answers": [
+            "kurz",
+            "course"
+          ],
+          "meaning": "kurz"
+        },
+        {
+          "prompt": "leider",
+          "answers": [
+            "bohužel",
+            "unfortunately"
+          ],
+          "meaning": "bohužel"
+        },
+        {
+          "prompt": "mein/meine/mein",
+          "answers": [
+            "můj",
+            "moje",
+            "my"
+          ],
+          "meaning": "můj/moje/moje"
+        },
+        {
+          "prompt": "der Mensch, -en",
+          "answers": [
+            "člověk",
+            "human",
+            "person"
+          ],
+          "meaning": "člověk"
+        },
+        {
+          "prompt": "die Mutter, Mütter",
+          "answers": [
+            "matka",
+            "mother"
+          ],
+          "meaning": "matka"
+        },
+        {
+          "prompt": "noch",
+          "answers": [
+            "ještě",
+            "still"
+          ],
+          "meaning": "ještě"
+        },
+        {
+          "prompt": "Portugal",
+          "answers": [
+            "portugalsko",
+            "portugal"
+          ],
+          "meaning": "Portugalsko"
+        },
+        {
+          "prompt": "das Portugiesisch",
+          "answers": [
+            "portugalština",
+            "portugalsky",
+            "portugalština, portugalsky",
+            "portuguese"
+          ],
+          "meaning": "portugalština, portugalsky"
+        },
+        {
+          "prompt": "Schweden",
+          "answers": [
+            "švédsko",
+            "sweden"
+          ],
+          "meaning": "Švédsko"
+        },
+        {
+          "prompt": "das Schwedisch",
+          "answers": [
+            "švédština",
+            "švédsky",
+            "švédština, švédsky",
+            "swedish"
+          ],
+          "meaning": "švédština, švédsky"
+        },
+        {
+          "prompt": "sehr",
+          "answers": [
+            "velmi",
+            "very"
+          ],
+          "meaning": "velmi"
+        },
+        {
+          "prompt": "nicht sehr gut",
+          "answers": [
+            "ne moc dobře",
+            "not very well"
+          ],
+          "meaning": "ne moc dobře"
+        },
+        {
+          "prompt": "studieren (Infinitiv)",
+          "answers": [
+            "studovat",
+            "to study"
+          ],
+          "meaning": "studovat"
+        },
+        {
+          "prompt": "das Südamerika",
+          "answers": [
+            "jižní amerika",
+            "south america"
+          ],
+          "meaning": "Jižní Amerika"
+        },
+        {
+          "prompt": "die USA (mn. č.)",
+          "answers": [
+            "usa",
+            "united states",
+            "spojené státy"
+          ],
+          "meaning": "USA"
+        },
+        {
+          "prompt": "viel",
+          "answers": [
+            "hodně",
+            "much",
+            "a lot"
+          ],
+          "meaning": "hodně"
+        },
+        {
+          "prompt": "wie viel",
+          "answers": [
+            "kolik",
+            "how much",
+            "how many"
+          ],
+          "meaning": "kolik"
+        }
+      ]
+    },
+    {
+      "header": "Strana 26",
+      "items": [
+        {
+          "prompt": "Deutscher/Deutsche",
+          "answers": [
+            "němec",
+            "němka",
+            "němec/němka"
+          ],
+          "meaning": "Němec/Němka"
+        },
+        {
+          "prompt": "Engländer/Engländerin",
+          "answers": [
+            "angličan",
+            "angličanka",
+            "angličan/angličanka"
+          ],
+          "meaning": "Angličan/Angličanka"
+        },
+        {
+          "prompt": "Franzose/Französin",
+          "answers": [
+            "francouz",
+            "francouzka",
+            "francouz/francouzka"
+          ],
+          "meaning": "Francouz/Francouzka"
+        },
+        {
+          "prompt": "Italiener/Italienerin",
+          "answers": [
+            "ital",
+            "italka",
+            "ital/italka"
+          ],
+          "meaning": "Ital/Italka"
+        },
+        {
+          "prompt": "die Nationalität, -en",
+          "answers": [
+            "národnost",
+            "nationality"
+          ],
+          "meaning": "národnost"
+        },
+        {
+          "prompt": "Österreicher/Österreicherin",
+          "answers": [
+            "rakušan",
+            "rakušanka",
+            "rakušan/rakušanka"
+          ],
+          "meaning": "Rakušan/Rakušanka"
+        },
+        {
+          "prompt": "Russe/Russin",
+          "answers": [
+            "rus",
+            "ruska",
+            "rus/ruska"
+          ],
+          "meaning": "Rus/Ruska"
+        },
+        {
+          "prompt": "Schweizer/Schweizerin",
+          "answers": [
+            "švýcar",
+            "švýcarka",
+            "švýcar/švýcarka"
+          ],
+          "meaning": "Švýcar/Švýcarka"
+        },
+        {
+          "prompt": "Slowake/Slowakin",
+          "answers": [
+            "slovák",
+            "slovenka",
+            "slovák/slovenka"
+          ],
+          "meaning": "Slovák/Slovenka"
+        },
+        {
+          "prompt": "Spanier/Spanierin",
+          "answers": [
+            "španěl",
+            "španělka",
+            "španěl/španělka"
+          ],
+          "meaning": "Španěl/Španělka"
+        },
+        {
+          "prompt": "Tscheche/Tschechin",
+          "answers": [
+            "čech",
+            "češka",
+            "čech/češka"
+          ],
+          "meaning": "Čech/Češka"
+        }
+      ]
+    },
+    {
+      "header": "Strana 26",
+      "items": [
+        {
+          "prompt": "dreißig",
+          "answers": [
+            "30",
+            "třicet"
+          ],
+          "meaning": "třicet (30)"
+        },
+        {
+          "prompt": "vierzig",
+          "answers": [
+            "40",
+            "čtyřicet"
+          ],
+          "meaning": "čtyřicet (40)"
+        },
+        {
+          "prompt": "fünfzig",
+          "answers": [
+            "50",
+            "padesát"
+          ],
+          "meaning": "padesát (50)"
+        },
+        {
+          "prompt": "sechzig",
+          "answers": [
+            "60",
+            "šedesát"
+          ],
+          "meaning": "šedesát (60)"
+        },
+        {
+          "prompt": "siebzig",
+          "answers": [
+            "70",
+            "sedmdesát"
+          ],
+          "meaning": "sedmdesát (70)"
+        },
+        {
+          "prompt": "achtzig",
+          "answers": [
+            "80",
+            "osmdesát"
+          ],
+          "meaning": "osmdesát (80)"
+        },
+        {
+          "prompt": "neunzig",
+          "answers": [
+            "90",
+            "devadesát"
+          ],
+          "meaning": "devadesát (90)"
+        },
+        {
+          "prompt": "(ein)hundert",
+          "answers": [
+            "100",
+            "sto"
+          ],
+          "meaning": "sto (100)"
+        },
+        {
+          "prompt": "(ein)tausend",
+          "answers": [
+            "1000",
+            "tisíc"
+          ],
+          "meaning": "tisíc (1000)"
+        }
+      ]
+    },
+    {
+      "header": "Strana 27",
+      "items": [
+        {
+          "prompt": "das Afrika",
+          "answers": [
+            "afrika",
+            "africa"
+          ],
+          "meaning": "Afrika"
+        },
+        {
+          "prompt": "die Arbeit, -en",
+          "answers": [
+            "práce",
+            "work",
+            "job"
+          ],
+          "meaning": "práce"
+        },
+        {
+          "prompt": "Asien",
+          "answers": [
+            "asie",
+            "asia"
+          ],
+          "meaning": "Asie"
+        },
+        {
+          "prompt": "das Australien",
+          "answers": [
+            "austrálie",
+            "australia"
+          ],
+          "meaning": "Austrálie"
+        },
+        {
+          "prompt": "beginnen (Infinitiv)",
+          "answers": [
+            "začít",
+            "začínat",
+            "to begin",
+            "to start"
+          ],
+          "meaning": "začít, začínat"
+        },
+        {
+          "prompt": "danke",
+          "answers": [
+            "děkuji",
+            "díky",
+            "thanks",
+            "thank you"
+          ],
+          "meaning": "děkuji, díky"
+        },
+        {
+          "prompt": "das Europa",
+          "answers": [
+            "evropa",
+            "europe"
+          ],
+          "meaning": "Evropa"
+        },
+        {
+          "prompt": "ganz",
+          "answers": [
+            "celý",
+            "whole"
+          ],
+          "meaning": "celý"
+        },
+        {
+          "prompt": "gehen (Infinitiv)",
+          "answers": [
+            "jít",
+            "chodit",
+            "to go"
+          ],
+          "meaning": "jít"
+        },
+        {
+          "prompt": "Wie geht es Ihnen?",
+          "answers": [
+            "jak se máte",
+            "how are you"
+          ],
+          "meaning": "Jak se máte?"
+        },
+        {
+          "prompt": "Wie geht es dir?",
+          "answers": [
+            "jak se máš",
+            "how are you"
+          ],
+          "meaning": "Jak se máš?"
+        },
+        {
+          "prompt": "genau",
+          "answers": [
+            "přesně",
+            "exactly"
+          ],
+          "meaning": "přesně"
+        },
+        {
+          "prompt": "morgen",
+          "answers": [
+            "zítra",
+            "tomorrow"
+          ],
+          "meaning": "zítra"
+        },
+        {
+          "prompt": "nur",
+          "answers": [
+            "jen",
+            "only"
+          ],
+          "meaning": "jen"
+        },
+        {
+          "prompt": "der Rekord, -e",
+          "answers": [
+            "rekord",
+            "record"
+          ],
+          "meaning": "rekord"
+        },
+        {
+          "prompt": "schon",
+          "answers": [
+            "již",
+            "už",
+            "already"
+          ],
+          "meaning": "již, už"
+        },
+        {
+          "prompt": "das Semester, -",
+          "answers": [
+            "semestr",
+            "semester"
+          ],
+          "meaning": "semestr"
+        },
+        {
+          "prompt": "viel",
+          "answers": [
+            "hodně",
+            "much",
+            "a lot"
+          ],
+          "meaning": "hodně"
+        },
+        {
+          "prompt": "wie viel",
+          "answers": [
+            "kolik",
+            "how much",
+            "how many"
+          ],
+          "meaning": "kolik"
+        },
+        {
+          "prompt": "die Welt",
+          "answers": [
+            "svět",
+            "world"
+          ],
+          "meaning": "svět"
+        },
+        {
+          "prompt": "aus der ganzen Welt",
+          "answers": [
+            "z celého světa",
+            "from all over the world"
+          ],
+          "meaning": "z celého světa"
+        }
+      ]
+    }
+  ]
+}

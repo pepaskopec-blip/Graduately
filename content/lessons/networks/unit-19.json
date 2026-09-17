@@ -1,0 +1,173 @@
+{
+  "id": "unit-19",
+  "subject": "networks",
+  "number": 19,
+  "titleKey": "net_unit19",
+  "subtitleKey": "net_unit19_sub",
+  "slides": [
+    {
+      "kicker": "1 / 7   •   Princip",
+      "title": "Směrování paketů",
+      "tip": "Tip: 3. vrstva ISO/OSI – síťová",
+      "lines": [
+        "Rozhodování o dalším směru přenosu paketů do cílové sítě.",
+        "Probíhá na síťové vrstvě modelu ISO/OSI.",
+        "K rozhodování se používají směrovací algoritmy."
+      ]
+    },
+    {
+      "kicker": "2 / 7   •   Adaptivní",
+      "title": "Dynamické algoritmy",
+      "tip": null,
+      "lines": [
+        "Reagují na změny v síti (výpadek linky, přetížení).",
+        "Vyžadují pravidelnou výměnu informací mezi směrovači."
+      ]
+    },
+    {
+      "kicker": "3 / 7   •   Neadaptivní",
+      "title": "Statické algoritmy",
+      "tip": null,
+      "lines": [
+        "Nereagují na změny v síti.",
+        "Cesty pevně definuje správce.",
+        "Při výpadku části sítě může spojení spadnout."
+      ]
+    },
+    {
+      "kicker": "4 / 7   •   Řízení",
+      "title": "Centralizované a izolované",
+      "tip": null,
+      "lines": [
+        "Centralizované: centrum počítá cesty pro všechny směrovače.",
+        "Výpadek centra = pád směrování; v praxi skoro nepoužívané.",
+        "Izolované: směrovač se rozhoduje sám z lokálních informací.",
+        "Izolované se používá spíš jako doplněk při přetížení."
+      ]
+    },
+    {
+      "kicker": "5 / 7   •   Distribuované",
+      "title": "Výměna mezi směrovači",
+      "tip": null,
+      "lines": [
+        "Směrovače si vyměňují informace.",
+        "Každý si udržuje vlastní směrovací tabulku."
+      ]
+    },
+    {
+      "kicker": "6 / 7   •   Tabulka",
+      "title": "Next Hop a metrika",
+      "tip": "Tip: nižší metrika = lepší / rychlejší trasa",
+      "lines": [
+        "Záznam: cílová síť, next hop a metrika.",
+        "Next hop = nejbližší soused, kterému paket předáme.",
+        "Metrika číselně ohodnocuje cestu.",
+        "Při více cestách se volí ta s nejnižší metrikou."
+      ]
+    },
+    {
+      "kicker": "7 / 7   •   Distance Vector",
+      "title": "Příklad algoritmu",
+      "tip": "Tip: např. výměna tabulek každých 30 s",
+      "lines": [
+        "Směrovače znají jen své přímé sousedy.",
+        "Pravidelně si posílají kopie směrovacích tabulek.",
+        "Informace se šíří krok za krokem po celé síti.",
+        "Každý směrovač si spočítá nejlepší trasu do známých sítí."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz19_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Směrování probíhá na vrstvě:",
+          "options": [
+            "Fyzické",
+            "Síťové (3. ISO/OSI)",
+            "Jen aplikační",
+            "Jen linkové"
+          ],
+          "correct": 1,
+          "hint": "Směrování běží na síťové (3.) vrstvě ISO/OSI"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Adaptivní (dynamické) algoritmy:",
+          "options": [
+            "Reagují na změny a vyměňují informace mezi směrovači",
+            "Nikdy nemění cesty",
+            "Fungují jen na fyzické vrstvě",
+            "Nepoužívají metriku"
+          ],
+          "correct": 0,
+          "hint": "Adaptivní algoritmy reagují na změny a sdílí stav sítě"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Neadaptivní (statické) směrování:",
+          "options": [
+            "Má cesty pevně nastavené správcem",
+            "Samo opraví každý výpadek",
+            "Nepotřebuje směrovací tabulku",
+            "Běží jen na Wi-Fi"
+          ],
+          "correct": 0,
+          "hint": "Statické cesty nastaví správce a samy se nemění"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Centralizované směrování v praxi:",
+          "options": [
+            "Se skoro nepoužívá – výpadek centra shodí směrování",
+            "Je jediný standard internetu",
+            "Neexistuje žádné centrum",
+            "Pracuje jen s MAC adresami"
+          ],
+          "correct": 0,
+          "hint": "Centralizované směrování padá s výpadkem centra"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Distribuované směrování znamená, že:",
+          "options": [
+            "Směrovače si vyměňují informace a každý má vlastní tabulku",
+            "Jedno centrum řídí všechny cesty",
+            "Směrovač nezná žádné sousedy",
+            "Pakety jdou jen přes hub"
+          ],
+          "correct": 0,
+          "hint": "Distribuované: výměna informací a vlastní tabulky"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Metrika ve směrovací tabulce:",
+          "options": [
+            "Číselně hodnotí cestu – nižší je lepší",
+            "Je vždy jen MAC adresa",
+            "Nemá vliv na výběr trasy",
+            "Nahrazuje next hop"
+          ],
+          "correct": 0,
+          "hint": "Nižší metrika = lepší / rychlejší trasa"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Distance Vector typicky:",
+          "options": [
+            "Posílá sousedům kopie tabulek a šíří informace krok za krokem",
+            "Počítá cesty jen v jednom centru",
+            "Ignoruje přímé sousedy",
+            "Pracuje jen na aplikační vrstvě"
+          ],
+          "correct": 0,
+          "hint": "Distance Vector: výměna tabulek se sousedy (např. každých 30 s)"
+        }
+      ]
+    }
+  ]
+}

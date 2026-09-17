@@ -1,0 +1,153 @@
+{
+  "id": "unit-08",
+  "subject": "networks",
+  "number": 8,
+  "titleKey": "net_unit8",
+  "subtitleKey": "net_unit8_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Okruhy",
+      "title": "Přepojování okruhů",
+      "tip": "Tip: spojovaná služba – jako telefon",
+      "lines": [
+        "Cesta se vytýčí předem (spojovaná služba).",
+        "Kapacita je garantována.",
+        "Přenos probíhá v reálném čase."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Pakety",
+      "title": "Přepojování paketů",
+      "tip": null,
+      "lines": [
+        "Data se dělí na pakety s adresami.",
+        "Každý paket může jít jinou cestou."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Hodnocení",
+      "title": "Výhody a nevýhody paketů",
+      "tip": null,
+      "lines": [
+        "Výhody: reakce na zátěž, lepší využití kapacity.",
+        "Nevýhody: negarantuje pořadí ani plynulost.",
+        "Nevhodné pro video v reálném čase."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Virtuální",
+      "title": "Virtuální spoje",
+      "tip": null,
+      "lines": [
+        "Cesta je vytýčena předem,",
+        "ale prostředky se využívají jen při průchodu paketu.",
+        "Výsledek: zrychlení datagramů."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz8_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Přepojování okruhů znamená:",
+          "options": [
+            "Pakety jdou vždy jinou cestou",
+            "Cesta se vytýčí předem a kapacita je garantována",
+            "Jen FDM multiplex",
+            "Jen half-duplex"
+          ],
+          "correct": 1,
+          "hint": "Cesta se vytýčí předem, kapacita je garantována"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Přepojování okruhů je vhodné pro:",
+          "options": [
+            "Jen náhodné datagramy bez cesty",
+            "Přenos v reálném čase (jako telefon)",
+            "Jen CRC",
+            "Jen peer‑to‑peer tisk"
+          ],
+          "correct": 1,
+          "hint": "Cesta se vytýčí předem, kapacita je garantována"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Při přepojování paketů:",
+          "options": [
+            "Vždy existuje jedna pevná cesta",
+            "Každý paket může jít jinou cestou",
+            "Kapacita je vždy garantována",
+            "Neexistují adresy"
+          ],
+          "correct": 1,
+          "hint": "Data se dělí na pakety, každý může jít jinou cestou"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Výhoda přepojování paketů je:",
+          "options": [
+            "Garantované pořadí vždy",
+            "Reakce na zátěž a využití kapacity",
+            "Jen simplex",
+            "Jen trunking"
+          ],
+          "correct": 1,
+          "hint": "Výhody: reakce na zátěž a lepší využití kapacity"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Nevýhoda přepojování paketů je:",
+          "options": [
+            "Nereaguje na zátěž",
+            "Negarantuje pořadí ani plynulost",
+            "Nelze použít adresy",
+            "Vždy blokuje kanál jako telefon"
+          ],
+          "correct": 1,
+          "hint": "Negarantuje pořadí ani plynulost – nevhodné pro živé video"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Pro video v reálném čase je přepojování paketů:",
+          "options": [
+            "Ideální vždy",
+            "Spíše nevhodné kvůli plynulosti",
+            "Jediná možná metoda",
+            "Stejné jako AM modulace"
+          ],
+          "correct": 1,
+          "hint": "Negarantuje pořadí ani plynulost – nevhodné pro živé video"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Virtuální spoje:",
+          "options": [
+            "Nemají předem žádnou cestu",
+            "Mají cestu předem, prostředky jen při průchodu paketu",
+            "Jsou jen FDM",
+            "Jsou jen parita"
+          ],
+          "correct": 1,
+          "hint": "Cesta je předem, prostředky se použijí jen při průchodu paketu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Virtuální spoje slouží hlavně k:",
+          "options": [
+            "Zrušení paketů",
+            "Zrychlení datagramů",
+            "Jen simplexu",
+            "Jen analogovému signálu"
+          ],
+          "correct": 1,
+          "hint": "Virtuální spoje zrychlují přenos datagramů"
+        }
+      ]
+    }
+  ]
+}

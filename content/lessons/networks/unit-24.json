@@ -1,0 +1,138 @@
+{
+  "id": "unit-24",
+  "subject": "networks",
+  "number": 24,
+  "titleKey": "net_unit24",
+  "subtitleKey": "net_unit24_sub",
+  "slides": [
+    {
+      "kicker": "1 / 5   •   ARP / RARP",
+      "title": "Převod adres",
+      "tip": null,
+      "lines": [
+        "ARP: z IP adresy na MAC (fyzickou) adresu.",
+        "RARP: z MAC adresy na IP adresu."
+      ]
+    },
+    {
+      "kicker": "2 / 5   •   Způsoby",
+      "title": "Jak zjistit MAC",
+      "tip": null,
+      "lines": [
+        "Tabulkový převod: ruční správa (malé sítě).",
+        "Výpočet: funkce, kde MAC plyne z IP.",
+        "Dotaz a odpověď: dynamické zjišťování (nejčastější)."
+      ]
+    },
+    {
+      "kicker": "3 / 5   •   Mechanismus",
+      "title": "Broadcast a unicast",
+      "tip": "Tip: „Kdo má IP x.x.x.x?“",
+      "lines": [
+        "ARP využívá broadcast v Ethernetu.",
+        "Odpoví jen uzel s danou IP.",
+        "Odpověď jde unicastem a obsahuje MAC adresu."
+      ]
+    },
+    {
+      "kicker": "4 / 5   •   Cache",
+      "title": "Dočasná paměť",
+      "tip": "Tip: zobrazení příkazem arp -a",
+      "lines": [
+        "Výsledky se ukládají do ARP cache.",
+        "Dotazy se tak nemusí stále opakovat.",
+        "Položky: dynamické (učené) nebo statické (ruční)."
+      ]
+    },
+    {
+      "kicker": "5 / 5   •   Shrnutí",
+      "title": "K čemu ARP slouží",
+      "tip": null,
+      "lines": [
+        "Propojuje síťovou adresu (IP) s linkovou (MAC).",
+        "Bez ARP by IP datagram nešel vložit do Ethernet rámce."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz24_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "ARP převádí:",
+          "options": [
+            "IP adresu na MAC adresu",
+            "MAC adresu na IP adresu",
+            "TCP na UDP",
+            "TTL na MTU"
+          ],
+          "correct": 0,
+          "hint": "ARP: IP → MAC"
+        },
+        {
+          "kind": "choice",
+          "prompt": "RARP převádí:",
+          "options": [
+            "MAC adresu na IP adresu",
+            "IP adresu na MAC adresu",
+            "EtherType na SAP",
+            "OSPF na RIP"
+          ],
+          "correct": 0,
+          "hint": "RARP: MAC → IP"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Nejčastější způsob ARP je:",
+          "options": [
+            "Dotaz a odpověď v síti",
+            "Jen ruční tabulka bez sítě",
+            "Jen cut-through",
+            "Jen ICMP Echo"
+          ],
+          "correct": 0,
+          "hint": "Nejčastější je dynamický dotaz a odpověď"
+        },
+        {
+          "kind": "choice",
+          "prompt": "ARP dotaz v Ethernetu používá:",
+          "options": [
+            "Broadcast",
+            "Jen unicast bez broadcastu",
+            "Jen laser",
+            "Jen Token Ring bez IP"
+          ],
+          "correct": 0,
+          "hint": "ARP dotaz jde broadcastem"
+        },
+        {
+          "kind": "choice",
+          "prompt": "ARP odpověď typicky přichází jako:",
+          "options": [
+            "Unicast s MAC adresou uzlu",
+            "Broadcast bez MAC",
+            "Jen Time Exceeded",
+            "Jen Source Quench"
+          ],
+          "correct": 0,
+          "hint": "ARP odpověď je unicast s MAC"
+        },
+        {
+          "kind": "choice",
+          "prompt": "ARP cache slouží k tomu, aby:",
+          "options": [
+            "Se nemusely stále opakovat stejné dotazy",
+            "Se nahradil směrovač",
+            "Se zrušila IP adresa",
+            "Se vypnul Ethernet"
+          ],
+          "correct": 0,
+          "hint": "ARP cache ukládá výsledky dočasně (arp -a)"
+        }
+      ]
+    }
+  ]
+}

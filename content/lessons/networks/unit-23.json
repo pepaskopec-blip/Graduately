@@ -1,0 +1,139 @@
+{
+  "id": "unit-23",
+  "subject": "networks",
+  "number": 23,
+  "titleKey": "net_unit23",
+  "subtitleKey": "net_unit23_sub",
+  "slides": [
+    {
+      "kicker": "1 / 5   •   ICMP",
+      "title": "Řídicí zprávy",
+      "tip": "Tip: síťová vrstva, ale nese se v IP datagramu",
+      "lines": [
+        "Zasílá informace o chybách a stavu přenosu.",
+        "ICMP paket jede přímo v IP datagramu.",
+        "Směrovače s ním pracují i bez transportní vrstvy."
+      ]
+    },
+    {
+      "kicker": "2 / 5   •   Zprávy I",
+      "title": "Quench, TTL, Unreachable",
+      "tip": null,
+      "lines": [
+        "Source Quench: hrozí zahlcení – zpomal odesílání.",
+        "Time Exceeded: TTL kleslo na 0, paket zahozen (tracert).",
+        "Destination Unreachable: cíl (síť/uzel/protokol/port)",
+        "není dostupný."
+      ]
+    },
+    {
+      "kicker": "3 / 5   •   Zprávy II",
+      "title": "Redirect a Echo",
+      "tip": null,
+      "lines": [
+        "Redirect: přesměruj přenos na jiný (rychlejší) router.",
+        "Echo Request / Echo Reply: test dostupnosti (ping)."
+      ]
+    },
+    {
+      "kicker": "4 / 5   •   Traceroute",
+      "title": "Princip TTL",
+      "tip": "Tip: typicky max. 30 skoků",
+      "lines": [
+        "Odešle paket s TTL = 1; první router odpoví Time Exceeded.",
+        "Pak TTL = 2, 3… a tak se zjišťují skoky na cestě.",
+        "Pokračuje, dokud paket nedorazí do cíle nebo nevyprší limit."
+      ]
+    },
+    {
+      "kicker": "5 / 5   •   Shrnutí",
+      "title": "K čemu ICMP slouží",
+      "tip": null,
+      "lines": [
+        "Diagnostika a hlášení chyb na síťové vrstvě.",
+        "Základ příkazů ping a traceroute / tracert."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz23_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "ICMP slouží především k:",
+          "options": [
+            "Zasílání informací o chybách a stavu přenosu",
+            "Jen směrování OSPF tabulek",
+            "Jen lámání optiky",
+            "Jen EtherType 0800h"
+          ],
+          "correct": 0,
+          "hint": "ICMP posílá informace o chybách a stavu přenosu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "ICMP paket se přenáší:",
+          "options": [
+            "Přímo v IP datagramu",
+            "Jen jako Ethernet II bez IP",
+            "Jen v UDP bez IP",
+            "Jen jako MAC bez datagramu"
+          ],
+          "correct": 0,
+          "hint": "ICMP jede uvnitř IP datagramu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Source Quench znamená:",
+          "options": [
+            "Varování před zahlcením – zpomal odesílání",
+            "TTL kleslo na 0",
+            "Cíl je nedostupný",
+            "Echo Reply"
+          ],
+          "correct": 0,
+          "hint": "Source Quench = zpomal odesílání kvůli zahlcení"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Time Exceeded nastane, když:",
+          "options": [
+            "TTL v IP hlavičce klesne na 0",
+            "Router nemá firewall",
+            "Použijeme jen SNAP",
+            "MTU je 1500"
+          ],
+          "correct": 0,
+          "hint": "Time Exceeded = TTL kleslo na 0"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Echo Request / Reply využívá příkaz:",
+          "options": [
+            "ping",
+            "lámačka",
+            "cut-through",
+            "hub"
+          ],
+          "correct": 0,
+          "hint": "Echo Request/Reply = ping"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Traceroute zjišťuje cestu tak, že:",
+          "options": [
+            "Postupně zvyšuje TTL a čeká na Time Exceeded",
+            "Posílá jen ARP bez IP",
+            "Ignoruje směrovače",
+            "Používá jen CAM tabulku"
+          ],
+          "correct": 0,
+          "hint": "Traceroute zvyšuje TTL a čte Time Exceeded"
+        }
+      ]
+    }
+  ]
+}

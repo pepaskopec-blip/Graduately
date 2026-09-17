@@ -1,0 +1,120 @@
+{
+  "id": "unit-10",
+  "subject": "networks",
+  "number": 10,
+  "titleKey": "net_unit10",
+  "subtitleKey": "net_unit10_sub",
+  "slides": [
+    {
+      "kicker": "1 / 3   •   ISO/OSI",
+      "title": "Sedmivrstvý model",
+      "tip": null,
+      "lines": [
+        "ISO/OSI: 7vrstvý model.",
+        "Je univerzální – popisuje komunikaci obecně.",
+        "V praxi je ale pomalejší: každá vrstva řešila spolehlivost."
+      ]
+    },
+    {
+      "kicker": "2 / 3   •   TCP/IP",
+      "title": "Praktická architektura",
+      "tip": null,
+      "lines": [
+        "TCP/IP: architektura, která zvítězila v praxi.",
+        "Vycházela ze skutečných potřeb sítí.",
+        "Spolehlivost řeší až vyšší vrstvy."
+      ]
+    },
+    {
+      "kicker": "3 / 3   •   Srovnání",
+      "title": "Proč zvítězil TCP/IP",
+      "tip": "Tip: méně režie na nižších vrstvách = rychlejší provoz",
+      "lines": [
+        "ISO/OSI: teoretický, univerzální, těžší a pomalejší.",
+        "TCP/IP: praktický, jednodušší dělení odpovědností.",
+        "Proto se TCP/IP stal základem dnešního internetu."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz10_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Model ISO/OSI má:",
+          "options": [
+            "4 vrstvy",
+            "5 vrstev",
+            "7 vrstev",
+            "10 vrstev"
+          ],
+          "correct": 2,
+          "hint": "ISO/OSI má 7 vrstev a je univerzální model"
+        },
+        {
+          "kind": "choice",
+          "prompt": "ISO/OSI je především:",
+          "options": [
+            "Jen typ kabelu",
+            "Univerzální referenční model",
+            "Jen tiskový server",
+            "Jen FDM"
+          ],
+          "correct": 1,
+          "hint": "ISO/OSI má 7 vrstev a je univerzální model"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Proč je ISO/OSI v praxi pomalejší?",
+          "options": [
+            "Nemá žádné vrstvy",
+            "Každá vrstva řešila spolehlivost",
+            "Nepoužívá protokoly",
+            "Nemá SAP"
+          ],
+          "correct": 1,
+          "hint": "V praxi je ISO/OSI pomalejší – spolehlivost řeší každá vrstva"
+        },
+        {
+          "kind": "choice",
+          "prompt": "TCP/IP v praxi:",
+          "options": [
+            "Prohrál proti ISO/OSI",
+            "Zvítězil jako praktická architektura",
+            "Je jen analogový signál",
+            "Je jen half-duplex"
+          ],
+          "correct": 1,
+          "hint": "TCP/IP zvítězil, protože vycházel ze skutečných potřeb"
+        },
+        {
+          "kind": "choice",
+          "prompt": "TCP/IP vycházel z:",
+          "options": [
+            "Jen teoretických schémat bez praxe",
+            "Skutečných potřeb sítí",
+            "Jen parity",
+            "Jen trunkingu"
+          ],
+          "correct": 1,
+          "hint": "TCP/IP zvítězil, protože vycházel ze skutečných potřeb"
+        },
+        {
+          "kind": "choice",
+          "prompt": "V TCP/IP spolehlivost řeší:",
+          "options": [
+            "Vždy jen fyzická vrstva",
+            "Až vyšší vrstvy",
+            "Jen metalické kabely",
+            "Jen mainframe"
+          ],
+          "correct": 1,
+          "hint": "V TCP/IP řeší spolehlivost až vyšší vrstvy"
+        }
+      ]
+    }
+  ]
+}

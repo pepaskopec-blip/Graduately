@@ -1,0 +1,181 @@
+{
+  "id": "unit-11",
+  "subject": "networks",
+  "number": 11,
+  "titleKey": "net_unit11",
+  "subtitleKey": "net_unit11_sub",
+  "slides": [
+    {
+      "kicker": "1 / 8   •   Přehled",
+      "title": "Tři skupiny vrstev",
+      "tip": "Tip: přenos → přizpůsobení → aplikace",
+      "lines": [
+        "Vrstvy orientované na přenos: fyzická, spojová, síťová.",
+        "Přizpůsobovací vrstva: transportní.",
+        "Vrstvy orientované na aplikace: relační, prezentační,",
+        "aplikační."
+      ]
+    },
+    {
+      "kicker": "2 / 8   •   Fyzická",
+      "title": "Přenos bitů",
+      "tip": null,
+      "lines": [
+        "Přenos bitů po médiu.",
+        "Definuje napětí, kabely, konektory, kódování a modulaci.",
+        "Řeší také duplex / simplex."
+      ]
+    },
+    {
+      "kicker": "3 / 8   •   Spojová",
+      "title": "Rámce a MAC",
+      "tip": "Tip: podvrstvy MAC (přístup k médiu) a LLC (logické řízení)",
+      "lines": [
+        "Tvorba rámců a fyzické (MAC) adresy.",
+        "Kontrola chyb (CRC) a řízení toku mezi sousedními uzly.",
+        "Podvrstvy: MAC a LLC."
+      ]
+    },
+    {
+      "kicker": "4 / 8   •   Síťová",
+      "title": "Směrování paketů",
+      "tip": null,
+      "lines": [
+        "Směrování (routing) paketů.",
+        "Funguje i v sítích bez přímého spojení mezi uzly."
+      ]
+    },
+    {
+      "kicker": "5 / 8   •   Transportní",
+      "title": "Segmenty end-to-end",
+      "tip": "Tip: v routerech transportní vrstva není",
+      "lines": [
+        "Rozklad zpráv na segmenty a jejich zpětné složení.",
+        "Kontrola pořadí a náprava chyb.",
+        "Existuje jen v koncových uzlech – není v routerech."
+      ]
+    },
+    {
+      "kicker": "6 / 8   •   Relační",
+      "title": "Relace a dialog",
+      "tip": null,
+      "lines": [
+        "Navazuje, udržuje a ukončuje relace.",
+        "Řídí dialog („neskákat si do řeči“).",
+        "Synchronizace – navázání po přerušení."
+      ]
+    },
+    {
+      "kicker": "7 / 8   •   Prezentační",
+      "title": "Formát dat",
+      "tip": null,
+      "lines": [
+        "Formátování dat (např. ASCII).",
+        "Komprese a šifrování.",
+        "Převod mezi různými standardy."
+      ]
+    },
+    {
+      "kicker": "8 / 8   •   Aplikační",
+      "title": "Rozhraní pro programy",
+      "tip": null,
+      "lines": [
+        "Rozhraní pro aplikace a služby.",
+        "Například e-mail, HTTP, FTP nebo terminál."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz11_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Fyzická vrstva se stará o:",
+          "options": [
+            "Přenos bitů",
+            "Směrování paketů",
+            "Navazování relací",
+            "Formátování ASCII"
+          ],
+          "correct": 0,
+          "hint": "Fyzická vrstva přenáší bity a řeší médium"
+        },
+        {
+          "kind": "choice",
+          "prompt": "MAC a LLC jsou podvrstvy:",
+          "options": [
+            "Síťové vrstvy",
+            "Spojové (linkové) vrstvy",
+            "Transportní vrstvy",
+            "Aplikační vrstvy"
+          ],
+          "correct": 1,
+          "hint": "Spojová vrstva má podvrstvy MAC a LLC"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Směrování paketů v sítích bez přímého spojení řeší:",
+          "options": [
+            "Fyzická vrstva",
+            "Relační vrstva",
+            "Síťová vrstva",
+            "Prezentační vrstva"
+          ],
+          "correct": 2,
+          "hint": "Síťová vrstva směruje pakety i bez přímého spojení"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Transportní vrstva existuje:",
+          "options": [
+            "Jen v koncových uzlech",
+            "I v routerech",
+            "Jen ve switchech",
+            "Jen na hubu"
+          ],
+          "correct": 0,
+          "hint": "Transportní vrstva je jen v koncových uzlech, ne v routerech"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Relační vrstva především:",
+          "options": [
+            "Definuje napětí a kabely",
+            "Navazuje, udržuje a ukončuje relace",
+            "Přidává MAC adresy",
+            "Směruje pakety"
+          ],
+          "correct": 1,
+          "hint": "Relační vrstva řídí relace, dialog a synchronizaci"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Komprese a šifrování patří do vrstvy:",
+          "options": [
+            "Fyzické",
+            "Spojové",
+            "Prezentační",
+            "Síťové"
+          ],
+          "correct": 2,
+          "hint": "Prezentační vrstva formátuje data, komprimuje a šifruje"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Aplikační vrstva poskytuje:",
+          "options": [
+            "CRC mezi sousedy",
+            "Rozhraní pro programy (HTTP, FTP, e-mail…)",
+            "Jen duplex/simplex",
+            "Jen směrování"
+          ],
+          "correct": 1,
+          "hint": "Aplikační vrstva je rozhraní pro programy a služby"
+        }
+      ]
+    }
+  ]
+}

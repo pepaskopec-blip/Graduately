@@ -1,0 +1,151 @@
+{
+  "id": "unit-09",
+  "subject": "networks",
+  "number": 9,
+  "titleKey": "net_unit9",
+  "subtitleKey": "net_unit9_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Proč",
+      "title": "Standardizace a dekompozice",
+      "tip": null,
+      "lines": [
+        "Standardizace zajišťuje kompatibilitu mezi výrobci.",
+        "Dekompozice: rozklad složitého problému přenosu na vrstvy."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Vrstvy",
+      "title": "Komunikace mezi vrstvami",
+      "tip": "Tip: SAP = Service Access Point",
+      "lines": [
+        "Vrstvy komunikují jen se sousedy přes rozhraní (SAP)."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Protokol",
+      "title": "Pravidla komunikace",
+      "tip": null,
+      "lines": [
+        "Protokol: pravidla komunikace mezi stejnými vrstvami",
+        "na různých uzlech."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Jednotky",
+      "title": "Hlavičky a PDU",
+      "tip": null,
+      "lines": [
+        "Každá vrstva přidá k datům hlavičku (header).",
+        "Rámec – linková vrstva.",
+        "Paket – síťová vrstva.",
+        "Segment – transportní vrstva."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz9_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Standardizace v sítích především:",
+          "options": [
+            "Zvyšuje nekompatibilitu",
+            "Zajišťuje kompatibilitu mezi výrobci",
+            "Ruší protokoly",
+            "Nahrazuje kabely"
+          ],
+          "correct": 1,
+          "hint": "Standardizace zajišťuje kompatibilitu mezi výrobci"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Dekompozice znamená:",
+          "options": [
+            "Spojení všeho do jedné vrstvy",
+            "Rozklad složitého přenosu na vrstvy",
+            "Jen FDM",
+            "Jen CRC"
+          ],
+          "correct": 1,
+          "hint": "Dekompozice rozkládá přenos na jednotlivé vrstvy"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Vrstvy komunikují:",
+          "options": [
+            "Se všemi vrstvami najednou",
+            "Jen se sousedy přes rozhraní (SAP)",
+            "Jen přes satelit",
+            "Jen bez protokolu"
+          ],
+          "correct": 1,
+          "hint": "Vrstvy komunikují jen se sousedy přes rozhraní SAP"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Protokol je:",
+          "options": [
+            "Fyzický kabel",
+            "Pravidla komunikace mezi stejnými vrstvami",
+            "Jen amplituda signálu",
+            "Jen tiskový server"
+          ],
+          "correct": 1,
+          "hint": "Protokol = pravidla mezi stejnými vrstvami na různých uzlech"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Každá vrstva k datům typicky přidá:",
+          "options": [
+            "Jen stop-bit",
+            "Hlavičku (header)",
+            "Jen šířku pásma",
+            "Jen mainframe"
+          ],
+          "correct": 1,
+          "hint": "Každá vrstva přidává k datům hlavičku (header)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jednotka linkové vrstvy se nazývá:",
+          "options": [
+            "Segment",
+            "Paket",
+            "Rámec",
+            "Baud"
+          ],
+          "correct": 2,
+          "hint": "Rámec = linková, paket = síťová, segment = transportní"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jednotka síťové vrstvy se nazývá:",
+          "options": [
+            "Rámec",
+            "Paket",
+            "Segment",
+            "Simplex"
+          ],
+          "correct": 1,
+          "hint": "Rámec = linková, paket = síťová, segment = transportní"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Jednotka transportní vrstvy se nazývá:",
+          "options": [
+            "Rámec",
+            "Paket",
+            "Segment",
+            "Trunk"
+          ],
+          "correct": 2,
+          "hint": "Rámec = linková, paket = síťová, segment = transportní"
+        }
+      ]
+    }
+  ]
+}

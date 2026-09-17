@@ -1,0 +1,185 @@
+{
+  "id": "unit-26",
+  "subject": "networks",
+  "number": 26,
+  "titleKey": "net_unit26",
+  "subtitleKey": "net_unit26_sub",
+  "slides": [
+    {
+      "kicker": "1 / 7   •   Úvod",
+      "title": "Aplikační protokoly",
+      "tip": null,
+      "lines": [
+        "Na uzlu běží více síťových aplikací současně.",
+        "Běžící aplikace = v operační paměti (1+ procesů).",
+        "Pracují podle pravidel – protokolů aplikační vrstvy.",
+        "Data posílají po síti přes TCP nebo UDP."
+      ]
+    },
+    {
+      "kicker": "2 / 7   •   Porty",
+      "title": "Procesy a porty",
+      "tip": null,
+      "lines": [
+        "Port v TCP/UDP říká, které aplikaci data patří.",
+        "Jeden proces může používat více portů.",
+        "Dva procesy nesmí používat stejný port."
+      ]
+    },
+    {
+      "kicker": "3 / 7   •   Rozsahy",
+      "title": "Well-known, registrované, dynamické",
+      "tip": "Tip: IANA",
+      "lines": [
+        "Well-known: 0–1023 – vyhrazené službám (norma IANA).",
+        "Registrované: 1024–49151 – IANA jen registruje použití.",
+        "Dynamické/privátní: 49152–65535 – volně k použití."
+      ]
+    },
+    {
+      "kicker": "4 / 7   •   Spojení",
+      "title": "Pětice hodnot",
+      "tip": null,
+      "lines": [
+        "Aplikační spojení určuje pětice:",
+        "(transport, IP1, port1, IP2, port2).",
+        "Klient osloví server na well-known portu."
+      ]
+    },
+    {
+      "kicker": "5 / 7   •   Více spojení",
+      "title": "Stejný server, různí klienti",
+      "tip": null,
+      "lines": [
+        "Na jeden uzel (např. web server) může být",
+        "více aplikačních spojení z různých klientů.",
+        "Rozlišují je IP a porty klientů (i transport)."
+      ]
+    },
+    {
+      "kicker": "6 / 7   •   Porty I",
+      "title": "Časté well-known služby",
+      "tip": null,
+      "lines": [
+        "20/21 FTP, 22 SSH, 23 Telnet, 25 SMTP, 53 DNS.",
+        "67/68 DHCP, 80 HTTP, 110 POP3, 143 IMAP.",
+        "123 NTP, 161 SNMP, 389 LDAP, 443 HTTPS."
+      ]
+    },
+    {
+      "kicker": "7 / 7   •   Porty II",
+      "title": "Zabezpečené a registrované",
+      "tip": null,
+      "lines": [
+        "587 SMTPS, 636 LDAPS, 993 IMAPS, 995 POP3S.",
+        "Registrované: 3306 MySQL, 3389 RDP, 5900 VNC.",
+        "Dynamické porty: 49152–65535."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz26_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Aplikační protokoly typicky posílají data přes:",
+          "options": [
+            "TCP nebo UDP",
+            "Jen fyzickou vrstvu",
+            "Jen ARP",
+            "Jen CAM tabulku"
+          ],
+          "correct": 0,
+          "hint": "Aplikace posílají data přes TCP/UDP"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Dva běžící procesy:",
+          "options": [
+            "Nesmí používat stejný port",
+            "Musí sdílet jeden port",
+            "Nesmí mít žádný port",
+            "Používají jen MAC"
+          ],
+          "correct": 0,
+          "hint": "Dva procesy nesmí sdílet stejný port"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Well-known porty mají rozsah:",
+          "options": [
+            "0–1023",
+            "1024–49151",
+            "49152–65535",
+            "Jen 80–443"
+          ],
+          "correct": 0,
+          "hint": "Well-known: 0–1023 (IANA)"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Dynamické (privátní) porty jsou:",
+          "options": [
+            "49152–65535",
+            "0–1023",
+            "Jen 20–21",
+            "Jen 3306"
+          ],
+          "correct": 0,
+          "hint": "Dynamické porty: 49152–65535"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Aplikační spojení určuje:",
+          "options": [
+            "Pětice (transport, IP1, port1, IP2, port2)",
+            "Jen MAC adresa",
+            "Jen název souboru",
+            "Jen VLAN ID"
+          ],
+          "correct": 0,
+          "hint": "Spojení = pětice hodnot"
+        },
+        {
+          "kind": "choice",
+          "prompt": "HTTP a HTTPS používají porty:",
+          "options": [
+            "80 a 443",
+            "22 a 23",
+            "25 a 110",
+            "53 a 67"
+          ],
+          "correct": 0,
+          "hint": "HTTP 80, HTTPS 443"
+        },
+        {
+          "kind": "choice",
+          "prompt": "SSH a DNS mají porty:",
+          "options": [
+            "22 a 53",
+            "80 a 443",
+            "3389 a 5900",
+            "20 a 21"
+          ],
+          "correct": 0,
+          "hint": "SSH 22, DNS 53"
+        },
+        {
+          "kind": "choice",
+          "prompt": "MySQL a RDP jsou typicky na portech:",
+          "options": [
+            "3306 a 3389",
+            "80 a 443",
+            "67 a 68",
+            "161 a 162"
+          ],
+          "correct": 0,
+          "hint": "MySQL 3306, RDP 3389"
+        }
+      ]
+    }
+  ]
+}

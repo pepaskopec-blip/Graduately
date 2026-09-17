@@ -1,0 +1,1005 @@
+/*
+ * Web port of the desktop GTK stylesheet.
+ *
+ * Colours arrive as CSS custom properties set by <AppProvider> from the shared
+ * `content/themes.json`, so the names below match the `ThemePalette` fields.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --radius: 14px;
+  --radius-lg: 22px;
+  --gap: 16px;
+  --content-width: 940px;
+
+  /* Fallbacks for the first paint, before the provider applies the palette. */
+  --base: #1e1e2e;
+  --crust: #11111b;
+  --mantle: #181825;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --surface2: #585b70;
+  --overlay: #6c7086;
+  --text: #cdd6f4;
+  --subtext: #a6adc8;
+  --accent: #cba6f7;
+  --accent2: #b4befe;
+  --accent3: #89b4fa;
+  --success: #a6e3a1;
+  --success2: #94e2d5;
+  --warning: #f9e2af;
+  --error: #f38ba8;
+  --on-accent: #1e1e2e;
+  --node: #2b2d40;
+  --locked-bg: #24263a;
+  --locked-border: #383b52;
+  --rail: #27293c;
+  --finish-dark: #1f202e;
+  --finish-light: #3b3e58;
+  --finish-stroke: #52556b;
+
+  color-scheme: dark;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--base);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------- layout - */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px clamp(12px, 3vw, 28px);
+  background: color-mix(in srgb, var(--mantle) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--surface0);
+}
+
+.topbar__title {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: clamp(18px, 4vw, 36px) clamp(14px, 3vw, 28px) 64px;
+}
+
+.page__head {
+  margin-bottom: 26px;
+}
+
+.page__title {
+  margin: 0;
+  font-size: clamp(1.6rem, 4.4vw, 2.3rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.page__sub {
+  margin: 8px 0 0;
+  color: var(--subtext);
+  font-size: 1rem;
+}
+
+/* ---------------------------------------------------------------- controls - */
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--surface0);
+  color: var(--text);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.icon-btn:hover {
+  background: var(--surface1);
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 650;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--ghost {
+  background: var(--surface0);
+  color: var(--text);
+}
+
+.btn--lg {
+  padding: 15px 32px;
+  font-size: 1.05rem;
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 999px;
+  background: var(--surface0);
+}
+
+.segmented button {
+  padding: 8px 18px;
+  border-radius: 999px;
+  color: var(--subtext);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* -------------------------------------------------------------------- path - */
+
+/*
+ * Serpentine learning path. The desktop app measures the window and folds the
+ * row; on the web a wrapping flex row with alternating direction gives the same
+ * shape and reflows on its own.
+ */
+.path {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.path__row {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 3vw, 26px);
+  padding: 10px 0;
+}
+
+.path__row:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.path__rail {
+  flex: 1;
+  min-width: 14px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--rail);
+}
+
+.path__rail--done {
+  background: var(--success);
+}
+
+.node {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  width: clamp(62px, 15vw, 84px);
+  height: clamp(62px, 15vw, 84px);
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--node);
+  border: 2px solid var(--surface1);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.node--current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.node--done {
+  background: var(--success);
+  border-color: var(--success);
+  color: var(--on-accent);
+}
+
+.node--locked {
+  background: var(--locked-bg);
+  border-color: var(--locked-border);
+  color: var(--overlay);
+}
+
+.node--finish {
+  background: linear-gradient(135deg, var(--finish-light), var(--finish-dark));
+  border-color: var(--finish-stroke);
+  color: var(--subtext);
+}
+
+.node:not(.node--locked):hover {
+  transform: translateY(-3px) scale(1.04);
+}
+
+.node__number {
+  font-size: 1.35rem;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.node__label {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  translate: -50% 0;
+  width: clamp(96px, 22vw, 150px);
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--subtext);
+}
+
+/* Reserve room for the absolutely positioned labels under each node. */
+.path__row {
+  margin-bottom: 46px;
+}
+
+/* ------------------------------------------------------------------- cards - */
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--mantle);
+  border: 1px solid var(--surface0);
+  text-align: left;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.card--interactive:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.card--locked {
+  opacity: 0.5;
+}
+
+.card__kicker {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+.card__title {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 680;
+}
+
+.card__body {
+  margin: 0;
+  color: var(--subtext);
+  font-size: 0.94rem;
+}
+
+/* ------------------------------------------------------------------ slides - */
+
+.slide {
+  padding: clamp(18px, 4vw, 30px);
+  border-radius: var(--radius-lg);
+  background: var(--mantle);
+  border: 1px solid var(--surface0);
+}
+
+.slide__kicker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+.slide__title {
+  margin: 6px 0 0;
+  font-size: clamp(1.35rem, 3.6vw, 1.95rem);
+  font-weight: 730;
+  letter-spacing: -0.015em;
+}
+
+.slide__tip {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border-left: 3px solid var(--warning);
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--text);
+  font-size: 0.94rem;
+}
+
+.slide__lines {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slide__lines li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--text);
+}
+
+.slide__lines li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent3);
+}
+
+.slides__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.dots {
+  display: flex;
+  gap: 7px;
+}
+
+.dots button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--surface1);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.dots button[aria-selected='true'] {
+  background: var(--accent);
+  transform: scale(1.3);
+}
+
+/* --------------------------------------------------------------- exercises - */
+
+.ex {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ex__item {
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--mantle);
+  border: 1px solid var(--surface0);
+}
+
+.ex__prompt {
+  margin: 0 0 12px;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.ex__num {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--surface0);
+  color: var(--subtext);
+  font-size: 0.82rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.ex__meaning {
+  margin: 10px 0 0;
+  color: var(--subtext);
+  font-size: 0.89rem;
+  font-style: italic;
+}
+
+.ex__model {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border-left: 3px solid var(--success);
+  font-size: 0.92rem;
+}
+
+/* Per-gap word glosses, e.g. "haben — mít · Freunde — přátelé". */
+.ex__gloss {
+  margin: 8px 0 0;
+  color: var(--subtext);
+  font-size: 0.85rem;
+}
+
+/* A heading splitting one exercise into groups, e.g. per speaker. */
+.ex__group {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Word bank or extra instruction under the task subtitle. */
+.ex__note {
+  margin: -6px 0 0;
+  color: var(--subtext);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Worked example above the items. */
+.ex__example {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--surface0);
+  border-left: 3px solid var(--accent);
+  font-size: 0.92rem;
+}
+
+/* Labelled answer fields, as the Czech grammar categories use. */
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.fields__field {
+  display: grid;
+  gap: 5px;
+  min-width: 150px;
+  flex: 1 1 150px;
+}
+
+.fields__label {
+  color: var(--subtext);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+/* Multiple choice */
+.opts {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.opt {
+  padding: 13px 16px;
+  border-radius: var(--radius);
+  background: var(--surface0);
+  border: 2px solid transparent;
+  text-align: left;
+  font-weight: 560;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.opt:hover:not(:disabled) {
+  background: var(--surface1);
+}
+
+.opt[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface0));
+}
+
+.opt--ok {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 24%, var(--surface0));
+}
+
+.opt--wrong {
+  border-color: var(--error);
+  background: color-mix(in srgb, var(--error) 24%, var(--surface0));
+}
+
+/* Gap-fill sentences */
+/*
+ * Normal inline flow rather than flex: the browser then breaks lines at spaces
+ * only, leaving `.sentence__chunk` groups (a word plus its gaps) intact.
+ */
+.sentence {
+  font-size: 1.02rem;
+  line-height: 2.1;
+}
+
+.sentence__emoji {
+  margin-right: 8px;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  vertical-align: middle;
+}
+
+.sentence__clue {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 12px;
+  border-radius: 8px;
+  background: var(--surface0);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+
+.gap {
+  min-width: 120px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  background: var(--surface0);
+  border: 2px solid var(--surface1);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease;
+}
+
+.gap:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.gap--ok {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 18%, var(--surface0));
+}
+
+.gap--wrong {
+  border-color: var(--error);
+  background: color-mix(in srgb, var(--error) 18%, var(--surface0));
+}
+
+/* A word and its gaps stay on one line; wrapping happens at spaces only. */
+.sentence__chunk {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.sentence--letters {
+  line-height: 2.2;
+}
+
+.sentence--letters .sentence__chunk {
+  gap: 1px;
+}
+
+.gap--letters {
+  min-width: 0;
+  width: 2.9em;
+  padding: 4px 5px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.speaker {
+  flex: 0 0 auto;
+  color: var(--accent2);
+  font-weight: 700;
+}
+
+/* Word bank / sentence assembly */
+.bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chip {
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: var(--surface0);
+  border: 2px solid var(--surface1);
+  font-weight: 580;
+  font-size: 0.95rem;
+  transition: background-color 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
+}
+
+.chip:hover:not(:disabled) {
+  background: var(--surface1);
+  transform: translateY(-2px);
+}
+
+.chip--used {
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border: 2px dashed var(--surface1);
+  background: color-mix(in srgb, var(--crust) 45%, transparent);
+}
+
+.slot--ok {
+  border-color: var(--success);
+  border-style: solid;
+}
+
+.slot--wrong {
+  border-color: var(--error);
+  border-style: solid;
+}
+
+.slot__placeholder {
+  color: var(--overlay);
+  font-size: 0.9rem;
+}
+
+/* Group assignment */
+.groups {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-top: 12px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--crust) 45%, transparent);
+  border: 2px dashed var(--surface1);
+  min-height: 96px;
+}
+
+.group__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+/* Feedback */
+.feedback {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-weight: 620;
+}
+
+.feedback--ok {
+  background: color-mix(in srgb, var(--success) 18%, transparent);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.feedback--err {
+  background: color-mix(in srgb, var(--error) 18%, transparent);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------- progress -- */
+
+.bar {
+  height: 9px;
+  border-radius: 999px;
+  background: var(--surface0);
+  overflow: hidden;
+}
+
+.bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+.bar__fill--done {
+  background: var(--success);
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--surface0);
+}
+
+.stat-row__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.stat-row__name {
+  font-weight: 620;
+}
+
+.stat-row__count {
+  color: var(--subtext);
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-bottom: 26px;
+}
+
+.summary__cell {
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--mantle);
+  border: 1px solid var(--surface0);
+}
+
+.summary__value {
+  font-size: 1.7rem;
+  font-weight: 760;
+  line-height: 1.15;
+  color: var(--accent);
+}
+
+.summary__label {
+  color: var(--subtext);
+  font-size: 0.84rem;
+}
+
+/* -------------------------------------------------------------- settings --- */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.settings__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings__label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--subtext);
+}
+
+.swatches {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px;
+  border-radius: var(--radius);
+  background: var(--surface0);
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.swatch:hover {
+  transform: translateY(-2px);
+}
+
+.swatch[aria-pressed='true'] {
+  border-color: var(--accent);
+}
+
+.swatch__dots {
+  display: flex;
+  gap: 4px;
+}
+
+.swatch__dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.swatch__name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--subtext);
+}
+
+/* ---------------------------------------------------------------- welcome -- */
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 100dvh;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.welcome__title {
+  margin: 0;
+  font-size: clamp(2.1rem, 8vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(120deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome__body {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--subtext);
+  font-size: clamp(0.98rem, 2.4vw, 1.1rem);
+}
+
+/* --------------------------------------------------------------- utilities - */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.muted {
+  color: var(--subtext);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

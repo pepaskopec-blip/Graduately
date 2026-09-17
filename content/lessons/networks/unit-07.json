@@ -1,0 +1,152 @@
+{
+  "id": "unit-07",
+  "subject": "networks",
+  "number": 7,
+  "titleKey": "net_unit7",
+  "subtitleKey": "net_unit7_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Multiplex",
+      "title": "Rozdělení kanálu",
+      "tip": null,
+      "lines": [
+        "Multiplex: rozdělení jednoho kanálu",
+        "na více logických podkanálů."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Typy",
+      "title": "FDM, TDM a STDM",
+      "tip": null,
+      "lines": [
+        "FDM (frekvenční): každému kanálu část frekvenčního pásma.",
+        "TDM (časový): každému kanálu vyhrazený časový slot.",
+        "STDM (statistický): kapacita dle potřeby (paketový přenos),",
+        "negarantuje 100% dostupnost."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Směry",
+      "title": "Simplex, poloduplex a duplex",
+      "tip": null,
+      "lines": [
+        "Simplex: jen jeden směr (např. optické vlákno).",
+        "Poloduplex (half-duplex): oběma směry, ne současně.",
+        "Duplex (full-duplex): oběma směry současně."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Agregace",
+      "title": "Sdílení kapacity",
+      "tip": null,
+      "lines": [
+        "Agregace: sdílení kapacity kanálu více uživateli."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz7_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Multiplex znamená:",
+          "options": [
+            "Jen jeden uživatel na kanál",
+            "Rozdělení jednoho kanálu na více logických podkanálů",
+            "Jen CRC kontrolu",
+            "Jen digitální 0 a 1"
+          ],
+          "correct": 1,
+          "hint": "Multiplex dělí jeden kanál na více logických podkanálů"
+        },
+        {
+          "kind": "choice",
+          "prompt": "FDM přiděluje každému kanálu:",
+          "options": [
+            "Časový slot",
+            "Část frekvenčního pásma",
+            "Jen start-bit",
+            "Jen mainframe"
+          ],
+          "correct": 1,
+          "hint": "FDM: každému kanálu část frekvenčního pásma"
+        },
+        {
+          "kind": "choice",
+          "prompt": "TDM přiděluje každému kanálu:",
+          "options": [
+            "Část frekvenčního pásma",
+            "Vyhrazený časový slot",
+            "Jen SaaS účet",
+            "Jen paritu"
+          ],
+          "correct": 1,
+          "hint": "TDM: každému kanálu vyhrazený časový slot"
+        },
+        {
+          "kind": "choice",
+          "prompt": "STDM:",
+          "options": [
+            "Garantuje vždy 100% dostupnost",
+            "Přiděluje kapacitu dle potřeby a negarantuje 100%",
+            "Je jen simplex",
+            "Je jen trunking kabelů"
+          ],
+          "correct": 1,
+          "hint": "STDM přiděluje kapacitu dle potřeby, negarantuje 100 %"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Simplex umožňuje přenos:",
+          "options": [
+            "Oběma směry současně",
+            "Jen jedním směrem",
+            "Oběma směry, ale ne současně",
+            "Jen přes CRC"
+          ],
+          "correct": 1,
+          "hint": "Simplex = jen jeden směr přenosu"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Half-duplex znamená:",
+          "options": [
+            "Jen jeden směr",
+            "Oběma směry, ne současně",
+            "Oběma směry současně",
+            "Jen FDM"
+          ],
+          "correct": 1,
+          "hint": "Half-duplex = oběma směry, ale ne současně"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Full-duplex znamená:",
+          "options": [
+            "Jen jeden směr",
+            "Oběma směry, ne současně",
+            "Oběma směry současně",
+            "Jen STDM"
+          ],
+          "correct": 2,
+          "hint": "Full-duplex = oběma směry současně"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Agregace je:",
+          "options": [
+            "Sdílení kapacity kanálu více uživateli",
+            "Jen fázová modulace",
+            "Jen dvoubodový spoj",
+            "Jen stop-bit"
+          ],
+          "correct": 0,
+          "hint": "Agregace = sdílení kapacity kanálu více uživateli"
+        }
+      ]
+    }
+  ]
+}

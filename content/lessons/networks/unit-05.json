@@ -1,0 +1,156 @@
+{
+  "id": "unit-05",
+  "subject": "networks",
+  "number": 5,
+  "titleKey": "net_unit5",
+  "subtitleKey": "net_unit5_sub",
+  "slides": [
+    {
+      "kicker": "1 / 4   •   Signál",
+      "title": "Analogový a digitální signál",
+      "tip": "Tip: f = 1/T",
+      "lines": [
+        "Analogový: spojitý, nabývá libovolných hodnot.",
+        "Digitální: diskrétní, hodnoty 0 a 1.",
+        "Parametry signálu:",
+        "perioda T, frekvence f = 1/T,",
+        "amplituda A, fázový posun Φ."
+      ]
+    },
+    {
+      "kicker": "2 / 4   •   Modulace",
+      "title": "Základní typy modulace",
+      "tip": "Modulace = přenos v přeloženém pásmu",
+      "lines": [
+        "AM – amplitudová modulace.",
+        "FM – frekvenční modulace.",
+        "PM – fázová modulace."
+      ]
+    },
+    {
+      "kicker": "3 / 4   •   Kombinované",
+      "title": "QPSK a 256-QAM",
+      "tip": null,
+      "lines": [
+        "QPSK: 2 bity v jednom prvku (symbolu).",
+        "256-QAM: 8 bitů v jednom prvku."
+      ]
+    },
+    {
+      "kicker": "4 / 4   •   Rychlosti",
+      "title": "Modulační, přenosová a šířka pásma",
+      "tip": null,
+      "lines": [
+        "Modulační rychlost: počet změn signálu za sekundu [Baud, Bd/s].",
+        "Přenosová rychlost: velikost přenesené informace [bit/s, bps].",
+        "Šířka pásma: rozsah frekvencí –",
+        "určuje maximální možnou rychlost."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz5_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Digitální signál nabývá:",
+          "options": [
+            "Libovolných spojitých hodnot",
+            "Diskrétních hodnot 0 a 1",
+            "Jen frekvence FM",
+            "Jen šířky pásma"
+          ],
+          "correct": 1,
+          "hint": "Analogový je spojitý, digitální má diskrétní hodnoty 0 a 1"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Frekvence f je:",
+          "options": [
+            "Stejná jako amplituda",
+            "f = 1/T",
+            "Jen fázový posun",
+            "Počet bitů v QPSK"
+          ],
+          "correct": 1,
+          "hint": "Frekvence f = 1/T, kde T je perioda"
+        },
+        {
+          "kind": "choice",
+          "prompt": "AM, FM a PM jsou:",
+          "options": [
+            "Typy kabelů",
+            "Základní typy modulace",
+            "Jen CRC metody",
+            "Typy serverů"
+          ],
+          "correct": 1,
+          "hint": "AM mění amplitudu, FM frekvenci, PM fázi"
+        },
+        {
+          "kind": "choice",
+          "prompt": "QPSK přenáší v jednom prvku:",
+          "options": [
+            "1 bit",
+            "2 bity",
+            "8 bitů",
+            "256 bitů"
+          ],
+          "correct": 1,
+          "hint": "QPSK nese 2 bity v prvku, 256-QAM nese 8 bitů"
+        },
+        {
+          "kind": "choice",
+          "prompt": "256-QAM přenáší v jednom prvku:",
+          "options": [
+            "2 bity",
+            "4 bity",
+            "8 bitů",
+            "16 bitů"
+          ],
+          "correct": 2,
+          "hint": "QPSK nese 2 bity v prvku, 256-QAM nese 8 bitů"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Modulační rychlost se udává v:",
+          "options": [
+            "Jen bit/s",
+            "Baud (Bd/s)",
+            "Jen metrech",
+            "Jen hertzech amplitudy"
+          ],
+          "correct": 1,
+          "hint": "Modulační rychlost = počet změn signálu za sekundu [Bd/s]"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Přenosová rychlost vyjadřuje:",
+          "options": [
+            "Počet změn signálu za sekundu",
+            "Velikost přenesené informace [bit/s]",
+            "Jen fázový posun",
+            "Jen periodu T"
+          ],
+          "correct": 1,
+          "hint": "Přenosová rychlost = množství informace za sekundu [bit/s]"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Šířka pásma určuje:",
+          "options": [
+            "Jen barvu kabelu",
+            "Maximální možnou přenosovou rychlost",
+            "Jen počet serverů",
+            "Jen start-bit"
+          ],
+          "correct": 1,
+          "hint": "Šířka pásma určuje maximální možnou přenosovou rychlost"
+        }
+      ]
+    }
+  ]
+}

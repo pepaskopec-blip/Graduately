@@ -1,0 +1,118 @@
+{
+  "id": "unit-15",
+  "subject": "networks",
+  "number": 15,
+  "titleKey": "net_unit15",
+  "subtitleKey": "net_unit15_sub",
+  "slides": [
+    {
+      "kicker": "1 / 3   •   Primární",
+      "title": "Ochrana 250 µm",
+      "tip": null,
+      "lines": [
+        "Primární ochrana má průměr 250 µm.",
+        "Chrání samotné vlákno hned po výrobě."
+      ]
+    },
+    {
+      "kicker": "2 / 3   •   Sekundární",
+      "title": "Ochrana 900 µm",
+      "tip": "Tip: těsná pro svislé, volná pro vodorovné instalace",
+      "lines": [
+        "Sekundární ochrana má průměr 900 µm.",
+        "Těsná varianta: vhodné pro svislé instalace.",
+        "Volná varianta: vhodné pro vodorovné instalace."
+      ]
+    },
+    {
+      "kicker": "3 / 3   •   Montáž",
+      "title": "Lámání a sváření",
+      "tip": "Tip: kolmost lomu do 0,5°",
+      "lines": [
+        "Vyžaduje precizní lámání lámačkou.",
+        "Spojování se dělá svářečkou optických vláken."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "title": "Quiz",
+      "subtitleKey": "net_quiz15_head",
+      "items": [
+        {
+          "kind": "choice",
+          "prompt": "Primární ochrana optického vlákna má průměr:",
+          "options": [
+            "900 µm",
+            "250 µm",
+            "50 µm",
+            "7–10 µm"
+          ],
+          "correct": 1,
+          "hint": "Primární ochrana: 250 µm"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Sekundární ochrana má průměr:",
+          "options": [
+            "250 µm",
+            "900 µm",
+            "62,5 µm",
+            "1 km"
+          ],
+          "correct": 1,
+          "hint": "Sekundární ochrana: 900 µm"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Těsná sekundární ochrana je vhodná hlavně:",
+          "options": [
+            "Pro svislé instalace",
+            "Jen pro kruhovou topologii",
+            "Jen pro UDP",
+            "Jen pro hub"
+          ],
+          "correct": 0,
+          "hint": "Těsná sekundární ochrana: svislé instalace"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Volná sekundární ochrana je vhodná hlavně:",
+          "options": [
+            "Pro vodorovné instalace",
+            "Jen pro ATM",
+            "Jen pro LED bez vlákna",
+            "Jen pro sběrnici"
+          ],
+          "correct": 0,
+          "hint": "Volná sekundární ochrana: vodorovné instalace"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Montáž optiky vyžaduje:",
+          "options": [
+            "Jen nůžky na koaxiál",
+            "Precizní lámání a svářečku vláken",
+            "Jen hub bez konektorů",
+            "Jen Token Ring"
+          ],
+          "correct": 1,
+          "hint": "Montáž: lámačka a svářečka optických vláken"
+        },
+        {
+          "kind": "choice",
+          "prompt": "Při lámání se požaduje kolmost zhruba:",
+          "options": [
+            "Do 0,5°",
+            "Do 45°",
+            "Přesně 90° bez tolerance",
+            "Bez významu"
+          ],
+          "correct": 0,
+          "hint": "Lámání vyžaduje kolmost asi 0,5°"
+        }
+      ]
+    }
+  ]
+}
