@@ -4,11 +4,15 @@
 /* Roadmap page                                                       */
 /* ------------------------------------------------------------------ */
 
-/* Draw the checkered "finish line" node: checkerboard behind the unit
- * number and the same lock glyph the locked units use. */
+/* Draw the "finish line" node: a locked-looking circle with the unit number
+ * and a small chequered flag. The chequers used to fill the whole circle,
+ * which read as the placeholder pattern for a missing image rather than as a
+ * flag, so they are now a badge sitting on a plain node face. */
 void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data) {
-    const double s = 11.0;
+    const double cell = 6.0;        /* chequer square */
+    const int flag_cols = 3;
+    const int flag_rows = 2;
     const Rgb gray = color_from_hex(app_theme.overlay);
     const Rgb fin_dark = color_from_hex(app_theme.finish_dark);
     const Rgb fin_light = color_from_hex(app_theme.finish_light);
@@ -17,15 +21,12 @@ void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
     double cx = width / 2.0;
     double cy = height / 2.0;
     double r = MIN(width, height) / 2.0 - 2.0;
-    double start_x = cx - r;
-    double start_y = cy - r;
-    int cols = (int)ceil(2.0 * r / s);
-    int rows = (int)ceil(2.0 * r / s);
     char buf[8];
     PangoLayout *layout;
     PangoFontDescription *fd;
     PangoRectangle ink;
     double num_cy;
+    double flag_x, flag_y;
     int ix, iy;
 
     (void)area;
@@ -39,19 +40,9 @@ void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
     cairo_arc(cr, cx, cy, r, 0.0, 2.0 * G_PI);
     cairo_clip(cr);
 
-    cairo_rectangle(cr, start_x, start_y, 2.0 * r, 2.0 * r);
+    cairo_rectangle(cr, cx - r, cy - r, 2.0 * r, 2.0 * r);
     cairo_set_source_rgb(cr, fin_dark.r, fin_dark.g, fin_dark.b);
     cairo_fill(cr);
-
-    for (iy = 0; iy < rows; iy++) {
-        for (ix = 0; ix < cols; ix++) {
-            if (((ix + iy) & 1) == 0)
-                continue;
-            cairo_rectangle(cr, start_x + ix * s, start_y + iy * s, s, s);
-            cairo_set_source_rgb(cr, fin_light.r, fin_light.g, fin_light.b);
-            cairo_fill(cr);
-        }
-    }
 
     /* unit number, styled like the other locked nodes */
     g_snprintf(buf, sizeof(buf), "%d", n);
@@ -70,8 +61,19 @@ void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                   num_cy - ink.height / 2.0 - ink.y);
     pango_cairo_show_layout(cr, layout);
 
-    /* lock glyph below the number, as on the other locked units */
-    lock_paint(cr, cx - 8.0, num_cy + ink.height / 2.0 + 6.0, 16.0, &gray);
+    /* chequered flag below the number, where locked units show a padlock */
+    flag_x = cx - (flag_cols * cell) / 2.0;
+    flag_y = num_cy + ink.height / 2.0 + 6.0;
+    for (iy = 0; iy < flag_rows; iy++) {
+        for (ix = 0; ix < flag_cols; ix++) {
+            const Rgb *c = ((ix + iy) & 1) ? &fin_light : &fin_stroke;
+
+            cairo_rectangle(cr, flag_x + ix * cell, flag_y + iy * cell,
+                            cell, cell);
+            cairo_set_source_rgb(cr, c->r, c->g, c->b);
+            cairo_fill(cr);
+        }
+    }
 
     g_object_unref(layout);
     pango_font_description_free(fd);
@@ -293,10 +295,10 @@ void add_path_node(GtkFixed *fixed, int index) {
         GtkWidget *number;
         GtkWidget *icon;
 
+        /* Unlocked units start out plain; refresh_completion_ui() decides
+         * which single one is the current step. */
         if (locked)
             gtk_widget_add_css_class(card, "locked");
-        else
-            gtk_widget_add_css_class(card, "current");
 
         vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
         gtk_widget_set_halign(vbox, GTK_ALIGN_CENTER);

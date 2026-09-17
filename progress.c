@@ -64,7 +64,24 @@ void all_rails_redraw(void) {
     }
 }
 
+/* Index of the unit the student should work on next: the first unlocked one
+ * that is not finished yet. -1 once every open unit is complete. */
+static int current_unit_index(void) {
+    for (int uidx = 0; uidx < NUM_UNLOCKED; uidx++) {
+        UnitCtx *u = &units[uidx];
+
+        if (u->n_ex <= 0)
+            continue;
+        for (int i = 1; i <= u->n_ex; i++)
+            if (!u->done[i])
+                return uidx;
+    }
+    return -1;
+}
+
 void refresh_completion_ui(void) {
+    int current = current_unit_index();
+
     for (int uidx = 0; uidx < NUM_UNLOCKED; uidx++) {
         UnitCtx *u = &units[uidx];
         gboolean all = TRUE;
@@ -107,19 +124,24 @@ void refresh_completion_ui(void) {
             }
         }
 
-        /* roadmap node marker */
+        /* Roadmap node: finished, the one step to take next, or simply open.
+         * Highlighting every unlocked unit made three of them look equally
+         * "current" and told the student nothing. */
         if (u->node) {
-            if (all && u->n_ex > 0) {
-                gtk_widget_remove_css_class(u->node, "current");
+            gboolean done = all && u->n_ex > 0;
+
+            if (done)
                 gtk_widget_add_css_class(u->node, "done");
-                if (u->node_done_icon)
-                    gtk_widget_set_visible(u->node_done_icon, TRUE);
-            } else {
+            else
                 gtk_widget_remove_css_class(u->node, "done");
+
+            if (!done && uidx == current)
                 gtk_widget_add_css_class(u->node, "current");
-                if (u->node_done_icon)
-                    gtk_widget_set_visible(u->node_done_icon, FALSE);
-            }
+            else
+                gtk_widget_remove_css_class(u->node, "current");
+
+            if (u->node_done_icon)
+                gtk_widget_set_visible(u->node_done_icon, done);
         }
     }
 
