@@ -154,7 +154,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      # v3 defaults to the retired `tools` package, which sdkmanager no longer
+      # serves. Request only packages that still exist.
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Install Android SDK platform
         run: |
