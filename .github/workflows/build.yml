@@ -258,8 +258,12 @@ jobs:
 
       # The branch is rewritten from scratch every time rather than added to,
       # so the repository keeps one copy of the packages instead of a new
-      # ~70 MB set per commit.
+      # ~70 MB set per commit. The same commit is then mirrored to Forgejo
+      # when FORGEJO_TOKEN is set (git.dvorakmortonxd.dev).
       - name: Push to builds branch
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+          FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -274,3 +278,33 @@ jobs:
           git add -A
           git commit -q -m "Build from ${{ github.sha }}"
           git push -f origin builds
+          if [ -z "${FORGEJO_TOKEN:-}" ]; then
+            echo "No FORGEJO_TOKEN; skipping Forgejo builds publish."
+            exit 0
+          fi
+          user="${FORGEJO_USER:-oauth2}"
+          git push -f \
+            "https://${user}:${FORGEJO_TOKEN}@git.dvorakmortonxd.dev/edu/maturita.c.git" \
+            HEAD:refs/heads/builds
+
+  forgejo-main:
+    name: Mirror main to Forgejo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same rule as the macOS cert step: never put `secrets` in `if:`.
+      - name: Push main
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+          FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
+        run: |
+          set -euo pipefail
+          if [ -z "${FORGEJO_TOKEN:-}" ]; then
+            echo "No FORGEJO_TOKEN; skipping Forgejo main mirror."
+            exit 0
+          fi
+          user="${FORGEJO_USER:-oauth2}"
+          git push \
+            "https://${user}:${FORGEJO_TOKEN}@git.dvorakmortonxd.dev/edu/maturita.c.git" \
+            HEAD:refs/heads/main
