@@ -33,6 +33,7 @@ final class Content {
     let hw: [J]
     let mluvnice: [J]
     let books: [J]
+    let changelog: [J]
 
     init(_ root: [String: Any]) {
         raw = J(root)
@@ -63,6 +64,7 @@ final class Content {
         hw = raw.arr("hw")
         mluvnice = raw.arr("mluvnice")
         books = raw.arr("books")
+        changelog = raw.arr("changelog")
     }
 
     func germanUnit(_ id: Int) -> J? { german.first { $0.int("id") == id } }

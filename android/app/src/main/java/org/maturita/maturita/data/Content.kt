@@ -31,6 +31,7 @@ class Content(root: JSONObject) {
     val hw = raw.arr("hw")
     val mluvnice = raw.arr("mluvnice")
     val books = raw.arr("books")
+    val changelog = raw.arr("changelog")
 
     fun germanUnit(id: Int) = german.firstOrNull { it.int("id") == id }
     fun netLesson(id: Int) = netLessons.firstOrNull { it.int("id") == id }

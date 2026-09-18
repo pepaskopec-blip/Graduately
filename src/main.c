@@ -414,6 +414,8 @@ static gboolean run_smoke_test(gpointer data) {
     fprintf(f, "commit=%s\n", APP_COMMIT);
     fprintf(f, "css=%s\n",
             g_file_test(CSS_FILE, G_FILE_TEST_IS_REGULAR) ? "ok" : "MISSING");
+    fprintf(f, "changelog=%s\n",
+            g_file_test(CHANGELOG_FILE, G_FILE_TEST_IS_REGULAR) ? "ok" : "MISSING");
     fprintf(f, "progress_dir=%s\n", app_progress_dir ? app_progress_dir : "?");
 
     for (i = 0; pages[i]; i++) {

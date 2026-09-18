@@ -240,6 +240,13 @@ GtkWidget *build_welcome_page(void) {
 
     gtk_box_append(GTK_BOX(hero), welcome_stat());
 
+    {
+        GtkWidget *notes = build_changelog_card();
+
+        gtk_widget_set_margin_top(notes, 28);
+        gtk_box_append(GTK_BOX(page), notes);
+    }
+
     features = gtk_box_new(GTK_ORIENTATION_VERTICAL, 14);
     gtk_widget_set_margin_top(features, 36);
     gtk_box_append(GTK_BOX(page), features);

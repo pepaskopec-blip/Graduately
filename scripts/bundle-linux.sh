@@ -36,6 +36,7 @@ mkdir -p "$APPDIR/usr/bin" \
 
 cp -f "$ROOT/maturita" "$APPDIR/usr/bin/maturita"
 cp -f "$ROOT/data/style.css" "$APPDIR/style.css"
+cp -f "$ROOT/data/changelog.txt" "$APPDIR/changelog.txt"
 cp -f "$ICON_512" "$APPDIR/icons/hicolor/512x512/apps/maturita.png"
 cp -f "$ICON_512" "$APPDIR/usr/share/icons/hicolor/512x512/apps/maturita.png"
 cp -f "$ICON_512" "$APPDIR/maturita.png"

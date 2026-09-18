@@ -1,0 +1,15 @@
+# User-facing notes, newest first. Copied next to style.css in every
+# package and folded into content.json for Android and iOS.
+# After an update the home screen shows the latest blocks until dismissed.
+#
+# --- YYYY-MM-DD
+# cs: bullet
+# en: bullet
+
+--- 2026-09-18
+cs: Po aktualizaci se na hlavní stránce ukáže, co je nového
+cs: Android updater teď nainstaluje podepsané APK ze stejného klíče
+cs: iOS se otevírá z Maturita.xcworkspace a běží nativně na iOS 26
+en: After an update the home screen shows what is new
+en: The Android updater now installs a signed APK from a stable key
+en: iOS opens from Maturita.xcworkspace and runs natively on iOS 26

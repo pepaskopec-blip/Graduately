@@ -47,6 +47,7 @@ mkdir -p "$MACOS" "$RES/icons/hicolor/512x512/apps" "$RES/share" "$FW"
 
 cp -f "$ROOT/maturita" "$MACOS/maturita-bin"
 cp -f "$ROOT/data/style.css" "$RES/style.css"
+cp -f "$ROOT/data/changelog.txt" "$RES/changelog.txt"
 cp -f "$ICON_512" "$RES/icons/hicolor/512x512/apps/maturita.png"
 cp -R "$ROOT/data/share/." "$RES/share/"
 

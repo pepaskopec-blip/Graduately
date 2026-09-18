@@ -159,6 +159,42 @@ tooltip {
    font-size: 12px;
    font-weight: 600;
 }
+.changelog-card {
+   background-color: alpha(@accent, 0.10);
+   border: 1px solid alpha(@accent, 0.28);
+   border-radius: 20px;
+   padding: 20px 24px 16px 24px;
+}
+.changelog-title {
+   color: @fg_text;
+   font-size: 18px;
+   font-weight: 700;
+   letter-spacing: -0.3px;
+}
+.changelog-date {
+   color: @fg_subtext;
+   font-size: 12px;
+   font-weight: 600;
+}
+.changelog-item {
+   color: @fg_text;
+   font-size: 15px;
+}
+.changelog-dismiss {
+   background-image: none;
+   background-color: @accent;
+   color: @on_accent;
+   border: none;
+   border-radius: 999px;
+   padding: 8px 16px;
+   font-size: 13px;
+   font-weight: 600;
+   box-shadow: none;
+   margin-top: 6px;
+}
+.changelog-dismiss:hover {
+   background-color: shade(@accent, 1.1);
+}
 .subject-grid {
    padding: 8px 4px 24px 4px;
 }

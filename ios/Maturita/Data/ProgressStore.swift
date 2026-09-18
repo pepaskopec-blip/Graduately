@@ -18,6 +18,11 @@ final class ProgressStore {
         set { defaults.set(newValue == .en ? "en" : "cs", forKey: "lang") }
     }
 
+    var seenCommit: String {
+        get { defaults.string(forKey: "seen_commit") ?? "" }
+        set { defaults.set(newValue, forKey: "seen_commit") }
+    }
+
     func germanDone(_ unit: Int, _ ex: Int) -> Bool { defaults.bool(forKey: "g.\(unit).\(ex)") }
     func markGerman(_ unit: Int, _ ex: Int) { defaults.set(true, forKey: "g.\(unit).\(ex)") }
     func vocabDone(_ unit: Int) -> Bool { defaults.bool(forKey: "g.\(unit).vocab") }

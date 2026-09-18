@@ -690,6 +690,28 @@ def net_tasks(rows) -> list[dict]:
     return out
 
 
+def parse_changelog(path: Path) -> list[dict]:
+    if not path.is_file():
+        return []
+    entries: list[dict] = []
+    current = None
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("---"):
+            current = {"date": line[3:].strip(), "cs": [], "en": []}
+            entries.append(current)
+            continue
+        if current is None:
+            continue
+        if line.startswith("cs:"):
+            current["cs"].append(line[3:].strip())
+        elif line.startswith("en:"):
+            current["en"].append(line[3:].strip())
+    return [e for e in entries if e["cs"] or e["en"]]
+
+
 def parse_i18n(src: str) -> dict:
     arrays = find_arrays(src)
     out = {}
@@ -1219,6 +1241,7 @@ def main() -> int:
         "hw": hw_lessons,
         "mluvnice": mluvnice,
         "books": books,
+        "changelog": parse_changelog(ROOT / "data" / "changelog.txt"),
     }
 
     # Fix single-string banks stored as char* "arrays"
@@ -1252,6 +1275,7 @@ def main() -> int:
     print(f"  hw lessons: {sum(1 for L in hw_lessons if L['slides'])}")
     print(f"  mluvnice: {len(mluvnice)}")
     print(f"  books quiz items: {[len(b['quiz']) for b in books]}")
+    print(f"  changelog entries: {len(payload.get('changelog', []))}")
     missing = []
     for u in german_units:
         if not u["unlocked"]:

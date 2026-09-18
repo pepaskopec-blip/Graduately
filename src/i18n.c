@@ -78,6 +78,8 @@ const TrEntry tr_ui[] = {
     {"update_err_badapk",
      "Stažený soubor není platný build maturita.c.",
      "The downloaded file is not a valid maturita.c build."},
+    {"changelog_title", "Co je nového", "What's new"},
+    {"changelog_dismiss", "Rozumím", "Got it"},
     {"welcome_feat1_title", "Efektivní procvičování", "Focused practice"},
     {"welcome_feat1_body",
      "Cvičení, nápovědy a vokabeltraining. Aplikace si pamatuje, kde jste skončili.",
@@ -1557,6 +1559,7 @@ void apply_language(void) {
     refresh_welcome_heading();
     refresh_stats_ui();
     update_apply_lang();
+    changelog_apply_lang();
     net_lessons_apply_lang();
     hw_lessons_apply_lang();
     search_apply_lang();

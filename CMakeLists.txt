@@ -78,6 +78,9 @@ add_custom_command(TARGET maturita POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_CURRENT_SOURCE_DIR}/data/style.css
             $<TARGET_FILE_DIR:maturita>/style.css
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_SOURCE_DIR}/data/changelog.txt
+            $<TARGET_FILE_DIR:maturita>/changelog.txt
     COMMAND ${CMAKE_COMMAND} -E make_directory
             $<TARGET_FILE_DIR:maturita>/icons/hicolor/512x512/apps
     COMMAND ${CMAKE_COMMAND} -E copy_if_different

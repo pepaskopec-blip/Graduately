@@ -91,6 +91,9 @@ fun HomeScreen(vm: AppViewModel) {
     val sum = summarize(vm.content, vm.progress)
     val pct = if (sum.totalEx == 0) 0f else sum.doneEx / sum.totalEx.toFloat()
     RootScaffold(vm, "Maturita") {
+        if (vm.showChangelog) {
+            item { ChangelogCard(vm) }
+        }
         item {
             Card(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
@@ -137,6 +140,51 @@ fun HomeScreen(vm: AppViewModel) {
                 leading = { SubjectIcon(s.str("icon"), open) },
                 onClick = if (open) ({ vm.goPage(s.str("target")) }) else null,
             )
+        }
+    }
+}
+
+@Composable
+private fun ChangelogCard(vm: AppViewModel) {
+    val langKey = if (vm.lang == UiLang.En) "en" else "cs"
+    val blocks = vm.content.changelog.take(3)
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+    ) {
+        Column(Modifier.padding(20.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    vm.tr("changelog_title"),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    modifier = Modifier.weight(1f),
+                )
+                val date = blocks.firstOrNull()?.str("date").orEmpty()
+                if (date.isNotEmpty()) {
+                    Text(
+                        date,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.7f),
+                    )
+                }
+            }
+            Spacer(Modifier.height(10.dp))
+            blocks.forEachIndexed { index, block ->
+                if (index > 0) Spacer(Modifier.height(8.dp))
+                block.strs(langKey).ifEmpty { block.strs("cs") }.forEach { line ->
+                    Text(
+                        "•  $line",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.padding(bottom = 4.dp),
+                    )
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            FilledTonalButton(onClick = { vm.dismissChangelog() }) {
+                Text(vm.tr("changelog_dismiss"))
+            }
         }
     }
 }

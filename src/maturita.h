@@ -20,6 +20,7 @@
 #define HW_SUBJ        2    /* index of "Technické vybavení"          */
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define CSS_FILE      "style.css"
+#define CHANGELOG_FILE "changelog.txt"
 #define APP_ID        "org.maturita.Maturita"
 /* Published builds bake in the commit they were made from (see COMMIT in the
  * Makefile), which is what the updater compares against the build published
@@ -907,6 +908,11 @@ void update_apply_lang(void);
 void update_on_settings_open(void);
 GtkWidget *build_update_banner(void);
 GtkWidget *build_update_box(void);
+/* changelog.c */
+void changelog_set_seen(const char *sha);
+const char *changelog_seen(void);
+void changelog_apply_lang(void);
+GtkWidget *build_changelog_card(void);
 void draw_finish_cell(GtkDrawingArea *area, cairo_t *cr,
                              int width, int height, gpointer data);
 void road_point(double t, double *ox, double *oy);

@@ -7,6 +7,14 @@ struct PracticeHome: View {
         let sum = summarize(vm.content, vm.progress)
         let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
         List {
+            if vm.showChangelog {
+                Section {
+                    ChangelogCard(vm: vm)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                }
+            }
             Section {
                 GlassCard {
                     VStack(alignment: .leading, spacing: 10) {
@@ -55,6 +63,55 @@ struct PracticeHome: View {
             }
         } icon: {
             SubjectIcon(icon: s.str("icon"), open: s.bool("open"))
+        }
+    }
+}
+
+struct ChangelogCard: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        let langKey = vm.lang == .en ? "en" : "cs"
+        let blocks = Array(vm.content.changelog.prefix(3))
+        GlassCard {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Label(vm.tr("changelog_title"), systemImage: "sparkles")
+                        .font(.headline)
+                    Spacer()
+                    if let date = blocks.first?.strOrNull("date") {
+                        Text(date)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                ForEach(Array(blocks.enumerated()), id: \.offset) { index, block in
+                    ChangelogLines(index: index, lines: changelogLines(block, langKey))
+                }
+                Button(vm.tr("changelog_dismiss")) { vm.dismissChangelog() }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
+            }
+        }
+    }
+}
+
+private func changelogLines(_ block: J, _ langKey: String) -> [String] {
+    let preferred = block.strs(langKey)
+    return preferred.isEmpty ? block.strs("cs") : preferred
+}
+
+private struct ChangelogLines: View {
+    let index: Int
+    let lines: [String]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            if index > 0 { Spacer().frame(height: 4) }
+            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                Text("•  \(line)")
+                    .font(.subheadline)
+            }
         }
     }
 }

@@ -287,6 +287,7 @@ void save_settings(void) {
                           app_color_mode == MODE_LIGHT ? "light" : "dark");
     g_key_file_set_string(kf, "ui", "lang",
                           app_lang == LANG_EN ? "en" : "cs");
+    g_key_file_set_string(kf, "ui", "seen_commit", changelog_seen());
 
     if (g_mkdir_with_parents(PROGRESS_DIR, 0755) != 0) {
         g_key_file_free(kf);
@@ -346,6 +347,12 @@ void load_settings(void) {
                 app_lang = LANG_CS;
             g_free(lang);
         }
+    }
+    {
+        gchar *seen = g_key_file_get_string(kf, "ui", "seen_commit", NULL);
+
+        changelog_set_seen(seen);
+        g_free(seen);
     }
 
     g_key_file_free(kf);

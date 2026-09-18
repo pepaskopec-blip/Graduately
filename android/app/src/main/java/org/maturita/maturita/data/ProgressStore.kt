@@ -17,6 +17,10 @@ class ProgressStore(context: Context) {
         get() = if (prefs.getString("lang", "cs") == "en") UiLang.En else UiLang.Cs
         set(v) { prefs.edit().putString("lang", if (v == UiLang.En) "en" else "cs").apply() }
 
+    var seenCommit: String
+        get() = prefs.getString("seen_commit", "") ?: ""
+        set(v) { prefs.edit().putString("seen_commit", v).apply() }
+
     fun germanDone(unit: Int, ex: Int) = prefs.getBoolean("g.$unit.$ex", false)
     fun markGerman(unit: Int, ex: Int) { prefs.edit().putBoolean("g.$unit.$ex", true).apply() }
     fun vocabDone(unit: Int) = prefs.getBoolean("g.$unit.vocab", false)

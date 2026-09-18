@@ -83,6 +83,7 @@ bundle: $(TARGET)
 	@mkdir -p dist
 	@cp $(TARGET) dist/
 	@cp $(DATA_DIR)/style.css dist/
+	@cp $(DATA_DIR)/changelog.txt dist/
 	@mkdir -p dist/icons/hicolor/512x512/apps
 	@cp "$(ICON_DST)" dist/icons/hicolor/512x512/apps/
 	@cp -R $(DATA_DIR)/share dist/

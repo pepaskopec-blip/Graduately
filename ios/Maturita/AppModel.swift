@@ -14,11 +14,13 @@ final class AppModel: ObservableObject {
     @Published var searchQuery = ""
     @Published var tick = 0
     @Published var update = UpdateState()
+    @Published var showChangelog = false
 
     init() {
         themeId = progress.themeId
         mode = progress.mode
         lang = progress.lang
+        showChangelog = !content.changelog.isEmpty && !sameBuild(AppConfig.commit, progress.seenCommit)
         #if DEBUG
         // `xcrun simctl launch <udid> org.maturita.maturita -route u1e3` opens a page for screenshots.
         if let page = UserDefaults.standard.string(forKey: "route"), let r = routeFromPage(page) {
@@ -141,4 +143,16 @@ final class AppModel: ObservableObject {
             self?.update = state
         }
     }
+
+    func dismissChangelog() {
+        progress.seenCommit = AppConfig.commit
+        showChangelog = false
+    }
+}
+
+func sameBuild(_ a: String?, _ b: String?) -> Bool {
+    guard let a, let b, !a.isEmpty, !b.isEmpty else { return false }
+    if a.caseInsensitiveCompare(b) == .orderedSame { return true }
+    let n = min(a.count, b.count)
+    return n >= 7 && a.prefix(n).caseInsensitiveCompare(b.prefix(n)) == .orderedSame
 }

@@ -32,6 +32,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         private set
     var update by mutableStateOf(UpdateState())
         private set
+    var showChangelog by mutableStateOf(shouldShowChangelog())
+        private set
 
     private val stack = mutableStateListOf<Route>(Route.Subjects)
     val route: Route get() = stack.last()
@@ -146,4 +148,21 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun installUpdate() {
         updater.install { update = it }
     }
+
+    fun dismissChangelog() {
+        progress.seenCommit = BuildConfig.COMMIT
+        showChangelog = false
+    }
+
+    private fun shouldShowChangelog(): Boolean {
+        if (content.changelog.isEmpty()) return false
+        return !sameBuild(BuildConfig.COMMIT, progress.seenCommit)
+    }
+}
+
+internal fun sameBuild(a: String?, b: String?): Boolean {
+    if (a.isNullOrEmpty() || b.isNullOrEmpty()) return false
+    if (a.equals(b, ignoreCase = true)) return true
+    val n = minOf(a.length, b.length)
+    return n >= 7 && a.regionMatches(0, b, 0, n, ignoreCase = true)
 }
