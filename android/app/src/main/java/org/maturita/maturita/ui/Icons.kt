@@ -8,6 +8,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
@@ -53,14 +54,36 @@ fun StatsIcon(color: Color, iconSize: Dp = 18.dp) {
 @Composable
 fun SettingsIcon(color: Color, iconSize: Dp = 18.dp) {
     DrawnIcon(iconSize) {
-        val c = Offset(size.width / 2, size.height / 2)
-        drawCircle(color, size.minDimension * 0.16f, c, style = Stroke(size.minDimension * 0.1f))
-        for (i in 0 until 6) {
-            val a = i * Math.PI / 3.0
-            val x = (c.x + kotlin.math.cos(a) * size.minDimension * 0.34).toFloat()
-            val y = (c.y + kotlin.math.sin(a) * size.minDimension * 0.34).toFloat()
-            drawCircle(color, size.minDimension * 0.07f, Offset(x, y))
+        val cx = size.width / 2f
+        val cy = size.height / 2f
+        val s = size.minDimension
+        val rOuter = s * 0.48f
+        val rInner = s * 0.34f
+        val rHole = s * 0.16f
+        val teeth = 8
+        val toothHalf = (Math.PI / teeth).toFloat()
+        val gear = Path().apply {
+            fillType = PathFillType.EvenOdd
+            for (i in 0 until teeth) {
+                val a = (-Math.PI / 2.0 + 2.0 * Math.PI * i / teeth).toFloat()
+                val a0 = a - toothHalf * 0.55f
+                val a1 = a - toothHalf * 0.28f
+                val a2 = a + toothHalf * 0.28f
+                val a3 = a + toothHalf * 0.55f
+                val p0 = Offset(cx + kotlin.math.cos(a0) * rInner, cy + kotlin.math.sin(a0) * rInner)
+                if (i == 0) moveTo(p0.x, p0.y) else lineTo(p0.x, p0.y)
+                lineTo(cx + kotlin.math.cos(a1) * rOuter, cy + kotlin.math.sin(a1) * rOuter)
+                lineTo(cx + kotlin.math.cos(a2) * rOuter, cy + kotlin.math.sin(a2) * rOuter)
+                lineTo(cx + kotlin.math.cos(a3) * rInner, cy + kotlin.math.sin(a3) * rInner)
+            }
+            close()
+            addOval(
+                androidx.compose.ui.geometry.Rect(
+                    cx - rHole, cy - rHole, cx + rHole, cy + rHole,
+                ),
+            )
         }
+        drawPath(gear, color)
     }
 }
 
