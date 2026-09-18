@@ -8,8 +8,76 @@
 
 --- 2026-09-18
 cs: Po aktualizaci se na hlavní stránce ukáže, co je nového
-cs: Android updater teď nainstaluje podepsané APK ze stejného klíče
-cs: iOS se otevírá z Maturita.xcworkspace a běží nativně na iOS 26
+cs: Android aplikace se stejnými cvičeními a funkčním updaterem
+cs: iOS aplikace nativně na iOS 26 (Liquid Glass) z Maturita.xcworkspace
 en: After an update the home screen shows what is new
-en: The Android updater now installs a signed APK from a stable key
-en: iOS opens from Maturita.xcworkspace and runs natively on iOS 26
+en: Android app with the same exercises and a working updater
+en: Native iOS 26 app (Liquid Glass) from Maturita.xcworkspace
+
+--- 2026-09-17
+cs: Vestavěný updater a instalátory, které stáhnou nejnovější build
+cs: Vyhledávání předmětů, lekcí a cvičení
+cs: Nový vzhled rozhraní a publikování do větve builds
+en: Built-in updater and installers that fetch the newest build
+en: Search for subjects, lessons and exercises
+en: A new interface look and publishing to the builds branch
+
+--- 2026-09-16
+cs: Samostatné balíčky pro Linux, macOS a Windows
+en: Self-contained packages for Linux, macOS and Windows
+
+--- 2026-09-15
+cs: Cvičení z české mluvnice
+cs: Ikona aplikace na macOS, Windows i Linuxu
+en: Czech grammar exercises
+en: App icon on macOS, Windows and Linux
+
+--- 2026-09-14
+cs: Česká literatura: 1984 a Spalovač mrtvol
+cs: Sítě: ročníky 1–4 a jednotky až po Wi-Fi
+cs: Slovní zásoba pro Deutsch jednotky 2 a 3
+en: Czech literature: 1984 and The Cremator
+en: Networks: years 1–4 and units through Wi-Fi
+en: Vocabulary for Deutsch units 2 and 3
+
+--- 2026-09-11
+cs: Technické vybavení: von Neumann, historie počítačů, bity a bajty
+cs: Deset jednotek sítí s kvízy
+cs: Slovní zásoba v Deutsch jednotce 1
+en: Hardware: von Neumann, computer history, bits and bytes
+en: Ten network units with quizzes
+en: Vocabulary in Deutsch unit 1
+
+--- 2026-09-10
+cs: Sestavení na Windows
+en: Windows build support
+
+--- 2026-09-09
+cs: Otevřený předmět sítí
+cs: Statistiky postupu po jednotkách
+en: Networks subject unlocked
+en: Progress statistics by unit
+
+--- 2026-09-08
+cs: Deutsch jednotka 3 a vylepšený hangman
+en: Deutsch unit 3 and a better hangman
+
+--- 2026-09-07
+cs: Z němčiny na více předmětů
+cs: Deutsch jednotka 2
+cs: Témata, světlý režim a čeština / angličtina
+en: From German-only to multiple subjects
+en: Deutsch unit 2
+en: Themes, light mode and Czech / English
+
+--- 2026-09-06
+cs: Cesta cvičení a překlady po kontrole
+en: Exercise path and translations after checking
+
+--- 2026-09-05
+cs: Cvičení v Deutsch jednotce 1
+en: Exercises in Deutsch unit 1
+
+--- 2026-09-03
+cs: První verze maturita.c
+en: First version of maturita.c
