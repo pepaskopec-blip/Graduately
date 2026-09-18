@@ -40,3 +40,6 @@ ios/DerivedData/
 ios/build/
 ios/Payload/
 ios/**/xcuserdata/
+
+# Xcode workspace user state
+*.xcworkspace/xcuserdata/

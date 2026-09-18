@@ -169,13 +169,15 @@ jednou odinstalujte a nainstalujte znovu.
 iOS ze zdroje (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
-open ios/Maturita.xcodeproj
+open Maturita.xcworkspace          # v kořeni repozitáře
 # Simulátor: vyber iPhone a Run, nic dalšího není potřeba (obsah se
 # vytáhne z C zdrojů při buildu). Na iPhone: v Signing vyber svůj Team.
 # nebo: make ios   # unsigned IPA v dist-ios/maturita-ios.ipa
 ```
 
-Projekt musí zůstat v `ios/` uvnitř repozitáře – build čte `../src` a `../scripts`.
+Workspace odkazuje na `ios/Maturita.xcodeproj`. Projekt nepřesouvejte – build
+čte `../src` a `../scripts` a v kořeni by `Maturita/` kolidovalo se
+zkompilovaným binárem `maturita`.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -345,12 +347,14 @@ signature – uninstall once and install again.
 iOS from source (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
-open ios/Maturita.xcodeproj
+open Maturita.xcworkspace          # at the repo root
 # Simulator: pick an iPhone and Run, nothing else needed (content is
 # extracted from the C sources during the build). Device: pick your Team.
 # or: make ios   # unsigned IPA at dist-ios/maturita-ios.ipa
 ```
 
-Keep the project inside `ios/` in the checkout – the build reads `../src` and `../scripts`.
+The workspace points at `ios/Maturita.xcodeproj`. Do not move the project –
+the build reads `../src` and `../scripts`, and at the root `Maturita/` would
+collide with the compiled `maturita` binary.
 
 License: [GPL-3.0](LICENSE).
