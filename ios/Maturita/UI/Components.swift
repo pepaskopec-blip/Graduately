@@ -41,98 +41,33 @@ struct FlowLayout: Layout {
 
 struct PrimaryButton: View {
     let label: String
-    let palette: Palette
     var action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(label)
-                .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(palette.onAccent)
-                .padding(.horizontal, 22)
-                .padding(.vertical, 12)
-                .background(palette.accent, in: Capsule())
-        }
-        .buttonStyle(.plain)
+        Button(label, action: action)
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
     }
 }
 
 struct PillButton: View {
     let label: String
-    let palette: Palette
     var action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(label)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(palette.text)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(palette.text.opacity(0.06), in: Capsule())
-        }
-        .buttonStyle(.plain)
+        Button(label, action: action)
+            .buttonStyle(.bordered)
     }
 }
 
-struct IconHit<Content: View>: View {
-    var action: () -> Void
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        Button(action: action) {
-            content()
-                .frame(width: 40, height: 40)
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-struct PageTop: View {
-    @ObservedObject var vm: AppModel
-    var back: () -> Void
-    let title: String
-    var subtitle: String?
-
-    var body: some View {
-        let p = vm.palette
-        VStack(spacing: 6) {
-            ZStack {
-                Text(title)
-                    .font(.system(size: 22, weight: .medium))
-                    .foregroundStyle(p.text)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 48)
-                HStack {
-                    IconHit(action: back) { BackIcon(color: p.text) }
-                    Spacer()
-                }
-            }
-            if let subtitle, !subtitle.isEmpty {
-                Text(subtitle)
-                    .font(.system(size: 14))
-                    .foregroundStyle(p.subtext)
-                    .multilineTextAlignment(.center)
-            }
-        }
-        .padding(.top, 4)
-        .padding(.bottom, 14)
-    }
-}
-
-struct CardBox<Content: View>: View {
-    let palette: Palette
+struct GlassCard<Content: View>: View {
     @ViewBuilder var content: () -> Content
 
     var body: some View {
         content()
-            .padding(20)
+            .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(palette.mantle, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(palette.text.opacity(0.07), lineWidth: 1)
-            )
+            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 }
 
@@ -144,9 +79,8 @@ struct FeedbackLine: View {
     var body: some View {
         if !text.isEmpty {
             Text(text)
-                .font(.system(size: 15, weight: .semibold))
+                .font(.subheadline.weight(.semibold))
                 .foregroundStyle(kind == "ok" ? palette.success : kind == "warn" ? palette.warning : palette.error)
-                .padding(.top, 8)
         }
     }
 }
@@ -159,92 +93,72 @@ struct Meaning: View {
     var body: some View {
         if visible && !text.isEmpty {
             Text(text)
-                .font(.system(size: 13))
-                .foregroundStyle(palette.subtext)
-                .padding(.bottom, 8)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .padding(.bottom, 4)
         }
     }
 }
 
 struct WordField: View {
     @Binding var value: String
-    let palette: Palette
     var placeholder: String
     var mark: Bool?
+    var palette: Palette?
 
     var body: some View {
-        let border: Color = {
-            if mark == true { return palette.success }
-            if mark == false { return palette.error }
-            return palette.text.opacity(0.12)
-        }()
-        ZStack(alignment: .leading) {
-            if value.isEmpty {
-                Text(placeholder).foregroundStyle(palette.overlay).font(.system(size: 15))
-            }
-            TextField("", text: $value)
-                .font(.system(size: 15))
-                .foregroundStyle(palette.text)
-                .tint(palette.accent)
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
-        .background(palette.surface0, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(border, lineWidth: 1))
+        TextField(placeholder, text: $value)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .padding(12)
+            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(border, lineWidth: mark == nil ? 0 : 1.5)
+            )
+    }
+
+    private var border: Color {
+        if mark == true { return palette?.success ?? .green }
+        if mark == false { return palette?.error ?? .red }
+        return .clear
     }
 }
 
 struct SegChip: View {
     let label: String
     let selected: Bool
-    let palette: Palette
     var action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(label)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(palette.text)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(selected ? palette.mantle : Color.clear, in: Capsule())
-        }
-        .buttonStyle(.plain)
+        Button(label, action: action)
+            .buttonStyle(.bordered)
+            .tint(selected ? .accentColor : .secondary)
     }
 }
 
 struct Hint: View {
     let text: String
-    let palette: Palette
     var body: some View {
-        Text(text).font(.system(size: 13)).foregroundStyle(palette.subtext).padding(.bottom, 8)
+        Text(text).font(.footnote).foregroundStyle(.secondary).padding(.bottom, 6)
     }
 }
 
 struct Prompt: View {
     let text: String
-    let palette: Palette
     var body: some View {
-        Text(text).font(.system(size: 16, weight: .medium)).foregroundStyle(palette.text)
+        Text(text).font(.body.weight(.medium))
     }
 }
 
 struct WordChip: View {
     let text: String
-    let palette: Palette
     var action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(text)
-                .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(palette.text)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(palette.mantle, in: Capsule())
-                .overlay(Capsule().stroke(palette.text.opacity(0.1), lineWidth: 1))
-        }
-        .buttonStyle(.plain)
+        Button(text, action: action)
+            .buttonStyle(.bordered)
+            .controlSize(.small)
     }
 }
 
@@ -252,25 +166,44 @@ struct OptionChip: View {
     let text: String
     let selected: Bool
     let mark: Bool?
-    let palette: Palette
     var action: () -> Void
 
     var body: some View {
-        let border: Color = {
-            if mark == true { return palette.success }
-            if mark == false { return palette.error }
-            return selected ? palette.accent : palette.text.opacity(0.1)
-        }()
         Button(action: action) {
-            Text(text)
-                .font(.system(size: 15))
-                .foregroundStyle(palette.text)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(12)
-                .background(selected ? palette.surface1 : palette.mantle, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(border, lineWidth: 1))
+            HStack {
+                Text(text).frame(maxWidth: .infinity, alignment: .leading)
+                if selected { Image(systemName: "checkmark") }
+            }
         }
-        .buttonStyle(.plain)
-        .padding(.bottom, 6)
+        .buttonStyle(.bordered)
+        .tint(tint)
+        .padding(.bottom, 4)
+    }
+
+    private var tint: Color {
+        if mark == true { return .green }
+        if mark == false { return .red }
+        return selected ? .accentColor : .secondary
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func navSubtitle(_ text: String?) -> some View {
+        if let text, !text.isEmpty {
+            navigationSubtitle(text)
+        } else {
+            self
+        }
+    }
+}
+
+func subjectSymbol(_ icon: String) -> String {
+    switch icon {
+    case "de": return "character.book.closed.fill"
+    case "wifi": return "wifi"
+    case "chip": return "cpu"
+    case "cz": return "text.book.closed.fill"
+    default: return "lock.fill"
     }
 }

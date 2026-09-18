@@ -1,197 +1,117 @@
 import SwiftUI
 
-struct WelcomeScreen: View {
+struct PracticeHome: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("maturita.c")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(p.text)
-                Text("sestavení \(AppConfig.versionName) · \(String(AppConfig.commit.prefix(7)))")
-                    .font(.system(size: 12))
-                    .foregroundStyle(p.overlay)
-                    .padding(.bottom, 12)
-                HStack(alignment: .center, spacing: 12) {
-                    VStack(alignment: .leading, spacing: 12) {
+        let sum = summarize(vm.content, vm.progress)
+        let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
+        List {
+            Section {
+                GlassCard {
+                    VStack(alignment: .leading, spacing: 10) {
                         Text(vm.tr("welcome_title"))
-                            .font(.system(size: 32, weight: .medium))
-                            .foregroundStyle(p.text)
+                            .font(.title.bold())
                         Text(vm.tr("welcome_body_ios"))
-                            .font(.system(size: 16))
-                            .foregroundStyle(p.subtext)
-                        PrimaryButton(label: vm.tr("continue"), palette: p) { vm.go(.subjects) }
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                        ProgressView(value: pct)
+                        Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
-                    Spacer(minLength: 0)
-                    VStack {
-                        Text(vm.tr("welcome_stat_value"))
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(p.text)
-                        Text(vm.tr("welcome_stat_label"))
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(p.subtext)
-                            .multilineTextAlignment(.center)
-                    }
-                    .frame(width: 108, height: 108)
-                    .background(p.mantle, in: Circle())
-                    .overlay(Circle().stroke(p.text.opacity(0.08), lineWidth: 1))
                 }
-                FeatureCard(vm: vm, t: "welcome_feat1_title", b: "welcome_feat1_body", l: "welcome_feat1_link")
-                    .padding(.top, 28)
-                FeatureCard(vm: vm, t: "welcome_feat2_title", b: "welcome_feat2_body", l: "welcome_feat2_link")
-                    .padding(.top, 12)
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
-        }
-    }
-}
 
-private struct FeatureCard: View {
-    @ObservedObject var vm: AppModel
-    let t, b, l: String
-
-    var body: some View {
-        let p = vm.palette
-        CardBox(palette: p) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(vm.tr(t)).font(.system(size: 18, weight: .bold)).foregroundStyle(p.text)
-                Text(vm.tr(b)).font(.system(size: 15)).foregroundStyle(p.subtext)
-                PillButton(label: vm.tr(l), palette: p) { vm.go(.subjects) }
-                    .padding(.top, 4)
-            }
-        }
-    }
-}
-
-struct SubjectsScreen: View {
-    @ObservedObject var vm: AppModel
-
-    var body: some View {
-        let p = vm.palette
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("subjects_title"), subtitle: vm.tr("subjects_sub"))
-                .padding(.horizontal, 16)
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(Array(stride(from: 0, to: vm.content.subjects.count, by: 2)), id: \.self) { i in
-                        HStack(spacing: 12) {
-                            subjectTile(vm.content.subjects[i], p)
-                            if i + 1 < vm.content.subjects.count {
-                                subjectTile(vm.content.subjects[i + 1], p)
-                            } else {
-                                Color.clear.frame(maxWidth: .infinity).frame(height: 132)
-                            }
+            Section(vm.tr("subjects_title")) {
+                ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
+                    let open = s.bool("open")
+                    let dest = s.strOrNull("target").flatMap(routeFromPage)
+                    if open, let dest, dest != .subjects, dest != .welcome {
+                        NavigationLink(value: dest) {
+                            subjectLabel(s)
                         }
+                    } else {
+                        subjectLabel(s)
+                            .foregroundStyle(.secondary)
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)
             }
         }
+        .navigationTitle("Maturita")
+        .navigationBarTitleDisplayMode(.large)
     }
 
-    private func subjectTile(_ s: J, _ p: Palette) -> some View {
-        let open = s.bool("open")
-        return Button {
-            if open { vm.goPage(s.str("target")) }
-        } label: {
-            VStack(spacing: 10) {
-                switch s.str("icon") {
-                case "de": GermanFlag(size: 44)
-                case "wifi": WifiIcon(color: p.text, size: 36)
-                case "chip": ChipIcon(color: p.text, size: 36)
-                case "cz": CzechFlag(size: 44)
-                default: LockIcon(color: p.overlay, size: 22)
-                }
+    private func subjectLabel(_ s: J) -> some View {
+        Label {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(vm.tr(s.str("key")))
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(p.text)
-                    .multilineTextAlignment(.center)
+                if !s.bool("open") {
+                    Text(vm.tr("stats_locked")).font(.caption).foregroundStyle(.secondary)
+                }
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 132)
-            .background(p.mantle, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(p.text.opacity(open ? 0.08 : 0.04), lineWidth: 1)
-            )
-            .opacity(open ? 1 : 0.48)
+        } icon: {
+            Image(systemName: subjectSymbol(s.str("icon")))
         }
-        .buttonStyle(.plain)
-        .disabled(!open)
     }
 }
 
-struct SettingsSheet: View {
+struct SettingsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(vm.tr("settings_title"))
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundStyle(p.text)
-                    Spacer()
-                    PillButton(label: vm.tr("back"), palette: p) { vm.settingsOpen = false }
+        Form {
+            Section(vm.tr("mode")) {
+                Picker(vm.tr("mode"), selection: modeBinding) {
+                    Text(vm.tr("mode_dark")).tag(ColorMode.dark)
+                    Text(vm.tr("mode_light")).tag(ColorMode.light)
                 }
-                Text(vm.tr("mode")).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext).padding(.top, 8)
-                HStack(spacing: 4) {
-                    SegChip(label: vm.tr("mode_dark"), selected: vm.mode == .dark, palette: p) { vm.applyMode(.dark) }
-                    SegChip(label: vm.tr("mode_light"), selected: vm.mode == .light, palette: p) { vm.applyMode(.light) }
-                }
-                .padding(3)
-                .background(p.surface1, in: Capsule())
-                Text(vm.tr("theme")).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext).padding(.top, 8)
-                ForEach(Array(themeNames.enumerated()), id: \.offset) { i, name in
-                    if let id = ThemeId(rawValue: i) {
-                        let sw = themePalette(id, vm.mode)
-                        let sel = vm.themeId == id
-                        Button { vm.setTheme(id) } label: {
-                            HStack(spacing: 10) {
-                                ZStack {
-                                    Circle().fill(sw.base)
-                                    Circle().fill(sw.accent).frame(width: 10, height: 10).offset(x: -8)
-                                    Circle().fill(sw.accent3).frame(width: 10, height: 10)
-                                    Circle().fill(sw.success).frame(width: 10, height: 10).offset(x: 8)
-                                    if sel { Circle().stroke(p.accent, lineWidth: 2.2) }
-                                }
-                                .frame(width: 36, height: 36)
-                                Text(name).font(.system(size: 16, weight: .medium)).foregroundStyle(p.text)
-                                Spacer()
-                            }
-                            .padding(10)
-                            .background(sel ? p.surface1 : p.surface0, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-                Text(vm.tr("language")).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext).padding(.top, 8)
-                HStack(spacing: 4) {
-                    SegChip(label: "Čeština", selected: vm.lang == .cs, palette: p) { vm.applyLang(.cs) }
-                    SegChip(label: "English", selected: vm.lang == .en, palette: p) { vm.applyLang(.en) }
-                }
-                .padding(3)
-                .background(p.surface1, in: Capsule())
-                Text(vm.tr("updates")).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext).padding(.top, 8)
-                Text(updateText)
-                    .font(.system(size: 14))
-                    .foregroundStyle(p.subtext)
-                HStack(spacing: 8) {
-                    PillButton(label: vm.tr("update_check"), palette: p) { vm.checkUpdate(true) }
-                    if vm.update.canInstall {
-                        PrimaryButton(label: vm.tr("update_install"), palette: p) { vm.installUpdate() }
-                    }
-                }
-                .padding(.bottom, 24)
+                .pickerStyle(.segmented)
             }
-            .padding(20)
+            Section(vm.tr("theme")) {
+                ForEach(Array(ThemeId.allCases), id: \.self) { id in
+                    Button {
+                        vm.setTheme(id)
+                    } label: {
+                        HStack {
+                            Circle().fill(themePalette(id, vm.mode).accent).frame(width: 14, height: 14)
+                            Text(themeNames[id.rawValue])
+                            Spacer()
+                            if vm.themeId == id {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            }
+            Section(vm.tr("language")) {
+                Picker(vm.tr("language"), selection: langBinding) {
+                    Text("Čeština").tag(UiLang.cs)
+                    Text("English").tag(UiLang.en)
+                }
+                .pickerStyle(.segmented)
+            }
+            Section(vm.tr("updates")) {
+                Text(updateText).foregroundStyle(.secondary)
+                Button(vm.tr("update_check")) { vm.checkUpdate(true) }
+                if vm.update.canInstall {
+                    Button(vm.tr("update_install")) { vm.installUpdate() }
+                }
+                LabeledContent("Build", value: "\(AppConfig.versionName) · \(String(AppConfig.commit.prefix(7)))")
+            }
         }
-        .background(p.base)
+        .navigationTitle(vm.tr("settings_title"))
+    }
+
+    private var modeBinding: Binding<ColorMode> {
+        Binding(get: { vm.mode }, set: { vm.applyMode($0) })
+    }
+
+    private var langBinding: Binding<UiLang> {
+        Binding(get: { vm.lang }, set: { vm.applyLang($0) })
     }
 
     private var updateText: String {
@@ -206,70 +126,44 @@ struct StatsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
         let sum = summarize(vm.content, vm.progress)
-        let pct = sum.totalEx == 0 ? 0 : (100 * sum.doneEx / sum.totalEx)
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("stats_title"), subtitle: vm.tr("stats_sub"))
-                .padding(.horizontal, 16)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 10) {
-                        metric(p, vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                        metric(p, vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", pct))
-                        metric(p, vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
-                    }
-                    ProgressBar(fraction: CGFloat(pct) / 100, palette: p, height: 8)
-                    Text(vm.tr("stats_section"))
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(p.subtext)
-                        .padding(.top, 10)
-                    ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
-                        let open = s.bool("open")
-                        let part = subjectSum(vm, s)
-                        CardBox(palette: p) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(vm.tr(s.str("key"))).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                                Text(open ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
-                                    .font(.system(size: 13)).foregroundStyle(p.subtext)
-                                if open && part.totalEx > 0 {
-                                    ProgressBar(fraction: CGFloat(part.doneEx) / CGFloat(part.totalEx), palette: p, height: 6)
-                                        .padding(.top, 4)
-                                }
-                            }
-                        }
-                        .opacity(open ? 1 : 0.55)
-                    }
+        let pct = sum.totalEx == 0 ? 0.0 : Double(sum.doneEx) / Double(sum.totalEx)
+        List {
+            Section {
+                HStack {
+                    stat(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                    stat(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
+                    stat(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)
+                .listRowBackground(Color.clear)
+                ProgressView(value: pct)
+            }
+            Section(vm.tr("stats_section")) {
+                ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
+                    let open = s.bool("open")
+                    let part = subjectSum(vm, s)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(vm.tr(s.str("key")))
+                        Text(open ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        if open && part.totalEx > 0 {
+                            ProgressView(value: Double(part.doneEx) / Double(part.totalEx))
+                        }
+                    }
+                    .opacity(open ? 1 : 0.5)
+                }
             }
         }
+        .navigationTitle(vm.tr("stats_title"))
     }
 
-    private func metric(_ p: Palette, _ label: String, _ value: String) -> some View {
-        CardBox(palette: p) {
-            VStack(alignment: .leading) {
-                Text(label).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext)
-                Text(value).font(.system(size: 22, weight: .bold)).foregroundStyle(p.text)
-            }
+    private func stat(_ label: String, _ value: String) -> some View {
+        VStack(alignment: .leading) {
+            Text(label).font(.caption).foregroundStyle(.secondary)
+            Text(value).font(.title3.bold())
         }
-    }
-}
-
-struct ProgressBar: View {
-    let fraction: CGFloat
-    let palette: Palette
-    var height: CGFloat = 8
-
-    var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule().fill(palette.surface1)
-                Capsule().fill(palette.accent).frame(width: geo.size.width * min(max(fraction, 0), 1))
-            }
-        }
-        .frame(height: height)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -297,61 +191,37 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
     return sum
 }
 
-struct SearchOverlay: View {
+struct SearchScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
         let q = normalizeAnswer(vm.searchQuery)
-        let hits = buildSearch(vm).filter { q.isEmpty || normalizeAnswer($0.hay).contains(q) }.prefix(24)
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                ZStack(alignment: .leading) {
-                    if vm.searchQuery.isEmpty {
-                        Text(vm.tr("search_placeholder")).foregroundStyle(p.overlay)
-                    }
-                    TextField("", text: $vm.searchQuery)
-                        .foregroundStyle(p.text)
-                        .tint(p.accent)
-                }
-                .padding(14)
-                .background(p.mantle, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                PillButton(label: vm.tr("back"), palette: p) { vm.searchOpen = false }
-            }
+        let hits = buildSearch(vm).filter { q.isEmpty || normalizeAnswer($0.hay).contains(q) }
+        List {
             if hits.isEmpty {
-                Text(q.isEmpty ? vm.tr("search_hint") : vm.tr("search_empty")).foregroundStyle(p.subtext)
+                ContentUnavailableView.search
             } else {
-                ScrollView {
-                    VStack(spacing: 8) {
-                        ForEach(Array(hits), id: \.target) { hit in
-                            Button {
-                                if !hit.locked {
-                                    vm.goPage(hit.target)
-                                    vm.searchOpen = false
-                                }
-                            } label: {
-                                CardBox(palette: p) {
-                                    VStack(alignment: .leading) {
-                                        Text(hit.title).font(.system(size: 16, weight: .semibold)).foregroundStyle(p.text)
-                                        Text(hit.sub).font(.system(size: 13)).foregroundStyle(p.subtext)
-                                    }
-                                }
-                            }
-                            .buttonStyle(.plain)
-                            .opacity(hit.locked ? 0.5 : 1)
+                ForEach(hits) { hit in
+                    Button {
+                        if !hit.locked { vm.openFromSearch(hit.target) }
+                    } label: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(hit.title)
+                            Text(hit.sub).font(.caption).foregroundStyle(.secondary)
                         }
                     }
+                    .disabled(hit.locked)
+                    .foregroundStyle(hit.locked ? .secondary : .primary)
                 }
             }
-            Spacer(minLength: 0)
         }
-        .padding(16)
-        .background(p.base.opacity(0.96))
+        .navigationTitle(vm.tr("search_placeholder"))
+        .searchable(text: $vm.searchQuery, prompt: vm.tr("search_placeholder"))
     }
 }
 
 private struct Hit: Identifiable {
-    var id: String { target + title }
+    var id: String { target + "|" + title }
     let title: String
     let sub: String
     let target: String
@@ -400,31 +270,27 @@ struct RoadmapScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let current = vm.content.german.firstIndex { u in
-            u.bool("unlocked") && u.strs("names").indices.contains { !vm.progress.germanDone(u.int("id"), $0 + 1) }
+        List {
+            ForEach(Array(vm.content.german.enumerated()), id: \.offset) { _, u in
+                let unlocked = u.bool("unlocked")
+                let names = u.strs("names")
+                let done = unlocked && !names.isEmpty && names.indices.allSatisfy { vm.progress.germanDone(u.int("id"), $0 + 1) }
+                if unlocked {
+                    NavigationLink(value: Route.unitMap(u.int("id"))) {
+                        Label {
+                            Text(u.str("title"))
+                        } icon: {
+                            Image(systemName: done ? "checkmark.circle.fill" : "circle")
+                        }
+                    }
+                } else {
+                    Label(u.str("title"), systemImage: "lock.fill")
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("roadmap_title"), subtitle: vm.tr("roadmap_sub"))
-                .padding(.horizontal, 12)
-            PathMap(
-                nodes: vm.content.german.enumerated().map { i, u in
-                    let unlocked = u.bool("unlocked")
-                    let names = u.strs("names")
-                    let done = unlocked && !names.isEmpty && names.indices.allSatisfy { vm.progress.germanDone(u.int("id"), $0 + 1) }
-                    return MapNode(
-                        id: u.str("page"),
-                        label: u.str("title"),
-                        locked: !unlocked,
-                        done: done,
-                        current: i == current,
-                        finish: i == vm.content.german.count - 1,
-                        onClick: unlocked ? { vm.go(.unitMap(u.int("id"))) } : nil
-                    )
-                },
-                palette: vm.palette
-            )
-            .padding(.horizontal, 12)
-        }
+        .navigationTitle(vm.tr("roadmap_title"))
+        .navigationSubtitle(vm.tr("roadmap_sub"))
     }
 }
 
@@ -435,29 +301,24 @@ struct UnitMapScreen: View {
     var body: some View {
         if let u = vm.content.germanUnit(unitId) {
             let names = u.strs("names")
-            let next = names.indices.first { !vm.progress.germanDone(unitId, $0 + 1) }
-            VStack(spacing: 0) {
-                PageTop(vm: vm, back: { vm.back() }, title: u.str("title"), subtitle: vm.tr(u.str("sub")))
-                    .padding(.horizontal, 12)
-                PathMap(
-                    nodes: names.enumerated().map { i, name in
-                        MapNode(
-                            id: "e\(i + 1)",
-                            label: name,
-                            locked: false,
-                            done: vm.progress.germanDone(unitId, i + 1),
-                            current: i == next,
-                            onClick: { vm.go(.germanEx(unitId, i + 1)) }
-                        )
-                    },
-                    palette: vm.palette
-                )
-                .padding(.horizontal, 12)
+            List {
+                ForEach(names.indices, id: \.self) { i in
+                    NavigationLink(value: Route.germanEx(unitId, i + 1)) {
+                        Label {
+                            Text(names[i])
+                        } icon: {
+                            Image(systemName: vm.progress.germanDone(unitId, i + 1) ? "checkmark.circle.fill" : "circle")
+                        }
+                    }
+                }
                 if u.has("branch") {
-                    PrimaryButton(label: vm.tr("Vokabeltraining"), palette: vm.palette) { vm.go(.vocab(unitId)) }
-                        .padding(.bottom, 16)
+                    NavigationLink(value: Route.vocab(unitId)) {
+                        Label(vm.tr("Vokabeltraining"), systemImage: "character.book.closed")
+                    }
                 }
             }
+            .navigationTitle(u.str("title"))
+            .navigationSubtitle(vm.tr(u.str("sub")))
         }
     }
 }
@@ -466,97 +327,98 @@ struct NetYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("net_years_title"), subtitle: vm.tr("net_years_sub"))
-                .padding(.horizontal, 16)
-            ScrollView {
-                VStack(spacing: 12) {
-                    yearCard(vm.tr("net_year1"), vm.tr("net_sub"), true) { vm.go(.netMap) }
-                    ForEach(["net_year2", "net_year3", "net_year4"], id: \.self) { key in
-                        yearCard(vm.tr(key), vm.tr("net_year_locked_sub"), false) {}
-                    }
+        List {
+            NavigationLink(value: Route.netMap) {
+                VStack(alignment: .leading) {
+                    Text(vm.tr("net_year1"))
+                    Text(vm.tr("net_sub")).font(.caption).foregroundStyle(.secondary)
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 16)
             }
-        }
-    }
-
-    private func yearCard(_ title: String, _ sub: String, _ open: Bool, _ action: @escaping () -> Void) -> some View {
-        let p = vm.palette
-        return Button(action: action) {
-            CardBox(palette: p) {
-                HStack {
+            ForEach(["net_year2", "net_year3", "net_year4"], id: \.self) { key in
+                Label {
                     VStack(alignment: .leading) {
-                        Text(title).font(.system(size: 18, weight: .bold)).foregroundStyle(p.text)
-                        Text(sub).font(.system(size: 14)).foregroundStyle(p.subtext)
+                        Text(vm.tr(key))
+                        Text(vm.tr("net_year_locked_sub")).font(.caption)
                     }
-                    Spacer()
-                    if !open { LockIcon(color: p.overlay) }
+                } icon: {
+                    Image(systemName: "lock.fill")
                 }
+                .foregroundStyle(.secondary)
             }
         }
-        .buttonStyle(.plain)
-        .disabled(!open)
-        .opacity(open ? 1 : 0.48)
+        .navigationTitle(vm.tr("net_years_title"))
+        .navigationSubtitle(vm.tr("net_years_sub"))
     }
 }
 
-struct LessonMapScreen: View {
-    @ObservedObject var vm: AppModel
+struct LessonRow: Identifiable {
+    let id: String
     let title: String
-    let sub: String
-    let nodes: [MapNode]
+    let done: Bool
+    let destination: Route
+}
+
+struct LessonListScreen: View {
+    let title: String
+    let subtitle: String
+    let rows: [LessonRow]
 
     var body: some View {
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: title, subtitle: sub)
-                .padding(.horizontal, 12)
-            PathMap(nodes: nodes, palette: vm.palette)
-                .padding(.horizontal, 12)
+        List(rows) { row in
+            NavigationLink(value: row.destination) {
+                Label {
+                    Text(row.title)
+                } icon: {
+                    Image(systemName: row.done ? "checkmark.circle.fill" : "circle")
+                }
+            }
         }
+        .navigationTitle(title)
+        .navigationSubtitle(subtitle)
     }
 }
 
 struct SlidesScreen: View {
     @ObservedObject var vm: AppModel
     let title: String
-    let sub: String
+    let subtitle: String
     let slides: [J]
-    var onExercise: () -> Void
+    let next: Route
     @State private var idx = 0
 
     var body: some View {
-        let p = vm.palette
-        if let slide = slides.indices.contains(idx) ? slides[idx] : nil {
-            VStack(spacing: 0) {
-                PageTop(vm: vm, back: { vm.back() }, title: title, subtitle: sub)
-                    .padding(.horizontal, 16)
+        TabView(selection: $idx) {
+            ForEach(slides.indices, id: \.self) { i in
+                let slide = slides[i]
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(slide.str("kicker")).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext)
-                        Text(slide.str("title")).font(.system(size: 24, weight: .bold)).foregroundStyle(p.text)
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(slide.str("kicker"))
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        Text(slide.str("title")).font(.title2.bold())
                         if let tip = slide.strOrNull("tip") {
-                            CardBox(palette: p) { Text(tip).foregroundStyle(p.text) }
+                            GlassCard { Text(tip) }
                         }
                         ForEach(Array(slide.strs("lines").enumerated()), id: \.offset) { _, line in
-                            CardBox(palette: p) { Text(line).font(.system(size: 16)).foregroundStyle(p.text) }
+                            Text(line).padding(.vertical, 4)
                         }
                     }
-                    .padding(.horizontal, 16)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                HStack {
-                    if idx > 0 {
-                        PillButton(label: vm.tr("net_slide_prev"), palette: p) { idx -= 1 }
-                    }
-                    Spacer()
-                    if idx < slides.count - 1 {
-                        PrimaryButton(label: vm.tr("net_slide_next"), palette: p) { idx += 1 }
-                    } else {
-                        PrimaryButton(label: vm.tr("net_slide_start"), palette: p, action: onExercise)
-                    }
+                .tag(i)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .automatic))
+        .navigationTitle(title)
+        .navigationSubtitle(subtitle)
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                if idx < slides.count - 1 {
+                    Button(vm.tr("net_slide_next")) { idx += 1 }
+                } else {
+                    NavigationLink(vm.tr("net_slide_start"), value: next)
                 }
-                .padding(12)
             }
         }
     }
@@ -566,44 +428,18 @@ struct CzechMapScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
-        let items: [(String, String, Route?)] = [
-            ("L", vm.tr("Literatura"), nil),
-            ("M", vm.tr("Mluvnice"), .mluvnice),
-            ("Č", vm.tr("Maturitní četba"), .readingList),
-        ]
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("Český jazyk a literatura"), subtitle: vm.tr("czech_sub"))
-                .padding(.horizontal, 16)
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(items, id: \.0) { letter, name, route in
-                        Button {
-                            if let route { vm.go(route) }
-                        } label: {
-                            CardBox(palette: p) {
-                                HStack(spacing: 14) {
-                                    ZStack {
-                                        Circle().fill(route == nil ? p.lockedBg : p.accent).frame(width: 56, height: 56)
-                                        if route == nil {
-                                            LockIcon(color: p.overlay)
-                                        } else {
-                                            Text(letter).font(.system(size: 20, weight: .heavy)).foregroundStyle(p.onAccent)
-                                        }
-                                    }
-                                    Text(name).font(.system(size: 16, weight: .semibold)).foregroundStyle(p.text)
-                                    Spacer()
-                                }
-                            }
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(route == nil)
-                        .opacity(route == nil ? 0.48 : 1)
-                    }
-                }
-                .padding(.horizontal, 16)
+        List {
+            Label(vm.tr("Literatura"), systemImage: "lock.fill")
+                .foregroundStyle(.secondary)
+            NavigationLink(value: Route.mluvnice) {
+                Label(vm.tr("Mluvnice"), systemImage: "textformat")
+            }
+            NavigationLink(value: Route.readingList) {
+                Label(vm.tr("Maturitní četba"), systemImage: "books.vertical")
             }
         }
+        .navigationTitle(vm.tr("Český jazyk a literatura"))
+        .navigationSubtitle(vm.tr("czech_sub"))
     }
 }
 
@@ -611,31 +447,22 @@ struct BookListScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
-        VStack(spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"))
-                .padding(.horizontal, 16)
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(Array(vm.content.books.enumerated()), id: \.offset) { _, b in
-                        Button { vm.go(.book(b.str("id"))) } label: {
-                            CardBox(palette: p) {
-                                HStack(spacing: 12) {
-                                    BookIcon(color: p.text, size: 28)
-                                    VStack(alignment: .leading) {
-                                        Text(b.str("title")).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                                        Text(vm.tr(b.str("subKey"))).font(.system(size: 13)).foregroundStyle(p.subtext)
-                                    }
-                                    Spacer()
-                                }
-                            }
+        List {
+            ForEach(Array(vm.content.books.enumerated()), id: \.offset) { _, b in
+                NavigationLink(value: Route.book(b.str("id"))) {
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text(b.str("title"))
+                            Text(vm.tr(b.str("subKey"))).font(.caption).foregroundStyle(.secondary)
                         }
-                        .buttonStyle(.plain)
+                    } icon: {
+                        Image(systemName: "book.fill")
                     }
                 }
-                .padding(.horizontal, 16)
             }
         }
+        .navigationTitle(vm.tr("Maturitní četba"))
+        .navigationSubtitle(vm.tr("reading_sub"))
     }
 }
 
@@ -645,54 +472,37 @@ struct BookScreen: View {
 
     var body: some View {
         if let b = vm.content.book(id) {
-            let p = vm.palette
-            VStack(spacing: 0) {
-                PageTop(vm: vm, back: { vm.back() }, title: b.str("title"), subtitle: vm.tr(b.str("subKey")))
-                    .padding(.horizontal, 16)
-                ScrollView {
-                    VStack(spacing: 12) {
-                        Button { vm.go(.bookQuiz(id)) } label: {
-                            CardBox(palette: p) {
-                                HStack(spacing: 10) {
-                                    QuizIcon(color: p.text)
-                                    VStack(alignment: .leading) {
-                                        Text(vm.tr(b.str("quizTitle"))).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                                        Text(vm.tr(b.str("quizSub"))).font(.system(size: 13)).foregroundStyle(p.subtext)
-                                    }
-                                }
-                            }
+            List {
+                NavigationLink(value: Route.bookQuiz(id)) {
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text(vm.tr(b.str("quizTitle")))
+                            Text(vm.tr(b.str("quizSub"))).font(.caption).foregroundStyle(.secondary)
                         }
-                        .buttonStyle(.plain)
-                        Button { vm.go(.bookPlot(id)) } label: {
-                            CardBox(palette: p) {
-                                HStack(spacing: 10) {
-                                    OrderIcon(color: p.text)
-                                    VStack(alignment: .leading) {
-                                        Text(vm.tr(b.str("plotTitle"))).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                                        Text(vm.tr(b.str("plotSub"))).font(.system(size: 13)).foregroundStyle(p.subtext)
-                                    }
-                                }
-                            }
+                    } icon: {
+                        Image(systemName: "questionmark.circle")
+                    }
+                }
+                NavigationLink(value: Route.bookPlot(id)) {
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text(vm.tr(b.str("plotTitle")))
+                            Text(vm.tr(b.str("plotSub"))).font(.caption).foregroundStyle(.secondary)
                         }
-                        .buttonStyle(.plain)
-                        ForEach(Array(b.arr("notes").enumerated()), id: \.offset) { _, note in
-                            CardBox(palette: p) {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    HStack(spacing: 8) {
-                                        noteIcon(note.str("icon"), p.text)
-                                        Text(note.str("title")).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                                    }
-                                    ForEach(note.strs("lines"), id: \.self) { line in
-                                        Text("• \(line)").font(.system(size: 15)).foregroundStyle(p.text)
-                                    }
-                                }
-                            }
+                    } icon: {
+                        Image(systemName: "list.number")
+                    }
+                }
+                ForEach(Array(b.arr("notes").enumerated()), id: \.offset) { _, note in
+                    Section(note.str("title")) {
+                        ForEach(note.strs("lines"), id: \.self) { line in
+                            Text(line)
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 20)
                 }
             }
+            .navigationTitle(b.str("title"))
+            .navigationSubtitle(vm.tr(b.str("subKey")))
         }
     }
 }

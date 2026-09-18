@@ -88,7 +88,7 @@ struct ComboEx: View {
         } else if type == "fill" {
             let blanks = rows.reduce(0) { $0 + $1.answerList().count }
             ComboRows(vm: vm, title: title, sub: sub, pool: pool, n: blanks, onDone: onDone, revealMean: spec.bool("preMeaning")) { picks, expected, revealed in
-                if let sample = spec.strOrNull("sample") { Hint(text: sample, palette: vm.palette) }
+                if let sample = spec.strOrNull("sample") { Hint(text: sample) }
                 ForEach(Array(fillRows().enumerated()), id: \.offset) { _, block in
                     FlowLayout(spacing: 4) {
                         if let num = block.num {
@@ -114,7 +114,7 @@ struct ComboEx: View {
             }
         } else {
             ComboRows(vm: vm, title: title, sub: sub, pool: pool, n: rows.count, onDone: onDone, revealMean: spec.bool("preMeaning")) { picks, expected, revealed in
-                if let sample = spec.strOrNull("sample") { Hint(text: sample, palette: vm.palette) }
+                if let sample = spec.strOrNull("sample") { Hint(text: sample) }
                 ForEach(rows.indices, id: \.self) { i in
                     let r = rows[i]
                     let prefix: String = {
@@ -318,29 +318,17 @@ struct WordPicker: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(pool, id: \.self) { w in
-                        Button { onPick(w) } label: {
-                            Text(w)
-                                .font(.system(size: 16))
-                                .foregroundStyle(palette.text)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 12)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-                .padding(10)
+            List(Array(pool.enumerated()), id: \.offset) { _, w in
+                Button(w) { onPick(w) }
             }
-            .background(palette.base)
+            .navigationTitle("")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(role: .cancel) { onPick(nil) } label: { Text("Zavřít") }
+                    Button("Zavřít", role: .cancel) { onPick(nil) }
                 }
             }
         }
+        .presentationDetents([.medium, .large])
     }
 }
 
@@ -442,7 +430,7 @@ struct LettersEx: View {
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
             if rows.contains(where: { $0.strs("answers").contains { hasUmlaut($0) } }) {
-                Hint(text: vm.tr("hint_umlauts"), palette: p)
+                Hint(text: vm.tr("hint_umlauts"))
             }
             LettersRows(vm: vm, rows: rows, fields: $fields, revealed: revealed)
         }
@@ -470,9 +458,9 @@ private struct LettersRows: View {
                         case .field(let idx, let ans):
                             WordField(
                                 value: Binding(get: { idx < fields.count ? fields[idx] : "" }, set: { if idx < fields.count { fields[idx] = $0 } }),
-                                palette: p,
                                 placeholder: "",
-                                mark: revealed ? answerAccepts(normalizeAnswer(idx < fields.count ? fields[idx] : ""), ans) : nil
+                                mark: revealed ? answerAccepts(normalizeAnswer(idx < fields.count ? fields[idx] : ""), ans) : nil,
+                                palette: p
                             )
                             .frame(width: 72)
                         }
@@ -555,7 +543,7 @@ struct TableEx: View {
                 ForEach(persons.indices, id: \.self) { c in
                     let i = r * persons.count + c
                     Text(persons[c]).font(.system(size: 12)).foregroundStyle(p.subtext)
-                    WordField(value: Binding(get: { i < fields.count ? fields[i] : "" }, set: { if i < fields.count { fields[i] = $0 } }), palette: p, placeholder: "")
+                    WordField(value: Binding(get: { i < fields.count ? fields[i] : "" }, set: { if i < fields.count { fields[i] = $0 } }), placeholder: "", palette: p)
                 }
                 Spacer().frame(height: 8)
             }
@@ -589,10 +577,10 @@ struct RevealEx: View {
             fb = (vm.tr("feedback_ok"), "ok")
             onDone()
         }, feedback: fb.0, kind: fb.1) {
-            if let note = spec.strOrNull("note") { Hint(text: note, palette: p) }
+            if let note = spec.strOrNull("note") { Hint(text: note) }
             ForEach(items.indices, id: \.self) { i in
-                Prompt(text: items[i].str("prompt"), palette: p)
-                PillButton(label: vm.tr("show_sample"), palette: p) { shown[i].toggle() }
+                Prompt(text: items[i].str("prompt"))
+                PillButton(label: vm.tr("show_sample")) { shown[i].toggle() }
                     .padding(.vertical, 6)
                 if shown[i] { Meaning(text: items[i].str("solution"), palette: p, visible: true) }
                 Spacer().frame(height: 8)
@@ -671,7 +659,6 @@ private struct VlsmEx: View {
         let answers = vm.content.netAnswers
         let p = vm.palette
         VStack(alignment: .leading, spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: vm.tr("net_ex_title"), subtitle: nil)
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(tasks.indices, id: \.self) { ti in
@@ -680,7 +667,7 @@ private struct VlsmEx: View {
                         let infeasible = block.isEmpty || block.allSatisfy { $0.int("pfx") <= 0 }
                         Text(task.str("prompt")).foregroundStyle(p.text).padding(.vertical, 8)
                         if infeasible {
-                            Hint(text: vm.tr("net_infeasible"), palette: p)
+                            Hint(text: vm.tr("net_infeasible"))
                         } else {
                             ForEach(block.indices, id: \.self) { si in
                                 Text("Podsíť \(String(UnicodeScalar(65 + si)!))")
@@ -690,12 +677,12 @@ private struct VlsmEx: View {
                                     get: { rows[ti][si].pfx },
                                     set: { rows[ti][si].pfx = $0 }
                                 ), palette: p)
-                                WordField(value: Binding(get: { rows[ti][si].net }, set: { rows[ti][si].net = $0 }), palette: p, placeholder: "síť")
-                                WordField(value: Binding(get: { rows[ti][si].bc }, set: { rows[ti][si].bc = $0 }), palette: p, placeholder: "broadcast")
-                                WordField(value: Binding(get: { rows[ti][si].lo }, set: { rows[ti][si].lo = $0 }), palette: p, placeholder: "první uzel")
-                                WordField(value: Binding(get: { rows[ti][si].hi }, set: { rows[ti][si].hi = $0 }), palette: p, placeholder: "poslední uzel")
+                                WordField(value: Binding(get: { rows[ti][si].net }, set: { rows[ti][si].net = $0 }), placeholder: "síť", palette: p)
+                                WordField(value: Binding(get: { rows[ti][si].bc }, set: { rows[ti][si].bc = $0 }), placeholder: "broadcast", palette: p)
+                                WordField(value: Binding(get: { rows[ti][si].lo }, set: { rows[ti][si].lo = $0 }), placeholder: "první uzel", palette: p)
+                                WordField(value: Binding(get: { rows[ti][si].hi }, set: { rows[ti][si].hi = $0 }), placeholder: "poslední uzel", palette: p)
                             }
-                            PillButton(label: vm.tr("check"), palette: p) {
+                            PillButton(label: vm.tr("check")) {
                                 let ok = block.indices.allSatisfy { si in
                                     let a = block[si]
                                     let field = rows[ti][si]
@@ -715,7 +702,7 @@ private struct VlsmEx: View {
                             }
                             .padding(.vertical, 6)
                         }
-                        PillButton(label: vm.tr("net_solution"), palette: p) {
+                        PillButton(label: vm.tr("net_solution")) {
                             if !infeasible {
                                 for si in block.indices {
                                     rows[ti][si].pfx = "/\(block[si].int("pfx"))"
@@ -735,7 +722,9 @@ private struct VlsmEx: View {
             }
             FeedbackLine(text: fb.0, kind: fb.1, palette: p)
         }
-        .padding(.horizontal, 16)
+        .padding()
+        .navigationTitle(vm.tr("net_ex_title"))
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private func maybeFinish() {
@@ -783,12 +772,11 @@ struct LitQuizScreen: View {
             let p = vm.palette
             let kahoot = [p.accent, p.error, p.warning, p.success]
             VStack(alignment: .leading, spacing: 8) {
-                PageTop(vm: vm, back: { vm.back() }, title: vm.tr(book.str("quizTitle")), subtitle: vm.tr(book.str("quizSub")))
                 if finished {
                     Text(vm.tr("lit_finished")).font(.system(size: 22, weight: .bold)).foregroundStyle(p.text)
                     Text(vm.tr("lit_finished_text")).foregroundStyle(p.subtext)
                     Text(vm.fmt("lit_score_fmt", score, qs.count)).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                    PrimaryButton(label: vm.tr("lit_again"), palette: p) {
+                    PrimaryButton(label: vm.tr("lit_again")) {
                         idx = 0; score = 0; answered = false; finished = false
                     }
                 } else if idx < qs.count {
@@ -817,7 +805,7 @@ struct LitQuizScreen: View {
                     }
                     if answered {
                         Meaning(text: q.str("expl"), palette: p, visible: true)
-                        PrimaryButton(label: idx + 1 >= qs.count ? vm.tr("lit_show_result") : vm.tr("lit_next"), palette: p) {
+                        PrimaryButton(label: idx + 1 >= qs.count ? vm.tr("lit_show_result") : vm.tr("lit_next")) {
                             if idx + 1 >= qs.count {
                                 finished = true
                                 vm.markBookQuiz(id)
@@ -830,7 +818,10 @@ struct LitQuizScreen: View {
                 }
                 Spacer()
             }
-            .padding(16)
+            .padding()
+            .navigationTitle(vm.tr(book.str("quizTitle")))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationSubtitle(vm.tr(book.str("quizSub")))
         }
     }
 }

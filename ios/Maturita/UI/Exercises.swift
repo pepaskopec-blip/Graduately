@@ -12,16 +12,29 @@ struct ExerciseScaffold<Content: View>: View {
 
     var body: some View {
         let p = vm.palette
-        VStack(alignment: .leading, spacing: 0) {
-            PageTop(vm: vm, back: { vm.back() }, title: title, subtitle: sub)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) { content() }
-            }
-            FeedbackLine(text: feedback, kind: kind, palette: p)
-            PrimaryButton(label: action, palette: p, action: onAction)
-                .padding(.vertical, 12)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) { content() }
+                .padding()
         }
-        .padding(.horizontal, 16)
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .navSubtitle(sub)
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                Button(action, action: onAction)
+                    .buttonStyle(.borderedProminent)
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if !feedback.isEmpty {
+                FeedbackLine(text: feedback, kind: kind, palette: p)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .padding(.horizontal)
+                    .padding(.bottom, 4)
+            }
+        }
     }
 }
 
@@ -132,7 +145,7 @@ private struct ChoiceEx: View {
                 ForEach(Array(qs[i].strs("options").enumerated()), id: \.offset) { o, opt in
                     let sel = picks[i] == o
                     let mark: Bool? = revealed && sel ? picks[i] == qs[i].int("correct") : nil
-                    OptionChip(text: opt, selected: sel, mark: mark, palette: p) { picks[i] = o }
+                    OptionChip(text: opt, selected: sel, mark: mark) { picks[i] = o }
                 }
                 if revealed {
                     if i < meanings.count { Meaning(text: vm.tr(meanings[i]), palette: p, visible: true) }
@@ -182,12 +195,12 @@ private struct AssemblyEx: View {
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
             ForEach(items.indices, id: \.self) { i in
-                if let prompt = items[i].strOrNull("prompt") { Hint(text: prompt, palette: p) }
+                if let prompt = items[i].strOrNull("prompt") { Hint(text: prompt) }
                 FlowLayout {
                     if placed[i].isEmpty { Text("…").foregroundStyle(p.overlay) }
                     ForEach(placed[i], id: \.self) { idx in
                         if idx < items[i].strs("words").count {
-                            WordChip(text: items[i].strs("words")[idx], palette: p) {
+                            WordChip(text: items[i].strs("words")[idx]) {
                                 placed[i].removeAll { $0 == idx }
                                 pools[i].append(idx)
                             }
@@ -201,7 +214,7 @@ private struct AssemblyEx: View {
                 FlowLayout(spacing: 6) {
                     ForEach(pools[i], id: \.self) { idx in
                         if idx < items[i].strs("words").count {
-                            WordChip(text: items[i].strs("words")[idx], palette: p) {
+                            WordChip(text: items[i].strs("words")[idx]) {
                                 pools[i].removeAll { $0 == idx }
                                 placed[i].append(idx)
                             }
@@ -262,22 +275,22 @@ private struct TypedEx: View {
             else { fb = (vm.tr("feedback_retry"), "err") }
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
-            if let note = spec.strOrNull("note") { Hint(text: note, palette: p) }
-            if let sample = spec.strOrNull("sample") { Hint(text: sample, palette: p) }
-            if let bank = spec.strOrNull("bank") { Hint(text: "\(vm.tr("wordbank")) \(bank)", palette: p) }
-            if umlaut { Hint(text: vm.tr("hint_umlauts"), palette: p) }
+            if let note = spec.strOrNull("note") { Hint(text: note) }
+            if let sample = spec.strOrNull("sample") { Hint(text: sample) }
+            if let bank = spec.strOrNull("bank") { Hint(text: "\(vm.tr("wordbank")) \(bank)") }
+            if umlaut { Hint(text: vm.tr("hint_umlauts")) }
             ForEach(items.indices, id: \.self) { i in
                 let q = items[i]
-                Prompt(text: q.str("prompt"), palette: p)
+                Prompt(text: q.str("prompt"))
                 let answers = q.answerList()
                 let hints = q.strs("hints")
                 ForEach(fields[i].indices, id: \.self) { j in
                     let ans = j < answers.count ? answers[j] : ""
                     WordField(
                         value: Binding(get: { fields[i][j] }, set: { fields[i][j] = $0 }),
-                        palette: p,
                         placeholder: j < hints.count ? hints[j] : vm.tr("your_answer"),
-                        mark: revealed ? answerAccepts(normalizeAnswer(fields[i][j]), ans) : nil
+                        mark: revealed ? answerAccepts(normalizeAnswer(fields[i][j]), ans) : nil,
+                        palette: p
                     )
                     .padding(.bottom, 4)
                 }
@@ -322,12 +335,12 @@ private struct FreeEx: View {
             shown = shown.map { _ in true }
             onDone()
         }, feedback: fb.0, kind: fb.1) {
-            if let tip = spec.strOrNull("tip") { Hint(text: vm.tr(tip), palette: p) }
+            if let tip = spec.strOrNull("tip") { Hint(text: vm.tr(tip)) }
             ForEach(qs.indices, id: \.self) { i in
                 let q = qs[i]
-                Prompt(text: q.str("question").isEmpty ? q.str("stem") : q.str("question"), palette: p)
-                WordField(value: Binding(get: { values[i] }, set: { values[i] = $0 }), palette: p, placeholder: vm.tr("your_answer"))
-                PillButton(label: vm.tr("show_sample"), palette: p) { shown[i].toggle() }
+                Prompt(text: q.str("question").isEmpty ? q.str("stem") : q.str("question"))
+                WordField(value: Binding(get: { values[i] }, set: { values[i] = $0 }), placeholder: vm.tr("your_answer"), palette: p)
+                PillButton(label: vm.tr("show_sample")) { shown[i].toggle() }
                     .padding(.vertical, 6)
                 if shown[i] {
                     let sample = q.str("sample")
@@ -376,10 +389,10 @@ private struct AssignEx: View {
             else { fb = (vm.tr("feedback_retry"), "err") }
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
-            Hint(text: vm.tr("assign_hint"), palette: p)
+            Hint(text: vm.tr("assign_hint"))
             FlowLayout(spacing: 8) {
                 ForEach(groups.indices, id: \.self) { i in
-                    SegChip(label: groups[i], selected: active == i, palette: p) { active = i }
+                    SegChip(label: groups[i], selected: active == i) { active = i }
                 }
             }
             Text(vm.tr("wordbank")).font(.system(size: 12)).foregroundStyle(p.subtext).padding(.top, 10)
@@ -387,7 +400,7 @@ private struct AssignEx: View {
                 ForEach(items.indices, id: \.self) { i in
                     if loc[i] == -1 {
                         let label = [items[i].strOrNull("emoji"), items[i].str("label")].compactMap { $0 }.joined(separator: " ")
-                        WordChip(text: label, palette: p) { loc[i] = active }
+                        WordChip(text: label) { loc[i] = active }
                     }
                 }
             }
@@ -397,7 +410,7 @@ private struct AssignEx: View {
                     ForEach(items.indices, id: \.self) { i in
                         if loc[i] == g {
                             let label = [items[i].strOrNull("emoji"), items[i].str("label")].compactMap { $0 }.joined(separator: " ")
-                            WordChip(text: label, palette: p) { loc[i] = -1 }
+                            WordChip(text: label) { loc[i] = -1 }
                         }
                     }
                 }
@@ -439,9 +452,8 @@ private struct HangmanEx: View {
         let p = vm.palette
         let cur = word < words.count ? words[word].uppercased() : ""
         VStack(alignment: .leading, spacing: 8) {
-            PageTop(vm: vm, back: { vm.back() }, title: title, subtitle: sub)
-            Text(vm.fmt("hm_progress", word + 1, words.count)).foregroundStyle(p.subtext)
-            if word < tips.count { Hint(text: "\(vm.tr("hm_hint")): \(vm.tr(tips[word]))", palette: p) }
+            Text(vm.fmt("hm_progress", word + 1, words.count)).foregroundStyle(.secondary)
+            if word < tips.count { Hint(text: "\(vm.tr("hm_hint")): \(vm.tr(tips[word]))") }
             Canvas { ctx, size in
                 var gallows = Path()
                 gallows.move(to: CGPoint(x: 40, y: size.height - 10))
@@ -525,7 +537,7 @@ private struct HangmanEx: View {
             }
             FeedbackLine(text: fb.0, kind: fb.1, palette: p)
             if misses >= 6 && !finished {
-                PillButton(label: vm.tr("hm_retry"), palette: p) {
+                PillButton(label: vm.tr("hm_retry")) {
                     misses = 0
                     guessed = guessed.map { _ in false }
                     fb = ("", "")
@@ -533,7 +545,10 @@ private struct HangmanEx: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 16)
+        .padding()
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .navSubtitle(sub)
     }
 }
 
@@ -572,17 +587,16 @@ private struct VocabEx: View {
     var body: some View {
         let p = vm.palette
         VStack(alignment: .leading, spacing: 8) {
-            PageTop(vm: vm, back: { vm.back() }, title: title, subtitle: sub)
-            Text(vm.fmt("trans_progress", done, total)).foregroundStyle(p.subtext)
+            Text(vm.fmt("trans_progress", done, total)).foregroundStyle(.secondary)
             if cards.isEmpty {
                 Text(vm.tr("trans_done")).font(.system(size: 16, weight: .bold)).foregroundStyle(p.success)
             } else if index < cards.count {
                 let cur = cards[index]
-                Hint(text: cur.0, palette: p)
-                Prompt(text: cur.1, palette: p)
-                if hasUmlaut(cur.2) { Hint(text: vm.tr("hint_umlauts"), palette: p) }
-                WordField(value: $value, palette: p, placeholder: vm.tr("your_answer"))
-                PrimaryButton(label: vm.tr("check"), palette: p) {
+                Hint(text: cur.0)
+                Prompt(text: cur.1)
+                if hasUmlaut(cur.2) { Hint(text: vm.tr("hint_umlauts")) }
+                WordField(value: $value, placeholder: vm.tr("your_answer"), palette: p)
+                PrimaryButton(label: vm.tr("check")) {
                     let norm = normalizeAnswer(value)
                     if answerAccepts(norm, cur.2) {
                         done += 1
@@ -603,6 +617,9 @@ private struct VocabEx: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 16)
+        .padding()
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .navSubtitle(sub)
     }
 }

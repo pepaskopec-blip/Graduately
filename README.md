@@ -31,7 +31,7 @@ větve.
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
 | Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout maturita.C.html** a nainstalovat APK (neznámé zdroje) |
-| iOS (16+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat maturita.C.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
+| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat maturita.C.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -160,7 +160,7 @@ cd android
 
 nebo z kořene `make android`.
 
-iOS ze zdroje (Xcode 16, iOS 16+):
+iOS ze zdroje (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
 python3 scripts/extract-android-content.py
@@ -198,7 +198,7 @@ branch-named file.
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
 | Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout maturita.C.html**, then install the APK (unknown sources) |
-| iOS (16+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat maturita.C.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
+| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat maturita.C.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -328,7 +328,7 @@ cd android
 
 or `make android` from the repo root.
 
-iOS from source (Xcode 16, iOS 16+):
+iOS from source (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
 python3 scripts/extract-android-content.py

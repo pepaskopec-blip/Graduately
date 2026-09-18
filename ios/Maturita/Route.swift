@@ -1,6 +1,13 @@
 import Foundation
 
-enum Route: Equatable {
+enum AppTab: Hashable {
+    case practice
+    case progress
+    case search
+    case settings
+}
+
+enum Route: Hashable {
     case welcome
     case subjects
     case stats
@@ -46,6 +53,50 @@ enum Route: Equatable {
         case .book(let id): return id == "1984" ? "cetba1984" : "cetbaFuks"
         case .bookQuiz(let id): return id == "1984" ? "cetba1984quiz" : "cetbaFuksQuiz"
         case .bookPlot(let id): return id == "1984" ? "cetba1984dej" : "cetbaFuksDej"
+        }
+    }
+
+    /// Stack of destinations on top of the practice root.
+    var stack: [Route] {
+        switch self {
+        case .welcome, .subjects, .stats:
+            return []
+        case .roadmap:
+            return [.roadmap]
+        case .unitMap(let id):
+            return [.roadmap, .unitMap(id)]
+        case .germanEx(let unit, let ex):
+            return [.roadmap, .unitMap(unit), .germanEx(unit, ex)]
+        case .vocab(let unit):
+            return [.roadmap, .unitMap(unit), .vocab(unit)]
+        case .netYears:
+            return [.netYears]
+        case .netMap:
+            return [.netYears, .netMap]
+        case .netLesson(let id):
+            return [.netYears, .netMap, .netLesson(id)]
+        case .netEx(let id):
+            return [.netYears, .netMap, .netLesson(id), .netEx(id)]
+        case .hwMap:
+            return [.hwMap]
+        case .hwLesson(let id):
+            return [.hwMap, .hwLesson(id)]
+        case .hwEx(let id):
+            return [.hwMap, .hwLesson(id), .hwEx(id)]
+        case .czechMap:
+            return [.czechMap]
+        case .mluvnice:
+            return [.czechMap, .mluvnice]
+        case .mluvEx(let n):
+            return [.czechMap, .mluvnice, .mluvEx(n)]
+        case .readingList:
+            return [.czechMap, .readingList]
+        case .book(let id):
+            return [.czechMap, .readingList, .book(id)]
+        case .bookQuiz(let id):
+            return [.czechMap, .readingList, .book(id), .bookQuiz(id)]
+        case .bookPlot(let id):
+            return [.czechMap, .readingList, .book(id), .bookPlot(id)]
         }
     }
 }

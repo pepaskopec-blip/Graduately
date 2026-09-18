@@ -6,58 +6,76 @@ struct MaturitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MaturitaRoot(vm: vm)
+            NativeRoot(vm: vm)
         }
     }
 }
 
-struct MaturitaRoot: View {
+struct NativeRoot: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        let p = vm.palette
-        ZStack {
-            p.base.ignoresSafeArea()
-            VStack(spacing: 0) {
-                HStack {
-                    Text("maturita.c")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundStyle(p.text)
-                    Spacer()
-                    IconHit(action: { vm.searchOpen = true }) { SearchIcon(color: p.text) }
-                    IconHit(action: { vm.go(.stats) }) { StatsIcon(color: p.text) }
-                    IconHit(action: { vm.settingsOpen = true }) { SettingsIcon(color: p.text) }
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                if vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged" {
-                    HStack {
-                        Text(bannerText)
-                            .font(.system(size: 13))
-                            .foregroundStyle(p.text)
-                        Spacer()
-                        if vm.update.canInstall {
-                            PillButton(label: vm.tr("update_install"), palette: p) { vm.installUpdate() }
-                        }
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 10)
-                    .background(p.surface1, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .padding(.horizontal, 12)
-                }
-                routeView
-                    .id(vm.tick)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            if vm.searchOpen {
-                SearchOverlay(vm: vm).ignoresSafeArea(edges: .bottom)
-            }
-            if vm.settingsOpen {
-                SettingsSheet(vm: vm).ignoresSafeArea(edges: .bottom)
+        Group {
+            if showsUpdateAccessory {
+                tabs.tabViewBottomAccessory { UpdateAccessory(vm: vm) }
+            } else {
+                tabs
             }
         }
+        .tint(vm.palette.accent)
         .preferredColorScheme(vm.mode == .dark ? .dark : .light)
         .onAppear { vm.checkUpdate(false) }
+    }
+
+    private var showsUpdateAccessory: Bool {
+        vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged"
+    }
+
+    private var tabs: some View {
+        TabView(selection: $vm.tab) {
+            Tab(vm.tr("subjects_title"), systemImage: "square.grid.2x2.fill", value: .practice) {
+                NavigationStack(path: $vm.practicePath) {
+                    PracticeHome(vm: vm)
+                        .navigationDestination(for: Route.self) { route in
+                            RouteDestination(vm: vm, route: route)
+                        }
+                }
+            }
+            Tab(vm.tr("stats"), systemImage: "chart.bar.fill", value: .progress) {
+                NavigationStack {
+                    StatsScreen(vm: vm)
+                }
+            }
+            Tab(vm.tr("settings"), systemImage: "gearshape.fill", value: .settings) {
+                NavigationStack {
+                    SettingsScreen(vm: vm)
+                }
+            }
+            Tab(vm.tr("search_placeholder"), systemImage: "magnifyingglass", value: .search, role: .search) {
+                NavigationStack {
+                    SearchScreen(vm: vm)
+                }
+            }
+        }
+        .tabViewStyle(.sidebarAdaptable)
+        .tabBarMinimizeBehavior(.onScrollDown)
+    }
+}
+
+private struct UpdateAccessory: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        HStack {
+            Text(bannerText)
+                .font(.subheadline)
+            Spacer()
+            if vm.update.canInstall {
+                Button(vm.tr("update_install")) { vm.installUpdate() }
+                    .buttonStyle(.borderedProminent)
+            }
+        }
+        .padding(.horizontal, 4)
     }
 
     private var bannerText: String {
@@ -66,89 +84,94 @@ struct MaturitaRoot: View {
         }
         return vm.tr(vm.update.messageKey)
     }
+}
 
-    @ViewBuilder
-    private var routeView: some View {
-        switch vm.route {
-        case .welcome: WelcomeScreen(vm: vm)
-        case .subjects: SubjectsScreen(vm: vm)
-        case .stats: StatsScreen(vm: vm)
-        case .roadmap: RoadmapScreen(vm: vm)
-        case .unitMap(let id): UnitMapScreen(vm: vm, unitId: id)
-        case .germanEx(let unit, let ex): GermanExercise(vm: vm, unitId: unit, ex: ex)
-        case .vocab(let id): VocabExercise(vm: vm, unitId: id)
-        case .netYears: NetYearsScreen(vm: vm)
+struct RouteDestination: View {
+    @ObservedObject var vm: AppModel
+    let route: Route
+
+    var body: some View {
+        switch route {
+        case .welcome, .subjects:
+            PracticeHome(vm: vm)
+        case .stats:
+            StatsScreen(vm: vm)
+        case .roadmap:
+            RoadmapScreen(vm: vm)
+        case .unitMap(let id):
+            UnitMapScreen(vm: vm, unitId: id)
+        case .germanEx(let unit, let ex):
+            GermanExercise(vm: vm, unitId: unit, ex: ex)
+        case .vocab(let id):
+            VocabExercise(vm: vm, unitId: id)
+        case .netYears:
+            NetYearsScreen(vm: vm)
         case .netMap:
-            LessonMapScreen(
-                vm: vm,
+            LessonListScreen(
                 title: vm.tr("net_year1"),
-                sub: vm.tr("net_sub"),
-                nodes: vm.content.netLessons.map { l in
+                subtitle: vm.tr("net_sub"),
+                rows: vm.content.netLessons.map { l in
                     let id = l.int("id")
-                    return MapNode(
+                    return LessonRow(
                         id: "n\(id)",
-                        label: vm.tr(l.str("titleKey")),
-                        locked: false,
+                        title: vm.tr(l.str("titleKey")),
                         done: vm.progress.netDone(id),
-                        current: !vm.progress.netDone(id),
-                        onClick: { vm.go(.netLesson(id)) }
+                        destination: .netLesson(id)
                     )
                 }
             )
         case .netLesson(let id):
             if let l = vm.content.netLesson(id) {
-                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), sub: vm.tr(l.str("subKey")), slides: l.arr("slides")) {
-                    vm.go(.netEx(id))
-                }
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .netEx(id))
             }
-        case .netEx(let id): NetQuizScreen(vm: vm, id: id)
+        case .netEx(let id):
+            NetQuizScreen(vm: vm, id: id)
         case .hwMap:
-            LessonMapScreen(
-                vm: vm,
+            LessonListScreen(
                 title: vm.tr("Technické vybavení"),
-                sub: vm.tr("hw_sub"),
-                nodes: vm.content.hw.map { l in
+                subtitle: vm.tr("hw_sub"),
+                rows: vm.content.hw.map { l in
                     let id = l.int("id")
-                    return MapNode(
+                    return LessonRow(
                         id: "h\(id)",
-                        label: vm.tr(l.str("titleKey")),
-                        locked: false,
+                        title: vm.tr(l.str("titleKey")),
                         done: vm.progress.hwDone(id),
-                        current: !vm.progress.hwDone(id),
-                        onClick: { vm.go(.hwLesson(id)) }
+                        destination: .hwLesson(id)
                     )
                 }
             )
         case .hwLesson(let id):
             if let l = vm.content.hwLesson(id) {
-                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), sub: vm.tr(l.str("subKey")), slides: l.arr("slides")) {
-                    vm.go(.hwEx(id))
-                }
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .hwEx(id))
             }
-        case .hwEx(let id): HwQuizScreen(vm: vm, id: id)
-        case .czechMap: CzechMapScreen(vm: vm)
+        case .hwEx(let id):
+            HwQuizScreen(vm: vm, id: id)
+        case .czechMap:
+            CzechMapScreen(vm: vm)
         case .mluvnice:
-            LessonMapScreen(
-                vm: vm,
+            LessonListScreen(
                 title: vm.tr("Mluvnice"),
-                sub: "Cvičení z mluvnice – styl maturita / přijímačky z ČJL",
-                nodes: vm.content.mluvnice.map { m in
+                subtitle: "Cvičení z mluvnice",
+                rows: vm.content.mluvnice.map { m in
                     let n = m.int("id")
-                    return MapNode(
+                    return LessonRow(
                         id: "m\(n)",
-                        label: m.str("name"),
-                        locked: false,
+                        title: m.str("name"),
                         done: vm.progress.mluvDone(n),
-                        current: !vm.progress.mluvDone(n),
-                        onClick: { vm.go(.mluvEx(n)) }
+                        destination: .mluvEx(n)
                     )
                 }
             )
-        case .mluvEx(let n): MluvExercise(vm: vm, n: n)
-        case .readingList: BookListScreen(vm: vm)
-        case .book(let id): BookScreen(vm: vm, id: id)
-        case .bookQuiz(let id): LitQuizScreen(vm: vm, id: id)
-        case .bookPlot(let id): PlotScreen(vm: vm, id: id)
+        case .mluvEx(let n):
+            MluvExercise(vm: vm, n: n)
+        case .readingList:
+            BookListScreen(vm: vm)
+        case .book(let id):
+            BookScreen(vm: vm, id: id)
+        case .bookQuiz(let id):
+            LitQuizScreen(vm: vm, id: id)
+        case .bookPlot(let id):
+            PlotScreen(vm: vm, id: id)
         }
     }
 }

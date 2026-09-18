@@ -9,12 +9,11 @@ final class AppModel: ObservableObject {
     @Published var themeId: ThemeId
     @Published var mode: ColorMode
     @Published var lang: UiLang
-    @Published var settingsOpen = false
-    @Published var searchOpen = false
+    @Published var tab: AppTab = .practice
+    @Published var practicePath: [Route] = []
     @Published var searchQuery = ""
     @Published var tick = 0
     @Published var update = UpdateState()
-    @Published var stack: [Route] = [.welcome]
 
     init() {
         themeId = progress.themeId
@@ -22,8 +21,6 @@ final class AppModel: ObservableObject {
         lang = progress.lang
     }
 
-    var route: Route { stack.last ?? .welcome }
-    var canGoBack: Bool { stack.count > 1 }
     var palette: Palette { themePalette(themeId, mode) }
 
     func tr(_ key: String?) -> String { content.tr(key, lang: lang) }
@@ -33,9 +30,21 @@ final class AppModel: ObservableObject {
     }
 
     func go(_ r: Route) {
-        if stack.last == r { return }
-        stack.append(r)
-        searchOpen = false
+        switch r {
+        case .stats:
+            tab = .progress
+        case .welcome, .subjects:
+            tab = .practice
+            practicePath = []
+        default:
+            tab = .practice
+            if practicePath.last == r { return }
+            if practicePath.isEmpty {
+                practicePath = r.stack
+            } else {
+                practicePath.append(r)
+            }
+        }
     }
 
     func goPage(_ page: String?) {
@@ -43,8 +52,18 @@ final class AppModel: ObservableObject {
         go(r)
     }
 
-    func back() {
-        if stack.count > 1 { stack.removeLast() }
+    func openFromSearch(_ page: String) {
+        guard let r = routeFromPage(page) else { return }
+        switch r {
+        case .stats:
+            tab = .progress
+        case .welcome, .subjects:
+            tab = .practice
+            practicePath = []
+        default:
+            tab = .practice
+            practicePath = r.stack
+        }
     }
 
     func setTheme(_ id: ThemeId) {
