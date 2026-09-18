@@ -1,6 +1,6 @@
 #!/bin/sh
-# Rebuild the three installer zips that README links to. Browsers download a
-# zip; they render .command / .sh / .cmd as a text tab.
+# Rebuild the installer zips that README links to. Browsers download a
+# zip; they render .command / .sh / .cmd / .html as a text tab.
 
 set -eu
 
@@ -24,3 +24,11 @@ rm -f "$here/maturita-installer-macos.zip"
 
 zip -q -FS maturita-installer-windows.zip maturita-installer-windows.cmd
 zip -q -FS maturita-installer-linux.zip maturita-installer-linux.sh
+
+# Browsers download a zip; they render .html as a text tab on GitHub.
+# The page looks up the tip of `builds` so Fastly cannot serve a cached 404
+# for the branch-named APK URL.
+cp maturita-android.html "$tmp/Stahnout maturita.C.html"
+rm -f "$here/maturita-installer-android.zip"
+(cd "$tmp" && zip -q -FS "$here/maturita-installer-android.zip" \
+    "Stahnout maturita.C.html")

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stáhnout maturita.C</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 28rem;
+      margin: 3rem auto;
+      padding: 0 1.2rem;
+      color: #1a1a1a;
+    }
+    a.btn {
+      display: block;
+      text-align: center;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 1rem 1.2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    p { color: #444; line-height: 1.45; }
+    code { font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <h1>maturita.C pro Android</h1>
+  <p>Klepni na tlačítko. Až se APK stáhne, otevři ho a povol instalaci z neznámých zdrojů.</p>
+  <p>
+    <a class="btn" id="dl"
+       href="https://raw.githubusercontent.com/pepaskopec-blip/maturita.c/refs/heads/builds/maturita-android.apk">
+      Stáhnout APK
+    </a>
+  </p>
+  <p>
+    Když odkaz hlásí 404, otevři
+    <a href="https://github.com/pepaskopec-blip/maturita.c/tree/builds">větev builds</a>
+    a stáhni <code>maturita-android.apk</code> odtud.
+  </p>
+  <script>
+    (function () {
+      var repo = "pepaskopec-blip/maturita.c";
+      fetch("https://api.github.com/repos/" + repo + "/commits/builds")
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.sha) {
+            document.getElementById("dl").href =
+              "https://raw.githubusercontent.com/" + repo + "/" + d.sha + "/maturita-android.apk";
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
+</body>
+</html>

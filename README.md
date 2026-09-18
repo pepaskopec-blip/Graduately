@@ -30,7 +30,7 @@ větve.
 | macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Rozbalit, pravý klik na **Nainstalovat maturita.C** → **Otevřít** |
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
-| Android (8+) | [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk) | Stáhnout APK a nainstalovat (neznámé zdroje) |
+| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout maturita.C.html** a nainstalovat APK (neznámé zdroje) |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -50,7 +50,7 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 - [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
-- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk)
+- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
 
 Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
 Na Androidu do úložiště aplikace (stejné statistiky, témata a jazyk).
@@ -180,7 +180,7 @@ branch-named file.
 | macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Unzip, right-click **Nainstalovat maturita.C** → **Open** |
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
-| Android (8+) | [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk) | Download the APK and install (unknown sources) |
+| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout maturita.C.html**, then install the APK (unknown sources) |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -200,7 +200,7 @@ above, or download from that branch page:
 - [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
-- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk)
+- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
 
 Progress and settings live in `progress/` next to the `.app` / folder /
 AppImage. On Android they stay in app storage (same stats, themes, language).
