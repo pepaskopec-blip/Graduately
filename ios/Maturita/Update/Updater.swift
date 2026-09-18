@@ -23,7 +23,14 @@ final class Updater {
             do {
                 let atom = try self.get("https://github.com/\(self.repo)/commits/\(self.branch).atom")
                 let remote: String
-                if let sha = self.atomMainSha(atom) {
+                // VERSION-ios names the commit whose IPA is really in the
+                // branch; it is missing only when the iOS job failed or on
+                // older branches, where the branch-wide commit is used.
+                if let tip = self.atomTip(atom),
+                   let marker = try? self.get("https://raw.githubusercontent.com/\(self.repo)/\(tip)/VERSION-ios").trimmingCharacters(in: .whitespacesAndNewlines),
+                   marker.count >= 7 {
+                    remote = marker
+                } else if let sha = self.atomMainSha(atom) {
                     remote = sha
                 } else if let tip = self.atomTip(atom) {
                     remote = try self.get("https://raw.githubusercontent.com/\(self.repo)/\(tip)/VERSION").trimmingCharacters(in: .whitespacesAndNewlines)

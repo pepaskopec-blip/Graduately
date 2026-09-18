@@ -160,6 +160,12 @@ cd android
 
 nebo z kořene `make android`.
 
+APK se podepisuje klíčem `android/keystore/sideload.jks` (není tajný – jde o
+sideload, ne o Google Play), aby aktualizace z aplikace šla nainstalovat přes
+předchozí build. Vlastní klíč lze dodat přes `MATURITA_KEYSTORE` a
+`MATURITA_KEYSTORE_PASSWORD`. Buildy `android-5` a starší mají jiný podpis –
+jednou odinstalujte a nainstalujte znovu.
+
 iOS ze zdroje (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
@@ -329,6 +335,12 @@ cd android
 ```
 
 or `make android` from the repo root.
+
+The APK is signed with `android/keystore/sideload.jks` (not a secret – this is
+a sideloaded app, not a Play release) so in-app updates install over the
+previous build. Supply your own key through `MATURITA_KEYSTORE` and
+`MATURITA_KEYSTORE_PASSWORD`. Builds `android-5` and older carry a different
+signature – uninstall once and install again.
 
 iOS from source (Xcode 26, iOS 26+ / Liquid Glass):
 

@@ -196,7 +196,8 @@ jobs:
 
   ios:
     name: iOS IPA
-    runs-on: macos-14
+    # The app targets iOS 26; this image ships Xcode 26 as the default.
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
 
@@ -217,25 +218,43 @@ jobs:
   publish:
     name: Publish to builds branch
     needs: [linux, windows, macos, android, ios]
+    # One broken platform must not freeze the others: publish whatever was
+    # built and keep the previous package for anything that failed.
+    if: ${{ !cancelled() && contains(needs.*.result, 'success') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Start from the previous builds branch
+        run: |
+          mkdir -p staged
+          if git fetch --depth 1 origin builds 2>/dev/null; then
+            git archive FETCH_HEAD | tar -x -C staged
+            rm -f staged/VERSION
+          fi
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          path: staged
+          path: fresh
           merge-multiple: true
 
       - name: Collect installers
         run: |
+          set -euo pipefail
+          cp -f fresh/* staged/ 2>/dev/null || true
           chmod +x installers/pack-installer-zips.sh
           ./installers/pack-installer-zips.sh
           cp installers/maturita-installer-linux.sh staged/
           cp installers/maturita-installer-windows.cmd staged/
           cp installers/maturita-installer-*.zip staged/
-          # The updater downloads this to see whether it is behind.
+          # The updaters download this to see whether they are behind.
           echo "${{ github.sha }}" > staged/VERSION
+          # Per-platform markers name the commit whose package is really
+          # here, so a platform that failed this run is not offered as new.
+          [ -f fresh/maturita-android.apk ] && echo "${{ github.sha }}" > staged/VERSION-android
+          [ -f fresh/maturita-ios.ipa ] && echo "${{ github.sha }}" > staged/VERSION-ios
+          ls fresh staged
 
       # The branch is rewritten from scratch every time rather than added to,
       # so the repository keeps one copy of the packages instead of a new

@@ -22,6 +22,12 @@ data class UpdateState(
     val canInstall: Boolean = false,
 )
 
+/**
+ * Self-update from the `builds` branch. CI rewrites that branch on every
+ * push to main with a commit titled "Build from <sha>"; the APK there is
+ * signed with the repository's sideload key, so Android accepts it as an
+ * update over any earlier build signed the same way.
+ */
 class Updater(private val app: Application) {
     private val io = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
@@ -37,15 +43,14 @@ class Updater(private val app: Application) {
             emit(cb, UpdateState(status = "dev", messageKey = "update_err_devbuild", messageArg = null))
             return
         }
-        emit(cb, UpdateState(status = "checking", messageKey = "update_checking", messageArg = null))
+        if (interactive) {
+            emit(cb, UpdateState(status = "checking", messageKey = "update_checking", messageArg = null))
+        }
         io.execute {
             try {
                 val atom = get("https://github.com/$repo/commits/$branch.atom")
-                val remote = atomMainSha(atom)
-                    ?: run {
-                        val tip = atomTip(atom) ?: error("sha")
-                        get("https://raw.githubusercontent.com/$repo/$tip/VERSION").trim()
-                    }
+                val tip = atomTip(atom) ?: error("sha")
+                val remote = remoteAndroidCommit(atom, tip)
                 val local = BuildConfig.COMMIT
                 if (sameCommit(remote, local)) {
                     emit(cb, UpdateState("ok", remote, "update_uptodate", remote.take(7)))
@@ -59,29 +64,40 @@ class Updater(private val app: Application) {
     }
 
     fun install(cb: (UpdateState) -> Unit) {
+        // Android 8+ needs a per-app opt-in before we may hand an APK to the
+        // package installer. Send the user there and keep the Update button
+        // so the second tap goes straight to the download.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            !app.packageManager.canRequestPackageInstalls()
+        ) {
+            val settings = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                data = Uri.parse("package:${app.packageName}")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            try {
+                app.startActivity(settings)
+            } catch (_: Exception) {
+            }
+            emit(cb, UpdateState("permission", messageKey = "update_android_allow", messageArg = null, canInstall = true))
+            return
+        }
         emit(cb, UpdateState(status = "downloading", messageKey = "update_downloading", messageArg = null))
         io.execute {
+            var tip: String? = null
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
-                    !app.packageManager.canRequestPackageInstalls()
-                ) {
-                    val settings = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
-                        data = Uri.parse("package:${app.packageName}")
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    }
-                    main.post { app.startActivity(settings) }
-                    emit(cb, UpdateState("error", messageKey = "update_err_download", messageArg = null))
-                    return@execute
-                }
                 val atom = get("https://github.com/$repo/commits/$branch.atom")
-                val tip = atomTip(atom) ?: error("sha")
-                val url = "https://raw.githubusercontent.com/$repo/$tip/maturita-android.apk"
+                val head = atomTip(atom) ?: error("sha")
+                tip = head
+                val remote = remoteAndroidCommit(atom, head)
+                // Pin the download to the commit: the branch-named URL can be
+                // served from a stale CDN cache (even a cached 404).
+                val url = "https://raw.githubusercontent.com/$repo/$head/maturita-android.apk"
                 val dir = File(app.cacheDir, "updates").apply { mkdirs() }
                 val apk = File(dir, "maturita.apk")
                 download(url, apk)
-                if (!isApk(apk)) {
+                if (!isOurApk(apk)) {
                     apk.delete()
-                    emit(cb, UpdateState("error", messageKey = "update_err_download", messageArg = null))
+                    emit(cb, UpdateState("error", remote, "update_err_badapk", null, canInstall = true))
                     return@execute
                 }
                 val uri = FileProvider.getUriForFile(app, "${app.packageName}.files", apk)
@@ -90,11 +106,25 @@ class Updater(private val app: Application) {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
                 }
                 main.post { app.startActivity(intent) }
-                emit(cb, UpdateState("staged", tip, "update_staged", tip.take(7)))
+                emit(cb, UpdateState("staged", remote, "update_android_installing", remote.take(7), canInstall = true))
             } catch (_: Exception) {
-                emit(cb, UpdateState("error", messageKey = "update_err_download", messageArg = null))
+                emit(cb, UpdateState("error", tip, "update_err_download", null, canInstall = true))
             }
         }
+    }
+
+    /**
+     * Commit whose APK sits in the builds branch. `VERSION-android` is written
+     * only when the Android job produced a package; older branches lack it,
+     * so fall back to the commit the whole branch was built from.
+     */
+    private fun remoteAndroidCommit(atom: String, tip: String): String {
+        val marker = runCatching {
+            get("https://raw.githubusercontent.com/$repo/$tip/VERSION-android").trim()
+        }.getOrNull()
+        if (marker != null && marker.length >= 7) return marker
+        return atomMainSha(atom)
+            ?: get("https://raw.githubusercontent.com/$repo/$tip/VERSION").trim()
     }
 
     private fun atomTip(atom: String): String? =
@@ -109,13 +139,16 @@ class Updater(private val app: Application) {
         return n >= 7 && a.take(n).equals(b.take(n), ignoreCase = true)
     }
 
-    private fun isApk(file: File): Boolean {
+    /** Reject anything that is not a parseable APK of this very app. */
+    private fun isOurApk(file: File): Boolean {
         if (file.length() < 1_000_000L) return false
         file.inputStream().use { input ->
             val header = ByteArray(2)
             if (input.read(header) != 2) return false
-            return header[0] == 'P'.code.toByte() && header[1] == 'K'.code.toByte()
+            if (header[0] != 'P'.code.toByte() || header[1] != 'K'.code.toByte()) return false
         }
+        val info = app.packageManager.getPackageArchiveInfo(file.absolutePath, 0) ?: return false
+        return info.packageName == app.packageName
     }
 
     private fun open(url: String, readMs: Int): HttpURLConnection {
