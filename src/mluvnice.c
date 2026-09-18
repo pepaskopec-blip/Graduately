@@ -61,8 +61,7 @@ void mluvnice_init(void) {
     mluv_unit.title = "Mluvnice";
     mluv_unit.page = "mluvnice";
     mluv_unit.ex_tag = "mluv";
-    mluv_unit.sub_key = "Cvičení z mluvnice – styl maturita / "
-                        "přijímačky z ČJL";
+    mluv_unit.sub_key = "mluv_sub";
     mluv_unit.back_target = "czechmap";
     mluv_unit.progress_file = app_progress_mluvnice;
     mluv_unit.n_ex = MLUV_N_EX;

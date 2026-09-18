@@ -299,9 +299,11 @@ GtkWidget *build_stats_page(void) {
     outer = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_add_css_class(outer, "stats-page");
 
+    /* Same header rhythm as the other pages (top_bar). */
     top = gtk_center_box_new();
-    gtk_widget_set_margin_top(top, 2);
-    gtk_widget_set_margin_bottom(top, 6);
+    gtk_widget_add_css_class(top, "page-top");
+    gtk_widget_set_margin_top(top, 8);
+    gtk_widget_set_margin_bottom(top, 18);
     gtk_box_append(GTK_BOX(outer), top);
 
     back = make_back_button("subjects");

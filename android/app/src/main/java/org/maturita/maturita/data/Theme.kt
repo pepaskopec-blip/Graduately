@@ -36,16 +36,48 @@ data class Palette(
     val finishDark: Color,
     val finishLight: Color,
     val finishStroke: Color,
+    /** Accent that stays readable as text and icon tint on [base]. */
+    val tint: Color,
+    /** Text colour that reads on [tint]. */
+    val onTint: Color,
 )
 
 private fun hx(v: Long) = Color(0xFF000000L or v)
 
-private fun pal(vararg c: Long) = Palette(
-    hx(c[0]), hx(c[1]), hx(c[2]), hx(c[3]), hx(c[4]), hx(c[5]), hx(c[6]),
-    hx(c[7]), hx(c[8]), hx(c[9]), hx(c[10]), hx(c[11]), hx(c[12]), hx(c[13]),
-    hx(c[14]), hx(c[15]), hx(c[16]), hx(c[17]), hx(c[18]), hx(c[19]), hx(c[20]),
-    hx(c[21]), hx(c[22]), hx(c[23]),
-)
+private fun luminance(v: Long): Double {
+    fun channel(c: Long): Double {
+        val s = c / 255.0
+        return if (s <= 0.03928) s / 12.92 else Math.pow((s + 0.055) / 1.055, 2.4)
+    }
+    return 0.2126 * channel((v shr 16) and 0xFF) + 0.7152 * channel((v shr 8) and 0xFF) + 0.0722 * channel(v and 0xFF)
+}
+
+private fun contrast(a: Long, b: Long): Double {
+    val la = luminance(a)
+    val lb = luminance(b)
+    return (maxOf(la, lb) + 0.05) / (minOf(la, lb) + 0.05)
+}
+
+/** Yellow on white is unreadable as link text; fall back to the next accent. */
+private fun readableTint(c: LongArray): Long {
+    val background = c[1]
+    for (candidate in longArrayOf(c[9], c[10], c[11])) {
+        if (contrast(candidate, background) >= 3.0) return candidate
+    }
+    return c[7]
+}
+
+private fun pal(vararg c: Long): Palette {
+    val tint = readableTint(c)
+    return Palette(
+        hx(c[0]), hx(c[1]), hx(c[2]), hx(c[3]), hx(c[4]), hx(c[5]), hx(c[6]),
+        hx(c[7]), hx(c[8]), hx(c[9]), hx(c[10]), hx(c[11]), hx(c[12]), hx(c[13]),
+        hx(c[14]), hx(c[15]), hx(c[16]), hx(c[17]), hx(c[18]), hx(c[19]), hx(c[20]),
+        hx(c[21]), hx(c[22]), hx(c[23]),
+        tint = hx(tint),
+        onTint = if (luminance(tint) > 0.4) Color(0xFF111111) else Color.White,
+    )
+}
 
 fun themePalette(id: ThemeId, mode: ColorMode): Palette {
     val light = mode == ColorMode.Light

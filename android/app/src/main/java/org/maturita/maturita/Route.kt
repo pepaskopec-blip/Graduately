@@ -4,6 +4,7 @@ sealed class Route(val page: String) {
     data object Welcome : Route("welcome")
     data object Subjects : Route("subjects")
     data object Stats : Route("stats")
+    data object Settings : Route("settings")
     data object Roadmap : Route("roadmap")
     data class UnitMap(val unitId: Int) : Route("unit${unitId + 1}")
     data class GermanEx(val unitId: Int, val ex: Int) : Route("u${unitId + 1}e$ex")
@@ -22,12 +23,46 @@ sealed class Route(val page: String) {
     data class Book(val id: String) : Route(if (id == "1984") "cetba1984" else "cetbaFuks")
     data class BookQuiz(val id: String) : Route(if (id == "1984") "cetba1984quiz" else "cetbaFuksQuiz")
     data class BookPlot(val id: String) : Route(if (id == "1984") "cetba1984dej" else "cetbaFuksDej")
+
+    /** Bottom-navigation roots; everything else is pushed on top of [Subjects]. */
+    val isRoot: Boolean get() = this is Welcome || this is Subjects || this is Stats || this is Settings
+
+    /** Screens with their own bottom action bar; the navigation bar stays hidden there. */
+    val isExercise: Boolean
+        get() = this is GermanEx || this is Vocab || this is NetEx || this is HwEx ||
+            this is MluvEx || this is BookQuiz || this is BookPlot || this is NetLesson || this is HwLesson
+
+    /** Full stack from the practice root to this screen, so back always goes up one level. */
+    fun stack(): List<Route> = when (this) {
+        Welcome, Subjects -> listOf(Subjects)
+        Stats -> listOf(Stats)
+        Settings -> listOf(Settings)
+        Roadmap -> listOf(Subjects, Roadmap)
+        is UnitMap -> listOf(Subjects, Roadmap, this)
+        is GermanEx -> listOf(Subjects, Roadmap, UnitMap(unitId), this)
+        is Vocab -> listOf(Subjects, Roadmap, UnitMap(unitId), this)
+        NetYears -> listOf(Subjects, NetYears)
+        NetMap -> listOf(Subjects, NetYears, NetMap)
+        is NetLesson -> listOf(Subjects, NetYears, NetMap, this)
+        is NetEx -> listOf(Subjects, NetYears, NetMap, NetLesson(id), this)
+        HwMap -> listOf(Subjects, HwMap)
+        is HwLesson -> listOf(Subjects, HwMap, this)
+        is HwEx -> listOf(Subjects, HwMap, HwLesson(id), this)
+        CzechMap -> listOf(Subjects, CzechMap)
+        Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
+        is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
+        ReadingList -> listOf(Subjects, CzechMap, ReadingList)
+        is Book -> listOf(Subjects, CzechMap, ReadingList, this)
+        is BookQuiz -> listOf(Subjects, CzechMap, ReadingList, Book(id), this)
+        is BookPlot -> listOf(Subjects, CzechMap, ReadingList, Book(id), this)
+    }
 }
 
 fun routeFromPage(page: String): Route? = when (page) {
     "welcome" -> Route.Welcome
     "subjects" -> Route.Subjects
     "stats" -> Route.Stats
+    "settings" -> Route.Settings
     "roadmap" -> Route.Roadmap
     "netyears" -> Route.NetYears
     "netmap" -> Route.NetMap

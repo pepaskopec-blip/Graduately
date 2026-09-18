@@ -26,7 +26,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         private set
     var lang by mutableStateOf(progress.lang)
         private set
-    var settingsOpen by mutableStateOf(false)
     var searchOpen by mutableStateOf(false)
     var searchQuery by mutableStateOf("")
     var tick by mutableStateOf(0)
@@ -34,19 +33,32 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     var update by mutableStateOf(UpdateState())
         private set
 
-    private val stack = mutableStateListOf<Route>(Route.Welcome)
+    private val stack = mutableStateListOf<Route>(Route.Subjects)
     val route: Route get() = stack.last()
-    val canGoBack: Boolean get() = stack.size > 1
+    val root: Route get() = stack.first()
+    val canGoBack: Boolean get() = stack.size > 1 || root != Route.Subjects
 
     val palette get() = themePalette(themeId, mode)
 
     fun tr(key: String?) = content.tr(key, lang)
     fun fmt(key: String, vararg args: Any) = content.fmt(key, lang, *args)
 
+    /** Roots switch the bottom tab; everything else is pushed on the practice stack. */
     fun go(r: Route) {
-        if (stack.last() == r) return
-        stack.add(r)
         searchOpen = false
+        if (stack.last() == r) return
+        if (r.isRoot) {
+            val target = if (r == Route.Welcome) Route.Subjects else r
+            stack.clear()
+            stack.add(target)
+            return
+        }
+        if (root != Route.Subjects) {
+            stack.clear()
+            stack.addAll(r.stack())
+            return
+        }
+        stack.add(r)
     }
 
     fun goPage(page: String?) {
@@ -54,8 +66,25 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         go(r)
     }
 
-    fun back() {
+    /** Jumping from search rebuilds the whole path so back walks up level by level. */
+    fun openPage(page: String) {
+        val r = routeFromPage(page) ?: return
+        searchOpen = false
+        stack.clear()
+        stack.addAll(r.stack())
+    }
+
+    /** Replace the current screen (lesson slides -> its exercise). */
+    fun replace(r: Route) {
         if (stack.size > 1) stack.removeAt(stack.lastIndex)
+        stack.add(r)
+    }
+
+    fun back() {
+        when {
+            stack.size > 1 -> stack.removeAt(stack.lastIndex)
+            root != Route.Subjects -> go(Route.Subjects)
+        }
     }
 
     fun setTheme(id: ThemeId) {

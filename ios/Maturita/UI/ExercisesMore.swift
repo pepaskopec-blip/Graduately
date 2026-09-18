@@ -16,8 +16,8 @@ struct DialogEx: View {
                 let line = lines[i]
                 if let name = line.name {
                     Text(name)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(vm.palette.subtext)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.secondary)
                         .padding(.vertical, 6)
                 }
                 ComboLine(
@@ -68,7 +68,7 @@ struct ComboEx: View {
             ComboRows(vm: vm, title: title, sub: sub, pool: spec.strs("pool"), n: allRows.count, onDone: onDone, revealMean: spec.bool("transUpfront")) { picks, expected, revealed in
                 ForEach(Array(verbSectionLines().enumerated()), id: \.offset) { idx, line in
                     if let title = line.title {
-                        Text(title).font(.system(size: 15, weight: .semibold)).foregroundStyle(vm.palette.subtext)
+                        Text(title).font(.subheadline.weight(.semibold)).foregroundStyle(.secondary)
                     }
                     ComboLine(
                         vm: vm, pool: spec.strs("pool"), picks: picks, expected: expected, idx: idx,
@@ -92,18 +92,18 @@ struct ComboEx: View {
                 ForEach(Array(fillRows().enumerated()), id: \.offset) { _, block in
                     FlowLayout(spacing: 4) {
                         if let num = block.num {
-                            Text(num).font(.system(size: 16, weight: .semibold)).foregroundStyle(vm.palette.text)
+                            Text(num).font(.body.weight(.semibold)).foregroundStyle(.primary)
                         }
                         ForEach(Array(block.parts.enumerated()), id: \.offset) { _, part in
                             switch part {
                             case .text(let s):
-                                Text(s).foregroundStyle(vm.palette.text)
+                                Text(s).foregroundStyle(.primary)
                             case .blank(let idx, let ans):
                                 ComboLine(vm: vm, pool: pool, picks: picks, expected: expected, idx: idx, answer: ans, revealed: revealed, inline: true)
                             }
                         }
                         if let mean = block.meaning {
-                            Text(vm.tr(mean)).font(.system(size: 12)).foregroundStyle(vm.palette.subtext)
+                            Text(vm.tr(mean)).font(.caption).foregroundStyle(.secondary)
                         }
                     }
                     .padding(.bottom, 6)
@@ -267,35 +267,36 @@ private struct ComboLine: View {
         let chip = Button {
             open = true
         } label: {
-            Text(pick.isEmpty ? "—" : pick)
-                .font(.system(size: 15))
-                .foregroundStyle(pick.isEmpty ? p.overlay : p.text)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(p.mantle, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .stroke(mark == true ? p.success : mark == false ? p.error : p.text.opacity(0.12), lineWidth: 1)
-                )
+            HStack(spacing: 4) {
+                Text(pick.isEmpty ? "…" : pick)
+                    .foregroundStyle(pick.isEmpty ? Color.secondary : Color.primary)
+                    .frame(minWidth: 36)
+                Image(systemName: mark == true ? "checkmark.circle.fill" : mark == false ? "xmark.circle.fill" : "chevron.up.chevron.down")
+                    .font(.caption2)
+                    .foregroundStyle(mark == true ? p.success : mark == false ? p.error : Color.secondary)
+            }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.bordered)
+        .controlSize(.small)
+        .tint(mark == true ? p.success : mark == false ? p.error : .secondary)
 
         Group {
             if inline {
                 chip
             } else {
                 FlowLayout(spacing: 6) {
-                    if !prefix.isEmpty { Text(prefix).font(.system(size: 16)).foregroundStyle(p.text) }
+                    if !prefix.isEmpty { Text(prefix) }
                     chip
-                    if !suffix.isEmpty { Text(suffix).font(.system(size: 16)).foregroundStyle(p.text) }
+                    if !suffix.isEmpty { Text(suffix) }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, 8)
             }
         }
         .onAppear {
             if idx >= 0 && idx < expected.count { expected[idx] = answer }
         }
-        .onChange(of: answer) { new in
+        .onChange(of: answer) { _, new in
             if idx >= 0 && idx < expected.count { expected[idx] = new }
         }
         .sheet(isPresented: $open) {
@@ -319,16 +320,22 @@ struct WordPicker: View {
     var body: some View {
         NavigationStack {
             List(Array(pool.enumerated()), id: \.offset) { _, w in
-                Button(w) { onPick(w) }
+                Button {
+                    onPick(w)
+                } label: {
+                    Text(w).foregroundStyle(.primary)
+                }
             }
-            .navigationTitle("")
+            .navigationTitle("Vyberte slovo")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Zavřít", role: .cancel) { onPick(nil) }
+                    Button(role: .cancel) { onPick(nil) } label: { Image(systemName: "xmark") }
                 }
             }
         }
         .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
     }
 }
 
@@ -351,12 +358,12 @@ struct Ex2Ex: View {
                 ForEach(Array(block.rows.enumerated()), id: \.offset) { _, row in
                     FlowLayout(spacing: 4) {
                         if let num = row.num {
-                            Text(num).foregroundStyle(vm.palette.text).padding(.trailing, 6)
+                            Text(num).foregroundStyle(.primary).padding(.trailing, 6)
                         }
                         ForEach(Array(row.parts.enumerated()), id: \.offset) { _, part in
                             switch part {
                             case .text(let s):
-                                Text(s).foregroundStyle(vm.palette.text)
+                                Text(s).foregroundStyle(.primary)
                             case .blank(let idx, let ans):
                                 ComboLine(vm: vm, pool: pool, picks: picks, expected: expected, idx: idx, answer: ans, revealed: revealed, inline: true)
                             }
@@ -415,7 +422,6 @@ struct LettersEx: View {
 
     var body: some View {
         let rows = spec.arr("rows")
-        let p = vm.palette
         ExerciseScaffold(vm: vm, title: title, sub: sub, action: vm.tr("check"), onAction: {
             var i = 0, ok = 0, total = 0
             for r in rows {
@@ -449,12 +455,12 @@ private struct LettersRows: View {
         VStack(alignment: .leading, spacing: 8) {
             ForEach(pairs.indices, id: \.self) { ri in
                 let row = pairs[ri]
-                if let num = row.num { Text(num).foregroundStyle(p.subtext) }
+                if let num = row.num { Text(num).foregroundStyle(.secondary) }
                 FlowLayout {
                     ForEach(row.parts.indices, id: \.self) { pi in
                         switch row.parts[pi] {
                         case .text(let s):
-                            Text(s).foregroundStyle(p.text)
+                            Text(s).foregroundStyle(.primary)
                         case .field(let idx, let ans):
                             WordField(
                                 value: Binding(get: { idx < fields.count ? fields[idx] : "" }, set: { if idx < fields.count { fields[idx] = $0 } }),
@@ -539,10 +545,10 @@ struct TableEx: View {
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
             ForEach(nouns.indices, id: \.self) { r in
-                Text(nouns[r]).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
+                Text(nouns[r]).font(.body.weight(.bold)).foregroundStyle(.primary)
                 ForEach(persons.indices, id: \.self) { c in
                     let i = r * persons.count + c
-                    Text(persons[c]).font(.system(size: 12)).foregroundStyle(p.subtext)
+                    Text(persons[c]).font(.caption).foregroundStyle(.secondary)
                     WordField(value: Binding(get: { i < fields.count ? fields[i] : "" }, set: { if i < fields.count { fields[i] = $0 } }), placeholder: "", palette: p)
                 }
                 Spacer().frame(height: 8)
@@ -658,29 +664,41 @@ private struct VlsmEx: View {
         let tasks = vm.content.netTasks
         let answers = vm.content.netAnswers
         let p = vm.palette
-        VStack(alignment: .leading, spacing: 0) {
-            ScrollView {
+        ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(tasks.indices, id: \.self) { ti in
                         let task = tasks[ti]
                         let block = ti < answers.count ? answers[ti] : []
                         let infeasible = block.isEmpty || block.allSatisfy { $0.int("pfx") <= 0 }
-                        Text(task.str("prompt")).foregroundStyle(p.text).padding(.vertical, 8)
+                        GlassCard {
+                            Label {
+                                Text(task.str("prompt"))
+                            } icon: {
+                                Image(systemName: done[ti] ? "checkmark.circle.fill" : "\(ti + 1).circle")
+                                    .foregroundStyle(done[ti] ? p.success : .secondary)
+                            }
+                        }
+                        .padding(.vertical, 4)
                         if infeasible {
                             Hint(text: vm.tr("net_infeasible"))
                         } else {
                             ForEach(block.indices, id: \.self) { si in
                                 Text("Podsíť \(String(UnicodeScalar(65 + si)!))")
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundStyle(p.subtext)
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundStyle(.secondary)
+                                    .padding(.top, 6)
                                 PrefixMenu(value: Binding(
                                     get: { rows[ti][si].pfx },
                                     set: { rows[ti][si].pfx = $0 }
                                 ), palette: p)
                                 WordField(value: Binding(get: { rows[ti][si].net }, set: { rows[ti][si].net = $0 }), placeholder: "síť", palette: p)
+                                    .keyboardType(.decimalPad)
                                 WordField(value: Binding(get: { rows[ti][si].bc }, set: { rows[ti][si].bc = $0 }), placeholder: "broadcast", palette: p)
+                                    .keyboardType(.decimalPad)
                                 WordField(value: Binding(get: { rows[ti][si].lo }, set: { rows[ti][si].lo = $0 }), placeholder: "první uzel", palette: p)
+                                    .keyboardType(.decimalPad)
                                 WordField(value: Binding(get: { rows[ti][si].hi }, set: { rows[ti][si].hi = $0 }), placeholder: "poslední uzel", palette: p)
+                                    .keyboardType(.decimalPad)
                             }
                             PillButton(label: vm.tr("check")) {
                                 let ok = block.indices.allSatisfy { si in
@@ -717,14 +735,22 @@ private struct VlsmEx: View {
                             maybeFinish()
                         }
                         if done[ti] { Meaning(text: task.str("solution"), palette: p, visible: true) }
+                        Divider().padding(.vertical, 8)
                     }
                 }
-            }
-            FeedbackLine(text: fb.0, kind: fb.1, palette: p)
+                .exerciseContent()
         }
-        .padding()
-        .navigationTitle(vm.tr("net_ex_title"))
-        .navigationBarTitleDisplayMode(.inline)
+        .scrollDismissesKeyboard(.interactively)
+        .detailScreen(vm.tr("net_ex_title"))
+        .safeAreaInset(edge: .bottom) {
+            if !fb.0.isEmpty {
+                FeedbackLine(text: fb.0, kind: fb.1, palette: p)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.bar)
+            }
+        }
+        .animation(.default, value: fb.0)
     }
 
     private func maybeFinish() {
@@ -739,15 +765,17 @@ private struct PrefixMenu: View {
 
     var body: some View {
         Button { open = true } label: {
-            Text(value.isEmpty ? "/…" : value)
-                .font(.system(size: 15))
-                .foregroundStyle(palette.text)
-                .padding(10)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(palette.mantle, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            HStack {
+                Text("Prefix").foregroundStyle(.secondary)
+                Spacer()
+                Text(value.isEmpty ? "/…" : value)
+                    .foregroundStyle(value.isEmpty ? Color.secondary : Color.primary)
+                    .monospacedDigit()
+                Image(systemName: "chevron.up.chevron.down").font(.caption2).foregroundStyle(.secondary)
+            }
         }
-        .buttonStyle(.plain)
-        .padding(.vertical, 4)
+        .buttonStyle(.bordered)
+        .tint(.secondary)
         .sheet(isPresented: $open) {
             WordPicker(palette: palette, pool: (8...30).map { "/\($0)" }) { word in
                 if let word { value = word }
@@ -765,63 +793,75 @@ struct LitQuizScreen: View {
     @State private var score = 0
     @State private var answered = false
     @State private var finished = false
+    @State private var picked = -1
 
     var body: some View {
         if let book = vm.content.book(id) {
             let qs = book.arr("quiz")
             let p = vm.palette
-            let kahoot = [p.accent, p.error, p.warning, p.success]
-            VStack(alignment: .leading, spacing: 8) {
-                if finished {
-                    Text(vm.tr("lit_finished")).font(.system(size: 22, weight: .bold)).foregroundStyle(p.text)
-                    Text(vm.tr("lit_finished_text")).foregroundStyle(p.subtext)
-                    Text(vm.fmt("lit_score_fmt", score, qs.count)).font(.system(size: 16, weight: .bold)).foregroundStyle(p.text)
-                    PrimaryButton(label: vm.tr("lit_again")) {
-                        idx = 0; score = 0; answered = false; finished = false
-                    }
-                } else if idx < qs.count {
-                    let q = qs[idx]
-                    HStack {
-                        Text(vm.fmt("lit_question_fmt", idx + 1, qs.count)).foregroundStyle(p.subtext)
-                        Spacer()
-                        Text(vm.fmt("lit_score_fmt", score, qs.count)).foregroundStyle(p.subtext)
-                    }
-                    Text(q.str("prompt")).font(.system(size: 18, weight: .semibold)).foregroundStyle(p.text).padding(.vertical, 12)
-                    ForEach(Array(q.strs("options").enumerated()), id: \.offset) { i, opt in
-                        Button {
-                            answered = true
-                            if i == q.int("correct") { score += 1 }
-                        } label: {
-                            Text(opt)
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundStyle(p.onAccent)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(16)
-                                .background(kahoot[i % 4], in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(answered)
-                        .padding(.bottom, 8)
-                    }
-                    if answered {
-                        Meaning(text: q.str("expl"), palette: p, visible: true)
-                        PrimaryButton(label: idx + 1 >= qs.count ? vm.tr("lit_show_result") : vm.tr("lit_next")) {
-                            if idx + 1 >= qs.count {
-                                finished = true
-                                vm.markBookQuiz(id)
-                            } else {
-                                idx += 1
-                                answered = false
+            ScrollView {
+                VStack(alignment: .leading, spacing: 8) {
+                    if finished {
+                        GlassCard {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Label(vm.tr("lit_finished"), systemImage: "rosette")
+                                    .font(.title2.weight(.bold))
+                                Text(vm.tr("lit_finished_text")).foregroundStyle(.secondary)
+                                Text(vm.fmt("lit_score_fmt", score, qs.count)).font(.headline)
                             }
+                        }
+                    } else if idx < qs.count {
+                        let q = qs[idx]
+                        ProgressView(value: Double(idx), total: Double(qs.count))
+                        HStack {
+                            Text(vm.fmt("lit_question_fmt", idx + 1, qs.count))
+                            Spacer()
+                            Text(vm.fmt("lit_score_fmt", score, qs.count))
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        Text(q.str("prompt")).font(.title3.weight(.semibold)).padding(.vertical, 12)
+                        ForEach(Array(q.strs("options").enumerated()), id: \.offset) { i, opt in
+                            let correct = i == q.int("correct")
+                            let chosen = answered && picked == i
+                            OptionChip(
+                                text: opt,
+                                selected: chosen,
+                                mark: answered ? (correct ? true : (chosen ? false : nil)) : nil
+                            ) {
+                                guard !answered else { return }
+                                picked = i
+                                answered = true
+                                if correct { score += 1 }
+                            }
+                        }
+                        if answered {
+                            Meaning(text: q.str("expl"), palette: p, visible: true)
                         }
                     }
                 }
-                Spacer()
+                .exerciseContent()
             }
-            .padding()
-            .navigationTitle(vm.tr(book.str("quizTitle")))
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationSubtitle(vm.tr(book.str("quizSub")))
+            .detailScreen(vm.tr(book.str("quizTitle")), subtitle: vm.tr(book.str("quizSub")))
+            .safeAreaInset(edge: .bottom) {
+                if finished {
+                    BottomAction(label: vm.tr("lit_again"), action: {
+                        idx = 0; score = 0; answered = false; finished = false; picked = -1
+                    }) { EmptyView() }
+                } else if answered {
+                    BottomAction(label: idx + 1 >= qs.count ? vm.tr("lit_show_result") : vm.tr("lit_next"), action: {
+                        if idx + 1 >= qs.count {
+                            finished = true
+                            vm.markBookQuiz(id)
+                        } else {
+                            idx += 1
+                            answered = false
+                            picked = -1
+                        }
+                    }) { EmptyView() }
+                }
+            }
+            .animation(.default, value: answered)
         }
     }
 }

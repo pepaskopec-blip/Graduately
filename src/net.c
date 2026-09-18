@@ -2669,7 +2669,10 @@ GtkWidget *net_qz_make_entry(void) {
     GtkWidget *e = gtk_entry_new();
 
     gtk_widget_set_hexpand(e, TRUE);
-    gtk_editable_set_width_chars(GTK_EDITABLE(e), 15);
+    /* Four address columns must share the window; 15 chars each pushed the
+     * last column past the right edge. */
+    gtk_editable_set_width_chars(GTK_EDITABLE(e), 7);
+    gtk_editable_set_max_width_chars(GTK_EDITABLE(e), 16);
     return e;
 }
 
@@ -2688,8 +2691,10 @@ GtkWidget *build_net_exercise_page(void) {
                    top_bar("netunit1", "net_ex_title", NULL));
 
     scroll = gtk_scrolled_window_new();
+    /* Never scroll sideways: the address table must shrink to the window
+     * instead of pushing its last column off screen. */
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
     gtk_widget_set_vexpand(scroll, TRUE);
     gtk_widget_set_margin_top(scroll, 12);
     gtk_box_append(GTK_BOX(page), scroll);
@@ -2732,6 +2737,7 @@ GtkWidget *build_net_exercise_page(void) {
             gtk_grid_set_row_spacing(GTK_GRID(table), 6);
             gtk_grid_set_column_spacing(GTK_GRID(table), 8);
             gtk_widget_set_margin_top(table, 6);
+            gtk_widget_set_hexpand(table, TRUE);
             gtk_box_append(GTK_BOX(task), table);
 
             for (guint c = 1; c < 6; c++) {

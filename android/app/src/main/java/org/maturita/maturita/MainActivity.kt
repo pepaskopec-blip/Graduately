@@ -12,56 +12,39 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
+import org.maturita.maturita.data.ColorMode
+import org.maturita.maturita.data.Palette
 import org.maturita.maturita.ui.BookListScreen
 import org.maturita.maturita.ui.BookScreen
 import org.maturita.maturita.ui.CzechMapScreen
 import org.maturita.maturita.ui.GermanExercise
+import org.maturita.maturita.ui.HomeScreen
 import org.maturita.maturita.ui.HwQuizScreen
-import org.maturita.maturita.ui.IconHit
-import org.maturita.maturita.ui.LessonMapScreen
+import org.maturita.maturita.ui.LessonListScreen
+import org.maturita.maturita.ui.LessonRow
 import org.maturita.maturita.ui.LitQuizScreen
-import org.maturita.maturita.ui.MapNode
 import org.maturita.maturita.ui.MluvExercise
 import org.maturita.maturita.ui.NetQuizScreen
 import org.maturita.maturita.ui.NetYearsScreen
 import org.maturita.maturita.ui.PlotScreen
 import org.maturita.maturita.ui.RoadmapScreen
-import org.maturita.maturita.ui.SearchIcon
-import org.maturita.maturita.ui.SearchOverlay
-import org.maturita.maturita.ui.SettingsIcon
-import org.maturita.maturita.ui.SettingsSheet
+import org.maturita.maturita.ui.SearchScreen
+import org.maturita.maturita.ui.SettingsScreen
 import org.maturita.maturita.ui.SlidesScreen
-import org.maturita.maturita.ui.appTextStyle
-import org.maturita.maturita.ui.appTypography
-import org.maturita.maturita.ui.StatsIcon
 import org.maturita.maturita.ui.StatsScreen
-import org.maturita.maturita.ui.SubjectsScreen
 import org.maturita.maturita.ui.UnitMapScreen
-import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.ui.VocabExercise
-import org.maturita.maturita.ui.WelcomeScreen
+import org.maturita.maturita.ui.appTypography
 
 class MainActivity : ComponentActivity() {
     private val vm: AppViewModel by viewModels()
@@ -125,165 +108,136 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/** Material 3 colour roles from the shared theme palette. */
+private fun schemeFor(p: Palette, dark: Boolean) = if (dark) {
+    darkColorScheme(
+        primary = p.tint,
+        onPrimary = p.onTint,
+        primaryContainer = p.accent,
+        onPrimaryContainer = p.onAccent,
+        secondary = p.accent2,
+        onSecondary = p.onAccent,
+        secondaryContainer = p.surface1,
+        onSecondaryContainer = p.text,
+        tertiary = p.warning,
+        onTertiary = p.crust,
+        background = p.base,
+        onBackground = p.text,
+        surface = p.base,
+        onSurface = p.text,
+        surfaceVariant = p.surface0,
+        onSurfaceVariant = p.subtext,
+        surfaceContainerLowest = p.crust,
+        surfaceContainerLow = p.mantle,
+        surfaceContainer = p.mantle,
+        surfaceContainerHigh = p.surface0,
+        surfaceContainerHighest = p.surface1,
+        outline = p.overlay,
+        outlineVariant = p.surface1,
+        error = p.error,
+        onError = Color.White,
+        errorContainer = p.error.copy(alpha = 0.22f),
+        onErrorContainer = p.text,
+    )
+} else {
+    lightColorScheme(
+        primary = p.tint,
+        onPrimary = p.onTint,
+        primaryContainer = p.accent,
+        onPrimaryContainer = p.onAccent,
+        secondary = p.accent2,
+        onSecondary = Color.White,
+        secondaryContainer = p.surface1,
+        onSecondaryContainer = p.text,
+        tertiary = p.warning,
+        onTertiary = Color.White,
+        background = p.base,
+        onBackground = p.text,
+        surface = p.base,
+        onSurface = p.text,
+        surfaceVariant = p.surface1,
+        onSurfaceVariant = p.subtext,
+        surfaceContainerLowest = p.mantle,
+        surfaceContainerLow = p.mantle,
+        surfaceContainer = p.mantle,
+        surfaceContainerHigh = p.surface1,
+        surfaceContainerHighest = p.surface2,
+        outline = p.overlay,
+        outlineVariant = p.surface2,
+        error = p.error,
+        onError = Color.White,
+        errorContainer = p.error.copy(alpha = 0.14f),
+        onErrorContainer = p.text,
+    )
+}
+
 @Composable
 fun MaturitaApp(vm: AppViewModel) {
-    val p = vm.palette
-    val scheme = if (vm.mode == ColorMode.Dark) {
-        darkColorScheme(
-            primary = p.accent,
-            onPrimary = p.onAccent,
-            secondary = p.accent2,
-            background = p.base,
-            onBackground = p.text,
-            surface = p.mantle,
-            onSurface = p.text,
-            surfaceVariant = p.surface1,
-            onSurfaceVariant = p.subtext,
-            error = p.error,
-        )
-    } else {
-        lightColorScheme(
-            primary = p.accent,
-            onPrimary = p.onAccent,
-            secondary = p.accent2,
-            background = p.base,
-            onBackground = p.text,
-            surface = p.mantle,
-            onSurface = p.text,
-            surfaceVariant = p.surface1,
-            onSurfaceVariant = p.subtext,
-            error = p.error,
-        )
-    }
-    MaterialTheme(colorScheme = scheme, typography = appTypography()) {
-        MaturitaAppBody(vm)
+    MaterialTheme(colorScheme = schemeFor(vm.palette, vm.mode == ColorMode.Dark), typography = appTypography()) {
+        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+            MaturitaAppBody(vm)
+        }
     }
 }
 
 @Composable
 private fun MaturitaAppBody(vm: AppViewModel) {
-    val p = vm.palette
     LaunchedEffect(Unit) { vm.checkUpdate(false) }
-    BackHandler(vm.canGoBack || vm.searchOpen || vm.settingsOpen) {
-        when {
-            vm.searchOpen -> vm.searchOpen = false
-            vm.settingsOpen -> vm.settingsOpen = false
-            else -> vm.back()
-        }
+    BackHandler(vm.canGoBack || vm.searchOpen) {
+        if (vm.searchOpen) vm.searchOpen = false else vm.back()
     }
-    Box(
-        Modifier
-            .fillMaxSize()
-            .background(p.base)
-            .statusBarsPadding()
-            .navigationBarsPadding(),
-    ) {
-        Column(Modifier.fillMaxSize()) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("maturita.c", style = appTextStyle(15.sp, FontWeight.Medium, color = p.text), modifier = Modifier.weight(1f))
-                IconHit({ vm.searchOpen = true }) { SearchIcon(p.text) }
-                IconHit({ vm.go(Route.Stats) }) { StatsIcon(p.text) }
-                IconHit({ vm.settingsOpen = true }) { SettingsIcon(p.text) }
-            }
-            if (vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged") {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .clip(RoundedCornerShape(14.dp))
-                        .background(p.surface1)
-                        .padding(horizontal = 12.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        vm.fmt(vm.update.messageKey, *(listOfNotNull(vm.update.messageArg).toTypedArray())),
-                        color = p.text,
-                        fontSize = 13.sp,
-                        modifier = Modifier.weight(1f),
-                    )
-                    if (vm.update.canInstall) {
-                        org.maturita.maturita.ui.PillButton(vm.tr("update_install"), p) { vm.installUpdate() }
-                    }
+    Box(Modifier.fillMaxSize()) {
+        when (val r = vm.route) {
+            Route.Welcome, Route.Subjects -> HomeScreen(vm)
+            Route.Stats -> StatsScreen(vm)
+            Route.Settings -> SettingsScreen(vm)
+            Route.Roadmap -> RoadmapScreen(vm)
+            is Route.UnitMap -> UnitMapScreen(vm, r.unitId)
+            is Route.GermanEx -> GermanExercise(vm, r.unitId, r.ex)
+            is Route.Vocab -> VocabExercise(vm, r.unitId)
+            Route.NetYears -> NetYearsScreen(vm)
+            Route.NetMap -> LessonListScreen(
+                vm, vm.tr("net_year1"), vm.tr("net_sub"),
+                vm.content.netLessons.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.netDone(id), Route.NetLesson(id))
+                },
+            )
+            is Route.NetLesson -> {
+                val l = vm.content.netLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.NetEx(r.id))
                 }
             }
-            Box(Modifier.weight(1f)) {
-                when (val r = vm.route) {
-                    Route.Welcome -> WelcomeScreen(vm)
-                    Route.Subjects -> SubjectsScreen(vm)
-                    Route.Stats -> StatsScreen(vm)
-                    Route.Roadmap -> RoadmapScreen(vm)
-                    is Route.UnitMap -> UnitMapScreen(vm, r.unitId)
-                    is Route.GermanEx -> GermanExercise(vm, r.unitId, r.ex)
-                    is Route.Vocab -> VocabExercise(vm, r.unitId)
-                    Route.NetYears -> NetYearsScreen(vm)
-                    Route.NetMap -> LessonMapScreen(
-                        vm, vm.tr("net_year1"), vm.tr("net_sub"),
-                        vm.content.netLessons.map { l ->
-                            val id = l.int("id")
-                            MapNode(
-                                "n$id", vm.tr(l.str("titleKey")), false,
-                                vm.progress.netDone(id), !vm.progress.netDone(id),
-                            ) { vm.go(Route.NetLesson(id)) }
-                        },
-                        vm.content.netLessons.count { vm.progress.netDone(it.int("id")) }.toFloat(),
-                    )
-                    is Route.NetLesson -> {
-                        val l = vm.content.netLesson(r.id)
-                        if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
-                            vm.go(Route.NetEx(r.id))
-                        }
-                    }
-                    is Route.NetEx -> NetQuizScreen(vm, r.id)
-                    Route.HwMap -> LessonMapScreen(
-                        vm, vm.tr("Technické vybavení"), vm.tr("hw_sub"),
-                        vm.content.hw.map { l ->
-                            val id = l.int("id")
-                            MapNode(
-                                "h$id", vm.tr(l.str("titleKey")), false,
-                                vm.progress.hwDone(id), !vm.progress.hwDone(id),
-                            ) { vm.go(Route.HwLesson(id)) }
-                        },
-                        vm.content.hw.count { vm.progress.hwDone(it.int("id")) }.toFloat(),
-                    )
-                    is Route.HwLesson -> {
-                        val l = vm.content.hwLesson(r.id)
-                        if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
-                            vm.go(Route.HwEx(r.id))
-                        }
-                    }
-                    is Route.HwEx -> HwQuizScreen(vm, r.id)
-                    Route.CzechMap -> CzechMapScreen(vm)
-                    Route.Mluvnice -> LessonMapScreen(
-                        vm, vm.tr("Mluvnice"), "Cvičení z mluvnice – styl maturita / přijímačky z ČJL",
-                        vm.content.mluvnice.map { m ->
-                            val n = m.int("id")
-                            MapNode(
-                                "m$n", m.str("name"), false,
-                                vm.progress.mluvDone(n), !vm.progress.mluvDone(n),
-                            ) { vm.go(Route.MluvEx(n)) }
-                        },
-                        vm.content.mluvnice.count { vm.progress.mluvDone(it.int("id")) }.toFloat(),
-                    )
-                    is Route.MluvEx -> MluvExercise(vm, r.n)
-                    Route.ReadingList -> BookListScreen(vm)
-                    is Route.Book -> BookScreen(vm, r.id)
-                    is Route.BookQuiz -> LitQuizScreen(vm, r.id)
-                    is Route.BookPlot -> PlotScreen(vm, r.id)
+            is Route.NetEx -> NetQuizScreen(vm, r.id)
+            Route.HwMap -> LessonListScreen(
+                vm, vm.tr("Technické vybavení"), vm.tr("hw_sub"),
+                vm.content.hw.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.hwDone(id), Route.HwLesson(id))
+                },
+            )
+            is Route.HwLesson -> {
+                val l = vm.content.hwLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.HwEx(r.id))
                 }
             }
+            is Route.HwEx -> HwQuizScreen(vm, r.id)
+            Route.CzechMap -> CzechMapScreen(vm)
+            Route.Mluvnice -> LessonListScreen(
+                vm, vm.tr("Mluvnice"), vm.tr("mluv_sub"),
+                vm.content.mluvnice.map { m ->
+                    val n = m.int("id")
+                    LessonRow(m.str("name"), vm.progress.mluvDone(n), Route.MluvEx(n))
+                },
+            )
+            is Route.MluvEx -> MluvExercise(vm, r.n)
+            Route.ReadingList -> BookListScreen(vm)
+            is Route.Book -> BookScreen(vm, r.id)
+            is Route.BookQuiz -> LitQuizScreen(vm, r.id)
+            is Route.BookPlot -> PlotScreen(vm, r.id)
         }
-        if (vm.searchOpen) SearchOverlay(vm)
-        if (vm.settingsOpen) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(p.base),
-            ) { SettingsSheet(vm) }
-        }
+        if (vm.searchOpen) SearchScreen(vm)
     }
 }

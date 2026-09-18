@@ -14,27 +14,19 @@ struct ExerciseScaffold<Content: View>: View {
         let p = vm.palette
         ScrollView {
             VStack(alignment: .leading, spacing: 8) { content() }
-                .padding()
+                .exerciseContent()
         }
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-        .navSubtitle(sub)
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                Button(action, action: onAction)
-                    .buttonStyle(.borderedProminent)
-            }
-        }
+        .scrollDismissesKeyboard(.interactively)
+        .detailScreen(title, subtitle: sub)
         .safeAreaInset(edge: .bottom) {
-            if !feedback.isEmpty {
-                FeedbackLine(text: feedback, kind: kind, palette: p)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-                    .padding(.horizontal)
-                    .padding(.bottom, 4)
+            BottomAction(label: action, action: onAction) {
+                if !feedback.isEmpty {
+                    FeedbackLine(text: feedback, kind: kind, palette: p)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
         }
+        .animation(.default, value: feedback)
     }
 }
 
@@ -102,7 +94,7 @@ struct DispatchExercise: View {
         case "letters", "letters_gap": LettersEx(vm: vm, title: title, sub: sub, spec: spec, onDone: onDone)
         case "table": TableEx(vm: vm, title: title, sub: sub, spec: spec, onDone: onDone)
         case "reveal": RevealEx(vm: vm, title: title, sub: sub, spec: spec, onDone: onDone)
-        default: Text("?").foregroundStyle(vm.palette.text)
+        default: Text("?").foregroundStyle(.primary)
         }
     }
 }
@@ -139,8 +131,7 @@ private struct ChoiceEx: View {
         }, feedback: fb.0, kind: fb.1) {
             ForEach(qs.indices, id: \.self) { i in
                 Text("\(i + 1). \(qs[i].str("prompt"))")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(p.text)
+                    .font(.body.weight(.semibold))
                     .padding(.bottom, 6)
                 ForEach(Array(qs[i].strs("options").enumerated()), id: \.offset) { o, opt in
                     let sel = picks[i] == o
@@ -196,20 +187,18 @@ private struct AssemblyEx: View {
         }, feedback: fb.0, kind: fb.1) {
             ForEach(items.indices, id: \.self) { i in
                 if let prompt = items[i].strOrNull("prompt") { Hint(text: prompt) }
-                FlowLayout {
-                    if placed[i].isEmpty { Text("…").foregroundStyle(p.overlay) }
-                    ForEach(placed[i], id: \.self) { idx in
-                        if idx < items[i].strs("words").count {
-                            WordChip(text: items[i].strs("words")[idx]) {
-                                placed[i].removeAll { $0 == idx }
-                                pools[i].append(idx)
+                WordSlot(empty: placed[i].isEmpty) {
+                    FlowLayout {
+                        ForEach(placed[i], id: \.self) { idx in
+                            if idx < items[i].strs("words").count {
+                                WordChip(text: items[i].strs("words")[idx]) {
+                                    placed[i].removeAll { $0 == idx }
+                                    pools[i].append(idx)
+                                }
                             }
                         }
                     }
                 }
-                .padding(8)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(p.surface0, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                 .padding(.bottom, 6)
                 FlowLayout(spacing: 6) {
                     ForEach(pools[i], id: \.self) { idx in
@@ -395,7 +384,7 @@ private struct AssignEx: View {
                     SegChip(label: groups[i], selected: active == i) { active = i }
                 }
             }
-            Text(vm.tr("wordbank")).font(.system(size: 12)).foregroundStyle(p.subtext).padding(.top, 10)
+            Text(vm.tr("wordbank")).font(.caption).foregroundStyle(.secondary).padding(.top, 10)
             FlowLayout(spacing: 6) {
                 ForEach(items.indices, id: \.self) { i in
                     if loc[i] == -1 {
@@ -405,7 +394,7 @@ private struct AssignEx: View {
                 }
             }
             ForEach(groups.indices, id: \.self) { g in
-                Text(groups[g]).font(.system(size: 12, weight: .semibold)).foregroundStyle(p.subtext).padding(.top, 10)
+                Text(groups[g]).font(.caption.weight(.semibold)).foregroundStyle(.secondary).padding(.top, 10)
                 FlowLayout(spacing: 6) {
                     ForEach(items.indices, id: \.self) { i in
                         if loc[i] == g {
@@ -451,7 +440,8 @@ private struct HangmanEx: View {
         let letters = spec.strs("letters")
         let p = vm.palette
         let cur = word < words.count ? words[word].uppercased() : ""
-        VStack(alignment: .leading, spacing: 8) {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
             Text(vm.fmt("hm_progress", word + 1, words.count)).foregroundStyle(.secondary)
             if word < tips.count { Hint(text: "\(vm.tr("hm_hint")): \(vm.tr(tips[word]))") }
             Canvas { ctx, size in
@@ -461,30 +451,30 @@ private struct HangmanEx: View {
                 gallows.move(to: CGPoint(x: 70, y: size.height - 10))
                 gallows.addLine(to: CGPoint(x: 70, y: 16))
                 gallows.addLine(to: CGPoint(x: size.width * 0.3 + 40, y: 16))
-                ctx.stroke(gallows, with: .color(p.text), style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                ctx.stroke(gallows, with: .color(.primary), style: StrokeStyle(lineWidth: 6, lineCap: .round))
                 let x = size.width * 0.3 + 40
                 if misses > 0 {
                     var rope = Path(); rope.move(to: CGPoint(x: x, y: 16)); rope.addLine(to: CGPoint(x: x, y: 36))
-                    ctx.stroke(rope, with: .color(p.text), lineWidth: 4)
+                    ctx.stroke(rope, with: .color(.primary), lineWidth: 4)
                 }
                 if misses > 1 {
-                    ctx.stroke(Path(ellipseIn: CGRect(x: x - 16, y: 36, width: 32, height: 32)), with: .color(p.text), lineWidth: 4)
+                    ctx.stroke(Path(ellipseIn: CGRect(x: x - 16, y: 36, width: 32, height: 32)), with: .color(.primary), lineWidth: 4)
                 }
                 if misses > 2 {
                     var body = Path(); body.move(to: CGPoint(x: x, y: 68)); body.addLine(to: CGPoint(x: x, y: 110))
-                    ctx.stroke(body, with: .color(p.text), lineWidth: 4)
+                    ctx.stroke(body, with: .color(.primary), lineWidth: 4)
                 }
                 if misses > 3 {
                     var a = Path(); a.move(to: CGPoint(x: x, y: 80)); a.addLine(to: CGPoint(x: x - 22, y: 100))
-                    ctx.stroke(a, with: .color(p.text), lineWidth: 4)
+                    ctx.stroke(a, with: .color(.primary), lineWidth: 4)
                 }
                 if misses > 4 {
                     var a = Path(); a.move(to: CGPoint(x: x, y: 80)); a.addLine(to: CGPoint(x: x + 22, y: 100))
-                    ctx.stroke(a, with: .color(p.text), lineWidth: 4)
+                    ctx.stroke(a, with: .color(.primary), lineWidth: 4)
                 }
                 if misses > 5 {
                     var a = Path(); a.move(to: CGPoint(x: x, y: 110)); a.addLine(to: CGPoint(x: x - 22, y: 140))
-                    ctx.stroke(a, with: .color(p.text), lineWidth: 4)
+                    ctx.stroke(a, with: .color(.primary), lineWidth: 4)
                 }
             }
             .frame(height: 160)
@@ -493,13 +483,14 @@ private struct HangmanEx: View {
                     let idx = letters.firstIndex { $0.compare(String(ch), options: .caseInsensitive) == .orderedSame }
                     let show = idx.map { guessed[$0] } ?? false
                     Text(show ? String(ch) : "_")
-                        .font(.system(size: 26, weight: .bold))
-                        .foregroundStyle(p.text)
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .monospaced()
                 }
             }
-            ForEach(Array(letters.chunked(10).enumerated()), id: \.offset) { _, row in
-                HStack(spacing: 4) {
-                    ForEach(row, id: \.self) { letter in
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+            FlowLayout(spacing: 6) {
+                    ForEach(letters, id: \.self) { letter in
                         if let i = letters.firstIndex(of: letter) {
                             Button {
                                 guessed[i] = true
@@ -523,17 +514,14 @@ private struct HangmanEx: View {
                                 }
                             } label: {
                                 Text(letter)
-                                    .font(.system(size: 15, weight: .bold))
-                                    .foregroundStyle(p.text)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 8)
-                                    .background(guessed[i] ? p.surface1 : p.mantle, in: RoundedRectangle(cornerRadius: 8))
+                                    .font(.body.weight(.semibold))
+                                    .frame(minWidth: 22)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(.bordered)
+                            .tint(guessed[i] ? .secondary : .primary)
                             .disabled(guessed[i] || finished)
                         }
                     }
-                }
             }
             FeedbackLine(text: fb.0, kind: fb.1, palette: p)
             if misses >= 6 && !finished {
@@ -543,12 +531,10 @@ private struct HangmanEx: View {
                     fb = ("", "")
                 }
             }
-            Spacer()
         }
-        .padding()
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-        .navSubtitle(sub)
+        .exerciseContent()
+        }
+        .detailScreen(title, subtitle: sub)
     }
 }
 
@@ -586,40 +572,63 @@ private struct VocabEx: View {
 
     var body: some View {
         let p = vm.palette
-        VStack(alignment: .leading, spacing: 8) {
-            Text(vm.fmt("trans_progress", done, total)).foregroundStyle(.secondary)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+            ProgressView(value: Double(done), total: Double(max(total, 1)))
+            Text(vm.fmt("trans_progress", done, total)).font(.footnote).foregroundStyle(.secondary)
             if cards.isEmpty {
-                Text(vm.tr("trans_done")).font(.system(size: 16, weight: .bold)).foregroundStyle(p.success)
+                Label(vm.tr("trans_done"), systemImage: "checkmark.seal.fill")
+                    .font(.headline)
+                    .foregroundStyle(p.success)
+                    .padding(.top, 8)
             } else if index < cards.count {
                 let cur = cards[index]
-                Hint(text: cur.0)
-                Prompt(text: cur.1)
-                if hasUmlaut(cur.2) { Hint(text: vm.tr("hint_umlauts")) }
-                WordField(value: $value, placeholder: vm.tr("your_answer"), palette: p)
-                PrimaryButton(label: vm.tr("check")) {
-                    let norm = normalizeAnswer(value)
-                    if answerAccepts(norm, cur.2) {
-                        done += 1
-                        cards.remove(at: index)
-                        if cards.isEmpty { fb = (vm.tr("trans_done"), "ok"); onDone() }
-                        else { if index >= cards.count { index = 0 }; value = ""; fb = ("", "") }
-                    } else if answerIncomplete(norm, cur.2) {
-                        fb = (vm.tr("trans_incomplete"), "warn")
-                    } else {
-                        fb = (vm.fmt("trans_wrong", cur.2.split(separator: "|").first.map(String.init) ?? ""), "err")
-                        let item = cards.remove(at: index)
-                        cards.append(item)
-                        if index >= cards.count { index = 0 }
-                        value = ""
+                GlassCard {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(cur.0).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                        Text(cur.1).font(.title2.weight(.semibold))
                     }
                 }
+                .padding(.vertical, 8)
+                if hasUmlaut(cur.2) { Hint(text: vm.tr("hint_umlauts")) }
+                WordField(value: $value, placeholder: vm.tr("your_answer"), palette: p)
+                    .submitLabel(.done)
+                    .onSubmit { check(cur) }
                 FeedbackLine(text: fb.0, kind: fb.1, palette: p)
             }
-            Spacer()
         }
-        .padding()
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-        .navSubtitle(sub)
+        .exerciseContent()
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .detailScreen(title, subtitle: sub)
+        .safeAreaInset(edge: .bottom) {
+            if index < cards.count {
+                BottomAction(label: vm.tr("check"), action: { check(cards[index]) }) { EmptyView() }
+            }
+        }
+    }
+
+    private func check(_ cur: (String, String, String)) {
+        let norm = normalizeAnswer(value)
+        if answerAccepts(norm, cur.2) {
+            done += 1
+            cards.remove(at: index)
+            if cards.isEmpty {
+                fb = (vm.tr("trans_done"), "ok")
+                onDone()
+            } else {
+                if index >= cards.count { index = 0 }
+                value = ""
+                fb = ("", "")
+            }
+        } else if answerIncomplete(norm, cur.2) {
+            fb = (vm.tr("trans_incomplete"), "warn")
+        } else {
+            fb = (vm.fmt("trans_wrong", cur.2.split(separator: "|").first.map(String.init) ?? ""), "err")
+            let item = cards.remove(at: index)
+            cards.append(item)
+            if index >= cards.count { index = 0 }
+            value = ""
+        }
     }
 }

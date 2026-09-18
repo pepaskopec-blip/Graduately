@@ -54,7 +54,7 @@ struct PracticeHome: View {
                 }
             }
         } icon: {
-            Image(systemName: subjectSymbol(s.str("icon")))
+            SubjectIcon(icon: s.str("icon"), open: s.bool("open"))
         }
     }
 }
@@ -77,11 +77,11 @@ struct SettingsScreen: View {
                         vm.setTheme(id)
                     } label: {
                         HStack {
-                            Circle().fill(themePalette(id, vm.mode).accent).frame(width: 14, height: 14)
-                            Text(themeNames[id.rawValue])
+                            Circle().fill(themePalette(id, vm.mode).tint).frame(width: 14, height: 14)
+                            Text(themeNames[id.rawValue]).foregroundStyle(.primary)
                             Spacer()
                             if vm.themeId == id {
-                                Image(systemName: "checkmark")
+                                Image(systemName: "checkmark").fontWeight(.semibold)
                             }
                         }
                     }
@@ -130,28 +130,42 @@ struct StatsScreen: View {
         let pct = sum.totalEx == 0 ? 0.0 : Double(sum.doneEx) / Double(sum.totalEx)
         List {
             Section {
-                HStack {
-                    stat(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                    stat(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
-                    stat(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
+                GlassCard {
+                    VStack(alignment: .leading, spacing: 14) {
+                        HStack(alignment: .top) {
+                            stat(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                            stat(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
+                            stat(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
+                        }
+                        ProgressView(value: pct)
+                    }
                 }
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                 .listRowBackground(Color.clear)
-                ProgressView(value: pct)
+                .listRowSeparator(.hidden)
             }
             Section(vm.tr("stats_section")) {
                 ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
                     let open = s.bool("open")
                     let part = subjectSum(vm, s)
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(vm.tr(s.str("key")))
-                        Text(open ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        if open && part.totalEx > 0 {
-                            ProgressView(value: Double(part.doneEx) / Double(part.totalEx))
+                    Label {
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack {
+                                Text(vm.tr(s.str("key")))
+                                Spacer()
+                                Text(open ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .monospacedDigit()
+                            }
+                            if open && part.totalEx > 0 {
+                                ProgressView(value: Double(part.doneEx) / Double(part.totalEx))
+                            }
                         }
+                    } icon: {
+                        SubjectIcon(icon: s.str("icon"), open: open)
                     }
-                    .opacity(open ? 1 : 0.5)
+                    .foregroundStyle(open ? .primary : .secondary)
                 }
             }
         }
@@ -159,9 +173,9 @@ struct StatsScreen: View {
     }
 
     private func stat(_ label: String, _ value: String) -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 2) {
             Text(label).font(.caption).foregroundStyle(.secondary)
-            Text(value).font(.title3.bold())
+            Text(value).font(.title3.bold()).monospacedDigit()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -397,29 +411,59 @@ struct SlidesScreen: View {
                             .foregroundStyle(.secondary)
                         Text(slide.str("title")).font(.title2.bold())
                         if let tip = slide.strOrNull("tip") {
-                            GlassCard { Text(tip) }
+                            GlassCard {
+                                Label(tip, systemImage: "lightbulb.fill")
+                            }
                         }
                         ForEach(Array(slide.strs("lines").enumerated()), id: \.offset) { _, line in
                             Text(line).padding(.vertical, 4)
                         }
                     }
                     .padding()
+                    .padding(.bottom, 24)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .tag(i)
             }
         }
-        .tabViewStyle(.page(indexDisplayMode: .automatic))
-        .navigationTitle(title)
-        .navigationSubtitle(subtitle)
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                if idx < slides.count - 1 {
-                    Button(vm.tr("net_slide_next")) { idx += 1 }
-                } else {
-                    NavigationLink(vm.tr("net_slide_start"), value: next)
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .detailScreen(title, subtitle: subtitle)
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 10) {
+                HStack(spacing: 6) {
+                    ForEach(slides.indices, id: \.self) { i in
+                        Capsule()
+                            .fill(i == idx ? Color.accentColor : Color(.tertiarySystemFill))
+                            .frame(width: i == idx ? 18 : 6, height: 6)
+                    }
+                }
+                .animation(.default, value: idx)
+                HStack(spacing: 10) {
+                    if idx > 0 {
+                        Button {
+                            withAnimation { idx -= 1 }
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .frame(minWidth: 24)
+                        }
+                        .buttonStyle(.glass)
+                        .controlSize(.large)
+                    }
+                    if idx < slides.count - 1 {
+                        PrimaryButton(label: vm.tr("net_slide_next")) {
+                            withAnimation { idx += 1 }
+                        }
+                    } else {
+                        PrimaryButton(label: vm.tr("net_slide_start")) {
+                            vm.go(next)
+                        }
+                    }
                 }
             }
+            .padding(.horizontal)
+            .padding(.top, 8)
+            .padding(.bottom, 4)
+            .background(.bar)
         }
     }
 }

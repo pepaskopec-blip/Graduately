@@ -19,6 +19,18 @@ final class AppModel: ObservableObject {
         themeId = progress.themeId
         mode = progress.mode
         lang = progress.lang
+        #if DEBUG
+        // `xcrun simctl launch <udid> org.maturita.maturita -route u1e3` opens a page for screenshots.
+        if let page = UserDefaults.standard.string(forKey: "route"), let r = routeFromPage(page) {
+            openFromSearch(r.page)
+        }
+        if let theme = UserDefaults.standard.string(forKey: "theme"), let n = Int(theme), let id = ThemeId(rawValue: n) {
+            themeId = id
+        }
+        if let m = UserDefaults.standard.string(forKey: "mode") {
+            mode = m == "dark" ? .dark : .light
+        }
+        #endif
     }
 
     var palette: Palette { themePalette(themeId, mode) }

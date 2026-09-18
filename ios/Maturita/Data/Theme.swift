@@ -24,6 +24,8 @@ struct Palette {
     let success, success2, warning, error: Color
     let onAccent, node, lockedBg, lockedBorder, rail: Color
     let finishDark, finishLight, finishStroke: Color
+    /// Accent that stays readable as text and icon tint on the theme's background.
+    let tint: Color
 }
 
 private func hx(_ v: UInt32) -> Color {
@@ -34,6 +36,29 @@ private func hx(_ v: UInt32) -> Color {
     )
 }
 
+private func luminance(_ v: UInt32) -> Double {
+    func channel(_ c: UInt32) -> Double {
+        let s = Double(c) / 255
+        return s <= 0.03928 ? s / 12.92 : pow((s + 0.055) / 1.055, 2.4)
+    }
+    return 0.2126 * channel((v >> 16) & 0xFF) + 0.7152 * channel((v >> 8) & 0xFF) + 0.0722 * channel(v & 0xFF)
+}
+
+private func contrast(_ a: UInt32, _ b: UInt32) -> Double {
+    let la = luminance(a), lb = luminance(b)
+    return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
+}
+
+/// Pick the first accent with enough contrast against the background; yellow on
+/// white is unreadable as tab labels and link text.
+private func readableTint(_ c: [UInt32]) -> UInt32 {
+    let background = c[1]
+    for candidate in [c[9], c[10], c[11]] where contrast(candidate, background) >= 3.0 {
+        return candidate
+    }
+    return c[7]
+}
+
 private func pal(_ c: [UInt32]) -> Palette {
     Palette(
         crust: hx(c[0]), base: hx(c[1]), mantle: hx(c[2]), surface0: hx(c[3]),
@@ -42,7 +67,8 @@ private func pal(_ c: [UInt32]) -> Palette {
         success: hx(c[12]), success2: hx(c[13]), warning: hx(c[14]), error: hx(c[15]),
         onAccent: hx(c[16]), node: hx(c[17]), lockedBg: hx(c[18]),
         lockedBorder: hx(c[19]), rail: hx(c[20]), finishDark: hx(c[21]),
-        finishLight: hx(c[22]), finishStroke: hx(c[23])
+        finishLight: hx(c[22]), finishStroke: hx(c[23]),
+        tint: hx(readableTint(c))
     )
 }
 

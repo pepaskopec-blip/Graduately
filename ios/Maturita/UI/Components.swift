@@ -44,9 +44,13 @@ struct PrimaryButton: View {
     var action: () -> Void
 
     var body: some View {
-        Button(label, action: action)
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+        Button(action: action) {
+            Text(label)
+                .font(.body.weight(.semibold))
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.glassProminent)
+        .controlSize(.large)
     }
 }
 
@@ -78,9 +82,13 @@ struct FeedbackLine: View {
 
     var body: some View {
         if !text.isEmpty {
-            Text(text)
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(kind == "ok" ? palette.success : kind == "warn" ? palette.warning : palette.error)
+            Label {
+                Text(text)
+            } icon: {
+                Image(systemName: kind == "ok" ? "checkmark.circle.fill" : kind == "warn" ? "exclamationmark.triangle.fill" : "xmark.circle.fill")
+            }
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(kind == "ok" ? palette.success : kind == "warn" ? palette.warning : palette.error)
         }
     }
 }
@@ -107,21 +115,28 @@ struct WordField: View {
     var palette: Palette?
 
     var body: some View {
-        TextField(placeholder, text: $value)
-            .textInputAutocapitalization(.never)
-            .autocorrectionDisabled()
-            .padding(12)
-            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(border, lineWidth: mark == nil ? 0 : 1.5)
-            )
+        HStack(spacing: 8) {
+            TextField(placeholder, text: $value)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+            if let mark {
+                Image(systemName: mark ? "checkmark.circle.fill" : "xmark.circle.fill")
+                    .foregroundStyle(mark ? (palette?.success ?? .green) : (palette?.error ?? .red))
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(border, lineWidth: mark == nil ? 0.5 : 1.5)
+        )
     }
 
     private var border: Color {
         if mark == true { return palette?.success ?? .green }
         if mark == false { return palette?.error ?? .red }
-        return .clear
+        return Color(.separator)
     }
 }
 
@@ -158,7 +173,26 @@ struct WordChip: View {
     var body: some View {
         Button(text, action: action)
             .buttonStyle(.bordered)
+            .tint(.primary)
             .controlSize(.small)
+    }
+}
+
+/// Drop zone for word ordering: visible even when empty.
+struct WordSlot<Content: View>: View {
+    let empty: Bool
+    @ViewBuilder var content: () -> Content
+
+    var body: some View {
+        content()
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            .padding(8)
+            .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(style: StrokeStyle(lineWidth: empty ? 1 : 0, dash: [5, 4]))
+                    .foregroundStyle(.tertiary)
+            )
     }
 }
 
@@ -171,13 +205,30 @@ struct OptionChip: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Text(text).frame(maxWidth: .infinity, alignment: .leading)
-                if selected { Image(systemName: "checkmark") }
+                Image(systemName: symbol)
+                    .foregroundStyle(symbolColor)
+                Text(text)
+                    .foregroundStyle(.primary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding(.vertical, 4)
         }
         .buttonStyle(.bordered)
         .tint(tint)
         .padding(.bottom, 4)
+    }
+
+    private var symbol: String {
+        if mark == true { return "checkmark.circle.fill" }
+        if mark == false { return "xmark.circle.fill" }
+        return selected ? "largecircle.fill.circle" : "circle"
+    }
+
+    private var symbolColor: Color {
+        if mark == true { return .green }
+        if mark == false { return .red }
+        return selected ? .accentColor : .secondary
     }
 
     private var tint: Color {
@@ -196,6 +247,39 @@ extension View {
             self
         }
     }
+
+    /// Detail screens with their own bottom action hide the tab bar so the
+    /// primary button is never covered by it.
+    func detailScreen(_ title: String, subtitle: String? = nil) -> some View {
+        navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .navSubtitle(subtitle)
+            .toolbar(.hidden, for: .tabBar)
+    }
+
+    /// Full-width, leading-aligned content for exercise screens.
+    func exerciseContent() -> some View {
+        frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+    }
+}
+
+/// Bottom action area used by exercises and lesson slides.
+struct BottomAction<Extra: View>: View {
+    let label: String
+    var action: () -> Void
+    @ViewBuilder var extra: () -> Extra
+
+    var body: some View {
+        VStack(spacing: 10) {
+            extra()
+            PrimaryButton(label: label, action: action)
+        }
+        .padding(.horizontal)
+        .padding(.top, 8)
+        .padding(.bottom, 4)
+        .background(.bar)
+    }
 }
 
 func subjectSymbol(_ icon: String) -> String {
@@ -205,5 +289,26 @@ func subjectSymbol(_ icon: String) -> String {
     case "chip": return "cpu"
     case "cz": return "text.book.closed.fill"
     default: return "lock.fill"
+    }
+}
+
+/// Subject glyph for list rows: real flags for the languages, SF Symbols otherwise.
+struct SubjectIcon: View {
+    let icon: String
+    var open = true
+
+    var body: some View {
+        Group {
+            switch icon {
+            case "de": GermanFlag(size: 26)
+            case "cz": CzechFlag(size: 26)
+            default:
+                Image(systemName: subjectSymbol(icon))
+                    .font(.title3)
+                    .foregroundStyle(open ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.tertiary))
+            }
+        }
+        .frame(width: 28, height: 28)
+        .opacity(open ? 1 : 0.6)
     }
 }

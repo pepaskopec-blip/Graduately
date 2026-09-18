@@ -18,7 +18,6 @@
 		A101000000000000000009 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000009 /* Updater.swift */; };
 		A101000000000000000010 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000010 /* Components.swift */; };
 		A101000000000000000011 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000011 /* Icons.swift */; };
-		A101000000000000000012 /* PathMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000012 /* PathMap.swift */; };
 		A101000000000000000013 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000013 /* Screens.swift */; };
 		A101000000000000000014 /* Exercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000014 /* Exercises.swift */; };
 		A101000000000000000015 /* ExercisesMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000015 /* ExercisesMore.swift */; };
@@ -38,7 +37,6 @@
 		A201000000000000000009 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		A201000000000000000010 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		A201000000000000000011 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
-		A201000000000000000012 /* PathMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathMap.swift; sourceTree = "<group>"; };
 		A201000000000000000013 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A201000000000000000014 /* Exercises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercises.swift; sourceTree = "<group>"; };
 		A201000000000000000015 /* ExercisesMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesMore.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 			children = (
 				A201000000000000000010 /* Components.swift */,
 				A201000000000000000011 /* Icons.swift */,
-				A201000000000000000012 /* PathMap.swift */,
 				A201000000000000000013 /* Screens.swift */,
 				A201000000000000000014 /* Exercises.swift */,
 				A201000000000000000015 /* ExercisesMore.swift */,
@@ -230,7 +227,6 @@
 				A101000000000000000009 /* Updater.swift in Sources */,
 				A101000000000000000010 /* Components.swift in Sources */,
 				A101000000000000000011 /* Icons.swift in Sources */,
-				A101000000000000000012 /* PathMap.swift in Sources */,
 				A101000000000000000013 /* Screens.swift in Sources */,
 				A101000000000000000014 /* Exercises.swift in Sources */,
 				A101000000000000000015 /* ExercisesMore.swift in Sources */,

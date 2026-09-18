@@ -225,6 +225,8 @@ const TrEntry tr_ui[] = {
     {"stats", "Statistiky", "Statistics"},
     {"stats_title", "Statistiky", "Statistics"},
     {"stats_sub", "Přehled vašeho pokroku.", "Overview of your progress."},
+    {"mluv_sub", "Cvičení z mluvnice – styl maturita / přijímačky z ČJL",
+     "Grammar exercises in the style of the maturita and entrance exams"},
     {"stats_ex_label", "Cvičení", "Exercises"},
     {"stats_pct_label", "Hotovo", "Done"},
     {"stats_units_label", "Jednotky", "Units"},

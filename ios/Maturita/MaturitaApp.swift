@@ -22,7 +22,7 @@ struct NativeRoot: View {
                 tabs
             }
         }
-        .tint(vm.palette.accent)
+        .tint(vm.palette.tint)
         .preferredColorScheme(vm.mode == .dark ? .dark : .light)
         .onAppear { vm.checkUpdate(false) }
     }
@@ -151,7 +151,7 @@ struct RouteDestination: View {
         case .mluvnice:
             LessonListScreen(
                 title: vm.tr("Mluvnice"),
-                subtitle: "Cvičení z mluvnice",
+                subtitle: vm.tr("mluv_sub"),
                 rows: vm.content.mluvnice.map { m in
                     let n = m.int("id")
                     return LessonRow(

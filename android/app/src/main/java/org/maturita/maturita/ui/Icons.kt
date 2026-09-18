@@ -52,6 +52,18 @@ fun StatsIcon(color: Color, iconSize: Dp = 18.dp) {
 }
 
 @Composable
+fun SubjectsIcon(color: Color, iconSize: Dp = 22.dp) {
+    DrawnIcon(iconSize) {
+        val gap = size.minDimension * 0.08f
+        val cell = (size.minDimension - gap) / 2f
+        val r = androidx.compose.ui.geometry.CornerRadius(cell * 0.28f)
+        for (iy in 0 until 2) for (ix in 0 until 2) {
+            drawRoundRect(color, Offset(ix * (cell + gap), iy * (cell + gap)), Size(cell, cell), r)
+        }
+    }
+}
+
+@Composable
 fun SettingsIcon(color: Color, iconSize: Dp = 18.dp) {
     DrawnIcon(iconSize) {
         val cx = size.width / 2f
