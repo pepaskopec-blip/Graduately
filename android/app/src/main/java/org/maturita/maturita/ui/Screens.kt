@@ -55,16 +55,15 @@ fun WelcomeScreen(vm: AppViewModel) {
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
-        Text("maturita.c", color = p.text, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+        Text("maturita.c", style = appTextStyle(15.sp, FontWeight.Medium, color = p.text))
         Text(
             "sestavení ${org.maturita.maturita.BuildConfig.VERSION_NAME} · ${org.maturita.maturita.BuildConfig.COMMIT.take(7)}",
-            color = p.overlay,
-            fontSize = 12.sp,
+            style = appTextStyle(12.sp, color = p.overlay),
         )
         Spacer(Modifier.height(12.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text(vm.tr("welcome_title"), color = p.text, fontSize = 36.sp, fontWeight = FontWeight.Bold, lineHeight = 40.sp)
+                Text(vm.tr("welcome_title"), style = appTextStyle(32.sp, FontWeight.Medium, color = p.text))
                 Spacer(Modifier.height(12.dp))
                 Text(
                     vm.tr("welcome_body_android"),

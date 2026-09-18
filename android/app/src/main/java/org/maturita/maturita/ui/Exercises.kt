@@ -37,6 +37,8 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import org.maturita.maturita.AppViewModel
 import org.maturita.maturita.data.J
 import org.maturita.maturita.data.Palette
@@ -519,8 +521,9 @@ private fun DialogEx(vm: AppViewModel, title: String, sub: String?, spec: J, onD
             Text(d.str("name"), color = vm.palette.subtext, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(vertical = 6.dp))
             d.arr("rows").forEach { row ->
                 val idx = i++
-                ComboLine(vm, pool, picks, expected, idx, row.str("answer"),
-                    prefix = "${row.str("speaker")} ${row.str("before")}",
+                ComboLine(
+                    vm, pool, picks, expected, idx, row.str("answer"),
+                    prefix = listOf(row.str("speaker"), row.str("before")).filter { it.isNotBlank() }.joinToString(" "),
                     suffix = row.str("after"),
                     meaning = meanings.getOrNull(idx),
                     revealed = revealed,
@@ -644,6 +647,7 @@ private fun ComboRows(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ComboLine(
     vm: AppViewModel,
@@ -663,58 +667,87 @@ private fun ComboLine(
     }
     val p = vm.palette
     var open by remember { mutableStateOf(false) }
-    val box = @Composable {
-        Column {
-            Box(
-                Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(p.mantle)
-                    .border(1.dp, if (revealed && picks.getOrNull(idx).orEmpty().isNotEmpty()) {
-                        if (answerAccepts(normalizeAnswer(picks.getOrNull(idx).orEmpty()), answer)) p.success else p.error
-                    } else p.text.copy(0.1f), RoundedCornerShape(12.dp))
-                    .clickable { open = !open }
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
-            ) {
-                val pick = picks.getOrNull(idx).orEmpty()
-                Text(pick.ifEmpty { "—" }, color = if (pick.isEmpty()) p.overlay else p.text)
-            }
-            if (open) {
-                Column(
-                    Modifier
-                        .padding(top = 4.dp)
-                        .heightIn(max = 220.dp)
-                        .verticalScroll(rememberScrollState())
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(p.surface0)
-                        .border(1.dp, p.text.copy(0.08f), RoundedCornerShape(12.dp)),
-                ) {
-                    pool.forEach { w ->
-                        Text(
-                            w,
-                            color = p.text,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    if (idx in picks.indices) picks[idx] = w
-                                    open = false
-                                }
-                                .padding(horizontal = 12.dp, vertical = 8.dp),
-                        )
-                    }
-                }
-            }
+    val pick = picks.getOrNull(idx).orEmpty()
+    val mark = if (revealed && pick.isNotEmpty()) {
+        answerAccepts(normalizeAnswer(pick), answer)
+    } else null
+    val chip = @Composable {
+        Box(
+            Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(p.mantle)
+                .border(
+                    1.dp,
+                    when (mark) {
+                        true -> p.success
+                        false -> p.error
+                        null -> p.text.copy(0.12f)
+                    },
+                    RoundedCornerShape(12.dp),
+                )
+                .clickable { open = true }
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+        ) {
+            Text(
+                pick.ifEmpty { "—" },
+                style = appTextStyle(15.sp, color = if (pick.isEmpty()) p.overlay else p.text),
+            )
         }
     }
     if (inline) {
-        box()
-        return
+        chip()
+    } else {
+        FlowRow(
+            Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            if (prefix.isNotBlank()) {
+                Text(prefix, style = appTextStyle(16.sp, color = p.text))
+            }
+            chip()
+            if (suffix.isNotBlank()) {
+                Text(suffix, style = appTextStyle(16.sp, color = p.text))
+            }
+        }
     }
-    Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-        if (prefix.isNotBlank()) Text(prefix, color = p.text, modifier = Modifier.padding(end = 6.dp))
-        box()
-        if (suffix.isNotBlank()) Text(suffix, color = p.text, modifier = Modifier.padding(start = 6.dp))
+    if (open) {
+        WordPicker(p, pool) { word ->
+            if (word != null && idx in picks.indices) picks[idx] = word
+            open = false
+        }
     }
     if (revealed && !meaning.isNullOrBlank()) Meaning(vm.tr(meaning), p, true)
+}
+
+@Composable
+private fun WordPicker(p: Palette, pool: List<String>, onPick: (String?) -> Unit) {
+    Dialog(
+        onDismissRequest = { onPick(null) },
+        properties = DialogProperties(usePlatformDefaultWidth = true),
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+                .background(p.base)
+                .padding(10.dp)
+                .heightIn(max = 420.dp)
+                .verticalScroll(rememberScrollState()),
+        ) {
+            pool.forEach { w ->
+                Text(
+                    w,
+                    style = appTextStyle(16.sp, color = p.text),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable { onPick(w) }
+                        .padding(horizontal = 14.dp, vertical = 12.dp),
+                )
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -968,29 +1001,20 @@ private fun VlsmEx(vm: AppViewModel, @Suppress("UNUSED_PARAMETER") lesson: J) {
 @Composable
 private fun PrefixMenu(value: String, p: Palette, onPick: (String) -> Unit) {
     var open by remember { mutableStateOf(false) }
-    Column(Modifier.padding(vertical = 4.dp)) {
-        Box(
-            Modifier.clip(RoundedCornerShape(12.dp)).background(p.mantle).clickable { open = !open }.padding(10.dp),
-        ) { Text(value.ifEmpty { "/…" }, color = p.text) }
-        if (open) {
-            Column(
-                Modifier
-                    .heightIn(max = 220.dp)
-                    .verticalScroll(rememberScrollState())
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(p.surface0),
-            ) {
-                (8..30).forEach { n ->
-                    Text(
-                        "/$n",
-                        color = p.text,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onPick("/$n"); open = false }
-                            .padding(horizontal = 12.dp, vertical = 8.dp),
-                    )
-                }
-            }
+    Box(
+        Modifier
+            .padding(vertical = 4.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(p.mantle)
+            .clickable { open = true }
+            .padding(10.dp),
+    ) {
+        Text(value.ifEmpty { "/…" }, style = appTextStyle(15.sp, color = p.text))
+    }
+    if (open) {
+        WordPicker(p, (8..30).map { "/$it" }) { word ->
+            if (word != null) onPick(word)
+            open = false
         }
     }
 }

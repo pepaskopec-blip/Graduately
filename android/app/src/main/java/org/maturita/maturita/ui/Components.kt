@@ -19,15 +19,53 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontSynthesis
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.maturita.maturita.AppViewModel
 import org.maturita.maturita.data.Palette
+
+fun appTextStyle(
+    fontSize: TextUnit,
+    fontWeight: FontWeight = FontWeight.Normal,
+    textAlign: TextAlign = TextAlign.Unspecified,
+    color: Color = Color.Unspecified,
+): TextStyle {
+    val weight = if (fontWeight >= FontWeight.Bold) FontWeight.Medium else fontWeight
+    return TextStyle(
+        color = color,
+        fontSize = fontSize,
+        fontWeight = weight,
+        fontFamily = FontFamily.SansSerif,
+        fontSynthesis = FontSynthesis.None,
+        lineHeight = fontSize * 1.4f,
+        letterSpacing = 0.sp,
+        textAlign = textAlign,
+    )
+}
+
+fun appTypography(): Typography {
+    val base = appTextStyle(16.sp)
+    return Typography(
+        bodyLarge = base,
+        bodyMedium = appTextStyle(14.sp),
+        bodySmall = appTextStyle(12.sp),
+        titleLarge = appTextStyle(22.sp, FontWeight.Medium),
+        titleMedium = appTextStyle(18.sp, FontWeight.Medium),
+        titleSmall = appTextStyle(16.sp, FontWeight.Medium),
+        labelLarge = appTextStyle(14.sp, FontWeight.Medium),
+        labelMedium = appTextStyle(12.sp, FontWeight.Medium),
+        headlineMedium = appTextStyle(24.sp, FontWeight.Medium),
+    )
+}
 
 private val Pill = RoundedCornerShape(999.dp)
 private val Card = RoundedCornerShape(20.dp)
@@ -42,7 +80,7 @@ fun PrimaryButton(label: String, palette: Palette, modifier: Modifier = Modifier
             .padding(horizontal = 22.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(label, color = palette.onAccent, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
+        Text(label, style = appTextStyle(15.sp, FontWeight.Medium, color = palette.onAccent))
     }
 }
 
@@ -55,7 +93,7 @@ fun PillButton(label: String, palette: Palette, modifier: Modifier = Modifier, o
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
-        Text(label, color = palette.text, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(label, style = appTextStyle(13.sp, FontWeight.Medium, color = palette.text))
     }
 }
 
@@ -73,15 +111,23 @@ fun IconHit(onClick: () -> Unit, content: @Composable () -> Unit) {
 @Composable
 fun PageTop(vm: AppViewModel, back: () -> Unit, title: String, subtitle: String? = null) {
     val p = vm.palette
-    Box(Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 14.dp)) {
-        Box(Modifier.align(Alignment.CenterStart)) {
-            IconHit(back) { BackIcon(p.text) }
-        }
-        Column(Modifier.align(Alignment.Center).padding(horizontal = 48.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(title, color = p.text, fontSize = 24.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
-            if (!subtitle.isNullOrBlank()) {
-                Text(subtitle, color = p.subtext, fontSize = 14.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 4.dp))
+    Column(Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 14.dp)) {
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Box(Modifier.align(Alignment.CenterStart)) {
+                IconHit(back) { BackIcon(p.text) }
             }
+            Text(
+                title,
+                modifier = Modifier.padding(horizontal = 48.dp),
+                style = appTextStyle(22.sp, FontWeight.Medium, TextAlign.Center, p.text),
+            )
+        }
+        if (!subtitle.isNullOrBlank()) {
+            Text(
+                subtitle,
+                modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                style = appTextStyle(14.sp, textAlign = TextAlign.Center, color = p.subtext),
+            )
         }
     }
 }

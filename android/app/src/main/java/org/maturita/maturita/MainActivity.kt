@@ -53,6 +53,8 @@ import org.maturita.maturita.ui.SearchOverlay
 import org.maturita.maturita.ui.SettingsIcon
 import org.maturita.maturita.ui.SettingsSheet
 import org.maturita.maturita.ui.SlidesScreen
+import org.maturita.maturita.ui.appTextStyle
+import org.maturita.maturita.ui.appTypography
 import org.maturita.maturita.ui.StatsIcon
 import org.maturita.maturita.ui.StatsScreen
 import org.maturita.maturita.ui.SubjectsScreen
@@ -153,7 +155,7 @@ fun MaturitaApp(vm: AppViewModel) {
             error = p.error,
         )
     }
-    MaterialTheme(colorScheme = scheme) {
+    MaterialTheme(colorScheme = scheme, typography = appTypography()) {
         MaturitaAppBody(vm)
     }
 }
@@ -183,7 +185,7 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                     .padding(horizontal = 12.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("maturita.c", color = p.text, fontWeight = FontWeight.Bold, fontSize = 15.sp, modifier = Modifier.weight(1f))
+                Text("maturita.c", style = appTextStyle(15.sp, FontWeight.Medium, color = p.text), modifier = Modifier.weight(1f))
                 IconHit({ vm.searchOpen = true }) { SearchIcon(p.text) }
                 IconHit({ vm.go(Route.Stats) }) { StatsIcon(p.text) }
                 IconHit({ vm.settingsOpen = true }) { SettingsIcon(p.text) }

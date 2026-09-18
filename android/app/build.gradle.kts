@@ -13,8 +13,8 @@ android {
         applicationId = "org.maturita.maturita"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "android-3"
+        versionCode = 4
+        versionName = "android-4"
         buildConfigField("String", "COMMIT", "\"$commit\"")
         buildConfigField("String", "UPDATE_REPO", "\"pepaskopec-blip/maturita.c\"")
         buildConfigField("String", "UPDATE_BRANCH", "\"builds\"")
