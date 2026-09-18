@@ -23,6 +23,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -656,7 +657,9 @@ private fun ComboLine(
     revealed: Boolean,
     inline: Boolean = false,
 ) {
-    if (idx in expected.indices) expected[idx] = answer
+    SideEffect {
+        if (idx in expected.indices && expected[idx] != answer) expected[idx] = answer
+    }
     val p = vm.palette
     var open by remember { mutableStateOf(false) }
     val box = @Composable {
@@ -963,6 +966,7 @@ private fun PrefixMenu(value: String, p: Palette, onPick: (String) -> Unit) {
 fun LitQuizScreen(vm: AppViewModel, id: String) {
     val book = vm.content.book(id) ?: return
     val qs = book.arr("quiz")
+    if (qs.isEmpty()) return
     var idx by remember { mutableIntStateOf(0) }
     var score by remember { mutableIntStateOf(0) }
     var answered by remember { mutableStateOf(false) }

@@ -7,10 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,7 +21,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +29,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -108,49 +105,49 @@ private fun FeatureCard(vm: AppViewModel, t: String, b: String, l: String) {
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SubjectsScreen(vm: AppViewModel) {
     val p = vm.palette
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
         PageTop(vm, { vm.back() }, vm.tr("subjects_title"), vm.tr("subjects_sub"))
-        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
-            val cell = (maxWidth - 12.dp) / 2
-            FlowRow(
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(bottom = 24.dp),
-                maxItemsInEachRow = 2,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                vm.content.subjects.forEach { s ->
-                    val open = s.bool("open")
-                    Box(
-                        Modifier
-                            .width(cell)
-                            .height(132.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(p.mantle)
-                            .border(1.dp, if (open) p.text.copy(0.08f) else p.text.copy(0.04f), RoundedCornerShape(20.dp))
-                            .alpha(if (open) 1f else 0.48f)
-                            .then(if (open) Modifier.clickable { vm.goPage(s.str("target")) } else Modifier)
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            when (s.str("icon")) {
-                                "de" -> GermanFlag(44.dp)
-                                "wifi" -> WifiIcon(p.text, 36.dp)
-                                "chip" -> ChipIcon(p.text, 36.dp)
-                                "cz" -> CzechFlag(44.dp)
-                                else -> LockIcon(p.overlay, 22.dp)
+        Column(
+            Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            vm.content.subjects.chunked(2).forEach { row ->
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    row.forEach { s ->
+                        val open = s.bool("open")
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .height(132.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(p.mantle)
+                                .border(1.dp, if (open) p.text.copy(0.08f) else p.text.copy(0.04f), RoundedCornerShape(20.dp))
+                                .alpha(if (open) 1f else 0.48f)
+                                .then(if (open) Modifier.clickable { vm.goPage(s.str("target")) } else Modifier)
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                when (s.str("icon")) {
+                                    "de" -> GermanFlag(44.dp)
+                                    "wifi" -> WifiIcon(p.text, 36.dp)
+                                    "chip" -> ChipIcon(p.text, 36.dp)
+                                    "cz" -> CzechFlag(44.dp)
+                                    else -> LockIcon(p.overlay, 22.dp)
+                                }
+                                Spacer(Modifier.height(10.dp))
+                                Text(vm.tr(s.str("key")), color = p.text, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
                             }
-                            Spacer(Modifier.height(10.dp))
-                            Text(vm.tr(s.str("key")), color = p.text, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
                         }
                     }
+                    if (row.size == 1) Spacer(Modifier.weight(1f))
                 }
             }
         }
@@ -166,7 +163,16 @@ fun SettingsSheet(vm: AppViewModel) {
             .verticalScroll(rememberScrollState())
             .padding(20.dp),
     ) {
-        Text(vm.tr("settings_title"), color = p.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                vm.tr("settings_title"),
+                color = p.text,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f),
+            )
+            PillButton(vm.tr("back"), p) { vm.settingsOpen = false }
+        }
         Spacer(Modifier.height(16.dp))
         Text(vm.tr("mode"), color = p.subtext, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(6.dp))
@@ -233,14 +239,14 @@ fun StatsScreen(vm: AppViewModel) {
     val pct = if (sum.totalEx == 0) 0 else (100 * sum.doneEx / sum.totalEx)
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
         PageTop(vm, { vm.back() }, vm.tr("stats_title"), vm.tr("stats_sub"))
-        Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = 24.dp)) {
+        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(bottom = 24.dp)) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Metric(p, vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx), Modifier.weight(1f))
                 Metric(p, vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", pct), Modifier.weight(1f))
                 Metric(p, vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits), Modifier.weight(1f))
             }
             Spacer(Modifier.height(10.dp))
-            LinearProgressIndicator(pct / 100f, Modifier.fillMaxWidth().height(8.dp).clip(CircleShape), p.accent, p.surface1, StrokeCap.Round)
+            ProgressBar(pct / 100f, p, 8.dp)
             Spacer(Modifier.height(20.dp))
             Text(vm.tr("stats_section"), color = p.subtext, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(8.dp))
@@ -258,16 +264,30 @@ fun StatsScreen(vm: AppViewModel) {
                         )
                         if (open && part.totalEx > 0) {
                             Spacer(Modifier.height(8.dp))
-                            LinearProgressIndicator(
-                                part.doneEx / part.totalEx.toFloat(),
-                                Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
-                                p.accent, p.surface1, StrokeCap.Round,
-                            )
+                            ProgressBar(part.doneEx / part.totalEx.toFloat(), p, 6.dp)
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ProgressBar(fraction: Float, p: org.maturita.maturita.data.Palette, barHeight: androidx.compose.ui.unit.Dp) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(barHeight)
+            .clip(CircleShape)
+            .background(p.surface1),
+    ) {
+        Box(
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(fraction.coerceIn(0f, 1f))
+                .background(p.accent),
+        )
     }
 }
 
@@ -342,7 +362,7 @@ fun SearchOverlay(vm: AppViewModel) {
         if (hits.isEmpty()) {
             Text(if (q.isEmpty()) vm.tr("search_hint") else vm.tr("search_empty"), color = p.subtext)
         } else {
-            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 hits.forEach { hit ->
                     CardBox(p, Modifier.fillMaxWidth().clickable {
                         if (!hit.locked) {
@@ -409,6 +429,7 @@ fun RoadmapScreen(vm: AppViewModel) {
     Column(Modifier.fillMaxSize().padding(horizontal = 12.dp)) {
         PageTop(vm, { vm.back() }, vm.tr("roadmap_title"), vm.tr("roadmap_sub"))
         PathMap(
+            modifier = Modifier.weight(1f),
             nodes = vm.content.german.mapIndexed { i, u ->
                 val unlocked = u.bool("unlocked")
                 val names = u.strs("names")
@@ -438,6 +459,7 @@ fun UnitMapScreen(vm: AppViewModel, unitId: Int) {
         PageTop(vm, { vm.back() }, u.str("title"), vm.tr(u.str("sub")))
         val next = names.indices.firstOrNull { !vm.progress.germanDone(unitId, it + 1) }
         PathMap(
+            modifier = Modifier.weight(1f),
             nodes = names.mapIndexed { i, name ->
                 val n = i + 1
                 MapNode(
@@ -503,7 +525,7 @@ fun LessonMapScreen(
 ) {
     Column(Modifier.fillMaxSize().padding(horizontal = 12.dp)) {
         PageTop(vm, { vm.back() }, title, sub)
-        PathMap(nodes, vm.palette, litUntil, nodeSize = 64f, spac = 150f, mx = 70f)
+        PathMap(nodes, vm.palette, litUntil, modifier = Modifier.weight(1f), nodeSize = 64f, spac = 150f, mx = 70f)
     }
 }
 

@@ -126,6 +126,7 @@ fun PathMap(
     nodes: List<MapNode>,
     palette: Palette,
     litUntil: Float,
+    modifier: Modifier = Modifier,
     nodeSize: Float = 72f,
     mx: Float = 90f,
     my: Float = 110f,
@@ -139,8 +140,8 @@ fun PathMap(
     if (nodes.isEmpty()) return
     val density = LocalDensity.current
     fun Float.toDp(): androidx.compose.ui.unit.Dp = with(density) { this@toDp.toDp() }
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val avail = constraints.maxWidth.toFloat()
+    BoxWithConstraints(modifier.fillMaxSize()) {
+        val avail = constraints.maxWidth.toFloat().coerceAtLeast(1f)
         val geo = serpentine(nodes.size, avail, mx, my, spac, gap, wave, lift)
         Box(
             Modifier

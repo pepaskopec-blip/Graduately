@@ -16,10 +16,10 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -51,6 +51,7 @@ import org.maturita.maturita.ui.StatsIcon
 import org.maturita.maturita.ui.StatsScreen
 import org.maturita.maturita.ui.SubjectsScreen
 import org.maturita.maturita.ui.UnitMapScreen
+import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.ui.VocabExercise
 import org.maturita.maturita.ui.WelcomeScreen
 
@@ -64,9 +65,43 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MaturitaApp(vm: AppViewModel) {
+    val p = vm.palette
+    val scheme = if (vm.mode == ColorMode.Dark) {
+        darkColorScheme(
+            primary = p.accent,
+            onPrimary = p.onAccent,
+            secondary = p.accent2,
+            background = p.base,
+            onBackground = p.text,
+            surface = p.mantle,
+            onSurface = p.text,
+            surfaceVariant = p.surface1,
+            onSurfaceVariant = p.subtext,
+            error = p.error,
+        )
+    } else {
+        lightColorScheme(
+            primary = p.accent,
+            onPrimary = p.onAccent,
+            secondary = p.accent2,
+            background = p.base,
+            onBackground = p.text,
+            surface = p.mantle,
+            onSurface = p.text,
+            surfaceVariant = p.surface1,
+            onSurfaceVariant = p.subtext,
+            error = p.error,
+        )
+    }
+    MaterialTheme(colorScheme = scheme) {
+        MaturitaAppBody(vm)
+    }
+}
+
+@Composable
+private fun MaturitaAppBody(vm: AppViewModel) {
     val p = vm.palette
     LaunchedEffect(Unit) { vm.checkUpdate(false) }
     BackHandler(vm.canGoBack || vm.searchOpen || vm.settingsOpen) {
@@ -184,11 +219,10 @@ fun MaturitaApp(vm: AppViewModel) {
         }
         if (vm.searchOpen) SearchOverlay(vm)
         if (vm.settingsOpen) {
-            ModalBottomSheet(
-                onDismissRequest = { vm.settingsOpen = false },
-                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                containerColor = p.base,
-                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(p.base),
             ) { SettingsSheet(vm) }
         }
     }

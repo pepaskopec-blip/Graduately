@@ -66,6 +66,11 @@ class Updater(private val app: Application) {
                 val dir = File(app.cacheDir, "updates").apply { mkdirs() }
                 val apk = File(dir, "maturita.apk")
                 download(url, apk)
+                if (!isApk(apk)) {
+                    apk.delete()
+                    emit(cb, UpdateState("error", messageKey = "update_err_download", messageArg = null))
+                    return@execute
+                }
                 val uri = FileProvider.getUriForFile(app, "${app.packageName}.files", apk)
                 val intent = Intent(Intent.ACTION_VIEW).apply {
                     setDataAndType(uri, "application/vnd.android.package-archive")
@@ -76,6 +81,15 @@ class Updater(private val app: Application) {
             } catch (_: Exception) {
                 emit(cb, UpdateState("error", messageKey = "update_err_download", messageArg = null))
             }
+        }
+    }
+
+    private fun isApk(file: File): Boolean {
+        if (file.length() < 1_000_000L) return false
+        file.inputStream().use { input ->
+            val header = ByteArray(2)
+            if (input.read(header) != 2) return false
+            return header[0] == 'P'.code.toByte() && header[1] == 'K'.code.toByte()
         }
     }
 
