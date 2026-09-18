@@ -143,9 +143,51 @@ jobs:
           name: maturita-macos
           path: dist/maturita-macos-*.zip
 
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK platform
+        run: |
+          sdkmanager --install "platforms;android-37" "build-tools;36.0.0"
+          if [ -d "$ANDROID_HOME/platforms/android-37.0" ] && [ ! -e "$ANDROID_HOME/platforms/android-37" ]; then
+            ln -s android-37.0 "$ANDROID_HOME/platforms/android-37"
+          fi
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: android
+
+      - name: Extract content and build APK
+        env:
+          COMMIT: ${{ github.sha }}
+        run: |
+          python3 scripts/extract-android-content.py
+          chmod +x android/gradlew
+          cd android
+          ./gradlew :app:assembleRelease --no-daemon
+          mkdir -p ../dist-android
+          cp app/build/outputs/apk/release/app-release.apk \
+            ../dist-android/maturita-android.apk
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maturita-android
+          path: dist-android/maturita-android.apk
+
   publish:
     name: Publish to builds branch
-    needs: [linux, windows, macos]
+    needs: [linux, windows, macos, android]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -23,3 +23,14 @@ cmake-build-*/
 error.txt
 error.log
 CLAUDE.md
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/.cxx/
+android/.local-sdk/
+android/app/src/main/assets/content.json

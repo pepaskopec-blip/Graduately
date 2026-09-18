@@ -30,6 +30,7 @@ větve.
 | macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Rozbalit, pravý klik na **Nainstalovat maturita.C** → **Otevřít** |
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
+| Android (8+) | [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk) | Stáhnout APK a nainstalovat (neznámé zdroje) |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -49,8 +50,10 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 - [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
+- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk)
 
 Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
+Na Androidu do úložiště aplikace (stejné statistiky, témata a jazyk).
 
 Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#sestavení-ze-zdroje).
 
@@ -129,13 +132,25 @@ make bundle                     # dist/maturita.exe jde spustit i z Průzkumník
 
 ```
 src/                 C zdroje a maturita.h
+android/             Jetpack Compose přehrávač (stejný obsah)
 data/                style.css, share/, podpisy, Windows .rc
 assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
-scripts/             balení AppImage a .app
+scripts/             balení AppImage, .app a extract-android-content.py
 .github/workflows/   CI: push na main → větev builds
 progress/            vzniká za běhu (cvičení, nastavení)
 ```
+
+Android ze zdroje (JDK 17 + Android SDK):
+
+```bash
+python3 scripts/extract-android-content.py
+cd android
+./gradlew :app:assembleRelease
+# APK: android/app/build/outputs/apk/release/app-release.apk
+```
+
+nebo z kořene `make android`.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -165,6 +180,7 @@ branch-named file.
 | macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Unzip, right-click **Nainstalovat maturita.C** → **Open** |
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
+| Android (8+) | [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk) | Download the APK and install (unknown sources) |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -184,9 +200,10 @@ above, or download from that branch page:
 - [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
+- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-android.apk)
 
 Progress and settings live in `progress/` next to the `.app` / folder /
-AppImage.
+AppImage. On Android they stay in app storage (same stats, themes, language).
 
 Intel Mac, another architecture, or hacking on the code →
 [build from source](#build-from-source).
@@ -266,12 +283,24 @@ make bundle                     # dist/maturita.exe can be double-clicked
 
 ```
 src/                 C sources and maturita.h
+android/             Jetpack Compose player (same content)
 data/                style.css, share/, signing files, Windows .rc
 assets/              source icon and screenshots
 installers/          fetch-the-latest installers
-scripts/             AppImage / .app bundlers
+scripts/             AppImage / .app bundlers and extract-android-content.py
 .github/workflows/   CI: push to main → builds branch
 progress/            created at runtime (exercises, settings)
 ```
+
+Android from source (JDK 17 + Android SDK):
+
+```bash
+python3 scripts/extract-android-content.py
+cd android
+./gradlew :app:assembleRelease
+# APK: android/app/build/outputs/apk/release/app-release.apk
+```
+
+or `make android` from the repo root.
 
 License: [GPL-3.0](LICENSE).

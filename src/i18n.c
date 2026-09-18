@@ -56,6 +56,11 @@ const TrEntry tr_ui[] = {
      "napsané v C studenty ze SSŠVT.",
      "Exam practice in one window. Czech and English, written in C "
      "by students from SSŠVT."},
+    {"welcome_body_android",
+     "Procvičování k maturitě v telefonu. Česky i anglicky, "
+     "stejný obsah jako na počítači.",
+     "Exam practice on your phone. Czech and English, "
+     "the same content as on the computer."},
     {"welcome_feat1_title", "Efektivní procvičování", "Focused practice"},
     {"welcome_feat1_body",
      "Cvičení, nápovědy a vokabeltraining. Aplikace si pamatuje, kde jste skončili.",
@@ -485,6 +490,9 @@ const TrEntry tr_ui[] = {
     {"net_slide_prev", "Zpět", "Back"},
     {"net_slide_start", "Přejít na cvičení", "Go to the exercise"},
     {"net_solution", "Ukázat řešení", "Show solution"},
+    {"net_infeasible",
+     "Toto zadání se do sítě /24 nevejde – vyzkoušej „Ukázat řešení“ a přečti si proč.",
+     "This assignment does not fit into a /24 network — tap “Show solution” to see why."},
     {"hw_sub", "Vyberte lekci na cestě a začněte procvičovat.",
      "Pick a unit on the path and start practicing."},
     {"hw_unit1", "Architektura počítače", "Computer architecture"},

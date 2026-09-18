@@ -115,4 +115,8 @@ installer-zips:
 
 -include $(DEP)
 
-.PHONY: all clean run bundle installer-zips
+android:
+	python3 scripts/extract-android-content.py
+	cd android && ./gradlew :app:assembleRelease
+
+.PHONY: all clean run bundle installer-zips android
