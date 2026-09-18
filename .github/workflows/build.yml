@@ -162,10 +162,15 @@ jobs:
 
       - name: Install Android SDK platform
         run: |
-          sdkmanager --install "platforms;android-37" "build-tools;36.0.0"
-          if [ -d "$ANDROID_HOME/platforms/android-37.0" ] && [ ! -e "$ANDROID_HOME/platforms/android-37" ]; then
-            ln -s android-37.0 "$ANDROID_HOME/platforms/android-37"
+          set -euo pipefail
+          sdkmanager --install "build-tools;36.0.0"
+          if ! sdkmanager --install "platforms;android-37.0"; then
+            sdkmanager --install "platforms;android-37"
           fi
+          if [ -d "$ANDROID_HOME/platforms/android-37.0" ] && [ ! -e "$ANDROID_HOME/platforms/android-37" ]; then
+            ln -sfn android-37.0 "$ANDROID_HOME/platforms/android-37"
+          fi
+          ls "$ANDROID_HOME/platforms"
 
       - uses: gradle/actions/setup-gradle@v4
         with:
