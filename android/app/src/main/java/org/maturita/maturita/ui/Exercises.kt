@@ -19,8 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -191,7 +190,8 @@ private fun AssemblyEx(vm: AppViewModel, title: String, sub: String?, spec: J, o
             FlowRow(Modifier.fillMaxWidth().padding(bottom = 6.dp).clip(RoundedCornerShape(14.dp)).background(p.surface0).padding(8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 if (placed[i].isEmpty()) Text("…", color = p.overlay)
                 placed[i].forEach { idx ->
-                    Chip(item.strs("words")[idx], p) {
+                    val word = item.strs("words").getOrNull(idx) ?: return@forEach
+                    Chip(word, p) {
                         placed[i].remove(idx)
                         pools[i].add(idx)
                     }
@@ -199,7 +199,8 @@ private fun AssemblyEx(vm: AppViewModel, title: String, sub: String?, spec: J, o
             }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 pools[i].toList().forEach { idx ->
-                    Chip(item.strs("words")[idx], p) {
+                    val word = item.strs("words").getOrNull(idx) ?: return@forEach
+                    Chip(word, p) {
                         pools[i].remove(idx)
                         placed[i].add(idx)
                     }
@@ -663,26 +664,43 @@ private fun ComboLine(
     val p = vm.palette
     var open by remember { mutableStateOf(false) }
     val box = @Composable {
-        Box {
+        Column {
             Box(
                 Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .background(p.mantle)
                     .border(1.dp, if (revealed && picks.getOrNull(idx).orEmpty().isNotEmpty()) {
-                        if (answerAccepts(normalizeAnswer(picks[idx]), answer)) p.success else p.error
+                        if (answerAccepts(normalizeAnswer(picks.getOrNull(idx).orEmpty()), answer)) p.success else p.error
                     } else p.text.copy(0.1f), RoundedCornerShape(12.dp))
-                    .clickable { open = true }
+                    .clickable { open = !open }
                     .padding(horizontal = 12.dp, vertical = 8.dp),
             ) {
                 val pick = picks.getOrNull(idx).orEmpty()
                 Text(pick.ifEmpty { "—" }, color = if (pick.isEmpty()) p.overlay else p.text)
             }
-            DropdownMenu(open, { open = false }) {
-                pool.forEach { w ->
-                    DropdownMenuItem({ Text(w) }, {
-                        if (idx in picks.indices) picks[idx] = w
-                        open = false
-                    })
+            if (open) {
+                Column(
+                    Modifier
+                        .padding(top = 4.dp)
+                        .heightIn(max = 220.dp)
+                        .verticalScroll(rememberScrollState())
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(p.surface0)
+                        .border(1.dp, p.text.copy(0.08f), RoundedCornerShape(12.dp)),
+                ) {
+                    pool.forEach { w ->
+                        Text(
+                            w,
+                            color = p.text,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    if (idx in picks.indices) picks[idx] = w
+                                    open = false
+                                }
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                        )
+                    }
                 }
             }
         }
@@ -950,13 +968,28 @@ private fun VlsmEx(vm: AppViewModel, @Suppress("UNUSED_PARAMETER") lesson: J) {
 @Composable
 private fun PrefixMenu(value: String, p: Palette, onPick: (String) -> Unit) {
     var open by remember { mutableStateOf(false) }
-    Box(Modifier.padding(vertical = 4.dp)) {
+    Column(Modifier.padding(vertical = 4.dp)) {
         Box(
-            Modifier.clip(RoundedCornerShape(12.dp)).background(p.mantle).clickable { open = true }.padding(10.dp),
+            Modifier.clip(RoundedCornerShape(12.dp)).background(p.mantle).clickable { open = !open }.padding(10.dp),
         ) { Text(value.ifEmpty { "/…" }, color = p.text) }
-        DropdownMenu(open, { open = false }) {
-            (8..30).forEach { n ->
-                DropdownMenuItem({ Text("/$n") }, { onPick("/$n"); open = false })
+        if (open) {
+            Column(
+                Modifier
+                    .heightIn(max = 220.dp)
+                    .verticalScroll(rememberScrollState())
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(p.surface0),
+            ) {
+                (8..30).forEach { n ->
+                    Text(
+                        "/$n",
+                        color = p.text,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onPick("/$n"); open = false }
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                    )
+                }
             }
         }
     }

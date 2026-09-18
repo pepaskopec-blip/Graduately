@@ -16,7 +16,7 @@ class Content(root: JSONObject) {
     }
     val subjects = raw.arr("subjects")
     val german = raw.arr("german")
-    val net = raw.obj("net")!!
+    val net = raw.obj("net") ?: J(JSONObject())
     val netLessons = net.arr("lessons")
     val netTasks = net.arr("tasks")
     val netAnswers: List<List<J>> = run {
@@ -59,8 +59,12 @@ class Content(root: JSONObject) {
 
     companion object {
         fun load(context: Context): Content {
-            val text = context.assets.open("content.json").bufferedReader().use { it.readText() }
-            return Content(JSONObject(text))
+            return try {
+                val text = context.assets.open("content.json").bufferedReader().use { it.readText() }
+                Content(JSONObject(text))
+            } catch (_: Exception) {
+                Content(JSONObject())
+            }
         }
     }
 }

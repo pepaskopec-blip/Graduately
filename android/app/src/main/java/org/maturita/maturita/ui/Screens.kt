@@ -56,6 +56,11 @@ fun WelcomeScreen(vm: AppViewModel) {
             .padding(horizontal = 24.dp, vertical = 16.dp),
     ) {
         Text("maturita.c", color = p.text, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+        Text(
+            "sestavení ${org.maturita.maturita.BuildConfig.VERSION_NAME} · ${org.maturita.maturita.BuildConfig.COMMIT.take(7)}",
+            color = p.overlay,
+            fontSize = 12.sp,
+        )
         Spacer(Modifier.height(12.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
@@ -184,7 +189,7 @@ fun SettingsSheet(vm: AppViewModel) {
         Text(vm.tr("theme"), color = p.subtext, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(8.dp))
         themeNames.forEachIndexed { i, name ->
-            val id = ThemeId.entries[i]
+            val id = ThemeId.entries.getOrNull(i) ?: return@forEachIndexed
             val sw = themePalette(id, vm.mode)
             val sel = vm.themeId == id
             Row(
