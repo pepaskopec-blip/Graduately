@@ -23,7 +23,8 @@
 #define APP_ID        "org.maturita.Maturita"
 /* Published builds bake in the commit they were made from (see COMMIT in the
  * Makefile), which is what the updater compares against the build published
- * in the repository. Local builds stay at "dev" and never offer an update. */
+ * in the repository. Plain source builds stay at "dev" and never offer an
+ * update; the macOS bundler supplies the checkout commit for local packages. */
 #ifndef APP_COMMIT
 #define APP_COMMIT    "dev"
 #endif

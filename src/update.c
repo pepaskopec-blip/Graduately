@@ -196,7 +196,7 @@ static gboolean same_commit(const char *a, const char *b) {
     return ok;
 }
 
-/* Only builds published by CI carry a commit; see APP_COMMIT in maturita.h. */
+/* Packaged builds carry a source commit; see APP_COMMIT in maturita.h. */
 static gboolean is_published_build(void) {
     return g_ascii_isxdigit(APP_COMMIT[0]) && strlen(APP_COMMIT) >= 7;
 }

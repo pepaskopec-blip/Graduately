@@ -102,6 +102,11 @@ make bundle       # AppImage / .app zip / Windows složka s DLL
 
 Volitelně CMake: `cmake -S . -B build && cmake --build build`.
 
+Na macOS `make bundle` automaticky vloží aktuální Git commit, aby fungovala
+kontrola aktualizací. Při balení ze zdrojů bez `.git` zadejte
+`COMMIT=<zdrojový-commit> make bundle`. Samotné `make` nadále vytváří vývojový
+build bez aktualizací.
+
 Aby stažená aplikace na macOS šla otevřít bez potvrzení v Nastavení, CI
 potřebuje **Apple Developer Program** a GitHub Secrets:
 
@@ -252,6 +257,11 @@ make bundle       # AppImage / .app zip / Windows DLL folder
 ```
 
 Optional CMake: `cmake -S . -B build && cmake --build build`.
+
+On macOS, `make bundle` embeds the current Git commit so the installed app
+can check for updates. When packaging a source export without `.git`, use
+`COMMIT=<source-commit> make bundle`. Plain `make` still produces a development
+build without updates.
 
 Skipping Gatekeeper on a downloaded macOS build needs an
 **Apple Developer Program** membership and these GitHub Secrets:
