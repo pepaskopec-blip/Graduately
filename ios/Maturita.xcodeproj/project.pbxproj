@@ -339,7 +339,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMMIT = dev;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C2U9S337H8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Maturita/Info.plist;
@@ -356,7 +356,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "ios-1";
-				PRODUCT_BUNDLE_IDENTIFIER = org.maturita.maturita;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -375,7 +375,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMMIT = dev;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = C2U9S337H8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Maturita/Info.plist;
@@ -392,7 +392,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = "ios-1";
-				PRODUCT_BUNDLE_IDENTIFIER = org.maturita.maturita;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
