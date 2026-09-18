@@ -10,7 +10,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-OUT = ROOT / "android" / "app" / "src" / "main" / "assets" / "content.json"
+OUTS = [
+    ROOT / "android" / "app" / "src" / "main" / "assets" / "content.json",
+    ROOT / "ios" / "Maturita" / "content.json",
+]
+OUT = OUTS[0]
 
 IDENT = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 
@@ -1223,8 +1227,10 @@ def main() -> int:
             else:
                 german_units[2]["exercises"]["5"]["bank"] = raw[0]
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    text = json.dumps(payload, ensure_ascii=False, indent=2)
+    for dest in OUTS:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(text, encoding="utf-8")
 
     def count(path, pred):
         node = payload
@@ -1232,7 +1238,7 @@ def main() -> int:
             node = node[p]
         return sum(1 for x in node if pred(x))
 
-    print(f"wrote {OUT}")
+    print("wrote " + ", ".join(str(dest) for dest in OUTS))
     print(f"  i18n keys: {len(i18n)}")
     print(f"  german unlocked exercises: "
           f"{sum(len(u.get('exercises', {})) for u in german_units if u['unlocked'])}")

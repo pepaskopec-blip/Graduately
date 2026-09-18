@@ -31,6 +31,7 @@ větve.
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
 | Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout maturita.C.html** a nainstalovat APK (neznámé zdroje) |
+| iOS (16+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat maturita.C.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -51,9 +52,10 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
 - [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
+- [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
 
 Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
-Na Androidu do úložiště aplikace (stejné statistiky, témata a jazyk).
+Na Androidu a iOS do úložiště aplikace (stejné statistiky, témata a jazyk).
 
 Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#sestavení-ze-zdroje).
 
@@ -138,10 +140,11 @@ make bundle                     # dist/maturita.exe jde spustit i z Průzkumník
 ```
 src/                 C zdroje a maturita.h
 android/             Jetpack Compose přehrávač (stejný obsah)
+ios/                 SwiftUI přehrávač (stejný obsah)
 data/                style.css, share/, podpisy, Windows .rc
 assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
-scripts/             balení AppImage, .app a extract-android-content.py
+scripts/             balení AppImage, .app, IPA a extract-android-content.py
 .github/workflows/   CI: push na main → větev builds
 progress/            vzniká za běhu (cvičení, nastavení)
 ```
@@ -156,6 +159,15 @@ cd android
 ```
 
 nebo z kořene `make android`.
+
+iOS ze zdroje (Xcode 16, iOS 16+):
+
+```bash
+python3 scripts/extract-android-content.py
+open ios/Maturita.xcodeproj
+# Signing: vlastní Team, Run na iPhone
+# nebo: make ios   # unsigned IPA v dist-ios/maturita-ios.ipa
+```
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -186,6 +198,7 @@ branch-named file.
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
 | Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout maturita.C.html**, then install the APK (unknown sources) |
+| iOS (16+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat maturita.C.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
@@ -206,9 +219,10 @@ above, or download from that branch page:
 - [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
 - [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
+- [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
 
 Progress and settings live in `progress/` next to the `.app` / folder /
-AppImage. On Android they stay in app storage (same stats, themes, language).
+AppImage. On Android and iOS they stay in app storage (same stats, themes, language).
 
 Intel Mac, another architecture, or hacking on the code →
 [build from source](#build-from-source).
@@ -294,10 +308,11 @@ make bundle                     # dist/maturita.exe can be double-clicked
 ```
 src/                 C sources and maturita.h
 android/             Jetpack Compose player (same content)
+ios/                 SwiftUI player (same content)
 data/                style.css, share/, signing files, Windows .rc
 assets/              source icon and screenshots
 installers/          fetch-the-latest installers
-scripts/             AppImage / .app bundlers and extract-android-content.py
+scripts/             AppImage / .app / IPA bundlers and extract-android-content.py
 .github/workflows/   CI: push to main → builds branch
 progress/            created at runtime (exercises, settings)
 ```
@@ -312,5 +327,14 @@ cd android
 ```
 
 or `make android` from the repo root.
+
+iOS from source (Xcode 16, iOS 16+):
+
+```bash
+python3 scripts/extract-android-content.py
+open ios/Maturita.xcodeproj
+# Signing: your Team, Run on iPhone
+# or: make ios   # unsigned IPA at dist-ios/maturita-ios.ipa
+```
 
 License: [GPL-3.0](LICENSE).

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>maturita.C pro iOS</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 28rem;
+      margin: 3rem auto;
+      padding: 0 1.2rem;
+      color: #1a1a1a;
+    }
+    a.btn {
+      display: block;
+      text-align: center;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 1rem 1.2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    p { color: #444; line-height: 1.45; }
+    code { font-size: 0.95em; }
+    ol { color: #444; line-height: 1.5; padding-left: 1.2rem; }
+  </style>
+</head>
+<body>
+  <h1>maturita.C pro iPhone</h1>
+  <p>
+    Apple nepovolí instalaci jako Android APK. Nejjednodušší cesta je Mac
+    s Xcode a vlastní iPhone (bezplatný Apple účet stačí na 7 dní).
+  </p>
+  <ol>
+    <li>Naklonuj <a href="https://github.com/pepaskopec-blip/maturita.c">maturita.c</a></li>
+    <li>Otevři <code>ios/Maturita.xcodeproj</code></li>
+    <li>V Signing vyber svůj Team</li>
+    <li>Připoj iPhone a stiskni Run</li>
+  </ol>
+  <p>
+    IPA z větve <code>builds</code> jde nahrát i přes AltStore nebo Sideloadly
+    (unsigned balíček, potřebuješ nástroj na sideload).
+  </p>
+  <p>
+    <a class="btn" id="dl"
+       href="https://raw.githubusercontent.com/pepaskopec-blip/maturita.c/refs/heads/builds/maturita-ios.ipa">
+      Stáhnout IPA
+    </a>
+  </p>
+  <p>
+    Když odkaz hlásí 404, otevři
+    <a href="https://github.com/pepaskopec-blip/maturita.c/tree/builds">větev builds</a>
+    a stáhni <code>maturita-ios.ipa</code> odtud.
+  </p>
+  <script>
+    (function () {
+      var repo = "pepaskopec-blip/maturita.c";
+      fetch("https://api.github.com/repos/" + repo + "/commits/builds")
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.sha) {
+            document.getElementById("dl").href =
+              "https://raw.githubusercontent.com/" + repo + "/" + d.sha + "/maturita-ios.ipa";
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
+</body>
+</html>

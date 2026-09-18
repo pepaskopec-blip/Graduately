@@ -119,4 +119,8 @@ android:
 	python3 scripts/extract-android-content.py
 	cd android && ./gradlew :app:assembleRelease
 
-.PHONY: all clean run bundle installer-zips android
+ios:
+	chmod +x scripts/bundle-ios.sh
+	./scripts/bundle-ios.sh
+
+.PHONY: all clean run bundle installer-zips android ios

@@ -34,3 +34,10 @@ android/*.iml
 android/.cxx/
 android/.local-sdk/
 android/app/src/main/assets/content.json
+
+# iOS
+ios/DerivedData/
+ios/build/
+ios/Payload/
+ios/Maturita/content.json
+ios/**/xcuserdata/

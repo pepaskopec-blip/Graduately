@@ -32,3 +32,8 @@ cp maturita-android.html "$tmp/Stahnout maturita.C.html"
 rm -f "$here/maturita-installer-android.zip"
 (cd "$tmp" && zip -q -FS "$here/maturita-installer-android.zip" \
     "Stahnout maturita.C.html")
+
+cp maturita-ios.html "$tmp/Jak nainstalovat maturita.C.html"
+rm -f "$here/maturita-installer-ios.zip"
+(cd "$tmp" && zip -q -FS "$here/maturita-installer-ios.zip" \
+    "Jak nainstalovat maturita.C.html")
