@@ -163,11 +163,13 @@ nebo z kořene `make android`.
 iOS ze zdroje (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
-python3 scripts/extract-android-content.py
 open ios/Maturita.xcodeproj
-# Signing: vlastní Team, Run na iPhone
+# Simulátor: vyber iPhone a Run, nic dalšího není potřeba (obsah se
+# vytáhne z C zdrojů při buildu). Na iPhone: v Signing vyber svůj Team.
 # nebo: make ios   # unsigned IPA v dist-ios/maturita-ios.ipa
 ```
+
+Projekt musí zůstat v `ios/` uvnitř repozitáře – build čte `../src` a `../scripts`.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -331,10 +333,12 @@ or `make android` from the repo root.
 iOS from source (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
-python3 scripts/extract-android-content.py
 open ios/Maturita.xcodeproj
-# Signing: your Team, Run on iPhone
+# Simulator: pick an iPhone and Run, nothing else needed (content is
+# extracted from the C sources during the build). Device: pick your Team.
 # or: make ios   # unsigned IPA at dist-ios/maturita-ios.ipa
 ```
+
+Keep the project inside `ios/` in the checkout – the build reads `../src` and `../scripts`.
 
 License: [GPL-3.0](LICENSE).

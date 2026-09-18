@@ -10,10 +10,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
+# Default target is the Android asset; Xcode passes `--out` and copies the
+# file into the app bundle itself, so nothing generated lives under ios/.
 OUTS = [
     ROOT / "android" / "app" / "src" / "main" / "assets" / "content.json",
-    ROOT / "ios" / "Maturita" / "content.json",
 ]
+if "--out" in sys.argv:
+    OUTS = [Path(a) for a in sys.argv[sys.argv.index("--out") + 1:] if a]
+    if not OUTS:
+        sys.exit("usage: extract-android-content.py [--out PATH ...]")
 OUT = OUTS[0]
 
 IDENT = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")

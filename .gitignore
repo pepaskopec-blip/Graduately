@@ -39,5 +39,4 @@ android/app/src/main/assets/content.json
 ios/DerivedData/
 ios/build/
 ios/Payload/
-ios/Maturita/content.json
 ios/**/xcuserdata/

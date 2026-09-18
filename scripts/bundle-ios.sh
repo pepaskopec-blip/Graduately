@@ -6,8 +6,7 @@ set -eu
 root=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
 cd "$root"
 
-python3 scripts/extract-android-content.py
-
+# The Xcode target extracts content.json itself during the build.
 export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 COMMIT="${COMMIT:-$(git -C "$root" rev-parse HEAD 2>/dev/null || echo dev)}"
 dd="$root/ios/DerivedData"
