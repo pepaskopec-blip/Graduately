@@ -124,4 +124,8 @@ ios:
 	chmod +x scripts/bundle-ios.sh
 	./scripts/bundle-ios.sh
 
-.PHONY: all clean run bundle installer-zips android ios
+macos:
+	chmod +x scripts/bundle-macos-swift.sh
+	./scripts/bundle-macos-swift.sh
+
+.PHONY: all clean run bundle installer-zips android ios macos

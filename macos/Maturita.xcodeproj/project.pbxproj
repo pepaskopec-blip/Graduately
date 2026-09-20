@@ -1,0 +1,429 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B101000000000000000001 /* MaturitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000001 /* MaturitaApp.swift */; };
+		B101000000000000000002 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000002 /* Platform.swift */; };
+		B101000000000000000003 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000003 /* Updater.swift */; };
+		B101000000000000000004 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000004 /* AppModel.swift */; };
+		B101000000000000000005 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000005 /* Route.swift */; };
+		B101000000000000000006 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000006 /* JSON.swift */; };
+		B101000000000000000007 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000007 /* Content.swift */; };
+		B101000000000000000008 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000008 /* Theme.swift */; };
+		B101000000000000000009 /* Answers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000009 /* Answers.swift */; };
+		B101000000000000000010 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000010 /* ProgressStore.swift */; };
+		B101000000000000000011 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000011 /* Components.swift */; };
+		B101000000000000000012 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000012 /* Icons.swift */; };
+		B101000000000000000013 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000013 /* Screens.swift */; };
+		B101000000000000000014 /* Exercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000014 /* Exercises.swift */; };
+		B101000000000000000015 /* ExercisesMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000015 /* ExercisesMore.swift */; };
+		B101000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B201000000000000000016 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B201000000000000000001 /* MaturitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaturitaApp.swift; sourceTree = "<group>"; };
+		B201000000000000000002 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		B201000000000000000003 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		B201000000000000000004 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../ios/Maturita/AppModel.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000005 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Route.swift; path = ../ios/Maturita/Route.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000006 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = ../ios/Maturita/Data/JSON.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000007 /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Content.swift; path = ../ios/Maturita/Data/Content.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000008 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = ../ios/Maturita/Data/Theme.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000009 /* Answers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Answers.swift; path = ../ios/Maturita/Data/Answers.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000010 /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressStore.swift; path = ../ios/Maturita/Data/ProgressStore.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000011 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Components.swift; path = ../ios/Maturita/UI/Components.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000012 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icons.swift; path = ../ios/Maturita/UI/Icons.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000013 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Screens.swift; path = ../ios/Maturita/UI/Screens.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000014 /* Exercises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Exercises.swift; path = ../ios/Maturita/UI/Exercises.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000015 /* ExercisesMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExercisesMore.swift; path = ../ios/Maturita/UI/ExercisesMore.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B201000000000000000017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B201000000000000000018 /* Maturita.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Maturita.entitlements; sourceTree = "<group>"; };
+		B301000000000000000001 /* Maturita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maturita.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B401000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B501000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				B501000000000000000002 /* Maturita */,
+				B501000000000000000006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B501000000000000000002 /* Maturita */ = {
+			isa = PBXGroup;
+			children = (
+				B201000000000000000001 /* MaturitaApp.swift */,
+				B201000000000000000002 /* Platform.swift */,
+				B201000000000000000004 /* AppModel.swift */,
+				B201000000000000000005 /* Route.swift */,
+				B501000000000000000003 /* Data */,
+				B501000000000000000004 /* Update */,
+				B501000000000000000005 /* UI */,
+				B201000000000000000016 /* Assets.xcassets */,
+				B201000000000000000017 /* Info.plist */,
+				B201000000000000000018 /* Maturita.entitlements */,
+			);
+			path = Maturita;
+			sourceTree = "<group>";
+		};
+		B501000000000000000003 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B201000000000000000006 /* JSON.swift */,
+				B201000000000000000007 /* Content.swift */,
+				B201000000000000000008 /* Theme.swift */,
+				B201000000000000000009 /* Answers.swift */,
+				B201000000000000000010 /* ProgressStore.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		B501000000000000000004 /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				B201000000000000000003 /* Updater.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
+		B501000000000000000005 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B201000000000000000011 /* Components.swift */,
+				B201000000000000000012 /* Icons.swift */,
+				B201000000000000000013 /* Screens.swift */,
+				B201000000000000000014 /* Exercises.swift */,
+				B201000000000000000015 /* ExercisesMore.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		B501000000000000000006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B301000000000000000001 /* Maturita.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B601000000000000000001 /* Maturita */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B801000000000000000002 /* Build configuration list for PBXNativeTarget "Maturita" */;
+			buildPhases = (
+				B701000000000000000001 /* Sources */,
+				B401000000000000000001 /* Frameworks */,
+				B701000000000000000002 /* Resources */,
+				B701000000000000000004 /* Extract content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Maturita;
+			productName = Maturita;
+			productReference = B301000000000000000001 /* Maturita.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B001000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					B601000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = B801000000000000000001 /* Build configuration list for PBXProject "Maturita" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = cs;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				cs,
+				Base,
+			);
+			mainGroup = B501000000000000000001;
+			productRefGroup = B501000000000000000006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B601000000000000000001 /* Maturita */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B701000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B101000000000000000016 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B701000000000000000004 /* Extract content */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Extract content";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/content.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/content.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Pull the exercises out of the C sources and drop the JSON into the app\n# bundle. Nothing generated is kept in the repository, so a fresh clone opens\n# and runs in Xcode without extra steps.\nset -eu\nextract=\"${SRCROOT}/../scripts/extract-android-content.py\"\nif [ ! -f \"$extract\" ]; then\n  echo \"error: ${extract} not found. Keep macos/ inside the maturita.c checkout.\" >&2\n  exit 1\nfi\nout=\"${DERIVED_FILE_DIR}/content.json\"\nmkdir -p \"${DERIVED_FILE_DIR}\"\npython3 \"$extract\" --out \"$out\"\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"$out\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/content.json\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B701000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B101000000000000000001 /* MaturitaApp.swift in Sources */,
+				B101000000000000000002 /* Platform.swift in Sources */,
+				B101000000000000000003 /* Updater.swift in Sources */,
+				B101000000000000000004 /* AppModel.swift in Sources */,
+				B101000000000000000005 /* Route.swift in Sources */,
+				B101000000000000000006 /* JSON.swift in Sources */,
+				B101000000000000000007 /* Content.swift in Sources */,
+				B101000000000000000008 /* Theme.swift in Sources */,
+				B101000000000000000009 /* Answers.swift in Sources */,
+				B101000000000000000010 /* ProgressStore.swift in Sources */,
+				B101000000000000000011 /* Components.swift in Sources */,
+				B101000000000000000012 /* Icons.swift in Sources */,
+				B101000000000000000013 /* Screens.swift in Sources */,
+				B101000000000000000014 /* Exercises.swift in Sources */,
+				B101000000000000000015 /* ExercisesMore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B901000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B901000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B901000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Maturita/Maturita.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COMMIT = dev;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C2U9S337H8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Maturita/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = maturita.c;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSHighResolutionCapable = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "GPL-3.0";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = "macos-1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita.macos;
+				PRODUCT_NAME = Maturita;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B901000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Maturita/Maturita.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COMMIT = dev;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C2U9S337H8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Maturita/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = maturita.c;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSHighResolutionCapable = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "GPL-3.0";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = "macos-1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita.macos;
+				PRODUCT_NAME = Maturita;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B801000000000000000001 /* Build configuration list for PBXProject "Maturita" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B901000000000000000001 /* Debug */,
+				B901000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B801000000000000000002 /* Build configuration list for PBXNativeTarget "Maturita" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B901000000000000000003 /* Debug */,
+				B901000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B001000000000000000001 /* Project object */;
+}

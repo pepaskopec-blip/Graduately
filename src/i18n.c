@@ -66,6 +66,11 @@ const TrEntry tr_ui[] = {
      "stejný obsah, rozhraní podle iOS.",
      "Native exam practice on iPhone. Czech and English, "
      "the same content, adapted to iOS."},
+    {"welcome_body_macos",
+     "Nativní procvičování na Macu. Česky i anglicky, "
+     "stejný obsah, rozhraní podle macOS.",
+     "Native exam practice on the Mac. Czech and English, "
+     "the same content, adapted to macOS."},
     {"update_ios_sideload",
      "Nový build je na GitHubu. Nainstalujte ho znovu přes Xcode nebo AltStore (%s).",
      "A newer build is on GitHub. Reinstall it with Xcode or AltStore (%s)."},

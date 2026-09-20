@@ -53,6 +53,7 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
 - [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
 - [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
+- [maturita-macos-swift-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-swift-arm64.zip)
 
 Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
 Na Androidu a iOS do úložiště aplikace (stejné statistiky, témata a jazyk).
@@ -141,6 +142,7 @@ make bundle                     # dist/maturita.exe jde spustit i z Průzkumník
 src/                 C zdroje a maturita.h
 android/             Jetpack Compose přehrávač (stejný obsah)
 ios/                 SwiftUI přehrávač (stejný obsah)
+macos/               nativní SwiftUI aplikace pro Mac (stejný obsah)
 data/                style.css, share/, podpisy, Windows .rc
 assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
@@ -175,9 +177,17 @@ open Maturita.xcworkspace          # v kořeni repozitáře
 # nebo: make ios   # unsigned IPA v dist-ios/maturita-ios.ipa
 ```
 
-Workspace odkazuje na `ios/Maturita.xcodeproj`. Projekt nepřesouvejte – build
-čte `../src` a `../scripts` a v kořeni by `Maturita/` kolidovalo se
-zkompilovaným binárem `maturita`.
+Nativní macOS ze zdroje (Xcode 26, macOS 26+):
+
+```bash
+open Maturita.xcworkspace          # scheme Maturita z macos/Maturita.xcodeproj
+# nebo: make macos                 # zip v dist/maturita-macos-swift-arm64.zip
+```
+
+Workspace odkazuje na `ios/Maturita.xcodeproj` a `macos/Maturita.xcodeproj`.
+Projekty nepřesouvejte – build čte `../src` a `../scripts` a v kořeni by
+`Maturita/` kolidovalo se zkompilovaným binárem `maturita`. Nativní Mac
+aplikace sdílí cvičení s iOS přehrávačem; GTK verze (`make bundle`) zůstává.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -230,6 +240,7 @@ above, or download from that branch page:
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
 - [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
 - [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
+- [maturita-macos-swift-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-swift-arm64.zip)
 
 Progress and settings live in `progress/` next to the `.app` / folder /
 AppImage. On Android and iOS they stay in app storage (same stats, themes, language).
@@ -319,6 +330,7 @@ make bundle                     # dist/maturita.exe can be double-clicked
 src/                 C sources and maturita.h
 android/             Jetpack Compose player (same content)
 ios/                 SwiftUI player (same content)
+macos/               native SwiftUI Mac app (same content)
 data/                style.css, share/, signing files, Windows .rc
 assets/              source icon and screenshots
 installers/          fetch-the-latest installers
@@ -353,8 +365,17 @@ open Maturita.xcworkspace          # at the repo root
 # or: make ios   # unsigned IPA at dist-ios/maturita-ios.ipa
 ```
 
-The workspace points at `ios/Maturita.xcodeproj`. Do not move the project –
-the build reads `../src` and `../scripts`, and at the root `Maturita/` would
-collide with the compiled `maturita` binary.
+Native macOS from source (Xcode 26, macOS 26+):
+
+```bash
+open Maturita.xcworkspace          # scheme Maturita from macos/Maturita.xcodeproj
+# or: make macos                   # zip at dist/maturita-macos-swift-arm64.zip
+```
+
+The workspace points at `ios/Maturita.xcodeproj` and `macos/Maturita.xcodeproj`.
+Do not move the projects – the build reads `../src` and `../scripts`, and at
+the root `Maturita/` would collide with the compiled `maturita` binary. The
+native Mac app shares exercises with the iOS player; the GTK build
+(`make bundle`) stays.
 
 License: [GPL-3.0](LICENSE).

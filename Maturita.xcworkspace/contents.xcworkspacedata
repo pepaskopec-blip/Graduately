@@ -4,4 +4,7 @@
    <FileRef
       location = "group:ios/Maturita.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:macos/Maturita.xcodeproj">
+   </FileRef>
 </Workspace>

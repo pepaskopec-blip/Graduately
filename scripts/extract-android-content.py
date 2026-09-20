@@ -10,8 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-# Default target is the Android asset; Xcode passes `--out` and copies the
-# file into the app bundle itself, so nothing generated lives under ios/.
+# Default target is the Android asset; Xcode (iOS / native macOS) passes
+# `--out` and copies the file into the app bundle itself, so nothing
+# generated lives under ios/ or macos/.
 OUTS = [
     ROOT / "android" / "app" / "src" / "main" / "assets" / "content.json",
 ]

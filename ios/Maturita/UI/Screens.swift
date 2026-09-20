@@ -20,7 +20,7 @@ struct PracticeHome: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(vm.tr("welcome_title"))
                             .font(.title.bold())
-                        Text(vm.tr("welcome_body_ios"))
+                        Text(vm.tr(Self.welcomeBodyKey))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                         ProgressView(value: pct)
@@ -50,7 +50,17 @@ struct PracticeHome: View {
             }
         }
         .navigationTitle("Maturita")
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
+        #endif
+    }
+
+    private static var welcomeBodyKey: String {
+        #if os(macOS)
+        "welcome_body_macos"
+        #else
+        "welcome_body_ios"
+        #endif
     }
 
     private func subjectLabel(_ s: J) -> some View {
@@ -458,32 +468,20 @@ struct SlidesScreen: View {
     @State private var idx = 0
 
     var body: some View {
-        TabView(selection: $idx) {
-            ForEach(slides.indices, id: \.self) { i in
-                let slide = slides[i]
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text(slide.str("kicker"))
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                        Text(slide.str("title")).font(.title2.bold())
-                        if let tip = slide.strOrNull("tip") {
-                            GlassCard {
-                                Label(tip, systemImage: "lightbulb.fill")
-                            }
-                        }
-                        ForEach(Array(slide.strs("lines").enumerated()), id: \.offset) { _, line in
-                            Text(line).padding(.vertical, 4)
-                        }
-                    }
-                    .padding()
-                    .padding(.bottom, 24)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        Group {
+            #if os(iOS)
+            TabView(selection: $idx) {
+                ForEach(slides.indices, id: \.self) { i in
+                    slidePage(slides[i]).tag(i)
                 }
-                .tag(i)
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            #else
+            if slides.indices.contains(idx) {
+                slidePage(slides[idx])
+            }
+            #endif
         }
-        .tabViewStyle(.page(indexDisplayMode: .never))
         .detailScreen(title, subtitle: subtitle)
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 10) {
@@ -503,7 +501,11 @@ struct SlidesScreen: View {
                             Image(systemName: "chevron.left")
                                 .frame(minWidth: 24)
                         }
+                        #if os(iOS)
                         .buttonStyle(.glass)
+                        #else
+                        .buttonStyle(.bordered)
+                        #endif
                         .controlSize(.large)
                     }
                     if idx < slides.count - 1 {
@@ -521,6 +523,31 @@ struct SlidesScreen: View {
             .padding(.top, 8)
             .padding(.bottom, 4)
             .background(.bar)
+        }
+    }
+
+    private func slidePage(_ slide: J) -> some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(slide.str("kicker"))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                Text(slide.str("title")).font(.title2.bold())
+                if let tip = slide.strOrNull("tip") {
+                    GlassCard {
+                        Label(tip, systemImage: "lightbulb.fill")
+                    }
+                }
+                ForEach(Array(slide.strs("lines").enumerated()), id: \.offset) { _, line in
+                    Text(line).padding(.vertical, 4)
+                }
+            }
+            .padding()
+            .padding(.bottom, 24)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            #if os(macOS)
+            .frame(maxWidth: 720, alignment: .leading)
+            #endif
         }
     }
 }
@@ -604,6 +631,96 @@ struct BookScreen: View {
             }
             .navigationTitle(b.str("title"))
             .navigationSubtitle(vm.tr(b.str("subKey")))
+        }
+    }
+}
+
+struct RouteDestination: View {
+    @ObservedObject var vm: AppModel
+    let route: Route
+
+    var body: some View {
+        switch route {
+        case .welcome, .subjects:
+            PracticeHome(vm: vm)
+        case .stats:
+            StatsScreen(vm: vm)
+        case .roadmap:
+            RoadmapScreen(vm: vm)
+        case .unitMap(let id):
+            UnitMapScreen(vm: vm, unitId: id)
+        case .germanEx(let unit, let ex):
+            GermanExercise(vm: vm, unitId: unit, ex: ex)
+        case .vocab(let id):
+            VocabExercise(vm: vm, unitId: id)
+        case .netYears:
+            NetYearsScreen(vm: vm)
+        case .netMap:
+            LessonListScreen(
+                title: vm.tr("net_year1"),
+                subtitle: vm.tr("net_sub"),
+                rows: vm.content.netLessons.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "n\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.netDone(id),
+                        destination: .netLesson(id)
+                    )
+                }
+            )
+        case .netLesson(let id):
+            if let l = vm.content.netLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .netEx(id))
+            }
+        case .netEx(let id):
+            NetQuizScreen(vm: vm, id: id)
+        case .hwMap:
+            LessonListScreen(
+                title: vm.tr("Technické vybavení"),
+                subtitle: vm.tr("hw_sub"),
+                rows: vm.content.hw.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "h\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.hwDone(id),
+                        destination: .hwLesson(id)
+                    )
+                }
+            )
+        case .hwLesson(let id):
+            if let l = vm.content.hwLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .hwEx(id))
+            }
+        case .hwEx(let id):
+            HwQuizScreen(vm: vm, id: id)
+        case .czechMap:
+            CzechMapScreen(vm: vm)
+        case .mluvnice:
+            LessonListScreen(
+                title: vm.tr("Mluvnice"),
+                subtitle: vm.tr("mluv_sub"),
+                rows: vm.content.mluvnice.map { m in
+                    let n = m.int("id")
+                    return LessonRow(
+                        id: "m\(n)",
+                        title: m.str("name"),
+                        done: vm.progress.mluvDone(n),
+                        destination: .mluvEx(n)
+                    )
+                }
+            )
+        case .mluvEx(let n):
+            MluvExercise(vm: vm, n: n)
+        case .readingList:
+            BookListScreen(vm: vm)
+        case .book(let id):
+            BookScreen(vm: vm, id: id)
+        case .bookQuiz(let id):
+            LitQuizScreen(vm: vm, id: id)
+        case .bookPlot(let id):
+            PlotScreen(vm: vm, id: id)
         }
     }
 }

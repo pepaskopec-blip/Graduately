@@ -304,7 +304,7 @@ private struct ComboLine: View {
                 if let word, idx < picks.count { picks[idx] = word }
                 open = false
             }
-            .presentationDetents([.medium, .large])
+            .sheetDetents()
         }
         if revealed, let meaning, !meaning.isEmpty {
             Meaning(text: vm.tr(meaning), palette: p, visible: true)
@@ -334,8 +334,7 @@ struct WordPicker: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
-        .presentationDragIndicator(.visible)
+        .sheetDetents()
     }
 }
 
@@ -781,7 +780,7 @@ private struct PrefixMenu: View {
                 if let word { value = word }
                 open = false
             }
-            .presentationDetents([.medium, .large])
+            .sheetDetents()
         }
     }
 }

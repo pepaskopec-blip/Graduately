@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GITCommit</key>
+	<string>$(COMMIT)</string>
+	<key>UPDATE_BRANCH</key>
+	<string>builds</string>
+	<key>UPDATE_REPO</key>
+	<string>pepaskopec-blip/maturita.c</string>
+</dict>
+</plist>

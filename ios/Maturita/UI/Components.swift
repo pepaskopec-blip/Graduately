@@ -49,7 +49,11 @@ struct PrimaryButton: View {
                 .font(.body.weight(.semibold))
                 .frame(maxWidth: .infinity)
         }
+        #if os(iOS)
         .buttonStyle(.glassProminent)
+        #else
+        .buttonStyle(.borderedProminent)
+        #endif
         .controlSize(.large)
     }
 }
@@ -250,17 +254,39 @@ extension View {
 
     /// Detail screens with their own bottom action hide the tab bar so the
     /// primary button is never covered by it.
+    @ViewBuilder
     func detailScreen(_ title: String, subtitle: String? = nil) -> some View {
+        #if os(iOS)
         navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .navSubtitle(subtitle)
             .toolbar(.hidden, for: .tabBar)
+        #else
+        navigationTitle(title)
+            .navSubtitle(subtitle)
+        #endif
+    }
+
+    @ViewBuilder
+    func sheetDetents() -> some View {
+        #if os(iOS)
+        presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        #else
+        self
+        #endif
     }
 
     /// Full-width, leading-aligned content for exercise screens.
     func exerciseContent() -> some View {
+        #if os(macOS)
+        frame(maxWidth: 720, alignment: .leading)
+            .padding(20)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        #else
         frame(maxWidth: .infinity, alignment: .leading)
             .padding()
+        #endif
     }
 }
 

@@ -41,5 +41,10 @@ ios/build/
 ios/Payload/
 ios/**/xcuserdata/
 
+# native macOS Swift
+macos/DerivedData/
+macos/build/
+macos/**/xcuserdata/
+
 # Xcode workspace user state
 *.xcworkspace/xcuserdata/
