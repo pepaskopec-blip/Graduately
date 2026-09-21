@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Exercise build identity at the real bundler entry point without building GTK.
+# Exercise build identity at the real bundler entry point without Xcode.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -12,28 +12,23 @@ fail() {
 }
 
 mkdir -p "$TMP/bin"
-cat > "$TMP/bin/make" <<'EOF'
+cat > "$TMP/bin/xcodebuild" <<'EOF'
 #!/usr/bin/env bash
 printf '%s\n' "${COMMIT-UNSET}" >> "$MATURITA_TEST_MAKE_LOG"
-if [[ "$*" == *" clean" ]]; then
-  exit 0
-fi
 # Stop before packaging, after observing the real build's environment.
 exit 97
-EOF
-cat > "$TMP/bin/brew" <<'EOF'
-#!/bin/sh
-echo /unused-homebrew
 EOF
 cat > "$TMP/bin/uname" <<'EOF'
 #!/bin/sh
 echo arm64
 EOF
-chmod +x "$TMP/bin/make" "$TMP/bin/brew" "$TMP/bin/uname"
+chmod +x "$TMP/bin/xcodebuild" "$TMP/bin/uname"
 
 new_fixture() {
   mkdir -p "$1/scripts"
   cp "$ROOT/scripts/bundle-macos.sh" "$1/scripts/bundle-macos.sh"
+  cp "$ROOT/scripts/bundle-macos-swift.sh" "$1/scripts/bundle-macos-swift.sh"
+  chmod +x "$1/scripts/bundle-macos.sh" "$1/scripts/bundle-macos-swift.sh"
 }
 
 run_bundle() {
@@ -64,15 +59,15 @@ expect_build_commit() {
     cat "$OUTPUT_LOG" >&2
     fail "expected the stubbed build to run (status $STATUS)"
   }
-  [[ -f "$MAKE_LOG" ]] || fail "make was not called"
+  [[ -f "$MAKE_LOG" ]] || fail "xcodebuild was not called"
   actual="$(cat "$MAKE_LOG")"
-  [[ "$actual" == "$expected"$'\n'"$expected" ]] ||
-    fail "clean/build did not both receive COMMIT=$expected (got '$actual')"
+  [[ "$actual" == "$expected" ]] ||
+    fail "build did not receive COMMIT=$expected (got '$actual')"
 }
 
 expect_missing_identity() {
   [[ "$STATUS" -ne 0 ]] || fail 'missing identity unexpectedly succeeded'
-  [[ ! -e "$MAKE_LOG" ]] || fail 'missing identity reached make'
+  [[ ! -e "$MAKE_LOG" ]] || fail 'missing identity reached xcodebuild'
   grep -q 'COMMIT' "$OUTPUT_LOG" || fail 'missing identity has no COMMIT guidance'
 }
 

@@ -27,7 +27,7 @@ case "$arch" in
 esac
 
 dd="$root/macos/DerivedData"
-out_zip="maturita-macos-swift-${arch_tag}.zip"
+out_zip="maturita-macos-${arch_tag}.zip"
 mkdir -p "$dd" "$root/dist"
 
 xcodebuild \

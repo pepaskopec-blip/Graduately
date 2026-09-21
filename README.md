@@ -1,6 +1,6 @@
 # maturita.c
 
-Vzdělávací GTK 4 aplikace k přípravě na maturitu. / An educational GTK 4 app for the Czech maturita exam.
+Vzdělávací aplikace k přípravě na maturitu. / An educational app for the Czech maturita exam.
 
 **[Česky](#česky)** · **[English](#english)**
 
@@ -53,10 +53,9 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
 - [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
 - [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
-- [maturita-macos-swift-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-swift-arm64.zip)
 
 Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
-Na Androidu a iOS do úložiště aplikace (stejné statistiky, témata a jazyk).
+Na Androidu, iOS a macOS do úložiště aplikace (stejné statistiky, témata a jazyk).
 
 Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#sestavení-ze-zdroje).
 
@@ -81,9 +80,12 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 ### Sestavení ze zdroje
 
+macOS je nativní SwiftUI aplikace (Xcode 26, macOS 26+). Linux a Windows
+zůstávají GTK 4.
+
 ```bash
 # macOS
-brew install gtk4 gcc make pkg-config
+# Xcode 26 z App Storu; žádné GTK
 
 # Debian / Ubuntu
 sudo apt install build-essential pkg-config libgtk-4-dev
@@ -98,17 +100,28 @@ sudo pacman -S base-devel pkgconf gtk4
 ```bash
 git clone https://github.com/pepaskopec-blip/maturita.c.git
 cd maturita.c
-make
-make run          # nebo ./maturita
-make bundle       # AppImage / .app zip / Windows složka s DLL
 ```
 
-Volitelně CMake: `cmake -S . -B build && cmake --build build`.
+Na Macu:
+
+```bash
+open Maturita.xcworkspace          # scheme Maturita z macos/Maturita.xcodeproj
+# nebo: make bundle                # zip v dist/maturita-macos-arm64.zip
+```
+
+Na Linuxu a Windows:
+
+```bash
+make
+make run          # nebo ./maturita
+make bundle       # AppImage / Windows složka s DLL
+```
+
+Volitelně CMake (GTK): `cmake -S . -B build && cmake --build build`.
 
 Na macOS `make bundle` automaticky vloží aktuální Git commit, aby fungovala
 kontrola aktualizací. Při balení ze zdrojů bez `.git` zadejte
-`COMMIT=<zdrojový-commit> make bundle`. Samotné `make` nadále vytváří vývojový
-build bez aktualizací.
+`COMMIT=<zdrojový-commit> make bundle`.
 
 Aby stažená aplikace na macOS šla otevřít bez potvrzení v Nastavení, CI
 potřebuje **Apple Developer Program** a GitHub Secrets:
@@ -139,7 +152,7 @@ make bundle                     # dist/maturita.exe jde spustit i z Průzkumník
 ### Struktura
 
 ```
-src/                 C zdroje a maturita.h
+src/                 C zdroje (GTK přehrávač pro Linux a Windows)
 android/             Jetpack Compose přehrávač (stejný obsah)
 ios/                 SwiftUI přehrávač (stejný obsah)
 macos/               nativní SwiftUI aplikace pro Mac (stejný obsah)
@@ -177,17 +190,9 @@ open Maturita.xcworkspace          # v kořeni repozitáře
 # nebo: make ios   # unsigned IPA v dist-ios/maturita-ios.ipa
 ```
 
-Nativní macOS ze zdroje (Xcode 26, macOS 26+):
-
-```bash
-open Maturita.xcworkspace          # scheme Maturita z macos/Maturita.xcodeproj
-# nebo: make macos                 # zip v dist/maturita-macos-swift-arm64.zip
-```
-
 Workspace odkazuje na `ios/Maturita.xcodeproj` a `macos/Maturita.xcodeproj`.
 Projekty nepřesouvejte – build čte `../src` a `../scripts` a v kořeni by
-`Maturita/` kolidovalo se zkompilovaným binárem `maturita`. Nativní Mac
-aplikace sdílí cvičení s iOS přehrávačem; GTK verze (`make bundle`) zůstává.
+`Maturita/` kolidovalo se zkompilovaným binárem `maturita`.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -240,10 +245,9 @@ above, or download from that branch page:
 - [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
 - [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
 - [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
-- [maturita-macos-swift-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-swift-arm64.zip)
 
 Progress and settings live in `progress/` next to the `.app` / folder /
-AppImage. On Android and iOS they stay in app storage (same stats, themes, language).
+AppImage. On Android, iOS and macOS they stay in app storage (same stats, themes, language).
 
 Intel Mac, another architecture, or hacking on the code →
 [build from source](#build-from-source).
@@ -269,9 +273,12 @@ Intel Mac, another architecture, or hacking on the code →
 
 ### Build from source
 
+macOS is a native SwiftUI app (Xcode 26, macOS 26+). Linux and Windows
+stay on GTK 4.
+
 ```bash
 # macOS
-brew install gtk4 gcc make pkg-config
+# Xcode 26 from the App Store; no GTK
 
 # Debian / Ubuntu
 sudo apt install build-essential pkg-config libgtk-4-dev
@@ -286,17 +293,28 @@ sudo pacman -S base-devel pkgconf gtk4
 ```bash
 git clone https://github.com/pepaskopec-blip/maturita.c.git
 cd maturita.c
-make
-make run          # or ./maturita
-make bundle       # AppImage / .app zip / Windows DLL folder
 ```
 
-Optional CMake: `cmake -S . -B build && cmake --build build`.
+On a Mac:
+
+```bash
+open Maturita.xcworkspace          # scheme Maturita from macos/Maturita.xcodeproj
+# or: make bundle                  # zip at dist/maturita-macos-arm64.zip
+```
+
+On Linux and Windows:
+
+```bash
+make
+make run          # or ./maturita
+make bundle       # AppImage / Windows DLL folder
+```
+
+Optional CMake (GTK): `cmake -S . -B build && cmake --build build`.
 
 On macOS, `make bundle` embeds the current Git commit so the installed app
 can check for updates. When packaging a source export without `.git`, use
-`COMMIT=<source-commit> make bundle`. Plain `make` still produces a development
-build without updates.
+`COMMIT=<source-commit> make bundle`.
 
 Skipping Gatekeeper on a downloaded macOS build needs an
 **Apple Developer Program** membership and these GitHub Secrets:
@@ -327,7 +345,7 @@ make bundle                     # dist/maturita.exe can be double-clicked
 ### Layout
 
 ```
-src/                 C sources and maturita.h
+src/                 C sources (GTK player for Linux and Windows)
 android/             Jetpack Compose player (same content)
 ios/                 SwiftUI player (same content)
 macos/               native SwiftUI Mac app (same content)
@@ -365,17 +383,8 @@ open Maturita.xcworkspace          # at the repo root
 # or: make ios   # unsigned IPA at dist-ios/maturita-ios.ipa
 ```
 
-Native macOS from source (Xcode 26, macOS 26+):
-
-```bash
-open Maturita.xcworkspace          # scheme Maturita from macos/Maturita.xcodeproj
-# or: make macos                   # zip at dist/maturita-macos-swift-arm64.zip
-```
-
 The workspace points at `ios/Maturita.xcodeproj` and `macos/Maturita.xcodeproj`.
 Do not move the projects – the build reads `../src` and `../scripts`, and at
-the root `Maturita/` would collide with the compiled `maturita` binary. The
-native Mac app shares exercises with the iOS player; the GTK build
-(`make bundle`) stays.
+the root `Maturita/` would collide with the compiled `maturita` binary.
 
 License: [GPL-3.0](LICENSE).

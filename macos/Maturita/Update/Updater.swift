@@ -24,7 +24,7 @@ final class Updater {
                 let atom = try self.get("https://github.com/\(self.repo)/commits/\(self.branch).atom")
                 let remote: String
                 if let tip = self.atomTip(atom),
-                   let marker = try? self.get("https://raw.githubusercontent.com/\(self.repo)/\(tip)/VERSION-macos-swift")
+                   let marker = try? self.get("https://raw.githubusercontent.com/\(self.repo)/\(tip)/VERSION-macos")
                     .trimmingCharacters(in: .whitespacesAndNewlines),
                    marker.count >= 7 {
                     remote = marker
@@ -90,9 +90,9 @@ final class Updater {
 
     private static func assetName() -> String {
         #if arch(arm64)
-        return "maturita-macos-swift-arm64.zip"
+        return "maturita-macos-arm64.zip"
         #else
-        return "maturita-macos-swift-x86_64.zip"
+        return "maturita-macos-x86_64.zip"
         #endif
     }
 

@@ -99,8 +99,8 @@ bundle: $(TARGET)
 	@echo "Bundled into dist/ - run dist/$(TARGET)"
 else ifeq ($(UNAME_S),Darwin)
 bundle:
-	@chmod +x scripts/bundle-macos.sh
-	@./scripts/bundle-macos.sh
+	@chmod +x scripts/bundle-macos-swift.sh
+	@./scripts/bundle-macos-swift.sh
 else
 bundle:
 	@chmod +x scripts/bundle-linux.sh

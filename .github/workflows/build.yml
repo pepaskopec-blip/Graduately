@@ -86,13 +86,9 @@ jobs:
 
   macos:
     name: macOS app
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: |
-          brew install gtk4 pkg-config
 
       # Developer ID lives in repo secrets. Without it the bundle is only
       # ad-hoc signed and Gatekeeper still blocks downloaded copies.
@@ -123,9 +119,10 @@ jobs:
             $(security list-keychains -d user | tr -d '"')
           rm -f "$cert"
 
-      - name: Build .app zip
+      - name: Build Swift .app zip
         env:
           COMMIT: ${{ github.sha }}
+          DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
           MACOS_SIGN_IDENTITY: ${{ secrets.MACOS_SIGN_IDENTITY }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -134,8 +131,8 @@ jobs:
           APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
         run: |
-          chmod +x scripts/bundle-macos.sh
-          ./scripts/bundle-macos.sh
+          chmod +x scripts/bundle-macos-swift.sh
+          ./scripts/bundle-macos-swift.sh
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -215,62 +212,9 @@ jobs:
           name: maturita-ios
           path: dist-ios/maturita-ios.ipa
 
-  macos-swift:
-    name: macOS Swift app
-    runs-on: macos-26
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Import Developer ID certificate
-        env:
-          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
-        run: |
-          set -euo pipefail
-          if [ -z "${MACOS_CERTIFICATE:-}" ]; then
-            echo "No Developer ID certificate; the bundle will be ad-hoc signed."
-            exit 0
-          fi
-          cert="$RUNNER_TEMP/certificate.p12"
-          keychain="$RUNNER_TEMP/signing.keychain-db"
-          pass="$(openssl rand -base64 32)"
-          echo "$MACOS_CERTIFICATE" | base64 --decode > "$cert"
-          security create-keychain -p "$pass" "$keychain"
-          security set-keychain-settings -lut 21600 "$keychain"
-          security unlock-keychain -p "$pass" "$keychain"
-          security import "$cert" -k "$keychain" \
-            -P "$MACOS_CERTIFICATE_PASSWORD" \
-            -T /usr/bin/codesign -T /usr/bin/security
-          security set-key-partition-list -S apple-tool:,apple: -s \
-            -k "$pass" "$keychain"
-          security list-keychains -d user -s "$keychain" \
-            $(security list-keychains -d user | tr -d '"')
-          rm -f "$cert"
-
-      - name: Build Swift .app zip
-        env:
-          COMMIT: ${{ github.sha }}
-          DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
-          MACOS_SIGN_IDENTITY: ${{ secrets.MACOS_SIGN_IDENTITY }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
-          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
-        run: |
-          chmod +x scripts/bundle-macos-swift.sh
-          ./scripts/bundle-macos-swift.sh
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: maturita-macos-swift
-          path: dist/maturita-macos-swift-*.zip
-
   publish:
     name: Publish to builds branch
-    needs: [linux, windows, macos, android, ios, macos-swift]
+    needs: [linux, windows, macos, android, ios]
     # One broken platform must not freeze the others: publish whatever was
     # built and keep the previous package for anything that failed.
     if: ${{ !cancelled() && contains(needs.*.result, 'success') }}
@@ -296,6 +240,7 @@ jobs:
         run: |
           set -euo pipefail
           cp -f fresh/* staged/ 2>/dev/null || true
+          rm -f staged/maturita-macos-swift-*.zip staged/VERSION-macos-swift
           chmod +x installers/pack-installer-zips.sh
           ./installers/pack-installer-zips.sh
           cp installers/maturita-installer-linux.sh staged/
@@ -307,7 +252,7 @@ jobs:
           # here, so a platform that failed this run is not offered as new.
           [ -f fresh/maturita-android.apk ] && echo "${{ github.sha }}" > staged/VERSION-android
           [ -f fresh/maturita-ios.ipa ] && echo "${{ github.sha }}" > staged/VERSION-ios
-          ls fresh/maturita-macos-swift-*.zip >/dev/null 2>&1 && echo "${{ github.sha }}" > staged/VERSION-macos-swift
+          ls fresh/maturita-macos-*.zip >/dev/null 2>&1 && echo "${{ github.sha }}" > staged/VERSION-macos
           ls fresh staged
 
       # The branch is rewritten from scratch every time rather than added to,
