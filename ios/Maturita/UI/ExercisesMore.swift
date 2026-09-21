@@ -741,12 +741,12 @@ private struct VlsmEx: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .detailScreen(vm.tr("net_ex_title"))
-        .safeAreaInset(edge: .bottom) {
+        .glassBottomBar {
             if !fb.0.isEmpty {
                 FeedbackLine(text: fb.0, kind: fb.1, palette: p)
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(.bar)
             }
         }
         .animation(.default, value: fb.0)
@@ -842,7 +842,7 @@ struct LitQuizScreen: View {
                 .exerciseContent()
             }
             .detailScreen(vm.tr(book.str("quizTitle")), subtitle: vm.tr(book.str("quizSub")))
-            .safeAreaInset(edge: .bottom) {
+            .glassBottomBar {
                 if finished {
                     BottomAction(label: vm.tr("lit_again"), action: {
                         idx = 0; score = 0; answered = false; finished = false; picked = -1

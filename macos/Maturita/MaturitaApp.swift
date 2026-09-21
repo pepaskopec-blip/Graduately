@@ -10,6 +10,7 @@ struct MaturitaApp: App {
         }
         .defaultSize(width: 1100, height: 720)
         .windowToolbarStyle(.unified)
+        .windowStyle(.automatic)
         .commands {
             CommandGroup(replacing: .newItem) {}
             CommandGroup(after: .sidebar) {
@@ -35,6 +36,7 @@ struct MaturitaApp: App {
 
         Settings {
             SettingsScreen(vm: vm)
+                .formStyle(.grouped)
                 .frame(minWidth: 420, minHeight: 460)
                 .tint(vm.palette.tint)
                 .preferredColorScheme(vm.mode == .dark ? .dark : .light)
@@ -46,61 +48,53 @@ struct MacRoot: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        NavigationSplitView {
-            MacSidebar(vm: vm)
-                .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
-        } detail: {
-            MacDetail(vm: vm)
-        }
-        .navigationSplitViewStyle(.balanced)
-        .tint(vm.palette.tint)
-        .preferredColorScheme(vm.mode == .dark ? .dark : .light)
-        .overlay(alignment: .top) {
-            if showsUpdateAccessory {
-                UpdateBanner(vm: vm)
-                    .padding(12)
+        tabs
+            .tint(vm.palette.tint)
+            .preferredColorScheme(vm.mode == .dark ? .dark : .light)
+            .overlay(alignment: .top) {
+                if showsUpdateAccessory {
+                    UpdateBanner(vm: vm)
+                        .padding(16)
+                }
             }
-        }
-        .onAppear { vm.checkUpdate(false) }
-        .frame(minWidth: 880, minHeight: 540)
+            .onAppear { vm.checkUpdate(false) }
+            .frame(minWidth: 880, minHeight: 540)
     }
 
     private var showsUpdateAccessory: Bool {
         vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged"
     }
-}
 
-private struct MacDetail: View {
-    @ObservedObject var vm: AppModel
-
-    var body: some View {
-        Group {
-            switch vm.tab {
-            case .practice:
+    private var tabs: some View {
+        TabView(selection: $vm.tab) {
+            Tab(vm.tr("search_home"), systemImage: "square.grid.2x2.fill", value: AppTab.practice) {
                 NavigationStack(path: $vm.practicePath) {
                     PracticeHome(vm: vm)
                         .navigationDestination(for: Route.self) { route in
                             RouteDestination(vm: vm, route: route)
                         }
                 }
-            case .progress:
+            }
+            Tab(vm.tr("stats"), systemImage: "chart.bar.fill", value: AppTab.progress) {
                 NavigationStack {
                     StatsScreen(vm: vm)
                 }
-            case .search:
-                NavigationStack {
-                    SearchScreen(vm: vm)
-                }
-            case .settings:
+            }
+            Tab(vm.tr("settings"), systemImage: "gearshape.fill", value: AppTab.settings) {
                 NavigationStack {
                     SettingsScreen(vm: vm)
                 }
             }
+            Tab(vm.tr("search"), systemImage: "magnifyingglass", value: AppTab.search, role: .search) {
+                NavigationStack {
+                    SearchScreen(vm: vm)
+                }
+            }
         }
+        .tabViewStyle(.sidebarAdaptable)
         .toolbar {
             MacWindowToolbar(vm: vm)
         }
-        .toolbarBackgroundVisibility(.visible, for: .windowToolbar)
     }
 }
 
@@ -122,65 +116,17 @@ private struct MacWindowToolbar: ToolbarContent {
                 Label(vm.tr("stats"), systemImage: "chart.bar.fill")
             }
             .help(vm.tr("stats"))
+        }
 
+        ToolbarSpacer(.fixed, placement: .primaryAction)
+
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 vm.tab = .settings
             } label: {
                 Label(vm.tr("settings"), systemImage: "gearshape")
             }
             .help(vm.tr("settings"))
-        }
-    }
-}
-
-private struct MacSidebar: View {
-    @ObservedObject var vm: AppModel
-
-    var body: some View {
-        List(selection: $vm.tab) {
-            Section {
-                Label(vm.tr("search_home"), systemImage: "square.grid.2x2.fill")
-                    .tag(AppTab.practice)
-                Label(vm.tr("stats"), systemImage: "chart.bar.fill")
-                    .tag(AppTab.progress)
-                Label(vm.tr("search_placeholder"), systemImage: "magnifyingglass")
-                    .tag(AppTab.search)
-                Label(vm.tr("settings"), systemImage: "gearshape.fill")
-                    .tag(AppTab.settings)
-            }
-
-            Section(vm.tr("subjects_title")) {
-                ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
-                    let open = s.bool("open")
-                    let dest = s.strOrNull("target").flatMap(routeFromPage)
-                    if open, let dest, dest != .subjects, dest != .welcome {
-                        Button {
-                            vm.openFromSearch(dest.page)
-                        } label: {
-                            subjectLabel(s)
-                        }
-                        .buttonStyle(.plain)
-                    } else {
-                        subjectLabel(s)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            }
-        }
-        .listStyle(.sidebar)
-        .navigationTitle("maturita.c")
-    }
-
-    private func subjectLabel(_ s: J) -> some View {
-        Label {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(vm.tr(s.str("key")))
-                if !s.bool("open") {
-                    Text(vm.tr("stats_locked")).font(.caption).foregroundStyle(.secondary)
-                }
-            }
-        } icon: {
-            SubjectIcon(icon: s.str("icon"), open: s.bool("open"))
         }
     }
 }
@@ -196,13 +142,14 @@ private struct UpdateBanner: View {
             Spacer()
             if vm.update.canInstall {
                 Button(vm.tr("update_install")) { vm.installUpdate() }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.glassProminent)
+                    .controlSize(.small)
             }
         }
-        .padding(12)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .shadow(color: .black.opacity(0.12), radius: 8, y: 2)
-        .frame(maxWidth: 640)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .glassEffect(.regular, in: .rect(cornerRadius: 18, style: .continuous))
+        .frame(maxWidth: 560)
     }
 
     private var bannerText: String {

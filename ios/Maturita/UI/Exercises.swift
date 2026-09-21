@@ -18,7 +18,7 @@ struct ExerciseScaffold<Content: View>: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .detailScreen(title, subtitle: sub)
-        .safeAreaInset(edge: .bottom) {
+        .glassBottomBar {
             BottomAction(label: action, action: onAction) {
                 if !feedback.isEmpty {
                     FeedbackLine(text: feedback, kind: kind, palette: p)
@@ -601,7 +601,7 @@ private struct VocabEx: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .detailScreen(title, subtitle: sub)
-        .safeAreaInset(edge: .bottom) {
+        .glassBottomBar {
             if index < cards.count {
                 BottomAction(label: vm.tr("check"), action: { check(cards[index]) }) { EmptyView() }
             }

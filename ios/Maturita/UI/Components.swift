@@ -49,12 +49,12 @@ struct PrimaryButton: View {
                 .font(.body.weight(.semibold))
                 .frame(maxWidth: .infinity)
         }
-        #if os(iOS)
         .buttonStyle(.glassProminent)
+        #if os(macOS)
+        .controlSize(.extraLarge)
         #else
-        .buttonStyle(.borderedProminent)
-        #endif
         .controlSize(.large)
+        #endif
     }
 }
 
@@ -75,7 +75,7 @@ struct GlassCard<Content: View>: View {
         content()
             .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .glassEffect(.regular, in: .rect(cornerRadius: 26, style: .continuous))
     }
 }
 
@@ -288,6 +288,33 @@ extension View {
             .padding()
         #endif
     }
+
+    /// macOS content lists use the inset style so they sit under the floating
+    /// glass sidebar instead of looking like a second source list.
+    @ViewBuilder
+    func appListStyle() -> some View {
+        #if os(macOS)
+        listStyle(.inset)
+        #else
+        self
+        #endif
+    }
+
+    @ViewBuilder
+    func appFormStyle() -> some View {
+        #if os(macOS)
+        formStyle(.grouped)
+            .scenePadding()
+        #else
+        self
+        #endif
+    }
+
+    /// Pin a primary action above scrolling content using the system scroll
+    /// edge effect instead of an opaque bar.
+    func glassBottomBar<Bar: View>(@ViewBuilder _ bar: () -> Bar) -> some View {
+        safeAreaBar(edge: .bottom, spacing: 8, content: bar)
+    }
 }
 
 /// Bottom action area used by exercises and lesson slides.
@@ -304,7 +331,6 @@ struct BottomAction<Extra: View>: View {
         .padding(.horizontal)
         .padding(.top, 8)
         .padding(.bottom, 4)
-        .background(.bar)
     }
 }
 
@@ -322,19 +348,20 @@ func subjectSymbol(_ icon: String) -> String {
 struct SubjectIcon: View {
     let icon: String
     var open = true
+    var size: CGFloat = 26
 
     var body: some View {
         Group {
             switch icon {
-            case "de": GermanFlag(size: 26)
-            case "cz": CzechFlag(size: 26)
+            case "de": GermanFlag(size: size)
+            case "cz": CzechFlag(size: size)
             default:
                 Image(systemName: subjectSymbol(icon))
-                    .font(.title3)
+                    .font(.system(size: size * 0.72, weight: .semibold))
                     .foregroundStyle(open ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.tertiary))
             }
         }
-        .frame(width: 28, height: 28)
+        .frame(width: size, height: size)
         .opacity(open ? 1 : 0.6)
     }
 }

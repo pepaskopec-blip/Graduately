@@ -4,6 +4,100 @@ struct PracticeHome: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
+        #if os(macOS)
+        macHome
+        #else
+        iosHome
+        #endif
+    }
+
+    #if os(macOS)
+    private var macHome: some View {
+        let sum = summarize(vm.content, vm.progress)
+        let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
+        return ScrollView {
+            VStack(alignment: .leading, spacing: 28) {
+                if vm.showChangelog {
+                    ChangelogCard(vm: vm)
+                }
+                GlassCard {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(vm.tr("welcome_title"))
+                            .font(.largeTitle.bold())
+                        Text(vm.tr(Self.welcomeBodyKey))
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        ProgressView(value: pct)
+                        Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(vm.tr("subjects_title"))
+                        .font(.title2.weight(.semibold))
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 16)], spacing: 16) {
+                        ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
+                            subjectTile(s)
+                        }
+                    }
+                }
+            }
+            .padding(28)
+            .frame(maxWidth: 920, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .backgroundExtensionEffect()
+        .navigationTitle("Maturita")
+    }
+
+    @ViewBuilder
+    private func subjectTile(_ s: J) -> some View {
+        let open = s.bool("open")
+        let dest = s.strOrNull("target").flatMap(routeFromPage)
+        let part = subjectSum(vm, s)
+        let progress = open && part.totalEx > 0 ? Double(part.doneEx) / Double(part.totalEx) : 0
+        Group {
+            if open, let dest, dest != .subjects, dest != .welcome {
+                NavigationLink(value: dest) {
+                    subjectTileBody(s, open: true, progress: progress, part: part)
+                }
+                .buttonStyle(.plain)
+            } else {
+                subjectTileBody(s, open: false, progress: 0, part: part)
+            }
+        }
+    }
+
+    private func subjectTileBody(_ s: J, open: Bool, progress: Double, part: ProgressSum) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            SubjectIcon(icon: s.str("icon"), open: open, size: 36)
+            Text(vm.tr(s.str("key")))
+                .font(.headline)
+                .foregroundStyle(open ? .primary : .secondary)
+                .multilineTextAlignment(.leading)
+            Spacer(minLength: 0)
+            if open && part.totalEx > 0 {
+                ProgressView(value: progress)
+                Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+            } else if !open {
+                Text(vm.tr("stats_locked"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, minHeight: 148, alignment: .topLeading)
+        .glassEffect(.regular, in: .rect(cornerRadius: 24, style: .continuous))
+    }
+    #endif
+
+    #if os(iOS)
+    private var iosHome: some View {
         let sum = summarize(vm.content, vm.progress)
         let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
         List {
@@ -50,17 +144,7 @@ struct PracticeHome: View {
             }
         }
         .navigationTitle("Maturita")
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
-        #endif
-    }
-
-    private static var welcomeBodyKey: String {
-        #if os(macOS)
-        "welcome_body_macos"
-        #else
-        "welcome_body_ios"
-        #endif
     }
 
     private func subjectLabel(_ s: J) -> some View {
@@ -74,6 +158,15 @@ struct PracticeHome: View {
         } icon: {
             SubjectIcon(icon: s.str("icon"), open: s.bool("open"))
         }
+    }
+    #endif
+
+    private static var welcomeBodyKey: String {
+        #if os(macOS)
+        "welcome_body_macos"
+        #else
+        "welcome_body_ios"
+        #endif
     }
 }
 
@@ -99,7 +192,7 @@ struct ChangelogCard: View {
                     ChangelogLines(index: index, lines: changelogLines(block, langKey))
                 }
                 Button(vm.tr("changelog_dismiss")) { vm.dismissChangelog() }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.glassProminent)
                     .controlSize(.small)
             }
         }
@@ -171,6 +264,7 @@ struct SettingsScreen: View {
             }
         }
         .navigationTitle(vm.tr("settings_title"))
+        .appFormStyle()
     }
 
     private var modeBinding: Binding<ColorMode> {
@@ -237,6 +331,7 @@ struct StatsScreen: View {
             }
         }
         .navigationTitle(vm.tr("stats_title"))
+        .appListStyle()
     }
 
     private func stat(_ label: String, _ value: String) -> some View {
@@ -296,8 +391,9 @@ struct SearchScreen: View {
                 }
             }
         }
-        .navigationTitle(vm.tr("search_placeholder"))
+        .navigationTitle(vm.tr("search"))
         .searchable(text: $vm.searchQuery, prompt: vm.tr("search_placeholder"))
+        .appListStyle()
     }
 }
 
@@ -372,6 +468,7 @@ struct RoadmapScreen: View {
         }
         .navigationTitle(vm.tr("roadmap_title"))
         .navigationSubtitle(vm.tr("roadmap_sub"))
+        .appListStyle()
     }
 }
 
@@ -400,6 +497,7 @@ struct UnitMapScreen: View {
             }
             .navigationTitle(u.str("title"))
             .navigationSubtitle(vm.tr(u.str("sub")))
+            .appListStyle()
         }
     }
 }
@@ -429,6 +527,7 @@ struct NetYearsScreen: View {
         }
         .navigationTitle(vm.tr("net_years_title"))
         .navigationSubtitle(vm.tr("net_years_sub"))
+        .appListStyle()
     }
 }
 
@@ -456,6 +555,7 @@ struct LessonListScreen: View {
         }
         .navigationTitle(title)
         .navigationSubtitle(subtitle)
+        .appListStyle()
     }
 }
 
@@ -483,7 +583,7 @@ struct SlidesScreen: View {
             #endif
         }
         .detailScreen(title, subtitle: subtitle)
-        .safeAreaInset(edge: .bottom) {
+        .glassBottomBar {
             VStack(spacing: 10) {
                 HStack(spacing: 6) {
                     ForEach(slides.indices, id: \.self) { i in
@@ -501,11 +601,7 @@ struct SlidesScreen: View {
                             Image(systemName: "chevron.left")
                                 .frame(minWidth: 24)
                         }
-                        #if os(iOS)
                         .buttonStyle(.glass)
-                        #else
-                        .buttonStyle(.bordered)
-                        #endif
                         .controlSize(.large)
                     }
                     if idx < slides.count - 1 {
@@ -522,7 +618,6 @@ struct SlidesScreen: View {
             .padding(.horizontal)
             .padding(.top, 8)
             .padding(.bottom, 4)
-            .background(.bar)
         }
     }
 
@@ -568,6 +663,7 @@ struct CzechMapScreen: View {
         }
         .navigationTitle(vm.tr("Český jazyk a literatura"))
         .navigationSubtitle(vm.tr("czech_sub"))
+        .appListStyle()
     }
 }
 
@@ -591,6 +687,7 @@ struct BookListScreen: View {
         }
         .navigationTitle(vm.tr("Maturitní četba"))
         .navigationSubtitle(vm.tr("reading_sub"))
+        .appListStyle()
     }
 }
 
@@ -631,6 +728,7 @@ struct BookScreen: View {
             }
             .navigationTitle(b.str("title"))
             .navigationSubtitle(vm.tr(b.str("subKey")))
+            .appListStyle()
         }
     }
 }
