@@ -9,23 +9,23 @@ struct MaturitaApp: App {
             MacRoot(vm: vm)
         }
         .defaultSize(width: 1100, height: 720)
+        .windowToolbarStyle(.unified)
         .commands {
             CommandGroup(replacing: .newItem) {}
-            CommandMenu(vm.tr("search_placeholder")) {
-                Button(vm.tr("search_placeholder")) {
-                    vm.tab = .search
-                }
-                .keyboardShortcut("k", modifiers: [.command])
-            }
-            CommandMenu(vm.tr("subjects_title")) {
+            CommandGroup(after: .sidebar) {
                 Button(vm.tr("search_home")) {
-                    vm.go(.subjects)
+                    vm.tab = .practice
+                    vm.practicePath = []
                 }
                 .keyboardShortcut("1", modifiers: [.command])
                 Button(vm.tr("stats")) {
                     vm.tab = .progress
                 }
                 .keyboardShortcut("2", modifiers: [.command])
+                Button(vm.tr("search")) {
+                    vm.tab = .search
+                }
+                .keyboardShortcut("k", modifiers: [.command])
                 Button(vm.tr("settings")) {
                     vm.tab = .settings
                 }
@@ -50,6 +50,31 @@ struct MacRoot: View {
             MacSidebar(vm: vm)
                 .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
         } detail: {
+            MacDetail(vm: vm)
+        }
+        .navigationSplitViewStyle(.balanced)
+        .tint(vm.palette.tint)
+        .preferredColorScheme(vm.mode == .dark ? .dark : .light)
+        .overlay(alignment: .top) {
+            if showsUpdateAccessory {
+                UpdateBanner(vm: vm)
+                    .padding(12)
+            }
+        }
+        .onAppear { vm.checkUpdate(false) }
+        .frame(minWidth: 880, minHeight: 540)
+    }
+
+    private var showsUpdateAccessory: Bool {
+        vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged"
+    }
+}
+
+private struct MacDetail: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        Group {
             switch vm.tab {
             case .practice:
                 NavigationStack(path: $vm.practicePath) {
@@ -72,21 +97,39 @@ struct MacRoot: View {
                 }
             }
         }
-        .navigationSplitViewStyle(.balanced)
-        .tint(vm.palette.tint)
-        .preferredColorScheme(vm.mode == .dark ? .dark : .light)
-        .overlay(alignment: .top) {
-            if showsUpdateAccessory {
-                UpdateBanner(vm: vm)
-                    .padding(12)
-            }
+        .toolbar {
+            MacWindowToolbar(vm: vm)
         }
-        .onAppear { vm.checkUpdate(false) }
-        .frame(minWidth: 880, minHeight: 540)
+        .toolbarBackgroundVisibility(.visible, for: .windowToolbar)
     }
+}
 
-    private var showsUpdateAccessory: Bool {
-        vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged"
+private struct MacWindowToolbar: ToolbarContent {
+    @ObservedObject var vm: AppModel
+
+    var body: some ToolbarContent {
+        ToolbarItemGroup(placement: .primaryAction) {
+            Button {
+                vm.tab = .search
+            } label: {
+                Label(vm.tr("search"), systemImage: "magnifyingglass")
+            }
+            .help(vm.tr("search"))
+
+            Button {
+                vm.tab = .progress
+            } label: {
+                Label(vm.tr("stats"), systemImage: "chart.bar.fill")
+            }
+            .help(vm.tr("stats"))
+
+            Button {
+                vm.tab = .settings
+            } label: {
+                Label(vm.tr("settings"), systemImage: "gearshape")
+            }
+            .help(vm.tr("settings"))
+        }
     }
 }
 
