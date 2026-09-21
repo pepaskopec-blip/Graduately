@@ -369,16 +369,25 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
 
 struct SearchScreen: View {
     @ObservedObject var vm: AppModel
+    @State private var query = ""
+    #if os(iOS)
+    @FocusState private var fieldFocused: Bool
+    #endif
 
     var body: some View {
-        let q = normalizeAnswer(vm.searchQuery)
+        let q = normalizeAnswer(query)
         let hits = buildSearch(vm).filter { q.isEmpty || normalizeAnswer($0.hay).contains(q) }
-        List {
+        return List {
             if hits.isEmpty {
                 ContentUnavailableView.search
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
             } else {
                 ForEach(hits) { hit in
                     Button {
+                        #if os(iOS)
+                        fieldFocused = false
+                        #endif
                         if !hit.locked { vm.openFromSearch(hit.target) }
                     } label: {
                         VStack(alignment: .leading, spacing: 2) {
@@ -392,9 +401,60 @@ struct SearchScreen: View {
             }
         }
         .navigationTitle(vm.tr("search"))
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaBar(edge: .top) {
+            searchField
+        }
+        .onAppear {
+            query = vm.searchQuery
+            DispatchQueue.main.async {
+                fieldFocused = true
+            }
+        }
+        .onChange(of: query) { _, q in
+            vm.searchQuery = q
+        }
+        .onChange(of: vm.searchQuery) { _, q in
+            if q != query { query = q }
+        }
+        #else
         .searchable(text: $vm.searchQuery, prompt: vm.tr("search_placeholder"))
+        .onAppear { query = vm.searchQuery }
+        .onChange(of: vm.searchQuery) { _, q in query = q }
+        #endif
         .appListStyle()
     }
+
+    #if os(iOS)
+    private var searchField: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(.secondary)
+            TextField(vm.tr("search_placeholder"), text: $query)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .submitLabel(.search)
+                .focused($fieldFocused)
+            if !query.isEmpty {
+                Button {
+                    query = ""
+                    fieldFocused = true
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.tertiary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Clear")
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+    }
+    #endif
 }
 
 private struct Hit: Identifiable {
