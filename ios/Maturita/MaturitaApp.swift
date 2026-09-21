@@ -51,7 +51,7 @@ struct NativeRoot: View {
                     SettingsScreen(vm: vm)
                 }
             }
-            Tab(vm.tr("search_placeholder"), systemImage: "magnifyingglass", value: .search, role: .search) {
+            Tab(vm.tr("search"), systemImage: "magnifyingglass", value: .search, role: .search) {
                 NavigationStack {
                     SearchScreen(vm: vm)
                 }
