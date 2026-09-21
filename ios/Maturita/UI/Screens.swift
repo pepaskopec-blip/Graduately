@@ -100,7 +100,7 @@ struct PracticeHome: View {
     private var iosHome: some View {
         let sum = summarize(vm.content, vm.progress)
         let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
-        List {
+        return List {
             if vm.showChangelog {
                 Section {
                     ChangelogCard(vm: vm)
