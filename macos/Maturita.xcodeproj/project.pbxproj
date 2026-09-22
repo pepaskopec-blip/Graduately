@@ -23,6 +23,7 @@
 		B101000000000000000014 /* Exercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000014 /* Exercises.swift */; };
 		B101000000000000000015 /* ExercisesMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000015 /* ExercisesMore.swift */; };
 		B101000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B201000000000000000016 /* Assets.xcassets */; };
+		B101000000000000000017 /* PathMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000019 /* PathMap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		B201000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B201000000000000000017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B201000000000000000018 /* Maturita.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Maturita.entitlements; sourceTree = "<group>"; };
+		B201000000000000000019 /* PathMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathMap.swift; path = ../ios/Maturita/UI/PathMap.swift; sourceTree = SOURCE_ROOT; };
 		B301000000000000000001 /* Maturita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maturita.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -108,6 +110,7 @@
 			children = (
 				B201000000000000000011 /* Components.swift */,
 				B201000000000000000012 /* Icons.swift */,
+				B201000000000000000019 /* PathMap.swift */,
 				B201000000000000000013 /* Screens.swift */,
 				B201000000000000000014 /* Exercises.swift */,
 				B201000000000000000015 /* ExercisesMore.swift */,
@@ -230,6 +233,7 @@
 				B101000000000000000010 /* ProgressStore.swift in Sources */,
 				B101000000000000000011 /* Components.swift in Sources */,
 				B101000000000000000012 /* Icons.swift in Sources */,
+				B101000000000000000017 /* PathMap.swift in Sources */,
 				B101000000000000000013 /* Screens.swift in Sources */,
 				B101000000000000000014 /* Exercises.swift in Sources */,
 				B101000000000000000015 /* ExercisesMore.swift in Sources */,

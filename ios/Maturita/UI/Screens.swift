@@ -507,6 +507,54 @@ struct RoadmapScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
+        #if os(macOS)
+        roadmapPath
+        #else
+        roadmapList
+        #endif
+    }
+
+    #if os(macOS)
+    private var roadmapPath: some View {
+        let current = vm.content.german.firstIndex { u in
+            u.bool("unlocked") && u.strs("names").indices.contains { !vm.progress.germanDone(u.int("id"), $0 + 1) }
+        }
+        let lit = CGFloat(max((current ?? vm.content.german.count) - 1, 0))
+        return PathMap(
+            nodes: vm.content.german.enumerated().map { i, u in
+                let unlocked = u.bool("unlocked")
+                let names = u.strs("names")
+                let done = unlocked && !names.isEmpty && names.indices.allSatisfy {
+                    vm.progress.germanDone(u.int("id"), $0 + 1)
+                }
+                return MapNode(
+                    id: u.str("page"),
+                    label: u.str("title"),
+                    locked: !unlocked,
+                    done: done,
+                    current: i == current,
+                    finish: i == vm.content.german.count - 1,
+                    destination: unlocked ? .unitMap(u.int("id")) : nil
+                )
+            },
+            palette: vm.palette,
+            litUntil: lit,
+            nodeSize: 78,
+            mx: 100,
+            my: 120,
+            spac: 190,
+            gap: 180,
+            wave: 32
+        )
+        .padding(20)
+        .backgroundExtensionEffect()
+        .navigationTitle(vm.tr("roadmap_title"))
+        .navigationSubtitle(vm.tr("roadmap_sub"))
+    }
+    #endif
+
+    #if os(iOS)
+    private var roadmapList: some View {
         List {
             ForEach(Array(vm.content.german.enumerated()), id: \.offset) { _, u in
                 let unlocked = u.bool("unlocked")
@@ -530,6 +578,7 @@ struct RoadmapScreen: View {
         .navigationSubtitle(vm.tr("roadmap_sub"))
         .appListStyle()
     }
+    #endif
 }
 
 struct UnitMapScreen: View {
@@ -538,28 +587,84 @@ struct UnitMapScreen: View {
 
     var body: some View {
         if let u = vm.content.germanUnit(unitId) {
-            let names = u.strs("names")
-            List {
-                ForEach(names.indices, id: \.self) { i in
-                    NavigationLink(value: Route.germanEx(unitId, i + 1)) {
-                        Label {
-                            Text(names[i])
-                        } icon: {
-                            Image(systemName: vm.progress.germanDone(unitId, i + 1) ? "checkmark.circle.fill" : "circle")
-                        }
-                    }
-                }
-                if u.has("branch") {
-                    NavigationLink(value: Route.vocab(unitId)) {
-                        Label(vm.tr("Vokabeltraining"), systemImage: "character.book.closed")
+            #if os(macOS)
+            unitPath(u)
+            #else
+            unitList(u)
+            #endif
+        }
+    }
+
+    #if os(macOS)
+    private func unitPath(_ u: J) -> some View {
+        let names = u.strs("names")
+        let next = names.indices.first { !vm.progress.germanDone(unitId, $0 + 1) }
+        let lit = CGFloat(next ?? names.count)
+        let branch: (index: Int, node: MapNode)? = u.has("branch")
+            ? (
+                1,
+                MapNode(
+                    id: "vocab-\(unitId)",
+                    label: vm.tr("Vokabeltraining"),
+                    locked: false,
+                    done: false,
+                    current: false,
+                    destination: .vocab(unitId)
+                )
+            )
+            : nil
+        return PathMap(
+            nodes: names.enumerated().map { i, name in
+                MapNode(
+                    id: "e\(i + 1)",
+                    label: name,
+                    locked: false,
+                    done: vm.progress.germanDone(unitId, i + 1),
+                    current: i == next,
+                    destination: .germanEx(unitId, i + 1)
+                )
+            },
+            palette: vm.palette,
+            litUntil: lit,
+            nodeSize: 72,
+            mx: 96,
+            my: 118,
+            spac: 180,
+            gap: 170,
+            wave: 28,
+            branch: branch
+        )
+        .padding(20)
+        .backgroundExtensionEffect()
+        .navigationTitle(u.str("title"))
+        .navigationSubtitle(vm.tr(u.str("sub")))
+    }
+    #endif
+
+    #if os(iOS)
+    private func unitList(_ u: J) -> some View {
+        let names = u.strs("names")
+        return List {
+            ForEach(names.indices, id: \.self) { i in
+                NavigationLink(value: Route.germanEx(unitId, i + 1)) {
+                    Label {
+                        Text(names[i])
+                    } icon: {
+                        Image(systemName: vm.progress.germanDone(unitId, i + 1) ? "checkmark.circle.fill" : "circle")
                     }
                 }
             }
-            .navigationTitle(u.str("title"))
-            .navigationSubtitle(vm.tr(u.str("sub")))
-            .appListStyle()
+            if u.has("branch") {
+                NavigationLink(value: Route.vocab(unitId)) {
+                    Label(vm.tr("Vokabeltraining"), systemImage: "character.book.closed")
+                }
+            }
         }
+        .navigationTitle(u.str("title"))
+        .navigationSubtitle(vm.tr(u.str("sub")))
+        .appListStyle()
     }
+    #endif
 }
 
 struct NetYearsScreen: View {
@@ -599,11 +704,51 @@ struct LessonRow: Identifiable {
 }
 
 struct LessonListScreen: View {
+    @ObservedObject var vm: AppModel
     let title: String
     let subtitle: String
     let rows: [LessonRow]
 
     var body: some View {
+        #if os(macOS)
+        lessonPath
+        #else
+        lessonList
+        #endif
+    }
+
+    #if os(macOS)
+    private var lessonPath: some View {
+        let next = rows.firstIndex { !$0.done }
+        return PathMap(
+            nodes: rows.enumerated().map { i, row in
+                MapNode(
+                    id: row.id,
+                    label: row.title,
+                    locked: false,
+                    done: row.done,
+                    current: i == next,
+                    destination: row.destination
+                )
+            },
+            palette: vm.palette,
+            litUntil: CGFloat(next ?? rows.count),
+            nodeSize: 70,
+            mx: 92,
+            my: 112,
+            spac: 176,
+            gap: 168,
+            wave: 26
+        )
+        .padding(20)
+        .backgroundExtensionEffect()
+        .navigationTitle(title)
+        .navigationSubtitle(subtitle)
+    }
+    #endif
+
+    #if os(iOS)
+    private var lessonList: some View {
         List(rows) { row in
             NavigationLink(value: row.destination) {
                 Label {
@@ -617,6 +762,7 @@ struct LessonListScreen: View {
         .navigationSubtitle(subtitle)
         .appListStyle()
     }
+    #endif
 }
 
 struct SlidesScreen: View {
@@ -815,6 +961,7 @@ struct RouteDestination: View {
             NetYearsScreen(vm: vm)
         case .netMap:
             LessonListScreen(
+                vm: vm,
                 title: vm.tr("net_year1"),
                 subtitle: vm.tr("net_sub"),
                 rows: vm.content.netLessons.map { l in
@@ -835,6 +982,7 @@ struct RouteDestination: View {
             NetQuizScreen(vm: vm, id: id)
         case .hwMap:
             LessonListScreen(
+                vm: vm,
                 title: vm.tr("Technické vybavení"),
                 subtitle: vm.tr("hw_sub"),
                 rows: vm.content.hw.map { l in
@@ -857,6 +1005,7 @@ struct RouteDestination: View {
             CzechMapScreen(vm: vm)
         case .mluvnice:
             LessonListScreen(
+                vm: vm,
                 title: vm.tr("Mluvnice"),
                 subtitle: vm.tr("mluv_sub"),
                 rows: vm.content.mluvnice.map { m in
