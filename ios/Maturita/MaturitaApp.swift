@@ -8,6 +8,10 @@ struct MaturitaApp: App {
         WindowGroup {
             NativeRoot(vm: vm)
         }
+        #if os(macOS)
+        .defaultSize(width: 1280, height: 840)
+        .windowResizability(.contentMinSize)
+        #endif
     }
 }
 
@@ -25,6 +29,9 @@ struct NativeRoot: View {
         .tint(vm.palette.tint)
         .preferredColorScheme(vm.mode == .dark ? .dark : .light)
         .onAppear { vm.checkUpdate(false) }
+        #if os(macOS)
+        .frame(minWidth: 980, minHeight: 640)
+        #endif
     }
 
     private var showsUpdateAccessory: Bool {
@@ -68,11 +75,18 @@ private struct UpdateAccessory: View {
     var body: some View {
         HStack {
             Text(bannerText)
+                #if os(macOS)
+                .font(.body)
+                #else
                 .font(.subheadline)
+                #endif
             Spacer()
             if vm.update.canInstall {
                 Button(vm.tr("update_install")) { vm.installUpdate() }
                     .buttonStyle(.borderedProminent)
+                    #if os(macOS)
+                    .controlSize(.large)
+                    #endif
             }
         }
         .padding(.horizontal, 4)

@@ -37,15 +37,15 @@ struct PracticeHome: View {
                 VStack(alignment: .leading, spacing: 16) {
                     Text(vm.tr("subjects_title"))
                         .font(.title2.weight(.semibold))
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 220), spacing: 16)], spacing: 16) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: MacChrome.homeTileMin), spacing: 18)], spacing: 18) {
                         ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
                             subjectTile(s)
                         }
                     }
                 }
             }
-            .padding(28)
-            .frame(maxWidth: 920, alignment: .leading)
+            .padding(32)
+            .frame(maxWidth: MacChrome.contentMaxWidth, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .navigationTitle("Maturita")
@@ -70,28 +70,28 @@ struct PracticeHome: View {
     }
 
     private func subjectTileBody(_ s: J, open: Bool, progress: Double, part: ProgressSum) -> some View {
-        VStack(alignment: .leading, spacing: 14) {
-            SubjectIcon(icon: s.str("icon"), open: open, size: 36)
+        VStack(alignment: .leading, spacing: 16) {
+            SubjectIcon(icon: s.str("icon"), open: open, size: 44)
             Text(vm.tr(s.str("key")))
-                .font(.headline)
+                .font(.title3.weight(.semibold))
                 .foregroundStyle(open ? .primary : .secondary)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 0)
             if open && part.totalEx > 0 {
                 ProgressView(value: progress)
                 Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
-                    .font(.caption)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
             } else if !open {
                 Text(vm.tr("stats_locked"))
-                    .font(.caption)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
         }
-        .padding(18)
-        .frame(maxWidth: .infinity, minHeight: 148, alignment: .topLeading)
-        .softSurface(cornerRadius: 20)
+        .padding(22)
+        .frame(maxWidth: .infinity, minHeight: MacChrome.homeTileHeight, alignment: .topLeading)
+        .softSurface(cornerRadius: 22)
     }
     #endif
 
@@ -193,10 +193,11 @@ struct ChangelogCard: View {
                 Button(vm.tr("changelog_dismiss")) { vm.dismissChangelog() }
                     #if os(macOS)
                     .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
                     #else
                     .buttonStyle(.glassProminent)
-                    #endif
                     .controlSize(.small)
+                    #endif
             }
         }
     }
@@ -233,20 +234,43 @@ struct SettingsScreen: View {
                     Text(vm.tr("mode_light")).tag(ColorMode.light)
                 }
                 .pickerStyle(.segmented)
+                #if os(macOS)
+                .controlSize(.large)
+                #endif
             }
             Section(vm.tr("theme")) {
                 ForEach(Array(ThemeId.allCases), id: \.self) { id in
                     Button {
                         vm.setTheme(id)
                     } label: {
-                        HStack {
-                            Circle().fill(themePalette(id, vm.mode).tint).frame(width: 14, height: 14)
-                            Text(themeNames[id.rawValue]).foregroundStyle(.primary)
+                        HStack(spacing: 12) {
+                            Circle().fill(themePalette(id, vm.mode).tint)
+                                .frame(width: {
+                                    #if os(macOS)
+                                    18
+                                    #else
+                                    14
+                                    #endif
+                                }(), height: {
+                                    #if os(macOS)
+                                    18
+                                    #else
+                                    14
+                                    #endif
+                                }())
+                            Text(themeNames[id.rawValue])
+                                #if os(macOS)
+                                .font(.title3)
+                                #endif
+                                .foregroundStyle(.primary)
                             Spacer()
                             if vm.themeId == id {
                                 Image(systemName: "checkmark").fontWeight(.semibold)
                             }
                         }
+                        #if os(macOS)
+                        .padding(.vertical, 4)
+                        #endif
                     }
                 }
             }
@@ -256,12 +280,25 @@ struct SettingsScreen: View {
                     Text("English").tag(UiLang.en)
                 }
                 .pickerStyle(.segmented)
+                #if os(macOS)
+                .controlSize(.large)
+                #endif
             }
             Section(vm.tr("updates")) {
-                Text(updateText).foregroundStyle(.secondary)
+                Text(updateText)
+                    #if os(macOS)
+                    .font(.body)
+                    #endif
+                    .foregroundStyle(.secondary)
                 Button(vm.tr("update_check")) { vm.checkUpdate(true) }
+                    #if os(macOS)
+                    .controlSize(.large)
+                    #endif
                 if vm.update.canInstall {
                     Button(vm.tr("update_install")) { vm.installUpdate() }
+                        #if os(macOS)
+                        .controlSize(.large)
+                        #endif
                 }
                 LabeledContent("Build", value: "\(AppConfig.versionName) · \(String(AppConfig.commit.prefix(7)))")
             }
@@ -316,9 +353,16 @@ struct StatsScreen: View {
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
                                 Text(vm.tr(s.str("key")))
+                                    #if os(macOS)
+                                    .font(.title3)
+                                    #endif
                                 Spacer()
                                 Text(open ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
+                                    #if os(macOS)
+                                    .font(.body)
+                                    #else
                                     .font(.caption)
+                                    #endif
                                     .foregroundStyle(.secondary)
                                     .monospacedDigit()
                             }
@@ -327,7 +371,13 @@ struct StatsScreen: View {
                             }
                         }
                     } icon: {
-                        SubjectIcon(icon: s.str("icon"), open: open)
+                        SubjectIcon(icon: s.str("icon"), open: open, size: {
+                            #if os(macOS)
+                            32
+                            #else
+                            26
+                            #endif
+                        }())
                     }
                     .foregroundStyle(open ? .primary : .secondary)
                 }
@@ -339,8 +389,20 @@ struct StatsScreen: View {
 
     private func stat(_ label: String, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(label).font(.caption).foregroundStyle(.secondary)
-            Text(value).font(.title3.bold()).monospacedDigit()
+            Text(label)
+                #if os(macOS)
+                .font(.subheadline)
+                #else
+                .font(.caption)
+                #endif
+                .foregroundStyle(.secondary)
+            Text(value)
+                #if os(macOS)
+                .font(.title2.bold())
+                #else
+                .font(.title3.bold())
+                #endif
+                .monospacedDigit()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -393,10 +455,7 @@ struct SearchScreen: View {
                         #endif
                         if !hit.locked { vm.openFromSearch(hit.target) }
                     } label: {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(hit.title)
-                            Text(hit.sub).font(.caption).foregroundStyle(.secondary)
-                        }
+                        ListRowLabel(title: hit.title, subtitle: hit.sub)
                     }
                     .disabled(hit.locked)
                     .foregroundStyle(hit.locked ? .secondary : .primary)
@@ -542,14 +601,14 @@ struct RoadmapScreen: View {
             },
             palette: vm.palette,
             litUntil: lit,
-            nodeSize: 68,
-            mx: 88,
-            my: 120,
-            spac: 168,
-            gap: 240,
-            wave: 16
+            nodeSize: MacChrome.pathNode,
+            mx: 100,
+            my: 140,
+            spac: 196,
+            gap: 280,
+            wave: 18
         )
-        .padding(20)
+        .padding(28)
         .navigationTitle(vm.tr("roadmap_title"))
         .navigationSubtitle(vm.tr("roadmap_sub"))
     }
@@ -628,15 +687,15 @@ struct UnitMapScreen: View {
             },
             palette: vm.palette,
             litUntil: lit,
-            nodeSize: 64,
-            mx: 88,
-            my: 118,
-            spac: 164,
-            gap: 230,
-            wave: 14,
+            nodeSize: MacChrome.pathNode,
+            mx: 100,
+            my: 136,
+            spac: 190,
+            gap: 268,
+            wave: 16,
             branch: branch
         )
-        .padding(20)
+        .padding(28)
         .navigationTitle(u.str("title"))
         .navigationSubtitle(vm.tr(u.str("sub")))
     }
@@ -674,17 +733,11 @@ struct NetYearsScreen: View {
     var body: some View {
         List {
             NavigationLink(value: Route.netMap) {
-                VStack(alignment: .leading) {
-                    Text(vm.tr("net_year1"))
-                    Text(vm.tr("net_sub")).font(.caption).foregroundStyle(.secondary)
-                }
+                ListRowLabel(title: vm.tr("net_year1"), subtitle: vm.tr("net_sub"))
             }
             ForEach(["net_year2", "net_year3", "net_year4"], id: \.self) { key in
                 Label {
-                    VStack(alignment: .leading) {
-                        Text(vm.tr(key))
-                        Text(vm.tr("net_year_locked_sub")).font(.caption)
-                    }
+                    ListRowLabel(title: vm.tr(key), subtitle: vm.tr("net_year_locked_sub"))
                 } icon: {
                     Image(systemName: "lock.fill")
                 }
@@ -734,14 +787,14 @@ struct LessonListScreen: View {
             },
             palette: vm.palette,
             litUntil: CGFloat(next ?? rows.count),
-            nodeSize: 64,
-            mx: 86,
-            my: 116,
-            spac: 160,
-            gap: 236,
-            wave: 14
+            nodeSize: MacChrome.pathNode,
+            mx: 98,
+            my: 134,
+            spac: 186,
+            gap: 272,
+            wave: 16
         )
-        .padding(20)
+        .padding(28)
         .navigationTitle(title)
         .navigationSubtitle(subtitle)
     }
@@ -833,25 +886,39 @@ struct SlidesScreen: View {
 
     private func slidePage(_ slide: J) -> some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 14) {
                 Text(slide.str("kicker"))
+                    #if os(macOS)
+                    .font(.subheadline.weight(.semibold))
+                    #else
                     .font(.caption.weight(.semibold))
+                    #endif
                     .foregroundStyle(.secondary)
-                Text(slide.str("title")).font(.title2.bold())
+                Text(slide.str("title"))
+                    #if os(macOS)
+                    .font(.title.bold())
+                    #else
+                    .font(.title2.bold())
+                    #endif
                 if let tip = slide.strOrNull("tip") {
                     GlassCard {
                         Label(tip, systemImage: "lightbulb.fill")
                     }
                 }
                 ForEach(Array(slide.strs("lines").enumerated()), id: \.offset) { _, line in
-                    Text(line).padding(.vertical, 4)
+                    Text(line)
+                        #if os(macOS)
+                        .font(.title3)
+                        #endif
+                        .padding(.vertical, 4)
                 }
             }
             .padding()
             .padding(.bottom, 24)
             .frame(maxWidth: .infinity, alignment: .leading)
             #if os(macOS)
-            .frame(maxWidth: 720, alignment: .leading)
+            .frame(maxWidth: MacChrome.exerciseMaxWidth, alignment: .leading)
+            .padding(12)
             #endif
         }
     }
@@ -862,13 +929,34 @@ struct CzechMapScreen: View {
 
     var body: some View {
         List {
-            Label(vm.tr("Literatura"), systemImage: "lock.fill")
-                .foregroundStyle(.secondary)
+            Label {
+                Text(vm.tr("Literatura"))
+                    #if os(macOS)
+                    .font(.title3)
+                    #endif
+            } icon: {
+                Image(systemName: "lock.fill")
+            }
+            .foregroundStyle(.secondary)
             NavigationLink(value: Route.mluvnice) {
-                Label(vm.tr("Mluvnice"), systemImage: "textformat")
+                Label {
+                    Text(vm.tr("Mluvnice"))
+                        #if os(macOS)
+                        .font(.title3)
+                        #endif
+                } icon: {
+                    Image(systemName: "textformat")
+                }
             }
             NavigationLink(value: Route.readingList) {
-                Label(vm.tr("Maturitní četba"), systemImage: "books.vertical")
+                Label {
+                    Text(vm.tr("Maturitní četba"))
+                        #if os(macOS)
+                        .font(.title3)
+                        #endif
+                } icon: {
+                    Image(systemName: "books.vertical")
+                }
             }
         }
         .navigationTitle(vm.tr("Český jazyk a literatura"))
@@ -885,15 +973,18 @@ struct BookListScreen: View {
             ForEach(Array(vm.content.books.enumerated()), id: \.offset) { _, b in
                 NavigationLink(value: Route.book(b.str("id"))) {
                     Label {
-                        VStack(alignment: .leading) {
-                            Text(b.str("title"))
-                            let genre = b.str("genre")
-                            Text(genre.isEmpty ? vm.tr(b.str("subKey")) : genre)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
+                        ListRowLabel(
+                            title: b.str("title"),
+                            subtitle: {
+                                let genre = b.str("genre")
+                                return genre.isEmpty ? vm.tr(b.str("subKey")) : genre
+                            }()
+                        )
                     } icon: {
                         Image(systemName: "book.fill")
+                            #if os(macOS)
+                            .font(.title3)
+                            #endif
                     }
                 }
             }
@@ -916,24 +1007,24 @@ struct BookScreen: View {
                 if hasQuiz {
                     NavigationLink(value: Route.bookQuiz(id)) {
                         Label {
-                            VStack(alignment: .leading) {
-                                Text(vm.tr(b.str("quizTitle")))
-                                Text(vm.tr(b.str("quizSub"))).font(.caption).foregroundStyle(.secondary)
-                            }
+                            ListRowLabel(title: vm.tr(b.str("quizTitle")), subtitle: vm.tr(b.str("quizSub")))
                         } icon: {
                             Image(systemName: "questionmark.circle")
+                                #if os(macOS)
+                                .font(.title3)
+                                #endif
                         }
                     }
                 }
                 if hasPlot {
                     NavigationLink(value: Route.bookPlot(id)) {
                         Label {
-                            VStack(alignment: .leading) {
-                                Text(vm.tr(b.str("plotTitle")))
-                                Text(vm.tr(b.str("plotSub"))).font(.caption).foregroundStyle(.secondary)
-                            }
+                            ListRowLabel(title: vm.tr(b.str("plotTitle")), subtitle: vm.tr(b.str("plotSub")))
                         } icon: {
                             Image(systemName: "list.number")
+                                #if os(macOS)
+                                .font(.title3)
+                                #endif
                         }
                     }
                 }
@@ -941,6 +1032,10 @@ struct BookScreen: View {
                     Section(note.str("title")) {
                         ForEach(Array(note.strs("lines").enumerated()), id: \.offset) { _, line in
                             Text(line)
+                                #if os(macOS)
+                                .font(.title3)
+                                .padding(.vertical, 4)
+                                #endif
                         }
                     }
                 }

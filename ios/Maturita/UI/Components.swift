@@ -1,5 +1,17 @@
 import SwiftUI
 
+#if os(macOS)
+enum MacChrome {
+    static let contentMaxWidth: CGFloat = 1080
+    static let exerciseMaxWidth: CGFloat = 900
+    static let cardPadding: CGFloat = 24
+    static let listRowMinHeight: CGFloat = 52
+    static let homeTileMin: CGFloat = 260
+    static let homeTileHeight: CGFloat = 176
+    static let pathNode: CGFloat = 84
+}
+#endif
+
 struct FlowLayout: Layout {
     var spacing: CGFloat = 6
 
@@ -48,6 +60,9 @@ struct PrimaryButton: View {
             Text(label)
                 .font(.body.weight(.semibold))
                 .frame(maxWidth: .infinity)
+                #if os(macOS)
+                .padding(.vertical, 4)
+                #endif
         }
         #if os(macOS)
         .buttonStyle(.borderedProminent)
@@ -66,6 +81,9 @@ struct PillButton: View {
     var body: some View {
         Button(label, action: action)
             .buttonStyle(.bordered)
+            #if os(macOS)
+            .controlSize(.large)
+            #endif
     }
 }
 
@@ -74,7 +92,11 @@ struct GlassCard<Content: View>: View {
 
     var body: some View {
         content()
+            #if os(macOS)
+            .padding(MacChrome.cardPadding)
+            #else
             .padding(16)
+            #endif
             .frame(maxWidth: .infinity, alignment: .leading)
             .softSurface(cornerRadius: 22)
     }
@@ -107,7 +129,11 @@ struct FeedbackLine: View {
             } icon: {
                 Image(systemName: kind == "ok" ? "checkmark.circle.fill" : kind == "warn" ? "exclamationmark.triangle.fill" : "xmark.circle.fill")
             }
+            #if os(macOS)
+            .font(.body.weight(.semibold))
+            #else
             .font(.subheadline.weight(.semibold))
+            #endif
             .foregroundStyle(kind == "ok" ? palette.success : kind == "warn" ? palette.warning : palette.error)
         }
     }
@@ -121,7 +147,11 @@ struct Meaning: View {
     var body: some View {
         if visible && !text.isEmpty {
             Text(text)
+                #if os(macOS)
+                .font(.body)
+                #else
                 .font(.footnote)
+                #endif
                 .foregroundStyle(.secondary)
                 .padding(.bottom, 4)
         }
@@ -139,13 +169,20 @@ struct WordField: View {
             TextField(placeholder, text: $value)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
+                #if os(macOS)
+                .font(.title3)
+                #endif
             if let mark {
                 Image(systemName: mark ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundStyle(mark ? (palette?.success ?? .green) : (palette?.error ?? .red))
             }
         }
         .padding(.horizontal, 12)
+        #if os(macOS)
+        .padding(.vertical, 14)
+        #else
         .padding(.vertical, 10)
+        #endif
         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -169,20 +206,35 @@ struct SegChip: View {
         Button(label, action: action)
             .buttonStyle(.bordered)
             .tint(selected ? .accentColor : .secondary)
+            #if os(macOS)
+            .controlSize(.large)
+            #endif
     }
 }
 
 struct Hint: View {
     let text: String
     var body: some View {
-        Text(text).font(.footnote).foregroundStyle(.secondary).padding(.bottom, 6)
+        Text(text)
+            #if os(macOS)
+            .font(.body)
+            #else
+            .font(.footnote)
+            #endif
+            .foregroundStyle(.secondary)
+            .padding(.bottom, 6)
     }
 }
 
 struct Prompt: View {
     let text: String
     var body: some View {
-        Text(text).font(.body.weight(.medium))
+        Text(text)
+            #if os(macOS)
+            .font(.title3.weight(.medium))
+            #else
+            .font(.body.weight(.medium))
+            #endif
     }
 }
 
@@ -194,7 +246,11 @@ struct WordChip: View {
         Button(text, action: action)
             .buttonStyle(.bordered)
             .tint(.primary)
+            #if os(macOS)
+            .controlSize(.large)
+            #else
             .controlSize(.small)
+            #endif
     }
 }
 
@@ -205,8 +261,13 @@ struct WordSlot<Content: View>: View {
 
     var body: some View {
         content()
+            #if os(macOS)
+            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+            .padding(12)
+            #else
             .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
             .padding(8)
+            #endif
             .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -224,18 +285,29 @@ struct OptionChip: View {
 
     var body: some View {
         Button(action: action) {
-            HStack {
+            HStack(spacing: 10) {
                 Image(systemName: symbol)
+                    .font(.title3)
                     .foregroundStyle(symbolColor)
                 Text(text)
+                    #if os(macOS)
+                    .font(.title3)
+                    #endif
                     .foregroundStyle(.primary)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            #if os(macOS)
+            .padding(.vertical, 8)
+            #else
             .padding(.vertical, 4)
+            #endif
         }
         .buttonStyle(.bordered)
         .tint(tint)
+        #if os(macOS)
+        .controlSize(.large)
+        #endif
         .padding(.bottom, 4)
     }
 
@@ -296,8 +368,8 @@ extension View {
     /// Full-width, leading-aligned content for exercise screens.
     func exerciseContent() -> some View {
         #if os(macOS)
-        frame(maxWidth: 720, alignment: .leading)
-            .padding(20)
+        frame(maxWidth: MacChrome.exerciseMaxWidth, alignment: .leading)
+            .padding(28)
             .frame(maxWidth: .infinity, alignment: .leading)
         #else
         frame(maxWidth: .infinity, alignment: .leading)
@@ -311,6 +383,9 @@ extension View {
     func appListStyle() -> some View {
         #if os(macOS)
         listStyle(.inset)
+            .environment(\.defaultMinListRowHeight, MacChrome.listRowMinHeight)
+            .scrollContentBackground(.hidden)
+            .padding(.horizontal, 8)
         #else
         self
         #endif
@@ -345,8 +420,39 @@ struct BottomAction<Extra: View>: View {
             PrimaryButton(label: label, action: action)
         }
         .padding(.horizontal)
+        #if os(macOS)
+        .padding(.top, 12)
+        .padding(.bottom, 10)
+        .frame(maxWidth: MacChrome.exerciseMaxWidth)
+        .frame(maxWidth: .infinity)
+        #else
         .padding(.top, 8)
         .padding(.bottom, 4)
+        #endif
+    }
+}
+
+/// Primary + secondary text sized for desktop lists.
+struct ListRowLabel: View {
+    let title: String
+    var subtitle: String? = nil
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(title)
+                #if os(macOS)
+                .font(.title3)
+                #endif
+            if let subtitle, !subtitle.isEmpty {
+                Text(subtitle)
+                    #if os(macOS)
+                    .font(.body)
+                    #else
+                    .font(.caption)
+                    #endif
+                    .foregroundStyle(.secondary)
+            }
+        }
     }
 }
 

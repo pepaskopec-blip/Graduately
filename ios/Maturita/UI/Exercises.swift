@@ -384,7 +384,14 @@ private struct AssignEx: View {
                     SegChip(label: groups[i], selected: active == i) { active = i }
                 }
             }
-            Text(vm.tr("wordbank")).font(.caption).foregroundStyle(.secondary).padding(.top, 10)
+            Text(vm.tr("wordbank"))
+                #if os(macOS)
+                .font(.body)
+                #else
+                .font(.caption)
+                #endif
+                .foregroundStyle(.secondary)
+                .padding(.top, 10)
             FlowLayout(spacing: 6) {
                 ForEach(items.indices, id: \.self) { i in
                     if loc[i] == -1 {

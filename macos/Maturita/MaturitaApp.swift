@@ -8,7 +8,8 @@ struct MaturitaApp: App {
         WindowGroup {
             MacRoot(vm: vm)
         }
-        .defaultSize(width: 1100, height: 720)
+        .defaultSize(width: 1280, height: 840)
+        .windowResizability(.contentMinSize)
         .windowToolbarStyle(.unified)
         .windowStyle(.automatic)
         .commands {
@@ -37,7 +38,7 @@ struct MaturitaApp: App {
         Settings {
             SettingsScreen(vm: vm)
                 .formStyle(.grouped)
-                .frame(minWidth: 420, minHeight: 460)
+                .frame(minWidth: 480, minHeight: 520)
                 .tint(vm.palette.tint)
                 .preferredColorScheme(vm.mode == .dark ? .dark : .light)
         }
@@ -58,7 +59,7 @@ struct MacRoot: View {
                 }
             }
             .onAppear { vm.checkUpdate(false) }
-            .frame(minWidth: 880, minHeight: 540)
+            .frame(minWidth: 980, minHeight: 640)
     }
 
     private var showsUpdateAccessory: Bool {
@@ -108,6 +109,7 @@ private struct MacWindowToolbar: ToolbarContent {
             } label: {
                 Label(vm.tr("search"), systemImage: "magnifyingglass")
             }
+            .controlSize(.large)
             .help(vm.tr("search"))
 
             Button {
@@ -115,6 +117,7 @@ private struct MacWindowToolbar: ToolbarContent {
             } label: {
                 Label(vm.tr("stats"), systemImage: "chart.bar.fill")
             }
+            .controlSize(.large)
             .help(vm.tr("stats"))
         }
 
@@ -126,6 +129,7 @@ private struct MacWindowToolbar: ToolbarContent {
             } label: {
                 Label(vm.tr("settings"), systemImage: "gearshape")
             }
+            .controlSize(.large)
             .help(vm.tr("settings"))
         }
     }
@@ -137,19 +141,20 @@ private struct UpdateBanner: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: "arrow.down.app.fill")
+                .font(.title3)
             Text(bannerText)
-                .font(.subheadline)
+                .font(.body)
             Spacer()
             if vm.update.canInstall {
                 Button(vm.tr("update_install")) { vm.installUpdate() }
                     .buttonStyle(.borderedProminent)
-                    .controlSize(.small)
+                    .controlSize(.large)
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 14)
         .softSurface(cornerRadius: 16)
-        .frame(maxWidth: 560)
+        .frame(maxWidth: 640)
     }
 
     private var bannerText: String {

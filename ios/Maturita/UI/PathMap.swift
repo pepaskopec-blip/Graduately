@@ -24,7 +24,11 @@ private struct Serpentine {
 }
 
 /// Keep enough room under/above each node for a two-line caption.
+#if os(macOS)
+private let labelBand: CGFloat = 56
+#else
 private let labelBand: CGFloat = 44
+#endif
 
 private func serpentine(
     count n: Int,
@@ -138,7 +142,7 @@ struct PathMap: View {
                 nodeSize: nodeSize,
                 lift: branch == nil ? 0 : 56
             )
-            let labelWidth = min(118, max(72, layout.spacing - 16))
+            let labelWidth = min(140, max(88, layout.spacing - 16))
             let canvasH = layout.height + labelBand + 24
             ScrollView([.horizontal, .vertical]) {
                 ZStack(alignment: .topLeading) {
@@ -151,7 +155,11 @@ struct PathMap: View {
                         nodeView(node, index: i)
                             .position(x: pt.x, y: pt.y)
                         Text(node.label)
+                            #if os(macOS)
+                            .font(.callout.weight(.semibold))
+                            #else
                             .font(.caption2.weight(.semibold))
+                            #endif
                             .foregroundStyle(node.locked ? palette.overlay : palette.text)
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
@@ -167,19 +175,23 @@ struct PathMap: View {
 
                     if let branch, branch.index < layout.points.count {
                         let base = layout.points[branch.index]
-                        let tip = NodePos(x: base.x + 52, y: base.y - 110, row: base.row)
+                        let tip = NodePos(x: base.x + 64, y: base.y - 128, row: base.row)
                         Path { p in
                             p.move(to: CGPoint(x: base.x, y: base.y - nodeSize / 2))
                             p.addQuadCurve(
                                 to: CGPoint(x: tip.x, y: tip.y + nodeSize / 2),
-                                control: CGPoint(x: base.x + 12, y: tip.y + 24)
+                                control: CGPoint(x: base.x + 14, y: tip.y + 28)
                             )
                         }
-                        .stroke(palette.rail, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                        .stroke(palette.rail, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                         nodeView(branch.node, index: nil)
                             .position(x: tip.x, y: tip.y)
                         Text(branch.node.label)
+                            #if os(macOS)
+                            .font(.callout.weight(.semibold))
+                            #else
                             .font(.caption2.weight(.semibold))
+                            #endif
                             .foregroundStyle(palette.text)
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
@@ -195,7 +207,11 @@ struct PathMap: View {
                 .padding(.horizontal, 12)
             }
         }
+        #if os(macOS)
+        .frame(minHeight: 520)
+        #else
         .frame(minHeight: 420)
+        #endif
     }
 
     @ViewBuilder
@@ -240,25 +256,60 @@ struct PathMap: View {
                 }
             if node.finish {
                 VStack(spacing: 2) {
-                    if let index { Text("\(index + 1)").font(.headline.weight(.black)) }
+                    if let index {
+                        Text("\(index + 1)")
+                            #if os(macOS)
+                            .font(.title2.weight(.black))
+                            #else
+                            .font(.headline.weight(.black))
+                            #endif
+                    }
                     FinishFlagBadge(palette: palette)
                 }
                 .foregroundStyle(palette.overlay)
             } else if node.locked {
                 VStack(spacing: 2) {
-                    if let index { Text("\(index + 1)").font(.headline.weight(.black)) }
-                    Image(systemName: "lock.fill").font(.caption2.weight(.bold))
+                    if let index {
+                        Text("\(index + 1)")
+                            #if os(macOS)
+                            .font(.title2.weight(.black))
+                            #else
+                            .font(.headline.weight(.black))
+                            #endif
+                    }
+                    Image(systemName: "lock.fill")
+                        #if os(macOS)
+                        .font(.caption.weight(.bold))
+                        #else
+                        .font(.caption2.weight(.bold))
+                        #endif
                 }
                 .foregroundStyle(palette.overlay)
             } else if node.done {
                 VStack(spacing: 2) {
-                    if let index { Text("\(index + 1)").font(.headline.weight(.black)) }
-                    Image(systemName: "checkmark").font(.caption2.weight(.bold))
+                    if let index {
+                        Text("\(index + 1)")
+                            #if os(macOS)
+                            .font(.title2.weight(.black))
+                            #else
+                            .font(.headline.weight(.black))
+                            #endif
+                    }
+                    Image(systemName: "checkmark")
+                        #if os(macOS)
+                        .font(.caption.weight(.bold))
+                        #else
+                        .font(.caption2.weight(.bold))
+                        #endif
                 }
                 .foregroundStyle(palette.onAccent)
             } else if let index {
                 Text("\(index + 1)")
+                    #if os(macOS)
+                    .font(.title2.weight(.black))
+                    #else
                     .font(.headline.weight(.black))
+                    #endif
                     .foregroundStyle(node.current ? palette.onAccent : palette.text)
             }
         }
