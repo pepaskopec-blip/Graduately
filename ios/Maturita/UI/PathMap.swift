@@ -13,13 +13,18 @@ struct MapNode: Identifiable {
 private struct NodePos {
     var x: CGFloat
     var y: CGFloat
+    var row: Int
 }
 
 private struct Serpentine {
     let points: [NodePos]
     let width: CGFloat
     let height: CGFloat
+    let spacing: CGFloat
 }
+
+/// Keep enough room under/above each node for a two-line caption.
+private let labelBand: CGFloat = 44
 
 private func serpentine(
     count n: Int,
@@ -29,30 +34,42 @@ private func serpentine(
     spac: CGFloat,
     gap: CGFloat,
     wave: CGFloat,
+    nodeSize: CGFloat,
     lift: CGFloat = 0
 ) -> Serpentine {
-    guard n > 0 else { return Serpentine(points: [], width: avail, height: my * 2) }
-    let scale = min(1, max(0.55, avail / (2 * mx + CGFloat(max(n - 1, 0)) * spac)))
-    let smx = mx * scale
-    let smy = my * scale
-    let sspac = spac * scale
-    let sgap = gap * scale
-    let swave = wave * scale
-    let slift = lift * scale
+    guard n > 0 else {
+        return Serpentine(points: [], width: avail, height: my * 2, spacing: spac)
+    }
 
+    // Pick the fewest rows that fit the preferred spacing in the available width.
+    // Do NOT pre-scale as if every node were on one row — that crushed tall maps.
     var rows = 1
+    var cols = n
     while rows <= n {
-        let cols = (n + rows - 1) / rows
-        if 2 * smx + CGFloat(cols - 1) * sspac <= avail + 1 { break }
+        cols = max(1, (n + rows - 1) / rows)
+        if 2 * mx + CGFloat(cols - 1) * spac <= avail + 1 { break }
         rows += 1
     }
     rows = min(rows, n)
-    let cols = max(1, (n + rows - 1) / rows)
+    cols = max(1, (n + rows - 1) / rows)
+
+    let needed = 2 * mx + CGFloat(cols - 1) * spac
+    let scale = needed > avail ? max(0.72, avail / needed) : 1
+
+    let smx = mx * scale
+    let smy = max(my * scale, nodeSize / 2 + labelBand + 8)
+    let sspac = max(spac * scale, nodeSize + 36)
+    // Gap must clear labels that sit between rows (outward placement still
+    // needs space when wave lifts nodes toward each other).
+    let sgap = max(gap * scale, nodeSize + labelBand * 2 + 28)
+    let swave = min(wave * scale, sgap * 0.12)
+    let slift = lift * scale
+
     let cw = 2 * smx + CGFloat(cols - 1) * sspac
-    let ch = 2 * smy + CGFloat(rows - 1) * sgap + slift
+    let ch = 2 * smy + CGFloat(rows - 1) * sgap + slift + labelBand
     let phase = CGFloat(2 * Double.pi * 1.7 / Double(max(n - 1, 1)))
 
-    var pts = Array(repeating: NodePos(x: 0, y: 0), count: n)
+    var pts = Array(repeating: NodePos(x: 0, y: 0, row: 0), count: n)
     for r in 0..<rows {
         let base = r * cols
         let len = min(cols, n - base)
@@ -62,16 +79,17 @@ private func serpentine(
             let cc = fwd ? c : cols - 1 - c
             pts[i] = NodePos(
                 x: smx + CGFloat(cc) * sspac,
-                y: smy + slift + CGFloat(r) * sgap + swave * sin(CGFloat(i) * phase)
+                y: smy + slift + CGFloat(r) * sgap + swave * sin(CGFloat(i) * phase),
+                row: r
             )
         }
     }
-    return Serpentine(points: pts, width: cw, height: ch)
+    return Serpentine(points: pts, width: cw, height: ch, spacing: sspac)
 }
 
 private func catmull(_ pts: [NodePos], _ t: CGFloat) -> NodePos {
     let n = pts.count
-    guard n > 1 else { return pts.first ?? NodePos(x: 0, y: 0) }
+    guard n > 1 else { return pts.first ?? NodePos(x: 0, y: 0, row: 0) }
     var k = Int(t)
     var u = t - CGFloat(k)
     if k < 0 { k = 0; u = 0 }
@@ -80,10 +98,10 @@ private func catmull(_ pts: [NodePos], _ t: CGFloat) -> NodePos {
     let p2 = pts[k + 1]
     let p0 = k - 1 >= 0
         ? pts[k - 1]
-        : NodePos(x: p1.x - (p2.x - p1.x), y: p1.y - (p2.y - p1.y))
+        : NodePos(x: p1.x - (p2.x - p1.x), y: p1.y - (p2.y - p1.y), row: p1.row)
     let p3 = k + 2 < n
         ? pts[k + 2]
-        : NodePos(x: p2.x + (p2.x - p1.x), y: p2.y + (p2.y - p1.y))
+        : NodePos(x: p2.x + (p2.x - p1.x), y: p2.y + (p2.y - p1.y), row: p2.row)
     let u2 = u * u
     let u3 = u2 * u
     let x = 0.5 * (2 * p1.x + (-p0.x + p2.x) * u
@@ -92,75 +110,92 @@ private func catmull(_ pts: [NodePos], _ t: CGFloat) -> NodePos {
     let y = 0.5 * (2 * p1.y + (-p0.y + p2.y) * u
         + (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * u2
         + (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * u3)
-    return NodePos(x: x, y: y)
+    return NodePos(x: x, y: y, row: p1.row)
 }
 
 struct PathMap: View {
     let nodes: [MapNode]
     let palette: Palette
     var litUntil: CGFloat = 0
-    var nodeSize: CGFloat = 72
+    var nodeSize: CGFloat = 64
     var mx: CGFloat = 90
     var my: CGFloat = 110
     var spac: CGFloat = 170
-    var gap: CGFloat = 170
-    var wave: CGFloat = 28
+    var gap: CGFloat = 220
+    var wave: CGFloat = 18
     var branch: (index: Int, node: MapNode)? = nil
 
     var body: some View {
         GeometryReader { geo in
             let layout = serpentine(
                 count: nodes.count,
-                avail: max(geo.size.width, 320),
+                avail: max(geo.size.width - 24, 480),
                 mx: mx,
                 my: my,
                 spac: spac,
                 gap: gap,
                 wave: wave,
-                lift: branch == nil ? 0 : 40
+                nodeSize: nodeSize,
+                lift: branch == nil ? 0 : 56
             )
+            let labelWidth = min(118, max(72, layout.spacing - 16))
+            let canvasH = layout.height + labelBand + 24
             ScrollView([.horizontal, .vertical]) {
                 ZStack(alignment: .topLeading) {
                     railCanvas(points: layout.points)
-                        .frame(width: layout.width, height: layout.height + 96)
+                        .frame(width: layout.width, height: canvasH)
 
                     ForEach(Array(nodes.enumerated()), id: \.element.id) { i, node in
                         let pt = layout.points[i]
+                        let labelBelow = pt.row % 2 == 0
                         nodeView(node, index: i)
                             .position(x: pt.x, y: pt.y)
                         Text(node.label)
-                            .font(.caption.weight(.semibold))
+                            .font(.caption2.weight(.semibold))
                             .foregroundStyle(node.locked ? palette.overlay : palette.text)
                             .multilineTextAlignment(.center)
-                            .frame(width: 140)
-                            .position(x: pt.x, y: pt.y + nodeSize / 2 + 18)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                            .frame(width: labelWidth, height: labelBand, alignment: labelBelow ? .top : .bottom)
+                            .position(
+                                x: pt.x,
+                                y: labelBelow
+                                    ? pt.y + nodeSize / 2 + labelBand / 2 + 6
+                                    : pt.y - nodeSize / 2 - labelBand / 2 - 6
+                            )
                     }
 
                     if let branch, branch.index < layout.points.count {
                         let base = layout.points[branch.index]
-                        let tip = NodePos(x: base.x + 48, y: base.y - 96)
+                        let tip = NodePos(x: base.x + 52, y: base.y - 110, row: base.row)
                         Path { p in
                             p.move(to: CGPoint(x: base.x, y: base.y - nodeSize / 2))
                             p.addQuadCurve(
                                 to: CGPoint(x: tip.x, y: tip.y + nodeSize / 2),
-                                control: CGPoint(x: base.x + 10, y: tip.y + 20)
+                                control: CGPoint(x: base.x + 12, y: tip.y + 24)
                             )
                         }
                         .stroke(palette.rail, style: StrokeStyle(lineWidth: 8, lineCap: .round))
                         nodeView(branch.node, index: nil)
                             .position(x: tip.x, y: tip.y)
                         Text(branch.node.label)
-                            .font(.caption.weight(.semibold))
+                            .font(.caption2.weight(.semibold))
                             .foregroundStyle(palette.text)
                             .multilineTextAlignment(.center)
-                            .frame(width: 140)
-                            .position(x: tip.x, y: tip.y + nodeSize / 2 + 18)
+                            .lineLimit(2)
+                            .frame(width: labelWidth, height: labelBand, alignment: .bottom)
+                            .position(x: tip.x, y: tip.y - nodeSize / 2 - labelBand / 2 - 6)
                     }
                 }
-                .frame(width: max(layout.width, geo.size.width), height: layout.height + 96, alignment: .topLeading)
+                .frame(
+                    width: max(layout.width + 24, geo.size.width),
+                    height: canvasH,
+                    alignment: .topLeading
+                )
+                .padding(.horizontal, 12)
             }
         }
-        .frame(minHeight: 360)
+        .frame(minHeight: 420)
     }
 
     @ViewBuilder
@@ -182,13 +217,13 @@ struct PathMap: View {
                 ctx.stroke(path, with: .color(color), style: style)
             }
             let end = CGFloat(points.count - 1)
-            stroke(0, end, color: palette.rail, width: 12)
+            stroke(0, end, color: palette.rail, width: 10)
             if litUntil > 0 {
-                stroke(0, min(litUntil, end), color: palette.accent, width: 12)
+                stroke(0, min(litUntil, end), color: palette.accent, width: 10)
             }
             let mutedStart = litUntil > 0 ? litUntil : 0
             if mutedStart < end {
-                stroke(mutedStart, end, color: palette.subtext.opacity(0.22), width: 12, dashed: true)
+                stroke(mutedStart, end, color: palette.subtext.opacity(0.22), width: 10, dashed: true)
             }
         }
     }
@@ -205,28 +240,26 @@ struct PathMap: View {
                 }
             if node.finish {
                 VStack(spacing: 2) {
-                    if let index { Text("\(index + 1)").font(.title3.weight(.black)) }
+                    if let index { Text("\(index + 1)").font(.headline.weight(.black)) }
                     FinishFlagBadge(palette: palette)
                 }
                 .foregroundStyle(palette.overlay)
             } else if node.locked {
                 VStack(spacing: 2) {
-                    if let index { Text("\(index + 1)").font(.title3.weight(.black)) }
-                    Image(systemName: "lock.fill").font(.caption.weight(.bold))
+                    if let index { Text("\(index + 1)").font(.headline.weight(.black)) }
+                    Image(systemName: "lock.fill").font(.caption2.weight(.bold))
                 }
                 .foregroundStyle(palette.overlay)
             } else if node.done {
                 VStack(spacing: 2) {
-                    if let index { Text("\(index + 1)").font(.title3.weight(.black)) }
-                    Image(systemName: "checkmark").font(.caption.weight(.bold))
+                    if let index { Text("\(index + 1)").font(.headline.weight(.black)) }
+                    Image(systemName: "checkmark").font(.caption2.weight(.bold))
                 }
                 .foregroundStyle(palette.onAccent)
-            } else {
-                if let index {
-                    Text("\(index + 1)")
-                        .font(.title3.weight(.black))
-                        .foregroundStyle(node.current ? palette.onAccent : palette.text)
-                }
+            } else if let index {
+                Text("\(index + 1)")
+                    .font(.headline.weight(.black))
+                    .foregroundStyle(node.current ? palette.onAccent : palette.text)
             }
         }
         .frame(width: nodeSize, height: nodeSize)

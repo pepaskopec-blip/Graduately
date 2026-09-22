@@ -539,12 +539,12 @@ struct RoadmapScreen: View {
             },
             palette: vm.palette,
             litUntil: lit,
-            nodeSize: 78,
-            mx: 100,
+            nodeSize: 68,
+            mx: 88,
             my: 120,
-            spac: 190,
-            gap: 180,
-            wave: 32
+            spac: 168,
+            gap: 240,
+            wave: 16
         )
         .padding(20)
         .backgroundExtensionEffect()
@@ -626,12 +626,12 @@ struct UnitMapScreen: View {
             },
             palette: vm.palette,
             litUntil: lit,
-            nodeSize: 72,
-            mx: 96,
+            nodeSize: 64,
+            mx: 88,
             my: 118,
-            spac: 180,
-            gap: 170,
-            wave: 28,
+            spac: 164,
+            gap: 230,
+            wave: 14,
             branch: branch
         )
         .padding(20)
@@ -733,12 +733,12 @@ struct LessonListScreen: View {
             },
             palette: vm.palette,
             litUntil: CGFloat(next ?? rows.count),
-            nodeSize: 70,
-            mx: 92,
-            my: 112,
-            spac: 176,
-            gap: 168,
-            wave: 26
+            nodeSize: 64,
+            mx: 86,
+            my: 116,
+            spac: 160,
+            gap: 236,
+            wave: 14
         )
         .padding(20)
         .backgroundExtensionEffect()
