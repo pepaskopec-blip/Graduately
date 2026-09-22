@@ -971,21 +971,59 @@ struct BookListScreen: View {
     var body: some View {
         List {
             ForEach(Array(vm.content.books.enumerated()), id: \.offset) { _, b in
+                let parts = bookTitleParts(b.str("title"))
+                let quizDone = !b.arr("quiz").isEmpty && vm.progress.bookQuiz(b.str("id"))
+                let plotDone = !b.arr("plot").isEmpty && vm.progress.bookPlot(b.str("id"))
                 NavigationLink(value: Route.book(b.str("id"))) {
-                    Label {
-                        ListRowLabel(
-                            title: b.str("title"),
-                            subtitle: {
-                                let genre = b.str("genre")
-                                return genre.isEmpty ? vm.tr(b.str("subKey")) : genre
-                            }()
-                        )
-                    } icon: {
+                    HStack(alignment: .top, spacing: 12) {
                         Image(systemName: "book.fill")
                             #if os(macOS)
+                            .font(.title2)
+                            #else
                             .font(.title3)
                             #endif
+                            .foregroundStyle(.tint)
+                            .frame(width: 28)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(parts.title)
+                                #if os(macOS)
+                                .font(.title3.weight(.semibold))
+                                #else
+                                .font(.body.weight(.semibold))
+                                #endif
+                            if let author = parts.author {
+                                Text(author)
+                                    #if os(macOS)
+                                    .font(.body)
+                                    #else
+                                    .font(.subheadline)
+                                    #endif
+                                    .foregroundStyle(.secondary)
+                            }
+                            HStack(spacing: 8) {
+                                let genre = b.str("genre")
+                                Text(genre.isEmpty ? vm.tr(b.str("subKey")) : genre)
+                                    #if os(macOS)
+                                    .font(.subheadline)
+                                    #else
+                                    .font(.caption)
+                                    #endif
+                                    .foregroundStyle(.secondary)
+                                if quizDone || plotDone {
+                                    Label(vm.tr("book_done"), systemImage: "checkmark.circle.fill")
+                                        #if os(macOS)
+                                        .font(.subheadline.weight(.semibold))
+                                        #else
+                                        .font(.caption.weight(.semibold))
+                                        #endif
+                                        .foregroundStyle(.green)
+                                }
+                            }
+                        }
                     }
+                    #if os(macOS)
+                    .padding(.vertical, 4)
+                    #endif
                 }
             }
         }
@@ -1003,47 +1041,216 @@ struct BookScreen: View {
         if let b = vm.content.book(id) {
             let hasQuiz = !b.arr("quiz").isEmpty
             let hasPlot = !b.arr("plot").isEmpty
-            List {
-                if hasQuiz {
-                    NavigationLink(value: Route.bookQuiz(id)) {
-                        Label {
-                            ListRowLabel(title: vm.tr(b.str("quizTitle")), subtitle: vm.tr(b.str("quizSub")))
-                        } icon: {
-                            Image(systemName: "questionmark.circle")
+            let notes = b.arr("notes")
+            let quizDone = vm.progress.bookQuiz(id)
+            let plotDone = vm.progress.bookPlot(id)
+            let parts = bookTitleParts(b.str("title"))
+            ScrollView {
+                VStack(alignment: .leading, spacing: 28) {
+                    GlassCard {
+                        VStack(alignment: .leading, spacing: 10) {
+                            if let author = parts.author {
+                                Text(author)
+                                    #if os(macOS)
+                                    .font(.title3)
+                                    #else
+                                    .font(.subheadline)
+                                    #endif
+                                    .foregroundStyle(.secondary)
+                            }
+                            if !b.str("genre").isEmpty {
+                                Text(b.str("genre"))
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundStyle(.tint)
+                            }
+                            Text(vm.tr("book_study_hint"))
                                 #if os(macOS)
                                 .font(.title3)
+                                #else
+                                .font(.body)
                                 #endif
+                                .foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+
+                    if !notes.isEmpty {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text(vm.tr("book_notes"))
+                                #if os(macOS)
+                                .font(.title.weight(.semibold))
+                                #else
+                                .font(.title2.weight(.semibold))
+                                #endif
+                            ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
+                                BookNoteCard(note: note)
+                            }
+                        }
+                    }
+
+                    if hasQuiz || hasPlot {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text(vm.tr("book_practice"))
+                                #if os(macOS)
+                                .font(.title.weight(.semibold))
+                                #else
+                                .font(.title2.weight(.semibold))
+                                #endif
+                            if hasQuiz {
+                                NavigationLink(value: Route.bookQuiz(id)) {
+                                    BookActionCard(
+                                        title: vm.tr(b.str("quizTitle")),
+                                        subtitle: vm.tr(b.str("quizSub")),
+                                        systemImage: "questionmark.circle.fill",
+                                        done: quizDone,
+                                        doneLabel: vm.tr("book_done")
+                                    )
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            if hasPlot {
+                                NavigationLink(value: Route.bookPlot(id)) {
+                                    BookActionCard(
+                                        title: vm.tr(b.str("plotTitle")),
+                                        subtitle: vm.tr(b.str("plotSub")),
+                                        systemImage: "list.number",
+                                        done: plotDone,
+                                        doneLabel: vm.tr("book_done")
+                                    )
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
                     }
                 }
-                if hasPlot {
-                    NavigationLink(value: Route.bookPlot(id)) {
-                        Label {
-                            ListRowLabel(title: vm.tr(b.str("plotTitle")), subtitle: vm.tr(b.str("plotSub")))
-                        } icon: {
-                            Image(systemName: "list.number")
-                                #if os(macOS)
-                                .font(.title3)
-                                #endif
-                        }
-                    }
-                }
-                ForEach(Array(b.arr("notes").enumerated()), id: \.offset) { _, note in
-                    Section(note.str("title")) {
-                        ForEach(Array(note.strs("lines").enumerated()), id: \.offset) { _, line in
+                #if os(macOS)
+                .padding(28)
+                .frame(maxWidth: MacChrome.exerciseMaxWidth, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                #else
+                .padding()
+                .padding(.bottom, 24)
+                #endif
+            }
+            .navigationTitle(parts.title)
+            .navigationSubtitle(parts.author ?? vm.tr(b.str("subKey")))
+        }
+    }
+}
+
+private struct BookActionCard: View {
+    let title: String
+    let subtitle: String
+    let systemImage: String
+    let done: Bool
+    let doneLabel: String
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 16) {
+            Image(systemName: systemImage)
+                #if os(macOS)
+                .font(.largeTitle)
+                #else
+                .font(.title)
+                #endif
+                .foregroundStyle(.tint)
+                .frame(width: 44)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    #if os(macOS)
+                    .font(.title3.weight(.semibold))
+                    #else
+                    .font(.headline)
+                    #endif
+                    .foregroundStyle(.primary)
+                Text(subtitle)
+                    #if os(macOS)
+                    .font(.body)
+                    #else
+                    .font(.subheadline)
+                    #endif
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 8)
+            if done {
+                Image(systemName: "checkmark.circle.fill")
+                    #if os(macOS)
+                    .font(.title2)
+                    #else
+                    .font(.title3)
+                    #endif
+                    .foregroundStyle(.green)
+                    .accessibilityLabel(doneLabel)
+            } else {
+                Image(systemName: "chevron.right")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
+        }
+        #if os(macOS)
+        .padding(20)
+        #else
+        .padding(16)
+        #endif
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .softSurface(cornerRadius: 18)
+    }
+}
+
+private struct BookNoteCard: View {
+    let note: J
+
+    var body: some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: 12) {
+                Label(note.str("title"), systemImage: noteSymbol(note.str("icon")))
+                    #if os(macOS)
+                    .font(.title2.weight(.semibold))
+                    #else
+                    .font(.headline)
+                    #endif
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(Array(note.strs("lines").enumerated()), id: \.offset) { _, line in
+                        HStack(alignment: .top, spacing: 10) {
+                            Text("•")
+                                .foregroundStyle(.secondary)
                             Text(line)
                                 #if os(macOS)
                                 .font(.title3)
-                                .padding(.vertical, 4)
+                                #else
+                                .font(.body)
                                 #endif
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                 }
             }
-            .navigationTitle(b.str("title"))
-            .navigationSubtitle(vm.tr(b.str("subKey")))
-            .appListStyle()
         }
+    }
+}
+
+private func bookTitleParts(_ title: String) -> (author: String?, title: String) {
+    let separators = [" – ", " — ", " - "]
+    for sep in separators {
+        if let range = title.range(of: sep) {
+            let author = String(title[..<range.lowerBound]).trimmingCharacters(in: .whitespaces)
+            let name = String(title[range.upperBound...]).trimmingCharacters(in: .whitespaces)
+            if !author.isEmpty && !name.isEmpty {
+                return (author, name)
+            }
+        }
+    }
+    return (nil, title)
+}
+
+private func noteSymbol(_ icon: String) -> String {
+    switch icon {
+    case "book": return "book.fill"
+    case "globe": return "globe.europe.africa.fill"
+    case "people": return "person.2.fill"
+    case "bulb": return "lightbulb.fill"
+    default: return "text.alignleft"
     }
 }
 

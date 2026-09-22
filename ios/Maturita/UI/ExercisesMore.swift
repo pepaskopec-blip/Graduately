@@ -799,27 +799,50 @@ struct LitQuizScreen: View {
             let qs = book.arr("quiz")
             let p = vm.palette
             ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 14) {
                     if finished {
                         GlassCard {
-                            VStack(alignment: .leading, spacing: 8) {
+                            VStack(alignment: .leading, spacing: 10) {
                                 Label(vm.tr("lit_finished"), systemImage: "rosette")
+                                    #if os(macOS)
+                                    .font(.largeTitle.weight(.bold))
+                                    #else
                                     .font(.title2.weight(.bold))
-                                Text(vm.tr("lit_finished_text")).foregroundStyle(.secondary)
-                                Text(vm.fmt("lit_score_fmt", score, qs.count)).font(.headline)
+                                    #endif
+                                Text(vm.tr("lit_finished_text"))
+                                    #if os(macOS)
+                                    .font(.title3)
+                                    #endif
+                                    .foregroundStyle(.secondary)
+                                Text(vm.fmt("lit_score_fmt", score, qs.count))
+                                    #if os(macOS)
+                                    .font(.title2.weight(.semibold))
+                                    #else
+                                    .font(.headline)
+                                    #endif
                             }
                         }
                     } else if idx < qs.count {
                         let q = qs[idx]
-                        ProgressView(value: Double(idx), total: Double(qs.count))
+                        ProgressView(value: Double(idx + (answered ? 1 : 0)), total: Double(qs.count))
                         HStack {
                             Text(vm.fmt("lit_question_fmt", idx + 1, qs.count))
                             Spacer()
                             Text(vm.fmt("lit_score_fmt", score, qs.count))
                         }
+                        #if os(macOS)
+                        .font(.body.weight(.semibold))
+                        #else
                         .font(.footnote)
+                        #endif
                         .foregroundStyle(.secondary)
-                        Text(q.str("prompt")).font(.title3.weight(.semibold)).padding(.vertical, 12)
+                        Text(q.str("prompt"))
+                            #if os(macOS)
+                            .font(.title.weight(.semibold))
+                            #else
+                            .font(.title3.weight(.semibold))
+                            #endif
+                            .padding(.vertical, 12)
                         ForEach(Array(q.strs("options").enumerated()), id: \.offset) { i, opt in
                             let correct = i == q.int("correct")
                             let chosen = answered && picked == i
