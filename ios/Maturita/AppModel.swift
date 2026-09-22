@@ -51,13 +51,7 @@ final class AppModel: ObservableObject {
             tab = .practice
             practicePath = []
         default:
-            tab = .practice
-            if practicePath.last == r { return }
-            if practicePath.isEmpty {
-                practicePath = r.stack
-            } else {
-                practicePath.append(r)
-            }
+            applyPracticeRoute(r, replace: practicePath.isEmpty)
         }
     }
 
@@ -75,8 +69,25 @@ final class AppModel: ObservableObject {
             tab = .practice
             practicePath = []
         default:
-            tab = .practice
-            practicePath = r.stack
+            // Switching tabs and assigning a deep NavigationStack path in the
+            // same turn crashes SwiftUI on macOS (boundPathChange / unexpectedError).
+            applyPracticeRoute(r, replace: true)
+        }
+    }
+
+    /// Sets the practice tab path safely, especially when jumping from Search.
+    private func applyPracticeRoute(_ r: Route, replace: Bool) {
+        let stack = replace ? r.stack : (practicePath + [r])
+        if !replace, practicePath.last == r { return }
+        let switching = tab != .practice
+        tab = .practice
+        if switching || replace {
+            practicePath = []
+            DispatchQueue.main.async { [weak self] in
+                self?.practicePath = stack
+            }
+        } else {
+            practicePath = stack
         }
     }
 

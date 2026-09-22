@@ -939,7 +939,7 @@ struct BookScreen: View {
                 }
                 ForEach(Array(b.arr("notes").enumerated()), id: \.offset) { _, note in
                     Section(note.str("title")) {
-                        ForEach(note.strs("lines"), id: \.self) { line in
+                        ForEach(Array(note.strs("lines").enumerated()), id: \.offset) { _, line in
                             Text(line)
                         }
                     }

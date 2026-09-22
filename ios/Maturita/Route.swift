@@ -54,8 +54,14 @@ enum Route: Hashable {
             if id == "1984" { return "cetba1984" }
             if id == "fuks" { return "cetbaFuks" }
             return "cetba_" + id.replacingOccurrences(of: "-", with: "_")
-        case .bookQuiz(let id): return id == "1984" ? "cetba1984quiz" : "cetbaFuksQuiz"
-        case .bookPlot(let id): return id == "1984" ? "cetba1984dej" : "cetbaFuksDej"
+        case .bookQuiz(let id):
+            if id == "1984" { return "cetba1984quiz" }
+            if id == "fuks" { return "cetbaFuksQuiz" }
+            return "cetba_" + id.replacingOccurrences(of: "-", with: "_") + "_quiz"
+        case .bookPlot(let id):
+            if id == "1984" { return "cetba1984dej" }
+            if id == "fuks" { return "cetbaFuksDej" }
+            return "cetba_" + id.replacingOccurrences(of: "-", with: "_") + "_dej"
         }
     }
 
@@ -123,6 +129,14 @@ func routeFromPage(_ page: String) -> Route? {
     case "cetbaFuksQuiz": return .bookQuiz("fuks")
     case "cetbaFuksDej": return .bookPlot("fuks")
     default:
+        if page.hasPrefix("cetba_"), page.hasSuffix("_quiz") {
+            let slug = String(page.dropFirst(6).dropLast(5)).replacingOccurrences(of: "_", with: "-")
+            return .bookQuiz(slug)
+        }
+        if page.hasPrefix("cetba_"), page.hasSuffix("_dej") {
+            let slug = String(page.dropFirst(6).dropLast(4)).replacingOccurrences(of: "_", with: "-")
+            return .bookPlot(slug)
+        }
         if page.hasPrefix("cetba_") {
             let slug = String(page.dropFirst(6)).replacingOccurrences(of: "_", with: "-")
             return .book(slug)
