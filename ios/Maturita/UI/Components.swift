@@ -49,10 +49,11 @@ struct PrimaryButton: View {
                 .font(.body.weight(.semibold))
                 .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.glassProminent)
         #if os(macOS)
+        .buttonStyle(.borderedProminent)
         .controlSize(.extraLarge)
         #else
+        .buttonStyle(.glassProminent)
         .controlSize(.large)
         #endif
     }
@@ -75,7 +76,22 @@ struct GlassCard<Content: View>: View {
         content()
             .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .glassEffect(.regular, in: .rect(cornerRadius: 26, style: .continuous))
+            .softSurface(cornerRadius: 22)
+    }
+}
+
+extension View {
+    /// Soft card surface without Liquid Glass refraction (which reads as a mirror
+    /// on large macOS panels over the wallpaper / sidebar extension).
+    func softSurface(cornerRadius: CGFloat) -> some View {
+        background {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .fill(.background.secondary)
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .strokeBorder(.separator.opacity(0.35), lineWidth: 0.5)
+        }
     }
 }
 

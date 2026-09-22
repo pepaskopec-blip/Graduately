@@ -142,13 +142,13 @@ private struct UpdateBanner: View {
             Spacer()
             if vm.update.canInstall {
                 Button(vm.tr("update_install")) { vm.installUpdate() }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.borderedProminent)
                     .controlSize(.small)
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .glassEffect(.regular, in: .rect(cornerRadius: 18, style: .continuous))
+        .softSurface(cornerRadius: 16)
         .frame(maxWidth: 560)
     }
 

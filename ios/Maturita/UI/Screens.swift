@@ -48,7 +48,6 @@ struct PracticeHome: View {
             .frame(maxWidth: 920, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .backgroundExtensionEffect()
         .navigationTitle("Maturita")
     }
 
@@ -92,7 +91,7 @@ struct PracticeHome: View {
         }
         .padding(18)
         .frame(maxWidth: .infinity, minHeight: 148, alignment: .topLeading)
-        .glassEffect(.regular, in: .rect(cornerRadius: 24, style: .continuous))
+        .softSurface(cornerRadius: 20)
     }
     #endif
 
@@ -192,7 +191,11 @@ struct ChangelogCard: View {
                     ChangelogLines(index: index, lines: changelogLines(block, langKey))
                 }
                 Button(vm.tr("changelog_dismiss")) { vm.dismissChangelog() }
+                    #if os(macOS)
+                    .buttonStyle(.borderedProminent)
+                    #else
                     .buttonStyle(.glassProminent)
+                    #endif
                     .controlSize(.small)
             }
         }
@@ -547,7 +550,6 @@ struct RoadmapScreen: View {
             wave: 16
         )
         .padding(20)
-        .backgroundExtensionEffect()
         .navigationTitle(vm.tr("roadmap_title"))
         .navigationSubtitle(vm.tr("roadmap_sub"))
     }
@@ -635,7 +637,6 @@ struct UnitMapScreen: View {
             branch: branch
         )
         .padding(20)
-        .backgroundExtensionEffect()
         .navigationTitle(u.str("title"))
         .navigationSubtitle(vm.tr(u.str("sub")))
     }
@@ -741,7 +742,6 @@ struct LessonListScreen: View {
             wave: 14
         )
         .padding(20)
-        .backgroundExtensionEffect()
         .navigationTitle(title)
         .navigationSubtitle(subtitle)
     }
@@ -807,7 +807,11 @@ struct SlidesScreen: View {
                             Image(systemName: "chevron.left")
                                 .frame(minWidth: 24)
                         }
+                        #if os(macOS)
+                        .buttonStyle(.bordered)
+                        #else
                         .buttonStyle(.glass)
+                        #endif
                         .controlSize(.large)
                     }
                     if idx < slides.count - 1 {
