@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: William Golding",
+        "Žánr: alegorický román",
+        "Poprvé vydáno: 1954 (česky Kovályová)",
+        "Děj: ostrov – chlapci bez dospělých budují a rozvracejí řád",
+        "Vyprávění: er-forma, symbolický realismus"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Po katastrofě uvíznou školáci na ostrově.",
+        "Ralph chce řád a záchranu; Jack lov a moc.",
+        "Strach z „bestie“ živí násilí.",
+        "Simon odhalí pravdu a je zabit.",
+        "Alegorie lidské přirozenosti a civilizace."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ralph – vůdce řádu a ohně.",
+        "Jack – vůdce lovců.",
+        "Piggy – rozum a brýle.",
+        "Simon – mystik/cit.",
+        "Roger – krutost.",
+        "Námořní důstojník – návrat civilizace."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Lastura – demokracie/řád.",
+        "Oheň – záchrana vs. ničení.",
+        "Bestie – strach v nás.",
+        "Malování tváře – maska divokosti.",
+        "Brýle – věda/rozum.",
+        "Pád civilizace – téma."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Pána much?",
+      "options": [
+        "Orwell",
+        "Golding",
+        "Bradbury",
+        "Tolkien"
+      ],
+      "correct": 1,
+      "expl": "Autorem je William Golding."
+    },
+    {
+      "prompt": "Kdo chce udržet oheň a řád?",
+      "options": [
+        "Jack",
+        "Ralph",
+        "Roger",
+        "Bestie"
+      ],
+      "correct": 1,
+      "expl": "Ralph sází na záchranu."
+    },
+    {
+      "prompt": "Co symbolizuje lastura?",
+      "options": [
+        "Lov",
+        "Řád a právo mluvit",
+        "Jídlo",
+        "Loď"
+      ],
+      "correct": 1,
+      "expl": "Lastura = demokratický řád."
+    },
+    {
+      "prompt": "Kdo reprezentuje rozum?",
+      "options": [
+        "Jack",
+        "Piggy",
+        "Roger",
+        "Oheň sám"
+      ],
+      "correct": 1,
+      "expl": "Piggy a brýle."
+    },
+    {
+      "prompt": "Co je bestie?",
+      "options": [
+        "Jen zvíře z lesa",
+        "Projekce strachu; „pán much“",
+        "Učitel",
+        "Loď"
+      ],
+      "correct": 1,
+      "expl": "Zlo v člověku."
+    },
+    {
+      "prompt": "Kdo je zabit jako „bestie“?",
+      "options": [
+        "Ralph",
+        "Simon",
+        "Důstojník",
+        "Lastura"
+      ],
+      "correct": 1,
+      "expl": "Simon zná pravdu a hyne."
+    },
+    {
+      "prompt": "Jak Jack získává moc?",
+      "options": [
+        "Volbami ohně",
+        "Lovem, strachem a maskami",
+        "Matematikou",
+        "Modlitbou jen"
+      ],
+      "correct": 1,
+      "expl": "Divokost a charisma."
+    },
+    {
+      "prompt": "Co se stane s Piggym?",
+      "options": [
+        "Emigruje",
+        "Je zabit; lastura zničena",
+        "Stane se náčelníkem",
+        "Odpluje hned"
+      ],
+      "correct": 1,
+      "expl": "Rozum je zničen."
+    },
+    {
+      "prompt": "Jak román končí?",
+      "options": [
+        "Ostrovní královstvím Jacka navždy",
+        "Zásahem dospělých / důstojníka",
+        "Svatbou",
+        "Oslavou bestie"
+      ],
+      "correct": 1,
+      "expl": "Civilizace se vrací zvenčí."
+    },
+    {
+      "prompt": "Jaký je žánr?",
+      "options": [
+        "Pohádka bez smyslu",
+        "Alegorie lidské přirozenosti",
+        "Detektivka",
+        "Cestopis luxusu"
+      ],
+      "correct": 1,
+      "expl": "Alegorický román."
+    },
+    {
+      "prompt": "Proč malují tváře?",
+      "options": [
+        "Móda",
+        "Maska uvolňuje krutost",
+        "Škola",
+        "Sportovní dres"
+      ],
+      "correct": 1,
+      "expl": "Anonymita násilí."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Turistika",
+        "Civilizace vs. primitivní násilí v člověku",
+        "Účetnictví",
+        "Opera"
+      ],
+      "correct": 1,
+      "expl": "Zlo a řád."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Chlapci ztroskotají",
+        "Volí Ralphа a zapalují oheň",
+        "Jack rozbíjí řád lovem",
+        "Strach z bestie roste",
+        "Simon a Piggy hynou",
+        "Důstojník ukončí hon na Ralpha"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: ztroskotání → řád → lov → strach → vraždy → zásah dospělých."
+  ]
+}

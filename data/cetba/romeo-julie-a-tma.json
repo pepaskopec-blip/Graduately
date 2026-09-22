@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Jan Otčenášek (1924–1979)",
+        "Žánr: novela / milostná próza s válečnou tematikou",
+        "Poprvé vydáno: 1958",
+        "Děj: Praha za protektorátu (kolem 1942), skrývání židovské dívky",
+        "Vyprávění: er-forma, soustředěná na vztah a strach"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Protektorát Čechy a Morava pod německou okupací.",
+        "Po atentátu na Heydricha panují represálie a strach.",
+        "Židé jsou perzekvováni; skrývání znamená smrtelné riziko.",
+        "Město je temné, plné kontrol a hrozby udání.",
+        "Láska dvou mladých lidí naráží na dějinné násilí."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Pavel – český student, skrývá Ester a miluje ji.",
+        "Ester – židovská dívka na útěku po zásahu proti rodině.",
+        "Pavlova matka – bojí se o syna i o důsledky úkrytu.",
+        "Alena – Pavlova bývalá přítelkyně, žárlí a nechápe situaci.",
+        "Sousedé a okolí – ztělesňují nebezpečí udavačství."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Tma – okupace, strach, skrývání i morální tma doby.",
+        "Romeo a Julie – milostný motiv dvou milenců proti světu.",
+        "Skrývání – akt pomoci i osudová past.",
+        "Udavačství – společenský strach a zrada.",
+        "Oběť – tragické vyústění lásky v nesvobodě.",
+        "Protektorát – historický rámec příběhu."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je autorem novely Romeo, Julie a tma?",
+      "options": [
+        "Jan Otčenášek",
+        "Karel Čapek",
+        "Josef Škvorecký",
+        "Ota Pavel"
+      ],
+      "correct": 0,
+      "expl": "Autorem je Jan Otčenášek; novela vyšla roku 1958."
+    },
+    {
+      "prompt": "V jaké době se děj odehrává?",
+      "options": [
+        "Za první republiky",
+        "Za protektorátu během 2. světové války",
+        "Po roce 1948",
+        "V 19. století"
+      ],
+      "correct": 1,
+      "expl": "Příběh se odehrává v okupované Praze za protektorátu."
+    },
+    {
+      "prompt": "Kdo je Ester?",
+      "options": [
+        "Česká učitelka",
+        "Židovská dívka, která se skrývá",
+        "Německá úřednice",
+        "Pavlova sestra"
+      ],
+      "correct": 1,
+      "expl": "Ester je židovská dívka potřebující úkryt."
+    },
+    {
+      "prompt": "Jak se jmenuje mladý Čech, který Ester skrývá?",
+      "options": [
+        "Jan",
+        "Pavel",
+        "Karel",
+        "Tomáš"
+      ],
+      "correct": 1,
+      "expl": "Hlavním hrdinou je student Pavel."
+    },
+    {
+      "prompt": "Proč je vztah Pavla a Ester nebezpečný?",
+      "options": [
+        "Rodiče jim to zakázali",
+        "Skrývání Židovky hrozí smrtí za okupace",
+        "Ester je vdaná",
+        "Pavel je Němec"
+      ],
+      "correct": 1,
+      "expl": "Pomoc Židům byla za protektorátu krutě trestána."
+    },
+    {
+      "prompt": "Na co odkazuje název Romeo, Julie a tma?",
+      "options": [
+        "Na Shakespeara a temnotu okupace",
+        "Na divadelní hru o cirkusu",
+        "Na báseň Wolkera",
+        "Na detektivku"
+      ],
+      "correct": 0,
+      "expl": "Název spojuje milostný motiv Romea a Julie s „tmou“ válečné doby."
+    },
+    {
+      "prompt": "Co se stane s Esterinou rodinou?",
+      "options": [
+        "Emigruje do USA",
+        "Je zasažena nacistickou perzekucí",
+        "Odjede na venkov",
+        "Přestoupí na křesťanství"
+      ],
+      "correct": 1,
+      "expl": "Ester zůstane sama po zásahu proti rodině."
+    },
+    {
+      "prompt": "Jakou roli hraje v příběhu strach z udání?",
+      "options": [
+        "Žádnou",
+        "Klíčovou – ohrožuje milence i okolí",
+        "Jen komickou",
+        "Týká se jen Němců"
+      ],
+      "correct": 1,
+      "expl": "Atmosféra strachu a možnosti udání určuje chování postav."
+    },
+    {
+      "prompt": "Jaký je základní konflikt novely?",
+      "options": [
+        "Láska versus válečná nesvoboda a antisemitismus",
+        "Spor o majetek",
+        "Rivalita studentů",
+        "Cestování do ciziny"
+      ],
+      "correct": 0,
+      "expl": "Milostný vztah naráží na historické násilí a rasovou perzekuci."
+    },
+    {
+      "prompt": "Jaký žánr nejlépe vystihuje dílo?",
+      "options": [
+        "Sci-fi román",
+        "Milostná novela s válečnou tematikou",
+        "Komedie",
+        "Epos"
+      ],
+      "correct": 1,
+      "expl": "Jde o krátkou milostnou prózu ve válečném prostředí."
+    },
+    {
+      "prompt": "Proč je motiv „tmy“ v názvu důležitý?",
+      "options": [
+        "Označuje jen noční Prahu",
+        "Symbolizuje strach, okupaci a beznaděj",
+        "Jde o jméno ulice",
+        "Je to přezdívka Pavla"
+      ],
+      "correct": 1,
+      "expl": "Tma je metafora doby – strach, skrývání a morální temnota."
+    },
+    {
+      "prompt": "Jak novela končí vzhledem k milostnému vztahu?",
+      "options": [
+        "Šťastným sňatkem",
+        "Tragicky – láska podlehne tlaku okupace",
+        "Emigrací do Švýcarska",
+        "Komickým nedorozuměním"
+      ],
+      "correct": 1,
+      "expl": "Příběh směřuje k tragickému vyústění v duchu Romea a Julie."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Pavel žije v okupované Praze a potká Ester",
+        "Ester se po zásahu proti rodině potřebuje skrývat",
+        "Pavel ji ukryje a vznikne mezi nimi láska",
+        "Strach z udání a okolí vztah ohrožuje",
+        "Situace se vyostří pod tlakem represálií",
+        "Tragický konec milenců ve stínu okupace"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: setkání → skrývání → láska → ohrožení → vyostření → tragický konec."
+  ]
+}

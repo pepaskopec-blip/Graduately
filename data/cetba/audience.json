@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Václav Havel",
+        "Žánr: absurdní jednoaktovka / dramatický dialog",
+        "Poprvé vydáno: 1975 (samizdat; oficiálně později)",
+        "Děj/prostředí: Pivovar v normalizačním Československu",
+        "Vyprávění/forma: dialog Vaněk–Sládek; komorní scéna"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Doba normalizace: politický tlak, špiclování a „přizpůsobení se“.",
+        "Disident Vaněk je „přeložen“ do pivovaru jako manuální pracovník.",
+        "Sládek představuje člověka, který se režimu přizpůsobuje a zároveň se stydí.",
+        "Hra ukazuje moralní dilema: kariéra vs. svědomí, alkohol jako únik.",
+        "Součást cyklu „vaňkovek“ (Audience, Vernisáž, Protest).",
+        "Téma: vina, přetvářka, komunikace v nesvobodě."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ferdinand Vaněk – disident a dramatik, pracuje v pivovaru.",
+        "Sládek – mistr v pivovaru, alkoholik, chce Vaňka „ukecat“ ke spolupráci.",
+        "Brewery/pivovar – prostředí jako obraz normalizační společnosti.",
+        "(nepřítomný) režim – tlak StB a nadřízených v pozadí dialogu.",
+        "Vaněk jako typ – literární alter ego Havla v dalších hrách.",
+        "Divák – má poznat sebe v kompromisech Sládka i v principu Vaňka."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Vaňkovky – krátké hry s postavou Ferdinanda Vaňka.",
+        "Normalizace – období po 1968, utužení komunistické moci.",
+        "Audience – „pohovor“; zde schůzka mistra s podřízeným.",
+        "Svědomí – Vaněk odmítá psát posudky/udání.",
+        "Alkohol – Sládkův únik a prostředek nátlaku.",
+        "Absurdita – rozmělňování dialogu, opakování, nedorozumění."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal hru Audience?",
+      "options": [
+        "Karel Čapek",
+        "Václav Havel",
+        "Josef Škvorecký",
+        "Milan Kundera"
+      ],
+      "correct": 1,
+      "expl": "Audience je jednoaktovka Václava Havla z cyklu vaňkovek."
+    },
+    {
+      "prompt": "Kde se hra odehrává?",
+      "options": [
+        "V parlamentu",
+        "V pivovaru",
+        "Ve vězení",
+        "V kavárně"
+      ],
+      "correct": 1,
+      "expl": "Vaněk pracuje v pivovaru; dialog probíhá v místnosti mistra Sládka."
+    },
+    {
+      "prompt": "Kdo je Ferdinand Vaněk?",
+      "options": [
+        "Pivovarský mistr",
+        "Disident a dramatik nucený k manuální práci",
+        "Estébák",
+        "Hostinský"
+      ],
+      "correct": 1,
+      "expl": "Vaněk je intelektuál a disident „převedený“ do výroby."
+    },
+    {
+      "prompt": "Co chce Sládek po Vaňkovi?",
+      "options": [
+        "Aby napsal hru o pivovaru",
+        "Aby psal zprávy/posudky a „spolupracoval“",
+        "Aby se stal ředitelem",
+        "Aby odešel do emigrace"
+      ],
+      "correct": 1,
+      "expl": "Sládek ho tlačí ke kompromisu – psát hlášení, která ulehčí Sládkovi situaci."
+    },
+    {
+      "prompt": "Proč Vaněk spolupráci odmítá?",
+      "options": [
+        "Nemá čas",
+        "Nechce zradit svědomí a stát se udavačem",
+        "Neumí psát",
+        "Bojí se alkoholu"
+      ],
+      "correct": 1,
+      "expl": "Jádrem hry je Vaňkova neochota vzdát se morální integrity."
+    },
+    {
+      "prompt": "Jakou roli hraje alkohol?",
+      "options": [
+        "Jen komický prvek",
+        "Prostředek nátlaku i úniku ze studu a strachu",
+        "Není důležitý",
+        "Oslavuje svobodu"
+      ],
+      "correct": 1,
+      "expl": "Sládek pije, aby snášel svou roli; alkoholem i Vaňka „změkčuje“."
+    },
+    {
+      "prompt": "K jakému žánru Audience patří?",
+      "options": [
+        "Historická epopej",
+        "Absurdní/komorní drama dialogu",
+        "Román ve verších",
+        "Detektivka"
+      ],
+      "correct": 1,
+      "expl": "Jde o krátké drama postavené na dialogu a absurdních situacích normalizace."
+    },
+    {
+      "prompt": "Audience patří do cyklu:",
+      "options": [
+        "Her o Jánošíkovi",
+        "Vaňkovek",
+        "Čapkových her",
+        "Shakespearovských adaptací"
+      ],
+      "correct": 1,
+      "expl": "Spolu s Vernisáží a Protestem tvoří tzv. vaňkovky."
+    },
+    {
+      "prompt": "Co hra především kritizuje?",
+      "options": [
+        "Pivovarnictví",
+        "Přizpůsobení se nesvobodě a morální úpadek",
+        "Emigraci",
+        "Církev"
+      ],
+      "correct": 1,
+      "expl": "Ukazuje, jak režim nutí lidi ke kompromisům a jak se s tím vyrovnávají."
+    },
+    {
+      "prompt": "Jaký je vztah Sládka k Vaňkovi?",
+      "options": [
+        "Čistě nepřátelský",
+        "Směs obdivu, závisti, nátlaku a studu",
+        "Otcovsky láskyplný",
+        "Lhostejný"
+      ],
+      "correct": 1,
+      "expl": "Sládek Vaňka zároveň respektuje i nenávidí za to, že se nepodřídil."
+    },
+    {
+      "prompt": "Kdy hra vznikla?",
+      "options": [
+        "Ve 30. letech",
+        "V polovině 70. let (normalizace)",
+        "Po roce 1989",
+        "Za 1. republiky"
+      ],
+      "correct": 1,
+      "expl": "Audience vznikla roku 1975 v období normalizace, šířila se samizdatem."
+    },
+    {
+      "prompt": "Čím je Vaněk typický hrdina?",
+      "options": [
+        "Bojovný revolucionář se zbraní",
+        "Tichý, zásadový intelektuál",
+        "Kariérista",
+        "Komik"
+      ],
+      "correct": 1,
+      "expl": "Vaněk nekáže, ale trvá na tom, že určité věci dělat nebude."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Vaněk přichází za Sládkem do kanceláře",
+        "Sládek ho obšťastňuje pivem a řečí",
+        "Naznačuje problém s nadřízenými a StB",
+        "Žádá Vaňka o psaní posudků/hlášení",
+        "Vaněk odmítá zradit svědomí",
+        "Dialog končí bez skutečného řešení, v napětí a studu"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: příchod → pití a řeči → nátlak režimu → žádost o hlášení → Vaňkovo odmítnutí → otevřený, trapný závěr."
+  ]
+}

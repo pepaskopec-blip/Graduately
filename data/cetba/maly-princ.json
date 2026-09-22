@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Antoine de Saint-Exupéry",
+        "Žánr: filozofická pohádka / novela s alegorií",
+        "Poprvé vydáno: 1943",
+        "Děj / prostředí: Sahara; asteroidy B-612 a další planetky; Země",
+        "Vyprávění / forma: ich-forma letce, dialogy s princem, jednoduchý styl + hluboký smysl"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "2. světová válka; autor – letec a humanista – píše v americkém exilu.",
+        "Text je pohádkou pro děti i alegorií pro dospělé.",
+        "Kritizuje dospělou „vážnost“: majetek, moc, marnivost.",
+        "Klíčové je vidět srdcem, ne jen rozumem a čísly.",
+        "Motivy: přátelství, odpovědnost, láska, samota, smrt.",
+        "Jedno z nejčtenějších děl světové literatury."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Malý princ – chlapec z planetky B-612, hledá smysl a přátelství.",
+        "Vypravěč (letec) – havaruje na Sahaře, kreslí a naslouchá.",
+        "Růže – pyšná květina z princovy planetky, kterou miluje.",
+        "Liška – učí prince o ochočení a odpovědnosti.",
+        "Král, prášil, pijan, businessman, lampář, geograf – typy dospělých.",
+        "Had – nabízí návrat domů skrze smrt/odchod."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Ochočení – vytvořit pouta a stát se jedinečným pro druhého.",
+        "„Vidět jen srdcem“ – pravda není v číslech.",
+        "Odpovědnost – jsi zodpovědný za to, cos ochočil.",
+        "Alegorie dospělých – kritika moci, marnivosti a zisku.",
+        "Růže – láska vyžadující péči i přes nedokonalost.",
+        "Návrat – odchod z těla/Země jako návrat k hvězdě."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Malého prince?",
+      "options": [
+        "Jules Verne",
+        "Antoine de Saint-Exupéry",
+        "Albert Camus",
+        "Marcel Proust"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Antoine de Saint-Exupéry."
+    },
+    {
+      "prompt": "Kde se vypravěč setká s princem?",
+      "options": [
+        "V Paříži",
+        "Na Sahaře po nouzovém přistání",
+        "Na Měsíci",
+        "V New Yorku"
+      ],
+      "correct": 1,
+      "expl": "Letec havaruje v poušti a potká Malého prince."
+    },
+    {
+      "prompt": "Odkud princ pochází?",
+      "options": [
+        "Ze Země",
+        "Z asteroidu B-612",
+        "Z Marsu",
+        "Z Londýna"
+      ],
+      "correct": 1,
+      "expl": "Jeho domovem je malá planetka B-612."
+    },
+    {
+      "prompt": "Co prince naučí liška?",
+      "options": [
+        "Létat",
+        "Ochočení, přátelství a odpovědnost",
+        "Obchodovat",
+        "Vládu nad králem"
+      ],
+      "correct": 1,
+      "expl": "Liška formuluje klíčové poučky o poutech."
+    },
+    {
+      "prompt": "Co znamená „jsi navždy zodpovědný za to, cos ochočil“?",
+      "options": [
+        "Majetkové právo",
+        "Etický závazek vůči bytosti, k níž máme pouto",
+        "Daně",
+        "Válečnou povinnost"
+      ],
+      "correct": 1,
+      "expl": "Láska a přátelství zakládají odpovědnost."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1923",
+        "1943",
+        "1963",
+        "1983"
+      ],
+      "correct": 1,
+      "expl": "Malý princ vyšel roku 1943."
+    },
+    {
+      "prompt": "Koho princ miluje na své planetce?",
+      "options": [
+        "Lišku",
+        "Růži",
+        "Hada",
+        "Geografa"
+      ],
+      "correct": 1,
+      "expl": "Jeho růže je středem lásky i starostí."
+    },
+    {
+      "prompt": "Co kritizují návštěvy u „dospělých“ na planetkách?",
+      "options": [
+        "Dětské hry",
+        "Marnivost, moc, ziskuchtivost a prázdnou vážnost",
+        "Přírodu",
+        "Letectví"
+      ],
+      "correct": 1,
+      "expl": "Typy dospělých jsou alegorií společenských nešvarů."
+    },
+    {
+      "prompt": "Jaká je klíčová poučka o vidění?",
+      "options": [
+        "Vidět jen mapou",
+        "Správně vidíme jen srdcem",
+        "Vidět jen mikroskopem",
+        "Nevidět vůbec"
+      ],
+      "correct": 1,
+      "expl": "„Podstatné je očím neviditelné.“"
+    },
+    {
+      "prompt": "Jakou roli má had?",
+      "options": [
+        "Zahradník",
+        "Pomáhá princovi odejít/vrátit se domů",
+        "Učí matematiku",
+        "Je králem"
+      ],
+      "correct": 1,
+      "expl": "Hadův uštknutí umožňuje princův návrat."
+    },
+    {
+      "prompt": "Proč princ opustil svou planetu?",
+      "options": [
+        "Hledal zlato",
+        "Kvůli neshodám s růží a touze poznat svět",
+        "Byl vyhnán králem",
+        "Ztratil mapu"
+      ],
+      "correct": 1,
+      "expl": "Odchod souvisí s růží a hledáním smyslu."
+    },
+    {
+      "prompt": "Jaký žánr text nejlépe vystihuje?",
+      "options": [
+        "Detektivka",
+        "Filozofická pohádka / alegorie",
+        "Historický epos",
+        "Naturalistický román"
+      ],
+      "correct": 1,
+      "expl": "Spojuje pohádkový děj s filozofickým poselstvím."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Letec havaruje na Sahaře",
+        "Potká Malého prince a naslouchá jeho příběhu",
+        "Princ vypráví o růži a cestách po planetkách",
+        "Na Zemi se učí od lišky o přátelství",
+        "Princ pochopí lásku k růži a odpovědnost",
+        "S pomocí hada odchází / vrací se ke své hvězdě"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: havárie → setkání → příběh planetek → liška → porozumění růži → odchod domů."
+  ]
+}

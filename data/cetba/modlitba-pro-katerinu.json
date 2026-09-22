@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Arnošt Lustig",
+        "Žánr: novela / próza s tématem holocaustu",
+        "Poprvé vydáno: 1964",
+        "Děj / prostředí: transport a koncentrační tábor za 2. světové války",
+        "Vyprávění / forma: er-forma, napínavý spád, pointa vzdoru"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Holocaust: systematické vyvražďování Židů nacistickým režimem.",
+        "Lustig patří k autorům, kteří přežili koncentrační tábory.",
+        "Příběh sleduje krásnou Kateřinu Horovitzovou v transportu.",
+        "Nacisté i američtí obchodníci jednají o „výkupném“ – morálně dvojznačné.",
+        "Novela končí aktem vzdoru: Kateřina zabije důstojníka a zahyne.",
+        "Témata: důstojnost, obchod s životy, vina, odvaha."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Kateřina Horovitzová – krásná židovská žena, symbol vzdoru.",
+        "Fredy Haberfeld – organizátor „obchodu“ s vězni.",
+        "Nacističtí důstojníci – vykonavatelé moci a násilí.",
+        "Američtí obchodníci – účastníci vyjednávání o výkupném.",
+        "Spoluvězeňkyně – kolektiv ženského transportu.",
+        "Brill – postava spjatá s mechanismem „záchrany“ za majetek."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Holocaust – historický rámec genocidy.",
+        "Obchod s životy – výkupné jako morální past.",
+        "Vzdor – Kateřinin závěrečný čin.",
+        "Důstojnost – zůstat člověkem tváří v tvář smrti.",
+        "Krása – Kateřinina atraktivita jako nástroj i cíl násilí.",
+        "Svědectví – literatura jako paměť o šoa."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Modlitbu pro Kateřinu Horovitzovou?",
+      "options": [
+        "Josef Škvorecký",
+        "Arnošt Lustig",
+        "Ladislav Fuks",
+        "Jiří Weil"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Arnošt Lustig."
+    },
+    {
+      "prompt": "V jakém historickém kontextu se děj odehrává?",
+      "options": [
+        "1. světová válka",
+        "Holocaust / 2. světová válka",
+        "Husitské války",
+        "Normalizace 1970"
+      ],
+      "correct": 1,
+      "expl": "Příběh je zasazen do transportu a táborů za šoa."
+    },
+    {
+      "prompt": "Kdo je Kateřina Horovitzová?",
+      "options": [
+        "Nacistická důstojnice",
+        "Židovská žena z transportu, která nakonec vzdoruje",
+        "Americká novinářka",
+        "Zdravotní sestra Červeného kříže"
+      ],
+      "correct": 1,
+      "expl": "Hrdinka je vězeňkyně, která na konci zabije důstojníka."
+    },
+    {
+      "prompt": "O co se v novele „obchoduje“?",
+      "options": [
+        "Obilím",
+        "O výkupné a životy vězňů",
+        "O umělecká díla bez lidí",
+        "O zbraně mezi spojenci"
+      ],
+      "correct": 1,
+      "expl": "Motiv výkupného odhaluje obchodování s lidskými životy."
+    },
+    {
+      "prompt": "Jak novela vrcholí?",
+      "options": [
+        "Osvobozením všech bez boje",
+        "Kateřina zastřelí důstojníka a je zabita",
+        "Svatbou v táboře",
+        "Útěkem do Švýcarska"
+      ],
+      "correct": 1,
+      "expl": "Závěrečný akt vzdoru stojí Kateřinu život."
+    },
+    {
+      "prompt": "Kdy novela vyšla?",
+      "options": [
+        "1945",
+        "1956",
+        "1964",
+        "1989"
+      ],
+      "correct": 2,
+      "expl": "Modlitba pro Kateřinu Horovitzovou vyšla roku 1964."
+    },
+    {
+      "prompt": "Proč je Lustigovo svědectví specifické?",
+      "options": [
+        "Nebyl v Evropě",
+        "Sám holocaust přežil a psal z osobní zkušenosti",
+        "Psal jen sci-fi",
+        "Byl nacistický úředník"
+      ],
+      "correct": 1,
+      "expl": "Lustig je autor-svědek koncentračních táborů."
+    },
+    {
+      "prompt": "Co je hlavním tématem?",
+      "options": [
+        "Venkovská idyla",
+        "Důstojnost, vzdor a morálka tváří v tvář genocidě",
+        "Detektivní hádanka",
+        "Milostná komedie"
+      ],
+      "correct": 1,
+      "expl": "Text zkoumá, jak zůstat člověkem v nelidských podmínkách."
+    },
+    {
+      "prompt": "Jakou roli hraje Kateřinina krása?",
+      "options": [
+        "Žádnou",
+        "Přitahuje pozornost mocných a stává se součástí konfliktu",
+        "Jen módní detail",
+        "Zaručuje jí záchranu bez rizika"
+      ],
+      "correct": 1,
+      "expl": "Krása je v táboře nebezpečná a ambivalentní."
+    },
+    {
+      "prompt": "Co novela říká o „záchraně“ za peníze?",
+      "options": [
+        "Že je vždy čistě morální",
+        "Že může být morálně dvojznačná a spojená s kalkulem",
+        "Že neexistovala",
+        "Že ji řídili jen vězni"
+      ],
+      "correct": 1,
+      "expl": "Obchod s životy není prezentován jako jednoznačné dobro."
+    },
+    {
+      "prompt": "Jaký žánr textu nejlépe odpovídá?",
+      "options": [
+        "Komedie",
+        "Novela o holocaustu",
+        "Epos",
+        "Pohádka"
+      ],
+      "correct": 1,
+      "expl": "Jde o kratší prózu s tématem šoa."
+    },
+    {
+      "prompt": "Proč je závěrečný čin nazýván „modlitbou“ / vzdorem?",
+      "options": [
+        "Protože Kateřina zpívá hymnu",
+        "Protože gestem vzdoru stvrzuje lidskou důstojnost i za cenu smrti",
+        "Protože vstupuje do kláštera",
+        "Protože píše dopis prezidentovi"
+      ],
+      "correct": 1,
+      "expl": "Její čin je etickým gestem proti naprosté bezmoci."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Kateřina je zařazena do transportu",
+        "Objevuje se možnost „výkupného“ a vyjednávání",
+        "Vězni procházejí ponižováním a nejistotou",
+        "Nacistická moc demaskuje faleš naděje",
+        "Kateřina se rozhodne vzdorovat",
+        "Zastřelí důstojníka a sama zahyne"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: transport → nabídka výkupného → ponižování → demaskování naděje → rozhodnutí vzdorovat → smrt po činu."
+  ]
+}

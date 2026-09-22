@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: F. Scott Fitzgerald (1896–1940)",
+        "Žánr: modernistický román",
+        "Poprvé vydáno: 1925",
+        "Děj: New York / Long Island ve „zlatých dvacátých“",
+        "Vyprávění: ich-forma – Nick Carraway jako svědek"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "USA po 1. světové válce, jazz age, bohatství a alkohol.",
+        "Americký sen naráží na třídní bariéry a prázdnotu.",
+        "Západní a východní vejce – symboly „nových“ a „starých“ peněz.",
+        "Párty, luxus a skandály maskují morální prázdno.",
+        "Román je kritikou i elegií amerického snu."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Jay Gatsby – zbohatlík, miluje Daisy a žije iluzí.",
+        "Daisy Buchananová – Gatsbyho dávná láska, vdaná za Toma.",
+        "Tom Buchanan – bohatý, arogantní manžel Daisy.",
+        "Nick Carraway – vypravěč, Gatsbyho soused.",
+        "Jordan Bakerová / Myrtle Wilsonová – další tváře zkorumpovaného světa."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Americký sen – slib úspěchu, který se láme o realitu.",
+        "Zelené světlo – symbol touhy po Daisy / budoucnosti.",
+        "Párty – lesk zakrývající prázdnotu.",
+        "Staré vs. nové peníze – třídní konflikt.",
+        "Iluzorní láska – Gatsby miluje obraz Daisy.",
+        "Morální úpadek – bohatství bez odpovědnosti."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Velkého Gatsbyho?",
+      "options": [
+        "Ernest Hemingway",
+        "F. Scott Fitzgerald",
+        "William Styron",
+        "Daniel Keyes"
+      ],
+      "correct": 1,
+      "expl": "Autorem je F. Scott Fitzgerald."
+    },
+    {
+      "prompt": "Kdo je vypravěč románu?",
+      "options": [
+        "Jay Gatsby",
+        "Nick Carraway",
+        "Tom Buchanan",
+        "Myrtle"
+      ],
+      "correct": 1,
+      "expl": "Příběh vypráví Nick Carraway."
+    },
+    {
+      "prompt": "Koho Gatsby miluje?",
+      "options": [
+        "Jordan jen jako obchod",
+        "Daisy Buchananovou",
+        "Myrtle jako manželku",
+        "Nickou sestru"
+      ],
+      "correct": 1,
+      "expl": "Ústřední touhou je Daisy."
+    },
+    {
+      "prompt": "Co symbolizuje zelené světlo?",
+      "options": [
+        "Semafor v Praze",
+        "Gatsbyho touhu po Daisy a nedosažitelné budoucnosti",
+        "RAF maják",
+        "Olymp"
+      ],
+      "correct": 1,
+      "expl": "Zelené světlo je klíčový symbol touhy."
+    },
+    {
+      "prompt": "V jaké době se děj odehrává?",
+      "options": [
+        "Ve středověku",
+        "V USA ve 20. letech 20. století",
+        "Za protektorátu v Praze",
+        "V antickém Řecku"
+      ],
+      "correct": 1,
+      "expl": "Jde o jazz age / „zlatá dvacátá“."
+    },
+    {
+      "prompt": "Kdo je Tom Buchanan?",
+      "options": [
+        "Chudý rybář",
+        "Daisyin bohatý, arogantní manžel",
+        "Gatsbyho sluha",
+        "Nickův syn"
+      ],
+      "correct": 1,
+      "expl": "Tom reprezentuje staré peníze a sílu."
+    },
+    {
+      "prompt": "Proč jsou Gatsbyho párty důležité?",
+      "options": [
+        "Jsou povinné ze zákona",
+        "Ukazují lesk i prázdnotu jeho světa a slouží k přilákání Daisy",
+        "Jsou jen o mlocích",
+        "Jsou školní akademií"
+      ],
+      "correct": 1,
+      "expl": "Párty jsou nástrojem iluze i společenskou satirou."
+    },
+    {
+      "prompt": "Ve kterém roce román vyšel?",
+      "options": [
+        "1925",
+        "1948",
+        "1952",
+        "1979"
+      ],
+      "correct": 0,
+      "expl": "The Great Gatsby vyšel roku 1925."
+    },
+    {
+      "prompt": "Jak román hodnotí americký sen?",
+      "options": [
+        "Jako vždy splněný slib",
+        "Jako sen, který se v bohatství a třídách často rozpadá",
+        "Jako rybářský recept",
+        "Jako elegii z Brixenu"
+      ],
+      "correct": 1,
+      "expl": "Sen o úspěchu naráží na prázdnotu a bariéry."
+    },
+    {
+      "prompt": "Jak Gatsby zbohatl (v rovině příběhu)?",
+      "options": [
+        "Jen výhrou v loterii sluhů",
+        "Pochybnými obchody (mj. alkohol v prohibici)",
+        "Soudním sporem o srnce",
+        "Psaním proletářských básní"
+      ],
+      "correct": 1,
+      "expl": "Jeho majetek má stín ilegality."
+    },
+    {
+      "prompt": "Kdo je Myrtle Wilsonová?",
+      "options": [
+        "Daisyina sestřenice z Oxfordu",
+        "Tomova milenka z chudšího prostředí",
+        "Gatsbyho matka",
+        "Pilotka"
+      ],
+      "correct": 1,
+      "expl": "Myrtle patří k milostnému trojúhelníku Toma."
+    },
+    {
+      "prompt": "Jaký je tragický směr příběhu?",
+      "options": [
+        "Gatsby získá vše a zestárne v klidu",
+        "Iluze lásky a snu se rozpadne; Gatsby hyne",
+        "Nick se stane mlokem",
+        "Daisy vstoupí do kláštera šťastně hned"
+      ],
+      "correct": 1,
+      "expl": "Román končí rozpadem snu a Gatsbyho smrtí."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Nick se nastěhuje vedle Gatsbyho na Long Island",
+        "Pozná svět párty, Toma a Daisy",
+        "Gatsby ho využije k setkání s Daisy",
+        "Obnovený vztah narazí na Toma a třídní bariéry",
+        "Konflikt vyvrcholí tragickou nehodou / násilím",
+        "Gatsby umírá; sen i iluze se rozpadají"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: Nickův příchod → svět bohatých → setkání s Daisy → konflikt → tragédie → rozpad snu."
+  ]
+}

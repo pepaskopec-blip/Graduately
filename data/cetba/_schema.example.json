@@ -1,0 +1,47 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: …",
+        "Žánr: …",
+        "Poprvé vydáno: …",
+        "Děj / prostředí: …",
+        "Vyprávění / forma: …"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": ["…", "…", "…", "…", "…"]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": ["Jméno – popis.", "…", "…", "…", "…"]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": ["Pojem – vysvětlení.", "…", "…", "…", "…"]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Otázka?",
+      "options": ["A", "B", "C", "D"],
+      "correct": 0,
+      "expl": "Krátké vysvětlení správné odpovědi."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": ["1", "2", "3", "4", "5", "6"]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: … → … → … → … → … → …."
+  ]
+}

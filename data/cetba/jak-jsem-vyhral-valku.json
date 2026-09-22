@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Patrick Ryan",
+        "Žánr: satirický válečný román / černá komedie",
+        "Poprvé vydáno: 1963",
+        "Děj / prostředí: 2. světová válka, britská armáda v Evropě a severní Africe",
+        "Vyprávění / forma: ich-forma, vypráví poručík Ernest Goodbody"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Děj se odehrává za druhé světové války v britské armádě.",
+        "Román paroduje vojenskou hierarchii, heroismus a „velké“ válečné příběhy.",
+        "Hrdina je naivní a idealistický důstojník, který věří v řád a čest.",
+        "Satira míří na absurditu války a neschopnost velení.",
+        "Film Mikea Nicholse (1967) s Johnem Lennonem dílo zpopularizoval.",
+        "Tón je ironický a černohumorý, nikoli heroický."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ernest Goodbody – naivní poručík, vypravěč, věří, že válku „vyhrál“.",
+        "Clapper – cynický seržant, praktický opak Goodbodyho idealismu.",
+        "Spool – voják z jednotky, součást absurdního vojenského kolektivu.",
+        "Dooley – další člen oddílu, vystaven chaosu fronty.",
+        "Nadřízení důstojníci – často neschopní, kariérističtí nebo absurdní."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Satira války – výsměch heroickým mýtům a vojenskému řádu.",
+        "Ironický vypravěč – Goodbody nechápe, jak směšný je.",
+        "Černý humor – tragédie a smrt jsou podány s nadhledem.",
+        "Antihrdina – „vítěz“ války je neschopný a naivní.",
+        "Vojenská hierarchie – systém, který přežívá i přes absurditu.",
+        "Kontrast idealismu a reality – klíčový komický i tragický princip."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je vypravěčem románu Jak jsem vyhrál válku?",
+      "options": [
+        "Seržant Clapper",
+        "Poručík Ernest Goodbody",
+        "John Lennon",
+        "Generál Montgomery"
+      ],
+      "correct": 1,
+      "expl": "Příběh vypráví naivní britský poručík Ernest Goodbody v ich-formě."
+    },
+    {
+      "prompt": "Jaký je celkový tón díla?",
+      "options": [
+        "Oslavný a patriotický",
+        "Satirický a černohumorý",
+        "Romantický",
+        "Dokumentární bez ironie"
+      ],
+      "correct": 1,
+      "expl": "Román paroduje válku a vojenský heroismus pomocí ironie a černého humoru."
+    },
+    {
+      "prompt": "Ve které válce se děj odehrává?",
+      "options": [
+        "1. světová válka",
+        "2. světová válka",
+        "Korejská válka",
+        "Vietnamská válka"
+      ],
+      "correct": 1,
+      "expl": "Příběh je zasazen do druhé světové války v britské armádě."
+    },
+    {
+      "prompt": "Proč je název ironický?",
+      "options": [
+        "Hrdina skutečně rozhodl o vítězství",
+        "Goodbody si myslí, že válku vyhrál, ale je to naivní sebeklam",
+        "Název napsal nakladatel",
+        "Jde o dokument o Churchillovi"
+      ],
+      "correct": 1,
+      "expl": "Název zesměšňuje hrdinovu naivitu a heroické sebehodnocení."
+    },
+    {
+      "prompt": "Kdo je Clapper?",
+      "options": [
+        "Německý generál",
+        "Cynický seržant, protiklad Goodbodyho",
+        "Goodbodyho otec",
+        "Válečný zpravodaj"
+      ],
+      "correct": 1,
+      "expl": "Clapper je praktický a cynický seržant, který kontrastuje s poručíkovým idealismem."
+    },
+    {
+      "prompt": "Které tvrzení nejlépe vystihuje Goodbodyho?",
+      "options": [
+        "Je geniální stratég",
+        "Je naivní idealista věřící v řád a čest",
+        "Je zrádce",
+        "Je pacifista, který dezertuje hned na začátku"
+      ],
+      "correct": 1,
+      "expl": "Goodbody věří ve vojenské ideály, ale realita války je zcela jiná."
+    },
+    {
+      "prompt": "Jakou literární formou je román vyprávěn?",
+      "options": [
+        "Er-forma s vševědoucím vypravěčem",
+        "Ich-forma z pohledu Goodbodyho",
+        "Dialogická hra",
+        "Dopisy mezi vojáky"
+      ],
+      "correct": 1,
+      "expl": "Vypráví sám Goodbody v první osobě, což posiluje ironii."
+    },
+    {
+      "prompt": "Co román především kritizuje?",
+      "options": [
+        "Britskou kuchyni",
+        "Absurditu války a vojenské hierarchie",
+        "Techniku tanků",
+        "Námořnictvo"
+      ],
+      "correct": 1,
+      "expl": "Satira míří na chaos fronty, neschopnost velení a mýtus hrdinství."
+    },
+    {
+      "prompt": "Kdy byl román poprvé vydán?",
+      "options": [
+        "1945",
+        "1955",
+        "1963",
+        "1975"
+      ],
+      "correct": 2,
+      "expl": "Kniha Patricka Ryana vyšla roku 1963."
+    },
+    {
+      "prompt": "Čím je dílo blízké Haškovu Švejkovi?",
+      "options": [
+        "Stejným autorem",
+        "Satirickým pohledem na válku a vojenský řád",
+        "Stejným dějištěm v Praze",
+        "Jde o poezii"
+      ],
+      "correct": 1,
+      "expl": "Obě díla používají humor a ironii ke kritice války a armády."
+    },
+    {
+      "prompt": "Který film zpopularizoval námět románu?",
+      "options": [
+        "Film Mikea Nicholse s Johnem Lennonem",
+        "Film Stevena Spielberga",
+        "Dokument BBC",
+        "Žádný film neexistuje"
+      ],
+      "correct": 0,
+      "expl": "V roce 1967 vznikla filmová adaptace režiséra Mikea Nicholse."
+    },
+    {
+      "prompt": "Jaká je hlavní funkce černého humoru v knize?",
+      "options": [
+        "Zlehčit technické detaily zbraní",
+        "Odhalit hrůzu a nesmyslnost války skrze smích",
+        "Oslavit hrdiny",
+        "Nahradit děj"
+      ],
+      "correct": 1,
+      "expl": "Humor slouží jako nástroj kritiky: směšnost odhaluje tragickou absurditu."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Goodbody nastoupí jako naivní poručík k jednotce",
+        "Jednotka prožívá chaos výcviku a přesunů",
+        "Na frontě se střetává idealismus s realitou války",
+        "Clapper a muži přežívají díky cynismu a improvizaci",
+        "Operace končí zmatkem a ztrátami",
+        "Goodbody ironicky „vyhrává“ válku ve své představě"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: nástup naivního poručíka → chaos výcviku → střet s realitou fronty → cynické přežívání → zmatek operace → ironické „vítězství“."
+  ]
+}

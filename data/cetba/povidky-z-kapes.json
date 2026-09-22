@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Čapek",
+        "Žánr: detektivní a humoristické povídky",
+        "Poprvé vydáno: 1929 (z jedné) a 1932 (z druhé kapsy)",
+        "Děj: krátké případy, anekdoty, logika i náhoda",
+        "Forma: povídkový cyklus s vypravěči u stolu"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "První republika: kavárenská inteligence.",
+        "Čapek si hraje s detektivkou a jejím limitem.",
+        "Humor, humanismus, skepse k jistotám.",
+        "Náhoda často vítězí nad čistou logikou.",
+        "Vyprávění ve společnosti jako rámec."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Vypravěči u stolu – rámec.",
+        "Detektivové a svědkové – střídají se.",
+        "Pachatelé všední i překvapiví.",
+        "Čtenář – háda s logikou.",
+        "Autorův humor – přítomný.",
+        "Oběti malých dramat."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Detektivka s odstupem.",
+        "Náhoda vs. logika.",
+        "Humanismus.",
+        "Anekdota.",
+        "Ironie jistot.",
+        "Kavárenský rámec."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Povídky z jedné a druhé kapsy?",
+      "options": [
+        "Hašek",
+        "Čapek",
+        "Kafka",
+        "Hrabal"
+      ],
+      "correct": 1,
+      "expl": "Karel Čapek."
+    },
+    {
+      "prompt": "Jaký je základní žánr?",
+      "options": [
+        "Epos",
+        "Detektivní/humoristické povídky",
+        "Audience",
+        "Balada"
+      ],
+      "correct": 1,
+      "expl": "Povídky s detektivním jádrem."
+    },
+    {
+      "prompt": "Co Čapek často zpochybňuje?",
+      "options": [
+        "Hudbu",
+        "Všemocnost čisté logiky",
+        "Existenci kaváren",
+        "Čtení"
+      ],
+      "correct": 1,
+      "expl": "Náhoda a lidskost."
+    },
+    {
+      "prompt": "Jaký je tón?",
+      "options": [
+        "Jen tragický patos",
+        "Humoristický, bystrý",
+        "Jen horor Poeův",
+        "Jen zákopový"
+      ],
+      "correct": 1,
+      "expl": "Čapkovský humor."
+    },
+    {
+      "prompt": "Jak jsou povídky rámovány?",
+      "options": [
+        "Jen deníkem vojáka",
+        "Vyprávěním ve společnosti",
+        "Jen úředním spisem",
+        "Jen hexametrem"
+      ],
+      "correct": 1,
+      "expl": "Rámec vypravěčů."
+    },
+    {
+      "prompt": "Proč „z kapes“?",
+      "options": [
+        "Náhodný název bez smyslu",
+        "Soubor drobných příběhů „po kapsách“",
+        "Jsou o krádežích kapes výhradně",
+        "Jsou o robotice"
+      ],
+      "correct": 1,
+      "expl": "Drobné historky."
+    },
+    {
+      "prompt": "Co je typické pointě?",
+      "options": [
+        "Žádná",
+        "Překvapení, vtip, lidský detail",
+        "Jen matematický důkaz bez vtipu",
+        "Jen sňatek"
+      ],
+      "correct": 1,
+      "expl": "Pointa s humorem."
+    },
+    {
+      "prompt": "Jak souvisí s Čapkovým dílem?",
+      "options": [
+        "Nesouvisí",
+        "Humanismus a hra s žánrem",
+        "Jen R.U.R. bez návaznosti",
+        "Jen Bílá nemoc bez humoru"
+      ],
+      "correct": 1,
+      "expl": "Stejný duch."
+    },
+    {
+      "prompt": "Kdy zhruba vycházely?",
+      "options": [
+        "1836",
+        "Přelom 20./30. let 20. stol.",
+        "2001",
+        "1415"
+      ],
+      "correct": 1,
+      "expl": "1929/1932."
+    },
+    {
+      "prompt": "Co čtenář dělá?",
+      "options": [
+        "Jen počítá daně",
+        "Spoluuhádá a nechá se překvapit",
+        "Jen cenzuruje",
+        "Jen tančí"
+      ],
+      "correct": 1,
+      "expl": "Interaktivní radost z příběhu."
+    },
+    {
+      "prompt": "Hlavní kouzlo?",
+      "options": [
+        "Délka eposu",
+        "Krátkost, vtip, nápad",
+        "Robotí vzpoura",
+        "Zákopová statistika"
+      ],
+      "correct": 1,
+      "expl": "Povídková elegance."
+    },
+    {
+      "prompt": "Téma napříč souborem?",
+      "options": [
+        "Jen válka v zákopech",
+        "Pravda, omyl, náhoda, lidská povaha",
+        "Jen lastura",
+        "Jen Claireina pomsta"
+      ],
+      "correct": 1,
+      "expl": "Lidská povaha v zápletkách."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Rámec vyprávění u stolu",
+        "Zadá se záhada",
+        "Nabízejí se logické stopy",
+        "Zvrat / náhoda",
+        "Pointa",
+        "Návrat k humoru společnosti"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: rámec → záhada → stopy → zvrat → pointa → humor."
+  ]
+}

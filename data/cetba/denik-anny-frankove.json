@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Anne Franková",
+        "Žánr: deníková próza / svědectví",
+        "Poprvé vydáno: 1947 (nizozemsky; česky později)",
+        "Děj/prostředí: Amsterodam za nacistické okupace, skrýš „Zadní dům“",
+        "Vyprávění/forma: autentický deník dívky (Kitty)"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "2. světová válka, holokaust, pronásledování Židů.",
+        "Rodina Frankových se skrývá v Amsterodamu.",
+        "Deník zachycuje dospívání i strach z odhalení.",
+        "Vztahy ve skrýši jsou napjaté, ale i plné naděje.",
+        "Po udání transport; Anne umírá v koncentračním táboře.",
+        "Téma: válka, identita, dospívání, lidská důstojnost."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Anne Franková – autorka deníku, dospívající dívka.",
+        "Otto Frank – otec, jediný z rodiny, který přežil.",
+        "Edith Franková – matka.",
+        "Margot Franková – Annina starší sestra.",
+        "Rodina van Pelsových a Fritz Pfeffer – spolubydlící ve skrýši.",
+        "Pomocníci (např. Miep Giesová) – riskují život kvůli úkrytu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Zadní dům (Achterhuis) – skrýš v Amsterodamu.",
+        "Deník Kitty – Anniny dopisy imaginární přítelkyni.",
+        "Holokaust – historický kontext genocidy.",
+        "Dospívání – osobní rovina vedle dějin.",
+        "Svědectví – dokumentární síla textu.",
+        "Naděje – Annina víra v dobro člověka i ve strachu."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Deník Anne Frankové?",
+      "options": [
+        "Miep Giesová",
+        "Anne Franková",
+        "Otto jen jako fikci",
+        "Viktor Hugo"
+      ],
+      "correct": 1,
+      "expl": "Jde o autentický deník Anne Frankové."
+    },
+    {
+      "prompt": "Kde se rodina skrývala?",
+      "options": [
+        "V Paříži",
+        "V Amsterodamu v Zadním domě",
+        "V Londýně",
+        "V Praze"
+      ],
+      "correct": 1,
+      "expl": "Skrýš se nazývá Achterhuis – Zadní dům."
+    },
+    {
+      "prompt": "Komu Anne deník často adresuje?",
+      "options": [
+        "Hitlerovi",
+        "Kitty",
+        "Učiteli",
+        "Královně"
+      ],
+      "correct": 1,
+      "expl": "Zápisy mají formu dopisů přítelkyni Kitty."
+    },
+    {
+      "prompt": "Kdo z blízké rodiny válku přežil?",
+      "options": [
+        "Anne",
+        "Otto Frank",
+        "Margot",
+        "Edith"
+      ],
+      "correct": 1,
+      "expl": "Otec Otto jako jediný z rodiny přežil a deník vydal."
+    },
+    {
+      "prompt": "V jaké historické situaci deník vzniká?",
+      "options": [
+        "Za husitství",
+        "Za nacistické okupace a holokaustu",
+        "Za napoleonských válek",
+        "V roce 1968 v Praze"
+      ],
+      "correct": 1,
+      "expl": "Židé se skrývají před deportací a vyhlazením."
+    },
+    {
+      "prompt": "Jak deník končí z hlediska osudu skrýše?",
+      "options": [
+        "Osvobozením hned první den",
+        "Udáním a zatčením obyvatel skrýše",
+        "Emigrací do USA uprostřed zápisů",
+        "Svatbou Anne"
+      ],
+      "correct": 1,
+      "expl": "Po udání jsou obyvatelé zatčeni a deportováni."
+    },
+    {
+      "prompt": "Proč je kniha důležitá pro maturitu / svědomí Evropy?",
+      "options": [
+        "Je to detektivka",
+        "Je osobním svědectvím o holokaustu a dospívání",
+        "Je o trifidech",
+        "Je cimrmanovská komedie"
+      ],
+      "correct": 1,
+      "expl": "Spojuje intimní hlas dívky s dějinnou tragédií."
+    },
+    {
+      "prompt": "Kdy deník poprvé vyšel knižně?",
+      "options": [
+        "1942",
+        "1947",
+        "1989",
+        "1937"
+      ],
+      "correct": 1,
+      "expl": "Nizozemsky vyšel roku 1947 díky Otovi Frankovi."
+    },
+    {
+      "prompt": "Co Anne ve skrýši také prožívá kromě strachu?",
+      "options": [
+        "Jen politické schůze",
+        "Dospívání, konflikty, lásku, touhu psát",
+        "Vojenský výcvik",
+        "Studium medicíny na univerzitě denně"
+      ],
+      "correct": 1,
+      "expl": "Deník je i portrét dospívání v extrémních podmínkách."
+    },
+    {
+      "prompt": "Kdo pomáhá skrýši zvenčí?",
+      "options": [
+        "Gestapo",
+        "Nežidovští přátelé a spolupracovníci (např. Miep Giesová)",
+        "Trifidi",
+        "Javert"
+      ],
+      "correct": 1,
+      "expl": "Bez pomoci zvenčí by úkryt nebyl možný; pomocníci riskují život."
+    },
+    {
+      "prompt": "Jaký žánr textu je nejpřesnější?",
+      "options": [
+        "Epos",
+        "Deníková próza / svědectví",
+        "Absurdní drama",
+        "Sonet"
+      ],
+      "correct": 1,
+      "expl": "Forma deníku dává textu bezprostřednost."
+    },
+    {
+      "prompt": "Kam byla Anne po zatčení deportována (kontext konce)?",
+      "options": [
+        "Do New Yorku studovat",
+        "Do koncentračního tábora; tam umírá",
+        "Domů do klidu",
+        "Na farmu zvířat"
+      ],
+      "correct": 1,
+      "expl": "Anne a Margot umírají v koncentraku (Bergen-Belsen) krátce před koncem války."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Anne dostává deník a začíná psát",
+        "Rodina se uchýlí do Zadního domu",
+        "Život ve skrýši: napětí, dospívání, naděje",
+        "Zprávy o válce a strach z odhalení rostou",
+        "Skrýš je prozrazena a obyvatelé zatčeni",
+        "Deník přežije jako svědectví (vydá Otto)"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: začátek deníku → skrýš → život v úkrytu → rostoucí ohrožení → zatčení → svědectví deníku."
+  ]
+}

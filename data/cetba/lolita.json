@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Vladimir Nabokov",
+        "Žánr: kontroverzní psychologický román / nespolehlivé vyprávění",
+        "Poprvé vydáno: 1955 (Paříž)",
+        "Děj / prostředí: USA po 2. světové válce – města, motely, cesty",
+        "Vyprávění / forma: ich-forma Humberta Humberta, stylově brilantní a manipulativní"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Poválečná Amerika: automobilismus, motely, konzumní kultura.",
+        "Román je umělecky mistrovský a eticky otřesný zároveň.",
+        "Humbert je nespolehlivý vypravěč – estetizuje zločin a zneužití.",
+        "Téma: moc, manipulace, ztráta dětství, vina a posedlost.",
+        "Dílo vyvolalo skandál; dnes se čte i jako kritika vypravěčské manipulace.",
+        "Pro maturitu je klíčové oddělit krásu stylu od morálního hodnocení činu."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Humbert Humbert – vypravěč, pedofilní intelektuál a manipulátor.",
+        "Dolores „Lolita“ Hazeová – dospívající dívka, oběť zneužití.",
+        "Charlotte Hazeová – Lolitina matka, vdova, vdá se za Humberta.",
+        "Clare Quilty – rival, také zneužívá Lolitu, Humbertův „dvojník“.",
+        "John / Jean Farlowovi – sousedé, součást amerického pozadí.",
+        "Právník / rámec rukopisu – Humbert píše zpověď ve vězení."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Nespolehlivý vypravěč – Humbert zkresluje skutečnost jazykem.",
+        "Nymfička – Humbertův pojem, kterým omlouvá posedlost.",
+        "Manipulace – kontrola nad Lolitiným životem a čtenářem.",
+        "Cesta / motel – prostor úniku i vězení.",
+        "Dvojnictví – Quilty jako temný odraz Humberta.",
+        "Etika vs. estetika – krása stylu nekryje zločin."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Lolitu?",
+      "options": [
+        "Ernest Hemingway",
+        "Vladimir Nabokov",
+        "John Updike",
+        "J. D. Salinger"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Vladimir Nabokov."
+    },
+    {
+      "prompt": "Kdo je vypravěčem?",
+      "options": [
+        "Lolita",
+        "Humbert Humbert",
+        "Quilty",
+        "Charlotte"
+      ],
+      "correct": 1,
+      "expl": "Román je Humbertovou ich-formou a zpovědí."
+    },
+    {
+      "prompt": "Proč je vypravěč nespolehlivý?",
+      "options": [
+        "Zapomíná jména měst",
+        "Estetizuje a omlouvá zneužití, zkresluje Lolitin pohled",
+        "Je dítě",
+        "Nemluví anglicky"
+      ],
+      "correct": 1,
+      "expl": "Jazyková virtuozita slouží k manipulaci čtenáře."
+    },
+    {
+      "prompt": "Kdo je Clare Quilty?",
+      "options": [
+        "Policista",
+        "Humbertův rival a další zneuživatel Lolity",
+        "Učitel matematiky",
+        "Charlottein bratr"
+      ],
+      "correct": 1,
+      "expl": "Quilty je dramatická postava dvojníka a soka."
+    },
+    {
+      "prompt": "Kdy román poprvé vyšel?",
+      "options": [
+        "1939",
+        "1955",
+        "1969",
+        "1980"
+      ],
+      "correct": 1,
+      "expl": "Lolita vyšla roku 1955 v Paříži."
+    },
+    {
+      "prompt": "Kde se převážná část děje odehrává?",
+      "options": [
+        "V carském Rusku",
+        "V USA (cesty a motely)",
+        "V Londýně výhradně",
+        "V gulagu"
+      ],
+      "correct": 1,
+      "expl": "Humbert a Lolita jezdí po Americe."
+    },
+    {
+      "prompt": "Jak se Humbert dostane k Lolitě „legálně“ zvenčí?",
+      "options": [
+        "Adopcí soudem",
+        "Sňatkem s její matkou Charlotte",
+        "Únosem ze školy hned na začátku",
+        "Jako lékař"
+      ],
+      "correct": 1,
+      "expl": "Ožení se s Charlotte, aby byl blízko dceři."
+    },
+    {
+      "prompt": "Co se stane s Charlotte?",
+      "options": [
+        "Emigruje",
+        "Zemře při nehodě poté, co odhalí Humbertovy úmysly",
+        "Vdá se za Quiltyho",
+        "Uvězní Humberta"
+      ],
+      "correct": 1,
+      "expl": "Po přečtení deníku naběhne pod auto."
+    },
+    {
+      "prompt": "Jaké je klíčové maturitní čtení románu?",
+      "options": [
+        "Oslava zneužití",
+        "Analýza manipulace, moci a nespolehlivého vyprávění",
+        "Jen cestopis USA",
+        "Humoristická idyla"
+      ],
+      "correct": 1,
+      "expl": "Text má být čten kriticky vůči Humbertově rétorice."
+    },
+    {
+      "prompt": "Co označuje Humbert slovem „nymfička“?",
+      "options": [
+        "Druh motýla výhradně",
+        "Jeho ideologický konstrukt dospívající dívky jako objektu touhy",
+        "Auta",
+        "Motel"
+      ],
+      "correct": 1,
+      "expl": "Jde o Humbertův pojem, kterým racionalizuje posedlost."
+    },
+    {
+      "prompt": "Jak román končí?",
+      "options": [
+        "Humbert a Lolita žijí šťastně",
+        "Humbert zabije Quiltyho a píše zpověď; Lolita žije jinde a později umírá",
+        "Humbert je osvobozen soudem bez viny",
+        "Charlotte se vrátí"
+      ],
+      "correct": 1,
+      "expl": "Vrcholí vražda Quiltyho a Humbertova vězeňská zpověď."
+    },
+    {
+      "prompt": "Proč byl román skandální?",
+      "options": [
+        "Kvůli politice",
+        "Kvůli tématu sexuálního zneužití dítěte",
+        "Kvůli překladu",
+        "Kvůli délce"
+      ],
+      "correct": 1,
+      "expl": "Téma pedofilie vyvolalo cenzurní a morální konflikty."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Humbert se ubytuje u Hazeových a posedne ho Lolita",
+        "Ožení se s Charlotte, aby zůstal blízko dívky",
+        "Charlotte odhalí pravdu a zahyne při nehodě",
+        "Humbert odjíždí s Lolitou na cesty po USA",
+        "Lolita uteče s Quiltym",
+        "Humbert zabije Quiltyho a píše zpověď"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: posedlost → sňatek s Charlotte → její smrt → cesty s Lolitou → útěk k Quiltymu → vražda a zpověď."
+  ]
+}

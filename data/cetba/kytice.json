@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Jaromír Erben",
+        "Žánr: baladická sbírka / romantická epika",
+        "Poprvé vydáno: 1853 (základní podoba Kytice z pověstí národních)",
+        "Děj / prostředí: český lidový svět – vesnice, příroda, nadpřirozeno",
+        "Vyprávění / forma: balady ve verších, pravidelný rytmus, refrény, dialogy"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Národní obrození: Erben sbírá folklor a přetváří jej v umělecké balady.",
+        "Svět řídí řád: vina → trest; často zasáhne nadpřirozeno.",
+        "Motivy: matka a dítě, nevěsta, smrt, příroda jako soudce.",
+        "Jazyk je zpěvný, archaizující, blízký lidové písni.",
+        "Kytice je základní kanonické dílo české literatury.",
+        "Romantismus zde má lidový a mravní rozměr, ne jen subjektivní cit."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Matka / děti – ústřední vztah v řadě balad (Poklad, Vodník, Dceřina kletba…).",
+        "Nevěsta / milenci – tragické dvojice (Svatební košile, Zlatý kolovrat).",
+        "Vodník – nadpřirozená bytost trestající i svádějící.",
+        "Polednice / Vrkoč – demonstrace strachu a viny v domácnosti.",
+        "Vypravěč balad – nadosobní hlas lidového řádu.",
+        "Příroda – aktivní síla (vítr, les, voda), ne jen kulisa."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Balada – tragický příběh ve verších s náhlým zvratem.",
+        "Vina a trest – mravní princip Erbenova světa.",
+        "Nadpřirozeno – zásah sil mimo člověka.",
+        "Folklor – lidové pověsti jako zdroj látek.",
+        "Refrén a rytmus – prostředky napětí a paměti textu.",
+        "Mateřství – klíčový motiv lásky i prokletí."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Kytici?",
+      "options": [
+        "Karel Hynek Mácha",
+        "Karel Jaromír Erben",
+        "Josef Kajetán Tyl",
+        "František Ladislav Čelakovský"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Karel Jaromír Erben."
+    },
+    {
+      "prompt": "Jaký žánr ve sbírce převládá?",
+      "options": [
+        "Sonet milostný výhradně",
+        "Balada",
+        "Román ve verších",
+        "Komedie"
+      ],
+      "correct": 1,
+      "expl": "Kytice je sbírka balad."
+    },
+    {
+      "prompt": "Kdy vyšla základní podoba Kytice?",
+      "options": [
+        "1836",
+        "1853",
+        "1883",
+        "1918"
+      ],
+      "correct": 1,
+      "expl": "Kytice z pověstí národních vyšla roku 1853."
+    },
+    {
+      "prompt": "Jaký mravní princip Erben zdůrazňuje?",
+      "options": [
+        "Náhoda bez trestu",
+        "Vina a trest",
+        "Jen milostný happy end",
+        "Politická revoluce"
+      ],
+      "correct": 1,
+      "expl": "Přestupky proti řádu jsou potrestány."
+    },
+    {
+      "prompt": "Z čeho Erben čerpá látky?",
+      "options": [
+        "Z antické filozofie výhradně",
+        "Z lidových pověstí a folkloru",
+        "Z vědeckých spisů",
+        "Z novinových reportáží"
+      ],
+      "correct": 1,
+      "expl": "Sbíral a umělecky zpracovával národní tradici."
+    },
+    {
+      "prompt": "Která bytost patří k typickým nadpřirozeným postavám?",
+      "options": [
+        "Robot",
+        "Vodník",
+        "Detektiv",
+        "Úředník"
+      ],
+      "correct": 1,
+      "expl": "Vodník je jednou z nejznámějších figur Kytice."
+    },
+    {
+      "prompt": "Co je typické pro formu balad?",
+      "options": [
+        "Volná próza bez rytmu",
+        "Verš, dialog, refrén a dramatický spád",
+        "Jen esej",
+        "Epistolární román"
+      ],
+      "correct": 1,
+      "expl": "Balady jsou veršované, dialektické a napínavé."
+    },
+    {
+      "prompt": "K jakému směru Kytici řadíme?",
+      "options": [
+        "Realismus Zolův",
+        "Romantismus (s folklorním základem)",
+        "Surrealismus",
+        "Existencialismus"
+      ],
+      "correct": 1,
+      "expl": "Patří k českému romantismu a obrozenecké tradici."
+    },
+    {
+      "prompt": "Jakou roli hraje příroda?",
+      "options": [
+        "Jen dekorativní pozadí",
+        "Často působí jako síla řádu a trestu",
+        "Je zcela nepřítomná",
+        "Jen jako mapa měst"
+      ],
+      "correct": 1,
+      "expl": "Voda, les či živel zasahují do lidských osudů."
+    },
+    {
+      "prompt": "Proč je mateřství tak důležité?",
+      "options": [
+        "Erben neměl jiné téma",
+        "Vztah matka–dítě je jádrem viny, lásky i kletby",
+        "Jde jen o humor",
+        "Matky v Kytici chybí"
+      ],
+      "correct": 1,
+      "expl": "Mnohé balady staví na mateřské lásce a jejím selhání."
+    },
+    {
+      "prompt": "Co odlišuje Erbena od Máchy?",
+      "options": [
+        "Erben nepíše verše",
+        "Erben je nadosobní, folklorní a mravní; Mácha subjektivnější",
+        "Mácha sbíral jen pověsti",
+        "Nic je neodlišuje"
+      ],
+      "correct": 1,
+      "expl": "Erbenův romantismus je lidový a etický, Máchův subjektivní."
+    },
+    {
+      "prompt": "Která balada NENÍ typicky spojována s Kyticí?",
+      "options": [
+        "Polednice",
+        "Vodník",
+        "Svatební košile",
+        "Máj jako součást Kytice"
+      ],
+      "correct": 3,
+      "expl": "Máj je samostatná Máchova skladba, ne součást Erbenovy Kytice."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Lidský přestupek proti mravnímu řádu",
+        "Varování nebo znamení (často z přírody či nadpřirozena)",
+        "Hrdina/hrdinka varování nedbá",
+        "Nadpřirozený nebo tragický zásah",
+        "Trest a ztráta (dítě, milý, život)",
+        "Mravní pointa balady"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: vina → varování → nedbání → zásah → trest → mravní pointa."
+  ]
+}

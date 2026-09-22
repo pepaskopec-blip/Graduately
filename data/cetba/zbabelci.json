@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Josef Škvorecký",
+        "Žánr: román",
+        "Poprvé vydáno: 1958",
+        "Děj: Kostelec na konci války 1945 – dospívání Dannyho Smiřického",
+        "Vyprávění: ich-forma, jazzový rytmus, hovorovost"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Konec protektorátu a příchod osvobození.",
+        "Danny řeší jazz, dívky a strach.",
+        "Satira na hrdinské pózy i zbabělost.",
+        "Maloměsto v dějinách – všednost vs. patos.",
+        "Generační pohled na válku bez idealizace."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Danny Smiřický – vypravěč, saxofonista.",
+        "Irena – dívka jeho touhy.",
+        "Přátelé z kapely – svět jazzu.",
+        "Otec a matka – domácí zázemí.",
+        "Revoluční nadšenci – terč ironie.",
+        "Němci / osvoboditelé – historické pozadí."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Jazz – svoboda a generační znak.",
+        "Zbabělost vs. hrdinství – ústřední otázka.",
+        "Maloměsto – chronotop.",
+        "Ironie patosu – styl.",
+        "Dospívání – osobní linie.",
+        "Konec války – historický rámec."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Zbabělce?",
+      "options": [
+        "Hrabal",
+        "Škvorecký",
+        "Kundera",
+        "Fuks"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Josef Škvorecký."
+    },
+    {
+      "prompt": "Kdo je Danny?",
+      "options": [
+        "Generál",
+        "Mladý jazzman a vypravěč",
+        "Farár",
+        "Revizor"
+      ],
+      "correct": 1,
+      "expl": "Danny Smiřický vypráví."
+    },
+    {
+      "prompt": "V jakém roce se děj odehrává?",
+      "options": [
+        "1938",
+        "Květen 1945",
+        "1968",
+        "1914"
+      ],
+      "correct": 1,
+      "expl": "Konec války 1945."
+    },
+    {
+      "prompt": "Co je pro Dannyho důležité?",
+      "options": [
+        "Účetnictví",
+        "Jazz a dívky i strach ze smrti",
+        "Jen politika bez osobního",
+        "Jen sport"
+      ],
+      "correct": 1,
+      "expl": "Osobní svět vs. dějiny."
+    },
+    {
+      "prompt": "Jaký je postoj k „hrdinství“?",
+      "options": [
+        "Bezvýhradná oslava",
+        "Ironický, demytizující",
+        "Jen náboženský",
+        "Jen dětský"
+      ],
+      "correct": 1,
+      "expl": "Škvorecký demytizuje pózy."
+    },
+    {
+      "prompt": "Proč název Zbabělci?",
+      "options": [
+        "Oslavuje zbabělost",
+        "Ironicky zkoumá strach a odvahu obyčejných lidí",
+        "Je o zvířatech",
+        "Je o robotice"
+      ],
+      "correct": 1,
+      "expl": "Téma strachu a morálky."
+    },
+    {
+      "prompt": "Jaký styl?",
+      "options": [
+        "Hexametr",
+        "Hovorový, jazzový rytmus prózy",
+        "Jen zákoník",
+        "Jen deník účetního"
+      ],
+      "correct": 1,
+      "expl": "Typický škvorecký jazyk."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "Praha jen",
+        "Fiktivní Kostelec (Náchodsko)",
+        "New York",
+        "Řím"
+      ],
+      "correct": 1,
+      "expl": "Maloměsto Kostelec."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1945",
+        "1958",
+        "1989",
+        "1921"
+      ],
+      "correct": 1,
+      "expl": "1958."
+    },
+    {
+      "prompt": "Co jazz symbolizuje?",
+      "options": [
+        "Otroctví",
+        "Svobodu, modernost, generaci",
+        "Cenzuru",
+        "Daně"
+      ],
+      "correct": 1,
+      "expl": "Jazz je znak svobody."
+    },
+    {
+      "prompt": "Jak kniha pracuje s dějinami?",
+      "options": [
+        "Ignoruje je",
+        "Prolíná všední dospívání s velkou historií",
+        "Jen kronika bitev",
+        "Jen mýtus bez lidí"
+      ],
+      "correct": 1,
+      "expl": "Dějiny skrz osobní zkušenost."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Zemědělství",
+        "Strach, dospívání a konec války bez patosu",
+        "Robotika",
+        "Antika"
+      ],
+      "correct": 1,
+      "expl": "Demytizace hrdinství a zrání."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Konec války v Kostelci",
+        "Danny hraje jazz a řeší vztahy",
+        "Pozoruje revoluční nadšení",
+        "Prožívá strach i touhu po odvaze",
+        "Město zažívá převrat dní",
+        "Ironický pohled na „hrdiny“ a zbabělce"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: konec války → jazz/vztahy → revoluční pózy → strach → převrat dní → ironická bilance."
+  ]
+}

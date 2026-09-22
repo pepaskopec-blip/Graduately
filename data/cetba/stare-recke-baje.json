@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Eduard Petiška (1924–1987)",
+        "Žánr: próza pro mládež / převyprávění mýtů",
+        "Poprvé vydáno: 1958",
+        "Děj: starověké Řecko – bohové, hrdinové, báje",
+        "Vyprávění: srozumitelné převyprávění antických příběhů"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Mýtické starověké Řecko: Olymp, podsvětí, moře a města.",
+        "Bohové zasahují do lidských osudů libovolně i spravedlivě.",
+        "Hrdinové plní úkoly, bojují s nestvůrami a hledají slávu.",
+        "Báje vysvětlují svět, mravní hodnoty i přírodní jevy.",
+        "Petiška zpřístupňuje antiku modernímu čtenáři."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Zeus a olympští bohové – vládci světa a lidských osudů.",
+        "Prométheus – dárce ohně lidem, potrestaný bohy.",
+        "Héraklés, Théseus, Perseus – hrdinové velkých činů.",
+        "Odysseus – důvtipný hrdina dlouhé cesty domů.",
+        "Lidští králové a hrdinky – oběti i aktéři mýtů (např. Éurope, Ariadna)."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Mýtus – posvátný příběh o bozích a vzniku řádu světa.",
+        "Olymp – sídlo bohů.",
+        "Hrdinský mýtus – zkoušky, nestvůry, sláva.",
+        "Osud (moira) – hranice i bohů.",
+        "Hubris – zpupnost trestána bohy.",
+        "Převyprávění – Petiškův didaktický a čtivý styl."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Staré řecké báje a pověsti?",
+      "options": [
+        "Homér",
+        "Eduard Petiška",
+        "Sofoklés",
+        "Karel Čapek"
+      ],
+      "correct": 1,
+      "expl": "Jde o Petiškovo převyprávění antických bájí."
+    },
+    {
+      "prompt": "Co kniha především obsahuje?",
+      "options": [
+        "Moderní detektivky",
+        "Převyprávěné řecké mýty o bozích a hrdinech",
+        "Účetní tabulky",
+        "Válečné deníky pilota"
+      ],
+      "correct": 1,
+      "expl": "Soubor zpřístupňuje antickou mytologii."
+    },
+    {
+      "prompt": "Kdo sídlí na Olympu?",
+      "options": [
+        "Mloci",
+        "Bohové",
+        "Jen Odysseus",
+        "Srnci"
+      ],
+      "correct": 1,
+      "expl": "Olymp je sídlem řeckých bohů."
+    },
+    {
+      "prompt": "Za co je známý Prométheus?",
+      "options": [
+        "Že ukradl oheň bohům a dal ho lidem",
+        "Že založil Prahu",
+        "Že napsal Žert",
+        "Že sloužil dvěma pánům"
+      ],
+      "correct": 0,
+      "expl": "Prométheus přinesl lidem oheň a byl potrestán."
+    },
+    {
+      "prompt": "Kdo je Héraklés?",
+      "options": [
+        "Římský císař",
+        "Hrdina známý dvanácti úkoly",
+        "Český rybář",
+        "Brooklynský spisovatel"
+      ],
+      "correct": 1,
+      "expl": "Héraklés (Herkules) je archetyp hrdiny s úkoly."
+    },
+    {
+      "prompt": "Co je hubris v řeckých bájích?",
+      "options": [
+        "Druh chleba",
+        "Zpupnost vůči bohům, která bývá potrestána",
+        "Loď Argonautů",
+        "Jméno pejska"
+      ],
+      "correct": 1,
+      "expl": "Hubris je nebezpečná pýcha."
+    },
+    {
+      "prompt": "Kdo je Odysseus?",
+      "options": [
+        "Bůh války",
+        "Důvtipný hrdina dlouhé cesty z Tróje domů",
+        "Titán ohně",
+        "Sluha Truffaldino"
+      ],
+      "correct": 1,
+      "expl": "Odysseus je hrdina Odysseie – cesty na Ithaku."
+    },
+    {
+      "prompt": "Proč Petiška báje převyprávěl?",
+      "options": [
+        "Aby zrušil mytologii",
+        "Aby je srozumitelně přiblížil (zejména mladším) čtenářům",
+        "Aby napsal zákoník",
+        "Aby přeložil Newspeak"
+      ],
+      "correct": 1,
+      "expl": "Cílem je přístupný a ucelený výklad mýtů."
+    },
+    {
+      "prompt": "Co báje často vysvětlují?",
+      "options": [
+        "Jen jízdní řády",
+        "Původ světa, zvyků a lidských vlastností",
+        "Burzovní kurzy",
+        "Stavbu mostů v Brooklynu"
+      ],
+      "correct": 1,
+      "expl": "Mýty dávají smysl řádu světa a morálce."
+    },
+    {
+      "prompt": "Která bytost patří k podsvětí?",
+      "options": [
+        "Zeus jako plavčík",
+        "Hádés / svět mrtvých",
+        "Arnoštek",
+        "Gatsby"
+      ],
+      "correct": 1,
+      "expl": "Podsvětí je říše Hádova."
+    },
+    {
+      "prompt": "Ve kterém roce kniha vyšla?",
+      "options": [
+        "1746",
+        "1925",
+        "1958",
+        "1979"
+      ],
+      "correct": 2,
+      "expl": "Petiškovy báje vyšly roku 1958."
+    },
+    {
+      "prompt": "Jaký žánr je pro maturitu nejpřesnější?",
+      "options": [
+        "Převyprávění antických bájí / próza pro mládež",
+        "Dystopický román",
+        "Humoristický román o sluhovi",
+        "Válečná reportáž"
+      ],
+      "correct": 0,
+      "expl": "Jde o adaptaci mýtů, ne o původní antický epos."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Vznik bohů a řád Olympu",
+        "Příběhy o zásazích bohů do světa lidí",
+        "Hrdinské činy (Perseus, Héraklés, Théseus…)",
+        "Velké cesty a války (např. Trója, Argonauti)",
+        "Odysseovy zkoušky na cestě domů",
+        "Mýty jako poučení o osudu, pýše a lidskosti"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: bohové → zásahy do světa → hrdinské činy → velké výpravy → Odysseus → poučení mýtů."
+  ]
+}

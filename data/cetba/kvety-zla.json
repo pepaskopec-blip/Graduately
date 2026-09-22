@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Charles Baudelaire",
+        "Žánr: symbolistická / moderní lyrika (sbírka básní)",
+        "Poprvé vydáno: 1857 (rozšířená vydání později)",
+        "Děj / prostředí: Paříž 19. století, vnitřní svět básníka – splín a krása",
+        "Vyprávění / forma: cykly básní, bohatá obraznost, synestézie, apostrofy"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Paříž druhé poloviny 19. století: moderní velkoměsto, úpadek i poezie.",
+        "Sbírka byla cenzurována; některé básně označeny za nemravné.",
+        "Baudelaire je klíčový předchůdce symbolismu a moderní poezie.",
+        "Témata: splín (ennui), krása ve zlu, erotika, smrt, umění.",
+        "Básník je „prokletý“ – citlivý outsider ve společnosti.",
+        "Českému čtenáři je známá i Nezvalovým překladem."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Básnický subjekt – flâneur, milenec, svědek města a vlastní duše.",
+        "Milovaná žena / múza – zdroj touhy i utrpení.",
+        "Čtenář – často oslovován jako „bližní“ a pokrytec.",
+        "Satan / zlo – alegorické figury pokušení a vzpoury.",
+        "Paříž – personifikované velkoměsto jako postava moderny.",
+        "Umění – jediná možnost překonat splín krásou."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Spleen (splín) – nuda, tíha existence moderního člověka.",
+        "Idéál – touha po kráse a absolutnu.",
+        "Korespondence – vzájemné odpovídání smyslů a obrazů.",
+        "Prokletý básník – umělec na okraji společnosti.",
+        "Krása ve zlu – estetizace ošklivého a hříšného.",
+        "Flâneur – poutník městem, pozorovatel moderny."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Květy zla?",
+      "options": [
+        "Arthur Rimbaud",
+        "Charles Baudelaire",
+        "Paul Verlaine",
+        "Stéphane Mallarmé"
+      ],
+      "correct": 1,
+      "expl": "Autorem sbírky je Charles Baudelaire."
+    },
+    {
+      "prompt": "Kdy sbírka poprvé vyšla?",
+      "options": [
+        "1830",
+        "1857",
+        "1880",
+        "1900"
+      ],
+      "correct": 1,
+      "expl": "Les Fleurs du mal vyšly roku 1857."
+    },
+    {
+      "prompt": "Proč byla sbírka cenzurována?",
+      "options": [
+        "Kvůli politické satirě na krále výhradně",
+        "Kvůli údajné nemravnosti některých básní",
+        "Kvůli chybám v sazbě",
+        "Nebyla cenzurována"
+      ],
+      "correct": 1,
+      "expl": "Část básní byla soudně napadena jako pohoršující."
+    },
+    {
+      "prompt": "Co je spleen u Baudelaira?",
+      "options": [
+        "Nemoc plic",
+        "Existenciální nuda a tíha moderního života",
+        "Druh květiny",
+        "Taneční forma"
+      ],
+      "correct": 1,
+      "expl": "Spleen označuje splín – prázdnotu a úzkost."
+    },
+    {
+      "prompt": "Jaký směr Baudelaire připravuje?",
+      "options": [
+        "Klasicismus",
+        "Symbolismus a moderní lyriku",
+        "Realistický román výhradně",
+        "Gotický román"
+      ],
+      "correct": 1,
+      "expl": "Je klíčovým předchůdcem symbolismu."
+    },
+    {
+      "prompt": "Co znamená „krása ve zlu“?",
+      "options": [
+        "Odmítnutí umění",
+        "Estetické zobrazení hříchu, ošklivosti a úpadku",
+        "Jen popis zahrady",
+        "Náboženskou apologetiku"
+      ],
+      "correct": 1,
+      "expl": "Baudelaire hledá poezii i v temných motivech."
+    },
+    {
+      "prompt": "Kdo je flâneur?",
+      "options": [
+        "Úředník",
+        "Pozorovatel a poutník velkoměstem",
+        "Voják",
+        "Kněz"
+      ],
+      "correct": 1,
+      "expl": "Flâneur bloumá městem a zaznamenává moderní život."
+    },
+    {
+      "prompt": "Jaká je typická forma sbírky?",
+      "options": [
+        "Jeden románový děj",
+        "Cykly básní s motivickými okruhy",
+        "Jen drama",
+        "Denní zápisky bez veršů"
+      ],
+      "correct": 1,
+      "expl": "Sbírka je členěna do tematických oddílů."
+    },
+    {
+      "prompt": "Jaký vztah má básník k městu?",
+      "options": [
+        "Ignoruje je",
+        "Paříž je zdrojem inspirace i úzkosti",
+        "Chce je zbořit",
+        "Žije jen na venkově"
+      ],
+      "correct": 1,
+      "expl": "Velkoměsto je ústředním prostorem moderní lyriky."
+    },
+    {
+      "prompt": "Co jsou korespondence (synestézie)?",
+      "options": [
+        "Úřední dopisy",
+        "Prolínání smyslových vjemů a obrazů",
+        "Rýmové schéma ABAB výhradně",
+        "Cenzurní záznamy"
+      ],
+      "correct": 1,
+      "expl": "Baudelaire spojuje vůně, barvy a zvuky v jediný obraz."
+    },
+    {
+      "prompt": "Který český básník sbírku významně překládal?",
+      "options": [
+        "Karel Hynek Mácha",
+        "Vítězslav Nezval",
+        "Jan Neruda",
+        "Jaroslav Vrchlický výhradně"
+      ],
+      "correct": 1,
+      "expl": "V katalogu je uveden překlad Nezvalův."
+    },
+    {
+      "prompt": "Jaké je základní napětí sbírky?",
+      "options": [
+        "Válka a mír",
+        "Spleen versus Idéál (tíha vs. touha po kráse)",
+        "Bohatství a chudoba jen ekonomicky",
+        "Komedie a tragédie divadelní"
+      ],
+      "correct": 1,
+      "expl": "Ústřední polarita je mezi splínem a ideálem."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Básník prožívá splín moderního města",
+        "Hledá krásu v erotice, umění i zlu",
+        "Oslovuje čtenáře a odhaluje pokrytectví",
+        "Prolíná smysly v symbolistických obrazech",
+        "Konfrontuje Idéál s úpadkem a smrtí",
+        "Umění zůstává cestou, jak splín překonat"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: splín města → hledání krásy → oslovení čtenáře → synestézie → střet ideálu a úpadku → umění jako východisko."
+  ]
+}

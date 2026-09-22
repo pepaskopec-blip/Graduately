@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Carlo Goldoni (1707–1793)",
+        "Žánr: komedie dell’arte / divadelní komedie",
+        "Poprvé uvedeno: 1746 (Benátky)",
+        "Děj: Benátky, záměny, lásky a služba dvěma pánům najednou",
+        "Forma: drama – dialogy, výstupy, komická situace"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Itálie 18. století, benátské měšťanské prostředí.",
+        "Goldoni reformuje komedii dell’arte směrem k charakterové komedii.",
+        "Svět je plný přetvářky, sňatků z rozumu a peněz.",
+        "Sloužící Truffaldino žije z důvtipu a improvizace.",
+        "Humor vzniká z nedorozumění a dvojí identity."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Truffaldino – sluha dvou pánů, hladový a vynalézavý.",
+        "Beatrice Rasponiová – dívka v mužském přestrojení (Federigo).",
+        "Florindo Aretusi – Beatricein milý, druhý „pán“.",
+        "Smeraldina – služka, Truffaldinova milá.",
+        "Pantalone a další měšťané – otcové, snoubenci, oběti záměn."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Komedie dell’arte – masky, typy, improvizace.",
+        "Dvojí služba – ústřední komický motor hry.",
+        "Přestrojení – Beatrice jako „Federigo“.",
+        "Nedorozumění – záměny dopisů, kufrů a osob.",
+        "Hlad a chytrost – Truffaldinovy motivace.",
+        "Šťastný konec – typický pro komedii (svatby)."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Sluhu dvou pánů?",
+      "options": [
+        "William Shakespeare",
+        "Carlo Goldoni",
+        "Molière",
+        "Sofoklés"
+      ],
+      "correct": 1,
+      "expl": "Autorem je italský dramatik Carlo Goldoni."
+    },
+    {
+      "prompt": "Kdo je Truffaldino?",
+      "options": [
+        "Benátský dóže",
+        "Sluha, který slouží dvěma pánům najednou",
+        "Soudce",
+        "Kněz"
+      ],
+      "correct": 1,
+      "expl": "Truffaldino je ústřední komická postava – sluha dvou pánů."
+    },
+    {
+      "prompt": "Kde se hra odehrává?",
+      "options": [
+        "V Praze",
+        "V Benátkách",
+        "V Londýně",
+        "V Troji"
+      ],
+      "correct": 1,
+      "expl": "Děj je zasazen do Benátek."
+    },
+    {
+      "prompt": "Proč Beatrice vystupuje jako muž?",
+      "options": [
+        "Chce být vojákem",
+        "Skrývá se a hledá milého / řeší rodinnou zápletku",
+        "Je to sázka",
+        "Je soudkyně"
+      ],
+      "correct": 1,
+      "expl": "Beatrice se převléká za Federiga kvůli milostné a rodinné intrize."
+    },
+    {
+      "prompt": "Kdo je Florindo?",
+      "options": [
+        "Truffaldinův syn",
+        "Beatricein milý a jeden z „pánů“",
+        "Pantalonův kuchař",
+        "Mlok"
+      ],
+      "correct": 1,
+      "expl": "Florindo je druhý pán, kterého Truffaldino také slouží."
+    },
+    {
+      "prompt": "Jaký žánr hra představuje?",
+      "options": [
+        "Tragédie",
+        "Komedie (dell’arte / charakterová komedie)",
+        "Elegie",
+        "Epos"
+      ],
+      "correct": 1,
+      "expl": "Jde o klasickou komedii s prvky komedie dell’arte."
+    },
+    {
+      "prompt": "Co Truffaldina nejvíc žene do problémů?",
+      "options": [
+        "Touha po vědě",
+        "Hlad, peníze a snaha utajit dvojí službu",
+        "Politika",
+        "Náboženství"
+      ],
+      "correct": 1,
+      "expl": "Chce sloužit dvěma pánům kvůli výdělku a jídlu – a musí lhát."
+    },
+    {
+      "prompt": "Kdo je Smeraldina?",
+      "options": [
+        "Šlechtična z Vídně",
+        "Služka a Truffaldinova milá",
+        "Beatriceina matka",
+        "Soudkyně"
+      ],
+      "correct": 1,
+      "expl": "Smeraldina patří k milostné linii „sluhů“."
+    },
+    {
+      "prompt": "Čím Goldoni komedii dell’arte ovlivnil?",
+      "options": [
+        "Zrušil veškerý humor",
+        "Posunul ji k pevným charakterům a propracovanějšímu textu",
+        "Psal jen latinsky",
+        "Zakázal dialogy"
+      ],
+      "correct": 1,
+      "expl": "Goldoni reformoval improvizovanou komedii směrem k charakterové hře."
+    },
+    {
+      "prompt": "Jak hra typicky končí?",
+      "options": [
+        "Katastrofou města",
+        "Odhalením záměn a šťastnými sňatky",
+        "Válkou",
+        "Popravou Truffaldina"
+      ],
+      "correct": 1,
+      "expl": "Komedie směřuje k vyjasnění a svatebnímu závěru."
+    },
+    {
+      "prompt": "Co je hlavní komický princip hry?",
+      "options": [
+        "Válečné scény",
+        "Záměny identity a služba dvěma pánům",
+        "Soudní řeči",
+        "Sbor antické tragedie"
+      ],
+      "correct": 1,
+      "expl": "Dvojí služba a přestrojení produkují nedorozumění."
+    },
+    {
+      "prompt": "Ve kterém století Goldoni působil?",
+      "options": [
+        "Ve 12.",
+        "V 18.",
+        "Ve 20.",
+        "V 5. př. n. l."
+      ],
+      "correct": 1,
+      "expl": "Goldoni je dramatik 18. století."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Truffaldino přijme službu u „Federiga“ (Beatrice)",
+        "Vzápětí slouží i Florindovi – má dva pány",
+        "Musí tajit záměny dopisů, kufrů a jídel",
+        "Milostné a rodinné intriky se zamotávají",
+        "Pravá identita Beatrice vychází najevo",
+        "Záměny se vyjasní a přicházejí šťastné sňatky"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: služba u Beatrice → druhý pán Florindo → tajení záměn → zamotání → odhalení → šťastný konec."
+  ]
+}

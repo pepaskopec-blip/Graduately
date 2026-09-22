@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Victor Hugo; překlad: Pavlousková",
+        "Žánr: společenský / historický román",
+        "Poprvé vydáno: 1862",
+        "Děj/prostředí: Francie po napoleonských válkách, zejména Paříž",
+        "Vyprávění/forma: šíroký epos mnoha osudů; překlad Pavlousková"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Francie 1. poloviny 19. století: chudoba, justice, povstání.",
+        "Román kritizuje tvrdé tresty a sociální nespravedlnost.",
+        "Pařížské barricady a boj o lidskou důstojnost.",
+        "Křesťanská milost (biskup Myriel) stojí proti zákonu (Javert).",
+        "Láska, oběť a vykoupení jako mravní osa.",
+        "Téma: vina a milost, chudoba, revoluce, lidskost."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Jean Valjean – trestanec, který hledá vykoupení.",
+        "Javert – neúprosný policejní inspektor.",
+        "Fantine – chudá matka Cosette, oběť společnosti.",
+        "Cosette – Valjeanova schovanka, později milovaná Mariusem.",
+        "Marius Pontmercy – student a revolucionář.",
+        "Thénardierovi – krutí hostinští a zloději."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Vykoupení – Valjeanova cesta od zločinu k dobru.",
+        "Milost – biskupův dar svícnů mění Valjeanův život.",
+        "Zákon vs. svědomí – konflikt Javert × Valjean.",
+        "Barricada – symbol lidového odporu.",
+        "Chudoba – hlavní sociální téma románu.",
+        "Identita – Valjean žije pod jménem Madeleine i jinými aliasy."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je Jean Valjean?",
+      "options": [
+        "Policejní šéf",
+        "Bývalý trestanec usilující o nápravu",
+        "Král Francie",
+        "Thénardierův syn"
+      ],
+      "correct": 1,
+      "expl": "Valjean byl odsouzen za krádež chleba; po milosti biskupa žije nový život."
+    },
+    {
+      "prompt": "Za co byl Valjean původně odsouzen?",
+      "options": [
+        "Vraždu",
+        "Krádež chleba (a pozdější útěky)",
+        "Podvod v bance",
+        "Zradu státu"
+      ],
+      "correct": 1,
+      "expl": "Ukázka krutosti justice: hlad a drobný přečin vedou k dlouhému trestu."
+    },
+    {
+      "prompt": "Kdo je Javert?",
+      "options": [
+        "Valjeanův bratr",
+        "Inspektor lpící na literě zákona",
+        "Student revolucionář",
+        "Kněz"
+      ],
+      "correct": 1,
+      "expl": "Javert věří jen zákonu; Valjeanova milost jeho svět zhroutí."
+    },
+    {
+      "prompt": "Kdo je Fantine?",
+      "options": [
+        "Šlechtična",
+        "Chudá dělnice a matka Cosette",
+        "Jeptiška",
+        "Policistka"
+      ],
+      "correct": 1,
+      "expl": "Fantine upadá do bídy, aby uživila dceru; umírá vyčerpáním."
+    },
+    {
+      "prompt": "Kdo vychová Cosette?",
+      "options": [
+        "Javert",
+        "Jean Valjean",
+        "Marius od dětství",
+        "Biskup Myriel"
+      ],
+      "correct": 1,
+      "expl": "Valjean Cosette vykoupí od Thénardierů a stane se jejím ochráncem."
+    },
+    {
+      "prompt": "Kdo jsou Thénardierovi?",
+      "options": [
+        "Ušlechtilí šlechtici",
+        "Bezzásadoví hostinští a zločinci",
+        "Policisté",
+        "Kněží"
+      ],
+      "correct": 1,
+      "expl": "Týrají Cosette a později vydírají i další postavy."
+    },
+    {
+      "prompt": "Co symbolizuje povstání na barikádách?",
+      "options": [
+        "Svatbu Cosette",
+        "Boj o spravedlnost a lidskou důstojnost",
+        "Javertův povýšení",
+        "Valjeanův útěk do Ameriky"
+      ],
+      "correct": 1,
+      "expl": "Hugo spojuje osobní osudy s historickým bojem lidu."
+    },
+    {
+      "prompt": "Proč Javert nakonec selže?",
+      "options": [
+        "Protože onemocní",
+        "Nemůže sloučit Valjeanovu milost se svým pojetím zákona",
+        "Emigruje",
+        "Zbohatne"
+      ],
+      "correct": 1,
+      "expl": "Valjean mu daruje život; Javertův rigidní svět se zhroutí."
+    },
+    {
+      "prompt": "Kdy Bídníci poprvé vyšli?",
+      "options": [
+        "1831",
+        "1862",
+        "1901",
+        "1945"
+      ],
+      "correct": 1,
+      "expl": "Les Misérables vyšli roku 1862; patří k vrcholům světového romantismu."
+    },
+    {
+      "prompt": "Jaký je hlavní mravní konflikt románu?",
+      "options": [
+        "Město × venkov",
+        "Milost a lidskost × tvrdý zákon",
+        "Věda × magie",
+        "Láska × sport"
+      ],
+      "correct": 1,
+      "expl": "Valjean vs. Javert je střet svědomí a litery zákona."
+    },
+    {
+      "prompt": "Kdo je Marius?",
+      "options": [
+        "Kat",
+        "Student a Cosettin milý, účastník bojů",
+        "Biskup",
+        "Valjeanův žalářník"
+      ],
+      "correct": 1,
+      "expl": "Marius reprezentuje mladou generaci a romantickou lásku k Cosette."
+    },
+    {
+      "prompt": "Co Valjeanovi daruje biskup Myriel?",
+      "options": [
+        "Zbraň",
+        "Stříbrné svícny a důvěru – milost",
+        "Úřad",
+        "Dům v Paříži"
+      ],
+      "correct": 1,
+      "expl": "Milost biskupa je počátek Valjeanova mravního obratu."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Valjean je propuštěn z galejí a setká se s biskupem",
+        "Stává se starostou Madeleine a zachrání Cosette",
+        "Javert ho pronásleduje pod novou identitou",
+        "Cosette a Marius se zamilují",
+        "Boje na pařížských barikádách",
+        "Valjean zachrání Mariuse; Javert se zhroutí"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: galeje a biskup → Madeleine a Cosette → Javertův hon → láska Cosette a Mariuse → barikády → záchrana a Javertův pád."
+  ]
+}

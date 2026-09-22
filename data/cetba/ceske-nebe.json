@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Zdeněk Svěrák, Ladislav Smoljak",
+        "Žánr: divadelní hra / mystifikační komedie (Jára Cimrman)",
+        "Poprvé vydáno: 1970s– (Cimrmanovo České nebe)",
+        "Děj/prostředí: Nebe jako úřad; čeští velikáni u cimrmanovské komise",
+        "Vyprávění/forma: komedie Divadla Járy Cimrmana, mystifikace"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Svět Cimrmanova divadla: vážná historie parodována humorem.",
+        "Čeští národní hrdinové jsou souzeni / přijímáni do „nebe“.",
+        "Mystifikace: Cimrman jako univerzální génius.",
+        "Ironie vůči národním mýtům a školním klišé.",
+        "Forma spojuje odborný „referát“ a scénky.",
+        "Téma: národní identita, humor, mystifikace, dějiny."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Jára Cimrman – nepřítomný génius v pozadí celého cyklu.",
+        "Komise / úředníci nebe – hodnotí české velikány.",
+        "Historické postavy (např. Hus, Komenský aj.) – parodované ikony.",
+        "Výpravěči/herci Cimrmanova divadla – rámec představení.",
+        "Žadatelé o vstup do českého nebe – komické typy.",
+        "Divák – spoluúčastník mystifikace."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Mystifikace – fiktivní Cimrman vydávaný za reálného génia.",
+        "Národní mýtus – terč laskavé ironie.",
+        "Divadlo Járy Cimrmana – specifický typ českého humoru.",
+        "Seminář + hra – typická struktura představení.",
+        "České nebe – metafora „pantheonu“ národních velikánů.",
+        "Satira – kritika pompéznosti a školních frází."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je autorskou dvojicí Českého nebe?",
+      "options": [
+        "Voskovec a Werich",
+        "Svěrák a Smoljak",
+        "Čapek a Langer",
+        "Havel a Kohout"
+      ],
+      "correct": 1,
+      "expl": "Hra patří do repertoáru Divadla Járy Cimrmana (Svěrák, Smoljak)."
+    },
+    {
+      "prompt": "K jakému divadelnímu kontextu hra patří?",
+      "options": [
+        "Národnímu divadlu baroka",
+        "Divadlu Járy Cimrmana",
+        "Antické tragédii",
+        "Opeře"
+      ],
+      "correct": 1,
+      "expl": "Jde o cimrmanovskou mystifikační komedii."
+    },
+    {
+      "prompt": "Kdo je Jára Cimrman?",
+      "options": [
+        "Skutečný středověký král",
+        "Fiktivní univerzální génius mystifikace",
+        "Rakouský císař",
+        "Postava z Bídníků"
+      ],
+      "correct": 1,
+      "expl": "Cimrman je vymyšlená postava „největšího Čecha“."
+    },
+    {
+      "prompt": "Čím se hra zabývá?",
+      "options": [
+        "Vesmírnou válkou",
+        "Přijímáním českých velikánů do „nebe“ / národního pantheonu",
+        "Tovární výrobou",
+        "Detektivkou z Londýna"
+      ],
+      "correct": 1,
+      "expl": "Paroduje, jak národ slaví své hrdiny."
+    },
+    {
+      "prompt": "Jaký je základní tón?",
+      "options": [
+        "Tragický naturalismus",
+        "Humor, ironie a mystifikace",
+        "Horror",
+        "Liturgie"
+      ],
+      "correct": 1,
+      "expl": "Cimrmanovský humor spojuje „vědu“ s nesmyslem."
+    },
+    {
+      "prompt": "Co je typická struktura cimrmanovského večera?",
+      "options": [
+        "Jen balet",
+        "Odborný seminář a následná hra",
+        "Jen pantomima",
+        "Filmová projekce"
+      ],
+      "correct": 1,
+      "expl": "Nejdřív „badatelský“ úvod, pak vlastní hra."
+    },
+    {
+      "prompt": "Co hra ironizuje?",
+      "options": [
+        "Matematiku",
+        "Národní sebechválu a školní mýty",
+        "Vaření",
+        "Sportovní výsledky výhradně"
+      ],
+      "correct": 1,
+      "expl": "Laskavě paroduje, jak Česi slaví dějiny."
+    },
+    {
+      "prompt": "Jaký žánr je nejpřesnější?",
+      "options": [
+        "Antiutopický román",
+        "Mystifikační divadelní komedie",
+        "Sonetový cyklus",
+        "Deník"
+      ],
+      "correct": 1,
+      "expl": "Jde o jevištní komedii s mystifikací."
+    },
+    {
+      "prompt": "Proč je Cimrman „nepřítomný“?",
+      "options": [
+        "Je to Bůh",
+        "Je fiktivní postava, o níž se jen referuje a hraje",
+        "Emigroval do děje Hamlet",
+        "Je strom"
+      ],
+      "correct": 1,
+      "expl": "Humor stojí na tom, že génius je všude dokazován, ale neukázán jako realita."
+    },
+    {
+      "prompt": "Co znamená „české nebe“ metaforicky?",
+      "options": [
+        "Počasí",
+        "Pantheon / výběr národních velikánů",
+        "Horský klub",
+        "Nemocnice"
+      ],
+      "correct": 1,
+      "expl": "Nebe je obraz „kdo patří mezi velikány národa“."
+    },
+    {
+      "prompt": "Které tvrzení platí?",
+      "options": [
+        "Hra je vážnou hagiografií bez humoru",
+        "Kombinuje parodii dějin s divadelní komikou",
+        "Je překladem Becketta",
+        "Je sci-fi o trifidech"
+      ],
+      "correct": 1,
+      "expl": "Podstatou je parodie a mystifikace, ne zbožná legenda."
+    },
+    {
+      "prompt": "Kdo bývá cílem cimrmanovské satiry?",
+      "options": [
+        "Jen zvířata",
+        "Pedanterie, úřednost a národní fráze",
+        "Jen cizí jazyky",
+        "Jen sportovci"
+      ],
+      "correct": 1,
+      "expl": "Směšné je často „vážné“ vykládání banality."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Seminář uvádí téma českého nebe",
+        "Představí se pravidla přijímání velikánů",
+        "Historické postavy procházejí „řízením“",
+        "Komika odhaluje národní klišé",
+        "Cimrmanova legenda se mísí do hodnocení",
+        "Závěr upevní mystifikaci i pointu o národě"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: seminář → pravidla nebe → přehlídka velikánů → odhalení klišé → cimrmanská legenda → pointa o národu."
+  ]
+}

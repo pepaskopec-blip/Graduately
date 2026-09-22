@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Zdeněk Jirotka",
+        "Žánr: humoristický román",
+        "Poprvé vydáno: 1942",
+        "Děj: domácnost pana Oulického a geniální komorník Saturnin",
+        "Vyprávění: ich-forma, elegantní humor a nadsázka"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Protektorátní doba vzniku, ale humor je nadčasový.",
+        "Saturnin organizuje „dobrodružství“ proti šedi života.",
+        "Satira na měšťácké zvyky a falešnou vážnost.",
+        "Doktor Vlach dodává sarkastický komentář.",
+        "Komika situací i jazyka."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Vypravěč (pan Oulický) – zaměstnavatel Saturnina.",
+        "Saturnin – komorník a režisér historek.",
+        "Doktor Vlach – ironický přítel.",
+        "Teta Kateřina – příbuzná s impulzy.",
+        "Slečna Barbora – milostná linie.",
+        "Majordomus / okolí – terč humoru."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Komorník-režisér – Saturninova role.",
+        "Únik ze šedi – motiv dobrodružství.",
+        "Ironie a nadsázka – styl.",
+        "Měšťáctví – předmět satiry.",
+        "Přátelství a vyprávění – rámec.",
+        "Humor jako vzdor."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Saturnina?",
+      "options": [
+        "Hašek",
+        "Jirotka",
+        "Hrabal",
+        "Čapek"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Zdeněk Jirotka."
+    },
+    {
+      "prompt": "Kdo je Saturnin?",
+      "options": [
+        "Lékař",
+        "Komorník, který řídí komické dobrodružství",
+        "Detektiv",
+        "Farár"
+      ],
+      "correct": 1,
+      "expl": "Saturnin je geniální sluha."
+    },
+    {
+      "prompt": "Jaký je tón knihy?",
+      "options": [
+        "Tragický",
+        "Humoristický, ironický",
+        "Jen hororový",
+        "Jen náboženský"
+      ],
+      "correct": 1,
+      "expl": "Jde o humoristický román."
+    },
+    {
+      "prompt": "Kdo je doktor Vlach?",
+      "options": [
+        "Nepřítel",
+        "Ironický komentátor a přítel",
+        "Komorník",
+        "Policista"
+      ],
+      "correct": 1,
+      "expl": "Vlach dodává sarkasmus."
+    },
+    {
+      "prompt": "Proti čemu humor míří?",
+      "options": [
+        "Proti matematice",
+        "Proti šedi, konvencím a měšťáctví",
+        "Proti přírodě",
+        "Proti hudbě"
+      ],
+      "correct": 1,
+      "expl": "Satira všednosti a přetvářky."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1918",
+        "1942",
+        "1968",
+        "1989"
+      ],
+      "correct": 1,
+      "expl": "Vydána 1942."
+    },
+    {
+      "prompt": "Jak vyprávění funguje?",
+      "options": [
+        "Jen dialogy bez vypravěče",
+        "Ich-forma zaměstnavatele",
+        "Jen verše",
+        "Jen zápisník policie"
+      ],
+      "correct": 1,
+      "expl": "Vypráví pán domu."
+    },
+    {
+      "prompt": "Co Saturnin typicky dělá?",
+      "options": [
+        "Nic",
+        "Vyvolává situace a „režíruje“ okolí",
+        "Emigruje hned",
+        "Zakládá továrnu"
+      ],
+      "correct": 1,
+      "expl": "Je hybatelem zápletek."
+    },
+    {
+      "prompt": "Jaká je milostná linie?",
+      "options": [
+        "Žádná",
+        "Souvisí se slečnou Barborou",
+        "Jen válka",
+        "Jen obchod"
+      ],
+      "correct": 1,
+      "expl": "Barbora patří k ději."
+    },
+    {
+      "prompt": "Proč je kniha oblíbená?",
+      "options": [
+        "Je zákoník",
+        "Lehký inteligentní humor a postavy",
+        "Je učebnice fyziky",
+        "Je telefonní seznam"
+      ],
+      "correct": 1,
+      "expl": "Klasika české humoristické prózy."
+    },
+    {
+      "prompt": "Jaký je vztah pána a Saturnina?",
+      "options": [
+        "Nenávist",
+        "Pán je často vlečen Saturninovými nápady",
+        "Otroctví bez humoru",
+        "Jen obchodní smlouva bez děje"
+      ],
+      "correct": 1,
+      "expl": "Dynamika komiky."
+    },
+    {
+      "prompt": "Hlavní motiv?",
+      "options": [
+        "Válka v zákopech",
+        "Únik z všednosti humorem",
+        "Tovární výroba robotů",
+        "Antická tragédie"
+      ],
+      "correct": 1,
+      "expl": "Humor jako životní strategie."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Saturnin vstupuje do domácnosti",
+        "Začíná režírovat situace",
+        "Doktor Vlach ironizuje dění",
+        "Přicházejí příbuzní a komplikace",
+        "Milostná a komická dobrodružství",
+        "Domácnost je vzhůru nohama – pointa humoru"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: příchod → režie → Vlach → komplikace → dobrodružství → komický chaos."
+  ]
+}

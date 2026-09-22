@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Jack Kerouac",
+        "Žánr: román beat generation",
+        "Poprvé vydáno: 1957 (česky Popel)",
+        "Děj: cesty po USA – Sal Paradise a Dean Moriarty",
+        "Vyprávění: ich-forma, spontánní próza"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Poválečná Amerika, touha po svobodě.",
+        "Beatnici odmítají konformitu.",
+        "Cesta je styl i téma.",
+        "Jazz, drogy, přátelství, rytmus řeči.",
+        "Vyčerpání svobody bez kotvy."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Sal Paradise – vypravěč.",
+        "Dean Moriarty – charismatický hybatel.",
+        "Marylou – Deanova partnerka.",
+        "Camille – další vztah Deana.",
+        "Přátelé beat scény – komunita cesty.",
+        "Amerika – prostor putování."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Cesta – svoboda i útěk.",
+        "Spontánní próza – styl.",
+        "Beat generation – kontext.",
+        "Jazzový rytmus jazyka.",
+        "Konformita vs. žízeň po životě.",
+        "Vyhoření – stín svobody."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Na cestě?",
+      "options": [
+        "Ginsberg",
+        "Kerouac",
+        "Burroughs jen",
+        "Hemingway"
+      ],
+      "correct": 1,
+      "expl": "Jack Kerouac."
+    },
+    {
+      "prompt": "Kdo je Sal?",
+      "options": [
+        "Policista",
+        "Vypravěč putující Amerikou",
+        "Deanův otec",
+        "Farár"
+      ],
+      "correct": 1,
+      "expl": "Sal Paradise."
+    },
+    {
+      "prompt": "Kdo je Dean?",
+      "options": [
+        "Bankéř",
+        "Charismatický přítel a motor cest",
+        "Učitel matematiky",
+        "Generál"
+      ],
+      "correct": 1,
+      "expl": "Dean Moriarty."
+    },
+    {
+      "prompt": "Jaký směr/generace?",
+      "options": [
+        "Romantismus Erbenův",
+        "Beat generation",
+        "Husité",
+        "Robotici"
+      ],
+      "correct": 1,
+      "expl": "Beatnici."
+    },
+    {
+      "prompt": "Co je „spontánní próza“?",
+      "options": [
+        "Úřední jazyk",
+        "Rychlý, rytmický proud řeči",
+        "Jen hexametr",
+        "Jen zákoník"
+      ],
+      "correct": 1,
+      "expl": "Kerouacův styl."
+    },
+    {
+      "prompt": "Proti čemu text míří?",
+      "options": [
+        "Proti jazzu",
+        "Proti konformní poválečné společnosti",
+        "Proti cestování",
+        "Proti přátelství"
+      ],
+      "correct": 1,
+      "expl": "Odpor ke konformitě."
+    },
+    {
+      "prompt": "Co je chronotop?",
+      "options": [
+        "Továrna",
+        "Silnice / cesta po USA",
+        "Zákop 1916",
+        "Dvůr Verony"
+      ],
+      "correct": 1,
+      "expl": "Cesta."
+    },
+    {
+      "prompt": "Jakou roli hraje jazz?",
+      "options": [
+        "Žádnou",
+        "Rytmus života i stylu",
+        "Jen cenzura",
+        "Jen vojenský pochod"
+      ],
+      "correct": 1,
+      "expl": "Jazz = svoboda."
+    },
+    {
+      "prompt": "Jaký je stín svobody?",
+      "options": [
+        "Bohatství",
+        "Vyčerpání, chaos, nestálost",
+        "Korunovace",
+        "Klášterní klid"
+      ],
+      "correct": 1,
+      "expl": "Svoboda má cenu."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1929",
+        "1957",
+        "1984",
+        "1836"
+      ],
+      "correct": 1,
+      "expl": "1957."
+    },
+    {
+      "prompt": "Proč je důležitá?",
+      "options": [
+        "Je jízdní řád",
+        "Manifest beatnické svobody a stylu",
+        "Je účetní",
+        "Je kuchařka"
+      ],
+      "correct": 1,
+      "expl": "Kulturní vliv."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Revize úřadů",
+        "Putování, přátelství a žízeň po životě",
+        "Robotí vzpoura",
+        "Antická tragédie"
+      ],
+      "correct": 1,
+      "expl": "Cesta jako smysl."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Sal potká Deana",
+        "Začínají cesty po Americe",
+        "Jazz, party, vztahy",
+        "Opakované návraty a rozchody",
+        "Vyčerpání a vystřízlivění",
+        "Bilance svobody na cestě"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: setkání → cesty → jazz/vztahy → návraty → vyčerpání → bilance."
+  ]
+}

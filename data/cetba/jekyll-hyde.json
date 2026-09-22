@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Robert Louis Stevenson; překlad: Kořán",
+        "Žánr: gotická novela / psychologický horor",
+        "Poprvé vydáno: 1886",
+        "Děj/prostředí: Londýn viktoriánské doby",
+        "Vyprávění/forma: rámec vyprávění (Utterson) + zpověď Jekylla; překlad Kořán"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Viktoriánská Anglie: přísná morálka a skryté vášně.",
+        "Věda zasahuje do lidské přirozenosti.",
+        "Dvojí tvář člověka: ctnost a zlo v jednom.",
+        "Londýn jako město mlhy, tajemství a zločinu.",
+        "Otázka odpovědnosti za „druhé já“.",
+        "Téma: dualita, vina, věda, pokrytectví."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Dr. Henry Jekyll – vážený lékař experimentující na sobě.",
+        "Mr. Edward Hyde – jeho zlé alter ego.",
+        "Gabriel Utterson – právník, přítel, vyšetřuje záhadu.",
+        "Dr. Lanyon – kolega zděšený Jekyllovým tajemstvím.",
+        "Sir Danvers Carew – oběť Hydeova násilí.",
+        "Poole – Jekyllův sluha, svědek uzavření laboratoře."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Dualita osobnosti – dobro a zlo v jednom člověku.",
+        "Elixír – chemický prostředek proměny.",
+        "Hyde – ztělesnění potlačeného zla.",
+        "Viktoriánská morálka – tlak na vnější počestnost.",
+        "Gotická novela – tajemství, horor, noční město.",
+        "Zpověď – závěrečné odhalení pravdy."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Dr. Jekylla a Mr. Hyda?",
+      "options": [
+        "Mary Shelleyová",
+        "Robert Louis Stevenson",
+        "Edgar Allan Poe",
+        "Bram Stoker"
+      ],
+      "correct": 1,
+      "expl": "Stevensonova novela z roku 1886 je klasikou duality."
+    },
+    {
+      "prompt": "Jaký je vztah Jekylla a Hyda?",
+      "options": [
+        "Bratři",
+        "Jedna osoba ve dvou podobách",
+        "Lékař a pacient cizí",
+        "Soudce a zločinec odděleně"
+      ],
+      "correct": 1,
+      "expl": "Hyde je Jekyllovo zlé já uvolněné elixírem."
+    },
+    {
+      "prompt": "Kdo je Utterson?",
+      "options": [
+        "Vrah",
+        "Právník pátrající po tajemství přítele",
+        "Hydeův sluha",
+        "Král"
+      ],
+      "correct": 1,
+      "expl": "Utterson drží děj jako vyšetřovatel a přítel."
+    },
+    {
+      "prompt": "Čím se Jekyll proměňuje?",
+      "options": [
+        "Modlitbou",
+        "Chemickým elixírem",
+        "Hypnózou Pozza",
+        "Televizní stěnou"
+      ],
+      "correct": 1,
+      "expl": "Vědecký pokus spustí fyzickou i mravní proměnu."
+    },
+    {
+      "prompt": "Co Hyde spáchá?",
+      "options": [
+        "Založí školu",
+        "Násilnosti včetně vraždy Carewa",
+        "Napíše Dekameron",
+        "Zachrání Galena"
+      ],
+      "correct": 1,
+      "expl": "Hyde je čiré zlo bez zábran vážené společnosti."
+    },
+    {
+      "prompt": "Proč experiment selže?",
+      "options": [
+        "Elixír dojde jen na den",
+        "Hyde získá převahu a Jekyll ztrácí kontrolu",
+        "Utterson elixír vypije první",
+        "Je to sen"
+      ],
+      "correct": 1,
+      "expl": "Zlo se vymaní kontrole; proměny začnou i bez vůle."
+    },
+    {
+      "prompt": "Kdy novela vyšla?",
+      "options": [
+        "1818",
+        "1886",
+        "1949",
+        "1953"
+      ],
+      "correct": 1,
+      "expl": "Strange Case of Dr Jekyll and Mr Hyde vyšla 1886."
+    },
+    {
+      "prompt": "Jaký žánr je nejpřiléhavější?",
+      "options": [
+        "Pastorální idyla",
+        "Gotická / psychologická novela",
+        "Epos o barikádách",
+        "Deník z Amsterodamu"
+      ],
+      "correct": 1,
+      "expl": "Spojuje horor, tajemství a psychologii."
+    },
+    {
+      "prompt": "Kdo je dr. Lanyon?",
+      "options": [
+        "Hydeův právník",
+        "Kolega, který odhalení nesnese",
+        "Oběť Carew",
+        "Trifid"
+      ],
+      "correct": 1,
+      "expl": "Lanyon vidí proměnu a zhroutí se z šoku."
+    },
+    {
+      "prompt": "Co novela říká o viktoriánské společnosti?",
+      "options": [
+        "Že zlo neexistuje",
+        "Že přísná morálka může skrývat temné já",
+        "Že věda je zakázaná vždy",
+        "Že Londýn je vesnice"
+      ],
+      "correct": 1,
+      "expl": "Počestná fasáda a potlačené touhy patří k tématu."
+    },
+    {
+      "prompt": "Jak příběh končí pro Jekylla?",
+      "options": [
+        "Slávou Nobelovy ceny",
+        "Zánikem / smrtí a odhalením pravdy ve zpovědi",
+        "Svatbou s Josellou",
+        "Útěkem k Godotovi"
+      ],
+      "correct": 1,
+      "expl": "Zpověď vysvětlí zločiny; Jekyll/Hyde končí tragicky."
+    },
+    {
+      "prompt": "Kdo najde stopu k tajemství laboratoře?",
+      "options": [
+        "Jen Carew",
+        "Utterson se sluhou Pooleem",
+        "Beatty",
+        "Sládek"
+      ],
+      "correct": 1,
+      "expl": "Dveře laboratoře a závěť vedou k odhalení."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Utterson pátrá po záhadném Hydeovi",
+        "Hyde páchá násilí v Londýně",
+        "Jekyll se uzavírá v laboratoři",
+        "Lanyon zažije otřesné odhalení",
+        "Poole a Utterson vniknou dovnitř",
+        "Zpověď odhalí jednotu Jekylla a Hyda"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: pátrání → Hydeovy zločiny → uzavření laboratoře → Lanyonovo zděšení → vniknutí → zpověď duality."
+  ]
+}

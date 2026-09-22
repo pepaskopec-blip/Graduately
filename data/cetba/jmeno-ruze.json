@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Umberto Eco",
+        "Žánr: historický detektivní román / semiologický román",
+        "Poprvé vydáno: 1980",
+        "Děj / prostředí: benediktinský klášter v severní Itálii, rok 1327",
+        "Vyprávění / forma: ich-forma Adsona z Melku, rámec rukopisu"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Středověk: spor o chudobu církve, inkvizice a moc papeže i císaře.",
+        "Klášter je centrem vzdělanosti; knihovna je labyrintem i symbolem moci.",
+        "Eco spojuje detektivku s filozofií, teologií a sémiotikou (naukou o znacích).",
+        "Vraždy souvisejí se zakázanou knihou (Aristotelova Poetika o komedii).",
+        "Konflikt mezi smíchem, poznáním a dogmatem.",
+        "Postava Jorgeho z Burgosu brání „pravdu“ zákazem smíchu."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Vilém z Baskervillu – františkánský detektiv, žák logiky a empirie.",
+        "Adso z Melku – Vilémův mladý žák a vypravěč.",
+        "Jorge z Burgosu – slepý mnich, strážce zakázané knihy.",
+        "Opat Abbone – představený kláštera, chrání prestiž instituce.",
+        "Bernard Gui – inkvizitor, přichází vyšetřovat kacířství.",
+        "Salvatore – zrůdný mnich mluvící směsicí jazyků."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Labyrint knihovny – symbol poznání i jeho kontroly.",
+        "Zakázaná kniha – Aristoteles o komedii; smích jako nebezpečí.",
+        "Sémiotika – čtení stop a znaků (Vilémova metoda).",
+        "Inkvizice – mocenský nástroj církve.",
+        "Smích vs. dogma – spor o svobodu myšlení.",
+        "Středověký spor o chudobu – dobový politicko-náboženský kontext."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je autorem Jména růže?",
+      "options": [
+        "Italo Calvino",
+        "Umberto Eco",
+        "Alessandro Manzoni",
+        "Dante Alighieri"
+      ],
+      "correct": 1,
+      "expl": "Román napsal italský sémiotik a spisovatel Umberto Eco."
+    },
+    {
+      "prompt": "Ve kterém století se děj odehrává?",
+      "options": [
+        "10. století",
+        "14. století (rok 1327)",
+        "16. století",
+        "18. století"
+      ],
+      "correct": 1,
+      "expl": "Příběh je zasazen do roku 1327 do benediktinského kláštera."
+    },
+    {
+      "prompt": "Kdo vyšetřuje záhadné smrti mnichů?",
+      "options": [
+        "Bernard Gui",
+        "Vilém z Baskervillu",
+        "Opat Abbone",
+        "Salvatore"
+      ],
+      "correct": 1,
+      "expl": "Detektivní roli má františkán Vilém z Baskervillu."
+    },
+    {
+      "prompt": "Kdo je vypravěčem?",
+      "options": [
+        "Vilém",
+        "Adso z Melku",
+        "Jorge",
+        "Papež"
+      ],
+      "correct": 1,
+      "expl": "Příběh vypráví starý Adso jako vzpomínku na mládí."
+    },
+    {
+      "prompt": "Co Jorge z Burgosu nejvíce odmítá?",
+      "options": [
+        "Modlitbu",
+        "Smích a komedii jako ohrožení víry",
+        "Práci v kuchyni",
+        "Císaře"
+      ],
+      "correct": 1,
+      "expl": "Jorge považuje smích za nebezpečný pro autoritu víry a skrývá knihu o komedii."
+    },
+    {
+      "prompt": "Jakou metodou Vilém pátrá?",
+      "options": [
+        "Jen mučením",
+        "Logikou, pozorováním stop a čtením znaků",
+        "Náhodou",
+        "Jen modlitbou"
+      ],
+      "correct": 1,
+      "expl": "Vilém postupuje empiricky a sémioticky – čte stopy jako znaky."
+    },
+    {
+      "prompt": "Co je středem klášterního tajemství?",
+      "options": [
+        "Zlatý poklad",
+        "Labyrintová knihovna a zakázaná kniha",
+        "Tajný tunel do Říma",
+        "Alchymistická laboratoř bez knih"
+      ],
+      "correct": 1,
+      "expl": "Knihovna-labyrint ukrývá zakázaný spis a stává se dějištěm zločinů."
+    },
+    {
+      "prompt": "Kdo je Bernard Gui?",
+      "options": [
+        "Knihovník",
+        "Inkvizitor",
+        "Císařský vyslanec",
+        "Adsonův otec"
+      ],
+      "correct": 1,
+      "expl": "Bernard Gui je inkvizitor, který přichází trestat kacíře."
+    },
+    {
+      "prompt": "Kdy román vyšel?",
+      "options": [
+        "1960",
+        "1970",
+        "1980",
+        "1990"
+      ],
+      "correct": 2,
+      "expl": "Jméno růže vyšlo roku 1980."
+    },
+    {
+      "prompt": "Jaký žánr dílo kombinuje?",
+      "options": [
+        "Jen lyriku",
+        "Historický román a detektivku s filozofií",
+        "Sci-fi",
+        "Pohádku"
+      ],
+      "correct": 1,
+      "expl": "Eco spojuje středověkou historii, detektivní zápletku a myšlenky o znacích a pravdě."
+    },
+    {
+      "prompt": "Proč je smích v knize tak důležitý?",
+      "options": [
+        "Je jen komickou vložkou",
+        "Symbolizuje svobodu myšlení ohrožující dogma",
+        "Slouží jen k odlehčení",
+        "Jde o lidovou zábavu mnichů"
+      ],
+      "correct": 1,
+      "expl": "Spor o smích je sporem o to, zda smí člověk zpochybňovat autoritu."
+    },
+    {
+      "prompt": "Jak román končí?",
+      "options": [
+        "Klášter slaví svatbu",
+        "Knihovna shoří a poznání je zčásti zničeno",
+        "Vilém se stane opatem",
+        "Adso se stane inkvizitorem"
+      ],
+      "correct": 1,
+      "expl": "Požár zničí knihovnu; zůstává nostalgia po ztraceném poznání."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Vilém a Adso přijíždějí do kláštera",
+        "Začínají záhadná úmrtí mnichů",
+        "Pátrání vede do labyrintu knihovny",
+        "Přichází inkvizitor Bernard Gui",
+        "Odhalení Jorgeho a zakázané knihy o komedii",
+        "Požár zničí knihovnu"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: příjezd → vraždy → labyrint knihovny → inkvizice → odhalení Jorgeho → požár knihovny."
+  ]
+}

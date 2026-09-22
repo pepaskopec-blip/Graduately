@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Čapek",
+        "Žánr: antiutopické / politické drama",
+        "Poprvé vydáno: 1937",
+        "Děj/prostředí: Fiktivní země před hrozbou války a epidemie",
+        "Vyprávění/forma: tříaktové drama, dialogy lékařů a mocných"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Evropa 30. let: vzestup diktatur a hrozba války.",
+        "„Bílá nemoc“ (maligna Galeniana) zabíjí zejména starší.",
+        "Maršál chce válku; doktor Galen má lék, ale klade podmínky.",
+        "Čapek varuje před fasismem, militarismem a lhostejností.",
+        "Etika vědy: smí lékař léčit tyrany bez záruk míru?",
+        "Téma: morálka, moc, válka, odpovědnost vědy."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Dr. Galen – objevitel léku, požaduje mír výměnou za léčbu.",
+        "Maršál – diktátor chtivý války a slávy.",
+        "Dr. Sigelius – ředitel kliniky, oportunista.",
+        "Prof. Sigelius / lékaři – instituce medicíny pod tlakem moci.",
+        "Rodina nemocných – lidská tvář epidemie.",
+        "Dav – nakonec zlynčuje Galena."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Bílá nemoc – smrtelná nákaza (metafora i dějová hrozba).",
+        "Galenův lék – nástroj morálního nátlaku na mocné.",
+        "Maršál – symbol diktatury a války.",
+        "Etika lékaře – léčit všechny, nebo podmiňovat mír?",
+        "Antiutopie – varování před blízkou katastrofou.",
+        "Davová psychóza – lynč Galena v závěru."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Bílou nemoc?",
+      "options": [
+        "Josef Čapek",
+        "Karel Čapek",
+        "V+W",
+        "František Langer"
+      ],
+      "correct": 1,
+      "expl": "Drama napsal Karel Čapek roku 1937 jako varování před válkou."
+    },
+    {
+      "prompt": "Co je „bílá nemoc“?",
+      "options": [
+        "Příjmení hrdiny",
+        "Smrtelná epidemie postihující zejména starší",
+        "Název strany",
+        "Typ zbraně"
+      ],
+      "correct": 1,
+      "expl": "Jde o fiktivní nákazu, která ohrožuje společnost i elity."
+    },
+    {
+      "prompt": "Kdo je dr. Galen?",
+      "options": [
+        "Generál",
+        "Lékař s lékem, který žádá ukončení válčení",
+        "Maršálův syn",
+        "Novinář"
+      ],
+      "correct": 1,
+      "expl": "Galen léčí chudé a odmítá léčit mocné, dokud nezaručí mír."
+    },
+    {
+      "prompt": "Co chce maršál?",
+      "options": [
+        "Mír a demokracii",
+        "Válku a moc",
+        "Stát se lékařem",
+        "Emigrovat"
+      ],
+      "correct": 1,
+      "expl": "Maršál je obraz diktátora – válka mu slouží k slávě."
+    },
+    {
+      "prompt": "Jaké morální dilema hra klade?",
+      "options": [
+        "Zda číst knihy",
+        "Zda smí lékař podmiňovat záchranu životů politickými podmínkami",
+        "Zda stavět nemocnice",
+        "Zda cestovat"
+      ],
+      "correct": 1,
+      "expl": "Galenův postoj otevírá spor mezi hippokratovskou etikou a bojem za mír."
+    },
+    {
+      "prompt": "Jak hra končí?",
+      "options": [
+        "Maršál kapituluje a nastane mír",
+        "Dav Galena zlynčuje, naděje mizí",
+        "Nemoc sama odezní",
+        "Galen se stane diktátorem"
+      ],
+      "correct": 1,
+      "expl": "Tragický závěr umocňuje Čapkovo varování: rozum a lidskost mohou prohrát."
+    },
+    {
+      "prompt": "Kdy drama vzniklo?",
+      "options": [
+        "1920",
+        "1937",
+        "1948",
+        "1968"
+      ],
+      "correct": 1,
+      "expl": "Rok 1937 – krátce před druhou světovou válkou; kontext je zásadní."
+    },
+    {
+      "prompt": "K jakému žánru patří?",
+      "options": [
+        "Pohádka",
+        "Politické antiutopické drama",
+        "Komedie dell’arte",
+        "Epos"
+      ],
+      "correct": 1,
+      "expl": "Je to moderní drama s antiutopickým a antiválečným poselstvím."
+    },
+    {
+      "prompt": "Kdo je Sigelius?",
+      "options": [
+        "Voják",
+        "Ředitel kliniky přizpůsobující se moci",
+        "Básník",
+        "Soudce"
+      ],
+      "correct": 1,
+      "expl": "Sigelius reprezentuje instituce, které se bojí konfliktu s režimem."
+    },
+    {
+      "prompt": "Proč Galen léčí přednostně chudé?",
+      "options": [
+        "Jsou bohatší",
+        "Chce tlačit na mocné, aby zastavili válku",
+        "Nemá jiný lék",
+        "Maršál mu to nařídil"
+      ],
+      "correct": 1,
+      "expl": "Strategie má donutit elity ke změně politiky."
+    },
+    {
+      "prompt": "Co Čapek především kritizuje?",
+      "options": [
+        "Sport",
+        "Militarismus, diktaturu a lhostejnost společnosti",
+        "Venkov",
+        "Církevní architekturu"
+      ],
+      "correct": 1,
+      "expl": "Bílá nemoc je varování před fasizací a válkou."
+    },
+    {
+      "prompt": "Jaká je role davu v závěru?",
+      "options": [
+        "Zachrání Galena",
+        "Zlynčuje ho – strach a propaganda zvítězí",
+        "Zvolí ho prezidentem",
+        "Odejde do exilu"
+      ],
+      "correct": 1,
+      "expl": "Davová agrese ukazuje, jak snadno zanikne hlas rozumu."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Propuká epidemie bílé nemoci",
+        "Galen objeví lék a léčí podle svědomí",
+        "Maršál chystá válku navzdory nákaze",
+        "Galen odmítá léčit mocné bez záruky míru",
+        "Konflikt medicíny a diktatury eskaluje",
+        "Dav Galena zlynčuje; naděje se hroutí"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: epidemie → Galenův lék → maršálova válka → podmínka míru → eskalace → lynč a tragický konec."
+  ]
+}

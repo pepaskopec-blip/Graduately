@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: J. R. R. Tolkien",
+        "Žánr: high fantasy / epická próza",
+        "Poprvé vydáno: 1954 (Společenstvo; česky Pošustová)",
+        "Děj: Středozem – Společenstvo nese Jeden prsten k zničení",
+        "Vyprávění: er-forma, mytologický epický styl"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "První díl trilogie Pán prstenů.",
+        "Frodo má zničit Prsten v Mordoru.",
+        "Společenstvo spojuje rasy proti Sauronovi.",
+        "Moc Prstenu korumpuje.",
+        "Putování z Kraje přes Rivendell a Morii."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Frodo Pytlík – nositel Prstenu.",
+        "Sam – věrný zahradník.",
+        "Gandalf – čaroděj.",
+        "Aragorn – královský dědic.",
+        "Boromir – člověk pokoušený Prstenem.",
+        "Legolas a Gimli – elf a trpaslík."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Jeden prsten – absolutní moc.",
+        "Společenstvo – jednota proti zlu.",
+        "Pokoušení – morální zkouška.",
+        "Putování – epická struktura.",
+        "Přátelství – hobití síla.",
+        "Mytologie Středozemě."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Pána prstenů?",
+      "options": [
+        "Lewis",
+        "Tolkien",
+        "Rowling",
+        "Martin"
+      ],
+      "correct": 1,
+      "expl": "J. R. R. Tolkien."
+    },
+    {
+      "prompt": "Co má Společenstvo udělat s Prstenem?",
+      "options": [
+        "Prodat ho",
+        "Zničit v hoře Osudu",
+        "Odevzdat Sauronovi dobrovolně",
+        "Vystavit v muzeu"
+      ],
+      "correct": 1,
+      "expl": "Jediná cesta je zničení."
+    },
+    {
+      "prompt": "Kdo Prsten nese?",
+      "options": [
+        "Aragorn",
+        "Frodo",
+        "Boromir od začátku jen",
+        "Gimli"
+      ],
+      "correct": 1,
+      "expl": "Frodo je nositel."
+    },
+    {
+      "prompt": "Kdo je Sam?",
+      "options": [
+        "Zrádce",
+        "Frodoův věrný společník",
+        "Temný pán",
+        "Trpaslík král"
+      ],
+      "correct": 1,
+      "expl": "Sam je opora."
+    },
+    {
+      "prompt": "Proč je Prsten nebezpečný?",
+      "options": [
+        "Je těžký jen",
+        "Korumpuje touhou po moci",
+        "Je skleněný",
+        "Zpívá"
+      ],
+      "correct": 1,
+      "expl": "Absolutní moc kazí."
+    },
+    {
+      "prompt": "Kdo padne v Morii (do propasti)?",
+      "options": [
+        "Frodo",
+        "Gandalf (dočasně)",
+        "Sam",
+        "Elrond"
+      ],
+      "correct": 1,
+      "expl": "Gandalf bojuje s balrogem."
+    },
+    {
+      "prompt": "Kdo se nechá Prstenem pokoušet?",
+      "options": [
+        "Sam jen",
+        "Boromir",
+        "Tom Bombadil",
+        "Elrond"
+      ],
+      "correct": 1,
+      "expl": "Boromir chce Prsten pro Gondor."
+    },
+    {
+      "prompt": "Kde Společenstvo vzniká?",
+      "options": [
+        "V Mordoru",
+        "V Rivendellu",
+        "V Shire jen bez rady",
+        "U Šedého přístavu hned"
+      ],
+      "correct": 1,
+      "expl": "Rada v Rivendellu."
+    },
+    {
+      "prompt": "Jaký žánr?",
+      "options": [
+        "Detektivka",
+        "Epická fantasy",
+        "Naturalismus",
+        "Audience"
+      ],
+      "correct": 1,
+      "expl": "High fantasy."
+    },
+    {
+      "prompt": "Kdo je Sauron?",
+      "options": [
+        "Hobit",
+        "Temný pán, tvůrce Prstenu",
+        "Hostinský",
+        "Elfí král dobrý"
+      ],
+      "correct": 1,
+      "expl": "Antagonista."
+    },
+    {
+      "prompt": "Proč hobiti?",
+      "options": [
+        "Náhodou",
+        "Malí hrdinové odolnější vůči pýše moci",
+        "Jsou nejsilnější bojovníci",
+        "Umí létat"
+      ],
+      "correct": 1,
+      "expl": "Pokora jako síla."
+    },
+    {
+      "prompt": "Hlavní téma dílu?",
+      "options": [
+        "Daně",
+        "Přátelství, pokušení moci a boj se zlem",
+        "Kuchyně",
+        "Účetnictví"
+      ],
+      "correct": 1,
+      "expl": "Morální epika."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Frodo získá Prsten",
+        "Rada v Rivendellu vytvoří Společenstvo",
+        "Cesta Morii a ztráta Gandalfa",
+        "Rozkol u Amon Henu",
+        "Boromir padne pokušení",
+        "Frodo se Samem pokračují sami"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: Prsten → Společenstvo → Moria → rozkol → pokušení → Frodo a Sam."
+  ]
+}

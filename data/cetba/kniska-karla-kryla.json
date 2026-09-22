@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Kryl",
+        "Žánr: protestní / autorská poezie a písňové texty",
+        "Poprvé vydáno: 1972 (exilové vydání; texty z přelomu 60./70. let)",
+        "Děj / prostředí: Československo po srpnu 1968, nesvoboda a emigrace",
+        "Vyprávění / forma: básně a písně – metafora, ironie, allegorie, refrén"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Po okupaci 1968 nastává normalizace: cenzura, strach, emigrace.",
+        "Kryl je symbolem odporu; jeho písně kolovaly i jako samizdat.",
+        "Kníška sbírá texty, které propojují poezii s protest songem.",
+        "Motivy: svoboda, zrada, pokrytectví moci, vina mlčení.",
+        "Jazyk je úderný, obrazný, často s biblickými a pohádkovými narážkami.",
+        "Dílo patří k klíčovým textům české protestní kultury 20. století."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Básnický subjekt – hlas svědka a moralisty proti moci.",
+        "Bratříčku, zavírej vrátka – bratr jako oslovení národa/generace.",
+        "Anděl / ďábel – alegorie dobra a zla v politice i člověku.",
+        "Král a blázen – figury moci a pravdy v písních.",
+        "Emigrant – postava vyhnance, která ztrácí domov i jistoty.",
+        "Dav / mlčící většina – kolektivní vina a strach."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Protest song – píseň jako nástroj odporu.",
+        "Alegorie – skryté politické významy v obrazech.",
+        "Normalizace – doba po 1968, proti ní Kryl protestuje.",
+        "Emigrace – ztráta domova i svobody promluvit doma.",
+        "Ironie a sarkasmus – zbraň proti propagandě.",
+        "Svědomí – vyzývání k osobní odpovědnosti."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je autorem Kníšky Karla Kryla?",
+      "options": [
+        "Jaroslav Seifert",
+        "Karel Kryl",
+        "Vladimír Holan",
+        "Josef Kainar"
+      ],
+      "correct": 1,
+      "expl": "Sbírka textů patří písničkáři a básníkovi Karlu Krylovi."
+    },
+    {
+      "prompt": "S jakou historickou situací jsou texty nejvíce spjaty?",
+      "options": [
+        "První republikou",
+        "Okupací 1968 a normalizací",
+        "Husitskými válkami",
+        "Sametovou revolucí výhradně"
+      ],
+      "correct": 1,
+      "expl": "Krylovy písně reagují na srpen 1968 a následnou nesvobodu."
+    },
+    {
+      "prompt": "Jaký žánr Kníška především představuje?",
+      "options": [
+        "Román",
+        "Protestní poezii a písňové texty",
+        "Drama",
+        "Sci-fi"
+      ],
+      "correct": 1,
+      "expl": "Jde o básně a texty písní s protestním a morálním nábojem."
+    },
+    {
+      "prompt": "Co je typické pro Krylův jazyk?",
+      "options": [
+        "Suchý úřední styl",
+        "Metafora, ironie a alegorie",
+        "Jen dialekt",
+        "Latinské traktáty"
+      ],
+      "correct": 1,
+      "expl": "Kryl pracuje s obrazy, ironií a skrytými politickými významy."
+    },
+    {
+      "prompt": "Píseň Bratříčku, zavírej vrátka vznikla jako reakce na:",
+      "options": [
+        "Mnichov 1938",
+        "Srpnovou okupaci 1968",
+        "Únor 1948",
+        "Rok 1989"
+      ],
+      "correct": 1,
+      "expl": "Patří k nejznámějším reakcím na okupaci Československa."
+    },
+    {
+      "prompt": "Proč Kryl emigroval?",
+      "options": [
+        "Za prací do Hollywoodu",
+        "Kvůli nesvobodě a perzekuci po roce 1968",
+        "Z důvodů studia medicíny",
+        "Nebyl emigrant"
+      ],
+      "correct": 1,
+      "expl": "Po okupaci a zákazu působení odešel do exilu."
+    },
+    {
+      "prompt": "Co je hlavním tématem mnoha textů?",
+      "options": [
+        "Milostná idyla bez politiky",
+        "Svoboda, zrada a vina mlčení",
+        "Technický pokrok",
+        "Sport"
+      ],
+      "correct": 1,
+      "expl": "Kryl tematizuje svobodu, zradu, strach a odpovědnost."
+    },
+    {
+      "prompt": "Jak texty často šířily v ČSSR?",
+      "options": [
+        "Jen oficiálním rozhlasem",
+        "Samizdatem, nahrávkami a ústně",
+        "Výhradně ve školách",
+        "Jen v kostele"
+      ],
+      "correct": 1,
+      "expl": "Oficiálně zakázané texty kolovaly neoficiálně."
+    },
+    {
+      "prompt": "Co znamená alegorie v Krylovi?",
+      "options": [
+        "Doslovný reportážní popis",
+        "Obrazný přenos politického smyslu",
+        "Rým",
+        "Žánr románu"
+      ],
+      "correct": 1,
+      "expl": "Alegorie umožňuje říkat politickou pravdu skrze obrazy."
+    },
+    {
+      "prompt": "Kdy vyšla Kníška v exilu (orientačně)?",
+      "options": [
+        "1958",
+        "1972",
+        "1995",
+        "2005"
+      ],
+      "correct": 1,
+      "expl": "Exilové vydání textů je spojeno s počátkem 70. let (1972)."
+    },
+    {
+      "prompt": "Čím se Kryl liší od „čisté“ lyrické poezie bez kontextu?",
+      "options": [
+        "Nemá rýmy",
+        "Je přímo angažovaný vůči moci a nesvobodě",
+        "Píše jen prózu",
+        "Odmítá metaforu"
+      ],
+      "correct": 1,
+      "expl": "Jeho tvorba je protestní a společensky angažovaná."
+    },
+    {
+      "prompt": "Jaké poselství maturita často zdůrazňuje?",
+      "options": [
+        "Poslušnost režimu",
+        "Osobní svědomí a odpor vůči lži a útlaku",
+        "Útěchu v majetku",
+        "Odmítnutí kultury"
+      ],
+      "correct": 1,
+      "expl": "Kryl vyzývá k pravdě, odvaze a odmítnutí mlčení."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Okupace a šok ze zrady svobody",
+        "Písně jako svědectví a protest",
+        "Střet jednotlivce s mocí a cenzurou",
+        "Emigrace a ztráta domova",
+        "Ironické odhalování pokrytectví",
+        "Výzva ke svědomí a paměti"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: okupace → protestní písně → střet s cenzurou → emigrace → ironie vůči moci → výzva ke svědomí."
+  ]
+}

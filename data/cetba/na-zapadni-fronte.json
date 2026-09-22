@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Erich Maria Remarque",
+        "Žánr: válečný román",
+        "Poprvé vydáno: 1929 (česky např. Gel)",
+        "Děj: západní fronta 1. světové války – skupina mladých vojáků",
+        "Vyprávění: ich-forma Paula Bäumera"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Protiválečný román generace zničené zákopy.",
+        "Škola a propaganda stojí proti realitě fronty.",
+        "Přátelství vojáků je jedinou jistotou.",
+        "Domov už nerozumí těm, kdo se vrátili.",
+        "Smrt je všední a nesmyslná."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Paul Bäumer – vypravěč.",
+        "Stanislaus Katczinsky (Kat) – zkušený kamarád.",
+        "Tjaden, Müller, Kropp – spolužáci/vojáci.",
+        "Kantorek – učitel, který je nabádal.",
+        "Himmelstoss – tyranský výcvikář.",
+        "Francouzský voják – lidskost nepřítele."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Ztráta generace – hlavní téma.",
+        "Zákop – chronotop války.",
+        "Kamarádství – hodnota.",
+        "Propaganda vs. zkušenost.",
+        "Odlidštění – důsledek fronty.",
+        "Antiválečný protest."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Na západní frontě klid?",
+      "options": [
+        "Hemingway",
+        "Remarque",
+        "Heller",
+        "Orwell"
+      ],
+      "correct": 1,
+      "expl": "Autorem je E. M. Remarque."
+    },
+    {
+      "prompt": "Kdo vypráví?",
+      "options": [
+        "Kat",
+        "Paul Bäumer",
+        "Kantorek",
+        "Himmelstoss"
+      ],
+      "correct": 1,
+      "expl": "Ich-forma Paula."
+    },
+    {
+      "prompt": "Jaký je základní postoj knihy k válce?",
+      "options": [
+        "Oslavný",
+        "Protiválečný",
+        "Neutrální kuchařský",
+        "Náboženský hymnus"
+      ],
+      "correct": 1,
+      "expl": "Jde o antiválečný román."
+    },
+    {
+      "prompt": "Co dělá Kantorek?",
+      "options": [
+        "Léčí raněné",
+        "Štve studenty do války ideály",
+        "Velí armádě",
+        "Je Paulův bratr"
+      ],
+      "correct": 1,
+      "expl": "Učitel jako nástroj propagandy."
+    },
+    {
+      "prompt": "Kdo je Kat?",
+      "options": [
+        "Nepřítel",
+        "Zkušený přítel na frontě",
+        "Učitel",
+        "Generál"
+      ],
+      "correct": 1,
+      "expl": "Kat je Paulova opora."
+    },
+    {
+      "prompt": "Proč je návrat domů cizí?",
+      "options": [
+        "Domov je v tropách",
+        "Civilisté nerozumějí frontové zkušenosti",
+        "Paul neumí německy",
+        "Nádraží neexistuje"
+      ],
+      "correct": 1,
+      "expl": "Odcizení veterána."
+    },
+    {
+      "prompt": "Jak Paul často vnímá nepřítele?",
+      "options": [
+        "Jen jako démona",
+        "Jako člověka v téže pasti",
+        "Jako učitele",
+        "Jako robota"
+      ],
+      "correct": 1,
+      "expl": "Humanizace nepřítele."
+    },
+    {
+      "prompt": "Co je „klid na frontě“ v ironii názvu?",
+      "options": [
+        "Oslava míru",
+        "Oficiální hlášení vs. smrt jednotlivce",
+        "Předpověď počasí",
+        "Název hostince"
+      ],
+      "correct": 1,
+      "expl": "Ironie vojenských zpráv."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1914",
+        "1929",
+        "1945",
+        "1968"
+      ],
+      "correct": 1,
+      "expl": "1929."
+    },
+    {
+      "prompt": "Jaký je osud generace?",
+      "options": [
+        "Bohatství",
+        "Zničení a ztráta budoucnosti",
+        "Vláda světa",
+        "Emigrace do antiky"
+      ],
+      "correct": 1,
+      "expl": "Ztracená generace."
+    },
+    {
+      "prompt": "Co fronta dělá s lidskostí?",
+      "options": [
+        "Posiluje ji vždy",
+        "Ohrožuje a otupuje ji",
+        "Nemění nic",
+        "Mění vojáky v básníky vždy"
+      ],
+      "correct": 1,
+      "expl": "Odlidštění je téma."
+    },
+    {
+      "prompt": "Hlavní hodnota ve válce podle knihy?",
+      "options": [
+        "Medaile",
+        "Kamarádství",
+        "Propaganda",
+        "Účetnictví"
+      ],
+      "correct": 1,
+      "expl": "Přátelství drží pohromadě."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Škola a odvod",
+        "Výcvik a týrání",
+        "Život v zákopech",
+        "Ztráty přátel",
+        "Cizota domova",
+        "Paulova smrt / zničení generace"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: odvod → výcvik → zákopy → ztráty → cizota domova → zničení."
+  ]
+}

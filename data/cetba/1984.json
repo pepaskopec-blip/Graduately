@@ -1,0 +1,421 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: George Orwell (vl. jm. Eric Arthur Blair)",
+        "Žánr: antiutopický (dystopický) román",
+        "Poprvé vydáno: 1949",
+        "Děj: Londýn, provincie Letopočet 1, stát Oceánie",
+        "Vyprávění: v er-formě, po deníkových zápiscích Winstona Smithe"
+      ]
+    },
+    {
+      "title": "Svět a strana",
+      "icon": "globe",
+      "lines": [
+        "Svět je rozdělen na tři supervelmoci: Oceánii, Eurasii a Východasii, které spolu vedou trvalou válku.",
+        "Vládne jediná strana (Angsoc) v čele s kultem Velkého bratra.",
+        "Ministerstvo pravdy – přepisuje historii a vyrábí „pravdu“.",
+        "Ministerstvo lásky – mučírny a likvidace nepohodlných.",
+        "Ministerstvo hojnosti – plánuje hospodářství a drží lidi v nedostatku.",
+        "Ministerstvo míru – vede válku."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Winston Smith – hlavní hrdina, přepisuje historii, touží po svobodě.",
+        "Julie – mladá členka strany, Winstonova tajná láska.",
+        "O'Brien – člen vnitřní strany, předstírá odboj a Winstona zničí.",
+        "Emmanuel Goldstein – nepřítel státu, údajný vůdce Bratrstva.",
+        "Velký bratr – symbol všemocné moci strany.",
+        "Pan Charrington – zdánlivý obchodník, ve skutečnosti agent."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Newspeak – uměle zjednodušovaný jazyk, který omezuje myšlení.",
+        "Dvojité myšlení – ochota věřit dvěma protikladným pravdám.",
+        "Zločin myšlení – už samotná zakázaná myšlenka.",
+        "Policie myšlení – tajná policie, která zatýká a mučí.",
+        "Bratrstvo – možná neexistující odbojová organizace.",
+        "Místnost 101 – nejhlubší mučírna, pro každého jeho největší strach."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je hlavní hrdina románu a co dělá?",
+      "options": [
+        "Winston Smith – přepisuje historii na Ministerstvu pravdy",
+        "O'Brien – řídí Ministerstvo lásky",
+        "Emmanuel Goldstein – vede Bratrstvo",
+        "Winston Smith – velí Policii myšlení"
+      ],
+      "correct": 0,
+      "expl": "Winston Smith je vnější člen strany, který na Ministerstvu pravdy upravuje staré záznamy a novinové články."
+    },
+    {
+      "prompt": "Ve kterém fiktivním státě se děj odehrává?",
+      "options": [
+        "V Eurasii",
+        "V Oceánii",
+        "Ve Východasii",
+        "V Angsocu"
+      ],
+      "correct": 1,
+      "expl": "Příběh se odehrává v Oceánii, v provincii Letopočet 1 (bývalá Anglie), jejímž hlavním městem je Londýn."
+    },
+    {
+      "prompt": "Co znamená slogan „VÁLKA JE MÍR, SVOBODA JE OTROCTVÍ, NEVĚDOMOST JE SÍLA“?",
+      "options": [
+        "Jsou to tři zásady Bratrstva",
+        "Jsou to názvy ministerstev",
+        "Jde o hesla prolety",
+        "Jsou to paradoxní hesla, kterými strana ospravedlňuje útlak"
+      ],
+      "correct": 3,
+      "expl": "Strana používá dvojité myšlení: hesla znějí vznešeně, ale ve skutečnosti obhajují válku, otroctví a nevědomost."
+    },
+    {
+      "prompt": "Kdo je Velký bratr a je reálnou osobou?",
+      "options": [
+        "Skutečný vůdce Bratrstva",
+        "Winstonův nadřízený na ministerstvu",
+        "Symbol všemocné moci a kultu osobnosti; možná vůbec neexistuje",
+        "O'Brienův pseudonym"
+      ],
+      "correct": 2,
+      "expl": "Velký bratr je tvář režimu. Není jasné, zda jde o živou osobu, nebo jen o symbol, který drží strach a poslušnost."
+    },
+    {
+      "prompt": "Co je Newspeak (novořeč) a proč ho strana zavádí?",
+      "options": [
+        "Tajná řeč Bratrstva",
+        "Zjednodušená angličtina omezující slovní zásobu, aby nešlo vyslovit zakázané myšlenky",
+        "Úřední jazyk prolety",
+        "Šifra Policie myšlení"
+      ],
+      "correct": 1,
+      "expl": "Newspeak neustále ubírá slova. Když pro svobodu nebo odpor neexistuje slovo, nelze o nich ani myslet."
+    },
+    {
+      "prompt": "Co je teleobrazovka (telescreen) a jak funguje?",
+      "options": [
+        "Televize určená jen pro zábavu",
+        "Zařízení, které vysílá i sleduje; nelze ji úplně vypnout",
+        "Rozhlasová stanice",
+        "Počítač Ministerstva pravdy"
+      ],
+      "correct": 1,
+      "expl": "Telescreen funguje obousměrně – neustále sleduje občany. Vypnout lze jen zvuk, obraz běží dál."
+    },
+    {
+      "prompt": "Jak se jmenují tři supervelmoci světa 1984?",
+      "options": [
+        "Oceánie, Eurasie a Východasie",
+        "Oceánie, Evropa a Asie",
+        "Anglie, Eurasie a Ostasie",
+        "Oceánie, Východasie a Afrika"
+      ],
+      "correct": 0,
+      "expl": "Svět je rozdělen na tři státy ve věčném, ale nerozhodném konfliktu: Oceánii, Eurasii a Východasii."
+    },
+    {
+      "prompt": "Čím se zabývá Ministerstvo pravdy?",
+      "options": [
+        "Vede válku",
+        "Dohlíží na morálku a sňatky",
+        "Upravuje a přepisuje historii, noviny a archivy",
+        "Rozděluje potraviny"
+      ],
+      "correct": 2,
+      "expl": "Ministerstvo pravdy vyrábí „pravdu“ – Winston v něm přepisuje staré záznamy tak, aby vždy odpovídaly současné linii strany."
+    },
+    {
+      "prompt": "K čemu slouží Ministerstvo lásky?",
+      "options": [
+        "Zajišťuje sňatky a lásku",
+        "Je to budova bez oken, kde se mučí a likvidují nepřátelé strany",
+        "Vyrábí zbraně",
+        "Školí děti"
+      ],
+      "correct": 1,
+      "expl": "Ministerstvo lásky je opakem svého názvu – sídlí tam mučírny a nachází se v něm i obávaná místnost 101."
+    },
+    {
+      "prompt": "V čem je paradox Ministerstva hojnosti?",
+      "options": [
+        "Má na starosti hospodářství, ale ve skutečnosti drží lidi v nedostatku",
+        "Rozdává jídlo a zboží zdarma",
+        "Zajišťuje dostatek pro všechny",
+        "Starají se o něj prolety"
+      ],
+      "correct": 0,
+      "expl": "Ministerstvo hojnosti plánuje výrobu, ale ekonomika je záměrně nastavena tak, aby lidé žili v trvalém nedostatku."
+    },
+    {
+      "prompt": "Co je Ministerstvo míru a čím se zabývá?",
+      "options": [
+        "Uzavírá mírové smlouvy",
+        "Dojednává příměří",
+        "Ve skutečnosti vede válku",
+        "Velí Policii myšlení"
+      ],
+      "correct": 2,
+      "expl": "Název je přesně opačný: Ministerstvo míru řídí válku, protože trvalý válečný stav pomáhá udržet moc strany."
+    },
+    {
+      "prompt": "Kdo je Julie a jaký vztah s ní Winston naváže?",
+      "options": [
+        "Winstonova žena",
+        "Mladá členka strany, s níž Winston prožije tajnou milostnou aféru",
+        "O'Brienova asistentka",
+        "Proletka a obchodnice"
+      ],
+      "correct": 1,
+      "expl": "Julie pracuje v oddělení beletrie a naoko je vzornou členkou strany. S Winstonem vytvoří tajný milostný vztah."
+    },
+    {
+      "prompt": "Proč je vztah Winstona a Julie zakázaný?",
+      "options": [
+        "Strana zakazuje lásku a sexualitu jako zločin; vztah je navíc tajný",
+        "Julie je vdaná za člena vnitřní strany",
+        "Winston je jejím nadřízeným",
+        "Julie patří k proletům"
+      ],
+      "correct": 0,
+      "expl": "Strana potlačuje citové a sexuální vazby, protože oddanost má patřit jen straně. Tajný vztah je proto dvojnásob nebezpečný."
+    },
+    {
+      "prompt": "Kdo je O'Brien a jakou roli hraje v příběhu?",
+      "options": [
+        "Skutečný vůdce Bratrstva",
+        "Vysoce postavený člen vnitřní strany, který Winstona nakonec mučí a „vyléčí“",
+        "Winstonův přítel z dětství",
+        "Proletářský básník"
+      ],
+      "correct": 1,
+      "expl": "Winston věří, že O'Brien je odbojář. Ve skutečnosti je to věrný člen vnitřní strany, který ho dostane do místnosti 101."
+    },
+    {
+      "prompt": "Co je Bratrstvo a existuje vůbec?",
+      "options": [
+        "Skutečná armáda Oceánie",
+        "Náboženská organizace",
+        "Údajná tajná organizace odporu; není jisté, zda existuje",
+        "Odbory prolety"
+      ],
+      "correct": 2,
+      "expl": "Bratrstvo zmiňuje Goldstein i O'Brien, ale kniha nikdy nepotvrdí, že doopravdy existuje – může jít o past strany."
+    },
+    {
+      "prompt": "Kdo je Emmanuel Goldstein?",
+      "options": [
+        "Ministr pravdy",
+        "Oficiální nepřítel státu a údajný vůdce Bratrstva",
+        "Winstonův kolega",
+        "Velký bratrův dvojník"
+      ],
+      "correct": 1,
+      "expl": "Goldstein je terčem dvouminutovky nenávisti. Má ztělesňovat nepřítele, proti kterému strana sjednocuje občany."
+    },
+    {
+      "prompt": "Co je dvojité myšlení (doublethink)?",
+      "options": [
+        "Schopnost myslet ve dvou jazycích",
+        "Zdvojení osobnosti",
+        "Schopnost věřit dvěma protikladným tvrzením zároveň",
+        "Tajné zapisování myšlenek"
+      ],
+      "correct": 2,
+      "expl": "Dvojité myšlení je jádro stranické ideologie – člověk přijme i zjevné rozpory, jako „válka je mír“."
+    },
+    {
+      "prompt": "Proč strana neustále přepisuje minulost?",
+      "options": [
+        "Aby opravila chyby v archivech",
+        "Aby měla vždy pravdu a nepřítel jí nemohl dokázat opak",
+        "Aby ušetřila papír",
+        "Aby potěšila prolety"
+      ],
+      "correct": 1,
+      "expl": "Kdo ovládá minulost, ovládá i budoucnost. Přepisováním historie strana udržuje absolutní kontrolu nad pravdou."
+    },
+    {
+      "prompt": "Co je zločin myšlení (thoughtcrime)?",
+      "options": [
+        "Pouhá myšlenka nebo názor, který se nelíbí straně",
+        "Krádež státního majetku",
+        "Nelegální obchod",
+        "Opomenutí dvouminutovky"
+      ],
+      "correct": 0,
+      "expl": "Strana trestá už samotné myšlenky. Winston se proviní tím, že si do deníku napíše „Dolů s Velkým bratrem“."
+    },
+    {
+      "prompt": "Kdo je pan Charrington a jaké je jeho skutečné postavení?",
+      "options": [
+        "Winstonův přítel a majitel hospody",
+        "Proletářský básník",
+        "Zdánlivě starý majitel obchodu, ve skutečnosti agent Policie myšlení",
+        "Člen Bratrstva"
+      ],
+      "correct": 2,
+      "expl": "Charrington Winstonovi pronajme pokoj bez teleobrazovky, ale právě on nakonec oba milence udá."
+    },
+    {
+      "prompt": "Co je místnost 101?",
+      "options": [
+        "Winstonova cela na policii",
+        "Skladiště knih",
+        "Místnost, ve které každého čeká jeho největší strach",
+        "Zasedací místnost vnitřní strany"
+      ],
+      "correct": 2,
+      "expl": "Místnost 101 je vrcholný mučicí nástroj. Winstonovi v ní hrozí krysy – jeho největší fobie."
+    },
+    {
+      "prompt": "Jak skončí vztah Winstona a Julie?",
+      "options": [
+        "Utečou spolu do Eurasie",
+        "Vezmou se a žijí svobodně",
+        "Winston se stane členem Bratrstva",
+        "Zradí se a nakonec se přestanou milovat"
+      ],
+      "correct": 3,
+      "expl": "Oba jsou po mučení zlomení a vzájemně se zradí. Na konci už k sobě nic necítí."
+    },
+    {
+      "prompt": "Co znamená závěrečná věta „Miloval Velkého bratra“?",
+      "options": [
+        "Winstonův vzdor se změnil v pokornou lásku k režimu",
+        "Winston se stal novým vůdcem",
+        "Byl to jen Winstonův sen",
+        "Julie mu to řekla"
+      ],
+      "correct": 0,
+      "expl": "Winston byl vnitřně zlomen. Přestal být sám sebou a nakonec režim opravdu přijal za svůj."
+    },
+    {
+      "prompt": "Které tvrzení NENÍ jedním z hlavních témat románu?",
+      "options": [
+        "Moc a absolutní kontrola",
+        "Pravda a přepisování historie",
+        "Svoboda a identita",
+        "Idylický venkovský život"
+      ],
+      "correct": 3,
+      "expl": "1984 je temná antiutopie. Hlavními tématy jsou moc, kontrola, manipulace s pravdou a ztráta svobody, ne venkovská idyla."
+    },
+    {
+      "prompt": "V jakém roce byl román 1984 poprvé vydán?",
+      "options": [
+        "1936",
+        "1949",
+        "1954",
+        "1984"
+      ],
+      "correct": 1,
+      "expl": "Román vyšel v roce 1949; letopočet 1984 označuje blízkou budoucnost, do níž Orwell příběh zasadil."
+    },
+    {
+      "prompt": "Které další Orwellovo dílo se dá s 1984 srovnat?",
+      "options": [
+        "Farma zvířat",
+        "Velký Gatsby",
+        "Zločin a trest",
+        "Babička"
+      ],
+      "correct": 0,
+      "expl": "Obě Orwellova díla varují před totalitou. Farma zvířat ji líčí alegoricky pomocí zvířat, 1984 očima jedince."
+    },
+    {
+      "prompt": "Co je „dvouminutovka nenávisti“?",
+      "options": [
+        "Krátká každodenní akce, při níž občané společně nenávidí Goldsteina a nepřítele",
+        "Pravidelná modlitba ke Velkému bratrovi",
+        "Sportovní přestávka ve škole",
+        "Porada vedení ministerstva"
+      ],
+      "correct": 0,
+      "expl": "Slouží k uvolnění a přesměrování agrese občanů na nepřítele státu, čímž strana posiluje svou moc."
+    },
+    {
+      "prompt": "Proč je podle knihy válka pro systém nezbytná?",
+      "options": [
+        "Přináší mír a blahobyt",
+        "Udržuje strach, spotřebovává výrobu a zachovává chudobu i hierarchii",
+        "Rozvíjí vědu a techniku",
+        "Sjednocuje vládu s prolety"
+      ],
+      "correct": 1,
+      "expl": "Trvalá válka pohlcuje nadbytečnou produkci a udržuje lidi ve strachu i chudobě, takže se nemohou vzbouřit."
+    },
+    {
+      "prompt": "Jaký je rozdíl mezi vnějšími členy strany a prolety?",
+      "options": [
+        "Proleti mají více práv než členové strany",
+        "Vnější členové jsou dozíráni, kdežto proleti žijí v chudobě a strana o ně nestojí",
+        "Není mezi nimi žádný rozdíl",
+        "Proleti tvoří vedení strany"
+      ],
+      "correct": 1,
+      "expl": "Proleti tvoří asi 85 % obyvatel. Žijí v bídě a jsou považováni za neškodné, dokud si neuvědomí svou sílu."
+    },
+    {
+      "prompt": "Jak strana kontroluje sexualitu a osobní vztahy?",
+      "options": [
+        "Podporuje volnou lásku a nezávislost",
+        "Potlačuje lásku a sexualitu, děti vede k oddanosti straně",
+        "Zakazuje veškerá manželství",
+        "Povoluje vztahy jen s prolety"
+      ],
+      "correct": 1,
+      "expl": "Strana chce, aby veškerá oddanost a energie patřily jí. Proto podporuje zdrženlivost a vede děti v Antisexuální lize mládeže."
+    },
+    {
+      "prompt": "Co symbolizuje papírové těžítko, které si Winston koupí?",
+      "options": [
+        "Jeho nenávist ke Goldsteinovi",
+        "Kousek krásy a minulosti, kterou už nelze vrátit",
+        "Moc Velkého bratra",
+        "Lásku k Julii"
+      ],
+      "correct": 1,
+      "expl": "Těžítko je drobný, krásný předmět z minulosti. Pro Winstona ztělesňuje svět, který strana zničila."
+    },
+    {
+      "prompt": "Jaké poselství chtěl Orwell románem nejspíš předat?",
+      "options": [
+        "Varování před totalitou a ztrátou svobody i pravdy",
+        "Oslavu technického pokroku",
+        "Návod, jak založit stát",
+        "Kritiku sportu a zábavy"
+      ],
+      "correct": 0,
+      "expl": "1984 je varování: když lidé přestanou bránit pravdu a svobodu, mohou o ně nenávratně přijít."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Winston upravuje historii na Ministerstvu pravdy",
+        "Seznámí se s Julií a začnou se tajně scházet",
+        "Pronajme si pokoj nad obchodem pana Charringtona",
+        "Přečte Goldsteinovu knihu u O'Briena",
+        "Jsou zatčeni Policií myšlení",
+        "Winston se zlomí v místnosti 101"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: přepisování historie → seznámení s Julií → pronájem pokoje → četba Goldsteinovy knihy → zatčení → místnost 101."
+  ]
+}

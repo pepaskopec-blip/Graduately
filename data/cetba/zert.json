@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Milan Kundera",
+        "Žánr: román",
+        "Poprvé vydáno: 1967",
+        "Děj: Ludvík Jahn a důsledky politického „žertu“ v socialistickém Československu",
+        "Vyprávění: střídání vypravěčů, analytická próza"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "50.–60. léta: ideologie, lavírování, paměť.",
+        "Pohlednice s žertem zničí Ludvíkovu kariéru.",
+        "Pomsta a láska se mísí s politickou historií.",
+        "Hudba, folklor a intelektuální debaty tvoří vrstvy.",
+        "Témata: vina, smích, ideologie, paměť těla."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ludvík Jahn – vypravěč, pomsta za minulost.",
+        "Helena – žena spjatá s jeho plánem.",
+        "Jaroslav – folklorista, přítel.",
+        "Kostka – křesťanský intelektuál.",
+        "Lucie – milostná linie z minulosti.",
+        "Strana / soudruzi – mechanismus moci."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Žert – spouštěč katastrofy.",
+        "Ideologie – ničí soukromí.",
+        "Pomsta – motiv přítomnosti.",
+        "Paměť a tělo – Kunderova poetika.",
+        "Polyfonie vyprávění – více hlasů.",
+        "Smích a zapomnění – filozofický přesah."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Žert?",
+      "options": [
+        "Škvorecký",
+        "Kundera",
+        "Hrabal",
+        "Vaculík"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Milan Kundera."
+    },
+    {
+      "prompt": "Co spustí Ludvíkův pád?",
+      "options": [
+        "Autonehoda",
+        "Politický žert na pohlednici",
+        "Výhra v loterii",
+        "Emigrace hned"
+      ],
+      "correct": 1,
+      "expl": "Pohlednice je vzata vážně mocí."
+    },
+    {
+      "prompt": "V jaké době se příběh pohybuje?",
+      "options": [
+        "Husitské války",
+        "Socialistické Československo 50.–60. let",
+        "Antický Řím",
+        "Současný New York jen"
+      ],
+      "correct": 1,
+      "expl": "Politický kontext ČSSR."
+    },
+    {
+      "prompt": "Jaká je Ludvíkova motivace později?",
+      "options": [
+        "Zahrádkaření",
+        "Pomsta za zničený život",
+        "Vstup do kláštera",
+        "Sportovní kariéra"
+      ],
+      "correct": 1,
+      "expl": "Chce se mstít."
+    },
+    {
+      "prompt": "Jak je román vyprávěn?",
+      "options": [
+        "Jen jedním dětským hlasem",
+        "Střídáním vypravěčů",
+        "Jen veršem",
+        "Jen scénářem filmu němého"
+      ],
+      "correct": 1,
+      "expl": "Polyfonní struktura."
+    },
+    {
+      "prompt": "Co Kundera zkoumá?",
+      "options": [
+        "Jen recepty",
+        "Ideologii, smích, paměť a vztahy",
+        "Jen zeměměřičství",
+        "Jen botaniku"
+      ],
+      "correct": 1,
+      "expl": "Filozofující román o moci a soukromí."
+    },
+    {
+      "prompt": "Kdo je Jaroslav?",
+      "options": [
+        "Policista",
+        "Přítel spjatý s folklorem",
+        "Revizor",
+        "Robot"
+      ],
+      "correct": 1,
+      "expl": "Jaroslav reprezentuje jiný svět hodnot."
+    },
+    {
+      "prompt": "Proč je „žert“ nebezpečný?",
+      "options": [
+        "Není",
+        "V ideologickém systému nemá humor milost",
+        "Protože je anglicky",
+        "Protože je o jídle"
+      ],
+      "correct": 1,
+      "expl": "Moc nezná ironii."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1948",
+        "1967",
+        "1989",
+        "1920"
+      ],
+      "correct": 1,
+      "expl": "1967."
+    },
+    {
+      "prompt": "Jak končí pomsta?",
+      "options": [
+        "Dokonalým triumfem",
+        "Nejde podle plánu, ironie se obrací",
+        "Svatbou se stranou",
+        "Oslavou pohlednice"
+      ],
+      "correct": 1,
+      "expl": "Pomsta selhává/ironicky se láme."
+    },
+    {
+      "prompt": "Jaká je role Lucie?",
+      "options": [
+        "Žádná",
+        "Klíčová milostná a existenciální linie",
+        "Jen úřednice bez vztahu",
+        "Jen vypravěčka zákonů"
+      ],
+      "correct": 1,
+      "expl": "Lucie patří k Ludvíkově minulosti."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Cestování",
+        "Moc, vina, smích a nemožnost napravit minulost",
+        "Robotika",
+        "Balady o vodníkovi"
+      ],
+      "correct": 1,
+      "expl": "Ideologie proti soukromému životu."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Ludvík napíše osudový žert",
+        "Je potrestán režimem",
+        "Žije s následky let",
+        "Plánuje pomstu skrze Helenu",
+        "Setkává se s minulostí a přáteli",
+        "Pomsta se zhroutí v ironii"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: žert → trest → léta následků → plán pomsty → setkání → ironický krach."
+  ]
+}

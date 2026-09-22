@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Guy de Maupassant",
+        "Žánr: realistická / naturalistická novela",
+        "Poprvé vydáno: 1880 (ve sbírce Večery na Médanu)",
+        "Děj / prostředí: Francie po prusko-francouzské válce 1870/71, ústup z Rouenu",
+        "Vyprávění / forma: er-forma, ironický vypravěč, pointa"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Po porážce Francie Pruskem: okupace, útěky měšťanů.",
+        "Maupassant ukazuje pokrytectví „slušné“ společnosti.",
+        "Hrdinkou je prostitutka Elisabeth Roussetová přezdívaná Kulička.",
+        "Morálka měšťáků je pokrytecká: využijí ji a pak ji pohrdají.",
+        "Novela patří k vrcholům francouzského realismu 19. století.",
+        "Důraz na detail, společenskou kritiku a ostrý závěr."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Kulička (Elisabeth Roussetová) – prostitutka s upřímným charakterem.",
+        "Měšťané ve voze – „slušní“ lidé, kteří ji využijí.",
+        "Jeptišky – jediné, kdo s ní částečně soucítí skrze jídlo víry.",
+        "Pruský důstojník – žádá Kuliččinu „úsluhu“ za propuštění vozu.",
+        "Hrabě / obchodníci – reprezentanti pokrytecké elity.",
+        "Kočí a cesta – rámec uzavřeného společenského mikrokosmu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Pokrytectví – měšťané odsuzují, ale potřebují Kuličku.",
+        "Vlastenectví vs. sobectví – vlastenecké řeči kryjí strach o majetek.",
+        "Oběť – Kulička se obětuje pro ostatní a je zavržena.",
+        "Ironie – vypravěč odhaluje pravý charakter „slušných“.",
+        "Válečný kontext – pruská okupace jako spouštěč konfliktu.",
+        "Pointa – závěrečné pohrdání po využití."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Kuličku?",
+      "options": [
+        "Émile Zola",
+        "Guy de Maupassant",
+        "Honoré de Balzac",
+        "Gustave Flaubert"
+      ],
+      "correct": 1,
+      "expl": "Autorem novely je Guy de Maupassant."
+    },
+    {
+      "prompt": "Kdo je Kulička?",
+      "options": [
+        "Jeptiška",
+        "Prostitutka Elisabeth Roussetová",
+        "Pruská šlechtična",
+        "Manželka hraběte"
+      ],
+      "correct": 1,
+      "expl": "Přezdívka patří upřímné prostitutce Elisabeth."
+    },
+    {
+      "prompt": "V jakém historickém kontextu se děj odehrává?",
+      "options": [
+        "Velká francouzská revoluce",
+        "Po prusko-francouzské válce 1870/71",
+        "1. světová válka",
+        "Napoleonské války výhradně"
+      ],
+      "correct": 1,
+      "expl": "Měšťané prchají z Rouenu za pruské okupace."
+    },
+    {
+      "prompt": "Proč vůz stojí v hostinci?",
+      "options": [
+        "Došel olej",
+        "Pruský důstojník podmiňuje odjezd Kuliččinou „úsluhou“",
+        "Bouře",
+        "Oprava mostu"
+      ],
+      "correct": 1,
+      "expl": "Důstojník žádá noc s Kuličkou výměnou za propuštění."
+    },
+    {
+      "prompt": "Jak se chovají „slušní“ cestující zprvu k Kuličce?",
+      "options": [
+        "S úctou jako k hrdince",
+        "S pohrdáním kvůli jejímu povolání",
+        "Jako k sestře",
+        "Vůbec si jí nevšímají"
+      ],
+      "correct": 1,
+      "expl": "Nejprve jí opovrhují jako prostitutkou."
+    },
+    {
+      "prompt": "Proč ji později přemlouvají?",
+      "options": [
+        "Chtějí ji adoptovat",
+        "Potřebují, aby ustoupila důstojníkovi a mohli odjet",
+        "Chtějí ji vdát",
+        "Hledají průvodkyni"
+      ],
+      "correct": 1,
+      "expl": "Kvůli sobeckému zájmu o odjezd změní tón a přemlouvají ji."
+    },
+    {
+      "prompt": "Jak novela končí?",
+      "options": [
+        "Oslavou Kuličky",
+        "Po oběti ji opět pohrdají a vyloučí ze společenství",
+        "Svatbou s důstojníkem",
+        "Osvobozením Paříže"
+      ],
+      "correct": 1,
+      "expl": "Jakmile jim poslouží, znovu ji odsoudí – vrchol ironie."
+    },
+    {
+      "prompt": "Co je hlavním terčem kritiky?",
+      "options": [
+        "Příroda",
+        "Pokrytectví měšťanské morálky",
+        "Církevní architektura",
+        "Technika železnice"
+      ],
+      "correct": 1,
+      "expl": "Maupassant demaskuje falešnou slušnost společnosti."
+    },
+    {
+      "prompt": "Kdy novela vyšla?",
+      "options": [
+        "1857",
+        "1880",
+        "1905",
+        "1920"
+      ],
+      "correct": 1,
+      "expl": "Kulička vyšla roku 1880."
+    },
+    {
+      "prompt": "Jaký literární směr dílo reprezentuje?",
+      "options": [
+        "Romantismus",
+        "Realismus/naturalismus",
+        "Surrealismus",
+        "Symbolismus výhradně"
+      ],
+      "correct": 1,
+      "expl": "Patří k realistické a naturalistické tradici."
+    },
+    {
+      "prompt": "Proč je Kulička paradoxně „morálnější“ než ostatní?",
+      "options": [
+        "Je bohatší",
+        "Je upřímná, obětavá a nemá falešnou masku ctnosti",
+        "Je vojačka",
+        "Je jeptiška"
+      ],
+      "correct": 1,
+      "expl": "Její otevřenost kontrastuje s pokrytectvím „slušných“."
+    },
+    {
+      "prompt": "Jakou roli hraje jídlo ve voze?",
+      "options": [
+        "Žádnou",
+        "Nejprve se o jídlo nedělí, pak Kuličku využívají i v tomto ohledu; symbol hierarchie",
+        "Jen jako dekorace",
+        "Jde o hostinu Prusů"
+      ],
+      "correct": 1,
+      "expl": "Scény s jídlem odhalují sobectví a pozdější účelové „přátelství“."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Skupina prchá z Rouenu v dostavníku",
+        "Měšťané pohrdají Kuličkou jako prostitutkou",
+        "Vůz je zadržen pruským důstojníkem",
+        "Cestující přemlouvají Kuličku k oběti",
+        "Kulička ustoupí, aby mohli odjet",
+        "Po odjezdu ji opět odsoudí a vyloučí"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: útěk → pohrdání → zadržení → přemlouvání → oběť → opětovné odsouzení."
+  ]
+}

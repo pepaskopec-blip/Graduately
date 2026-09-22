@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: William Styron (1925–2006)",
+        "Žánr: psychologický román o holocaustu",
+        "Poprvé vydáno: 1979",
+        "Děj: Brooklyn po válce; vzpomínky na Osvětim",
+        "Vyprávění: ich-forma – vypravěč Stingo, rámec Sofiiných zpovědí"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "USA po 2. světové válce (Brooklyn) a retrospektiva Polska / Osvětimi.",
+        "Holocaust je jádrem traumatu, které nekončí osvobozením.",
+        "Poválečná Amerika žije dál, zatímco přeživší nosí vinu a bolest.",
+        "Román se ptá na morální volbu v absolutním zlu.",
+        "Láska, žárlivost a sebedestrukce prostupují přítomnost."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Sophie Zawistowská – Polka, přeživší Osvětim, nosí strašnou volbu.",
+        "Nathan Landau – charismatický, nestabilní milenec Sophie.",
+        "Stingo – mladý jihoamerický vypravěč, svědek jejich vztahu.",
+        "Děti Sophie – střed její největší bolesti.",
+        "Postavy tábora / minulosti – připomínají mechanismus zla."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Sofiina volba – vynucená volba mezi dětmi; symbol nemožné morálky.",
+        "Trauma – minulost ovládá přítomnost.",
+        "Vina přeživšího – pocit viny za to, že člověk zůstal naživu.",
+        "Holocaust – historické zlo, které román personalizuje.",
+        "Láska a destrukce – vztah Sophie a Nathana.",
+        "Rámcové vyprávění – Stingo zprostředkuje zpověď."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Sofiinu volbu?",
+      "options": [
+        "Daniel Keyes",
+        "William Styron",
+        "F. Scott Fitzgerald",
+        "Ernest Hemingway"
+      ],
+      "correct": 1,
+      "expl": "Autorem je William Styron."
+    },
+    {
+      "prompt": "Kdo je Sophie?",
+      "options": [
+        "Americká učitelka",
+        "Polka, která přežila Osvětim",
+        "Německá důstojnice",
+        "Nathanova sestra"
+      ],
+      "correct": 1,
+      "expl": "Sophie Zawistowská je polská přeživší holocaustu."
+    },
+    {
+      "prompt": "Kde se odehrává přítomný děj románu?",
+      "options": [
+        "V Praze 1942",
+        "V Brooklynu po válce",
+        "V Benátkách 18. století",
+        "Na Berounce"
+      ],
+      "correct": 1,
+      "expl": "Rámec příběhu je poválečný Brooklyn."
+    },
+    {
+      "prompt": "Kdo je Stingo?",
+      "options": [
+        "Táborový velitel",
+        "Mladý vypravěč a svědek vztahu Sophie a Nathana",
+        "Soudce",
+        "Pilot RAF"
+      ],
+      "correct": 1,
+      "expl": "Stingo vypráví a postupně odhaluje Sofiinu minulost."
+    },
+    {
+      "prompt": "Co je „Sofiina volba“?",
+      "options": [
+        "Volba povolání",
+        "Vynucená volba, které z dětí má zemřít",
+        "Volba mezi dvěma snoubenci",
+        "Volba emigrace do Kanady"
+      ],
+      "correct": 1,
+      "expl": "V Osvětimi je Sophie donucena zvolit mezi svými dětmi."
+    },
+    {
+      "prompt": "Kdo je Nathan?",
+      "options": [
+        "Klídný kněz",
+        "Sofiin milenec – geniální i nebezpečně nestabilní",
+        "Stingův otec",
+        "Český rybář"
+      ],
+      "correct": 1,
+      "expl": "Nathan je charismatický, ale destruktivní partner."
+    },
+    {
+      "prompt": "Jaké hlavní téma román nese?",
+      "options": [
+        "Maloměstský humor",
+        "Trauma holocaustu, vina a nemožná morální volba",
+        "Cirkusová show",
+        "Školní komedie"
+      ],
+      "correct": 1,
+      "expl": "Jde o jedno z nejsilnějších témat poválečné literatury o holocaustu."
+    },
+    {
+      "prompt": "Proč Sophie nemůže „jen žít dál“ v Americe?",
+      "options": [
+        "Nemá pas",
+        "Trauma a vina z táborové volby ji ničí",
+        "Neumí anglicky ani slovo",
+        "Musí sloužit dvěma pánům"
+      ],
+      "correct": 1,
+      "expl": "Minulost ji pronásleduje a vztah s Nathanem trauma prohlubuje."
+    },
+    {
+      "prompt": "Jaký je vztah Sophie a Nathana?",
+      "options": [
+        "Čistě obchodní",
+        "Vášnivý, milostný a zároveň destruktivní",
+        "Sourozenecký",
+        "Učitelský"
+      ],
+      "correct": 1,
+      "expl": "Láska je propletená žárlivostí, násilím a sebedestrukcí."
+    },
+    {
+      "prompt": "Proč je volba v táboře „nemožná“?",
+      "options": [
+        "Protože jde o matematiku",
+        "Protože jakákoli volba je zločinem vynuceným systémem zla",
+        "Protože Sophie nemá děti",
+        "Protože je to vtip"
+      ],
+      "correct": 1,
+      "expl": "Nacisté ji nutí podílet se na zlu – volba nemá dobré řešení."
+    },
+    {
+      "prompt": "Ve kterém roce román vyšel?",
+      "options": [
+        "1949",
+        "1966",
+        "1979",
+        "1925"
+      ],
+      "correct": 2,
+      "expl": "Sofiina volba vyšla roku 1979."
+    },
+    {
+      "prompt": "Jakou roli hraje vypravěč Stingo?",
+      "options": [
+        "Jen statistu bez funkce",
+        "Zprostředkuje zpověď a morální svědectví",
+        "Velí táboru",
+        "Píše elegie o Tyrolsku"
+      ],
+      "correct": 1,
+      "expl": "Přes Stinga čtenář poznává Sophie i důsledky traumatu."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Stingo se v Brooklynu seznámí se Sophií a Nathanem",
+        "Sleduje jejich vášnivý a destruktivní vztah",
+        "Sophie postupně odhaluje minulost v Osvětimi",
+        "Vyjde najevo vynucená volba mezi dětmi",
+        "Trauma a Nathanova nestabilita vztah zničí",
+        "Tragické vyústění potvrzuje sílu minulosti"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: setkání → destruktivní vztah → zpověď → Sofiina volba → rozpad → tragický závěr."
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Friedrich Dürrenmatt",
+        "Žánr: tragická komedie / drama",
+        "Poprvé uvedeno: 1956",
+        "Děj: Güllen – bohatá Claire žádá smrt Illa za starou křivdu",
+        "Forma: drama s groteskní nadsázkou"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Poválečná Evropa: morálka vs. peníze.",
+        "Chudé město prodá svědomí.",
+        "Claire Zachanassian se vrací jako pomsta.",
+        "Humor zesiluje hrůzu korupce.",
+        "Satira na spravedlnost koupenou zlatem."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Claire Zachanassian – miliardářka.",
+        "Alfred Ill – bývalý milenec.",
+        "Starosta a občané Güllenu – korumpovaní.",
+        "Učitel – svědomí, které selhává.",
+        "Policie / farář – instituce.",
+        "Slepí eunuchové / groteskní doprovod Claire."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Pomsta – motor děje.",
+        "Korupce obce – téma.",
+        "Groteska – styl.",
+        "Spravedlnost za peníze – otázka.",
+        "Kolektivní vina – pointa.",
+        "Tragikomédie – žánr."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Návštěvu staré dámy?",
+      "options": [
+        "Brecht",
+        "Dürrenmatt",
+        "Frisch",
+        "Ibsen"
+      ],
+      "correct": 1,
+      "expl": "Friedrich Dürrenmatt."
+    },
+    {
+      "prompt": "Co Claire žádá?",
+      "options": [
+        "Svatbu",
+        "Smrt Illa za starou křivdu",
+        "Novou školu bez podmínky",
+        "Emigraci města"
+      ],
+      "correct": 1,
+      "expl": "Pomsta skrze obec."
+    },
+    {
+      "prompt": "Proč město souhlasí?",
+      "options": [
+        "Z lásky k Illovi",
+        "Chudoba a nabídnuté bohatství",
+        "Z náboženství",
+        "Z omylu v kalendáři"
+      ],
+      "correct": 1,
+      "expl": "Penězi korumpují svědomí."
+    },
+    {
+      "prompt": "Kdo je Ill?",
+      "options": [
+        "Starosta",
+        "Bývalý milenec, oběť pomsty",
+        "Clairein syn",
+        "Učitel jen"
+      ],
+      "correct": 1,
+      "expl": "Alfred Ill."
+    },
+    {
+      "prompt": "Jaký je tón hry?",
+      "options": [
+        "Jen sentimentální",
+        "Groteskní tragikomédie",
+        "Jen naturalistický protokol",
+        "Jen opera seria"
+      ],
+      "correct": 1,
+      "expl": "Smích i děs."
+    },
+    {
+      "prompt": "Co hra kritizuje?",
+      "options": [
+        "Zahradnictví",
+        "Kupčení se spravedlností",
+        "Mořeplavbu",
+        "Jazz"
+      ],
+      "correct": 1,
+      "expl": "Morálka vs. peníze."
+    },
+    {
+      "prompt": "Jak dopadne Ill?",
+      "options": [
+        "Emigruje šťastně",
+        "Je obětován obcí",
+        "Stane se starostou",
+        "Ožení se s Claire znovu bez trestu"
+      ],
+      "correct": 1,
+      "expl": "Obec ho obětuje."
+    },
+    {
+      "prompt": "Jaká je role učitele?",
+      "options": [
+        "Vrah",
+        "Hlas svědomí, který ustoupí",
+        "Bankéř",
+        "Clairein právník"
+      ],
+      "correct": 1,
+      "expl": "Svědomí selže."
+    },
+    {
+      "prompt": "Proč je Claire groteskní?",
+      "options": [
+        "Není",
+        "Tělesné protézy a doprovod zesilují hrůzu",
+        "Jen kvůli smíchu bez smyslu",
+        "Kvůli tanci"
+      ],
+      "correct": 1,
+      "expl": "Groteska jako prostředek."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Láska ideální bez konfliktu",
+        "Pomsta, korupce a kolektivní vina",
+        "Robotika",
+        "Zákopy 1916"
+      ],
+      "correct": 1,
+      "expl": "Svědomí na prodej."
+    },
+    {
+      "prompt": "Kde se odehrává?",
+      "options": [
+        "Verona",
+        "Fiktivní Güllen",
+        "Londýn Dickensův",
+        "Mordor"
+      ],
+      "correct": 1,
+      "expl": "Město Güllen."
+    },
+    {
+      "prompt": "Jaký žánr nejlépe?",
+      "options": [
+        "Balada",
+        "Tragická komedie",
+        "Epos",
+        "Pohádka batolat"
+      ],
+      "correct": 1,
+      "expl": "Tragikomédie."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Claire se vrací do Güllenu",
+        "Nabídne bohatství za Illovu smrt",
+        "Občané nejprve odmítají",
+        "Postupně se korumpují",
+        "Ill pochopí rozsudek obce",
+        "Oběť a „spravedlnost“ za peníze"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: návrat → nabídka → odmítnutí → korupce → rozsudek → oběť."
+  ]
+}

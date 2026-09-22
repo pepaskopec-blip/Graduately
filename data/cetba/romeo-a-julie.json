@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: William Shakespeare",
+        "Žánr: tragédie",
+        "Poprvé vydáno: 1597 (kvarto); psáno cca 1595–96",
+        "Děj / prostředí: Verona (a Mantova) v renesanční Itálii",
+        "Vyprávění / forma: drama ve verších i próze; sonetové pasáže"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Renesanční představa lásky, cti a rodového nepřátelství.",
+        "Verona: spor rodů Montague a Capulet rozděluje město.",
+        "Mládež jedné noci vs. nenávist generací.",
+        "Osud, náhoda a ukvapenost vedou k tragédii.",
+        "Shakespeare spojuje lyriku lásky s pouličním násilím.",
+        "Téma: láska vs. nenávist, osud, smíření skrze smrt."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Romeo Montague – zamilovaný mladík.",
+        "Julie Capuletová – jeho milovaná, teprve čtrnáctiletá.",
+        "Mnich Lorenzo – tajně je oddá; plán s lektvarem selže.",
+        "Mercutio – Romeův přítel, vtipný a vášnivý.",
+        "Tybalt – Juliin bratranec, agresivní šermíř.",
+        "Chůva – Juliina důvěrnice."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Rodová nenávist – konflikt Montague × Capulet.",
+        "Láska na první pohled – balkonová scéna.",
+        "Osud / hvězdy – „star-crossed lovers“.",
+        "Lektvar – falešná smrt Julie.",
+        "Ukvapenost – Romeova sebevražda z omylu.",
+        "Smíření – otcové po dětech ukončí spor."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Romea a Julii?",
+      "options": [
+        "William Shakespeare",
+        "Christopher Marlowe",
+        "Molière",
+        "Sofoklés"
+      ],
+      "correct": 0,
+      "expl": "Autorem je William Shakespeare."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "V Londýně",
+        "Ve Veroně (a Mantově)",
+        "V Římě císařském",
+        "V Athénách"
+      ],
+      "correct": 1,
+      "expl": "Hlavním místem je Verona, Romeo pak prchá do Mantovy."
+    },
+    {
+      "prompt": "Které rody se nenávidí?",
+      "options": [
+        "Lancaster a York",
+        "Montague a Capulet",
+        "Medici a Borgia",
+        "Bennet a Darcy"
+      ],
+      "correct": 1,
+      "expl": "Spor rodů Montague a Capulet tvoří konflikt hry."
+    },
+    {
+      "prompt": "Kdo tajně Romea a Julii oddá?",
+      "options": [
+        "Chůva",
+        "Mnich Lorenzo",
+        "Mercutio",
+        "Paris"
+      ],
+      "correct": 1,
+      "expl": "Mnich Lorenzo doufá, že sňatek usmíří rody."
+    },
+    {
+      "prompt": "Koho Romeo zabije po Mercutiově smrti?",
+      "options": [
+        "Parise hned na plese",
+        "Tybalta",
+        "Lorenzo",
+        "Benvolia"
+      ],
+      "correct": 1,
+      "expl": "Pomstí Mercutia a zabije Tybalta; je vyhoštěn."
+    },
+    {
+      "prompt": "Co má Juliin lektvar způsobit?",
+      "options": [
+        "Věčné mládí",
+        "Zdánlivou smrt, aby se vyhnula sňatku s Parisem",
+        "Zapomenutí Romea",
+        "Neviditelnost"
+      ],
+      "correct": 1,
+      "expl": "Má vypadat mrtvá a pak se probudit u Romea."
+    },
+    {
+      "prompt": "Proč Romeo spáchá sebevraždu?",
+      "options": [
+        "Prohraje v kostkách",
+        "Domnívá se, že Julie je mrtvá",
+        "Car ho odsoudí",
+        "Mercutio mu to poručí"
+      ],
+      "correct": 1,
+      "expl": "Nedoručený vzkaz a zdánlivá smrt ho dovedou k jedu."
+    },
+    {
+      "prompt": "Jak Julie zemře?",
+      "options": [
+        "Uteče do kláštera",
+        "Probudí se, najde mrtvého Romea a zabije se dýkou",
+        "Tybalt ji zabije",
+        "Otráví Parise a uteče"
+      ],
+      "correct": 1,
+      "expl": "Po Romeovi volí smrt jeho dýkou."
+    },
+    {
+      "prompt": "Co tragédie nakonec způsobí mezi rody?",
+      "options": [
+        "Větší válku",
+        "Smíření nad mrtvými dětmi",
+        "Sňatek chůvy s mnichom",
+        "Přestěhování do Mantovy všech"
+      ],
+      "correct": 1,
+      "expl": "Otcové pochopí cenu nenávisti a uzavřou mír."
+    },
+    {
+      "prompt": "Kdo je Mercutio?",
+      "options": [
+        "Juliin otec",
+        "Romeův přítel, který zemře po souboji s Tybaltem",
+        "Princ Verony",
+        "Lékárník"
+      ],
+      "correct": 1,
+      "expl": "Mercutiova smrt spustí řetězec pomsty."
+    },
+    {
+      "prompt": "Jaká je slavná scéna na začátku vztahu?",
+      "options": [
+        "Soudní přelíčení",
+        "Balkonová scéna",
+        "Námořní bitva",
+        "Korunovace"
+      ],
+      "correct": 1,
+      "expl": "Romeo a Julie si vyznávají lásku u balkonu."
+    },
+    {
+      "prompt": "Jaký žánr hra je?",
+      "options": [
+        "Komedie omylů bez smrti",
+        "Tragédie",
+        "Pastoralní idyla",
+        "Detektivka"
+      ],
+      "correct": 1,
+      "expl": "Končí smrtí milenců; jde o tragédii."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Romeo a Julie se zamilují na plese Capuletů",
+        "Tajný sňatek u mnicha Lorenza",
+        "Tybalt zabije Mercutia; Romeo zabije Tybalta a je vyhoštěn",
+        "Julie vypije lektvar zdánlivé smrti",
+        "Romeo uvěří, že zemřela, a otráví se",
+        "Julie se probudí a zabije se; rody se smíří"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: ples → sňatek → souboje a vyhoštění → lektvar → Romeova smrt → Julie a smíření rodů."
+  ]
+}

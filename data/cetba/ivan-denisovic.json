@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Alexandr Solženicyn",
+        "Žánr: novela / táborská literatura (lágr)",
+        "Poprvé vydáno: 1962 (časopis Novyj mir)",
+        "Děj / prostředí: jeden den v sovětském gulagu (sibiřský pracovní tábor)",
+        "Vyprávění / forma: er-forma, detailní chronologie jednoho dne"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Sovětský svaz za Stalina: systém gulagů pro politické i jiné vězně.",
+        "Dílo vyšlo v období tání po Stalinově smrti a otřáslo veřejností.",
+        "Autor čerpal z vlastní zkušenosti vězně.",
+        "Jeden „obyčejný“ den ukazuje celý mechanismus táborového života.",
+        "Důraz na drobné detaily: jídlo, práce, zima, hierarchie vězňů.",
+        "Kritika totality je nepřímá – skrze všední utrpení a přežívání."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ivan Denisovič Šuchov – hlavní hrdina, praktický a houževnatý vězeň.",
+        "Tiurin – předák brigády 104, chrání své muže.",
+        "Cezar Markovič – intelektuál s výhodami díky balíčkům.",
+        "Aljoška – zbožný baptistá, nachází útěchu ve víře.",
+        "Buojnovskij – bývalý námořní kapitán, bouří se proti nespravedlnosti.",
+        "Fěťukov – slabý vězeň, žebrá a ztrácí důstojnost."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Gulag – systém sovětských pracovních táborů.",
+        "Jeden den – kompoziční princip, který reprezentuje celý osud.",
+        "Přežití – umění získat jídlo, teplo a respekt.",
+        "Brigáda – základní pracovní a sociální jednotka tábora.",
+        "Důstojnost – Šuchov si ji udržuje prací a drobnými zásadami.",
+        "Totalita – anonymní násilí režimu přítomné v každém detailu."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je autorem Jednoho dne Ivana Denisoviče?",
+      "options": [
+        "Michail Bulgakov",
+        "Alexandr Solženicyn",
+        "Boris Pasternak",
+        "Ivan Turgeněv"
+      ],
+      "correct": 1,
+      "expl": "Novelu napsal Alexandr Solženicyn na základě vlastní zkušenosti."
+    },
+    {
+      "prompt": "Jaký je základní kompoziční rámec díla?",
+      "options": [
+        "Celý život hrdiny",
+        "Jeden den v táboře",
+        "Týden na útěku",
+        "Rok revoluce"
+      ],
+      "correct": 1,
+      "expl": "Celý příběh sleduje jediný den od budíčku do večerky."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "V moskevském bytě",
+        "V sovětském pracovním táboře (gulagu)",
+        "Na frontě",
+        "V klášteře"
+      ],
+      "correct": 1,
+      "expl": "Prostředím je sibiřský pracovní tábor gulagu."
+    },
+    {
+      "prompt": "Čím se Šuchov vyznačuje?",
+      "options": [
+        "Vzpourou a útěkem",
+        "Praktičností, pracovitostí a snahou udržet důstojnost",
+        "Kolaborací s vedením tábora",
+        "Náboženským fanatismem"
+      ],
+      "correct": 1,
+      "expl": "Šuchov přežívá díky šikovnosti, práci a drobným zásadám."
+    },
+    {
+      "prompt": "Kdy novela poprvé vyšla?",
+      "options": [
+        "1937",
+        "1953",
+        "1962",
+        "1974"
+      ],
+      "correct": 2,
+      "expl": "Vyšla roku 1962 v časopise Novyj mir v období politického tání."
+    },
+    {
+      "prompt": "Kdo je Tiurin?",
+      "options": [
+        "Náčelník tábora",
+        "Předák brigády 104",
+        "Šuchovův syn",
+        "Dozorce"
+      ],
+      "correct": 1,
+      "expl": "Tiurin vede brigádu a snaží se chránit své vězně."
+    },
+    {
+      "prompt": "Proč je Cezar Markovič na tom lépe než ostatní?",
+      "options": [
+        "Je dozorcem",
+        "Dostává balíčky a má výhody",
+        "Je nemocný a nepracuje",
+        "Je Šuchovův příbuzný"
+      ],
+      "correct": 1,
+      "expl": "Cezar díky zásilkám a konexím získává lepší jídlo a postavení."
+    },
+    {
+      "prompt": "Co je hlavním tématem novely?",
+      "options": [
+        "Romantická láska",
+        "Přežití a lidská důstojnost v totalitním táboře",
+        "Válečné hrdinství",
+        "Cestopis Sibiře"
+      ],
+      "correct": 1,
+      "expl": "Dílo ukazuje, jak člověk v gulagu bojuje o přežití i o sebeúctu."
+    },
+    {
+      "prompt": "Jak autor kritizuje režim?",
+      "options": [
+        "Otevřenými politickými projevy hrdiny",
+        "Nepřímo skrze všední detaily táborového života",
+        "Fantaskní alegorií",
+        "Humoristickými anekdotami o Stalinovi"
+      ],
+      "correct": 1,
+      "expl": "Kritika je v podrobném popisu bídy, zimy, práce a nespravedlnosti."
+    },
+    {
+      "prompt": "Kdo je Aljoška?",
+      "options": [
+        "Dozorce",
+        "Zbožný baptistá hledající útěchu ve víře",
+        "Předák",
+        "Šuchovův nepřítel"
+      ],
+      "correct": 1,
+      "expl": "Aljoška představuje duchovní odolnost uprostřed tábora."
+    },
+    {
+      "prompt": "Proč je „obyčejný“ den Šuchova považován za šťastný?",
+      "options": [
+        "Byl propuštěn",
+        "Nepřišel o příděl, dobře pracoval a přežil bez trestu",
+        "Dostal milost od Stalina",
+        "Utekl"
+      ],
+      "correct": 1,
+      "expl": "V táboře je „šťastný den“ ten, kdy člověk jen přežije o něco snáze."
+    },
+    {
+      "prompt": "K čemu slouží detailní popisy jídla a práce?",
+      "options": [
+        "K oslavě socialismu",
+        "Ukázat, že v táboře rozhodují drobnosti o životě a smrti",
+        "Jsou jen dekorací",
+        "Nahradit dialogy"
+      ],
+      "correct": 1,
+      "expl": "Detaily jídla, tepla a práce tvoří jádro boje o přežití."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Ranní budíček a kontrola v baráku",
+        "Snídaně a výdej práce brigádě",
+        "Těžká práce na staveništi v mrazu",
+        "Polední příděl a drobné výhody dne",
+        "Návrat do tábora a večerní sčítání",
+        "Šuchov usíná s pocitem relativně dobrého dne"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: budíček → snídaně a výdej práce → práce v mrazu → polední příděl → večerní sčítání → „šťastný“ spánek."
+  ]
+}

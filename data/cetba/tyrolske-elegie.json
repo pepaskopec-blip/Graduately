@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Havlíček Borovský (1821–1856)",
+        "Žánr: satirická skladba / elegie s ironií",
+        "Vznik: 1852 (v internaci); širší ohlas později",
+        "Obsah: cesta do vyhnanství do Brixenu a kritika moci",
+        "Forma: veršovaná satira s parodií elegického tónu"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Bachův absolutismus po porážce revoluce 1848/49.",
+        "Havlíček je internován do Brixenu v Tyrolsku.",
+        "Policejní dohled, cenzura a nesvoboda tvoří pozadí.",
+        "Autor ironizuje „ochranu“ státu i vlastní „elegii“.",
+        "Dílo je dokumentem odporu českého novináře-satirika."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Básnický subjekt (Havlíček) – vyhnanec s ironickým nadhledem.",
+        "Policejní doprovod – „strážci“ na cestě do Brixenu.",
+        "Představitelé moci / byrokracie – terč satiry.",
+        "Domov a Čechy – nepřítomný, ale bolestně vzpomínaný prostor.",
+        "Tyrolsko / Brixen – místo internace."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Elegie – žalozpěv; zde často parodovaný tón.",
+        "Satira – výsměch moci a pokrytectví.",
+        "Internace / vyhnanství – trest za žurnalistickou kritiku.",
+        "Bachův absolutismus – režim nesvobody 50. let 19. stol.",
+        "Ironie – klíčový prostředek Havlíčkova stylu.",
+        "Cenzura – důvod i téma odporu."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Tyrolské elegie?",
+      "options": [
+        "Jiří Wolker",
+        "Karel Havlíček Borovský",
+        "Jakub Arbes",
+        "Milan Kundera"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Karel Havlíček Borovský."
+    },
+    {
+      "prompt": "Proč Havlíček píše o Tyrolsku?",
+      "options": [
+        "Chodil tam lyžovat",
+        "Byl internován do Brixenu",
+        "Vlastnil tam cirkus",
+        "Hledal mloky"
+      ],
+      "correct": 1,
+      "expl": "Po zásahu moci byl poslán do Brixenu."
+    },
+    {
+      "prompt": "Jaký je základní tón skladby?",
+      "options": [
+        "Sladce idylický bez výhrad",
+        "Satirický a ironický (elegie jako parodie)",
+        "Jen laboratorní",
+        "Jen milostný sonet"
+      ],
+      "correct": 1,
+      "expl": "„Elegie“ je často ironická satira."
+    },
+    {
+      "prompt": "Co je Bachův absolutismus?",
+      "options": [
+        "Hudební směr",
+        "Nesvobodný režim v rakouské monarchii po 1848/49",
+        "Školní předmět",
+        "Značka vína"
+      ],
+      "correct": 1,
+      "expl": "Jde o policejně-byrokratickou éru Alexandra Bacha."
+    },
+    {
+      "prompt": "Čím byl Havlíček především?",
+      "options": [
+        "Pilotem RAF",
+        "Novinářem, kritikem a satirikem",
+        "Kuchařem Truffaldina",
+        "Malířem Gatsbyho"
+      ],
+      "correct": 1,
+      "expl": "Havlíček je ikona české žurnalistiky a satiry."
+    },
+    {
+      "prompt": "Co skladba kritizuje?",
+      "options": [
+        "Rybaření",
+        "Absolutismus, policii a nesvobodu slova",
+        "Jen počasí v Praze",
+        "Školní třídní knihu"
+      ],
+      "correct": 1,
+      "expl": "Terčem je moc a její „péče“ o nepohodlné."
+    },
+    {
+      "prompt": "Kde leží Brixen?",
+      "options": [
+        "V Čechách u Berounky",
+        "V Tyrolsku",
+        "V Brooklynu",
+        "Na Kubě"
+      ],
+      "correct": 1,
+      "expl": "Brixen (Bressanone) je v Tyrolsku."
+    },
+    {
+      "prompt": "Jaká forma díla je přesná?",
+      "options": [
+        "Próza o Algernonovi",
+        "Veršovaná satirická skladba",
+        "Jen úřední protokol",
+        "Komedie dell’arte"
+      ],
+      "correct": 1,
+      "expl": "Jde o verše s elegicko-satirickým rámcem."
+    },
+    {
+      "prompt": "Proč je název „elegie“ příznačný i zavádějící?",
+      "options": [
+        "Protože to není literatura",
+        "Tvárí se jako žalozpěv, ale je plný ironie a satiry",
+        "Protože slaví Bacha",
+        "Protože jde o kuchyni"
+      ],
+      "correct": 1,
+      "expl": "Havlíček paroduje žalozpěvný žánr."
+    },
+    {
+      "prompt": "K jakému století Havlíček patří?",
+      "options": [
+        "K 18. jen jako Goldoni",
+        "K 19.",
+        "K 21.",
+        "K antice"
+      ],
+      "correct": 1,
+      "expl": "Havlíček žil v 19. století (1821–1856)."
+    },
+    {
+      "prompt": "Co předcházelo internaci?",
+      "options": [
+        "Výhra v loterii",
+        "Jeho kritická žurnalistika nepohodlná moci",
+        "Svatba s Terezou",
+        "Lov marlína"
+      ],
+      "correct": 1,
+      "expl": "Moc trestala Havlíčkovu publicistiku."
+    },
+    {
+      "prompt": "Jaký je hlavní smysl Tyrolských elegií na maturitě?",
+      "options": [
+        "Návod na lyžování",
+        "Satira na nesvobodu a svědectví o vyhnanství",
+        "Oslava cenzury",
+        "Kuchařka"
+      ],
+      "correct": 1,
+      "expl": "Dílo spojuje osobní zkušenost internace s politickou satirou."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Havlíček je za kritiku moci postižen",
+        "Musí nastoupit cestu do tyrolské internace",
+        "Ironicky líčí „péči“ policie a úřadů",
+        "Elegický tón střídá satira a výsměch",
+        "Brixen se stává symbolem nesvobody",
+        "Skladba zůstává svědectvím odporu slova"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: postih → cesta do vyhnanství → ironie policie → satira „elegie“ → Brixen → svědectví odporu."
+  ]
+}

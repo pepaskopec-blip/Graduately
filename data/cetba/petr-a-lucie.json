@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Romain Rolland",
+        "Žánr: novela",
+        "Poprvé vydáno: 1920 (česky Zaorálek)",
+        "Děj: Paříž za 1. světové války – láska Petra a Lucie",
+        "Vyprávění: er-forma, lyrický, protiválečný tón"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Válka ničí civilní život i milence.",
+        "Petr a Lucie hledají čistou lásku uprostřed strachu.",
+        "Hudba a umění jako útočiště.",
+        "Kontrast něhy a válečné brutality.",
+        "Tragický konec pod bombami."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Petr – mladík.",
+        "Lucie – dívka, jeho láska.",
+        "Otec / rodina – tlak doby.",
+        "Pařížané – město ve válce.",
+        "Umělci / hudba – útočiště.",
+        "Válka – neviditelný vrah."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Láska vs. válka – ústřední konflikt.",
+        "Mládi – křehkost.",
+        "Paříž – chronotop.",
+        "Protiválečný humanismus.",
+        "Tragický osud – pointa.",
+        "Lyrismus – styl."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Petra a Lucii?",
+      "options": [
+        "Remarque",
+        "Rolland",
+        "Hemingway",
+        "Hugo"
+      ],
+      "correct": 1,
+      "expl": "Romain Rolland."
+    },
+    {
+      "prompt": "V jaké válce se novela odehrává?",
+      "options": [
+        "2. světová",
+        "1. světová válka",
+        "Trojská",
+        "Studená"
+      ],
+      "correct": 1,
+      "expl": "1. světová válka."
+    },
+    {
+      "prompt": "Kde?",
+      "options": [
+        "Londýn",
+        "Paříž",
+        "Berlín",
+        "Praha"
+      ],
+      "correct": 1,
+      "expl": "Paříž."
+    },
+    {
+      "prompt": "O čem sní milenci?",
+      "options": [
+        "O frontě",
+        "O lásce a míru uprostřed války",
+        "O obchodu",
+        "O korunovaci"
+      ],
+      "correct": 1,
+      "expl": "Láska proti válce."
+    },
+    {
+      "prompt": "Jaký je tón?",
+      "options": [
+        "Jen satirický švejkovský",
+        "Lyrický, něžný, tragický",
+        "Jen naturalistický naturalismus bez lyriky",
+        "Jen úřední"
+      ],
+      "correct": 1,
+      "expl": "Lyrická novela."
+    },
+    {
+      "prompt": "Jak milenci končí?",
+      "options": [
+        "Emigrací šťastnou",
+        "Zahynou při bombardování",
+        "Svatbou na frontě",
+        "Korunovací"
+      ],
+      "correct": 1,
+      "expl": "Tragický konec."
+    },
+    {
+      "prompt": "Proč je text protiválečný?",
+      "options": [
+        "Oslavuje generály",
+        "Ukazuje, jak válka ničí nevinné",
+        "Je návod na zbraně",
+        "Je sportovní reportáž"
+      ],
+      "correct": 1,
+      "expl": "Humanistický protest."
+    },
+    {
+      "prompt": "Co jim dává sílu?",
+      "options": [
+        "Penězi jen",
+        "Láska, umění, vzájemnost",
+        "Nenávist",
+        "Daně"
+      ],
+      "correct": 1,
+      "expl": "Vztah jako útočiště."
+    },
+    {
+      "prompt": "Jaký žánr?",
+      "options": [
+        "Epos heroický",
+        "Novela",
+        "Komedie Revizor",
+        "Balada Erbenova"
+      ],
+      "correct": 1,
+      "expl": "Novela."
+    },
+    {
+      "prompt": "Co kontrastuje s láskou?",
+      "options": [
+        "Zahrada",
+        "Brutalita a strach války",
+        "Jen počasí",
+        "Jen škola"
+      ],
+      "correct": 1,
+      "expl": "Válka vs. něha."
+    },
+    {
+      "prompt": "Proč je kniha krátká a silná?",
+      "options": [
+        "Je prázdná",
+        "Soustředí se na osud dvou lidí jako symbol",
+        "Je telefonní seznam",
+        "Je zákoník"
+      ],
+      "correct": 1,
+      "expl": "Symbol generace."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Robotika",
+        "Láska zničená válkou",
+        "Zákopové taktiky detailně",
+        "Dvorská intrika"
+      ],
+      "correct": 1,
+      "expl": "Humanismus proti válce."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Setkání Petra a Lucie",
+        "Rozvíjí se jejich láska",
+        "Válka stupňuje ohrožení",
+        "Hledají útočiště v sobě a umění",
+        "Bombardování zasáhne město",
+        "Milenci umírají"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: setkání → láska → ohrožení → útočiště → bombardování → smrt."
+  ]
+}

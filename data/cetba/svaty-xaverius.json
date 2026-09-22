@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Jakub Arbes (1840–1914)",
+        "Žánr: romaneto (novela s tajemstvím a úvahou)",
+        "Poprvé vydáno: 1873",
+        "Děj: Praha, obraz sv. Xaveria a záhada „pokladu“",
+        "Vyprávění: er-forma s napětím, logikou a filozofickým přesahem"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "České země v 19. století, Praha a její památky.",
+        "Romaneto spojuje detektivní záhadu s úvahou o poznání.",
+        "Církevní umění a legenda o světcovi tvoří kulisu příběhu.",
+        "Věda, rozum a fantazie se střetávají v pátrání.",
+        "Arbes bývá řazen k českým „romanetům“ po vzoru Poea."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Vypravěč / pátrač – sleduje stopu obrazu a záhady.",
+        "Maličký – přítel, s nímž se vede dialog o tajemství.",
+        "Svatý Xaverius (obraz/legenda) – střed mystéria.",
+        "Postavy minulosti spojené s obrazem – nositelé stopy „pokladu“.",
+        "Pražské prostředí – svědkové a kulisa pátrání."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Romaneto – kratší próza s tajemstvím a pointou.",
+        "Obraz sv. Xaveria – klíč k záhadě.",
+        "Poklad – doslovný i metaforický cíl pátrání.",
+        "Rozum vs. fantazie – metoda odhalování pravdy.",
+        "Praha – genia loci a historická paměť.",
+        "Pointa – překvapivé vysvětlení záhady."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Svatého Xaveria?",
+      "options": [
+        "Karel Havlíček Borovský",
+        "Jakub Arbes",
+        "Jiří Wolker",
+        "Vladislav Vančura"
+      ],
+      "correct": 1,
+      "expl": "Autorem romaneta je Jakub Arbes."
+    },
+    {
+      "prompt": "Co je romaneto?",
+      "options": [
+        "Druh polky",
+        "Novela s tajemstvím, napětím a často filozofickou pointou",
+        "Válečný deník",
+        "Školní řád"
+      ],
+      "correct": 1,
+      "expl": "Romaneto je Arbesův typ prózy blízký detektivně-filozofické novele."
+    },
+    {
+      "prompt": "Co je ústředním „předmětem“ záhady?",
+      "options": [
+        "Třídní kniha",
+        "Obraz svatého Xaveria",
+        "Marlín",
+        "Saturninův kufr"
+      ],
+      "correct": 1,
+      "expl": "Pátrání se točí kolem obrazu světce."
+    },
+    {
+      "prompt": "Ve kterém městě se děj odehrává?",
+      "options": [
+        "V Benátkách",
+        "V Praze",
+        "V Brooklynu",
+        "V Kostnici"
+      ],
+      "correct": 1,
+      "expl": "Prostorem je Praha."
+    },
+    {
+      "prompt": "Kdy Svatý Xaverius vyšel?",
+      "options": [
+        "1746",
+        "1873",
+        "1926",
+        "1952"
+      ],
+      "correct": 1,
+      "expl": "Romaneto vyšlo roku 1873."
+    },
+    {
+      "prompt": "Čím je Arbes literárně blízký?",
+      "options": [
+        "Jen socialistickému realismu",
+        "Tradici tajemné novely (mj. vliv E. A. Poea)",
+        "Jen básním Wolkera",
+        "Jen komedii dell’arte"
+      ],
+      "correct": 1,
+      "expl": "Romaneta rozvíjejí záhadu a pointu v duchu tajemné novely."
+    },
+    {
+      "prompt": "Co postavy v příběhu hledají?",
+      "options": [
+        "Mloky",
+        "Vysvětlení záhady spojené s obrazem / „pokladem“",
+        "Třídní knihu",
+        "Algernona"
+      ],
+      "correct": 1,
+      "expl": "Pátrání spojuje stopu obrazu s myšlenkou pokladu."
+    },
+    {
+      "prompt": "Jaký typ vyprávění romaneto využívá?",
+      "options": [
+        "Jen rýmy",
+        "Napínavé pátrání spojené s úvahou",
+        "Jen statistiky",
+        "Jen scénář filmu bez textu"
+      ],
+      "correct": 1,
+      "expl": "Napětí jde ruku v ruce s logikou a úvahou."
+    },
+    {
+      "prompt": "Proč je „poklad“ v romanetu dvojznačný?",
+      "options": [
+        "Protože neexistuje čeština",
+        "Může jít o hmotný zisk i o poznání / smysl záhady",
+        "Protože je jen v Tyrolsku",
+        "Protože patří Gatsbymu"
+      ],
+      "correct": 1,
+      "expl": "Pointa často posouvá význam hledaného „pokladu“."
+    },
+    {
+      "prompt": "K jakému století Arbes patří?",
+      "options": [
+        "K 12.",
+        "K 19.",
+        "K 21.",
+        "K antice"
+      ],
+      "correct": 1,
+      "expl": "Arbes je autor 19. století."
+    },
+    {
+      "prompt": "Jaký je typický závěr romaneta?",
+      "options": [
+        "Bez pointy",
+        "Odhalení záhady s překvapivou pointou",
+        "Emigrace do USA",
+        "Svatba Truffaldina"
+      ],
+      "correct": 1,
+      "expl": "Romaneto spěje k vysvětlení a pointě."
+    },
+    {
+      "prompt": "Co tvoří atmosféru Svatého Xaveria?",
+      "options": [
+        "Cirkusová hudba",
+        "Pražské reálie, legenda a tajemství obrazu",
+        "Jen golfový proud",
+        "Školní sbor"
+      ],
+      "correct": 1,
+      "expl": "Praha, umění a mystérium světce vytvářejí napětí."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Zájem o obraz sv. Xaveria a jeho historii",
+        "Stopa vede k legendě a domnělému pokladu",
+        "Pátrání v pražských reáliích a pramenech",
+        "Domněnky se střetávají s logikou a fakty",
+        "Záhada se postupně vysvětluje",
+        "Pointa odhalí smysl „pokladu“ a celého tajemství"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: obraz → legenda/poklad → pátrání → střet domněnek a logiky → vysvětlení → pointa."
+  ]
+}

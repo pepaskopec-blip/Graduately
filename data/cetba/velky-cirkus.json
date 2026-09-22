@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Pierre Clostermann (1921–2006)",
+        "Žánr: válečná literatura / memoárová próza letce",
+        "Poprvé vydáno: 1948 (Le Grand Cirque)",
+        "Děj: 2. světová válka, letecké boje RAF",
+        "Vyprávění: ich-forma – svědectví stíhacího esa"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "2. světová válka v Evropě, bitvy ve vzduchu.",
+        "Francouz Clostermann slouží u britského Royal Air Force.",
+        "Technika, disciplína a kamarádství drží posádky při životě.",
+        "Válka je „cirkus“ – nebezpečná show plná smrti.",
+        "Kniha spojuje dobrodružství s autenticitou pamětí."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Pierre Clostermann – vypravěč, stíhací pilot.",
+        "Spoluletci / eskadrila – přátelé i oběti bojů.",
+        "Nepřátelští letci – protivníci ve vzduchu.",
+        "Pozemní personál – neviditelná opora letecké války.",
+        "Velení RAF – rámec misí a rozkazů."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Velký cirkus – metafora letecké války jako nebezpečné show.",
+        "Stíhací eso – sestřely a prestiž, ale i smrt kolem.",
+        "RAF – britské letectvo, v němž Clostermann slouží.",
+        "Kamarádství – hodnota v extrémních podmínkách.",
+        "Autenticita – memoárový charakter textu.",
+        "Technika letounů – Spitfire aj. jako součást reality boje."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Velký cirkus?",
+      "options": [
+        "Ernest Hemingway",
+        "Pierre Clostermann",
+        "Josef Škvorecký",
+        "F. Scott Fitzgerald"
+      ],
+      "correct": 1,
+      "expl": "Autorem je francouzský letec Pierre Clostermann."
+    },
+    {
+      "prompt": "O jaké válce kniha především svědčí?",
+      "options": [
+        "O třicetileté",
+        "O 2. světové válce v letectvu",
+        "O válce s mloky",
+        "O napoleonských válkách"
+      ],
+      "correct": 1,
+      "expl": "Jde o letecké boje 2. světové války."
+    },
+    {
+      "prompt": "U kterého letectva Clostermann sloužil?",
+      "options": [
+        "U Wehrmachtu jako pěšák",
+        "U RAF (britské královské letectvo)",
+        "U říčních rybářů",
+        "U benátské policie"
+      ],
+      "correct": 1,
+      "expl": "Byl stíhačem RAF."
+    },
+    {
+      "prompt": "Co znamená název Velký cirkus?",
+      "options": [
+        "Cirkusové představení v Praze",
+        "Metaforu letecké války jako nebezpečné „show“",
+        "Román o Saturninovi",
+        "Báje o Olympu"
+      ],
+      "correct": 1,
+      "expl": "„Cirkus“ označuje chaos a spektákl vzdušných bojů."
+    },
+    {
+      "prompt": "Jaká je forma vyprávění?",
+      "options": [
+        "Jen statistiky sestřelů bez příběhu",
+        "Ich-forma memoárů / válečných vzpomínek",
+        "Jen verše Havlíčka",
+        "Dialogy Goldoniho"
+      ],
+      "correct": 1,
+      "expl": "Clostermann vypráví vlastní zkušenost."
+    },
+    {
+      "prompt": "Co je vedle boje silným motivem knihy?",
+      "options": [
+        "Účetnictví pekárny",
+        "Kamarádství a ztráty spolubojovníků",
+        "Maloměstská žárlivost u plovárny",
+        "Hledání pokladu u Xaveria"
+      ],
+      "correct": 1,
+      "expl": "Lidské vztahy v eskadrille jsou klíčové."
+    },
+    {
+      "prompt": "Ve kterém roce kniha vyšla (originál)?",
+      "options": [
+        "1936",
+        "1948",
+        "1968",
+        "1979"
+      ],
+      "correct": 1,
+      "expl": "Le Grand Cirque vyšel roku 1948."
+    },
+    {
+      "prompt": "Jaký typ letce Clostermann byl?",
+      "options": [
+        "Dopravní pilot civilní linky",
+        "Stíhací pilot",
+        "Balonový instruktor",
+        "Jen pozorovatel bez letu"
+      ],
+      "correct": 1,
+      "expl": "Byl stíhačem – eso."
+    },
+    {
+      "prompt": "Proč je kniha na maturitě ceněná?",
+      "options": [
+        "Pro matematické důkazy",
+        "Pro autentické svědectví o letecké válce",
+        "Pro komedii dell’arte",
+        "Pro naturalistickou vraždu na Seině"
+      ],
+      "correct": 1,
+      "expl": "Spojuje napětí, techniku a lidský rozměr války."
+    },
+    {
+      "prompt": "Jaký žánr je nejpřesnější?",
+      "options": [
+        "Antický mýtus",
+        "Válečná memoárová próza",
+        "Humoristický román o tetičce",
+        "Proletářská balada"
+      ],
+      "correct": 1,
+      "expl": "Jde o válečné paměti letce."
+    },
+    {
+      "prompt": "Co čtenář vedle akce poznává?",
+      "options": [
+        "Jen recepty",
+        "Každodennost základen, strach i disciplínu",
+        "Jen pražské romaneto",
+        "Jen Brooklynske salonky"
+      ],
+      "correct": 1,
+      "expl": "Válka je i rutinou, únavou a organizací."
+    },
+    {
+      "prompt": "Jaký národní kontext autora je důležitý?",
+      "options": [
+        "Byl Čech z Berounky",
+        "Francouz bojující v britském letectvu",
+        "Benátčan 18. stol.",
+        "Kubánský rybář"
+      ],
+      "correct": 1,
+      "expl": "Clostermann je Francouz ve službách RAF."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Clostermann vstupuje do služby u RAF",
+        "Absolvuje výcvik a první operační lety",
+        "Eskadrila žije bojem, rutinou i ztrátami",
+        "Vzdušné souboje stupňují nebezpečí „cirkusu“",
+        "Přátelství se láme smrtí spolubojovníků",
+        "Svědectví vrcholí bilancí války ve vzduchu"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: vstup k RAF → první lety → život eskadry → souboje → ztráty → bilance svědectví."
+  ]
+}

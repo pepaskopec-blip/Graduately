@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Charlotte Brontëová",
+        "Žánr: romaneto / romantický a společenský román s gotickými prvky",
+        "Poprvé vydáno: 1847 (pod pseudonymem Currer Bell)",
+        "Děj / prostředí: Anglie 19. století – Gateshead, Lowood, Thornfield, Marsh End",
+        "Vyprávění / forma: ich-forma, autobiografické vyprávění Jany Eyrové"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Anglie viktoriánské doby: přísné společenské normy a omezené postavení žen.",
+        "Školství chudých dívek (Lowood) ukazuje tvrdost a pokrytectví.",
+        "Gotické motivy: tajemství domu, šílenství, oheň, nadpřirozené náznaky.",
+        "Román zdůrazňuje morální integritu, rovnost a sebeúctu ženy.",
+        "Jana je sirotek, který si musí vydobýt místo vlastním charakterem.",
+        "Milostný děj je spojen s otázkou sociální třídy a nezávislosti."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Jana Eyrová – sirotek, vychovatelka, hrdinka s pevnými zásadami.",
+        "Edward Rochester – pán Thornfieldu, Janin milovaný s temným tajemstvím.",
+        "Bertha Masonová – Rochesterova první žena, držená v podkroví.",
+        "Paní Reedová – Janina krutá teta z Gatesheadu.",
+        "Svatý Jan Rivers – kněz, nabízí Janě sňatek z povinnosti.",
+        "Helen Burnsová – Janina přítelkyně z Lowoodu, zbožná a trpělivá."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Sirotectví – Janina výchozí situace a zdroj její síly.",
+        "Rovnost v lásce – Jana chce vztah na základě důstojnosti, ne podřízenosti.",
+        "Gotické tajemství – Bertha v podkroví jako skrytá minulost.",
+        "Morální volba – Jana odmítne být milenkou a odejde.",
+        "Nezávislost ženy – práce, vzdělání a sebeúcta.",
+        "Oheň – symbol zničení i očištění (Thornfield)."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Janu Eyrovou?",
+      "options": [
+        "Emily Brontëová",
+        "Charlotte Brontëová",
+        "Jane Austenová",
+        "George Eliotová"
+      ],
+      "correct": 1,
+      "expl": "Autorkou je Charlotte Brontëová; kniha vyšla pod pseudonymem Currer Bell."
+    },
+    {
+      "prompt": "V jaké formě je román vyprávěn?",
+      "options": [
+        "Er-forma",
+        "Ich-forma Janiným hlasem",
+        "Dopisy Rochesterovi",
+        "Veršem"
+      ],
+      "correct": 1,
+      "expl": "Jana vypráví svůj životopis v první osobě."
+    },
+    {
+      "prompt": "Kde Jana působí jako vychovatelka?",
+      "options": [
+        "V Gatesheadu",
+        "V Lowoodu",
+        "V Thornfieldu",
+        "V Londýně"
+      ],
+      "correct": 2,
+      "expl": "Jana se stane vychovatelkou Adèle v Thornfieldu u Rochestera."
+    },
+    {
+      "prompt": "Kdo je Bertha Masonová?",
+      "options": [
+        "Janina sestřenice",
+        "Rochesterova první žena držená v podkroví",
+        "Ředitelka Lowoodu",
+        "Služka"
+      ],
+      "correct": 1,
+      "expl": "Bertha je Rochesterova chorá manželka, skryté tajemství domu."
+    },
+    {
+      "prompt": "Proč Jana opustí Rochestera po neuskutečněné svatbě?",
+      "options": [
+        "Nemá ho ráda",
+        "Zjistí, že je už ženatý, a odmítne být milenkou",
+        "Musí se vrátit k tetě",
+        "Odjede studovat"
+      ],
+      "correct": 1,
+      "expl": "Jana odmítne poměr bez manželství a odejde, aby zachovala sebeúctu."
+    },
+    {
+      "prompt": "Co nabízí Janě Svatý Jan Rivers?",
+      "options": [
+        "Bohatství bez sňatku",
+        "Sňatek a misi do Indie z povinnosti",
+        "Místo v Lowoodu",
+        "Dům v Thornfieldu"
+      ],
+      "correct": 1,
+      "expl": "Rivers chce Janu za ženu jako pomocnici při misijní práci, ne z lásky."
+    },
+    {
+      "prompt": "Jaký motiv je typicky gotický?",
+      "options": [
+        "Školní rozvrh",
+        "Tajemství domu, šílenství a oheň",
+        "Úřední dopisy",
+        "Cestování po Evropě"
+      ],
+      "correct": 1,
+      "expl": "Gotiku zastupují temné tajemství Thornfieldu, Bertha a požár."
+    },
+    {
+      "prompt": "Co se stane s Thornfieldem?",
+      "options": [
+        "Je prodán Riversovi",
+        "Bertha jej zapálí a zahyne",
+        "Jana jej zdědí hned na začátku",
+        "Zůstane nedotčen"
+      ],
+      "correct": 1,
+      "expl": "Bertha zapálí dům, zahyne a Rochester je zmrzačen."
+    },
+    {
+      "prompt": "Jak román končí?",
+      "options": [
+        "Jana se vdá za Riversa",
+        "Jana se vrátí k Rochesterovi a vezmou se",
+        "Jana zůstane samotářkou",
+        "Rochester odjede do Indie"
+      ],
+      "correct": 1,
+      "expl": "Po zdědění majetku a Rochesterově osamění se Jana vrátí a uzavře sňatek."
+    },
+    {
+      "prompt": "Kdy kniha poprvé vyšla?",
+      "options": [
+        "1813",
+        "1847",
+        "1865",
+        "1901"
+      ],
+      "correct": 1,
+      "expl": "Román vyšel roku 1847."
+    },
+    {
+      "prompt": "Co je Lowood?",
+      "options": [
+        "Zámek Rochestera",
+        "Charitativní škola pro chudé dívky",
+        "Vesnice Riversových",
+        "Londýnský salon"
+      ],
+      "correct": 1,
+      "expl": "Lowood je přísná škola, kde Jana prožije dětství a ztratí Helen."
+    },
+    {
+      "prompt": "Jaké hlavní téma román zdůrazňuje?",
+      "options": [
+        "Válečný hrdinství",
+        "Důstojnost, rovnost a morální nezávislost ženy",
+        "Technický pokrok",
+        "Politickou revoluci"
+      ],
+      "correct": 1,
+      "expl": "Jana hledá lásku i rovnost a odmítá vztah založený na ponížení."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Jana trpí u Reedových a odchází do Lowoodu",
+        "Stane se vychovatelkou v Thornfieldu a zamiluje se do Rochestera",
+        "Svatba je přerušena odhalením Berthy",
+        "Jana uteče a najde útočiště u Riversových",
+        "Zdědí majetek a odmítne sňatek z povinnosti",
+        "Vrátí se k oslepenému Rochesterovi a vezmou se"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: Lowood → láska v Thornfieldu → odhalení Berthy → útěk k Riversovým → dědictví a odmítnutí → návrat k Rochesterovi."
+  ]
+}

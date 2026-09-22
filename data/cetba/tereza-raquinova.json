@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Émile Zola (1840–1902)",
+        "Žánr: naturalistický román",
+        "Poprvé vydáno: 1867",
+        "Děj: Paříž, milostný trojúhelník a vražda",
+        "Vyprávění: er-forma, důraz na vášeň, tělo a svědomí"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Francie 19. století, pařížské maloměšťáctví a obchod.",
+        "Naturalismus zkoumá člověka jako produkt dědičnosti a prostředí.",
+        "Temný obchod a řeka Seine tvoří dusivou kulisu zločinu.",
+        "Vášeň se mění v nenávist a halucinace viny.",
+        "Román je jedním ze Zolových raných naturalistických děl."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Tereza Raquinová – vdaná žena, propadne vášni k Laurentovi.",
+        "Camille – Terezin slabý manžel, oběť milenců.",
+        "Laurent – milenec, spoluviník vraždy.",
+        "Paní Raquinová – Camilleova matka, později ochrnutá svědkyně.",
+        "Přátelé z „čtvrtků“ – společenská maska měšťanského života."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Naturalismus – člověk jako výsledek pudů, dědičnosti a prostředí.",
+        "Vášeň – pohání zločin i pozdější rozklad vztahu.",
+        "Vražda na Seině – klíčový zločin milenců.",
+        "Svědomí / halucinace – trest přichází zevnitř.",
+        "Temnota obchodu – dusivý prostor viny.",
+        "Determinismus – omezená svoboda postav."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Terezu Raquinovou?",
+      "options": [
+        "Gustave Flaubert",
+        "Émile Zola",
+        "Victor Hugo",
+        "Milan Kundera"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Émile Zola."
+    },
+    {
+      "prompt": "Jaký směr román reprezentuje?",
+      "options": [
+        "Romantismus bez stínů",
+        "Naturalismus",
+        "Poetismus",
+        "Absurdní drama"
+      ],
+      "correct": 1,
+      "expl": "Tereza Raquinová je klasika naturalismu."
+    },
+    {
+      "prompt": "Kdo je Camille?",
+      "options": [
+        "Terezin milenec",
+        "Terezin manžel, kterého milenci zabijí",
+        "Soudce",
+        "Malíř Gatsby"
+      ],
+      "correct": 1,
+      "expl": "Camille je manžel a oběť."
+    },
+    {
+      "prompt": "Kdo je Laurent?",
+      "options": [
+        "Camilleův otec",
+        "Terezin milenec a spoluvrah",
+        "Kněz",
+        "Pilot"
+      ],
+      "correct": 1,
+      "expl": "Laurent je milenec a vrah."
+    },
+    {
+      "prompt": "Jak milenci Camille zabijí?",
+      "options": [
+        "Otravou čaje v kostele",
+        "Utopením při výletě na Seině",
+        "Soucitem",
+        "Soudním sporem"
+      ],
+      "correct": 1,
+      "expl": "Vražda se odehraje na řece."
+    },
+    {
+      "prompt": "Co se stane se vztahem Terezy a Laurenta po vraždě?",
+      "options": [
+        "Zůstane idylický",
+        "Rozpadá se pod tíhou viny a odporu",
+        "Odejdou do Ameriky šťastni",
+        "Založí školu"
+      ],
+      "correct": 1,
+      "expl": "Vášeň se mění v nenávist a hrůzu."
+    },
+    {
+      "prompt": "Jakou roli hraje paní Raquinová?",
+      "options": [
+        "Komická služka",
+        "Matka Camille; později ochrnutá, ale vědomá si zločinu",
+        "Prefektka policie",
+        "Bohyně Olympu"
+      ],
+      "correct": 1,
+      "expl": "Po mrtvici nemůže mluvit, ale chápe pravdu."
+    },
+    {
+      "prompt": "Ve kterém roce román vyšel?",
+      "options": [
+        "1867",
+        "1925",
+        "1952",
+        "1979"
+      ],
+      "correct": 0,
+      "expl": "Tereza Raquinová vyšla roku 1867."
+    },
+    {
+      "prompt": "Kde se děj především odehrává?",
+      "options": [
+        "V Praze",
+        "V Paříži",
+        "Na Kubě",
+        "V Kostnici"
+      ],
+      "correct": 1,
+      "expl": "Prostorem je Paříž."
+    },
+    {
+      "prompt": "Co naturalismus zdůrazňuje?",
+      "options": [
+        "Jen náhodu zázraků",
+        "Pudy, prostředí a determinaci člověka",
+        "Jen dvorskou etiketu",
+        "Jen školní humor"
+      ],
+      "correct": 1,
+      "expl": "Člověk je zkoumán „vědecky“ – pudy a prostředí."
+    },
+    {
+      "prompt": "Jak jsou vrahové „potrestáni“?",
+      "options": [
+        "Jen pokutou",
+        "Především vlastním svědomím, strachem a rozkladem vztahu",
+        "Odměnou od císaře",
+        "Povýšením"
+      ],
+      "correct": 1,
+      "expl": "Zola ukazuje vnitřní trest – halucinace a nenávist."
+    },
+    {
+      "prompt": "Proč je román temný a dusivý?",
+      "options": [
+        "Protože je to komedie",
+        "Protože zločin, vina a prostředí ničí postavy",
+        "Protože chybí Paříž",
+        "Protože jde o báje"
+      ],
+      "correct": 1,
+      "expl": "Atmosféra viny je stejně důležitá jako samotná vražda."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Tereza žije v dusivém manželství s Camillem",
+        "Propukne vášeň mezi Terezou a Laurentem",
+        "Milenci Camille utopením zabijí",
+        "Po čase se vezmou, ale vztah se rozkládá vinou",
+        "Paní Raquinová prohlédne a zůstane němým svědkem",
+        "Vina vyvrcholí vzájemnou nenávistí a zkázou"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: dusivé manželství → vášeň → vražda → sňatek ve vině → odhalení matkou → zkáza milenců."
+  ]
+}

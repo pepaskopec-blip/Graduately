@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Ota Pavel (vl. jm. Otto Popper, 1930–1973)",
+        "Žánr: povídkový soubor / autobiografická próza",
+        "Poprvé vydáno: 1971",
+        "Děj: střední Čechy, řeka Berounka, dětství a válka",
+        "Vyprávění: ich-forma, lyrické a humorné vzpomínky"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "První republika i protektorát v rodinných vzpomínkách.",
+        "Příroda, ryby a les jsou útočištěm i měřítkem krásy.",
+        "Židovský původ otce přináší za války ohrožení.",
+        "Německá okupace ničí idylu i lidské osudy.",
+        "Humor a nostalgie střídají tragiku holocaustu."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Vypravěč (Ota) – syn rodiny, svědek krásy i války.",
+        "Tatínek Leo Popper – obchodník, vášnivý rybář a snílek.",
+        "Maminka – praktická, drží rodinu pohromadě.",
+        "Bratři – součást rodinného světa u řeky.",
+        "Němečtí okupanti / úředníci – hrozba za protektorátu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Srnci / příroda – symbol krásy a ztracené idyly.",
+        "Řeka Berounka – prostor dětství a svobody.",
+        "Rybaření – tatínkova vášeň i životní filosofie.",
+        "Holocaust – stín nad židovskou větví rodiny.",
+        "Nostalgie – vzpomínka jako záchrana krásy.",
+        "Humor a tragika – typický Oty Pavla."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Smrt krásných srnců?",
+      "options": [
+        "Bohumil Hrabal",
+        "Ota Pavel",
+        "Jan Otčenášek",
+        "Ladislav Fuks"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Ota Pavel."
+    },
+    {
+      "prompt": "Jaký je základní charakter knihy?",
+      "options": [
+        "Soubor vzpomínkových povídek",
+        "Veršovaná epopej",
+        "Detektivka",
+        "Antiutopie"
+      ],
+      "correct": 0,
+      "expl": "Jde o povídky z rodinných vzpomínek."
+    },
+    {
+      "prompt": "Kde se mnoho příběhů odehrává?",
+      "options": [
+        "U řeky Berounky a v okolní přírodě",
+        "V New Yorku",
+        "Na Měsíci",
+        "V Benátkách"
+      ],
+      "correct": 0,
+      "expl": "Ústředním prostorem je Berounka a středočeská příroda."
+    },
+    {
+      "prompt": "Kdo je tatínek Leo Popper?",
+      "options": [
+        "Generál",
+        "Obchodník a vášnivý rybář",
+        "Kněz",
+        "Pilot"
+      ],
+      "correct": 1,
+      "expl": "Tatínek je legendární postava – snílek, obchodník a rybář."
+    },
+    {
+      "prompt": "Proč je rodina za války ohrožena?",
+      "options": [
+        "Kvůli dluhům za loď",
+        "Kvůli židovskému původu otce",
+        "Kvůli cirkusu",
+        "Kvůli mlokům"
+      ],
+      "correct": 1,
+      "expl": "Židovský původ přináší perzekuci za protektorátu."
+    },
+    {
+      "prompt": "Co symbolizují „krásní srnci“?",
+      "options": [
+        "Průmysl",
+        "Krásu přírody a ztracený svět dětství",
+        "Bankovní účet",
+        "Vojenský řád"
+      ],
+      "correct": 1,
+      "expl": "Srnci jsou obrazem krásy, kterou válka ničí."
+    },
+    {
+      "prompt": "Jaký tón mají Pavlova vyprávění?",
+      "options": [
+        "Jen suchý report",
+        "Směs humoru, nostalgie a tragiky",
+        "Jen horor",
+        "Jen satira na školu"
+      ],
+      "correct": 1,
+      "expl": "Humor a lyrická vzpomínka střídají válečnou bolest."
+    },
+    {
+      "prompt": "Ve kterém roce kniha vyšla?",
+      "options": [
+        "1942",
+        "1958",
+        "1971",
+        "1989"
+      ],
+      "correct": 2,
+      "expl": "Smrt krásných srnců vyšla roku 1971."
+    },
+    {
+      "prompt": "Jaká činnost je pro tatínka typická?",
+      "options": [
+        "Rybaření",
+        "Šachy na ministerstvu",
+        "Létání Spitfirem",
+        "Psaní elegií"
+      ],
+      "correct": 0,
+      "expl": "Rybaření je tatínkova vášeň a životní styl."
+    },
+    {
+      "prompt": "Jakou roli hraje příroda v knize?",
+      "options": [
+        "Vedlejší kulisu",
+        "Útočiště, krásu i měřítko lidskosti",
+        "Jen statistiku úrody",
+        "Nepřátelský vesmír"
+      ],
+      "correct": 1,
+      "expl": "Příroda je hodnotou, kterou válka a násilí ničí."
+    },
+    {
+      "prompt": "Jak kniha zachycuje protektorát?",
+      "options": [
+        "Jako veselý karneval",
+        "Jako ničení rodinné idyly a lidských životů",
+        "Vůbec ne",
+        "Jen jako sportovní sezónu"
+      ],
+      "correct": 1,
+      "expl": "Okupace vstupuje do rodinných příběhů tragicky."
+    },
+    {
+      "prompt": "Proč je Ota Pavel na maturitě oblíbený?",
+      "options": [
+        "Pro složité filozofické traktáty",
+        "Pro srozumitelný jazyk, emoci a silné motivy války i přírody",
+        "Pro matematiku",
+        "Pro anglický originál bez překladu"
+      ],
+      "correct": 1,
+      "expl": "Povídky jsou čtivé, lidské a tematicky silné."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Rodina žije u řeky; tatínek miluje ryby a přírodu",
+        "Dětství plné příhod, humoru a rybářských vášní",
+        "Přichází okupace a ohrožení židovské větve rodiny",
+        "Idyla u Berounky se láme pod tlakem války",
+        "Tragické ztráty a ponížení zasáhnou blízké",
+        "Vzpomínka zachovává krásu srnců i bolest doby"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: rodinná idyla → dětství u řeky → okupace → rozbití idyly → tragika → vzpomínka na krásu i bolest."
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Giovanni Boccaccio; překlad: Krátký",
+        "Žánr: rámcová novela / sbírka novel",
+        "Poprvé vydáno: kolem 1353",
+        "Děj/prostředí: Florencie doby moru; zahrada mimo město",
+        "Vyprávění/forma: 100 novel v 10 dnech; překlad Krátký"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Itálie 14. století, morová rána ve Florencii.",
+        "Sedm žen a tři muži utíkají z města a vyprávějí příběhy.",
+        "Novely o lásce, důvtipu, kněžích, kupcích a osudu.",
+        "Renesanční důraz na pozemský život a bystrost.",
+        "Kritika pokrytectví, zvláště církevního.",
+        "Téma: láska, důvtip, štěstěna, vyprávění jako lék."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Pampinea – jedna z vypravěček, často iniciativní.",
+        "Filomena, Fiammetta aj. – členky společnosti vypravěčů.",
+        "Dioneo – vypravěč s nejvolnějšími, často erotickými tématy.",
+        "Postavy novel – milenci, mniši, kupci, šibalové.",
+        "Florentská společnost – rámec úniku před morem.",
+        "Boccaccio jako autor – renesanční vypravěč světskosti."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Rámcový příběh – obal kolem 100 novel.",
+        "Novela – krátký příběh s pointou.",
+        "Mor – historický i symbolický rámec.",
+        "Fortuna – štěstěna řídící lidské osudy.",
+        "Důvtip (ingegno) – cnosti hrdinů novel.",
+        "Renesance – obrat k pozemskému člověku."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Dekameron?",
+      "options": [
+        "Dante Alighieri",
+        "Giovanni Boccaccio",
+        "Petrarca",
+        "Machiavelli"
+      ],
+      "correct": 1,
+      "expl": "Boccaccio je autor stovky novel v renesančním duchu."
+    },
+    {
+      "prompt": "Kolik novel Dekameron obsahuje?",
+      "options": [
+        "10",
+        "50",
+        "100",
+        "1000"
+      ],
+      "correct": 2,
+      "expl": "10 dnů × 10 novel = 100 příběhů."
+    },
+    {
+      "prompt": "Proč společnost opouští Florencii?",
+      "options": [
+        "Kvůli svatbě",
+        "Kvůli moru",
+        "Kvůli válce s Francií",
+        "Kvůli olympiádě"
+      ],
+      "correct": 1,
+      "expl": "Utíkají před epidemií a v bezpeččí vyprávějí."
+    },
+    {
+      "prompt": "Kolik vypravěčů tvoří rámec?",
+      "options": [
+        "Dva",
+        "Deset (7 žen a 3 muži)",
+        "Sto",
+        "Jeden mnich"
+      ],
+      "correct": 1,
+      "expl": "Sedm dam a tři mládenci střídají vyprávění."
+    },
+    {
+      "prompt": "Jaká témata novely často mají?",
+      "options": [
+        "Jen matematiku",
+        "Lásku, důvtip, kritiku pokrytectví",
+        "Jen bitvy kosmické",
+        "Jen zákony Říma"
+      ],
+      "correct": 1,
+      "expl": "Světské příběhy o lásce, šibalství a lidských slabostech."
+    },
+    {
+      "prompt": "Co je rámcový příběh?",
+      "options": [
+        "Poslední novela",
+        "Příběh vypravěčů, do nějž jsou novely vloženy",
+        "Titulní báseň",
+        "Rejstřík jmen"
+      ],
+      "correct": 1,
+      "expl": "Rámec drží sbírku pohromadě a dává jí smysl."
+    },
+    {
+      "prompt": "Který vypravěč má často nejvolnější témata?",
+      "options": [
+        "Jen Pampinea vždy",
+        "Dioneo",
+        "Dante",
+        "Godot"
+      ],
+      "correct": 1,
+      "expl": "Dioneo má výsadu volit si téma volněji."
+    },
+    {
+      "prompt": "Do jaké kulturní epochy dílo patří?",
+      "options": [
+        "Baroko",
+        "Raná renesance / trecento",
+        "Romantismus",
+        "Socialistický realismus"
+      ],
+      "correct": 1,
+      "expl": "Patří k základům italské renesanční literatury."
+    },
+    {
+      "prompt": "Co Dekameron často kritizuje?",
+      "options": [
+        "Zemědělství",
+        "Pokrytectví (i církevní) a pošetilost",
+        "Hudbu",
+        "Architekturu gotiky výhradně"
+      ],
+      "correct": 1,
+      "expl": "Mniši a pokrytci bývají terčem satiry."
+    },
+    {
+      "prompt": "Kdy přibližně dílo vzniklo?",
+      "options": [
+        "Okolo 800",
+        "Okolo 1353",
+        "1600",
+        "1862"
+      ],
+      "correct": 1,
+      "expl": "Datuje se do poloviny 14. století, po velkém moru."
+    },
+    {
+      "prompt": "Jakou roli hraje vyprávění pro postavy rámce?",
+      "options": [
+        "Je zakázáno",
+        "Je zábavou i „lékem“ proti strachu z moru",
+        "Je soudní protokol",
+        "Je vojenský rozkaz"
+      ],
+      "correct": 1,
+      "expl": "Příběhy odvádějí mysl od smrti a chaosu."
+    },
+    {
+      "prompt": "Co znamená slovo dekameron?",
+      "options": [
+        "Deset knih o válce",
+        "„Desetidenní“ (dílo)",
+        "Jméno hrdiny",
+        "Název řeky"
+      ],
+      "correct": 1,
+      "expl": "Z řečtiny: dílo deseti dnů."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Mor ve Florencii ohrožuje město",
+        "Deset mladých lidí odchází na venkov",
+        "Zavedou řád vyprávění po dnech",
+        "Střídají se novely o lásce a důvtipu",
+        "Satira míří na pokrytce a pošetilce",
+        "Po deseti dnech se společnost vrací"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: mor → odchod z města → řád dnů → novely → satira na pokrytectví → návrat."
+  ]
+}

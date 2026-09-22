@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Nikolaj Vasiljevič Gogol",
+        "Žánr: komedie / satira",
+        "Poprvé vydáno: 1836 (premiéra)",
+        "Děj / prostředí: ruské provinční městečko za cara Mikuláše I.",
+        "Vyprávění / forma: drama o pěti jednáních; nadsázka, sbor úředníků"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Carské Rusko 19. století: korupce, úplatky, strach z Petrohradu.",
+        "Úředníci se bojí kontroly a maskují nepořádky.",
+        "Gogol satirouje byrokracii a morální prázdnotu provincie.",
+        "Omyl identity: z nikoho se stane „revizor“.",
+        "Smích má léčit – „vy jste se vysmáli sami sobě“.",
+        "Téma: přetvářka, strach z moci, kolektivní vina."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ivan Alexandrovič Chlestakov – petrohradský úředníček, omylem „revizor“.",
+        "Horodničí (starosta) – zkorumpovaný správce města.",
+        "Anna Andreevna – starostova žena, snobská.",
+        "Marie Antonovna – dcera, objekt Chlestakovových řečí.",
+        "Osip – Chlestakovův sluha, prozíravější než pán.",
+        "Soudce, poštmistr, charitní – sbor zkorumpovaných úředníků."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Falešný revizor – komedie omylů.",
+        "Úplatek – jazyk korupce.",
+        "Strach – motor jednání úředníků.",
+        "Lhaní a chlubení – Chlestakovovy řeči.",
+        "Němý výstup – závěrečný šok z pravého revizora.",
+        "Satira – smích jako společenská kritika."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Revizora?",
+      "options": [
+        "N. V. Gogol",
+        "A. P. Čechov",
+        "F. M. Dostojevskij",
+        "A. S. Puškin"
+      ],
+      "correct": 0,
+      "expl": "Autorem je Nikolaj Vasiljevič Gogol."
+    },
+    {
+      "prompt": "Kdo je Chlestakov?",
+      "options": [
+        "Skutečný revizor z Petrohradu",
+        "Bezvýznamný úředník považovaný za revizora",
+        "Starosta",
+        "Car"
+      ],
+      "correct": 1,
+      "expl": "Úředníci ho omylem považují za tajného revizora."
+    },
+    {
+      "prompt": "Proč se úředníci bojí?",
+      "options": [
+        "Blíží se povodeň",
+        "Čekají revizi a mají máslo na hlavě",
+        "Chlestakov je voják nepřítel",
+        "Město hoří"
+      ],
+      "correct": 1,
+      "expl": "Korupce a nepořádky je nutí podlézat „revizorovi“."
+    },
+    {
+      "prompt": "Co Chlestakov od města získá?",
+      "options": [
+        "Jen pokutu",
+        "Úplatky, hostiny a nabídku sňatku",
+        "Okamžitý trest",
+        "Úřad starosty oficiálně"
+      ],
+      "correct": 1,
+      "expl": "Využije omylu k penězům a pohostinství."
+    },
+    {
+      "prompt": "Kdo je chytřejší ohledně útěku?",
+      "options": [
+        "Starosta",
+        "Osip, sluha",
+        "Poštmistr jako hrdina",
+        "Marie Antonovna"
+      ],
+      "correct": 1,
+      "expl": "Osip radí pánovi rychle odjet, dokud to jde."
+    },
+    {
+      "prompt": "Jak hra končí?",
+      "options": [
+        "Chlestakov se stane carem",
+        "Přijíždí skutečný revizor; němá scéna šoku",
+        "Všichni se usmíří na plese",
+        "Starosta vyhraje soud"
+      ],
+      "correct": 1,
+      "expl": "Závěrečný němý výstup zaskočí celé město."
+    },
+    {
+      "prompt": "Kdy měla hra premiéru?",
+      "options": [
+        "1825",
+        "1836",
+        "1861",
+        "1905"
+      ],
+      "correct": 1,
+      "expl": "Revizor měl premiéru roku 1836."
+    },
+    {
+      "prompt": "Co Gogol satirouje?",
+      "options": [
+        "Jen módu fraků",
+        "Korupci a strach byrokracie",
+        "Zemědělství",
+        "Církevní hudbu výhradně"
+      ],
+      "correct": 1,
+      "expl": "Hra je obrazem úplatkářství a přetvářky."
+    },
+    {
+      "prompt": "Jak Chlestakov mluví o Petrohradu?",
+      "options": [
+        "Mlčí",
+        "Chlubí se a lže o známostech a významu",
+        "Cituje zákony přesně",
+        "Zpívá jen lidové písně"
+      ],
+      "correct": 1,
+      "expl": "Jeho lži rostou s ochotou posluchačů věřit."
+    },
+    {
+      "prompt": "Kdo otevře Chlestakovův dopis a prozradí pravdu?",
+      "options": [
+        "Car",
+        "Poštmistr",
+        "Soudce v kostele",
+        "Osip v Petrohradě"
+      ],
+      "correct": 1,
+      "expl": "Poštmistr dopis zadrží a přečte nahlas."
+    },
+    {
+      "prompt": "Jaký žánr Revizor je?",
+      "options": [
+        "Tragédie osudu",
+        "Satirická komedie",
+        "Opera seria",
+        "Epos"
+      ],
+      "correct": 1,
+      "expl": "Jde o komedii s ostrým satirickým ostnem."
+    },
+    {
+      "prompt": "Co znamená němý výstup?",
+      "options": [
+        "Interval na čaj",
+        "Zamrznutí postav v šoku z pravého revizora",
+        "Konec představení bez herců",
+        "Zpívaný sbor"
+      ],
+      "correct": 1,
+      "expl": "Gogol nechá úředníky zkamenět v gestech viny a strachu."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Zpráva o čekajícím revizorovi vyděsí úředníky",
+        "Chlestakova považují za revizora",
+        "Hostiny, úplatky a námluvy",
+        "Chlestakov odjíždí s penězi",
+        "Dopis odhalí, že to byl podvod",
+        "Přijíždí skutečný revizor – němý výstup"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: strach z revize → omyl identity → úplatky → odjezd → odhalení → pravý revizor."
+  ]
+}

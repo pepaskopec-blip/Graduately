@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Poláček",
+        "Žánr: humoristický román / próza s dětským vypravěčem",
+        "Poprvé vydáno: 1946",
+        "Děj/prostředí: Malé české město před 1. světovou válkou",
+        "Vyprávění/forma: ich-forma očima chlapce Petra Bajzy"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Idyla maloměsta na přelomu století, ještě před velkou válkou.",
+        "Svět klukovských her, školních trapasů a rodinných historek.",
+        "Humor vzniká z naivity vypravěče a nedorozumění dospělých.",
+        "Jazyk je živý, hovorový, plný „klukovských“ výrazů.",
+        "Za humorem je nostalgie po ztraceném světě.",
+        "Téma: dětství, přátelství, maloměsto, vyprávění."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Petr Bajza – vypravěč, jeden z „pěti“.",
+        "Antonín „Tonda“ Jelen – kamarád z party.",
+        "Zilvar z chudobince – člen party, často terč vtípků.",
+        "Karel „Čeněk“ Nedvídek – další z pětice.",
+        "Josef „Pepík“ Štěpař – kamarád z party.",
+        "Dospělí (rodiče, učitelé) – komický protisvět řádu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Klukovská parta – jádro děje a humoru.",
+        "Maloměsto – uzavřený svět historek.",
+        "Naivní vypravěč – komika z omezeného pohledu dítěte.",
+        "Hovorový jazyk – autentický tón vyprávění.",
+        "Nostalgie – vzpomínka na předválečný svět.",
+        "Škola a rodina – zdroje konfliktů i komiky."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Bylo nás pět?",
+      "options": [
+        "Karel Čapek",
+        "Karel Poláček",
+        "Josef Lada",
+        "Jaroslav Hašek"
+      ],
+      "correct": 1,
+      "expl": "Humoristický román Karla Poláčka vyšel posmrtně roku 1946."
+    },
+    {
+      "prompt": "Kdo je vypravěč?",
+      "options": [
+        "Učitel",
+        "Petr Bajza",
+        "Zilvarův otec",
+        "Starosta"
+      ],
+      "correct": 1,
+      "expl": "Příběh vypráví chlapec Petr Bajza."
+    },
+    {
+      "prompt": "Kolik chlapců tvoří partu v názvu?",
+      "options": [
+        "Tři",
+        "Pět",
+        "Deset",
+        "Dva"
+      ],
+      "correct": 1,
+      "expl": "Název odkazuje na pětici kamarádů."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "V Praze za války",
+        "V malém českém městě",
+        "V New Yorku",
+        "Na galejích"
+      ],
+      "correct": 1,
+      "expl": "Typické poláčkovské maloměsto s ulicemi, školou a sousedy."
+    },
+    {
+      "prompt": "Jaký je základní tón knihy?",
+      "options": [
+        "Hororový",
+        "Humoristický a nostalgický",
+        "Naturalisticky krutý",
+        "Vědecký"
+      ],
+      "correct": 1,
+      "expl": "Humor plyne z dětského pohledu a maloměstských situací."
+    },
+    {
+      "prompt": "Kdo je Zilvar?",
+      "options": [
+        "Ředitel školy",
+        "Kamarád z chudobince, člen party",
+        "Policista",
+        "Farář"
+      ],
+      "correct": 1,
+      "expl": "Zilvar patří k partě; jeho původ je často předmětem klukovských řečí."
+    },
+    {
+      "prompt": "Čím je vyprávění zvláštní?",
+      "options": [
+        "Je ve verších",
+        "Je v ich-formě dětským jazykem",
+        "Je latinsky",
+        "Je bez dialogů"
+      ],
+      "correct": 1,
+      "expl": "Naivní ich-forma vytváří komiku nedorozumění."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1918",
+        "1938",
+        "1946",
+        "1968"
+      ],
+      "correct": 2,
+      "expl": "Vyšla roku 1946, po autorově smrti v koncentračním táboře."
+    },
+    {
+      "prompt": "Co je hlavním „dějištěm“ humoru?",
+      "options": [
+        "Dvorské intriky",
+        "Škola, hry, rodina a parta",
+        "Vesmír",
+        "Bitvy"
+      ],
+      "correct": 1,
+      "expl": "Každodenní klukovské příhody tvoří jádro knihy."
+    },
+    {
+      "prompt": "Jaký žánr knize nejlépe sedí?",
+      "options": [
+        "Tragédie",
+        "Humoristický román",
+        "Epos",
+        "Sci-fi"
+      ],
+      "correct": 1,
+      "expl": "Klasika české humoristické prózy s dětským hrdinou."
+    },
+    {
+      "prompt": "Proč je kniha nostalgická?",
+      "options": [
+        "Popisuje budoucnost",
+        "Vzpomíná na svět před 1. světovou válkou",
+        "Je o robotice",
+        "Je náboženská"
+      ],
+      "correct": 1,
+      "expl": "Za humorem je stesk po zaniklé maloměstské idyle."
+    },
+    {
+      "prompt": "Která postava NENÍ typicky v centru party?",
+      "options": [
+        "Petr Bajza",
+        "Maršál diktátor",
+        "Zilvar",
+        "Tonda Jelen"
+      ],
+      "correct": 1,
+      "expl": "Maršál patří do Čapkovy Bílé nemoci, ne do Poláčka."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Představení party pěti kluků",
+        "Školní a uliční příhody",
+        "Konflikty s dospělými a učiteli",
+        "Kamarádské spory i smíření",
+        "Rodinné historky Bajzů",
+        "Uzavření obrazu dětství na maloměstě"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: parta → školní/uliční historky → konflikty s dospělými → spory kamarádů → rodina → obraz dětství."
+  ]
+}

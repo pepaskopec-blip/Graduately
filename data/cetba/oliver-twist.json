@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Charles Dickens",
+        "Žánr: společenský román",
+        "Poprvé vydáno: 1837–1839 (česky Tilschovi)",
+        "Děj: Londýn – sirotek Oliver v chudobinci a zločineckém podsvětí",
+        "Vyprávění: er-forma, soucitný i satirický tón"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Viktoriánská Anglie: chudoba, workhousy, kriminalita.",
+        "Dickens kritizuje sociální instituce.",
+        "Oliver si zachovává nevinnost.",
+        "Faginova banda vs. dobrodinci.",
+        "Odhalení původu vede k happy endu."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Oliver Twist – sirotek.",
+        "Fagin – vůdce zlodějů.",
+        "Dodger – kapsař.",
+        "Bill Sikes – násilník.",
+        "Nancy – tragická žena ze dna.",
+        "Mr. Brownlow – dobrodinec."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Sirotectví – výchozí situace.",
+        "Sociální kritika – workhouse.",
+        "Nevinnost vs. zločin.",
+        "Město jako labyrint.",
+        "Soucit – Dickensova morálka.",
+        "Identita a původ – zápletka."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Olivera Twista?",
+      "options": [
+        "Hugo",
+        "Dickens",
+        "Balzac",
+        "Tolstoj"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Charles Dickens."
+    },
+    {
+      "prompt": "Kde Oliver vyrůstá nejdřív?",
+      "options": [
+        "Na zámku",
+        "V chudobinci / workhousu",
+        "V klášteře luxusním",
+        "Na lodi"
+      ],
+      "correct": 1,
+      "expl": "Začíná v workhousu."
+    },
+    {
+      "prompt": "Kdo vede zlodějskou bandu?",
+      "options": [
+        "Brownlow",
+        "Fagin",
+        "Oliver",
+        "Sikesův pes jen"
+      ],
+      "correct": 1,
+      "expl": "Fagin cvičí chlapce ke krádežím."
+    },
+    {
+      "prompt": "Kdo je Nancy?",
+      "options": [
+        "Učitelka",
+        "Žena ze dna, která Oliverovi pomůže",
+        "Královna",
+        "Soudkyně"
+      ],
+      "correct": 1,
+      "expl": "Nancy je tragická postava."
+    },
+    {
+      "prompt": "Co Dickens kritizuje?",
+      "options": [
+        "Zahradnictví",
+        "Sociální instituce a chudobu",
+        "Mořeplavbu antickou",
+        "Robotiku"
+      ],
+      "correct": 1,
+      "expl": "Sociální román."
+    },
+    {
+      "prompt": "Kdo je Bill Sikes?",
+      "options": [
+        "Dobrodinec",
+        "Násilný zločinec",
+        "Farář",
+        "Učitel"
+      ],
+      "correct": 1,
+      "expl": "Sikes je brutalita podsvětí."
+    },
+    {
+      "prompt": "Jaký je Oliverův charakter?",
+      "options": [
+        "Zkažený od počátku",
+        "Nevinný a dobrý navzdory prostředí",
+        "Jen komický šašek",
+        "Generál"
+      ],
+      "correct": 1,
+      "expl": "Nevinnost jako kontrast."
+    },
+    {
+      "prompt": "Kdo Oliverovi pomůže z vyšší společnosti?",
+      "options": [
+        "Fagin",
+        "Mr. Brownlow",
+        "Sikes",
+        "Dodger jako právník"
+      ],
+      "correct": 1,
+      "expl": "Brownlow je ochránce."
+    },
+    {
+      "prompt": "Jak román končí typicky dickensovsky?",
+      "options": [
+        "Totální nihilismus",
+        "Odhalení původu a záchrana dítěte",
+        "Zničení Londýna",
+        "Emigrace na Mars"
+      ],
+      "correct": 1,
+      "expl": "Morální happy end."
+    },
+    {
+      "prompt": "Proč je Fagin nebezpečný?",
+      "options": [
+        "Vaří dobře",
+        "Manipuluje dětmi ke zločinu",
+        "Je soudce",
+        "Je kněz"
+      ],
+      "correct": 1,
+      "expl": "Korumpování dětí."
+    },
+    {
+      "prompt": "Jaké město je chronotopem?",
+      "options": [
+        "Praha",
+        "Londýn",
+        "Řím",
+        "New York"
+      ],
+      "correct": 1,
+      "expl": "Londýnské podsvětí a čtvrti."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Jazz",
+        "Chudoba, nevinnost a sociální spravedlnost",
+        "Robotí vzpoura",
+        "Zákopová válka"
+      ],
+      "correct": 1,
+      "expl": "Sociální kritika."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Oliver v chudobinci",
+        "Utíká do Londýna",
+        "Padne k Faginovi",
+        "Nancy a Brownlow zasahují",
+        "Konflikt s Sikesem",
+        "Odhalení původu a záchrana"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: workhouse → Londýn → Fagin → pomoc → násilí → záchrana."
+  ]
+}

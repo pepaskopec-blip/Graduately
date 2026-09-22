@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Edgar Allan Poe",
+        "Žánr: gotická / symbolistně laděná baladická báseň",
+        "Poprvé vydáno: 1845",
+        "Děj/prostředí: Komorní noční komnata truchlícího milence",
+        "Vyprávění/forma: narativní báseň, strofy, refrain „Nevermore“ / „Nikdy víc“"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Americký romantismus / gotika 19. století.",
+        "Lyriický hrdina truchlí za mrtvou Lenoru.",
+        "Havran vstupuje jako posel beznaděje.",
+        "Opakování „Nevermore“ stupňuje zoufalství.",
+        "Atmosféra půlnoci, stínu a posedlosti.",
+        "Téma: smutek, paměť, šílenství, nenávratnost ztráty."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Lyriický subjekt – truchlící učenec/milenec.",
+        "Lenora – mrtvá milá, předmět žalu.",
+        "Havran – symbol osudové odpovědi „nikdy víc“.",
+        "Pallas Athéna (busta) – havran na ní usedne.",
+        "Ticho komnaty – „protějšek“ dialogu.",
+        "Paměť – síla, která nedovolí zapomenout."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Nevermore / Nikdy víc – klíčový refrain.",
+        "Gotická atmosféra – noc, stín, děs.",
+        "Symbol havrana – zlá věštba, trvalost žalu.",
+        "Lenora – ideál ztracené lásky.",
+        "Gradace – od zvědavosti k šílenství.",
+        "Zvukomalba – rytmus a rýmy stupňují náladu."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Havrana?",
+      "options": [
+        "Walt Whitman",
+        "Edgar Allan Poe",
+        "Emily Dickinsonová",
+        "Stevenson"
+      ],
+      "correct": 1,
+      "expl": "Poeova nejslavnější báseň vyšla 1845."
+    },
+    {
+      "prompt": "Jak se jmenuje mrtvá milá?",
+      "options": [
+        "Juliet",
+        "Lenora",
+        "Ofélie",
+        "Anne"
+      ],
+      "correct": 1,
+      "expl": "Lyriický hrdina truchlí za Lenorou."
+    },
+    {
+      "prompt": "Co havran odpovídá?",
+      "options": [
+        "Always",
+        "Nevermore / Nikdy víc",
+        "Amen",
+        "Godot"
+      ],
+      "correct": 1,
+      "expl": "Jediné slovo se stává osudovým verdiktem."
+    },
+    {
+      "prompt": "Kam havran usedne?",
+      "options": [
+        "Na postel",
+        "Na bustu Pallady",
+        "Na strom venku jen",
+        "Na trůn Claudia"
+      ],
+      "correct": 1,
+      "expl": "Usednutí na Palladu je slavný obraz básně."
+    },
+    {
+      "prompt": "Jaká je základní nálada?",
+      "options": [
+        "Humor cimrmanovský",
+        "Gotický žal a stupňované zoufalství",
+        "Oslava vynálezů",
+        "Válečná satira"
+      ],
+      "correct": 1,
+      "expl": "Od melancholie k posedlosti a beznaději."
+    },
+    {
+      "prompt": "Kdy báseň vyšla?",
+      "options": [
+        "1726",
+        "1845",
+        "1928",
+        "1953"
+      ],
+      "correct": 1,
+      "expl": "The Raven 1845."
+    },
+    {
+      "prompt": "Proč je refrain důležitý?",
+      "options": [
+        "Je jídelníček",
+        "Opakováním uzavírá naději a stupňuje horor",
+        "Jmenuje trifidy",
+        "Učí matematiku"
+      ],
+      "correct": 1,
+      "expl": "Každá otázka končí stejnou negativní odpovědí."
+    },
+    {
+      "prompt": "Jaký žánrový rámec báseň má?",
+      "options": [
+        "Komedie",
+        "Narativní gotická báseň",
+        "Drama o 5 aktech",
+        "Deník"
+      ],
+      "correct": 1,
+      "expl": "Vypráví příběh setkání s havranem ve verších."
+    },
+    {
+      "prompt": "Co hrdina od havrana postupně chce vědět?",
+      "options": [
+        "Kurz akcií",
+        "Zda uvidí Lenoru / zda skončí žal",
+        "Recept na elixír Jekylla",
+        "Cestu do Lilliputu"
+      ],
+      "correct": 1,
+      "expl": "Otázky míří k posmrtnému shledání a úlevě – odpověď je vždy ne."
+    },
+    {
+      "prompt": "Co symbolizuje havran?",
+      "options": [
+        "Jarní obnovu",
+        "Trvalost ztráty a zlou věštbu",
+        "Vítězství revoluce",
+        "Lékařský pokrok"
+      ],
+      "correct": 1,
+      "expl": "Je poslem nenávratnosti."
+    },
+    {
+      "prompt": "Jak končí vnitřní stav hrdiny?",
+      "options": [
+        "Uzdravením a svatbou",
+        "Zhroucením do zoufalství pod stínem havrana",
+        "Odchodem do pivovaru",
+        "Vynálezem žárovky"
+      ],
+      "correct": 1,
+      "expl": "Duše zůstává v zajetí „nikdy víc“."
+    },
+    {
+      "prompt": "Proč je text vhodný k maturitní poezii?",
+      "options": [
+        "Protože je anonymní",
+        "Ukazuje romantickou gotiku, symbol a hudebnost verše",
+        "Protože je účetní kniha",
+        "Protože je cimrmanovský seminář"
+      ],
+      "correct": 1,
+      "expl": "Forma i motivy patří k základům světové romantické poezie."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Hrdina o půlnoci truchlí za Lenorou",
+        "Slyší ťukání a otevírá dveře/okno",
+        "Vletí havran a usedne na Palladu",
+        "Dialog otázek a odpovědi „Nevermore“",
+        "Gradace od zvědavosti k zoufalství",
+        "Havran zůstává – žal je trvalý"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: půlnoční žal → ťukání → příchod havrana → „Nevermore“ → gradace zoufalství → trvalý stín žalu."
+  ]
+}

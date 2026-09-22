@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Vladislav Vančura (1891–1942)",
+        "Žánr: groteskní / poetická novela",
+        "Poprvé vydáno: 1926",
+        "Děj: malé městečko u řeky během jednoho léta",
+        "Vyprávění: stylizovaná er-forma, bohatý a hříčkový jazyk"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "První republika, idylické maloměsto u řeky.",
+        "Svět je poetický a komický spíš než těžce realistický.",
+        "Do klidu obce vstoupí kouzelník Arnoštek.",
+        "Léto je časem zábav, žárlivosti a drobných skandálů.",
+        "Humor a jazyková virtuozita tvoří atmosféru díla."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Antonín Důra – majitel plovárny, usedlý měšťan.",
+        "Kateřina – Důrova žena, touží po rozmaru a pozornosti.",
+        "Kanovník Roch – kněz, přítel Důry, moralista.",
+        "Major Hugo – důstojník, další z „pánů“ u řeky.",
+        "Arnoštek – kouzelník, který rozvíří klid městečka."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Rozmar – touha po změně, zábavě a dobrodružství.",
+        "Groteska – směšné i lehce absurdní situace.",
+        "Poetismus – hravost, obraznost a radost z jazyka.",
+        "Maloměsto – uzavřený svět zvyků a pověstí.",
+        "Žárlivost – pohání konflikty mezi postavami.",
+        "Řeka a plovárna – ústřední dějiště léta."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Rozmarné léto?",
+      "options": [
+        "Karel Čapek",
+        "Vladislav Vančura",
+        "Jaroslav Hašek",
+        "Bohumil Hrabal"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Vladislav Vančura."
+    },
+    {
+      "prompt": "Ve kterém roce vyšlo Rozmarné léto poprvé?",
+      "options": [
+        "1918",
+        "1926",
+        "1938",
+        "1945"
+      ],
+      "correct": 1,
+      "expl": "Novela vyšla roku 1926."
+    },
+    {
+      "prompt": "Kde se děj především odehrává?",
+      "options": [
+        "V Praze",
+        "U plovárny v malém městečku u řeky",
+        "Na frontě",
+        "V klášteře"
+      ],
+      "correct": 1,
+      "expl": "Ústředním místem je plovárna a okolí řeky."
+    },
+    {
+      "prompt": "Kdo je Antonín Důra?",
+      "options": [
+        "Kouzelník",
+        "Majitel plovárny",
+        "Starosta Prahy",
+        "Železničář"
+      ],
+      "correct": 1,
+      "expl": "Důra provozuje plovárnu a patří k hlavní trojici „pánů“."
+    },
+    {
+      "prompt": "Kdo rozvíří klid městečka?",
+      "options": [
+        "Arnoštek – kouzelník",
+        "Heydrich",
+        "Gatsby",
+        "Saturnin"
+      ],
+      "correct": 0,
+      "expl": "Příchod kouzelníka Arnoštka spustí komické zápletky."
+    },
+    {
+      "prompt": "Jaká je Kateřina ve vztahu k Důrovi?",
+      "options": [
+        "Jeho sestra",
+        "Jeho žena, která touží po rozmaru",
+        "Jeho učitelka",
+        "Cizí turistka"
+      ],
+      "correct": 1,
+      "expl": "Kateřina je Důrova manželka; její touha po změně hýbe dějem."
+    },
+    {
+      "prompt": "Kteří tři „páni“ tvoří ústřední společnost?",
+      "options": [
+        "Důra, kanovník Roch a major Hugo",
+        "Pavel, Ester a Alena",
+        "Charlie, Algernon a Strauss",
+        "Josef, Marie a Petr"
+      ],
+      "correct": 0,
+      "expl": "Trojice Důra–Roch–Hugo je jádrem života u plovárny."
+    },
+    {
+      "prompt": "Čím je Vančurův styl v této knize typický?",
+      "options": [
+        "Suchým úředním jazykem",
+        "Bohatou stylizací a jazykovou hrou",
+        "Jen dialogy bez vyprávění",
+        "Anglickými citáty"
+      ],
+      "correct": 1,
+      "expl": "Vančura pracuje s poetickým, hutným a hravým jazykem."
+    },
+    {
+      "prompt": "Jaký tón dílo převážně má?",
+      "options": [
+        "Tragický a válečný",
+        "Humoristický, rozmarný a ironický",
+        "Horrorový",
+        "Dokumentární"
+      ],
+      "correct": 1,
+      "expl": "Jde o lehkou, rozmarnou a komickou prózu."
+    },
+    {
+      "prompt": "Co Arnoštek v městečku především způsobí?",
+      "options": [
+        "Požár radnice",
+        "Rozruch, žárlivost a milostné zmatky",
+        "Válku s mloky",
+        "Ztrátu třídní knihy"
+      ],
+      "correct": 1,
+      "expl": "Jeho přítomnost rozhýbe vášně a komedie maloměsta."
+    },
+    {
+      "prompt": "K jakému uměleckému kontextu dílo bývá řazeno?",
+      "options": [
+        "K poetismu / avantgardní hříčce meziválečné literatury",
+        "K baroku",
+        "K socialistickému realismu 50. let",
+        "K gotickému románu"
+      ],
+      "correct": 0,
+      "expl": "Hravost a radost z jazyka souvisí s meziválečnou avantgardou."
+    },
+    {
+      "prompt": "Jaká je základní zápletka Rozmarného léta?",
+      "options": [
+        "Válečný útěk",
+        "Léto plné drobných skandálů po příchodu kouzelníka",
+        "Soudní proces",
+        "Cesta kolem světa"
+      ],
+      "correct": 1,
+      "expl": "Děj tvoří řetězec letních příhod kolem Arnoštka a místních."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Klíd u plovárny: Důra, Roch a Hugo tráví léto",
+        "Do městečka přijede kouzelník Arnoštek",
+        "Kateřina podlehne kouzlu změny a rozmaru",
+        "Mezi muži vzplane žárlivost a komické spory",
+        "Arnoštek rozvíří milostné i společenské poměry",
+        "Léto končí návratem k ironickému maloměstskému klidu"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: klid u plovárny → příchod Arnoštka → Kateřinin rozmar → žárlivost → zmatky → ironický závěr léta."
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Michal Viewegh",
+        "Žánr: autobiografický / humoristický román",
+        "Poprvé vydáno: 1992",
+        "Děj/prostředí: Československo od 60. let po normalizaci a sametovou revoluci",
+        "Vyprávění/forma: ich-forma, ironický komentář vypravěče Kvida"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Rodinná kronika zasazená do pozdního socialismu a normalizace.",
+        "Humor a nadsázka střídají bezmoc vůči režimu.",
+        "Rodina se stěhuje, otec ztrácí ideály, syn Kvido vyrůstá do literatury.",
+        "Politika vstupuje do soukromí: škola, práce, pochlebování, strach.",
+        "Konec směřuje k roku 1989 a pádu režimu.",
+        "Téma: dětství, totalita „zdola“, ironie jako obrana."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Kvido – vypravěč, nadané dítě a později spisovatel.",
+        "Otec – původně nadšený komunista, později zklamaný.",
+        "Matka – praktická, chrání rodinu, snáší otcovy výstřelky.",
+        "Babička – tradiční autorita a zdroj historek.",
+        "Sourozenci a spolužáci – milují/parodují Kvidův svět.",
+        "Stranické postavy – úředníci a „soudruzi“ tlaku moci."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Ironie – základní postoj vyprávění k režimu i rodině.",
+        "Normalizace – šedá doba po 1968 v pozadí dospívání.",
+        "Autobiografie – Kvido má blízko k autorovi.",
+        "Rodinná kronika – dějiny skrze domácnost.",
+        "Humor – zbraň proti absurditě moci.",
+        "Sametová revoluce – historický rámec závěru."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo je autorem Báječných let pod psa?",
+      "options": [
+        "Bohumil Hrabal",
+        "Michal Viewegh",
+        "Josef Škvorecký",
+        "Ivan Klíma"
+      ],
+      "correct": 1,
+      "expl": "Román napsal Michal Viewegh; vyšel v roce 1992."
+    },
+    {
+      "prompt": "Kdo vypráví příběh?",
+      "options": [
+        "Otec",
+        "Kvido",
+        "Učitel",
+        "Soudruh předseda"
+      ],
+      "correct": 1,
+      "expl": "Vypravěčem je Kvido – od dětství po dospělost."
+    },
+    {
+      "prompt": "Jaký je základní tón knihy?",
+      "options": [
+        "Tragický naturalismus",
+        "Ironický humor o životě za socialismu",
+        "Gotický horor",
+        "Náboženská meditace"
+      ],
+      "correct": 1,
+      "expl": "Viewegh spojuje rodinnou komedii s politickou ironií."
+    },
+    {
+      "prompt": "Co se děje s otcem?",
+      "options": [
+        "Emigruje hned na začátku",
+        "Z nadšeného komunisty se stává zklamaný muž",
+        "Stane se prezidentem",
+        "Odejde do kláštera"
+      ],
+      "correct": 1,
+      "expl": "Otcův ideologický oblouk ukazuje rozpad iluzí o režimu."
+    },
+    {
+      "prompt": "Do jaké doby je příběh zasazen?",
+      "options": [
+        "Husitské války",
+        "Od 60. let přes normalizaci k roku 1989",
+        "Jen 1. světová válka",
+        "Středověk"
+      ],
+      "correct": 1,
+      "expl": "Chronologie sleduje československé dějiny 2. poloviny 20. století."
+    },
+    {
+      "prompt": "Jaká je Kvidova zvláštnost v dětství?",
+      "options": [
+        "Nemluví",
+        "Je předčasně vyspělý a literárně nadaný",
+        "Je sportovní šampion",
+        "Je členem StB"
+      ],
+      "correct": 1,
+      "expl": "Kvido působí jako „zázračné dítě“ s literárními ambicemi."
+    },
+    {
+      "prompt": "K čemu slouží humor v románu?",
+      "options": [
+        "Jen k pobavení bez významu",
+        "K odhalení absurdity režimu i rodinných situací",
+        "K oslavě strany",
+        "K výuce matematiky"
+      ],
+      "correct": 1,
+      "expl": "Humor je nástroj kritiky i sebeobrany postav."
+    },
+    {
+      "prompt": "Kdy kniha poprvé vyšla?",
+      "options": [
+        "1968",
+        "1989",
+        "1992",
+        "2001"
+      ],
+      "correct": 2,
+      "expl": "Báječná léta pod psa vyšla roku 1992, krátce po pádu komunismu."
+    },
+    {
+      "prompt": "Jaký žánr knize nejlépe sedí?",
+      "options": [
+        "Epos",
+        "Autobiografický humoristický román",
+        "Antická tragédie",
+        "Detektivka"
+      ],
+      "correct": 1,
+      "expl": "Jde o autobiograficky laděný román s humorem a politickým podtextem."
+    },
+    {
+      "prompt": "Co je „pod psa“ v názvu?",
+      "options": [
+        "Název psího útulku",
+        "Ironické označení „báječných“ let, která tak báječná nebyla",
+        "Jméno vesnice",
+        "Značka auta"
+      ],
+      "correct": 1,
+      "expl": "Název je oxymóron: „báječná“ léta jsou ve skutečnosti bídná."
+    },
+    {
+      "prompt": "Jak do příběhu vstupuje politika?",
+      "options": [
+        "Vůbec",
+        "Přes školu, práci, strach a přetvářku v každodennosti",
+        "Jen v dodatku",
+        "Jen skrze válku"
+      ],
+      "correct": 1,
+      "expl": "Totalita je vidět v drobných situacích, ne jen ve velkých dějinách."
+    },
+    {
+      "prompt": "Čím román končí v historickém smyslu?",
+      "options": [
+        "Mnichovem 1938",
+        "Blízkostí pádu režimu / sametové revoluce",
+        "Husitskými válkami",
+        "Vznikem ČSR 1918"
+      ],
+      "correct": 1,
+      "expl": "Rodinný příběh ústí do historického zlomu konce 80. let."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Kvido vyrůstá v rodině pozdního socialismu",
+        "Otec věří straně, pak ztrácí iluze",
+        "Rodina čelí tlaku školy a práce",
+        "Kvido objevuje literaturu a ironii",
+        "Normalizace šediví každodenní život",
+        "Přichází historický zlom konce 80. let"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: dětství → otcovy iluze a zklamání → tlak režimu → Kvidova literatura → šedá normalizace → zlom 1989."
+  ]
+}

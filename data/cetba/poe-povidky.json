@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Edgar Allan Poe",
+        "Žánr: povídky (horor, detektivka, groteska)",
+        "Poprvé souborně / kanonicky 19. stol.",
+        "Prostředí: gotické interiéry, města, mysl vypravěče",
+        "Forma: krátká próza s pointou a atmosférou"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Romantismus/gotika: strach, vina, šílenství.",
+        "Poe zakládá moderní horor i detektivku.",
+        "Vypravěči často nespolehliví.",
+        "Racionalita (Dupin) vs. hrůza podvědomí.",
+        "Efekt jednotného dojmu."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Vypravěči–šílenci – častí hrdinové.",
+        "Augustе Dupin – analytik.",
+        "Oběti a pronásledovaní – gotické postavy.",
+        "Havraní / symbolické bytosti – motivy i mimo poezii.",
+        "Vyšetřovatelé a svědkové.",
+        "Čtenář – součást napětí."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Gotická atmosféra.",
+        "Nespolehlivý vypravěč.",
+        "Analytická detektivka.",
+        "Vina a svědomí.",
+        "Horor mysli.",
+        "Pointa povídky."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Čím je Poe významný?",
+      "options": [
+        "Jen účetnictvím",
+        "Zakladatelský vliv na horor a detektivku",
+        "Jen husitskou kronikou",
+        "Jen robotikou"
+      ],
+      "correct": 1,
+      "expl": "Moderní žánry."
+    },
+    {
+      "prompt": "Kdo je Dupin?",
+      "options": [
+        "Šílenec jen",
+        "Analytický detektiv",
+        "Vodník",
+        "Revizor"
+      ],
+      "correct": 1,
+      "expl": "Předchůdce Holmese."
+    },
+    {
+      "prompt": "Co je typické pro jeho horory?",
+      "options": [
+        "Veselí bez stínu",
+        "Atmosféra, vina, šílenství",
+        "Jen reportáž z fronty",
+        "Jen sňatkový trh"
+      ],
+      "correct": 1,
+      "expl": "Gotická psychologie."
+    },
+    {
+      "prompt": "Jaký bývá vypravěč?",
+      "options": [
+        "Vždy objektivní soudce",
+        "Často nespolehlivý",
+        "Jen dítě bez stínu",
+        "Jen robot"
+      ],
+      "correct": 1,
+      "expl": "Nespolehlivost."
+    },
+    {
+      "prompt": "Co je „jednotný dojem“?",
+      "options": [
+        "Daně",
+        "Kompozice k jednomu účinku na čtenáře",
+        "Sportovní výsledek",
+        "Jízdní řád"
+      ],
+      "correct": 1,
+      "expl": "Poeova poetika povídky."
+    },
+    {
+      "prompt": "Jaké prostředí bývá?",
+      "options": [
+        "Jen slunná pláž",
+        "Gotické domy, tma, uzavřenost",
+        "Jen zákopy 1916",
+        "Jen farmy mloků"
+      ],
+      "correct": 1,
+      "expl": "Gotika."
+    },
+    {
+      "prompt": "Co zkoumá detektivní linie?",
+      "options": [
+        "Počasí",
+        "Logiku a analýzu zločinu",
+        "Vaření",
+        "Tanec"
+      ],
+      "correct": 1,
+      "expl": "Racionalita."
+    },
+    {
+      "prompt": "Jaká emoce je klíčová?",
+      "options": [
+        "Jen nuda",
+        "Strach a vina",
+        "Jen úřední radost",
+        "Jen daňová úleva"
+      ],
+      "correct": 1,
+      "expl": "Horor svědomí."
+    },
+    {
+      "prompt": "Proč krátká forma?",
+      "options": [
+        "Náhodou",
+        "Pointa a atmosféra vyžadují celek",
+        "Protože neuměl dlouhé",
+        "Kvůli cenzuře robotů"
+      ],
+      "correct": 1,
+      "expl": "Efekt povídky."
+    },
+    {
+      "prompt": "Hlavní témata souboru?",
+      "options": [
+        "Zelinářství",
+        "Strach, rozum, zločin, šílenství",
+        "Lastura a oheň Goldinga jen",
+        "Audience Havla jen"
+      ],
+      "correct": 1,
+      "expl": "Široký žánrový vějíř."
+    },
+    {
+      "prompt": "Jaký směr?",
+      "options": [
+        "Socialistický realismus",
+        "Romantismus/gotika s moderním vlivem",
+        "Husitský epos",
+        "Dada jen"
+      ],
+      "correct": 1,
+      "expl": "Gotický romantismus."
+    },
+    {
+      "prompt": "Co čtenář často cítí?",
+      "options": [
+        "Jen návod na daně",
+        "Napětí a nejistotu pravdy",
+        "Jen klid účetního",
+        "Jen sňatek Darcyho"
+      ],
+      "correct": 1,
+      "expl": "Efekt hrůzy/záhady."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Úvod atmosféry a vypravěče",
+        "Náběh záhady/hrůzy",
+        "Stupňování napětí",
+        "Zvrat nebo odhalení",
+        "Pointa",
+        "Dojezd atmosféry"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: atmosféra → záhada → stupňování → zvrat → pointa → dojezd."
+  ]
+}

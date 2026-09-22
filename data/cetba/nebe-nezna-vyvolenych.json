@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Erich Maria Remarque",
+        "Žánr: román",
+        "Poprvé vydáno: 1942 (česky Holubovi)",
+        "Děj: emigranti prchající před nacismem, láska Joan a Ravica",
+        "Vyprávění: er-forma / prožitkový styl"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "2. světová válka, útěk a bezdomoví emigrantů.",
+        "Láska vzniká v nestabilitě.",
+        "Hranice, papíry, strach z zatčení.",
+        "Humanismus proti totalitě.",
+        "Křehkost štěstí ve válce."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Ravic – emigrant, lékař bez papírů.",
+        "Joan Madou – jeho láska.",
+        "Boris Morosow – přítel.",
+        "Policie / úřady – hrozba.",
+        "Uprchlíci – společenství osudu.",
+        "Paříž – chronotop exilu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Emigrace – základní situace.",
+        "Láska ve válce – téma.",
+        "Bezpapírovost – bezpráví.",
+        "Přátelství – opora.",
+        "Totalita – příčina útěku.",
+        "Ztráta – tragický stín."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Nebe nezná vyvolených?",
+      "options": [
+        "Remarque",
+        "Hemingway",
+        "Heller",
+        "Orwell"
+      ],
+      "correct": 0,
+      "expl": "E. M. Remarque."
+    },
+    {
+      "prompt": "O čem román je?",
+      "options": [
+        "O farmě mloků",
+        "O lásce emigrantů prchajících před nacismem",
+        "O robotike",
+        "O baladách"
+      ],
+      "correct": 1,
+      "expl": "Exil a láska."
+    },
+    {
+      "prompt": "Kdo je Ravic?",
+      "options": [
+        "Policista",
+        "Emigrant a lékař",
+        "Generál SS",
+        "Farár"
+      ],
+      "correct": 1,
+      "expl": "Ravic bez papírů."
+    },
+    {
+      "prompt": "Kdo je Joan?",
+      "options": [
+        "Úřednice jen",
+        "Ravicova láska",
+        "Mlok",
+        "Učitelka Kantorek"
+      ],
+      "correct": 1,
+      "expl": "Joan Madou."
+    },
+    {
+      "prompt": "Jaké nebezpečí hrozí?",
+      "options": [
+        "Daně z čaje",
+        "Zatčení, vydání, nestabilita exilu",
+        "Jen déšť",
+        "Jen opera"
+      ],
+      "correct": 1,
+      "expl": "Exilové bezpráví."
+    },
+    {
+      "prompt": "Kde se děj často odehrává?",
+      "options": [
+        "Verona",
+        "Paříž v čase války/exilu",
+        "Mordor",
+        "Kostelec 1945 jen"
+      ],
+      "correct": 1,
+      "expl": "Pařížský exil."
+    },
+    {
+      "prompt": "Jaký je tón?",
+      "options": [
+        "Jen komický švejkovský",
+        "Vážný, citový, protiválečný",
+        "Jen úřední",
+        "Jen absurdní Kafka bez lásky"
+      ],
+      "correct": 1,
+      "expl": "Remarquovský humanismus."
+    },
+    {
+      "prompt": "Co „nebe nezná vyvolených“ naznačuje?",
+      "options": [
+        "Vyvolenost bohatých",
+        "Nikdo nemá zaručené štěstí/osudovou ochranu",
+        "Meteorologii",
+        "Církevní hierarchii jen"
+      ],
+      "correct": 1,
+      "expl": "Osud nešetří nikoho."
+    },
+    {
+      "prompt": "Jaká je role přátelství?",
+      "options": [
+        "Žádná",
+        "Opora v exilu",
+        "Jen konkurence",
+        "Jen daně"
+      ],
+      "correct": 1,
+      "expl": "Boris aj."
+    },
+    {
+      "prompt": "Proč je láska křehká?",
+      "options": [
+        "Není",
+        "Válka a nestabilita ji ohrožují",
+        "Protože je o robotike",
+        "Protože je účetní"
+      ],
+      "correct": 1,
+      "expl": "Kontext ohrožení."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Zelinářství",
+        "Exil, láska a lidskost proti totalitě",
+        "Revizorova komika",
+        "Lastura a oheň"
+      ],
+      "correct": 1,
+      "expl": "Humanismus."
+    },
+    {
+      "prompt": "Jak souvisí s Remarquem obecně?",
+      "options": [
+        "Napsal jen komedie",
+        "Opět antiválečný/humanitní pohled",
+        "Jen fantasy",
+        "Jen balady"
+      ],
+      "correct": 1,
+      "expl": "Typická Remarquova poloha."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Ravic žije v ilegálním exilu",
+        "Potká Joan",
+        "Láska dává smysl nestabilitě",
+        "Úřady a válka stupňují tlak",
+        "Ztráty a odluky",
+        "Tragická cena vyhnanství"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: exil → setkání → láska → tlak → ztráty → tragická bilance."
+  ]
+}

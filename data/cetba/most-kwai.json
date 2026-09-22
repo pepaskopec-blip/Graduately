@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Pierre Boulle",
+        "Žánr: válečný román",
+        "Poprvé vydáno: 1952",
+        "Děj / prostředí: japonský zajatecký tábor v Barmě za 2. světové války, stavba mostu",
+        "Vyprávění / forma: er-forma, napětí mezi povinností, cti a sabotážou"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Pacifické bojiště 2. světové války: Japonci nutí zajatce stavět železnici.",
+        "Most přes Kwai je strategický objekt i symbol.",
+        "Konflikt mezi britskou vojenskou ctí a spojeneckou sabotážou.",
+        "Plukovník Nicholson chce most postavit „perfektně“ – paradox hrdosti.",
+        "Román klade otázku, kdy se disciplína stává absurdní.",
+        "Známá je i filmová adaptace (1957)."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Plukovník Nicholson – britský velitel zajatců, posedlý ctí a řádem.",
+        "Plukovník Saito – japonský velitel tábora.",
+        "Shears – spojenecký komandos / uprchlík (dle verze), účastník sabotáže.",
+        "Major Clipton – lékař, skeptický svědek Nicholsonovy pýchy.",
+        "Warden / komando – skupina pověřená zničením mostu.",
+        "Britští zajatci – muži rozpolcení mezi poslušností a přežitím."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Vojenská čest – Nicholsonův princip, dovedený do krajnosti.",
+        "Most – dílo i cíl zničení; symbol paradoxu.",
+        "Sabotáž – spojenecký úkol zničit strategickou stavbu.",
+        "Absurdita války – dokonalá práce pro nepřítele.",
+        "Konflikt kultur – britský a japonský vojenský kodex.",
+        "Ironie – hrdost pomáhá nepříteli."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Most přes řeku Kwai?",
+      "options": [
+        "Ernest Hemingway",
+        "Pierre Boulle",
+        "Joseph Heller",
+        "Norman Mailer"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Pierre Boulle."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "Ve Francii",
+        "V japonském zajateckém táboře v Barmě",
+        "V Londýně",
+        "V gulagu"
+      ],
+      "correct": 1,
+      "expl": "Zajatci staví most v jihovýchodní Asii za japonského zajetí."
+    },
+    {
+      "prompt": "Kdo je plukovník Nicholson?",
+      "options": [
+        "Japonský generál",
+        "Britský velitel posedlý vojenskou ctí a stavbou mostu",
+        "Americký pilot",
+        "Lékař"
+      ],
+      "correct": 1,
+      "expl": "Nicholson řídí zajatce a trvá na dokonalém mostě."
+    },
+    {
+      "prompt": "V čem spočívá paradox Nicholsonova jednání?",
+      "options": [
+        "Odmítá pracovat",
+        "Buduje dokonalý most pro nepřítele ve jménu cti",
+        "Dezertuje hned",
+        "Pomáhá jen Japoncům z lásky"
+      ],
+      "correct": 1,
+      "expl": "Jeho disciplína slouží japonské strategii."
+    },
+    {
+      "prompt": "Jaký úkol mají spojenci?",
+      "options": [
+        "Most vylepšit",
+        "Most zničit",
+        "Tábor koupit",
+        "Nicholsona povýšit"
+      ],
+      "correct": 1,
+      "expl": "Sabotážní skupina má most vyhodit."
+    },
+    {
+      "prompt": "Kdy román vyšel?",
+      "options": [
+        "1942",
+        "1952",
+        "1962",
+        "1972"
+      ],
+      "correct": 1,
+      "expl": "Kniha vyšla roku 1952."
+    },
+    {
+      "prompt": "Kdo je Saito?",
+      "options": [
+        "Britský lékař",
+        "Japonský velitel tábora",
+        "Vůdce komanda",
+        "Nicholsonův bratr"
+      ],
+      "correct": 1,
+      "expl": "Saito velí japonskému táboru."
+    },
+    {
+      "prompt": "Co je hlavním tématem?",
+      "options": [
+        "Milostná romance",
+        "Střet cti, povinnosti a smyslu války",
+        "Venkovská idyla",
+        "Detektivka"
+      ],
+      "correct": 1,
+      "expl": "Román zkoumá, kdy se vojenská čest stává absurdní."
+    },
+    {
+      "prompt": "Jakou roli má major Clipton?",
+      "options": [
+        "Stavitel mostu",
+        "Lékař a kritický pozorovatel Nicholsonovy pýchy",
+        "Japonský špion",
+        "Pilot"
+      ],
+      "correct": 1,
+      "expl": "Clipton zpochybňuje smysl Nicholsonova počínání."
+    },
+    {
+      "prompt": "Ve které válce se děj odehrává?",
+      "options": [
+        "Korejská",
+        "2. světová válka",
+        "Vietnamská výhradně",
+        "1. světová"
+      ],
+      "correct": 1,
+      "expl": "Jde o pacifické zajetí za druhé světové války."
+    },
+    {
+      "prompt": "Proč je most strategický?",
+      "options": [
+        "Je turistickou atrakcí",
+        "Umožňuje japonské dopravě a zásobování",
+        "Vede do Londýna",
+        "Je jen dekorací"
+      ],
+      "correct": 1,
+      "expl": "Železniční most slouží japonské válečné logistice."
+    },
+    {
+      "prompt": "Jaký je základní dramatický konflikt závěru?",
+      "options": [
+        "Svatba v táboře",
+        "Střet mezi snahou most bránit (čest) a snahou jej zničit (válka)",
+        "Volba nového velitele Evropy",
+        "Soud s Cliptonem"
+      ],
+      "correct": 1,
+      "expl": "Nicholsonova hrdost narazí na sabotáž vlastních spojenců."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Britští zajatci přicházejí do tábora u řeky Kwai",
+        "Konflikt Nicholsona se Saitem o vojenskou čest",
+        "Nicholson přebírá řízení stavby a buduje dokonalý most",
+        "Spojenci připravují sabotáž",
+        "Pokus most zničit naráží na Nicholsonův odpor",
+        "Most je zničen; vyvstává ironie cti ve válce"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: zajetí → spor o čest → dokonalá stavba → plán sabotáže → střet → zničení mostu."
+  ]
+}

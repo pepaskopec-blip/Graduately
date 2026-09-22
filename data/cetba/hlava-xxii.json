@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Joseph Heller; překlad: Jindra",
+        "Žánr: antiwar satirický román / černý humor",
+        "Poprvé vydáno: 1961",
+        "Děj/prostředí: Americká letecká základna ve Středomoří za 2. sv. války",
+        "Vyprávění/forma: nelineární vyprávění, paradoxní logika; překlad Jindra"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "2. světová válka jako pozadí absurdní byrokracie.",
+        "Vojáci mají létat stále více misí.",
+        "Hlava XXII: kdo je blázen, může být uvolněn – ale žádost dokazuje zdravý rozum.",
+        "Satira na armádu, kapitalismus a nesmysl moci.",
+        "Smrt a strach střídá groteska.",
+        "Téma: absurdita války, byrokracie, přežití, vina."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Kapitán Yossarian – bombardér, chce přežít.",
+        "Milo Minderbinder – obchodník se syndikátem.",
+        "Plukovník Cathcart – zvyšuje počet misí.",
+        "Chaplain / kaplan – svědek morálního chaosu.",
+        "Nately, Snowden, McWatt aj. – spolubojovníci a oběti.",
+        "Doc Daneeka – lékař v pasti paragrafu 22."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Hlava XXII – paradoxní předpis bez východiska.",
+        "Černý humor – smích nad hrůzou.",
+        "Byrokracie – nesmyslná pravidla řídí život i smrt.",
+        "Mise – počet náletů stále rostoucí.",
+        "Snowdenova smrt – traumatický střed Yossarianovy zkušenosti.",
+        "Syndikát Milo – válka jako byznys."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Hlavu XXII?",
+      "options": [
+        "Kurt Vonnegut",
+        "Joseph Heller",
+        "Ernest Hemingway",
+        "Orwell"
+      ],
+      "correct": 1,
+      "expl": "Hellerův román z roku 1961 definoval moderní antiwar satiru."
+    },
+    {
+      "prompt": "Co je „hlava XXII“?",
+      "options": [
+        "Název letadla",
+        "Paradoxní předpis: žádat o uvolnění dokazuje zdravý rozum",
+        "Jméno generála",
+        "Kód trifida"
+      ],
+      "correct": 1,
+      "expl": "Past bez východiska – logika moci, ne spravedlnost."
+    },
+    {
+      "prompt": "Kdo je Yossarian?",
+      "options": [
+        "Generál",
+        "Bombardér, který chce především přežít",
+        "Obchodník Milo výhradně",
+        "Prezident Snow"
+      ],
+      "correct": 1,
+      "expl": "Hlavní hrdina bojuje proti nesmyslu misí a smrti."
+    },
+    {
+      "prompt": "Co dělá plukovník Cathcart?",
+      "options": [
+        "Snižuje mise na nulu",
+        "Stále zvyšuje počet povinných misí",
+        "Léčí Snowdena",
+        "Píše poezii Nezvalovi"
+      ],
+      "correct": 1,
+      "expl": "Ambice velení prodlužuje vojákům nebezpečí."
+    },
+    {
+      "prompt": "Kdo je Milo Minderbinder?",
+      "options": [
+        "Kaplan",
+        "Podnikavec řídící syndikát i za cenu zrady",
+        "Německý pilot",
+        "Lékárník v Amsterodamu"
+      ],
+      "correct": 1,
+      "expl": "Válka je pro něj obchod; moralita mizí."
+    },
+    {
+      "prompt": "Jaký je styl vyprávění?",
+      "options": [
+        "Přísně lineární deník Anne",
+        "Nelineární, opakující se scény, paradoxní humor",
+        "Jen blankvers",
+        "Jen seminář Cimrmana"
+      ],
+      "correct": 1,
+      "expl": "Čas se láme; klíčové trauma se odhaluje postupně."
+    },
+    {
+      "prompt": "Kdy román vyšel?",
+      "options": [
+        "1945",
+        "1961",
+        "2008",
+        "1886"
+      ],
+      "correct": 1,
+      "expl": "Catch-22 vyšel 1961."
+    },
+    {
+      "prompt": "Co je Snowdenův význam?",
+      "options": [
+        "Je to prezident",
+        "Jeho smrt je jádro Yossarianova traumatu",
+        "Je to havran",
+        "Je to Edison"
+      ],
+      "correct": 1,
+      "expl": "Scéna se Snowdenem vysvětluje Yossarianův strach a poznání smrti."
+    },
+    {
+      "prompt": "Jaký žánr je nejpřiléhavější?",
+      "options": [
+        "Idyla",
+        "Válečná satira / černý humor",
+        "Gotická balada",
+        "Dekameronovská novela výhradně"
+      ],
+      "correct": 1,
+      "expl": "Antiwar román s absurdní komikou."
+    },
+    {
+      "prompt": "Proč Yossarian působí „bláznivě“?",
+      "options": [
+        "Chce víc misí",
+        "V absurdním systému je touha přežít jediný zdravý postoj",
+        "Nemiluje život",
+        "Je trifid"
+      ],
+      "correct": 1,
+      "expl": "Pointa hlavy XXII: zdravý člověk se bojí smrti."
+    },
+    {
+      "prompt": "Co satira míří vedle armády ještě na?",
+      "options": [
+        "Jen na vaření",
+        "Byznys, kariérismus a byrokracii",
+        "Jen na poetismus",
+        "Jen na husitství"
+      ],
+      "correct": 1,
+      "expl": "Miloův syndikát ukazuje válku jako trh."
+    },
+    {
+      "prompt": "Jaký je vztah humoru a hrůzy?",
+      "options": [
+        "Humor popírá válku jako neexistující",
+        "Černý humor odhaluje hrůzu tím, že ji zesměšňuje",
+        "Humor chybí úplně",
+        "Je to dětská říkanka"
+      ],
+      "correct": 1,
+      "expl": "Smích je zbraň proti nesmyslu i výraz zoufalství."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Yossarian létá mise a touží vypadnout",
+        "Cathcart zvyšuje počet náletů",
+        "Hlava XXII blokuje všechny úniky",
+        "Milo buduje válečný obchodní syndikát",
+        "Odhaluje se trauma Snowdenovy smrti",
+        "Yossarian volí vzpouru / útěk jako cestu přežití"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: mise a strach → růst náletů → past hlavy XXII → Miloův byznys → Snowdenovo trauma → Yossarianova vzpoura/útěk."
+  ]
+}

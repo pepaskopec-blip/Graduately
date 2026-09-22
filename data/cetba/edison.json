@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Vítězslav Nezval",
+        "Žánr: lyricko-epická báseň / poetismus",
+        "Poprvé vydáno: 1928 (pásmo v Díle)",
+        "Děj/prostředí: Moderní civilizace, inventivní svět, noční město",
+        "Vyprávění/forma: pásmo: volný verš, obrazy, refrain „Naše životy…“"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Avantgarda 20. let: poetismus, obdiv k moderně.",
+        "Edison jako symbol vynálezce a tvůrčí energie.",
+        "Báseň spojuje osobní úzkost s oslavou práce ducha.",
+        "Opakující se refrain dává hymnický rytmus.",
+        "Obrazy města, vědy, snu a smrti.",
+        "Téma: tvořivost, čas, sláva, smysl lidského snažení."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Thomas Alva Edison – ústřední symbol vynálezce.",
+        "Lyriický subjekt – básník meditující o tvorbě a životě.",
+        "„My“ v refrainu – generace / lidstvo v pohybu.",
+        "Vynálezci a tvůrci – typ člověka, který „rozsvěcí“ svět.",
+        "Smrt / čas – protivník i motivátor tvorby.",
+        "Moderní město – kulisa inspirace poetismu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Poetismus – avantgardní směr hravosti a obraznosti.",
+        "Pásmo – dlouhá báseň proudu představ.",
+        "Refrain – opakovaný motiv („Naše životy jsou…“).",
+        "Edison – metafora tvůrčího génia.",
+        "Civilizační lyrika – technika i sen v poezii.",
+        "Apoteóza práce ducha – oslava tvořivosti."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal báseň Edison?",
+      "options": [
+        "Jiří Wolker",
+        "Vítězslav Nezval",
+        "Karel Hynek Mácha",
+        "Jaroslav Seifert jen výhradně"
+      ],
+      "correct": 1,
+      "expl": "Edison patří k vrcholům Nezvalova poetismu."
+    },
+    {
+      "prompt": "K jakému směru báseň patří?",
+      "options": [
+        "Naturalismus",
+        "Poetismus / avantgarda",
+        "Husitský chorál",
+        "Socialistický realismus 50. let výhradně"
+      ],
+      "correct": 1,
+      "expl": "Obraznost, civilizace a hravost jsou poetistické."
+    },
+    {
+      "prompt": "Kdo je Edison v básni především?",
+      "options": [
+        "Jen historický údaj bez významu",
+        "Symbol vynálezce a tvůrčí energie",
+        "Záporný hrdina",
+        "Postava z Hamleta"
+      ],
+      "correct": 1,
+      "expl": "Nezval z Edisonovy postavy dělá mýtus tvoření."
+    },
+    {
+      "prompt": "Jaká forma textu je typická?",
+      "options": [
+        "Próza deníku",
+        "Pásmo volného verše s refrény",
+        "Pět aktů dramatu",
+        "Sonetový věnec výhradně"
+      ],
+      "correct": 1,
+      "expl": "Jde o pásmo – proud obrazů a opakování."
+    },
+    {
+      "prompt": "Co refrain zdůrazňuje?",
+      "options": [
+        "Recept na jídlo",
+        "Společný úděl lidských životů a jejich vzmach",
+        "Jména trifidů",
+        "Daňové zákony"
+      ],
+      "correct": 1,
+      "expl": "Opakování spojuje osobní i kolektivní zkušenost."
+    },
+    {
+      "prompt": "Kdy Edison (pásmo) vyšel?",
+      "options": [
+        "1886",
+        "1928",
+        "1952",
+        "1975"
+      ],
+      "correct": 1,
+      "expl": "Datuje se do roku 1928, vrcholných 20. let."
+    },
+    {
+      "prompt": "Jaké motivy se v básni mísí?",
+      "options": [
+        "Jen zemědělství",
+        "Vynález, město, sen, čas, smrt, tvorba",
+        "Jen bitevní řád",
+        "Jen mor ve Florencii"
+      ],
+      "correct": 1,
+      "expl": "Civilizační i existenciální motivy jdou spolu."
+    },
+    {
+      "prompt": "Co je poetismus?",
+      "options": [
+        "Středověký řád",
+        "Avantgardní směr oslavující obraznost a moderní život",
+        "Druh daně",
+        "Policejní metoda"
+      ],
+      "correct": 1,
+      "expl": "Poetismus (Nezval, Teige aj.) hledal poezii v civilizaci a hravosti."
+    },
+    {
+      "prompt": "Jaký je vztah lyriického subjektu k Edisonovi?",
+      "options": [
+        "Lhostejný",
+        "Obdivný; reflektuje skrze něj smysl tvorby",
+        "Čistě nepřátelský",
+        "Je to jeho syn"
+      ],
+      "correct": 1,
+      "expl": "Edison je zrcadlo básníkovy meditace o díle."
+    },
+    {
+      "prompt": "Proč je báseň vhodná k maturitě z poezie 20. století?",
+      "options": [
+        "Protože je próza",
+        "Reprezentuje českou avantgardu a pásmovou formu",
+        "Protože je anonymní",
+        "Protože je překlad Becketta"
+      ],
+      "correct": 1,
+      "expl": "Ukazuje poetismus, volný verš a civilizační lyriku."
+    },
+    {
+      "prompt": "Co „rozsvěcí“ Edison metaforicky?",
+      "options": [
+        "Jen svíčku v kostele",
+        "Svět vynálezem i duchovní energií tvorby",
+        "Jen cigarový ohýnek",
+        "Jen barikádu"
+      ],
+      "correct": 1,
+      "expl": "Světlo je symbol poznání a tvořivého činu."
+    },
+    {
+      "prompt": "Jak se liší „děj“ básně od románu?",
+      "options": [
+        "Má 12 kapitol detekce",
+        "Jde o kompozici motivů a gradaci obrazů, ne o epický plot",
+        "Má přesné datum bitvy jako u Huga",
+        "Je to zápis StB"
+      ],
+      "correct": 1,
+      "expl": "U poezie sledujeme řád motivů a refrénů, ne románové zápletky."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Vstup do meditace o moderním tvůrci",
+        "Obrazy Edisonovy vynalézavosti a energie",
+        "Refrain spojuje „naše životy“ s tvorbou",
+        "Vstupují úzkost, čas a smrtelnost",
+        "Gradace oslavy ducha a práce",
+        "Závěrečné vyznění apoteózy tvořivosti"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: meditace → Edisonovy obrazy → refrain „naše životy“ → úzkost času → gradace oslavy → apoteóza tvorby."
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Christiane F. (zaznamenali Kai Hermann a Horst Rieck)",
+        "Žánr: dokumentární próza / autentická zpověď",
+        "Poprvé vydáno: 1978 (Wir Kinder vom Bahnhof Zoo)",
+        "Děj / prostředí: Západní Berlín 70. let – stanice Zoo, drogová scéna",
+        "Vyprávění / forma: ich-forma Christiane, reportážní styl založený na rozhovorech"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Západní Berlín 70. let: subkultura, heroin, prostitutce mladistvých.",
+        "Kniha vznikla z novinářských rozhovorů s Christiane Felscherinow.",
+        "Ukazuje propad od dětství a večírků k závislosti.",
+        "Stanice Zoo je centrem drogové scény a obchodu s tělem.",
+        "Text varuje před drogami bez moralizující pohádky – skrze svědectví.",
+        "Patří k nejznámějším dokumentárním příběhům o závislosti."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Christiane F. – vypravěčka, dospívající dívka závislá na heroinu.",
+        "Detlef – Christianin přítel, také závislý.",
+        "Matka Christiane – snaží se dceru zachránit, často bezmocně.",
+        "Kamarádi z party scény – vstupní brána k drogám.",
+        "Dealeři a klienti – součást ekonomie stanice Zoo.",
+        "Sociální pracovníci / policie – instituce na okraji příběhu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Závislost – fyzické i sociální otroctví heroinu.",
+        "Stanice Zoo – symbol úpadku a trhu s drogami.",
+        "Prostituce – prostředek získání peněz na dávku.",
+        "Dokumentárnost – autentické svědectví, ne fikční „hrdinství“.",
+        "Dospívání – ztráta dětství v subkultuře.",
+        "Bezmoc okolí – rodina a instituce nestíhají pomáhat."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "O čem kniha My děti ze stanice ZOO především vypovídá?",
+      "options": [
+        "O válečném hrdinství",
+        "O drogové závislosti dospívajících v Berlíně",
+        "O středověku",
+        "O venkovské idyle"
+      ],
+      "correct": 1,
+      "expl": "Jde o svědectví o heroinové scéně 70. let."
+    },
+    {
+      "prompt": "Kdo je Christiane F.?",
+      "options": [
+        "Fiktivní detektiv",
+        "Skutečná dívka, jejíž zpověď kniha zaznamenává",
+        "Policistka",
+        "Lékárnice"
+      ],
+      "correct": 1,
+      "expl": "Christiane Felscherinow je autentická vypravěčka příběhu."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "V Praze",
+        "V Západním Berlíně u stanice Zoo",
+        "V New Yorku výhradně",
+        "V Moskvě"
+      ],
+      "correct": 1,
+      "expl": "Centrem scény je berlínská stanice Zoologischer Garten."
+    },
+    {
+      "prompt": "Jak kniha vznikla?",
+      "options": [
+        "Jako román z fantazie bez podkladů",
+        "Z novinářských rozhovorů s Christiane",
+        "Jako oficiální vládní brožura",
+        "Jako veršovaná skladba"
+      ],
+      "correct": 1,
+      "expl": "Text zpracovali novináři na základě rozhovorů."
+    },
+    {
+      "prompt": "Proč Christiane prostitutuje?",
+      "options": [
+        "Z kariérních důvodů",
+        "Aby získala peníze na heroin",
+        "Na příkaz školy",
+        "Pro film"
+      ],
+      "correct": 1,
+      "expl": "Prostituce je důsledkem a nástrojem závislosti."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1958",
+        "1968",
+        "1978",
+        "1998"
+      ],
+      "correct": 2,
+      "expl": "Originál vyšel roku 1978."
+    },
+    {
+      "prompt": "Kdo je Detlef?",
+      "options": [
+        "Učitel",
+        "Christianeán přítel ze scény, také závislý",
+        "Policista",
+        "Lékař"
+      ],
+      "correct": 1,
+      "expl": "Detlef je její partner v drogovém propadu."
+    },
+    {
+      "prompt": "Jaký je styl vyprávění?",
+      "options": [
+        "Barokní epos",
+        "Dokumentární ich-forma blízká reportáži",
+        "Antiká tragédie ve verších",
+        "Sci-fi"
+      ],
+      "correct": 1,
+      "expl": "Text působí jako autentická zpověď."
+    },
+    {
+      "prompt": "Co kniha ukazuje o „zábavě“ na začátku?",
+      "options": [
+        "Že je neškodná navždy",
+        "Že večírky a drogy mohou rychle přerůst v závislost",
+        "Že vedou jen ke sportu",
+        "Že končí maturitou"
+      ],
+      "correct": 1,
+      "expl": "Cesta začíná subkulturou a končí heroinem."
+    },
+    {
+      "prompt": "Jaká je role matky?",
+      "options": [
+        "Dealerka",
+        "Snaží se pomáhat, ale často je bezmocná",
+        "Hlavní vypravěčka místo dcery",
+        "Nepřítelem policie"
+      ],
+      "correct": 1,
+      "expl": "Rodina naráží na limity pomoci při závislosti."
+    },
+    {
+      "prompt": "Proč je text maturitně relevantní?",
+      "options": [
+        "Oslavuje drogy",
+        "Jako svědectví o závislosti, společnosti a ztrátě dětství",
+        "Jako návod",
+        "Jako komedie"
+      ],
+      "correct": 1,
+      "expl": "Čte se jako varovné autentické svědectví."
+    },
+    {
+      "prompt": "Co symbolizuje stanice Zoo?",
+      "options": [
+        "Turistický ráj bez problémů",
+        "Centrum drogové scény a úpadku",
+        "Školu",
+        "Nemocnici výhradně"
+      ],
+      "correct": 1,
+      "expl": "Název odkazuje na místo, kde se scéna soustředí."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Christiane vyrůstá a vstupuje do party scény",
+        "První drogy a sestup k heroinu",
+        "Vztah s Detlefem a společná závislost",
+        "Prostituce kvůli penězům na dávku",
+        "Život u stanice Zoo na dně scény",
+        "Pokusy o záchranu a svědectví o propadu"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: party scéna → heroin → vztah a závislost → prostitutce → dno u Zoo → svědectví a pokusy o záchranu."
+  ]
+}

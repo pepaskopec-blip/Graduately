@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Jiří Wolker (1900–1924)",
+        "Žánr: básnická sbírka (proletářská poezie)",
+        "Poprvé vydáno: 1922",
+        "Obsah: sociální motivy, smrt, láska, revoluční naděje",
+        "Forma: volný verš i baladické postupy, obraznost a patos"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Počátek 20. let 20. století, poválečná chudoba a sociální napětí.",
+        "Proletářská poezie staví do středu dělníka a kolektiv.",
+        "Wolker spojuje osobní cit se sociálním svědomím.",
+        "Smrt a nemoc jsou přítomné (autor sám zemřel mladý).",
+        "Sbírka patří k vrcholům české proletářské lyriky."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Básnický subjekt – „já“ citlivé k bolesti chudých.",
+        "Dělníci a chudí – hrdinové sociálních básní a balad.",
+        "Matka / rodina – motivy péče a oběti.",
+        "Milostný protějšek – osobní lyrika vedle sociální.",
+        "Kolektiv – naděje na spravedlivější řád."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Proletářská poezie – umění ve službách sociální spravedlnosti.",
+        "Balada – dramatický příběh v básni (např. o chudých).",
+        "Těžká hodina – chvíle krize, rozhodnutí i umírání.",
+        "Sociální cit – soucit s utlačovanými.",
+        "Revoluční naděje – víra ve změnu řádu.",
+        "Obraznost – konkrétní věci (chléb, práce, smrt) jako symboly."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Těžkou hodinu?",
+      "options": [
+        "Karel Hynek Mácha",
+        "Jiří Wolker",
+        "Karel Havlíček Borovský",
+        "Vladimír Holan"
+      ],
+      "correct": 1,
+      "expl": "Autorem sbírky je Jiří Wolker."
+    },
+    {
+      "prompt": "Jaký směr sbírka reprezentuje?",
+      "options": [
+        "Dekadenci bez sociálna",
+        "Proletářskou poezii",
+        "Pouze baroko",
+        "Jen absurdní drama"
+      ],
+      "correct": 1,
+      "expl": "Těžká hodina je vrchol proletářské poezie."
+    },
+    {
+      "prompt": "Kdy sbírka vyšla?",
+      "options": [
+        "1918",
+        "1922",
+        "1938",
+        "1968"
+      ],
+      "correct": 1,
+      "expl": "Těžká hodina vyšla roku 1922."
+    },
+    {
+      "prompt": "Co je typickým tématem Wolkerovy poezie?",
+      "options": [
+        "Jen dvorská láska",
+        "Sociální bolest, práce, smrt a naděje",
+        "Burzovní spekulace",
+        "Cirkusová akrobacie"
+      ],
+      "correct": 1,
+      "expl": "Wolker spojuje sociální cit s osobní lyrikou."
+    },
+    {
+      "prompt": "Co označuje „těžká hodina“?",
+      "options": [
+        "Přestávku ve škole",
+        "Chvíli krize, bolesti či umírání / rozhodování",
+        "Sportovní zápas",
+        "Svátek mloků"
+      ],
+      "correct": 1,
+      "expl": "Název odkazuje na těžkou životní chvíli."
+    },
+    {
+      "prompt": "Jakou formu Wolker často využívá?",
+      "options": [
+        "Jen úřední dopisy",
+        "Baladu a sociální lyriku",
+        "Jen sonety o golfu",
+        "Prózu o Gatsbym"
+      ],
+      "correct": 1,
+      "expl": "Známé jsou sociální balady i lyrické básně."
+    },
+    {
+      "prompt": "Proč je Wolker spojen se „sociálním svědomím“?",
+      "options": [
+        "Psál jen o aristokracii",
+        "Staví do středu chudé a volá po spravedlnosti",
+        "Ignoruje společnost",
+        "Píše jen recepty"
+      ],
+      "correct": 1,
+      "expl": "Proletářská poezie chce být hlasem utlačovaných."
+    },
+    {
+      "prompt": "Jaký osud měl autor?",
+      "options": [
+        "Dožil se 100 let v USA",
+        "Zemřel velmi mladý na tuberkulózu",
+        "Byl rytířem z Tyrol",
+        "Velel RAF"
+      ],
+      "correct": 1,
+      "expl": "Wolker zemřel roku 1924 ve 24 letech."
+    },
+    {
+      "prompt": "Co je balada v kontextu sbírky?",
+      "options": [
+        "Taneční kurz",
+        "Báseň s dramatickým, často tragickým příběhem",
+        "Daňové přiznání",
+        "Komedie dell’arte"
+      ],
+      "correct": 1,
+      "expl": "Balada vypráví příběh – u Wolkera často sociální."
+    },
+    {
+      "prompt": "Jaký tón mají básně Těžké hodiny?",
+      "options": [
+        "Jen veselý kabaret",
+        "Citový, sociální, někdy patetický a vážný",
+        "Jen statistický",
+        "Jen ironie Saturnina"
+      ],
+      "correct": 1,
+      "expl": "Sbírka je vážná, citová a angažovaná."
+    },
+    {
+      "prompt": "Čím se sbírka liší od čistě intimní lyriky?",
+      "options": [
+        "Nemá verše",
+        "Propojuje osobní cit s kolektivním a sociálním tématem",
+        "Je psána jen latinsky",
+        "Je to román"
+      ],
+      "correct": 1,
+      "expl": "„Já“ se otevírá k bolesti druhých a k naději změny."
+    },
+    {
+      "prompt": "K jakému období české literatury sbírka patří?",
+      "options": [
+        "K nationalismu 19. stol. pouze",
+        "K meziválečné / poválečné sociální poezii 20. let",
+        "K gotice",
+        "K antice"
+      ],
+      "correct": 1,
+      "expl": "Je dílem počátku 20. let 20. století."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Básník vnímá bolest chudých a sociální křivdy",
+        "Osobní cit se prolíná s obrazy práce a bídy",
+        "Baladické příběhy dramatizují osudy slabých",
+        "Téma smrti a „těžké hodiny“ nabývá naléhavosti",
+        "Objevuje se naděje na spravedlivější řád",
+        "Sbírka vrcholí spojením soucitu, patosu a výzvy"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: sociální vnímání → osobní i pracovní obrazy → balady → smrt/krize → naděje → patos výzvy."
+  ]
+}

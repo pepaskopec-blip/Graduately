@@ -1,0 +1,200 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Jane Austenová",
+        "Žánr: společenský román",
+        "Poprvé vydáno: 1813 (česky Poláčková)",
+        "Děj: anglický venkov – Elizabeth Bennetová a Darcy",
+        "Vyprávění: er-forma s ironií a volnou řečí postav"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Regency Anglie: sňatek, majetek, stav.",
+        "Pýcha a předsudek brání porozumění.",
+        "Ironie vůči sňatkovému trhu.",
+        "Ženská inteligence vs. konvence.",
+        "Vývoj postav k sebepoznání."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Elizabeth Bennetová – bystrá hrdinka.",
+        "Mr. Darcy – pyšný gentleman.",
+        "Jane – sestra, jemná.",
+        "Mr. Collins – servilní kněz.",
+        "Lady Catherine – aristokratická arogance.",
+        "Wickham – svůdný lhář."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Pýcha – Darcyho maska.",
+        "Předsudek – Elizabethin omyl.",
+        "Sňatek a majetek – společenský tlak.",
+        "Ironie – Austenové styl.",
+        "Sebepoznání – cesta hrdinů.",
+        "Stavovskost – konflikt."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Pýchu a předsudek?",
+      "options": [
+        "Brontëová",
+        "Austenová",
+        "Woolfová",
+        "Shelleyová"
+      ],
+      "correct": 1,
+      "expl": "Jane Austenová."
+    },
+    {
+      "prompt": "Kdo je Elizabeth?",
+      "options": [
+        "Lady Catherine",
+        "Bystrá dcera Bennetových",
+        "Darcyho matka",
+        "Collinsova šéfová"
+      ],
+      "correct": 1,
+      "expl": "Hlavní hrdinka."
+    },
+    {
+      "prompt": "Proč Darcy působí odpudivě?",
+      "options": [
+        "Je chudý",
+        "Pýcha a společenský odstup",
+        "Je zločinec odsouzený",
+        "Neumí anglicky"
+      ],
+      "correct": 1,
+      "expl": "Pýcha kazí první dojem."
+    },
+    {
+      "prompt": "Co je Elizabethin předsudek?",
+      "options": [
+        "Vůči hudbě",
+        "Unáhlený soud o Darcym vlivem Wickhama aj.",
+        "Vůči čaji",
+        "Vůči tanci"
+      ],
+      "correct": 1,
+      "expl": "Předsudek zkreslí pravdu."
+    },
+    {
+      "prompt": "Kdo je Wickham?",
+      "options": [
+        "Zcela spolehlivý kněz",
+        "Charmantní, ale nečestný důstojník",
+        "Darcyho otec",
+        "Farmář"
+      ],
+      "correct": 1,
+      "expl": "Wickham lže o Darcym."
+    },
+    {
+      "prompt": "O čem román ironizuje?",
+      "options": [
+        "Moře",
+        "Sňatkový trh a snobství",
+        "Robotiku",
+        "Zákopy"
+      ],
+      "correct": 1,
+      "expl": "Společenská satira."
+    },
+    {
+      "prompt": "Jak se vztah vyvíjí?",
+      "options": [
+        "Nemění se",
+        "Od odporu k respektu a lásce skrze poznání",
+        "Jen nenávist",
+        "Jen obchod"
+      ],
+      "correct": 1,
+      "expl": "Charakterový vývoj."
+    },
+    {
+      "prompt": "Kdo je Mr. Collins?",
+      "options": [
+        "Hrdina války",
+        "Servilní duchovní a dědic",
+        "Zloděj",
+        "Malíř"
+      ],
+      "correct": 1,
+      "expl": "Komická postava konvencí."
+    },
+    {
+      "prompt": "Proč je sňatek téma?",
+      "options": [
+        "Není",
+        "Ekonomické zajištění žen ve společnosti",
+        "Jen sport",
+        "Jen náboženství bez majetku"
+      ],
+      "correct": 1,
+      "expl": "Sňatek = status i přežití."
+    },
+    {
+      "prompt": "Jaký styl?",
+      "options": [
+        "Naturalismus brutalit",
+        "Ironie, dialog, společenský postřeh",
+        "Jen verš",
+        "Jen deník vojáka"
+      ],
+      "correct": 1,
+      "expl": "Austenové ironie."
+    },
+    {
+      "prompt": "Kdo je Lady Catherine?",
+      "options": [
+        "Chudá služka",
+        "Aristokratka tlačící na stavovské sňatky",
+        "Elizabethina sestra",
+        "Wickhamova žena"
+      ],
+      "correct": 1,
+      "expl": "Tlak aristokracie."
+    },
+    {
+      "prompt": "Hlavní téma?",
+      "options": [
+        "Fronta",
+        "Sebepoznání, stav a láska",
+        "Robotí vzpoura",
+        "Balady o vodníkovi"
+      ],
+      "correct": 1,
+      "expl": "Pýcha a předsudek jako překážky."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "První dojem z Darcyho",
+        "Wickham živí předsudek",
+        "Elizabeth odmítá nevhodné sňatky",
+        "Odhalení Wickhamovy lži",
+        "Darcy pomáhá rodině",
+        "Vzájmené pochopení a sňatek"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: první dojem → předsudek → odmítnutí → pravda → pomoc → sňatek."
+  ]
+}

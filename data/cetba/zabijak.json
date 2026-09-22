@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Émile Zola (1840–1902)",
+        "Žánr: naturalistický román (cyklus Rougon-Macquartové)",
+        "Poprvé vydáno: 1877 (L’Assommoir)",
+        "Děj: pařížská chudina, alkoholismus a sociální pád",
+        "Vyprávění: er-forma, detail prostředí a determinace"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Paříž 19. století, dělnické čtvrti a bída.",
+        "Industrializace a sociální rozdíly formují osudy.",
+        "Hospoda („zabiják“) je centrum útěku i zkázy.",
+        "Naturalismus ukazuje, jak prostředí ničí člověka.",
+        "Román je kritikou alkoholismu a sociální devastace."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Gervaise Macquartová – pradlena, hrdinka sociálního pádu.",
+        "Coupeau – Gervaisin muž, sklouzne k alkoholu.",
+        "Lantier – Gervaisin bývalý milenec, vrací se do vztahu.",
+        "Nana – dcera, vyrůstá v rozkladu rodiny.",
+        "Sousedé z domu – svědkové i účastníci pádu."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Zabiják (l’assommoir) – hospoda / destilát jako ničitel životů.",
+        "Alkoholismus – motor rozkladu rodiny.",
+        "Naturalismus – prostředí a dědičnost určují osud.",
+        "Sociální pád – od snahy o slušnost k bídě.",
+        "Prádelna – Gervaisina práce a krátkodobá naděje.",
+        "Determinismus – omezená možnost uniknout prostředí."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Zabijáka?",
+      "options": [
+        "F. Scott Fitzgerald",
+        "Émile Zola",
+        "Karel Čapek",
+        "William Styron"
+      ],
+      "correct": 1,
+      "expl": "Autorem je Émile Zola."
+    },
+    {
+      "prompt": "Co označuje „zabiják“ v názvu?",
+      "options": [
+        "Stíhací letoun",
+        "Hospodu / alkohol jako ničitele životů",
+        "Marlína",
+        "Školní ředitele"
+      ],
+      "correct": 1,
+      "expl": "L’Assommoir je hospoda i symbol alkoholu."
+    },
+    {
+      "prompt": "Kdo je Gervaise?",
+      "options": [
+        "Bohatá šlechtična z East Eggu",
+        "Pradlena a hlavní hrdinka sociálního pádu",
+        "Pilotka RAF",
+        "Bohyně Athéna"
+      ],
+      "correct": 1,
+      "expl": "Gervaise je ústřední postava románu."
+    },
+    {
+      "prompt": "Do jakého cyklu román patří?",
+      "options": [
+        "K Rougon-Macquartům",
+        "K cimrmanologii",
+        "K bájím Petišky",
+        "K Tyrolským elegiím"
+      ],
+      "correct": 0,
+      "expl": "Je součástí cyklu o rodině Rougon-Macquartů."
+    },
+    {
+      "prompt": "Jaký směr Zola reprezentuje?",
+      "options": [
+        "Poetismus",
+        "Naturalismus",
+        "Komedie dell’arte",
+        "Proletářskou baladu jen jako Wolker"
+      ],
+      "correct": 1,
+      "expl": "Zabiják je naturalistický román."
+    },
+    {
+      "prompt": "Co především ničí Gervaisinu rodinu?",
+      "options": [
+        "Nedostatek knih",
+        "Alkoholismus a sociální prostředí",
+        "Přílišný sport",
+        "Cimrmanovy přednášky"
+      ],
+      "correct": 1,
+      "expl": "Alkohol a bída rozkládají život postav."
+    },
+    {
+      "prompt": "Kdo je Coupeau?",
+      "options": [
+        "Gatsbyho sluha",
+        "Gervaisin muž, který propadne pití",
+        "Kapitán van Toch",
+        "Havlíček"
+      ],
+      "correct": 1,
+      "expl": "Coupeauův alkoholismus je klíčový."
+    },
+    {
+      "prompt": "Ve kterém městě se děj odehrává?",
+      "options": [
+        "V Praze",
+        "V Paříži",
+        "V Brixenu",
+        "V Kostnici"
+      ],
+      "correct": 1,
+      "expl": "Prostorem je pařížská chudina."
+    },
+    {
+      "prompt": "Jak román typicky končí pro Gervaise?",
+      "options": [
+        "Korunovací",
+        "Sociálním a lidským pádem / zkázou",
+        "Emigrací jako eso RAF",
+        "Svatbou s Truffaldinem"
+      ],
+      "correct": 1,
+      "expl": "Naturalistický oblouk vede k devastaci."
+    },
+    {
+      "prompt": "Proč je prostředí tak důležité?",
+      "options": [
+        "Není",
+        "Podle naturalismu formuje a často ničí člověka",
+        "Jen kvůli turistice",
+        "Jen kvůli zelenému světlu"
+      ],
+      "correct": 1,
+      "expl": "Determinace prostředím je jádro metody."
+    },
+    {
+      "prompt": "Kdo je Nana v tomto románu?",
+      "options": [
+        "Učitelka Alice",
+        "Gervaisina dcera vyrůstající v rozkladu",
+        "Mlok",
+        "Slečna Barbora"
+      ],
+      "correct": 1,
+      "expl": "Nana je dítě prostředí, později hrdinka dalšího románu."
+    },
+    {
+      "prompt": "Ve kterém roce Zabiják vyšel?",
+      "options": [
+        "1867",
+        "1877",
+        "1925",
+        "1936"
+      ],
+      "correct": 1,
+      "expl": "L’Assommoir vyšel roku 1877."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Gervaise se snaží o slušný život prací",
+        "S Coupeauem založí domácnost a prádelnu naděje",
+        "Úraz a alkohol začnou rozkládat jistoty",
+        "Návrat Lantiera a pití zhorší morální pád",
+        "Bída a závislost zničí práci i vztahy",
+        "Hrdinka končí v totálním sociálním úpadku"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: snaha o slušnost → naděje prádelny → alkohol → morální rozklad → ztráta všeho → sociální pád."
+  ]
+}

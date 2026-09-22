@@ -1214,15 +1214,53 @@ def main() -> int:
     }
 
     books = []
+    cetba_dir = ROOT / "data" / "cetba"
     for entry in catalog:
         bid = entry["id"]
         display = f"{entry['author']} – {entry['title']}"
         page = entry.get("page") or f"cetba_{bid.replace('-', '_')}"
-        if bid in full_books:
+        content_path = cetba_dir / f"{bid}.json"
+        disk = None
+        if content_path.exists():
+            disk = json.loads(content_path.read_text(encoding="utf-8"))
+
+        if bid in full_books and not disk:
             book = {"id": bid, "title": display, **full_books[bid]}
             book["genre"] = entry.get("genre", "")
             books.append(book)
             continue
+
+        if disk:
+            notes = disk.get("notes") or []
+            quiz = disk.get("quiz") or []
+            plot = disk.get("plot") or []
+            plot_meaning = disk.get("plotMeaning") or []
+            book = {
+                "id": bid,
+                "title": display,
+                "subKey": "cetba1984_sub" if quiz else "cetba_entry_sub",
+                "page": page if not entry.get("full") else (entry.get("page") or page),
+                "genre": entry.get("genre", ""),
+                "quizTitle": f"Kvíz: {display}" if quiz else "",
+                "quizSub": "lit_quiz_sub" if quiz else "",
+                "plotTitle": "lit_plot_title" if plot else "",
+                "plotSub": "lit_plot_sub" if plot else "",
+                "notes": notes,
+                "quiz": quiz,
+                "plot": plot,
+                "plotMeaning": plot_meaning,
+            }
+            if bid in full_books:
+                # Keep stable page ids for the two classic GTK screens
+                book["page"] = full_books[bid]["page"]
+                book["subKey"] = full_books[bid]["subKey"]
+                book["quizTitle"] = full_books[bid]["quizTitle"]
+                book["quizSub"] = full_books[bid]["quizSub"]
+                book["plotTitle"] = full_books[bid]["plotTitle"]
+                book["plotSub"] = full_books[bid]["plotSub"]
+            books.append(book)
+            continue
+
         about = [f"Autor: {entry['author']}", f"Žánr: {entry['genre']}"]
         if entry.get("translator"):
             about.append(f"Překlad: {entry['translator']}")
@@ -1245,6 +1283,10 @@ def main() -> int:
             "plotMeaning": [],
         })
 
+    # Prefer disk content for 1984/fuks when present (already handled above).
+    # GTK catalog: mark full when we have quiz content on disk or classic pages.
+    has_full = {b["id"] for b in books if b.get("quiz")}
+
     # GTK catalog include for the reading-list path map
     inc_lines = [
         "/* Generated from data/cetba-catalog.json – do not edit by hand. */",
@@ -1266,9 +1308,14 @@ def main() -> int:
         bid = entry["id"]
         display = f"{entry['author']} – {entry['title']}"
         page = entry.get("page") or f"cetba_{bid.replace('-', '_')}"
-        if entry.get("full"):
+        if bid in ("1984", "fuks") or entry.get("full"):
             target = entry.get("page") or page
             full = 1
+        elif bid in has_full:
+            # Data-driven books still open the shared stub page for now;
+            # Swift/Android use content.json fully.
+            target = "cetbastub"
+            full = 0
         else:
             target = "cetbastub"
             full = 0

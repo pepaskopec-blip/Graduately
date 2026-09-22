@@ -1,0 +1,201 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Suzanne Collins; překlad: Dušek",
+        "Žánr: dystopický young adult román",
+        "Poprvé vydáno: 2008",
+        "Děj/prostředí: Panem: Kapitol a chudé distrikty; aréna Her",
+        "Vyprávění/forma: ich-forma přítomného času (Katniss); překlad Dušek"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "Postapokalyptická Severní Amerika (Panem).",
+        "Kapitol ovládá 12 distriktů terorem a spektáklem.",
+        "Hladové hry: každoroční televizní souboj dětí na život a na smrt.",
+        "Chudoba distriktů vs. přepych Kapitolu.",
+        "Odpor se rodí z osobní vzpoury a symbolů.",
+        "Téma: moc, média, násilí jako zábava, přežití, morálka."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Katniss Everdeenová – lovkyně z distriktu 12, dobrovolnice.",
+        "Peeta Mellark – pekařský syn, spolutribut.",
+        "Gale Hawthorne – Katnissin přítel z lovu.",
+        "Haymitch Abernathy – mentor, bývalý vítěz.",
+        "Effie Trinketová – eskortá z Kapitolu.",
+        "Prezident Snow – vládce Panemu (v pozadí moci)."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Panem – stát Kapitolu a distriktů.",
+        "Hladové hry – televizní zabíjení tributů.",
+        "Tribut – chlapec a dívka z každého distriktu.",
+        "Distrikt 12 – chudý uhelný kraj Katniss.",
+        "Mockingjay / symbol – zárodek odporu.",
+        "Spektákl – násilí jako zábava mocných."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Hladové hry?",
+      "options": [
+        "J. K. Rowlingová",
+        "Suzanne Collins",
+        "Veronica Rothová",
+        "Bradbury"
+      ],
+      "correct": 1,
+      "expl": "První díl trilogie vyšel 2008."
+    },
+    {
+      "prompt": "Kdo je Katniss?",
+      "options": [
+        "Prezidentka",
+        "Dívka z distriktu 12, která jde dobrovolně místo sestry",
+        "Mentorka z Kapitolu",
+        "Tribut z distriktu 1 výhradně"
+      ],
+      "correct": 1,
+      "expl": "Přihlásí se místo Prim a stane se hrdinkou arény."
+    },
+    {
+      "prompt": "Co jsou Hladové hry?",
+      "options": [
+        "Sportovní olympiáda bez násilí",
+        "Televizní souboj mladých tributů na život a na smrt",
+        "Školní test",
+        "Divadelní hra Cimrmana"
+      ],
+      "correct": 1,
+      "expl": "Kapitol jimi trestá a baví se zároveň."
+    },
+    {
+      "prompt": "Kdo je Peeta?",
+      "options": [
+        "Voják Snowa",
+        "Spolutribut z distriktu 12, pekařův syn",
+        "Galeův otec",
+        "Hlavní kameraman"
+      ],
+      "correct": 1,
+      "expl": "V aréně i mimo ni je klíčový vztah Katniss–Peeta."
+    },
+    {
+      "prompt": "Proč Kapitol hry pořádá?",
+      "options": [
+        "Z vědecké zvědavosti",
+        "Jako trest za povstání a nástroj kontroly skrze strach a show",
+        "Aby vybral krále Lilliputu",
+        "Aby léčil bílou nemoc"
+      ],
+      "correct": 1,
+      "expl": "Spektákl má distrikty ponižovat a zastrašovat."
+    },
+    {
+      "prompt": "Kdo je Haymitch?",
+      "options": [
+        "Prezident",
+        "Mentor a bývalý vítěz Her",
+        "Tribut dítě",
+        "Trifid"
+      ],
+      "correct": 1,
+      "expl": "Alkoholik s traumatem, ale strategicky pomáhá."
+    },
+    {
+      "prompt": "Kde Katniss žije před hrami?",
+      "options": [
+        "V Kapitolu v paláci",
+        "V distriktu 12",
+        "V Amsterodamu",
+        "V Elsinoru"
+      ],
+      "correct": 1,
+      "expl": "Distrikt 12 je chudý uhelný kraj."
+    },
+    {
+      "prompt": "Kdy kniha vyšla?",
+      "options": [
+        "1949",
+        "2008",
+        "1862",
+        "1928"
+      ],
+      "correct": 1,
+      "expl": "The Hunger Games 2008; česky mimo jiné v překladu Duška."
+    },
+    {
+      "prompt": "Jaký je vyprávěcí postup?",
+      "options": [
+        "Jen sbor",
+        "Ich-forma (Katniss), často přítomný čas",
+        "Jen úřední protokol",
+        "Pásmo Nezvala"
+      ],
+      "correct": 1,
+      "expl": "Bezprostřední ich-forma vtahuje do arény."
+    },
+    {
+      "prompt": "Co Katniss umí a využívá?",
+      "options": [
+        "Jen zpěv opery",
+        "Lov a lukostřelbu",
+        "Jen účetnictví",
+        "Alchymii Jekylla"
+      ],
+      "correct": 1,
+      "expl": "Lovecké dovednosti jí dávají šanci přežít."
+    },
+    {
+      "prompt": "Jaký žánr knize sedí?",
+      "options": [
+        "Antická óda",
+        "Dystopický YA román",
+        "Husitská kronika",
+        "Deník z 17. století"
+      ],
+      "correct": 1,
+      "expl": "Young adult dystopie o moci a médiích."
+    },
+    {
+      "prompt": "Co je ústředním mediálním motivem?",
+      "options": [
+        "Ticho jako u Becketta výhradně",
+        "Násilí vysílané jako zábava",
+        "Jen rádio Edison",
+        "Cimrmanův seminář"
+      ],
+      "correct": 1,
+      "expl": "Kamery a show Kapitolu jsou nástroj moci."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Prim je vylosována; Katniss se hlásí dobrovolně",
+        "Tributové jedou do Kapitolu a na trénink",
+        "Hry v aréně začínají krveprolitím",
+        "Katniss uzavírá spojenectví a bojuje o život",
+        "S Peetou hrají „lásku“ pro diváky i přežití",
+        "Společné vítězství naruší pravidla Kapitolu"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: dobrovolnictví za Prim → Kapitol a trénink → start arény → boj a spojenectví → show lásky s Peetou → společné vítězství proti pravidlům."
+  ]
+}

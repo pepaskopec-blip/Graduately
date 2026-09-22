@@ -1,0 +1,199 @@
+{
+  "notes": [
+    {
+      "title": "O knize",
+      "icon": "book",
+      "lines": [
+        "Autor: Karel Čapek (1890–1938)",
+        "Žánr: dystopický / alegorický román, satira",
+        "Poprvé vydáno: 1936",
+        "Děj: celý svět – objev, obchod a válka s mloky",
+        "Vyprávění: montáž zpráv, reportáží, zápisků a „dokumentů“"
+      ]
+    },
+    {
+      "title": "Doba a svět",
+      "icon": "globe",
+      "lines": [
+        "30. léta 20. století – krize, kolonialismus, rostoucí fašismus.",
+        "Lidstvo zneužije inteligentní mloky jako levnou pracovní sílu.",
+        "Kapitalismus a geopolitika stupňují katastrofu.",
+        "Satira míří na rasismus, zbrojení i slepou víru v pokrok.",
+        "Román varuje před zničením civilizace vlastní chamtivostí."
+      ]
+    },
+    {
+      "title": "Postavy",
+      "icon": "people",
+      "lines": [
+        "Kapitán van Toch – objeví mloky v ostrovním zálivu.",
+        "G. H. Bondy – průmyslník, rozjede byznys s mloky.",
+        "Mr. Povondra – dveřník, „malý člověk“ sledující dějiny.",
+        "Mloci (např. Chief Salamander) – rostoucí moc non-lidí.",
+        "Novináři, politici, vědci – hlasy montážního vyprávění."
+      ]
+    },
+    {
+      "title": "Klíčové pojmy",
+      "icon": "bulb",
+      "lines": [
+        "Mlok – alegorie zneužité pracovní síly / „druhého“.",
+        "Byznys a kolonialismus – kořeny katastrofy.",
+        "Montáž – román jako koláž žánrů a dokumentů.",
+        "Satira – výsměch lidské hlouposti a chamtivosti.",
+        "Fašismus / zbrojení – dobový stín 30. let.",
+        "Varování – civilizace může zničit sama sebe."
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "prompt": "Kdo napsal Válku s mloky?",
+      "options": [
+        "Karel Čapek",
+        "Josef Škvorecký",
+        "Milan Kundera",
+        "Ota Pavel"
+      ],
+      "correct": 0,
+      "expl": "Autorem je Karel Čapek."
+    },
+    {
+      "prompt": "Kdo mloky objeví?",
+      "options": [
+        "Gatsby",
+        "Kapitán van Toch",
+        "Saturnin",
+        "Stingo"
+      ],
+      "correct": 1,
+      "expl": "Kapitán van Toch narazí na mloky v zálivu."
+    },
+    {
+      "prompt": "K čemu lidé mloky nejdřív využívají?",
+      "options": [
+        "Ke psaní elegií",
+        "Jako levnou pracovní sílu v mořích",
+        "Jako učitele latiny",
+        "Jako piloty Spitfiru"
+      ],
+      "correct": 1,
+      "expl": "Mloci se stávají zbožím a pracovní silou."
+    },
+    {
+      "prompt": "Kdo je G. H. Bondy?",
+      "options": [
+        "Rybář Santiago",
+        "Průmyslník, který z mloků udělá byznys",
+        "Český básník",
+        "Benátský sluha"
+      ],
+      "correct": 1,
+      "expl": "Bondy rozjede obchodní využití mloků."
+    },
+    {
+      "prompt": "Jaký je styl vyprávění románu?",
+      "options": [
+        "Jen milostné dopisy",
+        "Montáž zpráv, reportáží a „dokumentů“",
+        "Jen sonety",
+        "Jen deník Charlieho"
+      ],
+      "correct": 1,
+      "expl": "Čapek skládá román z různých textových forem."
+    },
+    {
+      "prompt": "Co román především satirizuje?",
+      "options": [
+        "Rybaření na Berounce",
+        "Chamtivost, rasismus, politiku a slepý pokrok",
+        "Školní sbor",
+        "Komedii dell’arte"
+      ],
+      "correct": 1,
+      "expl": "Satira míří na civilizační choroby 20. století."
+    },
+    {
+      "prompt": "Ve kterém roce kniha vyšla?",
+      "options": [
+        "1922",
+        "1936",
+        "1942",
+        "1968"
+      ],
+      "correct": 1,
+      "expl": "Válka s mloky vyšla roku 1936."
+    },
+    {
+      "prompt": "Jak konflikt s mloky končí v logice díla?",
+      "options": [
+        "Idylickým mírem hned na začátku",
+        "Eskalací k válce ohrožující lidstvo",
+        "Svatbou van Tocha",
+        "Otevřením pekárny"
+      ],
+      "correct": 1,
+      "expl": "Z obchodu se stane existenční válka."
+    },
+    {
+      "prompt": "Kdo je pan Povondra?",
+      "options": [
+        "Vůdce mloků",
+        "Dveřník – „malý člověk“ u Bondyho",
+        "Prezident USA",
+        "Marlín"
+      ],
+      "correct": 1,
+      "expl": "Povondra reprezentuje obyčejného svědka dějin."
+    },
+    {
+      "prompt": "Proč jsou mloci nebezpečnou alegorií?",
+      "options": [
+        "Protože neumějí plavat",
+        "Ukazují, jak člověk vytvoří sílu, která ho zničí",
+        "Protože píší básně",
+        "Protože jsou jen hračky"
+      ],
+      "correct": 1,
+      "expl": "Lidstvo si samo vypěstuje nepřítele."
+    },
+    {
+      "prompt": "Jaký žánr je nejpřiléhavější?",
+      "options": [
+        "Pastoralní idyla",
+        "Alegorická dystopie / satira",
+        "Jen cestopis bez pointy",
+        "Liturgie"
+      ],
+      "correct": 1,
+      "expl": "Jde o satirickou dystopii s alegorií."
+    },
+    {
+      "prompt": "Jaký dobový kontext je klíčový?",
+      "options": [
+        "Středověké cechy",
+        "30. léta – krize, kolonialismus, nástup totalit",
+        "Jen rok 1989",
+        "Antický Olymp"
+      ],
+      "correct": 1,
+      "expl": "Román reaguje na ohrožení civilizace ve 30. letech."
+    }
+  ],
+  "plot": [
+    {
+      "prompt": "Přetáhněte části příběhu do správného pořadí:",
+      "words": [
+        "Van Toch objeví inteligentní mloky",
+        "Bondy a svět z nich udělají obchodní artikl",
+        "Mloci se množí a získávají znalosti i zbraně",
+        "Lidstvo přehlíží varování kvůli zisku",
+        "Napětí přeroste v otevřený konflikt",
+        "Válka s mloky ohrozí celou civilizaci"
+      ]
+    }
+  ],
+  "plotMeaning": [
+    "Správné pořadí: objev → byznys → růst moci mloků → slepota zisku → konflikt → civilizační ohrožení."
+  ]
+}
