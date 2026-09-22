@@ -50,7 +50,10 @@ enum Route: Hashable {
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
         case .readingList: return "readinglist"
-        case .book(let id): return id == "1984" ? "cetba1984" : "cetbaFuks"
+        case .book(let id):
+            if id == "1984" { return "cetba1984" }
+            if id == "fuks" { return "cetbaFuks" }
+            return "cetba_" + id.replacingOccurrences(of: "-", with: "_")
         case .bookQuiz(let id): return id == "1984" ? "cetba1984quiz" : "cetbaFuksQuiz"
         case .bookPlot(let id): return id == "1984" ? "cetba1984dej" : "cetbaFuksDej"
         }
@@ -120,6 +123,10 @@ func routeFromPage(_ page: String) -> Route? {
     case "cetbaFuksQuiz": return .bookQuiz("fuks")
     case "cetbaFuksDej": return .bookPlot("fuks")
     default:
+        if page.hasPrefix("cetba_") {
+            let slug = String(page.dropFirst(6)).replacingOccurrences(of: "_", with: "-")
+            return .book(slug)
+        }
         if let m = page.wholeMatch(of: /unit(\d+)/), let n = Int(m.1) {
             return .unitMap(n - 1)
         }

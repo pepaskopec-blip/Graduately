@@ -1,5 +1,6 @@
 #include "maturita.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #define SEARCH_MAX 24
@@ -92,10 +93,21 @@ static void item_free(gpointer p) {
 
 static void catalog_add(const char *title, const char *subtitle,
                         const char *target, gboolean locked, int rank,
+                        const char *extra);
+
+void search_catalog_add(const char *title, const char *subtitle,
+                        const char *target, gboolean locked, int rank,
+                        const char *extra) {
+    catalog_add(title, subtitle, target, locked, rank, extra);
+}
+
+static void catalog_add(const char *title, const char *subtitle,
+                        const char *target, gboolean locked, int rank,
                         const char *extra) {
     if (!title || !target)
         return;
-    if (main_stack && !gtk_stack_get_child_by_name(main_stack, target))
+    if (main_stack && !gtk_stack_get_child_by_name(main_stack, target)
+        && strncmp(target, "cetbastub:", 10) != 0)
         return;
     g_ptr_array_add(search_items,
                     item_new(title, subtitle, target, locked, rank, extra));
@@ -190,14 +202,7 @@ static void catalog_rebuild(void) {
                     "gramatika grammar");
     catalog_add_key("Maturitní četba", "search_book", "readinglist", FALSE, 1,
                     "knihy books");
-    catalog_add("George Orwell – 1984", tr("search_book"), "cetba1984",
-                FALSE, 2, "orwell dystopie");
-    catalog_add(tr("lit_quiz_title"), tr("search_exercise"), "cetba1984quiz",
-                FALSE, 3, "orwell kviz");
-    catalog_add("Ladislav Fuks – Spalovač mrtvol", tr("search_book"),
-                "cetbaFuks", FALSE, 2, "fuks cremator");
-    catalog_add(tr("lit_fuks_quiz_title"), tr("search_exercise"),
-                "cetbaFuksQuiz", FALSE, 3, "fuks kviz");
+    cetba_register_search();
 
     {
         static const char *mluv_names[] = {
@@ -247,6 +252,12 @@ static int cmp_item(gconstpointer a, gconstpointer b) {
 static void search_go(const char *target) {
     if (!target || !main_stack)
         return;
+    if (strncmp(target, "cetbastub:", 10) == 0) {
+        int idx = atoi(target + 10);
+        search_close();
+        cetba_open_stub(idx);
+        return;
+    }
     if (!gtk_stack_get_child_by_name(main_stack, target))
         return;
     search_close();

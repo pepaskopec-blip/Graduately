@@ -1,0 +1,543 @@
+[
+  {
+    "id": "1984",
+    "author": "George Orwell",
+    "title": "1984",
+    "translator": "Šimečková",
+    "genre": "Próza",
+    "full": true,
+    "page": "cetba1984"
+  },
+  {
+    "id": "fahrenheit451",
+    "author": "Ray Bradbury",
+    "title": "451 stupňů Fahrenheita",
+    "translator": "Nezval",
+    "genre": "Próza"
+  },
+  {
+    "id": "audience",
+    "author": "Václav Havel",
+    "title": "Audience",
+    "genre": "Drama"
+  },
+  {
+    "id": "bajecna-leta",
+    "author": "Michal Viewegh",
+    "title": "Báječná léta pod psa",
+    "genre": "Próza"
+  },
+  {
+    "id": "bidnici",
+    "author": "Victor Hugo",
+    "title": "Bídníci",
+    "translator": "Pavlousková",
+    "genre": "Próza"
+  },
+  {
+    "id": "bila-nemoc",
+    "author": "Karel Čapek",
+    "title": "Bílá nemoc",
+    "genre": "Drama"
+  },
+  {
+    "id": "bylo-nas-pet",
+    "author": "Karel Poláček",
+    "title": "Bylo nás pět",
+    "genre": "Próza"
+  },
+  {
+    "id": "cekani-na-godota",
+    "author": "Samuel Beckett",
+    "title": "Čekání na Godota",
+    "translator": "Ouředník",
+    "genre": "Drama"
+  },
+  {
+    "id": "ceske-nebe",
+    "author": "Zdeněk Svěrák, Ladislav Smoljak",
+    "title": "České nebe",
+    "genre": "Drama"
+  },
+  {
+    "id": "dekameron",
+    "author": "Giovanni Boccaccio",
+    "title": "Dekameron",
+    "translator": "Krátký",
+    "genre": "Próza"
+  },
+  {
+    "id": "den-trifidu",
+    "author": "John Wyndham",
+    "title": "Den trifidů",
+    "translator": "Kořán",
+    "genre": "Próza"
+  },
+  {
+    "id": "denik-anny-frankove",
+    "author": "Anne Franková",
+    "title": "Deník Anne Frankové",
+    "genre": "Próza"
+  },
+  {
+    "id": "jekyll-hyde",
+    "author": "Robert Louis Stevenson",
+    "title": "Dr. Jekyll a Mr. Hyde",
+    "translator": "Kořán",
+    "genre": "Próza"
+  },
+  {
+    "id": "edison",
+    "author": "Vítězslav Nezval",
+    "title": "Edison",
+    "genre": "Poezie"
+  },
+  {
+    "id": "farma-zvirat",
+    "author": "George Orwell",
+    "title": "Farma zvířat",
+    "translator": "Gössell",
+    "genre": "Próza"
+  },
+  {
+    "id": "gulliverovy-cesty",
+    "author": "Jonathan Swift",
+    "title": "Gulliverovy cesty",
+    "translator": "Skoumal",
+    "genre": "Próza"
+  },
+  {
+    "id": "hamlet",
+    "author": "William Shakespeare",
+    "title": "Hamlet",
+    "translator": "Nevrla",
+    "genre": "Drama"
+  },
+  {
+    "id": "havran",
+    "author": "Edgar Allan Poe",
+    "title": "Havran",
+    "genre": "Poezie"
+  },
+  {
+    "id": "hladove-hry",
+    "author": "Suzanne Collins",
+    "title": "Hladové hry – I. Aréna smrti",
+    "translator": "Dušek",
+    "genre": "Próza"
+  },
+  {
+    "id": "hlava-xxii",
+    "author": "Joseph Heller",
+    "title": "Hlava XXII",
+    "translator": "Jindra",
+    "genre": "Próza"
+  },
+  {
+    "id": "chram-matky-bozi",
+    "author": "Victor Hugo",
+    "title": "Chrám Matky Boží",
+    "translator": "Tomášková",
+    "genre": "Próza"
+  },
+  {
+    "id": "jak-jsem-vyhral-valku",
+    "author": "Patrick Ryan",
+    "title": "Jak jsem vyhrál válku",
+    "translator": "Vrba",
+    "genre": "Próza"
+  },
+  {
+    "id": "jana-eyrova",
+    "author": "Charlotte Brontëová",
+    "title": "Jana Eyrová",
+    "translator": "Polák",
+    "genre": "Próza"
+  },
+  {
+    "id": "ivan-denisovic",
+    "author": "Alexandr Solženicyn",
+    "title": "Jeden den Ivana Denisoviče",
+    "translator": "Machonin, Nováková",
+    "genre": "Próza"
+  },
+  {
+    "id": "jmeno-ruze",
+    "author": "Umberto Eco",
+    "title": "Jméno růže",
+    "translator": "Frýbort",
+    "genre": "Próza"
+  },
+  {
+    "id": "kalibuv-zlocin",
+    "author": "Karel Václav Rais",
+    "title": "Kalibův zločin",
+    "genre": "Próza"
+  },
+  {
+    "id": "kniska-karla-kryla",
+    "author": "Karel Kryl",
+    "title": "Kníška Karla Kryla",
+    "genre": "Poezie"
+  },
+  {
+    "id": "komu-zvoni-hrana",
+    "author": "Ernest Hemingway",
+    "title": "Komu zvoní hrana",
+    "translator": "Valja, Kobík",
+    "genre": "Próza"
+  },
+  {
+    "id": "kral-oidipus",
+    "author": "Sofoklés",
+    "title": "Král Oidipus",
+    "translator": "Stiebitz",
+    "genre": "Drama"
+  },
+  {
+    "id": "krysar",
+    "author": "Viktor Dyk",
+    "title": "Krysař",
+    "genre": "Próza"
+  },
+  {
+    "id": "kulicka",
+    "author": "Guy de Maupassant",
+    "title": "Kulička",
+    "translator": "Guth",
+    "genre": "Próza"
+  },
+  {
+    "id": "kvety-zla",
+    "author": "Charles Baudelaire",
+    "title": "Květy zla",
+    "translator": "Nezval",
+    "genre": "Poezie"
+  },
+  {
+    "id": "kytice",
+    "author": "Karel Jaromír Erben",
+    "title": "Kytice",
+    "genre": "Poezie"
+  },
+  {
+    "id": "lakomec",
+    "author": "Molière",
+    "title": "Lakomec",
+    "translator": "Mikeš",
+    "genre": "Drama"
+  },
+  {
+    "id": "lolita",
+    "author": "Vladimir Nabokov",
+    "title": "Lolita",
+    "translator": "Kořínek",
+    "genre": "Próza"
+  },
+  {
+    "id": "maj",
+    "author": "Karel Hynek Mácha",
+    "title": "Máj",
+    "genre": "Poezie"
+  },
+  {
+    "id": "maly-princ",
+    "author": "Antoine de Saint-Exupéry",
+    "title": "Malý princ",
+    "translator": "Stavinohová",
+    "genre": "Próza"
+  },
+  {
+    "id": "marysa",
+    "author": "Alois Mrštík, Vilém Mrštík",
+    "title": "Maryša",
+    "genre": "Drama"
+  },
+  {
+    "id": "modlitba-pro-katerinu",
+    "author": "Arnošt Lustig",
+    "title": "Modlitba pro Kateřinu Horovitzovou",
+    "genre": "Próza"
+  },
+  {
+    "id": "most-kwai",
+    "author": "Pierre Boulle",
+    "title": "Most přes řeku Kwai",
+    "translator": "Šup",
+    "genre": "Próza"
+  },
+  {
+    "id": "stanice-zoo",
+    "author": "Christiane F.",
+    "title": "My děti ze stanice ZOO",
+    "translator": "Soukupová",
+    "genre": "Próza"
+  },
+  {
+    "id": "na-ceste",
+    "author": "Jack Kerouac",
+    "title": "Na cestě",
+    "translator": "Popel",
+    "genre": "Próza"
+  },
+  {
+    "id": "na-zapadni-fronte",
+    "author": "Erich Maria Remarque",
+    "title": "Na západní frontě klid",
+    "translator": "Gel",
+    "genre": "Próza"
+  },
+  {
+    "id": "navsteva-stare-damy",
+    "author": "Friedrich Dürrenmatt",
+    "title": "Návštěva staré dámy",
+    "genre": "Drama"
+  },
+  {
+    "id": "nebe-nezna-vyvolenych",
+    "author": "Erich Maria Remarque",
+    "title": "Nebe nezná vyvolených",
+    "translator": "V. a K. Holubovi",
+    "genre": "Próza"
+  },
+  {
+    "id": "o-mysich-a-lidech",
+    "author": "John Steinbeck",
+    "title": "O myších a lidech",
+    "translator": "Vendyš",
+    "genre": "Próza"
+  },
+  {
+    "id": "obraz-doriana-graye",
+    "author": "Oscar Wilde",
+    "title": "Obraz Doriana Graye",
+    "translator": "Novák",
+    "genre": "Próza"
+  },
+  {
+    "id": "obsluhoval-jsem",
+    "author": "Bohumil Hrabal",
+    "title": "Obsluhoval jsem anglického krále",
+    "genre": "Próza"
+  },
+  {
+    "id": "oliver-twist",
+    "author": "Charles Dickens",
+    "title": "Oliver Twist",
+    "translator": "E. a E. Tilschovi",
+    "genre": "Próza"
+  },
+  {
+    "id": "ostre-sledovane-vlaky",
+    "author": "Bohumil Hrabal",
+    "title": "Ostře sledované vlaky",
+    "genre": "Próza"
+  },
+  {
+    "id": "svejk",
+    "author": "Jaroslav Hašek",
+    "title": "Osudy dobrého vojáka Švejka za světové války",
+    "genre": "Próza"
+  },
+  {
+    "id": "pan-much",
+    "author": "William Golding",
+    "title": "Pán much",
+    "translator": "Kovályová",
+    "genre": "Próza"
+  },
+  {
+    "id": "pan-prstenu",
+    "author": "J. R. R. Tolkien",
+    "title": "Pán prstenů – Společenstvo prstenu",
+    "translator": "Pošustová",
+    "genre": "Próza"
+  },
+  {
+    "id": "petr-a-lucie",
+    "author": "Romain Rolland",
+    "title": "Petr a Lucie",
+    "translator": "Zaorálek",
+    "genre": "Próza"
+  },
+  {
+    "id": "poe-povidky",
+    "author": "Edgar Allan Poe",
+    "title": "Povídky",
+    "genre": "Próza"
+  },
+  {
+    "id": "povidky-z-kapes",
+    "author": "Karel Čapek",
+    "title": "Povídky z jedné a druhé kapsy",
+    "genre": "Próza"
+  },
+  {
+    "id": "promena",
+    "author": "Franz Kafka",
+    "title": "Proměna",
+    "genre": "Próza"
+  },
+  {
+    "id": "pycha-a-predsudek",
+    "author": "Jane Austenová",
+    "title": "Pýcha a předsudek",
+    "translator": "Poláčková",
+    "genre": "Próza"
+  },
+  {
+    "id": "rur",
+    "author": "Karel Čapek",
+    "title": "R. U. R.",
+    "genre": "Drama"
+  },
+  {
+    "id": "revizor",
+    "author": "Nikolaj Vasiljevič Gogol",
+    "title": "Revizor",
+    "translator": "Mahler, Suchařípa, Morávková",
+    "genre": "Drama"
+  },
+  {
+    "id": "romeo-a-julie",
+    "author": "William Shakespeare",
+    "title": "Romeo a Julie",
+    "translator": "Hilský",
+    "genre": "Drama"
+  },
+  {
+    "id": "romeo-julie-a-tma",
+    "author": "Jan Otčenášek",
+    "title": "Romeo, Julie a tma",
+    "genre": "Próza"
+  },
+  {
+    "id": "rozmarne-leto",
+    "author": "Vladislav Vančura",
+    "title": "Rozmarné léto",
+    "genre": "Próza"
+  },
+  {
+    "id": "ruze-pro-algernon",
+    "author": "Daniel Keyes",
+    "title": "Růže pro Algernon",
+    "translator": "Podaný",
+    "genre": "Próza"
+  },
+  {
+    "id": "saturnin",
+    "author": "Zdeněk Jirotka",
+    "title": "Saturnin",
+    "genre": "Próza"
+  },
+  {
+    "id": "sluha-dvou-panu",
+    "author": "Carlo Goldoni",
+    "title": "Sluha dvou pánů",
+    "translator": "Bezděková",
+    "genre": "Drama"
+  },
+  {
+    "id": "smrt-krasnych-srncu",
+    "author": "Ota Pavel",
+    "title": "Smrt krásných srnců",
+    "genre": "Próza"
+  },
+  {
+    "id": "sofiina-volba",
+    "author": "William Styron",
+    "title": "Sofiina volba",
+    "translator": "Nenadál",
+    "genre": "Próza"
+  },
+  {
+    "id": "fuks",
+    "author": "Ladislav Fuks",
+    "title": "Spalovač mrtvol",
+    "genre": "Próza",
+    "full": true,
+    "page": "cetbaFuks"
+  },
+  {
+    "id": "stare-recke-baje",
+    "author": "Eduard Petiška",
+    "title": "Staré řecké báje a pověsti",
+    "genre": "Próza"
+  },
+  {
+    "id": "starec-a-more",
+    "author": "Ernest Hemingway",
+    "title": "Stařec a moře",
+    "translator": "Vrba",
+    "genre": "Próza"
+  },
+  {
+    "id": "svaty-xaverius",
+    "author": "Jakub Arbes",
+    "title": "Svatý Xaverius",
+    "genre": "Próza"
+  },
+  {
+    "id": "tereza-raquinova",
+    "author": "Émile Zola",
+    "title": "Tereza Raquinová",
+    "genre": "Próza"
+  },
+  {
+    "id": "tezka-hodina",
+    "author": "Jiří Wolker",
+    "title": "Těžká hodina",
+    "genre": "Poezie"
+  },
+  {
+    "id": "tyrolske-elegie",
+    "author": "Karel Havlíček Borovský",
+    "title": "Tyrolské elegie",
+    "genre": "Poezie"
+  },
+  {
+    "id": "valka-s-mloky",
+    "author": "Karel Čapek",
+    "title": "Válka s mloky",
+    "genre": "Próza"
+  },
+  {
+    "id": "velky-cirkus",
+    "author": "Pierre Clostermann",
+    "title": "Velký cirkus",
+    "translator": "Jedlička",
+    "genre": "Próza"
+  },
+  {
+    "id": "velky-gatsby",
+    "author": "F. Scott Fitzgerald",
+    "title": "Velký Gatsby",
+    "translator": "Dorůžka",
+    "genre": "Próza"
+  },
+  {
+    "id": "tridni-kniha",
+    "author": "Ladislav Smoljak, Zdeněk Svěrák",
+    "title": "Vyšetřování ztráty třídní knihy",
+    "genre": "Drama"
+  },
+  {
+    "id": "zabijak",
+    "author": "Émile Zola",
+    "title": "Zabiják",
+    "translator": "Kárl",
+    "genre": "Próza"
+  },
+  {
+    "id": "zbabelci",
+    "author": "Josef Škvorecký",
+    "title": "Zbabělci",
+    "genre": "Próza"
+  },
+  {
+    "id": "zert",
+    "author": "Milan Kundera",
+    "title": "Žert",
+    "genre": "Próza"
+  }
+]

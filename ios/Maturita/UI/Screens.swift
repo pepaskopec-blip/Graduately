@@ -887,7 +887,10 @@ struct BookListScreen: View {
                     Label {
                         VStack(alignment: .leading) {
                             Text(b.str("title"))
-                            Text(vm.tr(b.str("subKey"))).font(.caption).foregroundStyle(.secondary)
+                            let genre = b.str("genre")
+                            Text(genre.isEmpty ? vm.tr(b.str("subKey")) : genre)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                     } icon: {
                         Image(systemName: "book.fill")
@@ -907,25 +910,31 @@ struct BookScreen: View {
 
     var body: some View {
         if let b = vm.content.book(id) {
+            let hasQuiz = !b.arr("quiz").isEmpty
+            let hasPlot = !b.arr("plot").isEmpty
             List {
-                NavigationLink(value: Route.bookQuiz(id)) {
-                    Label {
-                        VStack(alignment: .leading) {
-                            Text(vm.tr(b.str("quizTitle")))
-                            Text(vm.tr(b.str("quizSub"))).font(.caption).foregroundStyle(.secondary)
+                if hasQuiz {
+                    NavigationLink(value: Route.bookQuiz(id)) {
+                        Label {
+                            VStack(alignment: .leading) {
+                                Text(vm.tr(b.str("quizTitle")))
+                                Text(vm.tr(b.str("quizSub"))).font(.caption).foregroundStyle(.secondary)
+                            }
+                        } icon: {
+                            Image(systemName: "questionmark.circle")
                         }
-                    } icon: {
-                        Image(systemName: "questionmark.circle")
                     }
                 }
-                NavigationLink(value: Route.bookPlot(id)) {
-                    Label {
-                        VStack(alignment: .leading) {
-                            Text(vm.tr(b.str("plotTitle")))
-                            Text(vm.tr(b.str("plotSub"))).font(.caption).foregroundStyle(.secondary)
+                if hasPlot {
+                    NavigationLink(value: Route.bookPlot(id)) {
+                        Label {
+                            VStack(alignment: .leading) {
+                                Text(vm.tr(b.str("plotTitle")))
+                                Text(vm.tr(b.str("plotSub"))).font(.caption).foregroundStyle(.secondary)
+                            }
+                        } icon: {
+                            Image(systemName: "list.number")
                         }
-                    } icon: {
-                        Image(systemName: "list.number")
                     }
                 }
                 ForEach(Array(b.arr("notes").enumerated()), id: \.offset) { _, note in

@@ -1165,10 +1165,11 @@ def main() -> int:
     def note_lines(fn, name):
         return str_list(A(f"{fn}.{name}"))
 
-    books = [
-        {
-            "id": "1984",
-            "title": "George Orwell – 1984",
+    catalog_path = ROOT / "data" / "cetba-catalog.json"
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+
+    full_books = {
+        "1984": {
             "subKey": "cetba1984_sub",
             "page": "cetba1984",
             "quizTitle": "lit_quiz_title",
@@ -1189,9 +1190,7 @@ def main() -> int:
             "plot": assembly_items(A("lit_plot_items")),
             "plotMeaning": str_list(A("lit_plot_meaning")),
         },
-        {
-            "id": "fuks",
-            "title": "Ladislav Fuks – Spalovač mrtvol",
+        "fuks": {
             "subKey": "cetbaFuks_sub",
             "page": "cetbaFuks",
             "quizTitle": "lit_fuks_quiz_title",
@@ -1212,7 +1211,78 @@ def main() -> int:
             "plot": assembly_items(A("fuks_plot_items")),
             "plotMeaning": str_list(A("fuks_plot_meaning")),
         },
+    }
+
+    books = []
+    for entry in catalog:
+        bid = entry["id"]
+        display = f"{entry['author']} – {entry['title']}"
+        page = entry.get("page") or f"cetba_{bid.replace('-', '_')}"
+        if bid in full_books:
+            book = {"id": bid, "title": display, **full_books[bid]}
+            book["genre"] = entry.get("genre", "")
+            books.append(book)
+            continue
+        about = [f"Autor: {entry['author']}", f"Žánr: {entry['genre']}"]
+        if entry.get("translator"):
+            about.append(f"Překlad: {entry['translator']}")
+        about.append("Ze školního seznamu maturitní četby.")
+        books.append({
+            "id": bid,
+            "title": display,
+            "subKey": "cetba_entry_sub",
+            "page": page,
+            "genre": entry["genre"],
+            "quizTitle": "",
+            "quizSub": "",
+            "plotTitle": "",
+            "plotSub": "",
+            "notes": [
+                {"title": "O knize", "icon": "book", "lines": about},
+            ],
+            "quiz": [],
+            "plot": [],
+            "plotMeaning": [],
+        })
+
+    # GTK catalog include for the reading-list path map
+    inc_lines = [
+        "/* Generated from data/cetba-catalog.json – do not edit by hand. */",
+        f"#define BOOK_NODES {len(catalog)}",
+        "",
+        "typedef struct {",
+        "    const char *title;",
+        "    const char *target;",
+        "    const char *author;",
+        "    const char *work;",
+        "    const char *genre;",
+        "    const char *translator;",
+        "    int full;",
+        "} BookDef;",
+        "",
+        "static const BookDef book_defs[BOOK_NODES] = {",
     ]
+    for entry in catalog:
+        bid = entry["id"]
+        display = f"{entry['author']} – {entry['title']}"
+        page = entry.get("page") or f"cetba_{bid.replace('-', '_')}"
+        if entry.get("full"):
+            target = entry.get("page") or page
+            full = 1
+        else:
+            target = "cetbastub"
+            full = 0
+        transl = entry.get("translator") or ""
+        def c_str(s: str) -> str:
+            return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
+        transl_c = "NULL" if not transl else c_str(transl)
+        inc_lines.append(
+            f"    {{{c_str(display)}, {c_str(target)}, {c_str(entry['author'])}, "
+            f"{c_str(entry['title'])}, {c_str(entry['genre'])}, {transl_c}, {full}}},"
+        )
+    inc_lines.append("};")
+    inc_lines.append("")
+    (SRC / "cetba_catalog.inc").write_text("\n".join(inc_lines) + "\n", encoding="utf-8")
 
     subjects = [
         {"key": "Deutsch", "open": True, "target": "roadmap", "icon": "de"},

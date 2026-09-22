@@ -851,6 +851,12 @@ GtkWidget *build_cetba1984_plot_page(void);
 GtkWidget *build_cetba_fuks_page(void);
 GtkWidget *build_cetba_fuks_quiz_page(void);
 GtkWidget *build_cetba_fuks_plot_page(void);
+GtkWidget *build_cetba_stub_page(void);
+void cetba_register_search(void);
+void cetba_open_stub(int idx);
+void search_catalog_add(const char *title, const char *subtitle,
+                        const char *target, gboolean locked, int rank,
+                        const char *extra);
 void book_rail_theme_reset(void);
 GtkWidget *build_hw_unit1_page(void);
 GtkWidget *build_hw_unit1_exercise_page(void);

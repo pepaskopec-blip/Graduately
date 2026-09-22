@@ -1211,17 +1211,11 @@ static void lit_note_card(GtkWidget *parent, const char *title,
 /* Reading roadmap (Maturitní četba)                                  */
 /* ------------------------------------------------------------------ */
 
-#define BOOK_NODES 2
+#include "cetba_catalog.inc"
 
-typedef struct {
-    const char *title;
-    const char *target;
-} BookDef;
-
-static const BookDef book_defs[BOOK_NODES] = {
-    {"George Orwell – 1984", "cetba1984"},
-    {"Ladislav Fuks – Spalovač mrtvol", "cetbaFuks"},
-};
+static int stub_book_idx = -1;
+static GtkWidget *stub_title_lbl;
+static GtkWidget *stub_about_box;
 
 static GtkWidget *book_rail;
 static GtkWidget *book_nodes[BOOK_NODES];
@@ -1340,6 +1334,58 @@ void book_rail_theme_reset(void) {
         gtk_widget_queue_draw(book_rail);
 }
 
+static void rebuild_stub_about(int idx) {
+    GtkWidget *child;
+    static char author_buf[192];
+    static char genre_buf[96];
+    static char transl_buf[192];
+    const char *lines[4];
+    int n = 0;
+
+    if (!stub_about_box || idx < 0 || idx >= BOOK_NODES)
+        return;
+
+    while ((child = gtk_widget_get_first_child(stub_about_box)))
+        gtk_box_remove(GTK_BOX(stub_about_box), child);
+
+    g_snprintf(author_buf, sizeof author_buf, "Autor: %s",
+               book_defs[idx].author);
+    g_snprintf(genre_buf, sizeof genre_buf, "Žánr: %s",
+               book_defs[idx].genre);
+    lines[n++] = author_buf;
+    lines[n++] = genre_buf;
+    if (book_defs[idx].translator) {
+        g_snprintf(transl_buf, sizeof transl_buf, "Překlad: %s",
+                   book_defs[idx].translator);
+        lines[n++] = transl_buf;
+    }
+    lines[n++] = tr("cetba_stub_soon");
+
+    for (int i = 0; i < n; i++) {
+        GtkWidget *l = gtk_label_new(lines[i]);
+        gtk_widget_set_halign(l, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(l), TRUE);
+        gtk_label_set_xalign(GTK_LABEL(l), 0.0);
+        gtk_widget_add_css_class(l, "notes-body");
+        gtk_box_append(GTK_BOX(stub_about_box), l);
+    }
+}
+
+static void on_book_node_clicked(GtkButton *button, gpointer user_data) {
+    int idx = GPOINTER_TO_INT(user_data);
+    const char *target = book_defs[idx].target;
+
+    (void)button;
+    if (!book_defs[idx].full) {
+        stub_book_idx = idx;
+        if (stub_title_lbl)
+            gtk_label_set_text(GTK_LABEL(stub_title_lbl), book_defs[idx].title);
+        rebuild_stub_about(idx);
+    }
+    if (main_stack && target)
+        gtk_stack_set_visible_child_name(main_stack, target);
+}
+
 static GtkWidget *book_make_node(int i) {
     GtkWidget *btn = gtk_button_new();
     GtkWidget *icon = icon_area_new(draw_book_badge_icon, 0, 0, 0, 48);
@@ -1351,9 +1397,8 @@ static GtkWidget *book_make_node(int i) {
 
     gtk_button_set_child(GTK_BUTTON(btn), icon);
 
-    g_object_set_data_full(G_OBJECT(btn), "target",
-                           g_strdup(book_defs[i].target), g_free);
-    g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+    g_signal_connect(btn, "clicked", G_CALLBACK(on_book_node_clicked),
+                     GINT_TO_POINTER(i));
     return btn;
 }
 
@@ -1592,4 +1637,114 @@ GtkWidget *build_cetba_fuks_page(void) {
     lit_note_card(box, "Klíčové motivy", draw_bulb_icon, terms);
 
     return page;
+}
+
+GtkWidget *build_cetba_stub_page(void) {
+    GtkWidget *page;
+    GtkWidget *top;
+    GtkWidget *center;
+    GtkWidget *scroll;
+    GtkWidget *box;
+    GtkWidget *card;
+    GtkWidget *head;
+    GtkWidget *ic;
+    GtkWidget *t;
+    GtkWidget *sub;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    top = gtk_center_box_new();
+    gtk_widget_add_css_class(top, "page-top");
+    gtk_widget_set_margin_top(top, 8);
+    gtk_widget_set_margin_bottom(top, 18);
+    gtk_center_box_set_start_widget(GTK_CENTER_BOX(top),
+                                    make_back_button("readinglist"));
+
+    center = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_set_valign(center, GTK_ALIGN_CENTER);
+    gtk_center_box_set_center_widget(GTK_CENTER_BOX(top), center);
+
+    stub_title_lbl = gtk_label_new("…");
+    gtk_widget_set_halign(stub_title_lbl, GTK_ALIGN_CENTER);
+    gtk_label_set_wrap(GTK_LABEL(stub_title_lbl), TRUE);
+    gtk_widget_add_css_class(stub_title_lbl, "roadmap-title");
+    gtk_box_append(GTK_BOX(center), stub_title_lbl);
+
+    sub = gtk_label_new(NULL);
+    i18n_bind(sub, "cetba_entry_sub", 0);
+    gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(sub, "roadmap-sub");
+    gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
+    gtk_box_append(GTK_BOX(center), sub);
+
+    gtk_box_append(GTK_BOX(page), top);
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 14);
+    gtk_widget_set_margin_bottom(scroll, 14);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), box);
+
+    card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_add_css_class(card, "notes-card");
+    gtk_widget_set_margin_bottom(card, 14);
+    gtk_box_append(GTK_BOX(box), card);
+
+    head = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_box_append(GTK_BOX(card), head);
+    ic = icon_area_new(draw_book_icon, 0, 0, 0, 26);
+    gtk_widget_set_valign(ic, GTK_ALIGN_CENTER);
+    gtk_box_append(GTK_BOX(head), ic);
+    t = gtk_label_new("O knize");
+    gtk_widget_set_halign(t, GTK_ALIGN_START);
+    gtk_widget_set_valign(t, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(t, "notes-title");
+    gtk_box_append(GTK_BOX(head), t);
+
+    stub_about_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_box_append(GTK_BOX(card), stub_about_box);
+
+    return page;
+}
+
+void cetba_open_stub(int idx) {
+    if (idx < 0 || idx >= BOOK_NODES || book_defs[idx].full)
+        return;
+    stub_book_idx = idx;
+    if (stub_title_lbl)
+        gtk_label_set_text(GTK_LABEL(stub_title_lbl), book_defs[idx].title);
+    rebuild_stub_about(idx);
+    if (main_stack)
+        gtk_stack_set_visible_child_name(main_stack, "cetbastub");
+}
+
+void cetba_register_search(void) {
+    char target[32];
+
+    for (int i = 0; i < BOOK_NODES; i++) {
+        if (book_defs[i].full) {
+            search_catalog_add(book_defs[i].title, tr("search_book"),
+                               book_defs[i].target, FALSE, 2, book_defs[i].author);
+            if (g_strcmp0(book_defs[i].target, "cetba1984") == 0)
+                search_catalog_add(tr("lit_quiz_title"), tr("search_exercise"),
+                                   "cetba1984quiz", FALSE, 3, "orwell kviz");
+            else if (g_strcmp0(book_defs[i].target, "cetbaFuks") == 0)
+                search_catalog_add(tr("lit_fuks_quiz_title"),
+                                   tr("search_exercise"), "cetbaFuksQuiz",
+                                   FALSE, 3, "fuks kviz");
+        } else {
+            g_snprintf(target, sizeof target, "cetbastub:%d", i);
+            search_catalog_add(book_defs[i].title, tr("search_book"),
+                               target, FALSE, 2, book_defs[i].author);
+        }
+    }
 }
