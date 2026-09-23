@@ -360,6 +360,9 @@ extension View {
         #if os(iOS)
         presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
+            // Liquid Glass sheets refract the exercise chrome underneath into a
+            // bright tinted band across the word list; keep the sheet opaque.
+            .presentationBackground(.background)
         #else
         self
         #endif

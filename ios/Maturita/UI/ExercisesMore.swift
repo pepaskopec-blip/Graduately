@@ -319,13 +319,21 @@ struct WordPicker: View {
 
     var body: some View {
         NavigationStack {
-            List(Array(pool.enumerated()), id: \.offset) { _, w in
-                Button {
-                    onPick(w)
-                } label: {
-                    Text(w).foregroundStyle(.primary)
+            List {
+                ForEach(Array(pool.enumerated()), id: \.offset) { _, w in
+                    Button {
+                        onPick(w)
+                    } label: {
+                        Text(w)
+                            .foregroundStyle(.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.visible)
             .navigationTitle("Vyberte slovo")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
