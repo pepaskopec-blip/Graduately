@@ -298,7 +298,10 @@ jobs:
     name: Mirror main to Forgejo
     runs-on: ubuntu-latest
     steps:
+      # Full history: Forgejo rejects "shallow update" when replacing main.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # Same rule as the macOS cert step: never put `secrets` in `if:`.
       - name: Push main
@@ -312,6 +315,10 @@ jobs:
           if [ -z "$token" ]; then
             echo "No FORGEJO_TOKEN; skipping Forgejo main mirror."
             exit 0
+          fi
+          # Belt-and-suspenders if a future checkout change re-shallows.
+          if git rev-parse --is-shallow-repository 2>/dev/null | grep -qx true; then
+            git fetch --unshallow origin
           fi
           user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
           user="${user:-oauth2}"
