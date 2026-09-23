@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A601000000000000000001"
-               BuildableName = "Maturita.app"
+               BuildableName = "Graduately.app"
                BlueprintName = "Maturita"
                ReferencedContainer = "container:Maturita.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A601000000000000000001"
-            BuildableName = "Maturita.app"
+            BuildableName = "Graduately.app"
             BlueprintName = "Maturita"
             ReferencedContainer = "container:Maturita.xcodeproj">
          </BuildableReference>
@@ -63,7 +63,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A601000000000000000001"
-            BuildableName = "Maturita.app"
+            BuildableName = "Graduately.app"
             BlueprintName = "Maturita"
             ReferencedContainer = "container:Maturita.xcodeproj">
          </BuildableReference>

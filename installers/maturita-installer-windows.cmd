@@ -1,5 +1,5 @@
 @echo off
-rem maturita.c installer for Windows.
+rem Graduately installer for Windows.
 rem
 rem Carries no application of its own. Fastly caches branch-named URLs on
 rem raw.githubusercontent.com, so this script looks up the tip of `builds`
@@ -11,9 +11,9 @@ setlocal EnableDelayedExpansion
 set "REPO=pepaskopec-blip/maturita.c"
 set "BRANCH=builds"
 set "ASSET=maturita-windows-x64.zip"
-set "DEST=%LOCALAPPDATA%\Programs\Maturita"
+set "DEST=%LOCALAPPDATA%\Programs\Graduately"
 
-echo Installing maturita.C
+echo Installing Graduately
 echo ---------------------
 
 where curl >nul 2>&1 || goto :no_tools
@@ -37,7 +37,7 @@ if not exist "%DEST%" mkdir "%DEST%" || goto :fail_dest
 
 tar -xf "%TMP_DIR%\%ASSET%" -C "%DEST%" || goto :fail_extract
 
-set "LNK=%APPDATA%\Microsoft\Windows\Start Menu\Programs\maturita.C.lnk"
+set "LNK=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Graduately.lnk"
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$s=(New-Object -ComObject WScript.Shell).CreateShortcut('%LNK%');" ^
   "$s.TargetPath='%DEST%\maturita.exe';$s.WorkingDirectory='%DEST%';$s.Save()" >nul 2>&1

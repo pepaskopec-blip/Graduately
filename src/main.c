@@ -457,13 +457,13 @@ void activate(GtkApplication *app, gpointer user_data) {
 
     window = GTK_WINDOW(gtk_application_window_new(app));
     main_window = window;
-    gtk_window_set_title(window, "maturita.c");
+    gtk_window_set_title(window, "Graduately");
     gtk_window_set_default_size(window, 1080, 720);
     setup_window_icon(window);
 
     headerbar = gtk_header_bar_new();
     gtk_widget_add_css_class(headerbar, "titlebar");
-    title_label = gtk_label_new("maturita.c");
+    title_label = gtk_label_new("Graduately");
     gtk_widget_add_css_class(title_label, "app-title");
     gtk_header_bar_set_title_widget(GTK_HEADER_BAR(headerbar), title_label);
     gtk_window_set_titlebar(window, headerbar);

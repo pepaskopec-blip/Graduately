@@ -1,5 +1,5 @@
 #!/bin/sh
-# maturita.c installer for Linux.
+# Graduately installer for Linux.
 #
 # Carries no application of its own. Fastly caches branch-named URLs on
 # raw.githubusercontent.com, so this script looks up the tip of `builds`
@@ -34,7 +34,7 @@ builds_sha() {
         head -n 1
 }
 
-say "Installing maturita.C"
+say "Installing Graduately"
 say "---------------------"
 
 arch=$(uname -m)
@@ -76,7 +76,7 @@ mkdir -p "$DESKTOP_DIR"
 cat > "$DESKTOP_DIR/maturita.desktop" <<EOF
 [Desktop Entry]
 Type=Application
-Name=maturita.C
+Name=Graduately
 Comment=Practice app for the Czech maturita exam
 Exec=$DEST
 Icon=maturita

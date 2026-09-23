@@ -48,7 +48,7 @@ struct PracticeHome: View {
             .frame(maxWidth: MacChrome.contentMaxWidth, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .navigationTitle("Maturita")
+        .navigationTitle("Graduately")
     }
 
     @ViewBuilder
@@ -142,7 +142,7 @@ struct PracticeHome: View {
                 }
             }
         }
-        .navigationTitle("Maturita")
+        .navigationTitle("Graduately")
         .navigationBarTitleDisplayMode(.large)
     }
 

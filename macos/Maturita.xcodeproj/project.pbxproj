@@ -46,7 +46,7 @@
 		B201000000000000000017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B201000000000000000018 /* Maturita.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Maturita.entitlements; sourceTree = "<group>"; };
 		B201000000000000000019 /* PathMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathMap.swift; path = ../ios/Maturita/UI/PathMap.swift; sourceTree = SOURCE_ROOT; };
-		B301000000000000000001 /* Maturita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maturita.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B301000000000000000001 /* Graduately.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graduately.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 		B501000000000000000006 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B301000000000000000001 /* Maturita.app */,
+				B301000000000000000001 /* Graduately.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,8 +143,8 @@
 			dependencies = (
 			);
 			name = Maturita;
-			productName = Maturita;
-			productReference = B301000000000000000001 /* Maturita.app */;
+			productName = Graduately;
+			productReference = B301000000000000000001 /* Graduately.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -353,7 +353,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Maturita/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = maturita.c;
+				INFOPLIST_KEY_CFBundleDisplayName = Graduately;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSHighResolutionCapable = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "GPL-3.0";
@@ -364,7 +364,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita.macos;
-				PRODUCT_NAME = Maturita;
+				PRODUCT_NAME = Graduately;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -387,7 +387,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Maturita/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = maturita.c;
+				INFOPLIST_KEY_CFBundleDisplayName = Graduately;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSHighResolutionCapable = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "GPL-3.0";
@@ -398,7 +398,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita.macos;
-				PRODUCT_NAME = Maturita;
+				PRODUCT_NAME = Graduately;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;

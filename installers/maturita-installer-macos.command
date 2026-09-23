@@ -1,5 +1,5 @@
 #!/bin/sh
-# maturita.c installer for macOS.
+# Graduately installer for macOS.
 #
 # Carries no application of its own. Fastly caches branch-named URLs on
 # raw.githubusercontent.com, so this script looks up the tip of `builds`
@@ -24,7 +24,7 @@ say() { printf '%s\n' "$*"; }
 gui_dialog() {
     osascript - "$1" <<'APPLESCRIPT'
 on run argv
-    display dialog (item 1 of argv) with title "maturita.C" buttons {"OK"} default button 1
+    display dialog (item 1 of argv) with title "Graduately" buttons {"OK"} default button 1
 end run
 APPLESCRIPT
 }
@@ -32,7 +32,7 @@ APPLESCRIPT
 gui_alert() {
     osascript - "$1" <<'APPLESCRIPT'
 on run argv
-    display dialog (item 1 of argv) with title "maturita.C" buttons {"OK"} default button 1 with icon stop
+    display dialog (item 1 of argv) with title "Graduately" buttons {"OK"} default button 1 with icon stop
 end run
 APPLESCRIPT
 }
@@ -57,13 +57,13 @@ builds_sha() {
 
 if [ "$GUI" = 1 ]; then
     if ! osascript <<'APPLESCRIPT'
-display dialog "Nainstalovat maturita.C do složky Aplikace? Stáhne se aktuální verze." with title "maturita.C" buttons {"Zrušit", "Instalovat"} default button "Instalovat"
+display dialog "Nainstalovat Graduately do složky Aplikace? Stáhne se aktuální verze." with title "Graduately" buttons {"Zrušit", "Instalovat"} default button "Instalovat"
 APPLESCRIPT
     then
         exit 0
     fi
 else
-    say "Installing maturita.C"
+    say "Installing Graduately"
     say "---------------------"
 fi
 
@@ -78,16 +78,19 @@ command -v curl >/dev/null 2>&1 || die "Na Macu chybí curl, bez něj nejde nic 
 # often is not, even when this installer can drop a .app there once.
 dest_dir="$HOME/Applications"
 mkdir -p "$dest_dir"
-if [ -e "/Applications/Maturita.app" ] && [ -w "/Applications/Maturita.app" ]; then
-    rm -rf "/Applications/Maturita.app"
-fi
+# Remove legacy Maturita.app and any prior Graduately install in /Applications.
+for legacy in Maturita.app Graduately.app; do
+    if [ -e "/Applications/$legacy" ] && [ -w "/Applications/$legacy" ]; then
+        rm -rf "/Applications/$legacy"
+    fi
+done
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
 if [ "$GUI" = 1 ]; then
     osascript <<'APPLESCRIPT' >/dev/null || true
-display notification "Stahuji aktuální verzi…" with title "maturita.C"
+display notification "Stahuji aktuální verzi…" with title "Graduately"
 APPLESCRIPT
 fi
 
@@ -115,6 +118,10 @@ name=$(basename "$app")
 rm -rf "$dest_dir/$name.old"
 if [ -e "$dest_dir/$name" ]; then
     mv "$dest_dir/$name" "$dest_dir/$name.old"
+fi
+# Drop the old product name if we are installing Graduately.app.
+if [ "$name" = "Graduately.app" ] && [ -e "$dest_dir/Maturita.app" ]; then
+    rm -rf "$dest_dir/Maturita.app"
 fi
 if mv "$app" "$dest_dir/$name"; then
     rm -rf "$dest_dir/$name.old"

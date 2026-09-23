@@ -25,13 +25,13 @@ xcodebuild \
   CODE_SIGNING_REQUIRED=NO \
   COMMIT="$COMMIT"
 
-app=$(find "$dd" -name 'Maturita.app' -path '*/Release-iphoneos/*' | head -n 1)
+app=$(find "$dd" -name 'Graduately.app' -path '*/Release-iphoneos/*' | head -n 1)
 if [ -z "$app" ]; then
-  echo "Maturita.app not found" >&2
+  echo "Graduately.app not found" >&2
   exit 1
 fi
 
 mkdir -p "$root/ios/Payload"
-cp -R "$app" "$root/ios/Payload/Maturita.app"
+cp -R "$app" "$root/ios/Payload/Graduately.app"
 (cd "$root/ios" && zip -r -q "$root/dist-ios/maturita-ios.ipa" Payload)
 echo "wrote $root/dist-ios/maturita-ios.ipa"

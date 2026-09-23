@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
     private fun crashView(dump: String, retry: () -> Unit): LinearLayout {
         val pad = (20 * resources.displayMetrics.density).toInt()
         val title = TextView(this).apply {
-            text = "maturita.c spadla"
+            text = "Graduately spadla"
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
             setPadding(0, 0, 0, pad / 2)
         }

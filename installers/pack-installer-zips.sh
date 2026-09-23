@@ -12,7 +12,7 @@ chmod +x maturita-installer-macos.command maturita-installer-linux.sh
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
-app="$tmp/Nainstalovat maturita.C.app"
+app="$tmp/Nainstalovat Graduately.app"
 mkdir -p "$app/Contents/MacOS"
 cp macos/Info.plist "$app/Contents/Info.plist"
 cp maturita-installer-macos.command "$app/Contents/MacOS/installer"
@@ -20,7 +20,7 @@ chmod +x "$app/Contents/MacOS/installer"
 
 rm -f "$here/maturita-installer-macos.zip"
 (cd "$tmp" && zip -r -q "$here/maturita-installer-macos.zip" \
-    "Nainstalovat maturita.C.app")
+    "Nainstalovat Graduately.app")
 
 zip -q -FS maturita-installer-windows.zip maturita-installer-windows.cmd
 zip -q -FS maturita-installer-linux.zip maturita-installer-linux.sh
@@ -28,12 +28,12 @@ zip -q -FS maturita-installer-linux.zip maturita-installer-linux.sh
 # Browsers download a zip; they render .html as a text tab on GitHub.
 # The page looks up the tip of `builds` so Fastly cannot serve a cached 404
 # for the branch-named APK URL.
-cp maturita-android.html "$tmp/Stahnout maturita.C.html"
+cp maturita-android.html "$tmp/Stahnout Graduately.html"
 rm -f "$here/maturita-installer-android.zip"
 (cd "$tmp" && zip -q -FS "$here/maturita-installer-android.zip" \
-    "Stahnout maturita.C.html")
+    "Stahnout Graduately.html")
 
-cp maturita-ios.html "$tmp/Jak nainstalovat maturita.C.html"
+cp maturita-ios.html "$tmp/Jak nainstalovat Graduately.html"
 rm -f "$here/maturita-installer-ios.zip"
 (cd "$tmp" && zip -q -FS "$here/maturita-installer-ios.zip" \
-    "Jak nainstalovat maturita.C.html")
+    "Jak nainstalovat Graduately.html")

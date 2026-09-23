@@ -90,7 +90,7 @@ import org.maturita.maturita.data.themePalette
 fun HomeScreen(vm: AppViewModel) {
     val sum = summarize(vm.content, vm.progress)
     val pct = if (sum.totalEx == 0) 0f else sum.doneEx / sum.totalEx.toFloat()
-    RootScaffold(vm, "Maturita") {
+    RootScaffold(vm, "Graduately") {
         if (vm.showChangelog) {
             item { ChangelogCard(vm) }
         }

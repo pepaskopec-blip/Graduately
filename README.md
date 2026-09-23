@@ -1,6 +1,6 @@
-# maturita.c
+# Graduately
 
-Vzdělávací aplikace k přípravě na maturitu. / An educational app for the Czech maturita exam.
+Vzdělávací aplikace k přípravě na maturitu (repo `maturita.c`). / An educational app for the Czech maturita exam (repo `maturita.c`).
 
 **[Česky](#česky)** · **[English](#english)**
 
@@ -27,14 +27,14 @@ větve.
 
 | Platforma | Soubor | Jak spustit |
 | --------- | ------ | ----------- |
-| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Rozbalit, pravý klik na **Nainstalovat maturita.C** → **Otevřít** |
+| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Rozbalit, pravý klik na **Nainstalovat Graduately** → **Otevřít** |
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
-| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout maturita.C.html** a nainstalovat APK (neznámé zdroje) |
-| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat maturita.C.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
+| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout Graduately.html** a nainstalovat APK (neznámé zdroje) |
+| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat Graduately.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
-`%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
+`%LOCALAPPDATA%\Programs\Graduately` (Windows), `~/Applications` (Linux).
 
 Buildy zatím nejsou notarizované (chybí Apple Developer ID), proto je při
 **prvním** spuštění potřeba výše uvedený krok navíc. Aplikace se pak udržuje
@@ -219,14 +219,14 @@ branch-named file.
 
 | Platform | File | How to run |
 | -------- | ---- | ---------- |
-| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Unzip, right-click **Nainstalovat maturita.C** → **Open** |
+| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Unzip, right-click **Nainstalovat Graduately** → **Open** |
 | Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
 | Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
-| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout maturita.C.html**, then install the APK (unknown sources) |
-| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat maturita.C.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
+| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout Graduately.html**, then install the APK (unknown sources) |
+| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat Graduately.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
-`%LOCALAPPDATA%\Programs\Maturita` (Windows), `~/Applications` (Linux).
+`%LOCALAPPDATA%\Programs\Graduately` (Windows), `~/Applications` (Linux).
 
 The builds are not notarized yet (no Apple Developer ID), so the first
 launch still needs the extra step above. After that the app stays current:

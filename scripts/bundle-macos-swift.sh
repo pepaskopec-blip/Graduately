@@ -40,13 +40,13 @@ xcodebuild \
   CODE_SIGNING_REQUIRED=NO \
   COMMIT="$COMMIT"
 
-app=$(find "$dd" -name 'Maturita.app' -path '*/Release/*' | head -n 1)
+app=$(find "$dd" -name 'Graduately.app' -path '*/Release/*' | head -n 1)
 if [ -z "$app" ]; then
-  echo "Maturita.app not found" >&2
+  echo "Graduately.app not found" >&2
   exit 1
 fi
 
-dest="$root/dist/Maturita.app"
+dest="$root/dist/Graduately.app"
 rm -rf "$dest"
 cp -R "$app" "$dest"
 
@@ -67,7 +67,7 @@ pick_sign_identity() {
 }
 
 IDENTITY="$(pick_sign_identity)"
-echo "==> Signing Maturita.app ($IDENTITY)"
+echo "==> Signing Graduately.app ($IDENTITY)"
 sign_args="--force --sign $IDENTITY"
 if [ "$IDENTITY" != "-" ]; then
   sign_args="$sign_args --options runtime --timestamp"
@@ -95,7 +95,7 @@ can_notarize() {
 }
 
 if can_notarize; then
-  echo "==> Notarizing Maturita.app"
+  echo "==> Notarizing Graduately.app"
   zip="$root/dist/.notarize-$out_zip"
   rm -f "$zip"
   ditto -c -k --keepParent "$dest" "$zip"
@@ -123,6 +123,6 @@ fi
 rm -f "$root/dist/$out_zip"
 (
   cd "$root/dist"
-  zip -qry "$out_zip" Maturita.app
+  zip -qry "$out_zip" Graduately.app
 )
 echo "wrote $root/dist/$out_zip"

@@ -43,7 +43,7 @@
 		A201000000000000000015 /* ExercisesMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesMore.swift; sourceTree = "<group>"; };
 		A201000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A201000000000000000018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A301000000000000000001 /* Maturita.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maturita.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A301000000000000000001 /* Graduately.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graduately.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +116,7 @@
 		A501000000000000000006 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A301000000000000000001 /* Maturita.app */,
+				A301000000000000000001 /* Graduately.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -138,8 +138,8 @@
 			dependencies = (
 			);
 			name = Maturita;
-			productName = Maturita;
-			productReference = A301000000000000000001 /* Maturita.app */;
+			productName = Graduately;
+			productReference = A301000000000000000001 /* Graduately.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -347,7 +347,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Maturita/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = maturita.c;
+				INFOPLIST_KEY_CFBundleDisplayName = Graduately;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -361,7 +361,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Graduately;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -385,7 +385,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Maturita/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = maturita.c;
+				INFOPLIST_KEY_CFBundleDisplayName = Graduately;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -399,7 +399,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Graduately;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

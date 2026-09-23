@@ -250,7 +250,7 @@ static InstallKind install_target(char **target_out, char **parent_out) {
 #endif
 
 #ifdef __APPLE__
-    /* .../Maturita.app/Contents/MacOS/maturita -> .../Maturita.app */
+    /* .../Graduately.app/Contents/MacOS/maturita -> .../Graduately.app */
     if (!target && exe) {
         char *macos_dir = g_path_get_dirname(exe);
         char *contents = g_path_get_dirname(macos_dir);

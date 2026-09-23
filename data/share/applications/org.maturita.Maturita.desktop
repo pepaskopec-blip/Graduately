@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=maturita.c
-GenericName=Maturita study app
+Name=Graduately
+GenericName=Graduately study app
 GenericName[cs]=Příprava na maturitu
-Comment=Educational GTK app for maturita exam preparation
+Comment=Educational GTK app for Czech maturita exam preparation
 Comment[cs]=Vzdělávací GTK aplikace pro přípravu na maturitu
 Exec=maturita
 Icon=maturita

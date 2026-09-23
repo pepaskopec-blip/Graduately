@@ -79,5 +79,5 @@ cs: Cvičení v Deutsch jednotce 1
 en: Exercises in Deutsch unit 1
 
 --- 2026-09-03
-cs: První verze maturita.c
-en: First version of maturita.c
+cs: První verze Graduately
+en: First version of Graduately
