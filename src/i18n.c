@@ -50,7 +50,7 @@ const TrEntry tr_ui[] = {
     {"update_err_devbuild", "Tento build nepochází z repozitáře (dev).",
      "This build did not come from the repository (dev)."},
     {"welcome_kicker", "Graduately", "Graduately"},
-    {"welcome_title", "Graduately\nTo dáte.", "Graduately\nYou've got this."},
+    {"welcome_title", "Maturita?\nTo dáme.", "Maturita?\nWe've got this."},
     {"welcome_body",
      "Procvičování k maturitě v jednom okně. Česky i anglicky, "
      "napsané v C studenty ze SSŠVT.",
