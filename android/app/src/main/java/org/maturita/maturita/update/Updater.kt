@@ -156,7 +156,7 @@ class Updater(private val app: Application) {
             connectTimeout = 15000
             readTimeout = readMs
             instanceFollowRedirects = true
-            setRequestProperty("User-Agent", "maturita.c-android")
+            setRequestProperty("User-Agent", "Graduately-android")
             setRequestProperty("Accept", "*/*")
         }
     }

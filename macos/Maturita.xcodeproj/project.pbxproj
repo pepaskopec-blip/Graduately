@@ -212,7 +212,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Pull the exercises out of the C sources and drop the JSON into the app\n# bundle. Nothing generated is kept in the repository, so a fresh clone opens\n# and runs in Xcode without extra steps.\nset -eu\nextract=\"${SRCROOT}/../scripts/extract-android-content.py\"\nif [ ! -f \"$extract\" ]; then\n  echo \"error: ${extract} not found. Keep macos/ inside the maturita.c checkout.\" >&2\n  exit 1\nfi\nout=\"${DERIVED_FILE_DIR}/content.json\"\nmkdir -p \"${DERIVED_FILE_DIR}\"\npython3 \"$extract\" --out \"$out\"\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"$out\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/content.json\"\n";
+			shellScript = "# Pull the exercises out of the C sources and drop the JSON into the app\n# bundle. Nothing generated is kept in the repository, so a fresh clone opens\n# and runs in Xcode without extra steps.\nset -eu\nextract=\"${SRCROOT}/../scripts/extract-android-content.py\"\nif [ ! -f \"$extract\" ]; then\n  echo \"error: ${extract} not found. Keep macos/ inside the Graduately checkout.\" >&2\n  exit 1\nfi\nout=\"${DERIVED_FILE_DIR}/content.json\"\nmkdir -p \"${DERIVED_FILE_DIR}\"\npython3 \"$extract\" --out \"$out\"\nmkdir -p \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp \"$out\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/content.json\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
