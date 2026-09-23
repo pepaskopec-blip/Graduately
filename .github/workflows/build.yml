@@ -263,6 +263,7 @@ jobs:
         env:
           FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
           FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
+          FORGEJO_URL: ${{ secrets.FORGEJO_URL }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -281,16 +282,16 @@ jobs:
             echo "No FORGEJO_TOKEN; skipping Forgejo builds publish."
             exit 0
           fi
-          # Trim and fall back: an empty FORGEJO_USER secret is still "set", so
-          # ${VAR:-oauth2} would keep "" and produce https://:token@host which
-          # libcurl rejects as "Bad hostname". Prefer Basic auth over URL userinfo
-          # so tokens with @/: never break the URL either.
+          # Prefer Basic auth over URL userinfo so tokens with @/: never
+          # break the URL. Force-push: this is a one-way GitHub → Forgejo
+          # mirror (repo moved to edu/; non-ff rejects otherwise).
           token="$(printf '%s' "$FORGEJO_TOKEN" | tr -d '\r\n')"
           user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
           user="${user:-oauth2}"
           basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
+          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/maturita.c.git}"
           git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
-            "https://git.dvorakmortonxd.dev/skopcaak/maturita.c.git" \
+            "$forgejo_url" \
             HEAD:refs/heads/builds
 
   forgejo-main:
@@ -304,6 +305,7 @@ jobs:
         env:
           FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
           FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
+          FORGEJO_URL: ${{ secrets.FORGEJO_URL }}
         run: |
           set -euo pipefail
           token="$(printf '%s' "${FORGEJO_TOKEN:-}" | tr -d '\r\n')"
@@ -314,6 +316,7 @@ jobs:
           user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
           user="${user:-oauth2}"
           basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
-          git -c "http.extraHeader=Authorization: Basic ${basic}" push \
-            "https://git.dvorakmortonxd.dev/skopcaak/maturita.c.git" \
+          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/maturita.c.git}"
+          git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
+            "$forgejo_url" \
             HEAD:refs/heads/main

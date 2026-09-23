@@ -67,7 +67,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
   ročníky 2–4 jsou zamčené
 - **Technické vybavení** — 3 lekce (architektura, historie, bit/byte)
 - **Český jazyk a literatura** — mluvnice (20 cvičení) a maturitní četba
-  (1984, Spalovač mrtvol); literatura je zatím zamčená
+  (82 knih: zápisky, kvíz, sestavení děje); literární teorie je zatím zamčená
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
 - ukončení: `Cmd/Super+Q` nebo `Alt+F4`
 
@@ -115,6 +115,7 @@ Na Linuxu a Windows:
 make
 make run          # nebo ./maturita
 make bundle       # AppImage / Windows složka s DLL
+make smoke        # instalátory, content packs, dostupnost builds
 ```
 
 Volitelně CMake (GTK): `cmake -S . -B build && cmake --build build`.
@@ -156,11 +157,11 @@ src/                 C zdroje (GTK přehrávač pro Linux a Windows)
 android/             Jetpack Compose přehrávač (stejný obsah)
 ios/                 SwiftUI přehrávač (stejný obsah)
 macos/               nativní SwiftUI aplikace pro Mac (stejný obsah)
-data/                style.css, share/, podpisy, Windows .rc
+data/                style.css, changelog.txt, share/, cetba/*.json
 assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
-scripts/             balení AppImage, .app, IPA a extract-android-content.py
-.github/workflows/   CI: push na main → větev builds
+scripts/             balení AppImage, .app, IPA, extract a smoke test
+.github/workflows/   CI: push na main → větev builds (+ zrcadlo Forgejo)
 progress/            vzniká za běhu (cvičení, nastavení)
 ```
 
@@ -260,7 +261,7 @@ Intel Mac, another architecture, or hacking on the code →
   years 2–4 are locked
 - **Computer hardware** — 3 lessons (architecture, history, bit/byte)
 - **Czech language** — grammar (20 exercises) and required reading
-  (1984, Spalovač mrtvol); literature theory is still locked
+  (82 books: notes, quiz, plot ordering); literature theory is still locked
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
 - quit with `Cmd/Super+Q` or `Alt+F4`
 
@@ -308,6 +309,7 @@ On Linux and Windows:
 make
 make run          # or ./maturita
 make bundle       # AppImage / Windows DLL folder
+make smoke        # installers, content packs, builds availability
 ```
 
 Optional CMake (GTK): `cmake -S . -B build && cmake --build build`.
@@ -349,11 +351,11 @@ src/                 C sources (GTK player for Linux and Windows)
 android/             Jetpack Compose player (same content)
 ios/                 SwiftUI player (same content)
 macos/               native SwiftUI Mac app (same content)
-data/                style.css, share/, signing files, Windows .rc
+data/                style.css, changelog.txt, share/, cetba/*.json
 assets/              source icon and screenshots
 installers/          fetch-the-latest installers
-scripts/             AppImage / .app / IPA bundlers and extract-android-content.py
-.github/workflows/   CI: push to main → builds branch
+scripts/             AppImage / .app / IPA bundlers, extract, smoke test
+.github/workflows/   CI: push to main → builds branch (+ Forgejo mirror)
 progress/            created at runtime (exercises, settings)
 ```
 

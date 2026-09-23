@@ -114,6 +114,10 @@ installer-zips:
 	chmod +x installers/pack-installer-zips.sh
 	./installers/pack-installer-zips.sh
 
+smoke:
+	chmod +x scripts/smoke-platforms.sh
+	./scripts/smoke-platforms.sh
+
 -include $(DEP)
 
 android:
@@ -128,4 +132,4 @@ macos:
 	chmod +x scripts/bundle-macos-swift.sh
 	./scripts/bundle-macos-swift.sh
 
-.PHONY: all clean run bundle installer-zips android ios macos
+.PHONY: all clean run bundle installer-zips smoke android ios macos
