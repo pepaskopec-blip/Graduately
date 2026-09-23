@@ -281,9 +281,16 @@ jobs:
             echo "No FORGEJO_TOKEN; skipping Forgejo builds publish."
             exit 0
           fi
-          user="${FORGEJO_USER:-oauth2}"
-          git push -f \
-            "https://${user}:${FORGEJO_TOKEN}@git.dvorakmortonxd.dev/edu/maturita.c.git" \
+          # Trim and fall back: an empty FORGEJO_USER secret is still "set", so
+          # ${VAR:-oauth2} would keep "" and produce https://:token@host which
+          # libcurl rejects as "Bad hostname". Prefer Basic auth over URL userinfo
+          # so tokens with @/: never break the URL either.
+          token="$(printf '%s' "$FORGEJO_TOKEN" | tr -d '\r\n')"
+          user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
+          user="${user:-oauth2}"
+          basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
+          git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
+            "https://git.dvorakmortonxd.dev/skopcaak/maturita.c.git" \
             HEAD:refs/heads/builds
 
   forgejo-main:
@@ -299,11 +306,14 @@ jobs:
           FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
         run: |
           set -euo pipefail
-          if [ -z "${FORGEJO_TOKEN:-}" ]; then
+          token="$(printf '%s' "${FORGEJO_TOKEN:-}" | tr -d '\r\n')"
+          if [ -z "$token" ]; then
             echo "No FORGEJO_TOKEN; skipping Forgejo main mirror."
             exit 0
           fi
-          user="${FORGEJO_USER:-oauth2}"
-          git push \
-            "https://${user}:${FORGEJO_TOKEN}@git.dvorakmortonxd.dev/edu/maturita.c.git" \
+          user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
+          user="${user:-oauth2}"
+          basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
+          git -c "http.extraHeader=Authorization: Basic ${basic}" push \
+            "https://git.dvorakmortonxd.dev/skopcaak/maturita.c.git" \
             HEAD:refs/heads/main
