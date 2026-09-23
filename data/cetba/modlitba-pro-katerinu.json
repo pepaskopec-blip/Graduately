@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Arnošt Lustig",
-        "Žánr: novela / próza s tématem holocaustu",
-        "Poprvé vydáno: 1964",
-        "Děj / prostředí: transport a koncentrační tábor za 2. světové války",
-        "Vyprávění / forma: er-forma, napínavý spád, pointa vzdoru"
+        "Autor: František Halas (1901–1949), český básník",
+        "Žánr: moderní poezie, básnická skladba / cyklus",
+        "Poprvé vydáno: 1939 (Modlitba pro Katherinu Horovitzovou)",
+        "Děj / prostředí: 2. světová válka, okupace, koncentrační tábor (motiv)",
+        "Vyprávění / forma: volný verš, lyrický monolog, reflexe"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Holocaust: systematické vyvražďování Židů nacistickým režimem.",
-        "Lustig patří k autorům, kteří přežili koncentrační tábory.",
-        "Příběh sleduje krásnou Kateřinu Horovitzovou v transportu.",
-        "Nacisté i američtí obchodníci jednají o „výkupném“ – morálně dvojznačné.",
-        "Novela končí aktem vzdoru: Kateřina zabije důstojníka a zahyne.",
-        "Témata: důstojnost, obchod s životy, vina, odvaha."
+        "Vznik na počátku okupace – strach, útlak, lidská křehkost.",
+        "Inspirace románem Arnošta Lustiga o Katherině Horovitzové.",
+        "Halas modlí za oběť i za lidskost uprostřed nelidskosti.",
+        "Motivy: víra, naděje, bolest, smrt, odpovědnost básníka.",
+        "Patří k vrcholu české válečné lyriky.",
+        "Jazyk je intimní, naléhavý, bez patetického klišé."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Kateřina Horovitzová – krásná židovská žena, symbol vzdoru.",
-        "Fredy Haberfeld – organizátor „obchodu“ s vězni.",
-        "Nacističtí důstojníci – vykonavatelé moci a násilí.",
-        "Američtí obchodníci – účastníci vyjednávání o výkupném.",
-        "Spoluvězeňkyně – kolektiv ženského transportu.",
-        "Brill – postava spjatá s mechanismem „záchrany“ za majetek."
+        "Básnický subjekt – hlas modlícího se svědka.",
+        "Katherina Horovitzová – oběť holocaustu, addresát modlitby.",
+        "Oběti tábora – kolektivní tvář utrpení.",
+        "Bůh / addresát modlitby – vztah víry v krizi.",
+        "Okupanti – nepřítomní, ale pociťovaní v strachu.",
+        "Čtenář – svědek morální výzvy."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Holocaust – historický rámec genocidy.",
-        "Obchod s životy – výkupné jako morální past.",
-        "Vzdor – Kateřinin závěrečný čin.",
-        "Důstojnost – zůstat člověkem tváří v tvář smrti.",
-        "Krása – Kateřinina atraktivita jako nástroj i cíl násilí.",
-        "Svědectví – literatura jako paměť o šoa."
+        "Modlitba – forma i obsah – apel na smysl a milosrdenství.",
+        "Holocaust – genocida, Katherina jako konkrétní jméno.",
+        "Válečná lyrika – reakce na 2. světovou válku.",
+        "Oběť – individualizace utrpení jednoho člověka.",
+        "Naděje vs. beznaděj – napětí skladby.",
+        "Etická odpovědnost umělce – mluvit za ty, kdo nemohou."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Modlitbu pro Kateřinu Horovitzovou?",
-      "options": [
-        "Josef Škvorecký",
-        "Arnošt Lustig",
-        "Ladislav Fuks",
-        "Jiří Weil"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Arnošt Lustig."
-    },
-    {
-      "prompt": "V jakém historickém kontextu se děj odehrává?",
-      "options": [
-        "1. světová válka",
-        "Holocaust / 2. světová válka",
-        "Husitské války",
-        "Normalizace 1970"
-      ],
-      "correct": 1,
-      "expl": "Příběh je zasazen do transportu a táborů za šoa."
-    },
-    {
-      "prompt": "Kdo je Kateřina Horovitzová?",
-      "options": [
-        "Nacistická důstojnice",
-        "Židovská žena z transportu, která nakonec vzdoruje",
-        "Americká novinářka",
-        "Zdravotní sestra Červeného kříže"
-      ],
-      "correct": 1,
-      "expl": "Hrdinka je vězeňkyně, která na konci zabije důstojníka."
-    },
-    {
-      "prompt": "O co se v novele „obchoduje“?",
-      "options": [
-        "Obilím",
-        "O výkupné a životy vězňů",
-        "O umělecká díla bez lidí",
-        "O zbraně mezi spojenci"
-      ],
-      "correct": 1,
-      "expl": "Motiv výkupného odhaluje obchodování s lidskými životy."
-    },
-    {
-      "prompt": "Jak novela vrcholí?",
-      "options": [
-        "Osvobozením všech bez boje",
-        "Kateřina zastřelí důstojníka a je zabita",
-        "Svatbou v táboře",
-        "Útěkem do Švýcarska"
-      ],
-      "correct": 1,
-      "expl": "Závěrečný akt vzdoru stojí Kateřinu život."
-    },
-    {
-      "prompt": "Kdy novela vyšla?",
-      "options": [
-        "1945",
-        "1956",
-        "1964",
-        "1989"
-      ],
-      "correct": 2,
-      "expl": "Modlitba pro Kateřinu Horovitzovou vyšla roku 1964."
-    },
-    {
-      "prompt": "Proč je Lustigovo svědectví specifické?",
-      "options": [
-        "Nebyl v Evropě",
-        "Sám holocaust přežil a psal z osobní zkušenosti",
-        "Psal jen sci-fi",
-        "Byl nacistický úředník"
-      ],
-      "correct": 1,
-      "expl": "Lustig je autor-svědek koncentračních táborů."
-    },
-    {
-      "prompt": "Co je hlavním tématem?",
-      "options": [
-        "Venkovská idyla",
-        "Důstojnost, vzdor a morálka tváří v tvář genocidě",
-        "Detektivní hádanka",
-        "Milostná komedie"
-      ],
-      "correct": 1,
-      "expl": "Text zkoumá, jak zůstat člověkem v nelidských podmínkách."
-    },
-    {
-      "prompt": "Jakou roli hraje Kateřinina krása?",
-      "options": [
-        "Žádnou",
-        "Přitahuje pozornost mocných a stává se součástí konfliktu",
-        "Jen módní detail",
-        "Zaručuje jí záchranu bez rizika"
-      ],
-      "correct": 1,
-      "expl": "Krása je v táboře nebezpečná a ambivalentní."
-    },
-    {
-      "prompt": "Co novela říká o „záchraně“ za peníze?",
-      "options": [
-        "Že je vždy čistě morální",
-        "Že může být morálně dvojznačná a spojená s kalkulem",
-        "Že neexistovala",
-        "Že ji řídili jen vězni"
-      ],
-      "correct": 1,
-      "expl": "Obchod s životy není prezentován jako jednoznačné dobro."
-    },
-    {
-      "prompt": "Jaký žánr textu nejlépe odpovídá?",
-      "options": [
-        "Komedie",
-        "Novela o holocaustu",
-        "Epos",
-        "Pohádka"
-      ],
-      "correct": 1,
-      "expl": "Jde o kratší prózu s tématem šoa."
-    },
-    {
-      "prompt": "Proč je závěrečný čin nazýván „modlitbou“ / vzdorem?",
-      "options": [
-        "Protože Kateřina zpívá hymnu",
-        "Protože gestem vzdoru stvrzuje lidskou důstojnost i za cenu smrti",
-        "Protože vstupuje do kláštera",
-        "Protože píše dopis prezidentovi"
-      ],
-      "correct": 1,
-      "expl": "Její čin je etickým gestem proti naprosté bezmoci."
-    }
+    {"prompt": "Kdo napsal Modlitbu pro Katherinu Horovitzovou?", "options": ["Seifert", "František Halas", "Holan", "Nezval"], "correct": 1, "expl": "Halas vydal skladbu v roce 1939."},
+    {"prompt": "Kdy báseň vznikla?", "options": ["1939 – začátek okupace", "1989", "1848", "2000"], "correct": 0, "expl": "Reaguje na válečnou situaci Čech a Moravy."},
+    {"prompt": "Kdo je Katherina Horovitzová?", "options": ["Postava z Lustigova románu, oběť holocaustu", "Královna", "Halasova sestra", "Vymyšlená bez kontextu"], "correct": 0, "expl": "Halas reaguje na Lustigův příběh."},
+    {"prompt": "Jaký žánr dílo reprezentuje?", "options": ["Válečná lyrika / modlitební skladba", "Román", "Komedie", "Epos"], "correct": 0, "expl": "Lyrika s modlitební formou."},
+    {"prompt": "Proč „modlitba“ v titulu?", "options": ["Apel na Boha i lidskost za oběť", "Katolická mše text", "Bez významu", "Vtip"], "correct": 0, "expl": "Modlitba je forma i morální výzva."},
+    {"prompt": "Jaký kontext 2. sv. války?", "options": ["Okupace, tábory, genocida", "Mír", "První republika bez krize", "Vesmír"], "correct": 0, "expl": "Báseň vzniká v době nacistické hrozby."},
+    {"prompt": "Co je typické pro Halasovu lyriku?", "options": ["Intimní, naléhavý jazyk", "Suchý humor", "Sci-fi", "Bez emocí"], "correct": 0, "expl": "Halas patří k lyrickým modernistům."},
+    {"prompt": "Proč maturita zahrnuje skladbu?", "options": ["Nejdelší román", "Válečná poezie a etická reflexe", "Bez významu", "Jen humor"], "correct": 1, "expl": "Učí číst lyriku v historickém kontextu."},
+    {"prompt": "Kdo je Arnošt Lustig v souvislosti?", "options": ["Autor románu inspirujícího Halase", "Básník Modlitby", "Okupant", "Král"], "correct": 0, "expl": "Lustig psal o Katherině Horovitzové."},
+    {"prompt": "Co básnický subjekt dělá?", "options": ["Modlí se / apeluje za oběť", "Válku oslavuje", "Vaří", "Sportuje"], "correct": 0, "expl": "Hlas básníka je svědectvím."},
+    {"prompt": "Jaký tón převládá?", "options": ["Vážný, bolestný, někdy nadějný", "Komický", "Bezbřehý optimismus", "Prázdný"], "correct": 0, "expl": "Válečná lyrika bez kýče."},
+    {"prompt": "Co je holocaust v kontextu?", "options": ["Genocida Židů", "Sport", "Povodeň", "Revolution 1989"], "correct": 0, "expl": "Katherina reprezentuje oběti."},
+    {"prompt": "Které téma NENÍ středem?", "options": ["Oběť", "Válka", "Vesmírná kolonizace", "Modlitba"], "correct": 2, "expl": "Skladba je válečná lyrika."},
+    {"prompt": "Jak Halas individualizuje utrpení?", "options": ["Jménem konkrétní ženy", "Bez jmen", "Jen statistiky", "Humorem"], "correct": 0, "expl": "Konkrétní jméno zvyšuje sílu."},
+    {"prompt": "Co je etická odpovědnost umělce?", "options": ["Mluvit za oběti", "Mlčet", "Oslavovat moc", "Bez etiky"], "correct": 0, "expl": "Básník je svědek doby."},
+    {"prompt": "Jaký verš Halas používá?", "options": ["Volný verš moderní lyriky", "Antický hexametr", "Proza", "Bez verše"], "correct": 0, "expl": "Moderní forma odpovídá obsahu."},
+    {"prompt": "Kdy Halas zemřel?", "options": ["1949", "1939", "2000", "1890"], "correct": 0, "expl": "Halas patří k meziválečné generaci."},
+    {"prompt": "Co je naděje v modlitbě?", "options": ["Tenká, ale přítomná – víra v lidskost", "Absentní vždy", "Jen politika", "Sport"], "correct": 0, "expl": "Napětí mezi bezmocí a apellem."},
+    {"prompt": "Jak číst skladbu historicky?", "options": ["V kontextu okupace a holocaustu", "Bez kontextu", "Jako pohádku", "Jako sci-fi"], "correct": 0, "expl": "Historie je klíč interpretace."},
+    {"prompt": "Co NENÍ charakteristika Halase?", "options": ["Lyrika", "Válečné téma", "Groteskní humor bez vážnosti", "Modernismus"], "correct": 2, "expl": "Modlitba je vážná skladba."},
+    {"prompt": "Proč konkrétní jméno v titulu?", "options": ["Oběť není anonymní statistika", "Náhodné", "Reklama", "Město"], "correct": 0, "expl": "Individualizace zvyšuje etický tlak."},
+    {"prompt": "Jak skladba souvisí s Prokletým věkem?", "options": ["Halas je autorem obou", "Bez souvislosti", "Stejný autor Lustig", "Opera"], "correct": 0, "expl": "Halas napsal i Prokletý věk – válečná lyrika."},
+    {"prompt": "Co je addresát modlitby?", "options": ["Bůh / transcendentní instance i čtenář", "Jen sportovec", "Nikdo", "Okupant"], "correct": 0, "expl": "Modlitba směřuje nad člověka."},
+    {"prompt": "Jaký kontrast skladba nese?", "options": ["Modlitba za život vs. realita smrti", "Humor vs. humor", "Město vs. město", "Bez kontrastu"], "correct": 0, "expl": "Napětí víry a hrůzy."},
+    {"prompt": "Co čtenář má cítit?", "options": ["Soucit a morální odpovědnost", "Smích", "Nezájem", "Pouze strach bez smyslu"], "correct": 0, "expl": "Lyrika apeluje na svědomí."},
+    {"prompt": "Kde Halas patří v literatuře?", "options": ["Česká meziválečná moderna", "Baroko", "Antika", "Bez období"], "correct": 0, "expl": "Spolu s Seifertem, Holanem apod."},
+    {"prompt": "Proč „Horovitzová“?", "options": ["Identita oběti holocaustu", "Náhodné jméno", "Město", "Růže"], "correct": 0, "expl": "Židovská oběť v kontextu genocidy."},
+    {"prompt": "Jak skladba končí emocionálně?", "options": ["Naléhavost modlitby trvá", "Radostná párty", "Bez emocí", "Reklama"], "correct": 0, "expl": "Otevřený apel, ne uzavřený happy end."},
+    {"prompt": "Co je válečná lyrika?", "options": ["Poezie reagující na válku a útlak", "Jen romantismus", "Sport", "Epos"], "correct": 0, "expl": "Modlitba je typická ukázka."},
+    {"prompt": "Jaké poselství skladba nese?", "options": ["Pamatuj na oběti, nestrác humanitu v době zla", "Válka je slavná", "Oběti jsou čísla", "Bez morálky"], "correct": 0, "expl": "Etický apel Halasovy poezie."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Kateřina je zařazena do transportu",
-        "Objevuje se možnost „výkupného“ a vyjednávání",
-        "Vězni procházejí ponižováním a nejistotou",
-        "Nacistická moc demaskuje faleš naděje",
-        "Kateřina se rozhodne vzdorovat",
-        "Zastřelí důstojníka a sama zahyne"
+        "Okupace a hrůza 2. světové války",
+        "Halas čte příběh Katheriny Horovitzové",
+        "Básník promlouvá modlitbou k oběti",
+        "Apel na Boha a lidskost",
+        "Individualizace utrpení jednoho jména",
+        "Výzva čtenáři neztratit morální compass"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: transport → nabídka výkupného → ponižování → demaskování naděje → rozhodnutí vzdorovat → smrt po činu."
+    "Správné pořadí: válečný kontext → inspirace → modlitba → apel → jméno oběti → etické poselství."
   ]
 }

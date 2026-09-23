@@ -5,44 +5,46 @@
       "icon": "book",
       "lines": [
         "Autor: Émile Zola (1840–1902)",
-        "Žánr: naturalistický román (cyklus Rougon-Macquartové)",
-        "Poprvé vydáno: 1877 (L’Assommoir)",
-        "Děj: pařížská chudina, alkoholismus a sociální pád",
-        "Vyprávění: er-forma, detail prostředí a determinace"
+        "Žánr: naturalistický román",
+        "Poprvé vydáno: 1870",
+        "Děj: Les Halles, pařížská tržnice, maso",
+        "Vyprávění: er-forma, determinismus, sociální prostředí"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Paříž 19. století, dělnické čtvrti a bída.",
-        "Industrializace a sociální rozdíly formují osudy.",
-        "Hospoda („zabiják“) je centrum útěku i zkázy.",
-        "Naturalismus ukazuje, jak prostředí ničí člověka.",
-        "Román je kritikou alkoholismu a sociální devastace."
+        "Florent – bývalý učitel, údajný vrah.",
+        "Tržnice Halles – pach, maso, dělníci.",
+        "Florent vs. Lisa – tchyně, konflikt.",
+        "Politické sny – revoluce, represe.",
+        "Naturalismus – prostředí formuje charakter.",
+        "Titul Zabiják – Florentova minulost."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Gervaise Macquartová – pradlena, hrdinka sociálního pádu.",
-        "Coupeau – Gervaisin muž, sklouzne k alkoholu.",
-        "Lantier – Gervaisin bývalý milenec, vrací se do vztahu.",
-        "Nana – dcera, vyrůstá v rozkladu rodiny.",
-        "Sousedé z domu – svědkové i účastníci pádu."
+        "Florent – hlavní hrdina, „zabiják“.",
+        "Lisa Quenu – tchyně, majitelka.",
+        "Quenu – řezník, manžel.",
+        "La Normande, Les Halles dělníci.",
+        "Police, revolucionáři.",
+        "Paříž – městský organismus."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Zabiják (l’assommoir) – hospoda / destilát jako ničitel životů.",
-        "Alkoholismus – motor rozkladu rodiny.",
-        "Naturalismus – prostředí a dědičnost určují osud.",
-        "Sociální pád – od snahy o slušnost k bídě.",
-        "Prádelna – Gervaisina práce a krátkodobá naděje.",
-        "Determinismus – omezená možnost uniknout prostředí."
+        "Naturalismus – dědictvost a prostředí.",
+        "Halles – symbol kapitalismu a těla.",
+        "Maso – metafora brutality.",
+        "Florent – sny o spravedlnosti.",
+        "Determinismus – osud z ložnice vraždy.",
+        "Zola – dokumentární detail trhu."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Zabijáka?",
       "options": [
-        "F. Scott Fitzgerald",
+        "Hugo",
         "Émile Zola",
-        "Karel Čapek",
-        "William Styron"
+        "Flaubert",
+        "Styron"
       ],
       "correct": 1,
-      "expl": "Autorem je Émile Zola."
+      "expl": "Zola 1870."
     },
     {
-      "prompt": "Co označuje „zabiják“ v názvu?",
+      "prompt": "Kde děj?",
       "options": [
-        "Stíhací letoun",
-        "Hospodu / alkohol jako ničitele životů",
-        "Marlína",
-        "Školní ředitele"
-      ],
-      "correct": 1,
-      "expl": "L’Assommoir je hospoda i symbol alkoholu."
-    },
-    {
-      "prompt": "Kdo je Gervaise?",
-      "options": [
-        "Bohatá šlechtična z East Eggu",
-        "Pradlena a hlavní hrdinka sociálního pádu",
-        "Pilotka RAF",
-        "Bohyně Athéna"
-      ],
-      "correct": 1,
-      "expl": "Gervaise je ústřední postava románu."
-    },
-    {
-      "prompt": "Do jakého cyklu román patří?",
-      "options": [
-        "K Rougon-Macquartům",
-        "K cimrmanologii",
-        "K bájím Petišky",
-        "K Tyrolským elegiím"
+        "Paříž – tržnice Les Halles",
+        "Praha",
+        "Moře",
+        "RAF"
       ],
       "correct": 0,
-      "expl": "Je součástí cyklu o rodině Rougon-Macquartů."
+      "expl": "Masná tržnice."
     },
     {
-      "prompt": "Jaký směr Zola reprezentuje?",
+      "prompt": "Florent?",
       "options": [
-        "Poetismus",
-        "Naturalismus",
-        "Komedie dell’arte",
-        "Proletářskou baladu jen jako Wolker"
+        "Údajný vrah, bývalý učitel",
+        "Pilot",
+        "Sluha",
+        "Gatsby"
       ],
-      "correct": 1,
-      "expl": "Zabiják je naturalistický román."
+      "correct": 0,
+      "expl": "Titulní role."
     },
     {
-      "prompt": "Co především ničí Gervaisinu rodinu?",
+      "prompt": "Proč zabiják?",
       "options": [
-        "Nedostatek knih",
-        "Alkoholismus a sociální prostředí",
-        "Přílišný sport",
-        "Cimrmanovy přednášky"
+        "Zabil muže v sebeobraně – odsouzen",
+        "Bez důvodu",
+        "Detektiv",
+        "Král"
       ],
-      "correct": 1,
-      "expl": "Alkohol a bída rozkládají život postav."
+      "correct": 0,
+      "expl": "Minulost."
     },
     {
-      "prompt": "Kdo je Coupeau?",
+      "prompt": "Lisa?",
       "options": [
-        "Gatsbyho sluha",
-        "Gervaisin muž, který propadne pití",
-        "Kapitán van Toch",
-        "Havlíček"
+        "Tchyně, antagonistka",
+        "Manželka Florent",
+        "Daisy",
+        "Ester"
       ],
-      "correct": 1,
-      "expl": "Coupeauův alkoholismus je klíčový."
+      "correct": 0,
+      "expl": "Konflikt."
     },
     {
-      "prompt": "Ve kterém městě se děj odehrává?",
+      "prompt": "Quenu?",
       "options": [
-        "V Praze",
-        "V Paříži",
-        "V Brixenu",
-        "V Kostnici"
+        "Řezník, manžel",
+        "Pilot",
+        "Učitel",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Prostorem je pařížská chudina."
+      "correct": 0,
+      "expl": "Rodina."
     },
     {
-      "prompt": "Jak román typicky končí pro Gervaise?",
+      "prompt": "Naturalismus?",
       "options": [
-        "Korunovací",
-        "Sociálním a lidským pádem / zkázou",
-        "Emigrací jako eso RAF",
-        "Svatbou s Truffaldinem"
+        "Prostředí určuje osud",
+        "Bez",
+        "Sci-fi",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Naturalistický oblouk vede k devastaci."
+      "correct": 0,
+      "expl": "Zolův program."
     },
     {
-      "prompt": "Proč je prostředí tak důležité?",
+      "prompt": "Halles?",
       "options": [
-        "Není",
-        "Podle naturalismu formuje a často ničí člověka",
-        "Jen kvůli turistice",
-        "Jen kvůli zelenému světlu"
+        "Obrovská tržnice, maso, pach",
+        "Moře",
+        "Škola",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Determinace prostředím je jádro metody."
+      "correct": 0,
+      "expl": "Prostředí."
     },
     {
-      "prompt": "Kdo je Nana v tomto románu?",
+      "prompt": "Florent sny?",
       "options": [
-        "Učitelka Alice",
-        "Gervaisina dcera vyrůstající v rozkladu",
-        "Mlok",
-        "Slečna Barbora"
+        "Revoluce, spravedlnost",
+        "Bez",
+        "Jen láska",
+        "Sport"
       ],
-      "correct": 1,
-      "expl": "Nana je dítě prostředí, později hrdinka dalšího románu."
+      "correct": 0,
+      "expl": "Politika."
     },
     {
-      "prompt": "Ve kterém roce Zabiják vyšel?",
+      "prompt": "Konflikt Florent–Lisa?",
       "options": [
-        "1867",
-        "1877",
+        "Moc v domě a na trhu",
+        "Bez",
+        "Přátelé",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Tlak."
+    },
+    {
+      "prompt": "Jak končí Florent?",
+      "options": [
+        "Znovu zatčen / zničen",
+        "Král",
+        "Šťastný",
+        "Emigrace"
+      ],
+      "correct": 0,
+      "expl": "Tragicky."
+    },
+    {
+      "prompt": "Maso symbol?",
+      "options": [
+        "Brutalita, kapitalismus",
+        "Bez",
+        "Láska",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Naturalistická metafora."
+    },
+    {
+      "prompt": "Rok?",
+      "options": [
+        "1870",
         "1925",
-        "1936"
+        "2000",
+        "1867 Tereza"
       ],
-      "correct": 1,
-      "expl": "L’Assommoir vyšel roku 1877."
+      "correct": 0,
+      "expl": "Zola."
+    },
+    {
+      "prompt": "Tereza Raquin?",
+      "options": [
+        "Jiné Zolino dílo",
+        "Totéž",
+        "Bez",
+        "Gatsby"
+      ],
+      "correct": 0,
+      "expl": "Stejný autor."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Naturalismus",
+        "Paříž",
+        "Tržnice",
+        "Kosmické mloky"
+      ],
+      "correct": 3,
+      "expl": "Jiné dílo."
+    },
+    {
+      "prompt": "Dělníci Halles?",
+      "options": [
+        "Sociální vrstva",
+        "Ne",
+        "Jen králové",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Realismus."
+    },
+    {
+      "prompt": "Florent návrat?",
+      "options": [
+        "Z trestu na trh",
+        "Z moře",
+        "Bez",
+        "RAF"
+      ],
+      "correct": 0,
+      "expl": "Děj."
+    },
+    {
+      "prompt": "Atmosféra?",
+      "options": [
+        "Těžká, pach, hlučnost",
+        "Idyla",
+        "Bez",
+        "Komedy"
+      ],
+      "correct": 0,
+      "expl": "Naturalismus."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Zola, naturalismus, prostředí",
+        "Bez",
+        "Jen mapa",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Francouzská próza."
+    },
+    {
+      "prompt": "Vyprávění?",
+      "options": [
+        "Er-forma",
+        "Deník",
+        "Drama",
+        "Báseň"
+      ],
+      "correct": 0,
+      "expl": "Román."
+    },
+    {
+      "prompt": "Lisa moc?",
+      "options": [
+        "Manipuluje domácnost",
+        "Bez",
+        "Slabá",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Antagonista."
+    },
+    {
+      "prompt": "Revoluce?",
+      "options": [
+        "Florent idealista",
+        "Bez",
+        "Vždy vítězí",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Zola cyklus?",
+      "options": [
+        "Rougon-Macquart",
+        "Bez",
+        "1984",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Součást."
+    },
+    {
+      "prompt": "Překlad Kárl?",
+      "options": [
+        "České vydání",
+        "Bez",
+        "Anglicky",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Maturita."
+    },
+    {
+      "prompt": "Tělo / maso?",
+      "options": [
+        "Fyziologie města",
+        "Bez",
+        "Bez tématu",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Detail."
+    },
+    {
+      "prompt": "Florent charakter?",
+      "options": [
+        "Snílek i outsider",
+        "Král",
+        "Bez",
+        "Dítě"
+      ],
+      "correct": 0,
+      "expl": "Psychologie."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Temný naturalismus",
+        "Pure comedy",
+        "Bez",
+        "Pohádka"
+      ],
+      "correct": 0,
+      "expl": "Zola."
+    },
+    {
+      "prompt": "Trh Halles?",
+      "options": [
+        "Srdce děje",
+        "Okraj",
+        "Bez",
+        "Moře"
+      ],
+      "correct": 0,
+      "expl": "Prostředí."
+    },
+    {
+      "prompt": "Determinismus?",
+      "options": [
+        "Vina minulosti + prostředí",
+        "Svoboda bez limitů",
+        "Bez",
+        "Magie"
+      ],
+      "correct": 0,
+      "expl": "Teorie."
+    },
+    {
+      "prompt": "Titul?",
+      "options": [
+        "Odkaz na Florentovu minulost",
+        "Lovec srn",
+        "Bez",
+        "Pilot"
+      ],
+      "correct": 0,
+      "expl": "Zabiják."
+    },
+    {
+      "prompt": "Proč se Florent nazývá „zabiják“?",
+      "options": [
+        "V minulosti zabil muže a pyká trestem odnětí svobody",
+        "Pracuje jako řezník na Halles",
+        "Je detektiv z Paříže",
+        "Je fiktivní hrdina Hemingwaye"
+      ],
+      "correct": 0,
+      "expl": "Titul vychází z Florentovy vražedné minulosti, která ho pronásleduje."
+    },
+    {
+      "prompt": "Co symbolizují pařížské Halles v románu?",
+      "options": [
+        "Kapitalistický svět masa, těla a brutality města",
+        "Idylickou venkovskou přírodu",
+        "Klášterní ticho",
+        "Vzdušné souboje RAF"
+      ],
+      "correct": 0,
+      "expl": "Tržnice je naturalistickým prostředím, které formuje postavy i atmosféru."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Gervaise se snaží o slušný život prací",
-        "S Coupeauem založí domácnost a prádelnu naděje",
-        "Úraz a alkohol začnou rozkládat jistoty",
-        "Návrat Lantiera a pití zhorší morální pád",
-        "Bída a závislost zničí práci i vztahy",
-        "Hrdinka končí v totálním sociálním úpadku"
+        "Florent se vrací z trestu",
+        "Bydlí u řezníka Quenua",
+        "Konflikt s Lisou na Halles",
+        "Politické sny a napětí",
+        "Florent se propadá",
+        "Znovu ztrácí svobodu / zničení"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: snaha o slušnost → naděje prádelny → alkohol → morální rozklad → ztráta všeho → sociální pád."
+    "Správné pořadí: návrat → rodina → konflikt → sny → eskalace → pád Florenta."
   ]
 }

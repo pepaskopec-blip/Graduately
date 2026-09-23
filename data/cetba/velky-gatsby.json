@@ -7,42 +7,44 @@
         "Autor: F. Scott Fitzgerald (1896–1940)",
         "Žánr: modernistický román",
         "Poprvé vydáno: 1925",
-        "Děj: New York / Long Island ve „zlatých dvacátých“",
-        "Vyprávění: ich-forma – Nick Carraway jako svědek"
+        "Děj: Long Island, New York, „roaring twenties“",
+        "Vyprávění: ich-forma Nicka Carrawaye"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "USA po 1. světové válce, jazz age, bohatství a alkohol.",
-        "Americký sen naráží na třídní bariéry a prázdnotu.",
-        "Západní a východní vejce – symboly „nových“ a „starých“ peněz.",
-        "Párty, luxus a skandály maskují morální prázdno.",
-        "Román je kritikou i elegií amerického snu."
+        "Americký sen – bohatství, láska, iluze.",
+        "Jay Gatsby – tajemný milionář, párty.",
+        "Daisy Buchanan – dávná láska, vdaná za Toma.",
+        "Zelené světlo – symbol touhy.",
+        "Tragédie – Myrtle, Wilson, Gatsbyho smrt.",
+        "Kritika prázdného luxusu jazz age."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Jay Gatsby – zbohatlík, miluje Daisy a žije iluzí.",
-        "Daisy Buchananová – Gatsbyho dávná láska, vdaná za Toma.",
-        "Tom Buchanan – bohatý, arogantní manžel Daisy.",
-        "Nick Carraway – vypravěč, Gatsbyho soused.",
-        "Jordan Bakerová / Myrtle Wilsonová – další tváře zkorumpovaného světa."
+        "Jay Gatsby (James Gatz) – hlavní hrdina.",
+        "Nick Carraway – vypravěč, soused.",
+        "Daisy Buchanan – milovaná žena.",
+        "Tom Buchanan – bohatý, arogantní manžel.",
+        "Jordan Baker – golfistka, Nickova přítelkyně.",
+        "Myrtle a George Wilson – tragické vedlejší postavy."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Americký sen – slib úspěchu, který se láme o realitu.",
-        "Zelené světlo – symbol touhy po Daisy / budoucnosti.",
-        "Párty – lesk zakrývající prázdnotu.",
-        "Staré vs. nové peníze – třídní konflikt.",
-        "Iluzorní láska – Gatsby miluje obraz Daisy.",
-        "Morální úpadek – bohatství bez odpovědnosti."
+        "Americký sen – slib úspěchu.",
+        "Zelené světlo na konci Daisyina doku.",
+        "Nové vs. staré peníze – East/West Egg.",
+        "Párty – maska osamělosti.",
+        "Iluze – Gatsby miluje idealizovanou Daisy.",
+        "Oko doktora T. J. Eckleburga – symbol."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Velkého Gatsbyho?",
       "options": [
-        "Ernest Hemingway",
+        "Hemingway",
         "F. Scott Fitzgerald",
-        "William Styron",
-        "Daniel Keyes"
+        "Styron",
+        "Keyes"
       ],
       "correct": 1,
-      "expl": "Autorem je F. Scott Fitzgerald."
+      "expl": "Fitzgerald 1925."
     },
     {
-      "prompt": "Kdo je vypravěč románu?",
+      "prompt": "Vypravěč?",
       "options": [
-        "Jay Gatsby",
+        "Gatsby",
         "Nick Carraway",
-        "Tom Buchanan",
-        "Myrtle"
+        "Tom",
+        "Daisy"
       ],
       "correct": 1,
-      "expl": "Příběh vypráví Nick Carraway."
+      "expl": "Nick je svědek."
     },
     {
-      "prompt": "Koho Gatsby miluje?",
+      "prompt": "Gatsby miluje?",
       "options": [
-        "Jordan jen jako obchod",
-        "Daisy Buchananovou",
-        "Myrtle jako manželku",
-        "Nickou sestru"
+        "Jordan",
+        "Daisy Buchanan",
+        "Myrtle",
+        "Nick"
       ],
       "correct": 1,
-      "expl": "Ústřední touhou je Daisy."
+      "expl": "Dávná láska."
     },
     {
-      "prompt": "Co symbolizuje zelené světlo?",
+      "prompt": "Daisy je?",
       "options": [
-        "Semafor v Praze",
-        "Gatsbyho touhu po Daisy a nedosažitelné budoucnosti",
-        "RAF maják",
-        "Olymp"
-      ],
-      "correct": 1,
-      "expl": "Zelené světlo je klíčový symbol touhy."
-    },
-    {
-      "prompt": "V jaké době se děj odehrává?",
-      "options": [
-        "Ve středověku",
-        "V USA ve 20. letech 20. století",
-        "Za protektorátu v Praze",
-        "V antickém Řecku"
-      ],
-      "correct": 1,
-      "expl": "Jde o jazz age / „zlatá dvacátá“."
-    },
-    {
-      "prompt": "Kdo je Tom Buchanan?",
-      "options": [
-        "Chudý rybář",
-        "Daisyin bohatý, arogantní manžel",
-        "Gatsbyho sluha",
-        "Nickův syn"
-      ],
-      "correct": 1,
-      "expl": "Tom reprezentuje staré peníze a sílu."
-    },
-    {
-      "prompt": "Proč jsou Gatsbyho párty důležité?",
-      "options": [
-        "Jsou povinné ze zákona",
-        "Ukazují lesk i prázdnotu jeho světa a slouží k přilákání Daisy",
-        "Jsou jen o mlocích",
-        "Jsou školní akademií"
-      ],
-      "correct": 1,
-      "expl": "Párty jsou nástrojem iluze i společenskou satirou."
-    },
-    {
-      "prompt": "Ve kterém roce román vyšel?",
-      "options": [
-        "1925",
-        "1948",
-        "1952",
-        "1979"
+        "Vdaná za Toma Buchanan",
+        "Gatsbyho manželka",
+        "Sestra Nick",
+        "Učitelka"
       ],
       "correct": 0,
-      "expl": "The Great Gatsby vyšel roku 1925."
+      "expl": "Manželka Toma."
     },
     {
-      "prompt": "Jak román hodnotí americký sen?",
+      "prompt": "Zelené světlo?",
       "options": [
-        "Jako vždy splněný slib",
-        "Jako sen, který se v bohatství a třídách často rozpadá",
-        "Jako rybářský recept",
-        "Jako elegii z Brixenu"
+        "Symbol touhy po Daisy / budoucnosti",
+        "Reklama",
+        "Vlak",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Sen o úspěchu naráží na prázdnotu a bariéry."
+      "correct": 0,
+      "expl": "Na konci doku."
     },
     {
-      "prompt": "Jak Gatsby zbohatl (v rovině příběhu)?",
+      "prompt": "East Egg vs West Egg?",
       "options": [
-        "Jen výhrou v loterii sluhů",
-        "Pochybnými obchody (mj. alkohol v prohibici)",
-        "Soudním sporem o srnce",
-        "Psaním proletářských básní"
+        "Staré vs. nové bohatství",
+        "Stejné",
+        "Evropa",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Jeho majetek má stín ilegality."
+      "correct": 0,
+      "expl": "Třídní rozdíl."
     },
     {
-      "prompt": "Kdo je Myrtle Wilsonová?",
+      "prompt": "Gatsby bohatství?",
       "options": [
-        "Daisyina sestřenice z Oxfordu",
-        "Tomova milenka z chudšího prostředí",
-        "Gatsbyho matka",
-        "Pilotka"
+        "Pašování / nejasný původ",
+        "Dědictví Toma",
+        "Státní plat",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Myrtle patří k milostnému trojúhelníku Toma."
+      "correct": 0,
+      "expl": "Tajemství."
     },
     {
-      "prompt": "Jaký je tragický směr příběhu?",
+      "prompt": "Párty u Gatsbyho?",
       "options": [
-        "Gatsby získá vše a zestárne v klidu",
-        "Iluze lásky a snu se rozpadne; Gatsby hyne",
-        "Nick se stane mlokem",
-        "Daisy vstoupí do kláštera šťastně hned"
+        "Velkolepé, ale osamělé",
+        "Ne",
+        "Malé",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Román končí rozpadem snu a Gatsbyho smrtí."
+      "correct": 0,
+      "expl": "Maska."
+    },
+    {
+      "prompt": "Myrtle?",
+      "options": [
+        "Milenka Toma, umírá under car",
+        "Manželka Gatsby",
+        "Nick",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Tragédie."
+    },
+    {
+      "prompt": "Kdo zabije Gatsbyho?",
+      "options": [
+        "George Wilson",
+        "Tom",
+        "Nick",
+        "Daisy"
+      ],
+      "correct": 0,
+      "expl": "Myrtlein manžel."
+    },
+    {
+      "prompt": "Jak Gatsby zemře?",
+      "options": [
+        "V bazénu – střela",
+        "Stářím",
+        "Moře",
+        "Válka"
+      ],
+      "correct": 0,
+      "expl": "Tragický konec."
+    },
+    {
+      "prompt": "Nick na konci?",
+      "options": [
+        "Odejde zpět na Midwest",
+        "S Daisy",
+        "Král",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Disiluze."
+    },
+    {
+      "prompt": "Americký sen?",
+      "options": [
+        "Kritika – iluze úspěchu",
+        "Bez tématu",
+        "Sci-fi",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Jádro románu."
+    },
+    {
+      "prompt": "Tom Buchanan?",
+      "options": [
+        "Arogantní boháč",
+        "Chudý",
+        "Kněz",
+        "Pilot"
+      ],
+      "correct": 0,
+      "expl": "Antagonista morálky."
+    },
+    {
+      "prompt": "Jordan?",
+      "options": [
+        "Golfistka, vztah s Nickem",
+        "Gatsbyho sestra",
+        "Wilson",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Vedlejší linie."
+    },
+    {
+      "prompt": "Valley of Ashes?",
+      "options": [
+        "Průmyslová chudoba mezi Eggs",
+        "Raj",
+        "Moře",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Kontrast."
+    },
+    {
+      "prompt": "Eckleburg oči?",
+      "options": [
+        "Billboard – symbol",
+        "Bez",
+        "Gatsby",
+        "Daisy"
+      ],
+      "correct": 0,
+      "expl": "Moderní symbol."
+    },
+    {
+      "prompt": "Gatsby původní jméno?",
+      "options": [
+        "James Gatz",
+        "Nick",
+        "Tom",
+        "Jay only"
+      ],
+      "correct": 0,
+      "expl": "Přetvoření identity."
+    },
+    {
+      "prompt": "Daisy a Gatsby minulost?",
+      "options": [
+        "Milovali se před válkou",
+        "Ne",
+        "Sourozenci",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Louisville."
+    },
+    {
+      "prompt": "Auto accident?",
+      "options": [
+        "Myrtle killed – zvrat",
+        "Bez",
+        "Gatsby wins",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Klíčová scéna."
+    },
+    {
+      "prompt": "Kdo řídí auto?",
+      "options": [
+        "Daisy (debata) – Gatsby chrání",
+        "Wilson",
+        "Nick",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Gatsby přebírá vinu."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Modernistický román",
+        "Epos",
+        "Báseň",
+        "Drama"
+      ],
+      "correct": 0,
+      "expl": "Literature 20. st."
+    },
+    {
+      "prompt": "Rok?",
+      "options": [
+        "1925",
+        "1949",
+        "2000",
+        "1890"
+      ],
+      "correct": 0,
+      "expl": "Jazz age."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Kritika snu",
+        "Láska",
+        "Tragedie",
+        "Kosmické mloky"
+      ],
+      "correct": 3,
+      "expl": "Realistický USA."
+    },
+    {
+      "prompt": "Nick a Gatsby?",
+      "options": [
+        "Přátelství, obdiv",
+        "Nepřátelé",
+        "Bratři",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Nick vypráví."
+    },
+    {
+      "prompt": "Gatsbyho pohřeb?",
+      "options": [
+        "Skoro nikdo nepřijde",
+        "Národní slavnost",
+        "Bez",
+        "Tom only"
+      ],
+      "correct": 0,
+      "expl": "Osamělost."
+    },
+    {
+      "prompt": "Překlad Dorůžka?",
+      "options": [
+        "České vydání",
+        "Bez",
+        "Anglicky jen",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Maturita."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Elegický, kritický",
+        "Pure comedy",
+        "Horor",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Tragédie snu."
+    },
+    {
+      "prompt": "Daisy hlas?",
+      "options": [
+        "Symbol půvabu a prázdnoty",
+        "Bez",
+        "Sci-fi",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Sen může být iluze ničící",
+        "Vždy vyhraj",
+        "Bez",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Fitzgeraldova kritika."
+    },
+    {
+      "prompt": "Co symbolizují oči doktora T. J. Eckleburga?",
+      "options": [
+        "Prázdný moralismus reklamní civilizace / „Bůh“ údolí popela",
+        "Gatsbyho majetek",
+        "Nickovu rodinu",
+        "Daisyin hlas"
+      ],
+      "correct": 0,
+      "expl": "Billboard je jedním z nejsilnějších obrazů románu."
+    },
+    {
+      "prompt": "Proč Gatsby na konci zůstává osamělý i při velkých párty?",
+      "options": [
+        "Hosté využívají lesk, ne jeho – touží jen po Daisy",
+        "Protože je neznámý",
+        "Protože je z chudiny",
+        "Protože je v exilu"
+      ],
+      "correct": 0,
+      "expl": "Párty maskují osamělost muže žijícího v iluzi minulosti."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Nick se nastěhuje vedle Gatsbyho na Long Island",
-        "Pozná svět párty, Toma a Daisy",
-        "Gatsby ho využije k setkání s Daisy",
-        "Obnovený vztah narazí na Toma a třídní bariéry",
-        "Konflikt vyvrcholí tragickou nehodou / násilím",
-        "Gatsby umírá; sen i iluze se rozpadají"
+        "Nick přijede na Long Island",
+        "Pozná Gatsbyho a párty",
+        "Gatsby chce Daisy zpět",
+        "Aféra, napětí s Tomem",
+        "Myrtleina smrt autem",
+        "Wilson zabije Gatsbyho – Nick odchází"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: Nickův příchod → svět bohatých → setkání s Daisy → konflikt → tragédie → rozpad snu."
+    "Správné pořadí: Nick → Gatsby → Daisy → konflikt → nehoda → smrt Gatsbyho."
   ]
 }

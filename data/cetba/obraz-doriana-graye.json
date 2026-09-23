@@ -5,196 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: Oscar Wilde",
-        "Žánr: román / dekadence",
-        "Poprvé vydáno: 1890/1891 (česky např. Novák)",
-        "Děj: Londýn – krásný Dorian a jeho portrét přebírající vinu stáří a hříchu",
-        "Vyprávění: er-forma, aforismy, estetismus"
+        "Žánr: philosophický / gotický román",
+        "Poprvé vydáno: 1890 (revidováno 1891)",
+        "Děj: Londýn fin de siècle, společnost a moralita",
+        "Vyprávění: er-forma; epigramy, estetika"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Fin de siècle: kult krásy a hedonismu.",
-        "Lord Henry svádí Doriana k životu prožitku.",
-        "Portrét stárne a hyzdí se místo hrdiny.",
-        "Umění, morálka a přetvářka společnosti.",
-        "Tragédie narcismu a ztráty duše."
+        "Victoriánská Anglie – puritanismus vs. estetismus.",
+        "Umění pro umění, hedonismus lorda Henryho.",
+        "Dvojí život Doriana – krása navenek, shniloba v obraze.",
+        "Skandály, opium, vražda – morální pokles.",
+        "Gotický prvek: portrét nesoucí viny.",
+        "Téma: krása, morálka, vina, umění."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Dorian Gray – krásný mladík.",
-        "Lord Henry Wotton – cynický mentor.",
-        "Basil Hallward – malíř portrétu.",
-        "Sibyla Vane – herečka, Dorianova oběť.",
-        "James Vane – bratr toužící po pomstě.",
-        "Portrét – zrcadlo svědomí."
+        "Dorian Gray – mladík neuvěřitelné krásy.",
+        "Basil Hallward – malíř, autor portrétu.",
+        "Lord Henry Wotton – cynický hedonista, vpliv.",
+        "Sibyl Vane – herečka, Dorianova první oběť.",
+        "James Vane – Sibylin bratr, pomsta.",
+        "Portrét – zrcadlo Dorianovy duše."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Estetismus – krása nade vše.",
-        "Dvojník / portrét – vnější a vnitřní já.",
-        "Hedonismus – život rozkoše.",
-        "Morálka a maska – viktoriánská společnost.",
-        "Aforismus – Wildův styl.",
-        "Sebezkáza – důsledek."
+        "Portrét – nese stárnutí a zločiny místo Doriana.",
+        "Estetismus – krása nad morálkou (Henry).",
+        "Hedonismus – hledání rozkoší.",
+        "Dvojí život – společenská maska.",
+        "Zrcadlo / obraz – symbol viny.",
+        "Závěr – Dorian bodne portrét, umírá sám."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Obraz Doriana Graye?",
-      "options": [
-        "Stevenson",
-        "Wilde",
-        "Poe",
-        "Stoker"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Oscar Wilde."
-    },
-    {
-      "prompt": "Co se děje s portrétem?",
-      "options": [
-        "Zmizí",
-        "Stárne a nese stopy hříchů místo Doriana",
-        "Zpívá",
-        "Je sněden"
-      ],
-      "correct": 1,
-      "expl": "Portrét přebírá důsledky života."
-    },
-    {
-      "prompt": "Kdo ovlivní Doriana nejvíc?",
-      "options": [
-        "Basil jen kladně",
-        "Lord Henry",
-        "James Vane jako učitel",
-        "Sluha"
-      ],
-      "correct": 1,
-      "expl": "Henry formuje jeho filozofii."
-    },
-    {
-      "prompt": "Kdo portrét namaloval?",
-      "options": [
-        "Henry",
-        "Basil Hallward",
-        "Dorian sám",
-        "Sibyla"
-      ],
-      "correct": 1,
-      "expl": "Basil je malíř."
-    },
-    {
-      "prompt": "Co se stane se Sibylou?",
-      "options": [
-        "Emigruje šťastně",
-        "Po Dorianově odmítnutí hyne",
-        "Stane se lordem",
-        "Nic"
-      ],
-      "correct": 1,
-      "expl": "Její tragédie je první velká vina."
-    },
-    {
-      "prompt": "Jaký směr text reprezentuje?",
-      "options": [
-        "Realismus venkova",
-        "Dekadence / estetismus",
-        "Socialistický realismus",
-        "Husitská kronika"
-      ],
-      "correct": 1,
-      "expl": "Fin-de-siècle estetismus."
-    },
-    {
-      "prompt": "Proč Dorian zůstává mladý?",
-      "options": [
-        "Sportem",
-        "Nadpřirozenou dohodou skrze portrét",
-        "Léky",
-        "Válkou"
-      ],
-      "correct": 1,
-      "expl": "Portrét nese stáří a hřích."
-    },
-    {
-      "prompt": "Jak Dorian skončí?",
-      "options": [
-        "Svatbou",
-        "Zničí portrét a zabije sám sebe",
-        "Odejde do kláštera",
-        "Stane se malířem"
-      ],
-      "correct": 1,
-      "expl": "Útok na obraz ho zabije."
-    },
-    {
-      "prompt": "Co Wilde aforismy dělá?",
-      "options": [
-        "Nic",
-        "Ostře komentuje společnost a morálku",
-        "Jen počítá",
-        "Jen popisuje počasí"
-      ],
-      "correct": 1,
-      "expl": "Stylová pointa románu."
-    },
-    {
-      "prompt": "Jaké je hlavní téma?",
-      "options": [
-        "Zemědělství",
-        "Krása, vina, dvojnictví a korupce duše",
-        "Robotika",
-        "Fronta 1914"
-      ],
-      "correct": 1,
-      "expl": "Estetika vs. morálka."
-    },
-    {
-      "prompt": "Kdo je James Vane?",
-      "options": [
-        "Malíř",
-        "Sibylin bratr toužící po pomstě",
-        "Lord",
-        "Kněz"
-      ],
-      "correct": 1,
-      "expl": "Hrozba pomsty."
-    },
-    {
-      "prompt": "Proč Basil trpí?",
-      "options": [
-        "Ztratil štětec",
-        "Vidí zkázu v Dorianovi a obraze",
-        "Vyhrál lístek",
-        "Emigroval"
-      ],
-      "correct": 1,
-      "expl": "Basil chce zachránit přítele."
-    }
+    {"prompt": "Kdo napsal Obraz Doriana Graye?", "options": ["Dickens", "Oscar Wilde", "Austen", "Brontë"], "correct": 1, "expl": "Wilde, irský autor, estet a dramatik."},
+    {"prompt": "Co je zvláštní na Dorianově portrétu?", "options": ["Stárne a kazí se místo Doriana", "Je prázdný", "Mění autora", "Je fotografie"], "correct": 0, "expl": "Dorian zůstává mladý, vina se hromadí v obraze."},
+    {"prompt": "Kdo portrét maluje?", "options": ["Basil Hallward", "Lord Henry", "Sibyl", "James"], "correct": 0, "expl": "Basil obdivuje Dorianovu krásu."},
+    {"prompt": "Kdo Doriana morally kazí?", "options": ["Lord Henry Wotton", "Basil", "Sibyl", "Kněz"], "correct": 0, "expl": "Henry hlásá hedonismus a cynismus."},
+    {"prompt": "Kdo je Sibyl Vane?", "options": ["Herečka, kterou Dorian zničí", "Malířka", "Královna", "Basilova sestra"], "correct": 0, "expl": "Dorian ji opustí – ona spáchá sebevraždu."},
+    {"prompt": "Co Dorian přeje u portrétu?", "options": ["Aby stárl obraz místo něj", "Aby zmizel", "Aby byl bohatý", "Aby byl král"], "correct": 0, "expl": "Faustovská touha – splní se groteskně."},
+    {"prompt": "Jak Dorian skrývá stárnutí?", "options": ["Portrét schovává v pokoji", "Operace", "Kouzlo bez obrazu", "Ne skrývá"], "correct": 0, "expl": "Obraz je tajné zrcadlo duše."},
+    {"prompt": "Co se stane Basilovi?", "options": ["Dorian ho zavraždí", "Basil se stane králem", "Emigruje", "Nic"], "correct": 0, "expl": "Basil konfrontuje Doriana – Dorian ho zabije."},
+    {"prompt": "Kdo hledá pomstu?", "options": ["James Vane, bratr Sibylin", "Lord Henry", "Basil", "Sibyl"], "correct": 0, "expl": "James pronásleduje Doriana."},
+    {"prompt": "Jak román končí?", "options": ["Dorian bodne portrét a sám zemře stařec", "Šťastná svatba", "Dorian vládne", "Obraz zmizí"], "correct": 0, "expl": "Katharsis – vina se vrátí na Doriana."},
+    {"prompt": "Jaký je žánr?", "options": ["Philosophický/gotický román", "Válečný román", "Sci-fi", "Bajka"], "correct": 0, "expl": "Gotický prvek portrétu + estetická filozofie."},
+    {"prompt": "Co znamená estetismus?", "options": ["Umění a krása jako nejvyšší hodnota", "Válka", "Robotika", "Asketa"], "correct": 0, "expl": "Wilde a Henry ztělesňují „umění pro umění“."},
+    {"prompt": "Proč je kniha důležitá pro maturitu?", "options": ["Učí chemii", "Wilde, symbolika portrétu, morálka, estetika", "Je atlas", "Je cookbook"], "correct": 1, "expl": "U maturity: autor, postavy, symboly, témata."},
+    {"prompt": "Kdy román poprvé vyšel?", "options": ["1890/1891", "1929", "2000", "1595"], "correct": 0, "expl": "Victoriánská éra, skandál kvůli morálce."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Krása a vina", "Portrét jako zrcadlo", "Vzpoura robotů", "Hedonismus"], "correct": 2, "expl": "Roboti nejsou Wilde."},
+    {"prompt": "Jak lord Henry mluví?", "options": ["Epigramy, paradox, cynismus", "Prostě bez stylu", "Jen latinsky", "Německy"], "correct": 0, "expl": "Wildeovy aforismy jsou slavné."},
+    {"prompt": "Co Dorian sbírá?", "options": ["Morální prach – skandály, zločiny", "Známky", "Roboty", "Mapy"], "correct": 0, "expl": "Hedonismus vede k degeneraci."},
+    {"prompt": "Kdo je James Vane?", "options": ["Sibylin bratr", "Malíř", "Lord", "Basil"], "correct": 0, "expl": "Pomsta za sestru."},
+    {"prompt": "Jaký kontrast román staví?", "options": ["Krása navenek vs. hnus duše", "Moře vs. hory", "Den vs. noc", "Práce vs. lenost"], "correct": 0, "expl": "Základní gothic premise."},
+    {"prompt": "Která postava NENÍ v románu?", "options": ["Dorian", "Henry", "Elizabeth Bennet", "Basil"], "correct": 2, "expl": "Elizabeth je Austenová."},
+    {"prompt": "Co symbolizuje opium?", "options": ["Únik a morální propad", "Sport", "Věda", "Náboženský rituál"], "correct": 0, "expl": "Dorian hledá rozkoše v temnotě."},
+    {"prompt": "Jak Wilde kritizuje společnost?", "options": ["Přes hypokrizii a estetickou masku", "Oslavou války", "Bez myšlenky", "Pouze humorem Haška"], "correct": 0, "expl": "Victoriánská puritánství vs. skrytá shniloba."},
+    {"prompt": "Které dílo NENÍ Wildovo?", "options": ["Obraz Doriana Graye", "How I Became a Happy Ghost – ne; Importance of Being Earnest", "Revizor", "Ballad of Reading Gaol"], "correct": 2, "expl": "Revizor je Gogol."},
+    {"prompt": "Proč Basil umírá?", "options": ["Konfrontuje Doriana s pravdou o portrétu", "Náhodou", "Válka", "Starost"], "correct": 0, "expl": "Dorian zabije svědka své duše."},
+    {"prompt": "Jak vypadá Dorian navenek roky?", "options": ["Stále mladý a krásný", "Okamžitě starý", "Jako dítě", "Jako zvíře"], "correct": 0, "expl": "Zatímco obraz nesou věk a viny."},
+    {"prompt": "Co čtenář má pochopit z konce?", "options": ["Vina se nedá věčně přenést na obraz", "Krása vítězí vždy", "Umění je zbytečné", "Nic"], "correct": 0, "expl": "Moralita se vrátí – Dorian platí."},
+    {"prompt": "Jaký je vztah Basil–Dorian?", "options": ["Basil obdivuje, Dorian zrazuje", "Nepřátelé od začátku", "Bratři", "Učitel latiny"], "correct": 0, "expl": "Basilova láska ke kráse končí tragicky."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Londýn a okolí", "Praha", "Verona", "Sibiř"], "correct": 0, "expl": "Společenský život victoriánské metropole."},
+    {"prompt": "Co je gotický prvek?", "options": ["Prokletý portrét a tajemný pokoj", "Robot", "Válka", "Komunismus"], "correct": 0, "expl": "Gotika: nadprirodzeno, vina, hrůza."},
+    {"prompt": "Jak Wilde v románu pracuje s estetikou?", "options": ["Klade krásu a umění proti morálce a pokání", "Odmítá umění úplně", "Píše jen učebnici", "Popisuje pouze válku"], "correct": 0, "expl": "Lord Henry a Dorian ztělesňují estetismus – cena je morální shniloba."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Basil namaluje portrét",
-        "Henry svádí Doriana k hedonismu",
-        "Sibylina tragédie",
-        "Portrét se hyzdí",
-        "Dorian vraždí a kryje se",
-        "Zničení obrazu = smrt"
+        "Basil maluje portrét, Dorian se setká s lordem Henrym",
+        "Dorian přeje, aby stárl obraz místo něj",
+        "Vztah se Sibyl Vane a její smrt",
+        "Dorian žije hedonisticky, obraz se kazí",
+        "Dorian zavraždí Basila",
+        "Dorian bodne portrét a sám zemře"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: portrét → vliv Henryho → Sibyla → hyzdění → zločiny → smrt s obrazem."
+    "Správné pořadí: portrét a Henry → přání → Sibyl → degenerace → vražda Basila → konec s portrétem."
   ]
 }

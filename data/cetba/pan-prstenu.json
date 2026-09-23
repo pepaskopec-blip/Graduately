@@ -4,22 +4,23 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: J. R. R. Tolkien",
-        "Žánr: high fantasy / epická próza",
-        "Poprvé vydáno: 1954 (Společenstvo; česky Pošustová)",
-        "Děj: Středozem – Společenstvo nese Jeden prsten k zničení",
-        "Vyprávění: er-forma, mytologický epický styl"
+        "Autor: John Ronald Reuel Tolkien",
+        "Žánr: epická fantasy (román)",
+        "Poprvé vydáno: 1954–1955 (trilogie)",
+        "Děj: Středozem, válka proti Sauronovi",
+        "Vyprávění: er-forma; mýtus, epos"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "První díl trilogie Pán prstenů.",
-        "Frodo má zničit Prsten v Mordoru.",
-        "Společenstvo spojuje rasy proti Sauronovi.",
-        "Moc Prstenu korumpuje.",
-        "Putování z Kraje přes Rivendell a Morii."
+        "Fiktivní Středozem – Třetí věk.",
+        "Prsten moci – Sauron, Mordor.",
+        "Společenstvo – putování k Hoře osudu.",
+        "Témata: moc korumpuje, přátelství, oběť.",
+        "Hobití kraj vs. temnota.",
+        "Kulturní fenomén fantasy."
       ]
     },
     {
@@ -27,174 +28,72 @@
       "icon": "people",
       "lines": [
         "Frodo Pytlík – nositel Prstenu.",
-        "Sam – věrný zahradník.",
-        "Gandalf – čaroděj.",
-        "Aragorn – královský dědic.",
-        "Boromir – člověk pokoušený Prstenem.",
-        "Legolas a Gimli – elf a trpaslík."
+        "Sam – věrný společník.",
+        "Gandalf – čaroděj, mentor.",
+        "Aragorn – dědic Gondoru.",
+        "Gollum/Smeagol – posedlost Prstenem.",
+        "Společenstvo – Legolas, Gimli, Boromir…"
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Jeden prsten – absolutní moc.",
-        "Společenstvo – jednota proti zlu.",
-        "Pokoušení – morální zkouška.",
-        "Putování – epická struktura.",
-        "Přátelství – hobití síla.",
-        "Mytologie Středozemě."
+        "Jeden prsten – moc Saurona.",
+        "Společenstvo prstenu – výprava.",
+        "Hora osudu – zničit Prsten.",
+        "Mordor – říše zla.",
+        "Hobit – malý hrdina.",
+        "Moc korumpuje – Boromir, Gollum."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Pána prstenů?",
-      "options": [
-        "Lewis",
-        "Tolkien",
-        "Rowling",
-        "Martin"
-      ],
-      "correct": 1,
-      "expl": "J. R. R. Tolkien."
-    },
-    {
-      "prompt": "Co má Společenstvo udělat s Prstenem?",
-      "options": [
-        "Prodat ho",
-        "Zničit v hoře Osudu",
-        "Odevzdat Sauronovi dobrovolně",
-        "Vystavit v muzeu"
-      ],
-      "correct": 1,
-      "expl": "Jediná cesta je zničení."
-    },
-    {
-      "prompt": "Kdo Prsten nese?",
-      "options": [
-        "Aragorn",
-        "Frodo",
-        "Boromir od začátku jen",
-        "Gimli"
-      ],
-      "correct": 1,
-      "expl": "Frodo je nositel."
-    },
-    {
-      "prompt": "Kdo je Sam?",
-      "options": [
-        "Zrádce",
-        "Frodoův věrný společník",
-        "Temný pán",
-        "Trpaslík král"
-      ],
-      "correct": 1,
-      "expl": "Sam je opora."
-    },
-    {
-      "prompt": "Proč je Prsten nebezpečný?",
-      "options": [
-        "Je těžký jen",
-        "Korumpuje touhou po moci",
-        "Je skleněný",
-        "Zpívá"
-      ],
-      "correct": 1,
-      "expl": "Absolutní moc kazí."
-    },
-    {
-      "prompt": "Kdo padne v Morii (do propasti)?",
-      "options": [
-        "Frodo",
-        "Gandalf (dočasně)",
-        "Sam",
-        "Elrond"
-      ],
-      "correct": 1,
-      "expl": "Gandalf bojuje s balrogem."
-    },
-    {
-      "prompt": "Kdo se nechá Prstenem pokoušet?",
-      "options": [
-        "Sam jen",
-        "Boromir",
-        "Tom Bombadil",
-        "Elrond"
-      ],
-      "correct": 1,
-      "expl": "Boromir chce Prsten pro Gondor."
-    },
-    {
-      "prompt": "Kde Společenstvo vzniká?",
-      "options": [
-        "V Mordoru",
-        "V Rivendellu",
-        "V Shire jen bez rady",
-        "U Šedého přístavu hned"
-      ],
-      "correct": 1,
-      "expl": "Rada v Rivendellu."
-    },
-    {
-      "prompt": "Jaký žánr?",
-      "options": [
-        "Detektivka",
-        "Epická fantasy",
-        "Naturalismus",
-        "Audience"
-      ],
-      "correct": 1,
-      "expl": "High fantasy."
-    },
-    {
-      "prompt": "Kdo je Sauron?",
-      "options": [
-        "Hobit",
-        "Temný pán, tvůrce Prstenu",
-        "Hostinský",
-        "Elfí král dobrý"
-      ],
-      "correct": 1,
-      "expl": "Antagonista."
-    },
-    {
-      "prompt": "Proč hobiti?",
-      "options": [
-        "Náhodou",
-        "Malí hrdinové odolnější vůči pýše moci",
-        "Jsou nejsilnější bojovníci",
-        "Umí létat"
-      ],
-      "correct": 1,
-      "expl": "Pokora jako síla."
-    },
-    {
-      "prompt": "Hlavní téma dílu?",
-      "options": [
-        "Daně",
-        "Přátelství, pokušení moci a boj se zlem",
-        "Kuchyně",
-        "Účetnictví"
-      ],
-      "correct": 1,
-      "expl": "Morální epika."
-    }
+    {"prompt": "Kdo napsal Pána prstenů?", "options": ["C. S. Lewis", "J. R. R. Tolkien", "Rowling", "Martin"], "correct": 1, "expl": "Tolkien, 1954–55 – zakladatel moderní fantasy."},
+    {"prompt": "Kdo nese Prsten?", "options": ["Frodo Pytlík", "Gandalf", "Sauron", "Aragorn"], "correct": 0, "expl": "Hobit Frodo je zvolen nositelem."},
+    {"prompt": "Co je cíl výpravy?", "options": ["Zničit Prsten v Hoře osudu", "Ukrást Prsten Sauronovi navždy", "Prodat Prsten", "Schovat v Kraji"], "correct": 0, "expl": "Jediná cesta zničit Saurona."},
+    {"prompt": "Kdo je Sam?", "options": ["Frodův věrný společník", "Čaroděj", "Ork", "Král"], "correct": 0, "expl": "Sam podporuje Froda až do Mordoru."},
+    {"prompt": "Kdo je Gandalf?", "options": ["Istari, čaroděj, mentor", "Hobit", "Trpaslík", "Ent"], "correct": 0, "expl": "Gandalf organizuje Společenstvo."},
+    {"prompt": "Kdo je Gollum?", "options": ["Smeagol, posedlý Prstenem", "Král Gondoru", "Elf", "Ent"], "correct": 0, "expl": "Prsten ho zničil – guide i hrozba."},
+    {"prompt": "Co je Společenstvo?", "options": ["Skupina na zničení Prstenu", "Armáda Saurona", "Hospoda", "Škola"], "correct": 0, "expl": "Různé rasy – elf, trpaslík, lidé, hobiti."},
+    {"prompt": "Kde Frodo bydlí?", "options": ["Kraj (Shire)", "Mordor", "Rivendell navždy", "Moria"], "correct": 0, "expl": "Hobití kraj – idyla vs. temnota."},
+    {"prompt": "Kdo je Sauron?", "options": ["Temný pán Mordoru", "Hobit", "Král Rohanu", "Ent"], "correct": 0, "expl": "Vládce Prstenu moci."},
+    {"prompt": "Co Boromir?", "options": ["Touží po Prstenu, zradí, pokání", "Vždy zlý", "Hobit", "Elf"], "correct": 0, "expl": "Moc korumpuje i dobré."},
+    {"prompt": "Kdo je Aragorn?", "options": ["Dědic trůnu Gondoru", "Ork", "Gollum", "Sam"], "correct": 0, "expl": "Strider – král v návratu."},
+    {"prompt": "Jak končí Prsten?", "options": ["Zničen v Hoře osudu (Gollum pád)", "Sauron nosí navždy", "Frodo vládne", "Zmizí"], "correct": 0, "expl": "Gollum ukousne prst – pád do lávy."},
+    {"prompt": "Proč maturita?", "options": ["Fantasy epos, postavy, témata moci", "Chemie", "Atlas", "Cookbook"], "correct": 0, "expl": "Často zkrácená maturitní verze."},
+    {"prompt": "Které téma NENÍ?", "options": ["Přátelství", "Moc", "Robotí R.U.R.", "Oběť"], "correct": 2, "expl": "Čapek."},
+    {"prompt": "Co Mordor?", "options": ["Sauronova říše", "Hobití kraj", "Rivendell", "Londýn"], "correct": 0, "expl": "Cíl výpravy."},
+    {"prompt": "Kdy vyšlo?", "options": ["1954–1955", "1929", "1836", "2010"], "correct": 0, "expl": "Poválečná fantasy."},
+    {"prompt": "Která postava NENÍ?", "options": ["Frodo", "Gandalf", "Elizabeth Bennet", "Aragorn"], "correct": 2, "expl": "Austen."},
+    {"prompt": "Co Hobit?", "options": ["Malý lid milující mír", "Ork", "Ent", "Balrog"], "correct": 0, "expl": "Frodo a Sam jsou hobiti."},
+    {"prompt": "Které dílo NENÍ Tolkien?", "options": ["Pán prstenů", "Hobit", "Revizor", "Silmarillion"], "correct": 2, "expl": "Gogol."},
+    {"prompt": "Co Hora osudu?", "options": ["Sammath Naur – zničení Prstenu", "Hobití kopec", "Věž", "Hospoda"], "correct": 0, "expl": "V Mordoru."},
+    {"prompt": "Jak vyprávění?", "options": ["Er-forma epos", "Ich Frodo celé", "Drama", "Lyrika"], "correct": 0, "expl": "Epický roman."},
+    {"prompt": "Co elf Legolas a trpaslík Gimli?", "options": ["Členové Společenstva", "Orkové", "Sauronovi", "Hobiti"], "correct": 0, "expl": "Symbol smíření ras."},
+    {"prompt": "Proč Frodo odchází na konci?", "options": ["Rány Prstenu – odplutí do Undying Lands", "Král", "Smrt v boji", "Zůstane v Kraji"], "correct": 0, "expl": "Epilog – oběť nositele."},
+    {"prompt": "Co „Jeden prsten“?", "options": ["Věta Sauronovy moci", "Sport", "Jídlo", "Mapa"], "correct": 0, "expl": "Slavný verš Prstenu."},
+    {"prompt": "Jaký konflikt?", "options": ["Dobro vs. Sauron, pokušení moci", "Láska Romeo", "Revizor", "Švejk"], "correct": 0, "expl": "Základ fantasy eposu."},
+    {"prompt": "Co Rivendell?", "options": ["Elfí útočiště Elronda", "Mordor", "Kraj", "Moria"], "correct": 0, "expl": "Zde vzniká Společenstvo."},
+    {"prompt": "Co Moria?", "options": ["Trpasličí doly, Balrog", "Hobití kraj", "Mordor", "Rohan"], "correct": 0, "expl": "Gandalf pád s Balrogem."},
+    {"prompt": "Jaký tón?", "options": ["Epická fantasy, mýtus", "Realismus Dickens", "Groteska Hrabal", "Satira"], "correct": 0, "expl": "Tolkien buduje svět."},
+    {"prompt": "Co čtenář po dočtení?", "options": ["Chápe postavy, Prsten, témata", "Chemii", "Nic", "Mapu ČR"], "correct": 0, "expl": "Maturitní přehled."},
+    {"prompt": "Kdo režíroval slavný film?", "options": ["Peter Jackson (2001–2003)", "Menzel", "Disney", "N/A 1920"], "correct": 0, "expl": "Kulturní doplněk k maturitě."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Frodo získá Prsten",
-        "Rada v Rivendellu vytvoří Společenstvo",
-        "Cesta Morii a ztráta Gandalfa",
-        "Rozkol u Amon Henu",
-        "Boromir padne pokušení",
-        "Frodo se Samem pokračují sami"
+        "Frodo zdědí Prsten, odchod z Kraje",
+        "Společenstvo v Rivendell",
+        "Cesta – Moria, rozpad společenstva",
+        "Frodo a Sam k Mordoru",
+        "Gollum vede, pokušení moci",
+        "Prsten zničen v Hoře osudu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: Prsten → Společenstvo → Moria → rozkol → pokušení → Frodo a Sam."
+    "Správné pořadí: Kraj → Společenstvo → cesta → Frodo a Sam → Gollum → Hora osudu."
   ]
 }

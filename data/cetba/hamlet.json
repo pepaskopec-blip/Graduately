@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: William Shakespeare; překlad: Nevrla",
-        "Žánr: tragédie",
-        "Poprvé vydáno: 1600–1601 (uvedení; tisk Q2 1604/5)",
-        "Děj/prostředí: Dánsko, královský hrad Elsinore",
-        "Vyprávění/forma: pět aktů, blankvers i próza; překlad Nevrla"
+        "Autor: William Shakespeare",
+        "Žánr: tragédie (drama)",
+        "Poprvé vydáno: kolem 1601",
+        "Děj/prostředí: dánský hrad Elsinore",
+        "Vyprávění/forma: divadelní hra, blankvers; překlad Nevrla"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Renesanční Anglie; látka ze severské legendy.",
-        "Dvůr plný intrik, předstírání a špionáže.",
-        "Hamlet hledá pravdu o vraždě otce a smysl činu.",
-        "Otázky pomsty, svědomí, šílenství a smrti.",
-        "Divadlo ve hře odhaluje viníka.",
-        "Téma: pomsta, morálka, zdání vs. bytí, tragická vina."
+        "Předstírané šílenství, intriky",
+        "Duch krále, pomsta",
+        "Politika Claudius, Gertrude",
+        "Filosofické monology",
+        "Smrt a morálka",
+        "Renesanční individualismus"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Hamlet – dánský princ, váhavý mstitel.",
-        "Claudius – strýc, vrah a nový král.",
-        "Gertruda – matka, provdaná za Claudia.",
-        "Ofélie – Hamletova milá, zešílí a zemře.",
-        "Polonius – Oféliin otec, dvorní rádce.",
-        "Horacio – věrný přítel; Laertes – Oféliin bratr."
+        "Hamlet – princ, pomstychtivý",
+        "Claudius – strýc, vrah krále",
+        "Gertrude – matka",
+        "Polonius – rádce",
+        "Ophelia – dcera Polonia",
+        "Horatio – Hamletův přítel"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Pomsta – hnací motiv tragédie.",
-        "Předstírané šílenství – Hamletova maska.",
-        "„Být, či nebýt“ – meditace o bytí a smrti.",
-        "Divadlo ve hře – past na Claudia.",
-        "Jed – motiv vraždy i souboje.",
-        "Tragický konec – vymření dvora."
+        "„Být či nebýt“",
+        "Duch otce",
+        "Předstírané šílenství",
+        "Pomsta a odklad",
+        "Opeliina smrt",
+        "Finále – duel, jed, smrt"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Hamleta?",
+      "prompt": "Autor?",
       "options": [
-        "Christopher Marlowe",
-        "William Shakespeare",
+        "Shakespeare",
         "Molière",
-        "Sofoklés"
+        "Beckett",
+        "Goethe"
       ],
-      "correct": 1,
-      "expl": "Shakespeareova nejslavnější tragédie."
+      "correct": 0,
+      "expl": "William Shakespeare."
     },
     {
-      "prompt": "Kde se děj odehrává?",
+      "prompt": "Žánr?",
       "options": [
-        "V Římě",
-        "V Elsinoru v Dánsku",
-        "V Londýně výhradně",
-        "V Lilliputu"
-      ],
-      "correct": 1,
-      "expl": "Královský hrad Elsinore je hlavní scénou."
-    },
-    {
-      "prompt": "Kdo zabil Hamletova otce?",
-      "options": [
-        "Horacio",
-        "Claudius",
-        "Laertes hned na začátku",
-        "Fortinbras"
-      ],
-      "correct": 1,
-      "expl": "Claudius otrávil bratra a vzal trůn i Gertrudu."
-    },
-    {
-      "prompt": "Co Hamlet předstírá?",
-      "options": [
-        "Hluchotu",
-        "Šílenství",
-        "Slepotu",
-        "Že je Godot"
-      ],
-      "correct": 1,
-      "expl": "Maska šílenství mu má pomoci odhalit pravdu."
-    },
-    {
-      "prompt": "K čemu slouží „divadlo ve hře“?",
-      "options": [
-        "Zábavě Ofélie",
-        "Us past na Claudia – sledovat jeho reakci",
-        "Svatbě",
-        "Pohřbu Polonia výhradně"
-      ],
-      "correct": 1,
-      "expl": "Herecká scéna vraždy krále usvědčí Claudia svědomím."
-    },
-    {
-      "prompt": "Jak zemře Ofélie?",
-      "options": [
-        "V souboji",
-        "Utonutím po zhroucení mysli",
-        "Jehlou trifida",
-        "Jako Hyde"
-      ],
-      "correct": 1,
-      "expl": "Po otcově smrti zešílí a utopí se."
-    },
-    {
-      "prompt": "Čím je slavný monolog „Být, či nebýt“?",
-      "options": [
-        "Oslavou války",
-        "Úvahou o smrti, utrpení a činu",
-        "Receptem",
-        "Daňovým přiznáním"
-      ],
-      "correct": 1,
-      "expl": "Hamlet váhá mezi životem, smrtí a jednáním."
-    },
-    {
-      "prompt": "Kdo je Laertes?",
-      "options": [
-        "Hamletův otec",
-        "Oféliin bratr toužící po pomstě",
-        "Král Norska",
-        "Herec"
-      ],
-      "correct": 1,
-      "expl": "Claudius ho využije v souboji s otráveným ostřím."
-    },
-    {
-      "prompt": "Jak tragédie končí?",
-      "options": [
-        "Svatbou Hamleta a Ofélie",
-        "Smrtí hlavních postav dvora; Fortinbras přebírá moc",
-        "Návratem otce k životu",
-        "Odchodem do Zadního domu"
-      ],
-      "correct": 1,
-      "expl": "Jed a souboj zničí Hamlet, Laerta, Gertrudu i Claudia."
-    },
-    {
-      "prompt": "Kdo je Horacio?",
-      "options": [
-        "Vrah",
-        "Hamletův věrný přítel a svědek",
-        "Claudiusův špeh výhradně",
-        "Hrobník jediný"
-      ],
-      "correct": 1,
-      "expl": "Horacio přežije, aby vyprávěl pravdu."
-    },
-    {
-      "prompt": "Jaký žánr je Hamlet?",
-      "options": [
-        "Komedie dell’arte",
         "Tragédie",
-        "Novela poetismu",
-        "Sci-fi"
+        "Komedie",
+        "Epos",
+        "Báseň"
       ],
-      "correct": 1,
-      "expl": "Klasická renesanční tragédie o pomstě a pádu."
+      "correct": 0,
+      "expl": "Drama."
     },
     {
-      "prompt": "Proč Hamlet otálí s pomstou?",
+      "prompt": "Kde děj?",
       "options": [
-        "Nezná cestu na hrad",
-        "Nejistota důkazu, svědomí, filozofické pochybnosti",
-        "Je slepý",
-        "Čeká na Godota doslova"
+        "Elsinore, Dánsko",
+        "Praha",
+        "Řím",
+        "Londýn"
       ],
-      "correct": 1,
-      "expl": "Váhavost je jádrem charakteru i dramatu."
+      "correct": 0,
+      "expl": "Hrad."
+    },
+    {
+      "prompt": "Hamlet?",
+      "options": [
+        "Princ pomstychtivý",
+        "Král",
+        "Klaun",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Hrdina."
+    },
+    {
+      "prompt": "Claudius?",
+      "options": [
+        "Vrah otce, nový král",
+        "Hamlet",
+        "Horatio",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Antagonista."
+    },
+    {
+      "prompt": "Duch?",
+      "options": [
+        "Volá k pomstě",
+        "Ne",
+        "Ophelia",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Začátek akce."
+    },
+    {
+      "prompt": "Ophelia?",
+      "options": [
+        "Zblázní se, utopí",
+        "Královna",
+        "Vrah",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Tragédie."
+    },
+    {
+      "prompt": "Polonius?",
+      "options": [
+        "Rádce, zabit Hamletem",
+        "Král",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Intriky."
+    },
+    {
+      "prompt": "Horatio?",
+      "options": [
+        "Věrný přítel",
+        "Vrah",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Svědek."
+    },
+    {
+      "prompt": "Být či nebýt?",
+      "options": [
+        "Monolog o existenci",
+        "Ne",
+        "Konec",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Slavný monolog."
+    },
+    {
+      "prompt": "Předstírané šílenství?",
+      "options": [
+        "Hamletova taktika",
+        "Ne",
+        "Ophelia",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Strategie."
+    },
+    {
+      "prompt": "Laertes?",
+      "options": [
+        "Bratr Ophelie, duel",
+        "Král",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Souboj."
+    },
+    {
+      "prompt": "Gertrude?",
+      "options": [
+        "Matka, provdá se za Claudius",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Rodina."
+    },
+    {
+      "prompt": "Rok?",
+      "options": [
+        "Kolem 1601",
+        "1989",
+        "500",
+        "2000"
+      ],
+      "correct": 0,
+      "expl": "Renesance."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Nevrla",
+        "Hilský",
+        "Nezval",
+        "Kořán"
+      ],
+      "correct": 0,
+      "expl": "Katalog Nevrla."
+    },
+    {
+      "prompt": "Konec?",
+      "options": [
+        "Hamlet, Claudius, Gertrude mrtví",
+        "Svatba",
+        "Raj",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Krvavé finále."
+    },
+    {
+      "prompt": "Představení hry?",
+      "options": [
+        "Past na Claudia",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Odhalení viny."
+    },
+    {
+      "prompt": "Yorick?",
+      "options": [
+        "Lebka klauna – memento mori",
+        "Král",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Symbol."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Největší tragédie",
+        "Nejkratší",
+        "Bez smyslu",
+        "Jen film"
+      ],
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Hamlet",
+        "Claudius",
+        "Romeo hlavní zde",
+        "Ophelia"
+      ],
+      "correct": 2,
+      "expl": "Romeo jiná hra."
+    },
+    {
+      "prompt": "Blankvers?",
+      "options": [
+        "Ne rýmovaný verš",
+        "Proza",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Forma."
+    },
+    {
+      "prompt": "Rosenkranz a Guildenstern?",
+      "options": [
+        "Vyslanci, zahynou",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Intriky."
+    },
+    {
+      "prompt": "Norwegian Fortinbras?",
+      "options": [
+        "Nástup moci na konci",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Politika."
+    },
+    {
+      "prompt": "Téma pomsty?",
+      "options": [
+        "Centrální",
+        "Ne",
+        "Sport",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Osud."
+    },
+    {
+      "prompt": "Filozofie?",
+      "options": [
+        "Hamlet přemýšlí",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Renesance."
+    },
+    {
+      "prompt": "Katalog?",
+      "options": [
+        "Drama",
+        "Próza",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Drama."
+    },
+    {
+      "prompt": "Shakespeare jazyk?",
+      "options": [
+        "Anglicky",
+        "Česky originál",
+        "Latina",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Originál."
+    },
+    {
+      "prompt": "Divadlo Globe?",
+      "options": [
+        "Kontext",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Elisabethan."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Mstivost a nejistota vedou ke zkáze",
+        "Pomsta vždy dobrá",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Tragédie."
+    },
+    {
+      "prompt": "Hilský?",
+      "options": [
+        "Jiný překlad Shakespeare",
+        "Hamlet autor",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Romeo Hilský."
+    },
+    {
+      "prompt": "Ofélie květiny?",
+      "options": [
+        "Symbol šílenství",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Scéna."
+    },
+    {
+      "prompt": "Jed?",
+      "options": [
+        "Claudius otráví meč i víno",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Finále."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Duch otce žádá pomstu za vraždu",
-        "Hamlet předstírá šílenství a pátrá",
-        "Divadlo ve hře usvědčí Claudia",
-        "Hamlet zabije Polonia; Ofélie hyne",
-        "Laertes se vrací žádat odplatu",
-        "Souboj s jedem: pád dvora"
+        "Duch vyzve Hamleta k pomstě",
+        "Hamlet předstírá šílenství a váhá",
+        "Past divadelní hrou",
+        "Hamlet zabije Polonia",
+        "Ophelia umírá, Hamlet se vrací",
+        "Duel a smrt hlavních postav"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: duch a pomsta → předstírané šílenství → divadlo ve hře → smrt Polonia a Ofélie → Laertova odplata → jedovatý souboj a zánik."
+    "Pořadí: duch → šílenství → hra v hře → Polonius → Ophelia → finální masakr."
   ]
 }

@@ -6,31 +6,32 @@
       "lines": [
         "Autor: William Golding",
         "Žánr: alegorický román",
-        "Poprvé vydáno: 1954 (česky Kovályová)",
-        "Děj: ostrov – chlapci bez dospělých budují a rozvracejí řád",
-        "Vyprávění: er-forma, symbolický realismus"
+        "Poprvé vydáno: 1954",
+        "Děj: opuštěný ostrov po nehodě letadla",
+        "Vyprávění: er-forma; symbolický realismus"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Po katastrofě uvíznou školáci na ostrově.",
-        "Ralph chce řád a záchranu; Jack lov a moc.",
-        "Strach z „bestie“ živí násilí.",
-        "Simon odhalí pravdu a je zabit.",
-        "Alegorie lidské přirozenosti a civilizace."
+        "Poválečná doba – chlapci bez dospělých.",
+        "Pokus o řád vs. divokost.",
+        "Strach z „bestie“ – projekce zla.",
+        "Oheň jako záchrana i ničení.",
+        "Pád civilizace na ostrově.",
+        "Téma: lidská přirozenost, moc, strach."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ralph – vůdce řádu a ohně.",
-        "Jack – vůdce lovců.",
-        "Piggy – rozum a brýle.",
-        "Simon – mystik/cit.",
-        "Roger – krutost.",
+        "Ralph – vůdce demokracie, lastura.",
+        "Jack – vůdce lovců, tyranie.",
+        "Piggy – rozum, brýle.",
+        "Simon – introvert, pravda o bestii.",
+        "Roger – krutost bez hranic.",
         "Námořní důstojník – návrat civilizace."
       ]
     },
@@ -38,163 +39,61 @@
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Lastura – demokracie/řád.",
-        "Oheň – záchrana vs. ničení.",
-        "Bestie – strach v nás.",
-        "Malování tváře – maska divokosti.",
-        "Brýle – věda/rozum.",
-        "Pád civilizace – téma."
+        "Lastura – volba, řád.",
+        "Oheň – signál vs. les v plamenech.",
+        "Bestie – strach uvnitř lidí.",
+        "Brýle – věda, rozum (Piggy).",
+        "Malování tváří – maska divokosti.",
+        "Pán much – prase hlava na kůlu."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Pána much?",
-      "options": [
-        "Orwell",
-        "Golding",
-        "Bradbury",
-        "Tolkien"
-      ],
-      "correct": 1,
-      "expl": "Autorem je William Golding."
-    },
-    {
-      "prompt": "Kdo chce udržet oheň a řád?",
-      "options": [
-        "Jack",
-        "Ralph",
-        "Roger",
-        "Bestie"
-      ],
-      "correct": 1,
-      "expl": "Ralph sází na záchranu."
-    },
-    {
-      "prompt": "Co symbolizuje lastura?",
-      "options": [
-        "Lov",
-        "Řád a právo mluvit",
-        "Jídlo",
-        "Loď"
-      ],
-      "correct": 1,
-      "expl": "Lastura = demokratický řád."
-    },
-    {
-      "prompt": "Kdo reprezentuje rozum?",
-      "options": [
-        "Jack",
-        "Piggy",
-        "Roger",
-        "Oheň sám"
-      ],
-      "correct": 1,
-      "expl": "Piggy a brýle."
-    },
-    {
-      "prompt": "Co je bestie?",
-      "options": [
-        "Jen zvíře z lesa",
-        "Projekce strachu; „pán much“",
-        "Učitel",
-        "Loď"
-      ],
-      "correct": 1,
-      "expl": "Zlo v člověku."
-    },
-    {
-      "prompt": "Kdo je zabit jako „bestie“?",
-      "options": [
-        "Ralph",
-        "Simon",
-        "Důstojník",
-        "Lastura"
-      ],
-      "correct": 1,
-      "expl": "Simon zná pravdu a hyne."
-    },
-    {
-      "prompt": "Jak Jack získává moc?",
-      "options": [
-        "Volbami ohně",
-        "Lovem, strachem a maskami",
-        "Matematikou",
-        "Modlitbou jen"
-      ],
-      "correct": 1,
-      "expl": "Divokost a charisma."
-    },
-    {
-      "prompt": "Co se stane s Piggym?",
-      "options": [
-        "Emigruje",
-        "Je zabit; lastura zničena",
-        "Stane se náčelníkem",
-        "Odpluje hned"
-      ],
-      "correct": 1,
-      "expl": "Rozum je zničen."
-    },
-    {
-      "prompt": "Jak román končí?",
-      "options": [
-        "Ostrovní královstvím Jacka navždy",
-        "Zásahem dospělých / důstojníka",
-        "Svatbou",
-        "Oslavou bestie"
-      ],
-      "correct": 1,
-      "expl": "Civilizace se vrací zvenčí."
-    },
-    {
-      "prompt": "Jaký je žánr?",
-      "options": [
-        "Pohádka bez smyslu",
-        "Alegorie lidské přirozenosti",
-        "Detektivka",
-        "Cestopis luxusu"
-      ],
-      "correct": 1,
-      "expl": "Alegorický román."
-    },
-    {
-      "prompt": "Proč malují tváře?",
-      "options": [
-        "Móda",
-        "Maska uvolňuje krutost",
-        "Škola",
-        "Sportovní dres"
-      ],
-      "correct": 1,
-      "expl": "Anonymita násilí."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Turistika",
-        "Civilizace vs. primitivní násilí v člověku",
-        "Účetnictví",
-        "Opera"
-      ],
-      "correct": 1,
-      "expl": "Zlo a řád."
-    }
+    {"prompt": "Kdo napsal Pána much?", "options": ["Orwell", "William Golding", "Hemingway", "Twain"], "correct": 1, "expl": "Lord of the Flies, 1954."},
+    {"prompt": "Kdo je Ralph?", "options": ["Zvolený vůdce, lastura", "Lovec", "Kněz", "Učitel"], "correct": 0, "expl": "Snaží se udržet oheň a pravidla."},
+    {"prompt": "Kdo je Jack?", "options": ["Vůdce lovců, tyran", "Ralphův bratr", "Piggy", "Simon"], "correct": 0, "expl": "Rozštěpuje skupinu."},
+    {"prompt": "Kdo je Piggy?", "options": ["Inteligentní, brýle", "Generál", "Pilot", "Dospělý"], "correct": 0, "expl": "Symbol rozumu – tragicky zabit."},
+    {"prompt": "Co je lastura?", "options": ["Symbol moci a řeči na shromáždění", "Zbraň", "Loď", "Jídlo"], "correct": 0, "expl": "Kdo drží lasturu, mluví."},
+    {"prompt": "Co je „bestie“?", "options": ["Strach a zlo v lidech, ne zvíře", "Skutečný drak", "Loď", "Piggy"], "correct": 0, "expl": "Simon to pochopí jako projekci."},
+    {"prompt": "Co se stane Simonovi?", "options": ["Zabit v transu jako „bestie“", "Král", "Uteče", "Lékař"], "correct": 0, "expl": "Lynč v nočním šílenství."},
+    {"prompt": "Co je pán much?", "options": ["Prase hlava na kůlu – symbol zla", "Ralph", "Loď", "Lastura"], "correct": 0, "expl": "Titulní obraz degenerace."},
+    {"prompt": "Jak končí Ralph?", "options": ["Zachráněn námořníkem, pláč", "Král ostrova", "Smrt", "S Jackem spřátelen"], "correct": 0, "expl": "Návrat civilizace – uvědomění zla."},
+    {"prompt": "Jaký je žánr?", "options": ["Alegorický román", "Válečný", "Sci-fi roboti", "Bajka"], "correct": 0, "expl": "Alegorie lidské přirozenosti."},
+    {"prompt": "Proč maturita?", "options": ["Symboly, postavy, témata moci", "Chemie", "Atlas", "Cookbook"], "correct": 0, "expl": "Častá maturitní četba."},
+    {"prompt": "Co oheň?", "options": ["Záchrana i ničení lesa", "Bez významu", "Jen hra", "Nemoc"], "correct": 0, "expl": "Jack nechá hasnout signál."},
+    {"prompt": "Kdo je Roger?", "options": ["Krutý chlapec", "Mírotvorce", "Pilot", "Kněz"], "correct": 0, "expl": "Překračuje morální hranice."},
+    {"prompt": "Které téma NENÍ?", "options": ["Moc", "Strach", "Robotí vzpoura", "Civilizace vs. divokost"], "correct": 2, "expl": "R.U.R. jiné."},
+    {"prompt": "Kdy vyšlo?", "options": ["1954", "1929", "1836", "2001"], "correct": 0, "expl": "Poválečná reflexe."},
+    {"prompt": "Která postava NENÍ?", "options": ["Ralph", "Jack", "Švejk", "Piggy"], "correct": 2, "expl": "Hašek."},
+    {"prompt": "Co brýle?", "options": ["Oheň z brýlí – věda", "Móda", "Hra", "Nic"], "correct": 0, "expl": "Piggy bez brýlí bezmocný."},
+    {"prompt": "Jak Jack maluje tváře?", "options": ["Maska divokosti a násilí", "Sport", "Nemoc", "Bez významu"], "correct": 0, "expl": "Symbol odpoutání od morálky."},
+    {"prompt": "Které dílo NENÍ Golding?", "options": ["Pán much", "1984", "Inheritors", "Pincher Martin"], "correct": 1, "expl": "Orwell."},
+    {"prompt": "Co alegorie?", "options": ["Ostrov = společnost bez moci", "Historický dokument", "Bez významu", "Cookbook"], "correct": 0, "expl": "Chlapci = lidstvo."},
+    {"prompt": "Proč letadlo?", "options": ["Válka – chlapci uvízli", "Turistika", "Sci-fi", "Bez kontextu"], "correct": 0, "expl": "Evakuace, nehoda."},
+    {"prompt": "Co Piggyho smrt?", "options": ["Pád civilizace na ostrově", "Komise", "Radost", "Nic"], "correct": 0, "expl": "Roger zabije kamenem."},
+    {"prompt": "Jak vyprávění?", "options": ["Er-forma", "Ich Ralph", "Drama", "Lyrika"], "correct": 0, "expl": "Klasický roman."},
+    {"prompt": "Co námořní důstojník?", "options": ["Návrat adult civilizace", "Bestie", "Jack", "Piggy"], "correct": 0, "expl": "Ironický konec – dospělí také válčí."},
+    {"prompt": "Jaký konflikt Ralph–Jack?", "options": ["Řád vs. lov a moc", "Láska", "Sport", "Jazyk"], "correct": 0, "expl": "Demokracie vs. tyranie."},
+    {"prompt": "Co Simon dělá?", "options": ["Hledá pravdu o bestii", "Generál", "Pilot", "Učitel"], "correct": 0, "expl": "Mystik, oběť davu."},
+    {"prompt": "Jaký tón?", "options": ["Temný realismus, alegorie", "Pouze komedie", "Idyla", "Učebnice"], "correct": 0, "expl": "Golding varuje před zlem v lidech."},
+    {"prompt": "Proč „muchy“?", "options": ["Hniloba prase hlavy", "Sport", "Láska", "Nemoc"], "correct": 0, "expl": "Obraz morálního rozkladu."},
+    {"prompt": "Co čtenář po dočtení?", "options": ["Chápe symboliku a téma zla", "Chemii", "Nic", "Mapu"], "correct": 0, "expl": "Maturitní interpretace."},
+    {"prompt": "Kde děj?", "options": ["Tropický ostrov", "Praha", "Londýn", "Verona"], "correct": 0, "expl": "Izolovaný mikrokosmos."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Chlapci ztroskotají",
-        "Volí Ralphа a zapalují oheň",
-        "Jack rozbíjí řád lovem",
+        "Chlapci uvízli na ostrově, Ralph vůdce",
+        "Oheň a pravidla vs. Jackovi lovci",
         "Strach z bestie roste",
-        "Simon a Piggy hynou",
-        "Důstojník ukončí hon na Ralpha"
+        "Simon zabit, Piggy zabit",
+        "Jack přebírá moc, hon na Ralpha",
+        "Záchrana námořníkem"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: ztroskotání → řád → lov → strach → vraždy → zásah dospělých."
+    "Správné pořadí: ostrov → oheň vs. lov → bestie → Simon a Piggy → hon → námořník."
   ]
 }

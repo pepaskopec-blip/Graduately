@@ -4,197 +4,95 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Karel Václav Rais",
-        "Žánr: realistická venkovská próza / tragický román",
+        "Autor: Karel Václav Rais (1857–1926), český realista",
+        "Žánr: venkovský realistický román, tragédie",
         "Poprvé vydáno: 1892",
         "Děj / prostředí: podkrkonošská vesnice, chalupa Kalibů",
-        "Vyprávění / forma: er-forma, realistický popis prostředí a psychologie"
+        "Vyprávění / forma: er-forma, psychologický realismus"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Konec 19. století: český venkov, tvrdé sociální a majetkové poměry.",
-        "Rais patří k realistům; zobrazuje všední život bez idealizace.",
-        "Konflikt je založen na majetku, sňatku a vztahu generací.",
-        "Tragedie vyrůstá z malosti, sobectví a nedorozumění v rodině.",
-        "Prostředí hor a chalupy formuje charaktery i osud.",
-        "Dílo je typickou ukázkou české venkovské realistické prózy."
+        "Konec 19. století: tvrdý venkovský život, majetek a rodinné vazby.",
+        "Chalupa je centrem konfliktu mezi Kalibou, druhou ženou a synem.",
+        "Rais zobrazuje venkov bez idealizace – chudoba, sobectví, tlak okolí.",
+        "Tragédie vyrůstá z postupného útlaku Frantíka a slabosti otce.",
+        "Motiv macechy Karly je klasický, ale zasazený do českého prostředí.",
+        "Zločin otce je vyústění dlouholetého napětí, ne náhlý impulz bez příčiny."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vojtěch Kaliba – slabý, dobrácký hospodář, oběť okolností.",
-        "Karla – Kalibova druhá žena, sobecká a panovačná.",
-        "Frantík – Kalibův syn z prvního manželství, trpí macešiným týráním.",
-        "Babka – stará Kalibova matka, brání vnuka.",
-        "Sousedé a vesnice – sociální tlak a svědkové tragédie."
+        "Vojtěch Kaliba – slabý hospodář, dobrácký, ale neschopný bránit syna.",
+        "Karla – druhá manželka, panovačná, týrá Frantíka, chce mít moc v domě.",
+        "Frantík – syn z prvního manželství, oběť macechy, touží po spravedlnosti.",
+        "Babka – Kalibova matka, chrání vnuka před Karlou.",
+        "Vesnice – svědek rodinného konfliktu a morálního soudku."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Realismus – věrné zobrazení venkova a psychologie postav.",
-        "Macecha – Karla jako zdroj konfliktu v rodině.",
-        "Majetek a sňatek – motivy, které spouštějí tragédii.",
-        "Generační spor – střet babičky, otce a syna.",
-        "Zločin z zoufalství – Kalibův čin jako vyústění útlaku.",
-        "Determinace prostředím – chudoba a malost formují osudy."
+        "Realismus – věrný obraz venkova a psychologie.",
+        "Macecha – Karla jako zdroj útlaku.",
+        "Majetek a chalupa – ekonomický základ rodinného sporu.",
+        "Generační konflikt – babička, otec, syn proti Karlě.",
+        "Zločin z bezmoci – Kaliba ubije Frantíka v afektu.",
+        "Tragédie – nevyhnutelný pád rodiny."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Kalibův zločin?",
-      "options": [
-        "Alois Jirásek",
-        "Karel Václav Rais",
-        "Teréza Nováková",
-        "Božena Němcová"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Karel Václav Rais, představitel českého realismu."
-    },
-    {
-      "prompt": "Kde se děj odehrává?",
-      "options": [
-        "V Praze",
-        "Na podkrkonošském venkově",
-        "V Brně",
-        "Na Slovensku"
-      ],
-      "correct": 1,
-      "expl": "Román je zasazen do horské vesnice v Podkrkonoší."
-    },
-    {
-      "prompt": "Kdo je Karla?",
-      "options": [
-        "Kalibova dcera",
-        "Kalibova druhá žena, panovačná macecha",
-        "Učitelka",
-        "Sousedka bez vlivu"
-      ],
-      "correct": 1,
-      "expl": "Karla se vdá za Kalibu a týrá jeho syna Frantíka."
-    },
-    {
-      "prompt": "Proč je vztah v chalupě napjatý?",
-      "options": [
-        "Kvůli válce",
-        "Kvůli majetku, maceše a týrání syna",
-        "Kvůli náboženství",
-        "Kvůli studiu Frantíka"
-      ],
-      "correct": 1,
-      "expl": "Konflikt vyrůstá z Karliny panovačnosti a útlaku Frantíka."
-    },
-    {
-      "prompt": "Kdo se snaží Frantíka chránit?",
-      "options": [
-        "Karla",
-        "Babka (Kalibova matka)",
-        "Statkář",
-        "Farář výhradně"
-      ],
-      "correct": 1,
-      "expl": "Stará babička se staví na stranu vnuka proti maceše."
-    },
-    {
-      "prompt": "Jaký je Kaliba jako postava?",
-      "options": [
-        "Silný a rozhodný hrdina",
-        "Slabý, dobrácký muž neschopný konfliktu řešit",
-        "Zloděj od začátku",
-        "Komická figura"
-      ],
-      "correct": 1,
-      "expl": "Kalibova slabost a neschopnost bránit syna vedou k tragédii."
-    },
-    {
-      "prompt": "K jakému literárnímu směru dílo patří?",
-      "options": [
-        "Romantismus",
-        "Realismus",
-        "Surrealismus",
-        "Existencialismus"
-      ],
-      "correct": 1,
-      "expl": "Rais zobrazuje venkov realisticky, bez idealizace."
-    },
-    {
-      "prompt": "Kdy román vyšel?",
-      "options": [
-        "1862",
-        "1892",
-        "1918",
-        "1938"
-      ],
-      "correct": 1,
-      "expl": "Kalibův zločin vyšel roku 1892."
-    },
-    {
-      "prompt": "Co je jádrem tragédie?",
-      "options": [
-        "Válečný konflikt",
-        "Rodinný útlak a Kalibův zoufalý čin",
-        "Nešťastná láska ke šlechtičně",
-        "Politická zrada"
-      ],
-      "correct": 1,
-      "expl": "Tragédie vyvrcholí Kalibovým zločinem z dlouhého utrpení."
-    },
-    {
-      "prompt": "Jakou roli hraje majetek?",
-      "options": [
-        "Žádnou",
-        "Ovlivňuje sňatek a vztahy v rodině",
-        "Jen dekorativní",
-        "Týká se jen města"
-      ],
-      "correct": 1,
-      "expl": "Majetkové a sňatkové poměry spouštějí rodinný konflikt."
-    },
-    {
-      "prompt": "Čím je Raisův styl typický?",
-      "options": [
-        "Expresionistickými metaforami",
-        "Detailním realistickým popisem prostředí a postav",
-        "Volným veršem",
-        "Sci-fi prvky"
-      ],
-      "correct": 1,
-      "expl": "Rais pečlivě popisuje venkov, dialekt a psychologii postav."
-    },
-    {
-      "prompt": "Jaké poučení z příběhu často zdůrazňuje maturita?",
-      "options": [
-        "Oslavu moci",
-        "Důsledky slabosti, sobectví a domácího útlaku",
-        "Nutnost emigrace",
-        "Výhody války"
-      ],
-      "correct": 1,
-      "expl": "Román ukazuje, jak malost a krutost v rodině vedou k zločinu."
-    }
+    {"prompt": "Kdo napsal Kalibův zločin?", "options": ["Němcová", "Karel Václav Rais", "Nezval", "Hašek"], "correct": 1, "expl": "Rais patří k vrcholu české realistické prózy konce 19. století."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Praha", "Podkrkonoší, chalupa Kalibů", "Morava", "Slovensko"], "correct": 1, "expl": "Horské prostředí ovlivňuje charakter postav i atmosféru."},
+    {"prompt": "Kdo je Frantík?", "options": ["Kalibův syn z prvního manželství", "Sousedův syn", "Kněz", "Karlův bratr"], "correct": 0, "expl": "Frantík je obětí Karlina týrání a Kalibovy slabosti."},
+    {"prompt": "Jaká je Karla?", "options": ["Laskavá macecha", "Sobecká, panovačná druhá žena", "Cizí panna", "Učitelka"], "correct": 1, "expl": "Karla chce ovládat domácnost a odstranit Frantíka z cesty."},
+    {"prompt": "Kdo brání Frantíkovi nejvíc?", "options": ["Karla", "Babka (Kalibova matka)", "Kněz", "Starosta"], "correct": 1, "expl": "Babička je jediná, kdo Frantíka aktivně chrání."},
+    {"prompt": "Proč je Kaliba tragická postava?", "options": ["Je zlý tyran od začátku", "Je dobrácký, ale slabý – neubrání syna", "Je bohatý magnát", "Je cizinec"], "correct": 1, "expl": "Jeho selhání jako otce vede k nejhoršímu činu."},
+    {"prompt": "Jak román končí?", "options": ["Svatbou Frantíka", "Kaliba v afektu syna ubije; tragédie rodiny", "Karla odchází bohatá", "Frantík dědí statek"], "correct": 1, "expl": "Zločin je vrchol dlouhodobého napětí v chalupě."},
+    {"prompt": "Jaký žánr dílo reprezentuje?", "options": ["Sci-fi", "Venkovský realistický román / tragédie", "Bajka", "Detektivka"], "correct": 1, "expl": "Rais popisuje reálné venkovské poměry a psychologii."},
+    {"prompt": "Co je hlavním zdrojem konfliktu?", "options": ["Válka", "Majetek, moc v domácnosti a vztah macechy k synovi", "Magie", "Politika"], "correct": 1, "expl": "Chalupa a sňatek Karly spouštějí boj o místo ve vztahu."},
+    {"prompt": "Kdy román poprvé vyšel?", "options": ["1892", "1948", "2001", "1850"], "correct": 0, "expl": "Vydání spadá do období českého realismu."},
+    {"prompt": "Jak Rais vykresluje venkov?", "options": ["Idylicky bez problémů", "Realisticky – chudoba, tvrdost, morální tlak", "Jako město", "Jako poušť"], "correct": 1, "expl": "Venkov není ráj; je prostředím sociálního a rodinného napětí."},
+    {"prompt": "Proč Frantík trpí?", "options": ["Je nemocný", "Karla ho ponižuje, otec nezasáhne dostatečně", "Je v exilu", "Je bohatý"], "correct": 1, "expl": "Systematický útlak v domácnosti je jádrem děje."},
+    {"prompt": "Co symbolizuje chalupa?", "options": ["Cizí zem", "Rodinný majetek a uzavřený svět konfliktu", "Škola", "Kostel"], "correct": 1, "expl": "V chalupě se soustřeďuje veškeré napětí rodiny."},
+    {"prompt": "Jaký vztah mají Kaliba a Karla?", "options": ["Manželé; Karla dominuje", "Sourozenci", "Nepřátelé bez sňatku", "Strýc a neteř"], "correct": 0, "expl": "Kaliba si Karlu vzal jako druhou manželku po smrti první ženy."},
+    {"prompt": "Co je typické pro Raisovu prózu?", "options": ["Fantastické prvky", "Psychologický realismus a venkovské prostředí", "Sci-fi", "Pouze poezie"], "correct": 1, "expl": "Rais je známý realistickými venkovskými romány."},
+    {"prompt": "Proč je titul Kalibův zločin?", "options": ["Zločin spáchá Frantík", "Hlavní viníkem finálního násilí je otec Kaliba", "Zločin spáchá babka", "Jde o krádež krav"], "correct": 1, "expl": "Titul ukazuje na otce, který sáhne k nejhoršímu činu."},
+    {"prompt": "Jak vesnice reaguje na rodinu?", "options": ["Ignoruje ji", "Je svědkem a morálním soudem venkovské komunity", "Odchází z kraje", "Staví divadlo"], "correct": 1, "expl": "Společenský tlak okolí je součástí realismu."},
+    {"prompt": "Které téma NENÍ středem románu?", "options": ["Rodinný útlak", "Macecha a syn", "Vesmírná kolonizace", "Slabost otce"], "correct": 2, "expl": "Dílo je uzavřené venkovské drama 19. století."},
+    {"prompt": "Jak lze označit Frantíka?", "options": ["Antihrdina zla", "Oběť a postava vyvolávající soucit", "Komik", "Vesnický boháč"], "correct": 1, "expl": "Čtenář sleduje jeho trápení a touhu po spravedlnosti."},
+    {"prompt": "Co předchází zločinu?", "options": ["Okamžitá radost", "Dlouhodobé napětí, hádky a útlak", "Válka", "Povodeň bez děje"], "correct": 1, "expl": "Tragédie je logickým vyústěním situace v chalupě."},
+    {"prompt": "Jak Rais pracuje s jazykem?", "options": ["Archaičtina bez smyslu", "Spisovná čeština s prvky venkovského prostředí", "Cizím jazykem", "Pouze dialogy anglicky"], "correct": 1, "expl": "Jazyk odpovídá realistickému stylu doby."},
+    {"prompt": "Proč je dílo v maturitní četbě?", "options": ["Je nejkratší", "Ukázka českého realismu a rodinné tragédie", "Je komiks", "Nemá děj"], "correct": 1, "expl": "Učí číst psychologii postav a historický kontext venkova."},
+    {"prompt": "Kdo je Vojtěch Kaliba?", "options": ["Syn Frantík", "Hospodář, otec Frantíka, manžel Karly", "Soudce", "Učitel"], "correct": 1, "expl": "Kaliba je středem morálního pádu příběhu."},
+    {"prompt": "Jaký motiv sdílí s jinými realistickými díly?", "options": ["Kritika městské elity bez venkova", "Tvrdý život venkovského obyvatelstva", "Pouze humor", "Fantasy"], "correct": 1, "expl": "Rais navazuje na tradici zobrazování venkova (V.M. Karel, Němcová v jiném tónu)." },
+    {"prompt": "Co Kaliba typicky neumí?", "options": ["Orat", "Postavit se rozhodně Karlě ve prospěch syna", "Vařit", "Spát"], "correct": 1, "expl": "Jeho slabost je klíčová pro vývoj tragédie."},
+    {"prompt": "Jaký osud čeká rodinu po zločinu?", "options": ["Šťastný návrat normy", "Morální a právní následky tragédie", "Emigrace do Ameriky", "Svatba Frantíka"], "correct": 1, "expl": "Zločin ničí rodinu – realistický důsledek násilí."},
+    {"prompt": "Která postava reprezentuje starší generaci ochrany?", "options": ["Karla", "Babka", "Frantík", "Soused"], "correct": 1, "expl": "Babka stojí proti Karlě v ochraně vnuka."},
+    {"prompt": "Co je afekt u Kaliby?", "options": ["Plánovaná vražda", "Náhlé emoční vypětí vedoucí k ubíjení syna", "Radost", "Spánek"], "correct": 1, "expl": "Zločin není chladně promyšlený, ale výbuch bezmoci."},
+    {"prompt": "Jaký kontrast tvoří jádro díla?", "options": ["Bohatí vs. chudí ve městě", "Dobráckost otce vs. strašný čin proti synovi", "Moře vs. hory bez děje", "Humor vs. humor"], "correct": 1, "expl": "Kontrast zvyšuje tragický efekt."},
+    {"prompt": "Co čtenář má cítit vůči Frantíkovi?", "options": ["Opovržení", "Soucit a pochopení jeho beznaděje", "Smích", "Nezájem"], "correct": 1, "expl": "Frantík je emocionálním středem čtenářské reakce."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Kaliba ovdoví a žije se synem Frantíkem a babičkou",
-        "Ožení se s Karlou, která se stane panovačnou macechou",
-        "Karla týrá Frantíka a rozvrací domácnost",
-        "Babička se marně snaží synovce bránit",
-        "Napětí v chalupě vrcholí",
-        "Kaliba spáchá zoufalý zločin"
+        "Kaliba žije s druhou ženou Karlou a synem Frantíkem",
+        "Karla týrá Frantíka; babka ho brání",
+        "Napětí v chalupě roste; otec je pasivní",
+        "Frantík se vzepře nebo konflikt vyhrotí",
+        "Kaliba v afektu syna ubije",
+        "Rodina čelí tragickému následku zločinu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: vdovství → sňatek s Karlou → týrání Frantíka → marná obrana babičky → vyhrocení → Kalibův zločin."
+    "Správné pořadí: rodina na chalupě → útlak Frantíka → eskalace → vyhrocení → zločin otce → tragický konec."
   ]
 }

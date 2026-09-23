@@ -4,197 +4,97 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Jack Kerouac",
-        "Žánr: román beat generation",
-        "Poprvé vydáno: 1957 (česky Popel)",
-        "Děj: cesty po USA – Sal Paradise a Dean Moriarty",
-        "Vyprávění: ich-forma, spontánní próza"
+        "Autor: Jack Kerouac (vl. jm. Jean-Louis Lebris de Kérouac)",
+        "Žánr: román beat generation; autobiografické rysy",
+        "Poprvé vydáno: 1957 (anglicky On the Road; česky Na cestě)",
+        "Děj: opakované cesty po Spojených státech a do Mexika",
+        "Vyprávění: ich-forma; spontánní próza inspirovaná jazzem"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Poválečná Amerika, touha po svobodě.",
-        "Beatnici odmítají konformitu.",
-        "Cesta je styl i téma.",
-        "Jazz, drogy, přátelství, rytmus řeči.",
-        "Vyčerpání svobody bez kotvy."
+        "Poválečná Amerika 40. a 50. let: konformita, spotřební společnost, studená válka.",
+        "Beat generation odmítá materialismus a hledá autentický život.",
+        "Silnice, auta a vlaky jsou symbolem svobody i neklidu.",
+        "Jazz, noční bary, drogy a sex patří k beatnickému stylu.",
+        "Cesta je zároveň únikem i hledáním smyslu – často bez pevné kotvy.",
+        "Kerouac zachycuje rytmus života rychlým, neupraveným stylem."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Sal Paradise – vypravěč.",
-        "Dean Moriarty – charismatický hybatel.",
-        "Marylou – Deanova partnerka.",
-        "Camille – další vztah Deana.",
-        "Přátelé beat scény – komunita cesty.",
-        "Amerika – prostor putování."
+        "Sal Paradise – vypravěč, spisovatel, hledá zkušenost (Kerouac).",
+        "Dean Moriarty – neklidný, charismatický motor cest (Neal Cassady).",
+        "Marylou – Deanova mladá partnerka.",
+        "Camille / Galatea – další ženy v Deanově nestálém životě.",
+        "Carlo Marx, Old Bull Lee – přátelé z beat scény (Ginsberg, Burroughs).",
+        "Amerika – prostor nekonečných cest a setkání."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Cesta – svoboda i útěk.",
-        "Spontánní próza – styl.",
-        "Beat generation – kontext.",
-        "Jazzový rytmus jazyka.",
-        "Konformita vs. žízeň po životě.",
-        "Vyhoření – stín svobody."
+        "Beat generation – kulturní hnutí mladých umělců po válce.",
+        "Spontánní próza – rychlý proud řeči bez klasické kompozice.",
+        "Cesta – metafora svobody, touhy i vyčerpání.",
+        "Jazz – rytmus textu i životního stylu.",
+        "Konformita vs. autenticita – hlavní konflikt.",
+        "IT – beatnické slovo pro extatický okamžik plnosti."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Na cestě?",
-      "options": [
-        "Ginsberg",
-        "Kerouac",
-        "Burroughs jen",
-        "Hemingway"
-      ],
-      "correct": 1,
-      "expl": "Jack Kerouac."
-    },
-    {
-      "prompt": "Kdo je Sal?",
-      "options": [
-        "Policista",
-        "Vypravěč putující Amerikou",
-        "Deanův otec",
-        "Farár"
-      ],
-      "correct": 1,
-      "expl": "Sal Paradise."
-    },
-    {
-      "prompt": "Kdo je Dean?",
-      "options": [
-        "Bankéř",
-        "Charismatický přítel a motor cest",
-        "Učitel matematiky",
-        "Generál"
-      ],
-      "correct": 1,
-      "expl": "Dean Moriarty."
-    },
-    {
-      "prompt": "Jaký směr/generace?",
-      "options": [
-        "Romantismus Erbenův",
-        "Beat generation",
-        "Husité",
-        "Robotici"
-      ],
-      "correct": 1,
-      "expl": "Beatnici."
-    },
-    {
-      "prompt": "Co je „spontánní próza“?",
-      "options": [
-        "Úřední jazyk",
-        "Rychlý, rytmický proud řeči",
-        "Jen hexametr",
-        "Jen zákoník"
-      ],
-      "correct": 1,
-      "expl": "Kerouacův styl."
-    },
-    {
-      "prompt": "Proti čemu text míří?",
-      "options": [
-        "Proti jazzu",
-        "Proti konformní poválečné společnosti",
-        "Proti cestování",
-        "Proti přátelství"
-      ],
-      "correct": 1,
-      "expl": "Odpor ke konformitě."
-    },
-    {
-      "prompt": "Co je chronotop?",
-      "options": [
-        "Továrna",
-        "Silnice / cesta po USA",
-        "Zákop 1916",
-        "Dvůr Verony"
-      ],
-      "correct": 1,
-      "expl": "Cesta."
-    },
-    {
-      "prompt": "Jakou roli hraje jazz?",
-      "options": [
-        "Žádnou",
-        "Rytmus života i stylu",
-        "Jen cenzura",
-        "Jen vojenský pochod"
-      ],
-      "correct": 1,
-      "expl": "Jazz = svoboda."
-    },
-    {
-      "prompt": "Jaký je stín svobody?",
-      "options": [
-        "Bohatství",
-        "Vyčerpání, chaos, nestálost",
-        "Korunovace",
-        "Klášterní klid"
-      ],
-      "correct": 1,
-      "expl": "Svoboda má cenu."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1929",
-        "1957",
-        "1984",
-        "1836"
-      ],
-      "correct": 1,
-      "expl": "1957."
-    },
-    {
-      "prompt": "Proč je důležitá?",
-      "options": [
-        "Je jízdní řád",
-        "Manifest beatnické svobody a stylu",
-        "Je účetní",
-        "Je kuchařka"
-      ],
-      "correct": 1,
-      "expl": "Kulturní vliv."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Revize úřadů",
-        "Putování, přátelství a žízeň po životě",
-        "Robotí vzpoura",
-        "Antická tragédie"
-      ],
-      "correct": 1,
-      "expl": "Cesta jako smysl."
-    }
+    {"prompt": "Kdo je autorem románu Na cestě?", "options": ["Allen Ginsberg", "Jack Kerouac", "William S. Burroughs", "Ernest Hemingway"], "correct": 1, "expl": "Román napsal Jack Kerouac; vyšel v roce 1957 a stal se manifestem beat generation."},
+    {"prompt": "Jak se jmenuje anglický originál knihy?", "options": ["The Road", "On the Road", "Down the Road", "Off the Road"], "correct": 1, "expl": "Originální název je On the Road – „na cestě“, v pohybu."},
+    {"prompt": "Kdo je vypravěč příběhu?", "options": ["Dean Moriarty", "Sal Paradise", "Carlo Marx", "Old Bull Lee"], "correct": 1, "expl": "Sal Paradise vypráví v ich-formě o svých cestách a o Deanovi."},
+    {"prompt": "Na koho reálně naráží postava Deana Moriartyho?", "options": ["Na Neal Cassadyho", "Na Ernesta Hemingwaye", "Na F. S. Fitzgeralda", "Na Jacka Londona"], "correct": 0, "expl": "Dean Moriarty je literární obraz Neal Cassadyho, Kerouacova přítele a vzoru neklidu."},
+    {"prompt": "Jaké hnutí román nejvíc reprezentuje?", "options": ["Romantismus", "Beat generation", "Socialistický realismus", "Existencialismus Sartreův"], "correct": 1, "expl": "Na cestě je klíčovým textem beat generation – odmítání konformity a hledání života."},
+    {"prompt": "Co je „spontánní próza“ v Kerouacově pojetí?", "options": ["Přesně strukturovaný epos", "Rychlý, rytmický proud řeči blízký jazzu", "Úřední styl", "Pouze dialogy"], "correct": 1, "expl": "Kerouac psal rychle, s jazzovým rytmem; vzdává se klasické pevné kompozice."},
+    {"prompt": "Jakou roli hraje jazz v románu?", "options": ["Jen kulisa bez významu", "Rytmus života, hudby i stylu vyprávění", "Symbol války", "Náboženský obřad"], "correct": 1, "expl": "Jazz ovlivňuje beatnický život i Kerouacovu prózu – rychlost, improvizace, extáze."},
+    {"prompt": "Proti čemu beatnici v románu nejvíc vystupují?", "options": ["Proti cestování", "Proti konformní poválečné společnosti a prázdnému materialismu", "Proti demokracii", "Proti literatuře"], "correct": 1, "expl": "Hrdinové utíkají před nudou, kariérou a „normálním“ životem bez autenticity."},
+    {"prompt": "Co je typickým prostorem děje?", "options": ["Pouze jeden byt v New Yorku", "Silnice, auta, vlaky a města USA (a cesta do Mexika)", "Středověký hrad", "Vesnická idyla"], "correct": 1, "expl": "Chronotopem románu je cesta – Amerika jako nekonečná silnice a setkání."},
+    {"prompt": "Jaký vztah mají Sal a Dean?", "options": ["Jsou bratři", "Sal obdivuje Deana, Dean je hybatelem neklidných cest", "Jsou nepřátelé", "Dean je Salův učitel latině"], "correct": 1, "expl": "Sal je pozorovatel a společník; Dean přitahuje svou energií, ale také ničí vztahy kolem sebe."},
+    {"prompt": "Jak Dean Moriarty obvykle jedná k ženám?", "options": ["Je věrný jedné partnerce", "Je vášnivý, ale nestálý a často opouští rodiny", "Ženy v románu vůbec nejsou", "Je asketa"], "correct": 1, "expl": "Dean prožívá intenzivní vztahy s Marylou, Camille a dalšími, ale nedokáže zůstat."},
+    {"prompt": "Kdo je Carlo Marx v románu?", "options": ["Policista", "Beatnický básník, obraz Allena Ginsberga", "Deanův otec", "Mexický farmář"], "correct": 1, "expl": "Carlo Marx představuje Ginsberga – intelektuála a básníka z beat scény."},
+    {"prompt": "Kdo je Old Bull Lee?", "options": ["Námořní kapitán", "Literární obraz Williama S. Burroughse", "Salův strýc", "Kněz"], "correct": 1, "expl": "Old Bull Lee je Kerouacova verze Burroughse – excentrický spisovatel na jihu USA."},
+    {"prompt": "Proč Sal opakovaně vyráží na cestu?", "options": ["Kvůli vojenské službě", "Hledá zkušenost, extázi a autentický život", "Je to trest soudu", "Musí doručovat poštu"], "correct": 1, "expl": "Sal touží po „IT“ – okamžiku, kdy život dává smysl; cesta je jeho metoda hledání."},
+    {"prompt": "Jak román obvykle končí jednotlivé etapy cest?", "options": ["Vždy šťastným sňatkem", "Vyčerpáním, rozchody a návratem k psaní či klidu", "Vítězstvím ve válce", "Dědictvím milionů"], "correct": 1, "expl": "Za extází cesty přichází únava, prázdné noci a vystřízlivění – svoboda má cenu."},
+    {"prompt": "Kam Sal s Deanem mimo USA také cestují?", "options": ["Do Antarktidy", "Do Mexika (a další cesty po Americe)", "Do Marsu", "Pouze do Kanady"], "correct": 1, "expl": "Mezi významné úseky patří jízda do Mexika – jiná kultura, drogy, pocit svobody."},
+    {"prompt": "Co znamená beatnické „IT“?", "options": ["Iniciály autora", "Extatický okamžik plnosti a pravdy", "Název auta", "Zkratka pro cenzuru"], "correct": 1, "expl": "„IT“ je stav, kdy člověk prožije život naplno – jazz, noc, řeč, extáze."},
+    {"prompt": "Jaký je vztah románu k autobiografii?", "options": ["Čistá fantasy bez reálií", "Silně autobiografický – postavy odpovídají reálným beatníkům", "Historický román o středověku", "Detektivka"], "correct": 1, "expl": "Kerouac zpracoval skutečné cesty a přátele; román je fikcionalizovaným deníkem."},
+    {"prompt": "Které téma NENÍ pro Na cestě typické?", "options": ["Touha po svobodě", "Přátelství a neklid", "Kritika prázdné konformity", "Středověké rytířské turnaje"], "correct": 3, "expl": "Román je o moderní Americe a beatnících, ne o rytířském středověku."},
+    {"prompt": "Jak Sal vydělává na živobytí (mimo cesty)?", "options": ["Jako spisovatel a občas brigádník", "Jako soudce", "Jako farář", "Jako astronaut"], "correct": 0, "expl": "Sal píše a občas pracuje; cesty financuje různými krátkodobými příjmy."},
+    {"prompt": "Proč je Dean pro ostatní tak přitažlivý?", "options": ["Má neomezené bohatství", "Je plný energie, spontánnosti a radosti z okamžiku", "Je nejlepší student na univerzitě", "Je generál armády"], "correct": 1, "expl": "Dean žije rychle, mluví zmateně ale vášnivě a láme pravidla – fascinuje i ničí."},
+    {"prompt": "Jaký stín má beatnická svoboda v románu?", "options": ["Žádný – vše je idyla", "Vyčerpání, osamění, rozpad vztahů a deprese", "Vězení za jazz", "Ztráta paměti"], "correct": 1, "expl": "Neustálý pohyb nevyplní vždy prázdnotu; hrdinové často končí u únavy a smutku."},
+    {"prompt": "V jakém roce román poprvé vyšel?", "options": ["1929", "1957", "1984", "2001"], "correct": 1, "expl": "Kniha vyšla v roce 1957 a rychle ovlivnila americkou kulturu."},
+    {"prompt": "Jaký jazykový styl je typický?", "options": ["Strohé věty bez emocí", "Dlouhé věty, slang, rytmus mluvené řeči", "Středověká čeština", "Pouze rýmované verše"], "correct": 1, "expl": "Kerouac napodobuje mluvený jazyk, jazzový flow a rychlé sledy obrazů."},
+    {"prompt": "Co je hlavní strukturou románu?", "options": ["Jeden den v jedné místnosti", "Série cest a setkání bez klasické zápletky", "Přesný detektivní úkol", "Epos o jedné bitvě"], "correct": 1, "expl": "Román nemá tradiční děj; skládá se z epizod na cestách."},
+    {"prompt": "Jaký význam má přátelství Sal–Dean?", "options": ["Jen náhodné setkání", "Jádro románu – inspirace, svoboda i zklamání", "Obchodní partnerství", "Vztah učitele a žáka v latině"], "correct": 1, "expl": "Sal bez Deana necestuje stejně; Dean je symbolem i problémem beatnického života."},
+    {"prompt": "Proč je Na cestě důležitá pro maturitu?", "options": ["Je technický manuál", "Ukazuje beat generation, styl i témata poválečné Ameriky", "Je encyklopedie rostlin", "Je zákoník"], "correct": 1, "expl": "U maturity jde o autora, kontext, postavy, styl spontánní prózy a témata svobody."},
+    {"prompt": "Které město je častým výchozím bodem Salových cest?", "options": ["New York", "Praha", "Paříž", "Tokio"], "correct": 0, "expl": "Sal žije mezi New Yorkem a cestami po zbytku USA; město je start i návrat."},
+    {"prompt": "Jak Dean často financuje svůj neklid?", "options": ["Krádeže bank", "Krátké práce, přátelé, manželky, auta", "Výhra v loterii pokaždé", "Státní dotace na poezii"], "correct": 1, "expl": "Dean žije od ruky k ruce – auta, práce, vztahy; stabilní kariéru nemá."},
+    {"prompt": "Co Kerouac románem nejspíš vyjadřuje?", "options": ["Oslavu konformity", "Touhu po autentickém životě a varování před prázdnou svobodou", "Návod na daňové úniky", "Historii antiky"], "correct": 1, "expl": "Román slaví cestu a okamžik, ale ukazuje i vyhoření a nenasytnost pohybu."},
+    {"prompt": "Která postava nepatří k beat scéně v románu?", "options": ["Sal Paradise", "Dean Moriarty", "Carlo Marx", "Napoleon Bonaparte"], "correct": 3, "expl": "Napoleon v románu nevystupuje; ostatní jména patří ke Kerouacově beatnické partě."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Sal potká Deana",
-        "Začínají cesty po Americe",
-        "Jazz, party, vztahy",
-        "Opakované návraty a rozchody",
-        "Vyčerpání a vystřízlivění",
-        "Bilance svobody na cestě"
+        "Sal potká Deana Moriartyho a obdivuje jeho energii",
+        "Společně vyrážejí na první velké cesty po Americe",
+        "Noční jízdy, jazz, bary a vztahy s ženami",
+        "Cesta do Mexika a další opakované výjezdy",
+        "Deanův neklid ničí vztahy, Sal se unavuje",
+        "Sal se vrací k psaní a bilancuje cesty"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: setkání → cesty → jazz/vztahy → návraty → vyčerpání → bilance."
+    "Správné pořadí: setkání s Deanem → první cesty → jazz a vztahy → Mexiko a další jízdy → vyčerpání → návrat a bilance."
   ]
 }

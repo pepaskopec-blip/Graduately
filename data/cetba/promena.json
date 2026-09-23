@@ -7,20 +7,20 @@
         "Autor: Franz Kafka",
         "Žánr: novela; absurdní / existenciální próza",
         "Poprvé vydáno: 1915",
-        "Děj / prostředí: byt rodiny Samsa v moderním městě",
-        "Vyprávění / forma: er-forma; věcný, chladný styl kontrastující s hrůzou"
+        "Děj: byt rodiny Samsových v moderním městě",
+        "Vyprávění: er-forma; věcný chladný styl vs. hrůza proměny"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Počátek 20. století: byrokracie, rodina, práce jako povinnost.",
-        "Kafkaovský svět: odcizení, vina bez jasné příčiny, absurdita.",
-        "Gregor je živitel rodiny; po proměně se stává přítěží.",
-        "Měšťanský byt jako klec a jeviště rodinné krize.",
-        "Moderní člověk je redukován na funkci a užitečnost.",
-        "Téma: odcizení, vinna, rodina, dehumanizace."
+        "Počátek 20. století: rodina, práce, byrokracie jako povinnost.",
+        "Gregor je obchodní cestující a živitel – hodnota člověka = užitečnost.",
+        "Po proměně v hmyz se stává přítěží a objektem odporu.",
+        "Měšťanský byt je klec i jeviště rodinné krize.",
+        "Podnájemníci zhorší tlak na rodinu.",
+        "Téma: odcizení, vina, dehumanizace."
       ]
     },
     {
@@ -28,174 +28,71 @@
       "icon": "people",
       "lines": [
         "Gregor Samsa – obchodní cestující proměněný v hmyz.",
-        "Grete – sestra; nejprve pečuje, pak ho odmítne.",
-        "Otec – autoritativní, násilný vůči Gregorovi.",
-        "Matka – rozpolcená mezi strachem a soucitem.",
-        "Podnájemníci – cizí pohled na „ostudu“ rodiny.",
-        "Prokurista – zástupce práce a povinnosti."
+        "Grete – sestra; nejprve pečuje, později odmítá.",
+        "Otec – autoritativní, násilný (jablko).",
+        "Matka – soucit i strach.",
+        "Podnájemníci – cizí soudci „ostudy“.",
+        "Prokurista – symbol práce a tlaku."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Proměna – ztráta lidské formy i statusu.",
-        "Odcizení – člověk cizí sobě i blízkým.",
-        "Užitečnost – hodnota člověka podle výdělku.",
-        "Jablko – otcova zbraň, zraňující symbol.",
-        "Dveře a pokoj – izolace.",
-        "Smrt Gregora – „osvobození“ rodiny."
+        "Proměna – ztráta lidské podoby i společenského místa.",
+        "Odcizení – cizí sobě i rodině.",
+        "Užitečnost – člověk = výdělek.",
+        "Jablko – zranění od otce, symbol viny.",
+        "Pokoj – izolace za dveřmi.",
+        "Smrt Gregora – „úleva“ pro rodinu."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Proměnu?",
-      "options": [
-        "Franz Kafka",
-        "Alfred Döblin",
-        "Thomas Mann",
-        "Hermann Hesse"
-      ],
-      "correct": 0,
-      "expl": "Autorem je Franz Kafka."
-    },
-    {
-      "prompt": "V co se Gregor Samsa promění?",
-      "options": [
-        "V vlka",
-        "V obří hmyz / brouka",
-        "V ptáka",
-        "V kámen"
-      ],
-      "correct": 1,
-      "expl": "Ráno se probudí jako obrovský hmyz."
-    },
-    {
-      "prompt": "Jaké bylo Gregorovo povolání?",
-      "options": [
-        "Lékař",
-        "Obchodní cestující",
-        "Učitel",
-        "Soudce"
-      ],
-      "correct": 1,
-      "expl": "Gregor živí rodinu jako obchodní cestující."
-    },
-    {
-      "prompt": "Kdo o Gregora zprvu pečuje?",
-      "options": [
-        "Prokurista",
-        "Sestra Grete",
-        "Podnájemníci",
-        "Nikdo"
-      ],
-      "correct": 1,
-      "expl": "Grete mu nosí jídlo a uklízí pokoj."
-    },
-    {
-      "prompt": "Čím otec Gregora zraní?",
-      "options": [
-        "Nožem",
-        "Jablkem",
-        "Pistolí",
-        "Lanovým okem"
-      ],
-      "correct": 1,
-      "expl": "Otec po něm hází jablka; jedno uvízne v těle."
-    },
-    {
-      "prompt": "Jak se vztah rodiny vyvíjí?",
-      "options": [
-        "Stále větší láska",
-        "Od péče k odporu a přání, aby zmizel",
-        "Ihned ho oslaví",
-        "Učiní z něj mascota firmy"
-      ],
-      "correct": 1,
-      "expl": "Jakmile přestane být užitečný, rodina ho odmítne."
-    },
-    {
-      "prompt": "Kdy novela vyšla?",
-      "options": [
-        "1905",
-        "1915",
-        "1925",
-        "1935"
-      ],
-      "correct": 1,
-      "expl": "Die Verwandlung vyšla roku 1915."
-    },
-    {
-      "prompt": "Jaký styl Kafka volí?",
-      "options": [
-        "Pateticky romantický",
-        "Věcný, klidný popis absurdní situace",
-        "Jen rýmované verše",
-        "Expresivní křik bez narace"
-      ],
-      "correct": 1,
-      "expl": "Kontrast suchého stylu a hrůzné události je klíčový."
-    },
-    {
-      "prompt": "Co je ústředním tématem?",
-      "options": [
-        "Válečná strategie",
-        "Odcizení a dehumanizace v rodině i práci",
-        "Cestopis exotic",
-        "Komedie omylů"
-      ],
-      "correct": 1,
-      "expl": "Gregor přestává být „člověkem“ pro okolí."
-    },
-    {
-      "prompt": "Jak Gregor umírá?",
-      "options": [
-        "V souboji",
-        "Zanícením, hladem a zanedbáním; rodina si uleví",
-        "Popravou soudu",
-        "Pádem z okna při útěku do práce"
-      ],
-      "correct": 1,
-      "expl": "Umírá opuštěný; rodina pak plánuje nový život."
-    },
-    {
-      "prompt": "Co symbolizují dveře Gregorova pokoje?",
-      "options": [
-        "Svobodu cestování",
-        "Hranici mezi ním a rodinou / izolaci",
-        "Vstup do továrny",
-        "Kostel"
-      ],
-      "correct": 1,
-      "expl": "Pokoj je klec oddělující Gregora od ostatních."
-    },
-    {
-      "prompt": "Proč je proměna „kafkaovská“?",
-      "options": [
-        "Má veselý konec",
-        "Absurdní úděl bez vysvětlení a s pocitem viny",
-        "Jde o pohádku o víle",
-        "Je to realistický report"
-      ],
-      "correct": 1,
-      "expl": "Kafka dává hrůzu bez logického důvodu a východiska."
-    }
+    {"prompt": "Kdo napsal Proměnu?", "options": ["Franz Kafka", "Jaroslav Hašek", "Karel Čapek", "Erich Maria Remarque"], "correct": 0, "expl": "Novela je jedním z nejznámějších Kafkových textů; vyšla 1915."},
+    {"prompt": "Co se stane Gregorovi Samsovi na začátku?", "options": ["Vyhrá loterii", "Probudí se proměněný v obrovského hmyz", "Odjede do války", "Stane se králem"], "correct": 1, "expl": "Slavná úvodní věta líčí bizarní proměnu bez vysvětlení."},
+    {"prompt": "Jaké povolání má Gregor před proměnou?", "options": ["Lékař", "Obchodní cestující", "Učitel", "Kněz"], "correct": 1, "expl": "Gregor dře pro rodinu jako obchodník – práce ho vyčerpává."},
+    {"prompt": "Kdo je Grete?", "options": ["Gregorova manželka", "Gregorova sestra", "Sousedka", "Prokuristka"], "correct": 1, "expl": "Grete se nejprve stará o bratra, později ho odmítá."},
+    {"prompt": "Proč je Gregor pro rodinu důležitý (před proměnou)?", "options": ["Je slavný herec", "Je hlavní živitel rodiny", "Je politik", "Je dědic hradu"], "correct": 1, "expl": "Rodina je na jeho platu závislá – otec, matka, sestra."},
+    {"prompt": "Jak reaguje otec na Gregora-hmyz?", "options": ["Objímá ho", "Násilně ho zaplaší – mimo jiné jablko", "Ignoruje navždy", "Pošle ho do školy"], "correct": 1, "expl": "Otec představuje autoritu a hrubou sílu vůči „nestvůře“."},
+    {"prompt": "Co symbolizuje jablko zabodnuté do Gregora?", "options": ["Lásku", "Otcovské násilí, vinu a odcizení", "Svatou hostii", "Sport"], "correct": 1, "expl": "Jablko zraní Gregora a dlouho v něm zůstává – obraz odcizení."},
+    {"prompt": "Jak se mění vztah Grete k Gregorovi?", "options": ["Vždy milující", "Od péče k odmítnutí a požadavku „se zbavit ho“", "Grete se promění v hmyz", "Grete odejde do kláštera hned"], "correct": 1, "expl": "Grete na konci prosí rodiče, aby se Gregora zbavili."},
+    {"prompt": "Kdo jsou podnájemníci?", "options": ["Gregorovi přátelé", "Cizí lidé v bytě, kteří zhorší finanční tlak", "Policisté", "Lékaři"], "correct": 1, "expl": "Podnájemníci jsou svědky „ostudy“ a urychlí krizi."},
+    {"prompt": "Jaký je styl vyprávění?", "options": ["Rychlý humor Haška", "Er-forma, věcný tón u absurdní události", "Pouze dialogy divadla", "Epický zpěv"], "correct": 1, "expl": "Kafka kontrastuje chladný jazyk s hrůzou situace."},
+    {"prompt": "Kde Gregor většinou pobývá?", "options": ["Na ulici", "Ve svém pokoji, často za zavřenými dveřmi", "V lese", "Na moři"], "correct": 1, "expl": "Izolace v pokoji zdůrazňuje odcizení od rodiny."},
+    {"prompt": "Jak Gregor umírá?", "options": ["Na popravišti", "Sám, vyčerpán – rodina cítí úlevu", "V boji", "V autonehodě"], "correct": 1, "expl": "Po smrti rodina plánuje světlejší budoucnost – krutá ironie."},
+    {"prompt": "Co je hlavní téma Proměny?", "options": ["Válečná sláva", "Odcizení, užitečnost člověka a rozpad rodinných vazeb", "Růst tržní ekonomiky", "Středověké rytířství"], "correct": 1, "expl": "Gregor je milován, dokud vydělává; jako hmyz je odpad."},
+    {"prompt": "Proč Gregor nemůže hned jít do práce?", "options": ["Proměna v hmyz", "Je na dovolené", "Je bohatý", "Je v jiné zemi"], "correct": 0, "expl": "Právě proměna spouští konflikt s prokuristou a rodinou."},
+    {"prompt": "Kdo přichází do bytu jako reprezentant práce?", "options": ["Prokurista", "Švejk", "Romeo", "Domin"], "correct": 0, "expl": "Prokurista je tlak firmy – Gregor musí vysvětlovat absenci."},
+    {"prompt": "Jak matka reaguje na Gregora?", "options": ["Vždy klidně objímá", "Rozpolcená – soucit i strach, omdlévání", "Nikdy se o něj nezajímá", "Stane se hmyzem"], "correct": 1, "expl": "Matka trpí mezi synem a realitou bytu."},
+    {"prompt": "Co znamená kafkaovský svět?", "options": ["Idyla", "Absurdita, vina bez důvodu, byrokratický tlak", "Pouze komedie", "Historický dokument"], "correct": 1, "expl": "Proměna je ukázkou existenciální absurdity bez vysvětlení."},
+    {"prompt": "Jak rodina končí po Gregorově smrti?", "options": ["Truchlí navždy", "Plánuje světlou budoucnost (s výhledem na sestřin sňatek)", "Emigruje", "Zbankrotuje"], "correct": 1, "expl": "Závěr je ironický – Gregorova smrt uvolní cestu „normálnímu“ životu."},
+    {"prompt": "Který prvek NENÍ v Proměně typický?", "options": ["Rodinný byt", "Proměna těla", "Vysvětlení příčiny proměny vědou", "Odcizení"], "correct": 2, "expl": "Kafka příčinu nevysvětluje – to je součást absurdity."},
+    {"prompt": "Jak Gregor slyší hudbu (housle)?", "options": ["Nesnáší ji", "Grete hraje – Gregor je dojat, lidskost v něm rezonuje", "Je hluchý", "Hudba nefiguruje"], "correct": 1, "expl": "Scéna s houslemi ukazuje zbytky Gregorovy citlivosti."},
+    {"prompt": "Proč je novela důležitá pro maturitu?", "options": ["Učí účetnictví", "Kafka, symbolika, témata, styl – klasika světové literatury", "Je atlas", "Je cookbook"], "correct": 1, "expl": "U maturity: autor, děj, postavy, symboly, témata odcizení."},
+    {"prompt": "V jakém roce vyšla Proměna?", "options": ["1915", "1929", "1949", "2005"], "correct": 0, "expl": "Text vznikl v Kafkově tvůrčím období první světové války."},
+    {"prompt": "Která věta patří k úvodu Proměny?", "options": ["Call me Ishmael", "Jednoho rána, když se ze spánku probudil, proměnil se Gregor Samsa v obrovského brouka", "Vánoce nebyly bílé", "Dvě ulice Prahy"], "correct": 1, "expl": "Slavný začátek v českých překladech obvykle „hmyz/brouk“."},
+    {"prompt": "Jaká forma vyprávění je v Proměně?", "options": ["Ich-forma", "Er-forma (třetí osoba)", "Drama", "Epistolární"], "correct": 1, "expl": "Kafka vypráví o Gregorovi v třetí osobě – er-forma."},
+    {"prompt": "Co podnájemníci dělají při hře na housle?", "options": ["Tleskají", "Projevují netrpělivost – Gregor chce Grete bránit", "Odejdou hned první den", "Stanou se hmyzem"], "correct": 1, "expl": "Konflikt vyhrotí Gregorovo vyloupení z pokoje."},
+    {"prompt": "Jak otec vypadá po Gregorově proměně?", "options": ["Mladne", "Zpočátku zlomený, později energický při potrestání Gregora", "Zmizí", "Je v nemocnici"], "correct": 1, "expl": "Otec se znovu postaví do role autority."},
+    {"prompt": "Které téma souvisí s prací?", "options": ["Gregor = hodnota jen jako výdělek", "Gregor je nezaměstnaný od narození", "Práce nefiguruje", "Gregor je král"], "correct": 0, "expl": "Když nemůže pracovat, rodina ho vnímá jako břemeno."},
+    {"prompt": "Jaký žánr je Proměna?", "options": ["Novela / absurdní próza", "Historický román", "Bajka o zvířatech", "Učebnice"], "correct": 0, "expl": "Krátký prózní útvar s fantastickým prvkem – novela."},
+    {"prompt": "Co NENÍ postava Proměny?", "options": ["Grete", "Otec", "Winston Smith", "Matka"], "correct": 2, "expl": "Winston Smith je z Orwellova 1984, ne z Kafky."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Gregor se probudí jako hmyz",
-        "Rodina a práce reagují šokem",
-        "Grete pečuje; Gregor se izoluje",
-        "Otec ho zraní jablkem",
-        "Grete navrhne zbavit se ho",
-        "Gregor umírá; rodina odchází s úlevou"
+        "Gregor se probudí proměněný v hmyz",
+        "Prokurista a rodina zjišťují, že nemůže do práce",
+        "Grete pečuje, Gregor je izolován v pokoji",
+        "Otec zraní Gregora jablkem",
+        "Podnájemníci a hádky – Gregor vyloupen",
+        "Gregor umírá, rodina plánuje nový začátek"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: proměna → šok → péče a izolace → zranění jablkem → odmítnutí → smrt a úleva rodiny."
+    "Správné pořadí: proměna → tlak práce → péče Grete → jablko → podnájemníci → smrt a „úleva“ rodiny."
   ]
 }

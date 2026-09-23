@@ -5,197 +5,406 @@
       "icon": "book",
       "lines": [
         "Autor: Vítězslav Nezval",
-        "Žánr: lyricko-epická báseň / poetismus",
-        "Poprvé vydáno: 1928 (pásmo v Díle)",
-        "Děj/prostředí: Moderní civilizace, inventivní svět, noční město",
-        "Vyprávění/forma: pásmo: volný verš, obrazy, refrain „Naše životy…“"
+        "Žánr: poetická skladba / poema",
+        "Poprvé vydáno: 1927",
+        "Děj/prostředí: poetický portrét vynálezce T. A. Edisona",
+        "Vyprávění/forma: volná skladba, obrazná moderní poezie"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Avantgarda 20. let: poetismus, obdiv k moderně.",
-        "Edison jako symbol vynálezce a tvůrčí energie.",
-        "Báseň spojuje osobní úzkost s oslavou práce ducha.",
-        "Opakující se refrain dává hymnický rytmus.",
-        "Obrazy města, vědy, snu a smrti.",
-        "Téma: tvořivost, čas, sláva, smysl lidského snažení."
+        "Poetismus – hravost, obrazy, město",
+        "Obdiv k technice a modernitě",
+        "Edison jako symbol vynálezce",
+        "USA / industrializace v obrazu",
+        "Surreální a groteskní prvky",
+        "Skupina Devětsil"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Thomas Alva Edison – ústřední symbol vynálezce.",
-        "Lyriický subjekt – básník meditující o tvorbě a životě.",
-        "„My“ v refrainu – generace / lidstvo v pohybu.",
-        "Vynálezci a tvůrci – typ člověka, který „rozsvěcí“ svět.",
-        "Smrt / čas – protivník i motivátor tvorby.",
-        "Moderní město – kulisa inspirace poetismu."
+        "Thomas Alva Edison – střed básně",
+        "Objevitel jako mýtus",
+        "Nezvalův lyrický subjekt",
+        "Technika personifikovaná",
+        "Dělníci a laboratoř",
+        "Kolektivní obraz doby"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Poetismus – avantgardní směr hravosti a obraznosti.",
-        "Pásmo – dlouhá báseň proudu představ.",
-        "Refrain – opakovaný motiv („Naše životy jsou…“).",
-        "Edison – metafora tvůrčího génia.",
-        "Civilizační lyrika – technika i sen v poezii.",
-        "Apoteóza práce ducha – oslava tvořivosti."
+        "Poetismus – Nezval",
+        "Světlo – žárovka, symbol",
+        "Vynález – kreativita",
+        "Moderní civilizace",
+        "Hra s jazykem a obrazy",
+        "Oslava i ironie techniky"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal báseň Edison?",
+      "prompt": "Autor Edison?",
       "options": [
-        "Jiří Wolker",
-        "Vítězslav Nezval",
-        "Karel Hynek Mácha",
-        "Jaroslav Seifert jen výhradně"
+        "Nezval",
+        "Seifert",
+        "Hrubín",
+        "Vrchlický"
       ],
-      "correct": 1,
-      "expl": "Edison patří k vrcholům Nezvalova poetismu."
+      "correct": 0,
+      "expl": "Vítězslav Nezval."
     },
     {
-      "prompt": "K jakému směru báseň patří?",
+      "prompt": "Žánr?",
       "options": [
-        "Naturalismus",
-        "Poetismus / avantgarda",
-        "Husitský chorál",
-        "Socialistický realismus 50. let výhradně"
+        "Poema / poezie",
+        "Román",
+        "Drama",
+        "Esej"
       ],
-      "correct": 1,
-      "expl": "Obraznost, civilizace a hravost jsou poetistické."
+      "correct": 0,
+      "expl": "Poezie v katalogu."
     },
     {
-      "prompt": "Kdo je Edison v básni především?",
+      "prompt": "Rok?",
       "options": [
-        "Jen historický údaj bez významu",
-        "Symbol vynálezce a tvůrčí energie",
-        "Záporný hrdina",
-        "Postava z Hamleta"
+        "1927",
+        "1948",
+        "1890",
+        "2000"
       ],
-      "correct": 1,
-      "expl": "Nezval z Edisonovy postavy dělá mýtus tvoření."
+      "correct": 0,
+      "expl": "Meziválečí."
     },
     {
-      "prompt": "Jaká forma textu je typická?",
+      "prompt": "O kom báseň?",
       "options": [
-        "Próza deníku",
-        "Pásmo volného verše s refrény",
-        "Pět aktů dramatu",
-        "Sonetový věnec výhradně"
+        "T. A. Edison",
+        "Einstein",
+        "Beckett",
+        "Hugo"
       ],
-      "correct": 1,
-      "expl": "Jde o pásmo – proud obrazů a opakování."
+      "correct": 0,
+      "expl": "Vynálezce."
     },
     {
-      "prompt": "Co refrain zdůrazňuje?",
+      "prompt": "Směr?",
       "options": [
-        "Recept na jídlo",
-        "Společný úděl lidských životů a jejich vzmach",
-        "Jména trifidů",
-        "Daňové zákony"
+        "Poetismus",
+        "Realismus 19 st",
+        "Romantismus",
+        "Socialistický"
       ],
-      "correct": 1,
-      "expl": "Opakování spojuje osobní i kolektivní zkušenost."
+      "correct": 0,
+      "expl": "Devětsil."
     },
     {
-      "prompt": "Kdy Edison (pásmo) vyšel?",
+      "prompt": "Devětsil?",
       "options": [
-        "1886",
-        "1928",
-        "1952",
-        "1975"
+        "Umělecká skupina",
+        "Edison firma",
+        "Město",
+        "Postava"
       ],
-      "correct": 1,
-      "expl": "Datuje se do roku 1928, vrcholných 20. let."
+      "correct": 0,
+      "expl": "Kontext."
     },
     {
-      "prompt": "Jaké motivy se v básni mísí?",
+      "prompt": "Téma světla?",
       "options": [
-        "Jen zemědělství",
-        "Vynález, město, sen, čas, smrt, tvorba",
-        "Jen bitevní řád",
-        "Jen mor ve Florencii"
+        "Žárovka, symbol poznání",
+        "Ne",
+        "Pouze tma",
+        "Sport"
       ],
-      "correct": 1,
-      "expl": "Civilizační i existenciální motivy jdou spolu."
+      "correct": 0,
+      "expl": "Motiv."
     },
     {
-      "prompt": "Co je poetismus?",
+      "prompt": "Forma?",
       "options": [
-        "Středověký řád",
-        "Avantgardní směr oslavující obraznost a moderní život",
-        "Druh daně",
-        "Policejní metoda"
+        "Volná skladba obrazů",
+        "Sonety striktně",
+        "Prozaický román",
+        "Drama"
       ],
-      "correct": 1,
-      "expl": "Poetismus (Nezval, Teige aj.) hledal poezii v civilizaci a hravosti."
+      "correct": 0,
+      "expl": "Moderní poezie."
     },
     {
-      "prompt": "Jaký je vztah lyriického subjektu k Edisonovi?",
+      "prompt": "Edison realita?",
       "options": [
-        "Lhostejný",
-        "Obdivný; reflektuje skrze něj smysl tvorby",
-        "Čistě nepřátelský",
-        "Je to jeho syn"
+        "Historický vynálezce",
+        "Fiktivní",
+        "Nezval",
+        "Král"
       ],
-      "correct": 1,
-      "expl": "Edison je zrcadlo básníkovy meditace o díle."
+      "correct": 0,
+      "expl": "USA vynálezce."
     },
     {
-      "prompt": "Proč je báseň vhodná k maturitě z poezie 20. století?",
+      "prompt": "Proč maturitní?",
       "options": [
-        "Protože je próza",
-        "Reprezentuje českou avantgardu a pásmovou formu",
-        "Protože je anonymní",
-        "Protože je překlad Becketta"
+        "Česká avantgarda",
+        "Nejdelší",
+        "Bez stylu",
+        "Jen próza"
       ],
-      "correct": 1,
-      "expl": "Ukazuje poetismus, volný verš a civilizační lyriku."
+      "correct": 0,
+      "expl": "Nezval kanón."
     },
     {
-      "prompt": "Co „rozsvěcí“ Edison metaforicky?",
+      "prompt": "Poetismus charakter?",
       "options": [
-        "Jen svíčku v kostele",
-        "Svět vynálezem i duchovní energií tvorby",
-        "Jen cigarový ohýnek",
-        "Jen barikádu"
+        "Hra, obrazy, město",
+        "Epická vážnost",
+        "Bez obrazů",
+        "Pouze politika"
       ],
-      "correct": 1,
-      "expl": "Světlo je symbol poznání a tvořivého činu."
+      "correct": 0,
+      "expl": "Směr."
     },
     {
-      "prompt": "Jak se liší „děj“ básně od románu?",
+      "prompt": "Jazyk?",
       "options": [
-        "Má 12 kapitol detekce",
-        "Jde o kompozici motivů a gradaci obrazů, ne o epický plot",
-        "Má přesné datum bitvy jako u Huga",
-        "Je to zápis StB"
+        "Expresivní, obrazný",
+        "Archaičtina",
+        "Latina",
+        "Bez metafor"
       ],
-      "correct": 1,
-      "expl": "U poezie sledujeme řád motivů a refrénů, ne románové zápletky."
+      "correct": 0,
+      "expl": "Nezval."
+    },
+    {
+      "prompt": "Technika v básně?",
+      "options": [
+        "Obdiv a poetizace",
+        "Ne",
+        "Pouze odsouzení",
+        "Nezmíněna"
+      ],
+      "correct": 0,
+      "expl": "Téma."
+    },
+    {
+      "prompt": "Nezval jiná díla?",
+      "options": [
+        "Abeceda, Valerie, atd.",
+        "Hamlet",
+        "1984",
+        "Dekameron"
+      ],
+      "correct": 0,
+      "expl": "Bohatá tvorba."
+    },
+    {
+      "prompt": "Ich vs er?",
+      "options": [
+        "Lyrický subjekt obdivuje",
+        "Epický román",
+        "Drama",
+        "Deník"
+      ],
+      "correct": 0,
+      "expl": "Lyrika."
+    },
+    {
+      "prompt": "Groteska?",
+      "options": [
+        "Poetismus ji používá",
+        "Ne",
+        "Pouze real",
+        "Horor"
+      ],
+      "correct": 0,
+      "expl": "Styl."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Poezie",
+        "Edison téma",
+        "Nezval",
+        "Realistický venkovský román"
+      ],
+      "correct": 3,
+      "expl": "Je poema."
+    },
+    {
+      "prompt": "Motiv vynálezu?",
+      "options": [
+        "Tvůrčí síla člověka",
+        "Ne",
+        "Zlo",
+        "Nuda"
+      ],
+      "correct": 0,
+      "expl": "Obdiv."
+    },
+    {
+      "prompt": "Katalog žánr?",
+      "options": [
+        "Poezie",
+        "Próza",
+        "Drama",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Poezie."
+    },
+    {
+      "prompt": "Obrazy?",
+      "options": [
+        "Kinematografické skoky",
+        "Ne",
+        "Jen rým",
+        "Proza"
+      ],
+      "correct": 0,
+      "expl": "Poetismus."
+    },
+    {
+      "prompt": "Edison žárovka?",
+      "options": [
+        "Symbol světla",
+        "Ne",
+        "Postava",
+        "Město"
+      ],
+      "correct": 0,
+      "expl": "Známý vynález."
+    },
+    {
+      "prompt": "Meziválečí?",
+      "options": [
+        "Kontext vzniku",
+        "Středověk",
+        "Normalizace",
+        "Antika"
+      ],
+      "correct": 0,
+      "expl": "1927."
+    },
+    {
+      "prompt": "Surrealismus vliv?",
+      "options": [
+        "Jemně v poetismu",
+        "Ne",
+        "Jen realism",
+        "Zakázáno"
+      ],
+      "correct": 0,
+      "expl": "Avantgarda."
+    },
+    {
+      "prompt": "Čtení maturita?",
+      "options": [
+        "Autor, směr, téma Edison",
+        "Jen rok narození Edison",
+        "Jen anglicky",
+        "Nic"
+      ],
+      "correct": 0,
+      "expl": "Základ."
+    },
+    {
+      "prompt": "Laboratoř?",
+      "options": [
+        "Místo tvoření v obrazu",
+        "Ne",
+        "Praha",
+        "Nebe"
+      ],
+      "correct": 0,
+      "expl": "Metafora."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Modernita a tvůrčí energie",
+        "Technika zlá vždy",
+        "Bez smyslu",
+        "Antitechnika"
+      ],
+      "correct": 0,
+      "expl": "Obdiv k tvorbě."
+    },
+    {
+      "prompt": "Délka?",
+      "options": [
+        "Delší skladba",
+        "Epos 12 knih",
+        "Jedna slova",
+        "Román"
+      ],
+      "correct": 0,
+      "expl": "Poema."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Originál česky Nezval",
+        "Anglicky autor",
+        "Latina",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Česká báseň."
+    },
+    {
+      "prompt": "Seifert vs Nezval?",
+      "options": [
+        "Obě česká poezie, jiní",
+        "Totéž",
+        "Seifert Edison",
+        "Nezval Švejk"
+      ],
+      "correct": 0,
+      "expl": "Různí."
+    },
+    {
+      "prompt": "Rým?",
+      "options": [
+        "Volná skladba – rým volný",
+        "Pouze blankvers",
+        "Bez jazyka",
+        "Proza"
+      ],
+      "correct": 0,
+      "expl": "Moderní forma."
+    },
+    {
+      "prompt": "Edison firma?",
+      "options": [
+        "Může být zmíněna obrazně",
+        "Hlavní děj román",
+        "Ne",
+        "Hamlet"
+      ],
+      "correct": 0,
+      "expl": "Kontext vynálezce."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Vstup do meditace o moderním tvůrci",
-        "Obrazy Edisonovy vynalézavosti a energie",
-        "Refrain spojuje „naše životy“ s tvorbou",
-        "Vstupují úzkost, čas a smrtelnost",
-        "Gradace oslavy ducha a práce",
-        "Závěrečné vyznění apoteózy tvořivosti"
+        "Nezval představí Edisona jako mýtus vynálezce",
+        "Obrazy laboratoře a světla",
+        "Poetistické obrazy techniky",
+        "Hra jazykem a metaforami",
+        "Oslava tvůrčí energie",
+        "Finální skladba obrazů modernity"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: meditace → Edisonovy obrazy → refrain „naše životy“ → úzkost času → gradace oslavy → apoteóza tvorby."
+    "Pořadí: mýtus Edison → světlo/laboratoř → obrazy → jazyk → tvůrčí síla → celek poemy."
   ]
 }

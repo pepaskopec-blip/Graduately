@@ -4,45 +4,47 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Ota Pavel (vl. jm. Otto Popper, 1930–1973)",
-        "Žánr: povídkový soubor / autobiografická próza",
+        "Autor: Ota Pavel (1930–1973)",
+        "Žánr: autobiografické povídky / humoristická próza",
         "Poprvé vydáno: 1971",
-        "Děj: střední Čechy, řeka Berounka, dětství a válka",
-        "Vyprávění: ich-forma, lyrické a humorné vzpomínky"
+        "Děj: vzpomínky na dětství a válku (Příbramsko)",
+        "Forma: soubor povídek spojených rodinou a přírodou"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "První republika i protektorát v rodinných vzpomínkách.",
-        "Příroda, ryby a les jsou útočištěm i měřítkem krásy.",
-        "Židovský původ otce přináší za války ohrožení.",
-        "Německá okupace ničí idylu i lidské osudy.",
-        "Humor a nostalgie střídají tragiku holocaustu."
+        "Dětství v rodině holiče a rybářských vášní.",
+        "Protektorát – otec v koncentračním táboře.",
+        "Příroda, rybaření, sport jako únik i radost.",
+        "Humor i smutek v paměti na válku.",
+        "Motiv otce – silný, trpící, milovaný.",
+        "Titulní povídka o srnách a poválečném lovu."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vypravěč (Ota) – syn rodiny, svědek krásy i války.",
-        "Tatínek Leo Popper – obchodník, vášnivý rybář a snílek.",
-        "Maminka – praktická, drží rodinu pohromadě.",
-        "Bratři – součást rodinného světa u řeky.",
-        "Němečtí okupanti / úředníci – hrozba za protektorátu."
+        "Ota (vypravěč) – chlapec, pozorovatel.",
+        "Otec – holič, rybář, sportovec, v táboře.",
+        "Maminka – drží rodinu.",
+        "Bratři – Antonín, Jiří.",
+        "Srnec / zvěř – symbol krásy i ztráty.",
+        "Místní rybáři a sousedé."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Srnci / příroda – symbol krásy a ztracené idyly.",
-        "Řeka Berounka – prostor dětství a svobody.",
-        "Rybaření – tatínkova vášeň i životní filosofie.",
-        "Holocaust – stín nad židovskou větví rodiny.",
-        "Nostalgie – vzpomínka jako záchrana krásy.",
-        "Humor a tragika – typický Oty Pavla."
+        "Autobiografismus – Pavel píše z vlastní paměti.",
+        "Rybaření – metafora trpělivosti a štěstí.",
+        "Koncentrační tábor otce – stín války.",
+        "Humor dětství – nevinnost vs. realita.",
+        "Příroda – les, rybníky, srnci.",
+        "Titul – smrt krásných tvorů, poválečná doba."
       ]
     }
   ],
@@ -50,150 +52,348 @@
     {
       "prompt": "Kdo napsal Smrt krásných srnců?",
       "options": [
-        "Bohumil Hrabal",
+        "Vančura",
         "Ota Pavel",
-        "Jan Otčenášek",
-        "Ladislav Fuks"
+        "Hrabal",
+        "Němcová"
       ],
       "correct": 1,
-      "expl": "Autorem je Ota Pavel."
+      "expl": "Ota Pavel, vydání 1971."
     },
     {
-      "prompt": "Jaký je základní charakter knihy?",
+      "prompt": "Jaká forma díla?",
       "options": [
-        "Soubor vzpomínkových povídek",
-        "Veršovaná epopej",
-        "Detektivka",
-        "Antiutopie"
+        "Jedna novela",
+        "Soubor autobiografických povídek",
+        "Drama",
+        "Básnická skladba"
+      ],
+      "correct": 1,
+      "expl": "Kniha je soubor povídek."
+    },
+    {
+      "prompt": "Kde dětství probíhá?",
+      "options": [
+        "Praha centrum",
+        "Příbramsko / okolí",
+        "Siberie",
+        "Itálie"
+      ],
+      "correct": 1,
+      "expl": "Pavel vyrůstal v tomto kraji."
+    },
+    {
+      "prompt": "Čím je otec známý?",
+      "options": [
+        "Učitelem",
+        "Holičem, rybářem, sportovcem",
+        "Knězem",
+        "Politiem"
+      ],
+      "correct": 1,
+      "expl": "Otec je ústřední postava vzpomínek."
+    },
+    {
+      "prompt": "Co prožívá otec za války?",
+      "options": [
+        "Dovolenou",
+        "Koncentrační tábor",
+        "Ministerskou funkci",
+        "Emigraci"
+      ],
+      "correct": 1,
+      "expl": "Tábor je traumatická linka."
+    },
+    {
+      "prompt": "Co znamená titulní povídka?",
+      "options": [
+        "Lovecký zážitek po válce – smrt srn",
+        "Smrt ryb",
+        "Smrt ve městě",
+        "Sci-fi"
       ],
       "correct": 0,
-      "expl": "Jde o povídky z rodinných vzpomínek."
+      "expl": "Srnci symbolizují krásu zničenou."
     },
     {
-      "prompt": "Kde se mnoho příběhů odehrává?",
+      "prompt": "Jaký tón převažuje?",
       "options": [
-        "U řeky Berounky a v okolní přírodě",
-        "V New Yorku",
-        "Na Měsíci",
-        "V Benátkách"
+        "Humor i dojetí",
+        "Pouze horor",
+        "Bez emocí",
+        "Politický manifest"
       ],
       "correct": 0,
-      "expl": "Ústředním prostorem je Berounka a středočeská příroda."
+      "expl": "Pavel mísí vtip a smutek."
     },
     {
-      "prompt": "Kdo je tatínek Leo Popper?",
+      "prompt": "Rybaření v knize?",
       "options": [
-        "Generál",
-        "Obchodník a vášnivý rybář",
-        "Kněz",
-        "Pilot"
+        "Chybí",
+        "Důležitý motiv radosti a vztahu s otcem",
+        "Jen sport pro armádu",
+        "Zakázané"
       ],
       "correct": 1,
-      "expl": "Tatínek je legendární postava – snílek, obchodník a rybář."
+      "expl": "Ryby a voda jsou obrazem svobody."
     },
     {
-      "prompt": "Proč je rodina za války ohrožena?",
+      "prompt": "Kdo vypráví?",
       "options": [
-        "Kvůli dluhům za loď",
-        "Kvůli židovskému původu otce",
-        "Kvůli cirkusu",
-        "Kvůli mlokům"
+        "Otec",
+        "Ota Pavel jako vzpomínající",
+        "Němec",
+        "Učitel"
       ],
       "correct": 1,
-      "expl": "Židovský původ přináší perzekuci za protektorátu."
+      "expl": "Autobiografický vypravěč."
     },
     {
-      "prompt": "Co symbolizují „krásní srnci“?",
+      "prompt": "Proč je dílo v maturitě?",
       "options": [
-        "Průmysl",
-        "Krásu přírody a ztracený svět dětství",
-        "Bankovní účet",
-        "Vojenský řád"
+        "Česká próza 20. st., paměť války",
+        "Bez témat",
+        "Jen humor bez hloubky",
+        "Cizí jazyk"
+      ],
+      "correct": 0,
+      "expl": "Spojuje válku, rodinu, přírodu."
+    },
+    {
+      "prompt": "Jak matka funguje?",
+      "options": [
+        "Bez role",
+        "Drží rodinu při otci v táboře",
+        "Je Němka",
+        "Je lovec"
       ],
       "correct": 1,
-      "expl": "Srnci jsou obrazem krásy, kterou válka ničí."
+      "expl": "Matka je opora domácnosti."
     },
     {
-      "prompt": "Jaký tón mají Pavlova vyprávění?",
+      "prompt": "Bratři v knize?",
       "options": [
-        "Jen suchý report",
-        "Směs humoru, nostalgie a tragiky",
-        "Jen horor",
-        "Jen satira na školu"
+        "Neexistují",
+        "Antonín, Jiří – součást rodiny",
+        "Jen cizinci",
+        "Vědci"
       ],
       "correct": 1,
-      "expl": "Humor a lyrická vzpomínka střídají válečnou bolest."
+      "expl": "Rodinné vztahy jsou důležité."
     },
     {
-      "prompt": "Ve kterém roce kniha vyšla?",
+      "prompt": "Příroda je?",
       "options": [
-        "1942",
-        "1958",
-        "1971",
-        "1989"
+        "Nepřítel",
+        "Útočiště a radost dětství",
+        "Jen kulisa",
+        "Město"
       ],
-      "correct": 2,
-      "expl": "Smrt krásných srnců vyšla roku 1971."
+      "correct": 1,
+      "expl": "Les a voda kontrastují s válkou."
     },
     {
-      "prompt": "Jaká činnost je pro tatínka typická?",
+      "prompt": "Humor Pavla?",
       "options": [
+        "Chybí",
+        "Dětský pohled, groteskní detaily",
+        "Pouze slovní hříčka",
+        "Nadávky"
+      ],
+      "correct": 1,
+      "expl": "Humor je laskavý i hořký."
+    },
+    {
+      "prompt": "Kdy Pavel zemřel?",
+      "options": [
+        "1973",
+        "1990",
+        "1950",
+        "2000"
+      ],
+      "correct": 0,
+      "expl": "Spisovatel zemřel relativně mladý."
+    },
+    {
+      "prompt": "Co NENÍ téma?",
+      "options": [
+        "Válka a tábor",
+        "Rodina",
         "Rybaření",
-        "Šachy na ministerstvu",
-        "Létání Spitfirem",
-        "Psaní elegií"
+        "Kosmické kolonie"
+      ],
+      "correct": 3,
+      "expl": "Dílo je zakořeněné v českém venkově."
+    },
+    {
+      "prompt": "Otec se vrací z tábora?",
+      "options": [
+        "Ano, rodina to prožívá",
+        "Ne, nikdy",
+        "Je to fikce bez války",
+        "Emigruje"
       ],
       "correct": 0,
-      "expl": "Rybaření je tatínkova vášeň a životní styl."
+      "expl": "Návrat otce je silný moment."
     },
     {
-      "prompt": "Jakou roli hraje příroda v knize?",
+      "prompt": "Jazyk Pavla?",
       "options": [
-        "Vedlejší kulisu",
-        "Útočiště, krásu i měřítko lidskosti",
-        "Jen statistiku úrody",
-        "Nepřátelský vesmír"
+        "Úřednický",
+        "Hovorový, živý, obrazný",
+        "Archaičtina",
+        "Angličtina"
       ],
       "correct": 1,
-      "expl": "Příroda je hodnotou, kterou válka a násilí ničí."
+      "expl": "Pavel píše s nadhledem."
     },
     {
-      "prompt": "Jak kniha zachycuje protektorát?",
+      "prompt": "Další kniha Pavla?",
       "options": [
-        "Jako veselý karneval",
-        "Jako ničení rodinné idyly a lidských životů",
-        "Vůbec ne",
-        "Jen jako sportovní sezónu"
+        "Zlatí úhoři",
+        "1984",
+        "Babička",
+        "Kytice"
       ],
-      "correct": 1,
-      "expl": "Okupace vstupuje do rodinných příběhů tragicky."
+      "correct": 0,
+      "expl": "Zlatí úhoři navazují na rybářské motivy."
     },
     {
-      "prompt": "Proč je Ota Pavel na maturitě oblíbený?",
+      "prompt": "Proč „krásní“ srnci?",
       "options": [
-        "Pro složité filozofické traktáty",
-        "Pro srozumitelný jazyk, emoci a silné motivy války i přírody",
-        "Pro matematiku",
-        "Pro anglický originál bez překladu"
+        "Oškliví",
+        "Krása zvěře kontrastuje s její smrtí",
+        "Ironie bez smyslu",
+        "Reklama"
       ],
       "correct": 1,
-      "expl": "Povídky jsou čtivé, lidské a tematicky silné."
+      "expl": "Titul zdůrazňuje ztrátu krásy."
+    },
+    {
+      "prompt": "Dětský vypravěč?",
+      "options": [
+        "Vidí svět nevině i s bolestí",
+        "Je dospělý generál",
+        "Je Němec",
+        "Nevidí válku"
+      ],
+      "correct": 0,
+      "expl": "Dětská perspektiva je typická."
+    },
+    {
+      "prompt": "Sport u Pavla?",
+      "options": [
+        "Hokej, fotbal vzpomínky",
+        "Jen šachy",
+        "Nic",
+        "Pouze box"
+      ],
+      "correct": 0,
+      "expl": "Otec sportuje, syn obdivuje."
+    },
+    {
+      "prompt": "Kniha vyšla za?",
+      "options": [
+        "Normalizace 1971",
+        "1890",
+        "2010",
+        "1940"
+      ],
+      "correct": 0,
+      "expl": "Vydání v 70. letech."
+    },
+    {
+      "prompt": "Emoce čtenáře?",
+      "options": [
+        "Smích i dojetí",
+        "Pouze nuda",
+        "Strach horor",
+        "Bez reakce"
+      ],
+      "correct": 0,
+      "expl": "Pavel je mistr nálady."
+    },
+    {
+      "prompt": "Vztah k Hrabalovi?",
+      "options": [
+        "Oba humor + všednost",
+        "Identičtí",
+        "Bez paralely",
+        "Hrabal napsal srnce"
+      ],
+      "correct": 0,
+      "expl": "Generačně blízcí, různý styl."
+    },
+    {
+      "prompt": "Lovecký motiv?",
+      "options": [
+        "Etika lovu po válce",
+        "Vesmír",
+        "Politika strany",
+        "Škola"
+      ],
+      "correct": 0,
+      "expl": "Titulní povídka reflektuje poválečný lov."
+    },
+    {
+      "prompt": "Co si pamatovat o otci?",
+      "options": [
+        "Slaboch",
+        "Silná, tragická, obdivuhodná postava",
+        "Villain",
+        "Cizinec"
+      ],
+      "correct": 1,
+      "expl": "Otec je hrdina vzpomínek."
+    },
+    {
+      "prompt": "Proč autobiografie?",
+      "options": [
+        "Autenticita paměti",
+        "Fikce bez základu",
+        "Překlad",
+        "Sborová poezie"
+      ],
+      "correct": 0,
+      "expl": "Vychází z Pavlova života."
+    },
+    {
+      "prompt": "Krátce: jádro knihy?",
+      "options": [
+        "Rodina, válka, příroda, humor",
+        "Detektivka",
+        "Sci-fi",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "To jsou hlavní osy."
+    },
+    {
+      "prompt": "Pavel byl také?",
+      "options": [
+        "Fotbalový komentátor / novinář",
+        "Král",
+        "Německý spisovatel",
+        "Malíř"
+      ],
+      "correct": 0,
+      "expl": "Pavel pracoval v médiích."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Rodina žije u řeky; tatínek miluje ryby a přírodu",
-        "Dětství plné příhod, humoru a rybářských vášní",
-        "Přichází okupace a ohrožení židovské větve rodiny",
-        "Idyla u Berounky se láme pod tlakem války",
-        "Tragické ztráty a ponížení zasáhnou blízké",
-        "Vzpomínka zachovává krásu srnců i bolest doby"
+        "Dětství Oty a rodina holiče",
+        "Rybaření, sport, radosti",
+        "Otec odveden do tábora",
+        "Matka drží domácnost",
+        "Otec se vrací, válka končí",
+        "Titulní lov – smrt krásných srnců"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: rodinná idyla → dětství u řeky → okupace → rozbití idyly → tragika → vzpomínka na krásu i bolest."
+    "Správné pořadí: dětství → radosti → tábor → doma bez otce → návrat → povídka o srncích."
   ]
 }

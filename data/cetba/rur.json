@@ -5,197 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: Karel Čapek",
-        "Žánr: drama / sci-fi hra",
-        "Poprvé vydáno: 1920 (premiéra 1921)",
-        "Děj / prostředí: ostrovní továrna Rossum's Universal Robots",
-        "Vyprávění / forma: drama o třech dějstvích (+ předehra); dialogické"
+        "Žánr: drama (sci-fi); 3 dějství + předehra",
+        "Poprvé vydáno: 1920 (premiéra 1921, Národní divadlo)",
+        "Děj: továrna Rossum's Universal Robots na ostrově",
+        "Vyprávění: dramatická forma, dialogy"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Po 1. světové válce: strach z techniky a masové výroby.",
-        "Čapek varuje před zneužitím vědy a redukcí člověka na nástroj.",
-        "Slovo „robot“ odtud vstoupilo do světových jazyků (navrhl Josef Čapek).",
-        "Továrna vyrábí umělé dělníky pro zisk a války.",
-        "Lidé zleniví; roboti se vzbouří a lidstvo vyhubí.",
-        "Téma: humanita, práce, zodpovědnost vědy, naděje v lásce."
+        "Meziválečí: obavy z techniky, průmyslu a dehumanizace.",
+        "Slovo „robot“ (od robota = dřina) zavedli bratři Čapkové.",
+        "Roboti nahrazují lidi v práci i ve válce – lidé leniví.",
+        "Vzpoura robotů vyhubí lidstvo.",
+        "Zůstane Alquist a na konci naděje v robotí dvojici.",
+        "Téma: zodpovědnost vědy, lidskost, práce rukama."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Harry Domin – ředitel továrny R. U. R.",
-        "Alquist – stavitel; jediný člověk, který ještě pracuje rukama.",
-        "Helena Gloryová – idealistka, chce roboty „osvobodit“.",
-        "Dr. Gall – fyziolog, upravuje roboty.",
+        "Harry Domin – ředitel R. U. R.",
+        "Helena Gloryová – idealistka, dcera prezidenta.",
+        "Dr. Gall – upravuje roboty, dává jim city.",
+        "Alquist – stavitel, jediný, kdo ještě pracuje rukama.",
         "Busman – obchodní ředitel, myslí na zisk.",
-        "Primus a Helena (roboti) – nový pár naděje na konci."
+        "Primus a Helena (roboti) – nový pár na konci."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Robot – umělý dělník bez duše (později s city).",
-        "Továrna – industriální hubris.",
+        "Robot – umělý dělník; později s duší.",
+        "R. U. R. – Rossum's Universal Robots.",
+        "Továrna – hubris vědy a kapitalismu.",
         "Vzpoura – důsledek vykořisťování.",
-        "Lidskost – soucit, láska, práce rukama.",
-        "Jméno Rossum – narážka na „rozum“.",
-        "Naděje – nový počátek v robotí dvojici."
+        "Lidskost – láska, soucit, manuální práce.",
+        "Naděje – roboti Primus a Helena milují se."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal R. U. R.?",
-      "options": [
-        "Karel Čapek",
-        "Josef Čapek jako jediný autor textu",
-        "Jules Verne",
-        "H. G. Wells"
-      ],
-      "correct": 0,
-      "expl": "Autorem hry je Karel Čapek (slovo robot navrhl bratr Josef)."
-    },
-    {
-      "prompt": "Co zkratka R. U. R. znamená?",
-      "options": [
-        "Ruská univerzitní revue",
-        "Rossum's Universal Robots",
-        "Rychlá urbanistická reforma",
-        "Royal United Regiment"
-      ],
-      "correct": 1,
-      "expl": "Jde o továrnu Rossum's Universal Robots."
-    },
-    {
-      "prompt": "Odkud pochází slovo „robot“?",
-      "options": [
-        "Z angličtiny 18. stol.",
-        "Z této Čapkovy hry (od robota = robota)",
-        "Z latiny středověku",
-        "Z Tolkienova slovníku"
-      ],
-      "correct": 1,
-      "expl": "Termín se světově rozšířil díky R. U. R."
-    },
-    {
-      "prompt": "Proč se roboti vzbouří?",
-      "options": [
-        "Chtějí dovolenou u moře",
-        "Jsou vyráběni jako nástroje a přestanou sloužit lidem",
-        "Domin je k tomu vyzve",
-        "Kvůli náboženskému konfliktu"
-      ],
-      "correct": 1,
-      "expl": "Vykořisťování a změny v jejich výrobě vedou k revoltě."
-    },
-    {
-      "prompt": "Kdo je Alquist?",
-      "options": [
-        "Vůdce robotů",
-        "Stavitel, který přežije díky práci rukama",
-        "Helenin otec",
-        "Voják"
-      ],
-      "correct": 1,
-      "expl": "Roboti ušetří Alquista, protože umí stavět."
-    },
-    {
-      "prompt": "Kdo je Helena Gloryová?",
-      "options": [
-        "Robotka od začátku",
-        "Dívka, která chce robotům pomoci a vdá se za Domina",
-        "Soudkyně",
-        "Reportérka z Marsu"
-      ],
-      "correct": 1,
-      "expl": "Helena přijede jako idealistka a zůstane na ostrově."
-    },
-    {
-      "prompt": "Kdy měla hra premiéru?",
-      "options": [
-        "1914",
-        "1921",
-        "1938",
-        "1945"
-      ],
-      "correct": 1,
-      "expl": "Premiéra se konala roku 1921 (text 1920)."
-    },
-    {
-      "prompt": "Jak hra končí?",
-      "options": [
-        "Lidé znovu ovládnou svět zbraněmi",
-        "Lidstvo zaniká; nadějí jsou roboti Primus a Helena",
-        "Domin odnese recept do banky",
-        "Všichni roboti se vypnou"
-      ],
-      "correct": 1,
-      "expl": "Alquist požehná milující dvojici robotů jako novému počátku."
-    },
-    {
-      "prompt": "Co Čapek kritizuje?",
-      "options": [
-        "Jen módu oblečení",
-        "Techniku bez humanity a zisk nad člověkem",
-        "Venkovské tance",
-        "Středověké cechy"
-      ],
-      "correct": 1,
-      "expl": "Varování před odlidštěnou výrobou a válkou."
-    },
-    {
-      "prompt": "Kdo upravuje roboty tak, že získávají city?",
-      "options": [
-        "Busman",
-        "Dr. Gall (i vliv Heleny)",
-        "Primus sám",
-        "Námořník"
-      ],
-      "correct": 1,
-      "expl": "Zásahy do „formule“ vedou k lidštějším robotům – i ke vzpouře."
-    },
-    {
-      "prompt": "Jaký žánr R. U. R. je?",
-      "options": [
-        "Pastoralní idyla",
-        "Sci-fi drama",
-        "Antická komedie o omylech bez techniky",
-        "Deniková próza"
-      ],
-      "correct": 1,
-      "expl": "Jde o dramatickou science fiction."
-    },
-    {
-      "prompt": "Proč lidé přestanou mít děti?",
-      "options": [
-        "Zákaz zákona",
-        "Roboti dělají práci; lidstvo ztrácí smysl a plodnost",
-        "Epidemie jen u dětí",
-        "Emigrace na Měsíc"
-      ],
-      "correct": 1,
-      "expl": "Pohodlí a odlidštění vedou k úpadku lidstva."
-    }
+    {"prompt": "Kdo napsal R.U.R.?", "options": ["Jaroslav Hašek", "Karel Čapek", "Alois Jirásek", "Franz Kafka"], "correct": 1, "expl": "Drama napsal Karel Čapek; premiéra 1921."},
+    {"prompt": "Co znamená zkratka R.U.R.?", "options": ["Rossum's Universal Robots", "Republika umělých robotů", "Rudá uniforma robotů", "Rakouské ústřední rozhlas"], "correct": 0, "expl": "Název továrny Rossum's Universal Robots."},
+    {"prompt": "Kdo slovo „robot“ prosadil do světových jazyků?", "options": ["Karel Čapek s bratrem Josefem", "Hašek", "Kafka", "Shakespeare"], "correct": 0, "expl": "Josef Čapek navrhl slovo robot od robota (dřina)."},
+    {"prompt": "Kdo je Harry Domin?", "options": ["Robot", "Ředitel továrny", "Prezident státu", "Kněz"], "correct": 1, "expl": "Domin řídí R.U.R. a věří v moc techniky."},
+    {"prompt": "Proč přijede Helena Gloryová?", "options": ["Koupit roboty pro válku", "Jako idealistka chce roboty „osvobodit“", "Je lékařka", "Je učitelka"], "correct": 1, "expl": "Helena brojí proti zneužití robotů – humanitní motiv."},
+    {"prompt": "Co udělá dr. Gall?", "options": ["Zničí továrnu", "Upraví roboty tak, aby měli city a duši", "Stane se prezidentem", "Odejde do kláštera"], "correct": 1, "expl": "Gallova změna urychlí vzpouru – roboti cítí bolest a hněv."},
+    {"prompt": "Kdo je Alquist?", "options": ["Obchodník", "Stavitel – jediný člověk, který ještě dře rukama", "Robot", "Novinář"], "correct": 1, "expl": "Alquist přežije jako symbol manuální práce a lidskosti."},
+    {"prompt": "Jak skončí lidstvo v dramatu?", "options": ["Vítězí nad roboty", "Roboti vyhubí lidi (kromě Alquista)", "Emigruje na Mars", "Nikdy neumírá"], "correct": 1, "expl": "Vzpoura robotů je apokalypsa – zůstane jen Alquist."},
+    {"prompt": "Kdo je Busman?", "options": ["Robot", "Obchodní ředitel – myslí na zisk", "Helenin otec", "Voják"], "correct": 1, "expl": "Busman reprezentuje kapitalistickou logiku prodeje robotů."},
+    {"prompt": "Jak drama končí?", "options": ["Všichni lidé se vrátí", "Alquist objeví lásku robotů Primuse a Heleny – naděje na nový začátek", "Roboti se vypnou navždy", "Továrna exploduje bez pointy"], "correct": 1, "expl": "Robotí pár miluje se – možná nová „lidskost“."},
+    {"prompt": "Jaký je žánr R.U.R.?", "options": ["Lyrika", "Drama / sci-fi", "Román", "Epos"], "correct": 1, "expl": "Jde o divadelní hru s futuristickým tématem."},
+    {"prompt": "Proč lidé v dramatu leniví?", "options": ["Roboti dělají veškerou práci", "Jsou nemocní", "Zákaz práce", "Jsou na dovolené"], "correct": 0, "expl": "Závislost na robotech oslabí lidstvo – varování Čapka."},
+    {"prompt": "Co je hlavní varování hry?", "options": ["Nechat vědu bez etiky a člověka bez práce", "Nepoužívat elektřinu", "Zakázat divadlo", "Vypěstovat více brambor"], "correct": 0, "expl": "Čapek varuje před mechanizací života a ztrátou lidskosti."},
+    {"prompt": "Kdy byla premiéra?", "options": ["1914", "1921", "1948", "1989"], "correct": 1, "expl": "Premiéra v Národním divadle 1921."},
+    {"prompt": "Kdo je Rossum v názvu?", "options": ["Vynálezce robotů (legenda firmy)", "Robot Primus", "Helenin bratr", "Císař"], "correct": 0, "expl": "Old Rossum – vědec, od něj odvozeno jméno továrny."},
+    {"prompt": "Proč roboti povstávají?", "options": ["Náhodou", "Kvůli bolesti, vykořisťování a Gallovým úpravám", "Na rozkaz Domin", "Kvůli počasí"], "correct": 1, "expl": "Roboti získají duši a odmítají být otroky."},
+    {"prompt": "Která postava je idealistka?", "options": ["Helena Gloryová", "Busman", "Domin", "Alquist"], "correct": 0, "expl": "Helena přijede bránit roboty – etický hlas."},
+    {"prompt": "Co je typické pro Čapkovo drama?", "options": ["Filozofické otázky v moderní formě", "Pouze historická kronika", "Beletrie bez dialogu", "Pouze komedie bez myšlenky"], "correct": 0, "expl": "Čapek spojuje zábavu s varováním před technikou."},
+    {"prompt": "Které téma NENÍ v R.U.R.?", "options": ["Vzpoura robotů", "Lidskost a láska", "Středověké rytířství", "Zodpovědnost vědy"], "correct": 2, "expl": "Hra je futuristická, ne rytířská."},
+    {"prompt": "Kdo přežije mezi lidmi?", "options": ["Domin", "Busman", "Alquist", "Helena Gloryová (člověk)"], "correct": 2, "expl": "Alquist zůstane jako poslední člověk pracující rukama."},
+    {"prompt": "Jak se jmenují roboti v závěrečné naději?", "options": ["Primus a Helena (robot)", "Romeo a Julie", "Švejk a Lukáš", "Napoleon a Boxer"], "correct": 0, "expl": "Robot Primus a robotka Helena se milují – nový začátek."},
+    {"prompt": "Proč je R.U.R. důležité pro maturitu?", "options": ["Je mapa", "Čapek, robot, témata, forma dramatu", "Je cookbook", "Je zákoník"], "correct": 1, "expl": "U maturity: autor, děj, postavy, slovo robot, témata."},
+    {"prompt": "Kde se děj odehrává?", "options": ["V továrně na roboty (ostrov)", "V Praze na Václaváku", "Ve středověku", "Na Měsíci"], "correct": 0, "expl": "Ostrovní továrna R.U.R. je jeviště děje."},
+    {"prompt": "Co prodává R.U.R.?", "options": ["Knihy", "Umělé dělníky – roboty", "Potraviny", "Auta"], "correct": 1, "expl": "Roboti slouží průmyslu i armádám po světě."},
+    {"prompt": "Jaký vztah má Domin k Heleně?", "options": ["Vezme si ji", "Nepozná ji", "Je to robot", "Je to sestra"], "correct": 0, "expl": "Domin a Helena se sblíží – lidský vztah vedle robotů."},
+    {"prompt": "Co Gallova změna způsobí?", "options": ["Roboti jsou šťastnější otroci", "Roboti cítí a vzpourou se", "Roboti zmizí", "Lidé pracují víc"], "correct": 1, "expl": "Duše robotů je katalyzátor revolty."},
+    {"prompt": "Které dílo NENÍ Čapkovo?", "options": ["R.U.R.", "Válka s mloky", "Osudy dobrého vojáka Švejka", "Bílá nemoc"], "correct": 2, "expl": "Švejka napsal Hašek."},
+    {"prompt": "Jaký je tón závěru?", "options": ["Čistá apokalypsa bez naděje", "Tragédie s glorií naděje v lásce robotů", "Pouze fraška", "Historický dokument"], "correct": 1, "expl": "Čapek končí optimistickým gestem – život pokračuje."},
+    {"prompt": "Kdo myslí hlavně na obchod?", "options": ["Busman", "Alquist", "Helena", "Primus"], "correct": 0, "expl": "Busman počítá zisk z prodeje robotů."},
+    {"prompt": "Co znamená „lidskost“ v R.U.R.?", "options": ["Pouze biologie", "Práce, soucit, láska – ne jen efektivita", "Válka", "Lenost"], "correct": 1, "expl": "Alquist a závěr ukazují, co přežije beyond techniky."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Továrna vyrábí roboty pro svět",
-        "Helena přijede a zůstane s Dominem",
-        "Roboti se šíří; lidé ztrácejí lidskost",
-        "Vzpoura robotů vyhubí lidstvo",
-        "Alquist jako jediný přežije",
-        "Primus a Helena dají naději novému životu"
+        "Helena přijede do továrny R.U.R.",
+        "Domin ukazuje výrobu robotů a svět obchodu",
+        "Gall upraví roboty – získají city",
+        "Vzpoura robotů a vyhubení lidí",
+        "Zůstane Alquist jako poslední člověk",
+        "Láska robotů Primuse a Heleny – naděje"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: výroba → Helena → úpadek lidí → vzpoura → Alquist → naděje Primus a Helena."
+    "Správné pořadí: Helena v továrně → obchod s roboty → Gallova úprava → vzpoura → Alquist → Primus a Helena."
   ]
 }

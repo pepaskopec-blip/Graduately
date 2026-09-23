@@ -4,198 +4,407 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Giovanni Boccaccio; překlad: Krátký",
-        "Žánr: rámcová novela / sbírka novel",
-        "Poprvé vydáno: kolem 1353",
-        "Děj/prostředí: Florencie doby moru; zahrada mimo město",
-        "Vyprávění/forma: 100 novel v 10 dnech; překlad Krátký"
+        "Autor: Giovanni Boccaccio",
+        "Žánr: próza – sbírka novel (100 příběhů)",
+        "Poprvé vydáno: kolem 1350",
+        "Děj/prostředí: Florencie, morová rána, venkovský únik",
+        "Vyprávění/forma: rámcový příběh + jednotlivé novely, překlad Krátký"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Itálie 14. století, morová rána ve Florencii.",
-        "Sedm žen a tři muži utíkají z města a vyprávějí příběhy.",
-        "Novely o lásce, důvtipu, kněžích, kupcích a osudu.",
-        "Renesanční důraz na pozemský život a bystrost.",
-        "Kritika pokrytectví, zvláště církevního.",
-        "Téma: láska, důvtip, štěstěna, vyprávění jako lék."
+        "Itálie 14. století, mor, společenská krize",
+        "Deset mládenců a mladenek odchází na venkov",
+        "Deset dní – každý den deset novel (100)",
+        "Světskost, humor, láska, lstivost",
+        "Kritika církve a měšťanů",
+        "Humanismus rané renesance"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Pampinea – jedna z vypravěček, často iniciativní.",
-        "Filomena, Fiammetta aj. – členky společnosti vypravěčů.",
-        "Dioneo – vypravěč s nejvolnějšími, často erotickými tématy.",
-        "Postavy novel – milenci, mniši, kupci, šibalové.",
-        "Florentská společnost – rámec úniku před morem.",
-        "Boccaccio jako autor – renesanční vypravěč světskosti."
+        "Pampinea, Fiammetta, Filostrato aj. – vypravěči",
+        "Deset postav v rámcovém příběhu",
+        "Hrdinové jednotlivých novel – měšťané, kněží, milenci",
+        "Často chytré ženy a podvodníci",
+        "Rámcový narrátor kolektiv",
+        "Typy středověké společnosti"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Rámcový příběh – obal kolem 100 novel.",
-        "Novela – krátký příběh s pointou.",
-        "Mor – historický i symbolický rámec.",
-        "Fortuna – štěstěna řídící lidské osudy.",
-        "Důvtip (ingegno) – cnosti hrdinů novel.",
-        "Renesance – obrat k pozemskému člověku."
+        "Rámec – únik před morem",
+        "100 novel – rozmanitost života",
+        "Láska a erotika (místy provokativní)",
+        "Rozum a lest – přechytračení",
+        "Fortuna – štěstí/neštěstí",
+        "Renesanční světskost"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Dekameron?",
+      "prompt": "Autor Dekameronu?",
       "options": [
-        "Dante Alighieri",
-        "Giovanni Boccaccio",
+        "Dante",
+        "Boccaccio",
         "Petrarca",
-        "Machiavelli"
+        "Shakespeare"
       ],
       "correct": 1,
-      "expl": "Boccaccio je autor stovky novel v renesančním duchu."
+      "expl": "Giovanni Boccaccio."
     },
     {
-      "prompt": "Kolik novel Dekameron obsahuje?",
+      "prompt": "Kdy vznik?",
+      "options": [
+        "1350 kolem",
+        "1800",
+        "1900",
+        "500 př. n. l."
+      ],
+      "correct": 0,
+      "expl": "Středověká renesance."
+    },
+    {
+      "prompt": "Kolik novel?",
       "options": [
         "10",
-        "50",
         "100",
-        "1000"
+        "1000",
+        "1"
+      ],
+      "correct": 1,
+      "expl": "Deset dní po deseti."
+    },
+    {
+      "prompt": "Rámec?",
+      "options": [
+        "Bitva",
+        "Únik Florencie před morem na venkov",
+        "Luna",
+        "Praha"
+      ],
+      "correct": 1,
+      "expl": "Mor jako rámec."
+    },
+    {
+      "prompt": "Kolik vypravěčů v rámu?",
+      "options": [
+        "Deset mladých",
+        "Jeden král",
+        "Sto",
+        "Nikdo"
+      ],
+      "correct": 0,
+      "expl": "5 mužů, 5 žen typicky."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Epos",
+        "Sbírka novel s rámcem",
+        "Drama",
+        "Poezie"
+      ],
+      "correct": 1,
+      "expl": "Novelistický cyklus."
+    },
+    {
+      "prompt": "Jazyk originálu?",
+      "options": [
+        "Latina",
+        "Italština (vernacular)",
+        "Řečtina",
+        "Francouzština"
+      ],
+      "correct": 1,
+      "expl": "Vernakulární italština."
+    },
+    {
+      "prompt": "Téma novel?",
+      "options": [
+        "Pouze válka",
+        "Láska, lest, humor, společnost",
+        "Pouze náboženství",
+        "Pouze sci-fi"
+      ],
+      "correct": 1,
+      "expl": "Rozmanitost."
+    },
+    {
+      "prompt": "Překlad maturita?",
+      "options": [
+        "Krátký",
+        "Nezval",
+        "Nevrla",
+        "Skoumal"
+      ],
+      "correct": 0,
+      "expl": "V katalogu Krátký."
+    },
+    {
+      "prompt": "Florencie?",
+      "options": [
+        "Místo moru a odchodu",
+        "Nezmíněna",
+        "Pouze vesnice",
+        "Amerika"
+      ],
+      "correct": 0,
+      "expl": "Historická Florencie."
+    },
+    {
+      "prompt": "Humanismus?",
+      "options": [
+        "Světský zájem o člověka",
+        "Ne",
+        "Pouze teologie",
+        "Stoicismus"
+      ],
+      "correct": 0,
+      "expl": "Renesanční přístup."
+    },
+    {
+      "prompt": "Satira?",
+      "options": [
+        "Na kněze, měšťany, lidské slabosti",
+        "Ne",
+        "Pouze na krále",
+        "Zakázaná"
+      ],
+      "correct": 0,
+      "expl": "Často kritické."
+    },
+    {
+      "prompt": "Fortuna?",
+      "options": [
+        "Motiv štěstí/osudu v příbězích",
+        "Postava Godota",
+        "Ne",
+        "Jen město"
+      ],
+      "correct": 0,
+      "expl": "Středověký motiv."
+    },
+    {
+      "prompt": "Erotika?",
+      "options": [
+        "Součást některých novel",
+        "Neexistuje",
+        "Celá kniha bez lásky",
+        "Zakázáno"
+      ],
+      "correct": 0,
+      "expl": "Provokativní pro dobu."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Klasika světové prózy",
+        "Nejkratší",
+        "Bez rámce",
+        "Jen české"
+      ],
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Dante vs Boccaccio?",
+      "options": [
+        "Obě italské, různá díla",
+        "Totéž",
+        "Boccaccio Božská komedie",
+        "Dante Dekameron"
+      ],
+      "correct": 0,
+      "expl": "Trecento literatura."
+    },
+    {
+      "prompt": "Struktura dne?",
+      "options": [
+        "10 novel denně",
+        "1 ročně",
+        "100 denně",
+        "0"
+      ],
+      "correct": 0,
+      "expl": "Deset dní."
+    },
+    {
+      "prompt": "Pampinea?",
+      "options": [
+        "Jedna z vypravěček v rámu",
+        "Mor",
+        "Město",
+        "Pes"
+      ],
+      "correct": 0,
+      "expl": "Jméno v rámu."
+    },
+    {
+      "prompt": "Venkovské sídlo?",
+      "options": [
+        "Útočiště před morem",
+        "Vězení",
+        "Boj",
+        "Nebe"
+      ],
+      "correct": 0,
+      "expl": "Kontext rámce."
+    },
+    {
+      "prompt": "Novela vs román?",
+      "options": [
+        "Kratší příběh v souboru",
+        "Totéž",
+        "Pouze báseň",
+        "Epos"
+      ],
+      "correct": 0,
+      "expl": "Forma."
+    },
+    {
+      "prompt": "Kritika církve?",
+      "options": [
+        "Ano v některých příbězích",
+        "Ne",
+        "Pouze chvála",
+        "Zakázáno"
+      ],
+      "correct": 0,
+      "expl": "Světský pohled."
+    },
+    {
+      "prompt": "Renesance?",
+      "options": [
+        "Raná renesance Itálie",
+        "Baroko",
+        "Romantismus",
+        "Existencialismus"
+      ],
+      "correct": 0,
+      "expl": "Období."
+    },
+    {
+      "prompt": "Vyprávění v rámu?",
+      "options": [
+        "Střídání vypravěčů po dnech",
+        "Jeden monolog",
+        "Bez slov",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Organizace."
+    },
+    {
+      "prompt": "Co NENÍ Dekameron?",
+      "options": [
+        "100 novel",
+        "Rámec s morem",
+        "Shakespearova tragédie",
+        "Italská próza"
       ],
       "correct": 2,
-      "expl": "10 dnů × 10 novel = 100 příběhů."
+      "expl": "Shakespeare jinak."
     },
     {
-      "prompt": "Proč společnost opouští Florencii?",
+      "prompt": "Laskavý humor?",
       "options": [
-        "Kvůli svatbě",
-        "Kvůli moru",
-        "Kvůli válce s Francií",
-        "Kvůli olympiádě"
+        "Často",
+        "Nikdy",
+        "Pouze horor",
+        "Pouze epos"
       ],
-      "correct": 1,
-      "expl": "Utíkají před epidemií a v bezpeččí vyprávějí."
+      "correct": 0,
+      "expl": "Lehkost i drsnost."
     },
     {
-      "prompt": "Kolik vypravěčů tvoří rámec?",
+      "prompt": "Petrarca?",
       "options": [
-        "Dva",
-        "Deset (7 žen a 3 muži)",
-        "Sto",
-        "Jeden mnich"
+        "Současník, jiná díla",
+        "Autor Dekameronu",
+        "Čech",
+        "Beckett"
       ],
-      "correct": 1,
-      "expl": "Sedm dam a tři mládenci střídají vyprávění."
+      "correct": 0,
+      "expl": "Kontext trecenta."
     },
     {
-      "prompt": "Jaká témata novely často mají?",
+      "prompt": "Poselství?",
       "options": [
-        "Jen matematiku",
-        "Lásku, důvtip, kritiku pokrytectví",
-        "Jen bitvy kosmické",
-        "Jen zákony Říma"
+        "Život je rozmanitý – příběhy mapují společnost",
+        "Jen mor",
+        "Jen válka",
+        "Bez smyslu"
       ],
-      "correct": 1,
-      "expl": "Světské příběhy o lásce, šibalství a lidských slabostech."
+      "correct": 0,
+      "expl": "Encyklopedie příběhů."
     },
     {
-      "prompt": "Co je rámcový příběh?",
+      "prompt": "Krátký překlad?",
       "options": [
-        "Poslední novela",
-        "Příběh vypravěčů, do nějž jsou novely vloženy",
-        "Titulní báseň",
-        "Rejstřík jmen"
+        "Český překlad v maturitě",
+        "Anglický autor",
+        "Neexistuje",
+        "Latina"
       ],
-      "correct": 1,
-      "expl": "Rámec drží sbírku pohromadě a dává jí smysl."
+      "correct": 0,
+      "expl": "Katalog."
     },
     {
-      "prompt": "Který vypravěč má často nejvolnější témata?",
+      "prompt": "Žánr katalog?",
       "options": [
-        "Jen Pampinea vždy",
-        "Dioneo",
-        "Dante",
-        "Godot"
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
       ],
-      "correct": 1,
-      "expl": "Dioneo má výsadu volit si téma volněji."
+      "correct": 0,
+      "expl": "Próza."
     },
     {
-      "prompt": "Do jaké kulturní epochy dílo patří?",
+      "prompt": "Rámec končí?",
       "options": [
-        "Baroko",
-        "Raná renesance / trecento",
-        "Romantismus",
-        "Socialistický realismus"
+        "Návrat do města po moru",
+        "Válka",
+        "Apokalypsa",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Patří k základům italské renesanční literatury."
+      "correct": 0,
+      "expl": "Uzavření úniku."
     },
     {
-      "prompt": "Co Dekameron často kritizuje?",
+      "prompt": "Typ hrdinky?",
       "options": [
-        "Zemědělství",
-        "Pokrytectví (i církevní) a pošetilost",
-        "Hudbu",
-        "Architekturu gotiky výhradně"
+        "Často chytrá, aktivní žena",
+        "Pouze pasivní",
+        "Neexistuje",
+        "Jen král"
       ],
-      "correct": 1,
-      "expl": "Mniši a pokrytci bývají terčem satiry."
-    },
-    {
-      "prompt": "Kdy přibližně dílo vzniklo?",
-      "options": [
-        "Okolo 800",
-        "Okolo 1353",
-        "1600",
-        "1862"
-      ],
-      "correct": 1,
-      "expl": "Datuje se do poloviny 14. století, po velkém moru."
-    },
-    {
-      "prompt": "Jakou roli hraje vyprávění pro postavy rámce?",
-      "options": [
-        "Je zakázáno",
-        "Je zábavou i „lékem“ proti strachu z moru",
-        "Je soudní protokol",
-        "Je vojenský rozkaz"
-      ],
-      "correct": 1,
-      "expl": "Příběhy odvádějí mysl od smrti a chaosu."
-    },
-    {
-      "prompt": "Co znamená slovo dekameron?",
-      "options": [
-        "Deset knih o válce",
-        "„Desetidenní“ (dílo)",
-        "Jméno hrdiny",
-        "Název řeky"
-      ],
-      "correct": 1,
-      "expl": "Z řečtiny: dílo deseti dnů."
+      "correct": 0,
+      "expl": "Renesanční typy."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Mor ve Florencii ohrožuje město",
-        "Deset mladých lidí odchází na venkov",
-        "Zavedou řád vyprávění po dnech",
-        "Střídají se novely o lásce a důvtipu",
-        "Satira míří na pokrytce a pošetilce",
-        "Po deseti dnech se společnost vrací"
+        "Mor sužuje Florencii",
+        "Deset mladých odchází na venkov",
+        "Každý den vyprávějí novely",
+        "Střídání témat lásky a lsti",
+        "Deset dní po deseti příbězích",
+        "Návrat k životu po krizi"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: mor → odchod z města → řád dnů → novely → satira na pokrytectví → návrat."
+    "Pořadí: mor → únik → vyprávění → témata → 100 novel v rámci → konec úniku."
   ]
 }

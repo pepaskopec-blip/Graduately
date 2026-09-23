@@ -4,198 +4,95 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Molière (vl. jm. Jean-Baptiste Poquelin)",
-        "Žánr: klasicistní komedie charakterů",
-        "Poprvé uvedeno: 1668",
-        "Děj / prostředí: Paříž 17. století, Harpagonova domácnost",
-        "Vyprávění / forma: drama v próze, dialogy, komika situace i charakteru"
+        "Autor: Molière (Jean-Baptiste Poquelin, 1622–1673)",
+        "Žánr: divadelní komedie (komedie charakterů)",
+        "Poprvé vydáno / uvedeno: 1668",
+        "Děj / prostředí: pařížská měšťanská domácnost 17. století",
+        "Vyprávění / forma: drama, pětiaktová komedie, rýmovaná próza"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Francie Ludvíka XIV.: klasicismus vyžaduje pravidla a typy postav.",
-        "Molière kritizuje společenské neřesti – zde lakotu.",
-        "Harpagon miluje peníze víc než vlastní děti.",
-        "Komedie spojuje milostné zápletky s výsměchem chamtivosti.",
-        "Typická je komika slov, gest a nedorozumění.",
-        "Dílo je součástí evropského kánonu charakterových komedií."
+        "Klasicismus: pravidla jednoty, jasné typy postav, satira mravů.",
+        "Molière kritizuje lakotu, pokrytectví a měšťanskou chamtivost.",
+        "Harapagon je extrémní typ – komedie charakterů.",
+        "Rodina vs. otec: děti chtějí lásku, otec šetří i na štěstí.",
+        "Komedie končí happy endem – typické pro Molièra.",
+        "Hra je stále nejhranější francouzskou komedií."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Harpagon – lakomý otec, posedlý pokladem a sňatky z výhodnosti.",
-        "Cléante – syn, miluje Marianu, potřebuje peníze.",
-        "Elise – dcera, miluje Valèra.",
-        "Mariana – dívka, o niž mají zájem Cléante i Harpagon.",
-        "Valère – Elisin milý, slouží v domě.",
-        "La Flèche – sluha, pomáhá odhalit Harpagonovu lakotu."
+        "Harapagon – lakomec, otec, posedlý penězi.",
+        "Elise – Harapagonova dcera, miluje Valéra.",
+        "Cléante – Harapagonův syn, miluje Marianu.",
+        "Valér – sluha, miluje Elise, chytrý manipulátor.",
+        "Marianna – mladá dívka, objekt Harapagonových i Cléantových sňatků.",
+        "Frosina – matchmaker, využívá Harapagonovu lakotu."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Komedie charakteru – smích z typické neřesti (lakoty).",
-        "Poklad – Harpagonova vášeň a zdroj zápletky.",
-        "Sňatek z rozumu vs. z lásky – generační konflikt.",
-        "Převleky a nedorozumění – klasické komediální prostředky.",
-        "Klasicismus – pravidla žánru, jednoty, typizace.",
-        "Satira – kritika chamtivosti měšťanstva."
+        "Komedie charakterů – jedna dominantní vlastnost (lakota).",
+        "Satira – výsměch mravům a společnosti.",
+        "Truhla s pokladem – Harapagonova posedlost.",
+        "Sňatky za peníze – konflikt generací.",
+        "Happy end – odhalení, smíření, svatby.",
+        "Valérova lst – sluha jako komický intrikán."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Lakomce?",
-      "options": [
-        "Racine",
-        "Molière",
-        "Corneille",
-        "Voltaire"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Molière."
-    },
-    {
-      "prompt": "Jaká je Harpagonova hlavní vlastnost?",
-      "options": [
-        "Statečnost",
-        "Lakota a posedlost penězi",
-        "Velkorysost",
-        "Náboženská askese"
-      ],
-      "correct": 1,
-      "expl": "Harpagon je prototyp lakomce."
-    },
-    {
-      "prompt": "Kdy byla hra poprvé uvedena?",
-      "options": [
-        "1600",
-        "1668",
-        "1789",
-        "1830"
-      ],
-      "correct": 1,
-      "expl": "Lakomec měl premiéru roku 1668."
-    },
-    {
-      "prompt": "Koho miluje Cléante?",
-      "options": [
-        "Elise",
-        "Marianu",
-        "Frosinu výhradně",
-        "Harpagonovu kuchařku"
-      ],
-      "correct": 1,
-      "expl": "Cléante miluje Marianu, o niž stojí i otec."
-    },
-    {
-      "prompt": "Proč je konflikt mezi otcem a synem?",
-      "options": [
-        "Kvůli válce",
-        "Oba chtějí Marianu a narážejí na peníze",
-        "Kvůli studiu medicíny",
-        "Kvůli náboženství"
-      ],
-      "correct": 1,
-      "expl": "Harpagon chce Marianu sám a synovi odpírá prostředky."
-    },
-    {
-      "prompt": "Kdo je Valère?",
-      "options": [
-        "Soudce",
-        "Elisin milý sloužící v domě",
-        "Harpagonův bratr",
-        "Královský kurýr"
-      ],
-      "correct": 1,
-      "expl": "Valère miluje Elise a působí u Harpagona."
-    },
-    {
-      "prompt": "Co je středem Harpagonovy úzkosti?",
-      "options": [
-        "Ztráta cti u dvora",
-        "Ukrytá kazeta s penězi",
-        "Nemoc koně výhradně",
-        "Politika"
-      ],
-      "correct": 1,
-      "expl": "Komedie vrcholí strach o ukradený poklad."
-    },
-    {
-      "prompt": "K jakému žánru hra patří?",
-      "options": [
-        "Tragédie",
-        "Klasicistní komedie charakterů",
-        "Opera",
-        "Balada"
-      ],
-      "correct": 1,
-      "expl": "Jde o charakterovou komedii klasicismu."
-    },
-    {
-      "prompt": "Co Molière především kritizuje?",
-      "options": [
-        "Vědu",
-        "Lakota a pokrytectví spojené s majetkem",
-        "Rolnictvo",
-        "Církevní architekturu"
-      ],
-      "correct": 1,
-      "expl": "Satira míří na chamtivost a její společenské důsledky."
-    },
-    {
-      "prompt": "Jak příběh typicky směřuje k závěru?",
-      "options": [
-        "Popravou Harpagona",
-        "Odhalením pravd, sňatky z lásky a Harpagonovým lpěním na penězích",
-        "Emigrací do Anglie",
-        "Válkou"
-      ],
-      "correct": 1,
-      "expl": "Milenci se spojí; Harpagon zůstává věrný své lásce k penězům."
-    },
-    {
-      "prompt": "Co je komika charakteru?",
-      "options": [
-        "Smích jen z převleků",
-        "Smích plynoucí z typické neřesti postavy",
-        "Tragický pláč",
-        "Hudba"
-      ],
-      "correct": 1,
-      "expl": "Harpagonova lakota sama generuje komické situace."
-    },
-    {
-      "prompt": "Ve které zemi a době se děj odehrává?",
-      "options": [
-        "Anglie 19. století",
-        "Francie 17. století",
-        "Itálie renesance výhradně",
-        "Rusko 20. století"
-      ],
-      "correct": 1,
-      "expl": "Prostředím je pařížská domácnost doby klasicismu."
-    }
+    {"prompt": "Kdo napsal Lakomce?", "options": ["Racine", "Molière", "Corneille", "Hugo"], "correct": 1, "expl": "Molière uvedl hru v roce 1668."},
+    {"prompt": "Jaký typ komedie to je?", "options": ["Komedie charakterů", "Tragedie", "Opera", "Epos"], "correct": 0, "expl": "Harapagon ztělesňuje extrémní lakotu."},
+    {"prompt": "Kdo je Harapagon?", "options": ["Král", "Lakomý otec posedlý penězi", "Voják", "Kněz"], "correct": 1, "expl": "Titulní postava je synonymem pro lakotu."},
+    {"prompt": "Co Harapagon nejvíc miluje?", "options": ["Děti", "Truhlu s penězi", "Umění", "Přírodu"], "correct": 1, "expl": "Peníze jsou nad rodinou i láskou."},
+    {"prompt": "Koho miluje Elise?", "options": ["Harapagona", "Valéra", "Cléanta", "Marianu"], "correct": 1, "expl": "Valér je sluha, ale i milenec Elise."},
+    {"prompt": "Koho miluje Cléante?", "options": ["Frosinu", "Marianu", "Elise", "Harapagona"], "correct": 1, "expl": "Syn chce sňatek s Marianou."},
+    {"prompt": "Co Harapagon plánuje s Marianou?", "options": ["Oženit se s ní sám", "Poslat ji do kláštera", "Prodat dům", "Nic"], "correct": 0, "expl": "Starý lakomec chce mladou manželku."},
+    {"prompt": "Kdo je Frosina?", "options": ["Služka", "Prostřednice sňatků využívající lakotu", "Královna", "Dcera"], "correct": 1, "expl": "Frosina manipuluje Harapagonem."},
+    {"prompt": "Co se stane s truhlou?", "options": ["Zmizí", "Harapagon ji ztratí, pak ji najdou – vrchol komiky", "Spálí ji", "Dá ji chudým"], "correct": 1, "expl": "Scéna s ukradenou truhlou je slavná."},
+    {"prompt": "Jak hra končí?", "options": ["Tragedií", "Happy endem – svatby, návrat peněz", "Harapagon umírá", "Válka"], "correct": 1, "expl": "Molièrovy komedie často končí smířením."},
+    {"prompt": "Jaký je Valér?", "options": ["Hloupý sluha", "Chytrý, lstivý milenec Elise", "Král v převleku", "Harapagonův bratr"], "correct": 1, "expl": "Valér ovládá situaci v domě."},
+    {"prompt": "Proč maturita zahrnuje Lakomce?", "options": ["Nejdelší román", "Klasická komedie, satira, drama", "Bez děje", "Sci-fi"], "correct": 1, "expl": "Učí strukturu komedie a charakterového typu."},
+    {"prompt": "Kdy Molière žil?", "options": ["17. století", "19. století", "Antika", "21. století"], "correct": 0, "expl": "Molière působil za Ludvíka XIV."},
+    {"prompt": "Co satira kritizuje?", "options": ["Lakotu a měšťanské mravy", "Vesmír", "Sport", "Pouze krále"], "correct": 0, "expl": "Harapagon je groteskní exemplum lakotce."},
+    {"prompt": "Kolik aktů má hra?", "options": ["Pět", "Jeden", "Deset", "Dva"], "correct": 0, "expl": "Klasická pětaktová struktura."},
+    {"prompt": "Které téma NENÍ středem?", "options": ["Peníze vs. láska", "Sňatky dětí", "Vesmírná válka", "Rodinný konflikt"], "correct": 2, "expl": "Hra je komedie o měšťanské domácnosti."},
+    {"prompt": "Co Harapagon šetří?", "options": ["Na vše – jídlo, svatbu, štěstí dětí", "Nic", "Jen na knihy", "Jen na krále"], "correct": 0, "expl": "Lakota proniká celým životem."},
+    {"prompt": "Jak funguje komedie charakterů?", "options": ["Postava má jednu přehnanou vlastnost", "Bez postav", "Jen akce", "Tragedie"], "correct": 0, "expl": "Harapagon = lakota v extrému."},
+    {"prompt": "Kdo ukradne truhlu (v ději)?", "options": ["Harapagon sám ji „ztratí“ – komplikovaná intrika", "Král", "Marianna", "Nikdo"], "correct": 0, "expl": "Ztráta pokladu vyvolá groteskní scénu."},
+    {"prompt": "Jaký jazyk hra používá?", "options": ["Rýmovaná próza (veršovaná próza)", "Pouze proza", "Latin", "Bez textu"], "correct": 0, "expl": "Molière používá alexandríny v próze."},
+    {"prompt": "Co chtějí děti od otce?", "options": ["Pouze peníze", "Svolení ke sňatkům z lásky", "Vypovězení", "Trůn"], "correct": 1, "expl": "Generační konflikt je motor děje."},
+    {"prompt": "Kdo je Anselme na konci?", "options": ["Postava odhalená jako Valérova rodina – řeší sňatky", "Vrah", "Cizinec bez role", "Harapagon"], "correct": 0, "expl": "Zápletky se rozuzlí identitou Anselma."},
+    {"prompt": "Proč je Lakomec stále populární?", "options": ["Univerzální humor a typ lakotce", "Zastaralý", "Bez humoru", "Jen ve Francii"], "correct": 0, "expl": "Chamtivost je věčné téma."},
+    {"prompt": "Jak Molière pracuje s happy endem?", "options": ["Vše se vyřeší sňatky a smířením", "Všichni umřou", "Bez závěru", "Válka"], "correct": 0, "expl": "Klasická komická katarze."},
+    {"prompt": "Co je matchmaker Frosina?", "options": ["Prostřednice sňatků", "Voják", "Lakomec", "Král"], "correct": 0, "expl": "Využívá Harapagonovy touhy."},
+    {"prompt": "Jaký kontrast tvoří jádro hry?", "options": ["Láska mladých vs. lakota starého otce", "Moře vs. hory", "Válka vs. mír bez rodiny", "Praha vs. Brno"], "correct": 0, "expl": "Peníze vs. city je hlavní osa."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Paříž, měšťanský dům", "Venkov bez domu", "Londýn", "Praha"], "correct": 0, "expl": "Měšťanské prostředí 17. století."},
+    {"prompt": "Co Harapagon odmítá platit?", "options": ["Vše možné – i sluhy, hostinu, svatbu", "Nic", "Jen daně", "Jen králi"], "correct": 0, "expl": "Šetří na každém kroku."},
+    {"prompt": "Jaké poselství hra nese?", "options": ["Lakota ničí rodinu i štěstí", "Šetři vždy", "Peníze jsou vše", "Bez morálky"], "correct": 0, "expl": "Satira varuje před extrémní chamtivostí."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Harpagon plánuje výhodné sňatky a střeží poklad",
-        "Cléante a Elise touží po sňatcích z lásky",
-        "Otec i syn mají zájem o Marianu",
-        "Intrigy sluhů a nedorozumění odhalují lakotu",
-        "Poklad je ukraden / ohrožen – Harpagon šílí",
-        "Pravdy se vyjasní, milenci se spojí, lakomec lpí na penězích"
+        "Harapagon vládne domu lakotou",
+        "Děti chtějí sňatky z lásky",
+        "Harapagon touží po Marianně a penězích",
+        "Ztráta truhly a komické pátrání",
+        "Odhalení identit a intrik (Valér, Anselme)",
+        "Happy end – svatby a smíření"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: plán sňatků → touha dětí → rivalita o Marianu → intrigy → ohrožení pokladu → vyjasnění a pointa lakoty."
+    "Správné pořadí: lakota otce → konflikt s dětmi → Harapagon a Marianna → truhla → rozuzlení → svatby."
   ]
 }

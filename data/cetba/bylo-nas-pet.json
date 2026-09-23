@@ -5,197 +5,417 @@
       "icon": "book",
       "lines": [
         "Autor: Karel Poláček",
-        "Žánr: humoristický román / próza s dětským vypravěčem",
-        "Poprvé vydáno: 1946",
-        "Děj/prostředí: Malé české město před 1. světovou válkou",
-        "Vyprávění/forma: ich-forma očima chlapce Petra Bajzy"
+        "Žánr: humoristický autobiograficky laděný román",
+        "Poprvé vydáno: 1926",
+        "Děj/prostředí: maloměsto / venkov, rodina pěti sourozenců",
+        "Vyprávění/forma: ich-forma (Jaromír), humorné epizody"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Idyla maloměsta na přelomu století, ještě před velkou válkou.",
-        "Svět klukovských her, školních trapasů a rodinných historek.",
-        "Humor vzniká z naivity vypravěče a nedorozumění dospělých.",
-        "Jazyk je živý, hovorový, plný „klukovských“ výrazů.",
-        "Za humorem je nostalgie po ztraceném světě.",
-        "Téma: dětství, přátelství, maloměsto, vyprávění."
+        "První republika, idylické dětství s stínem chudoby",
+        "Rodina židovského původu – Poláček pracuje s humorem i identitou",
+        "Škola, hřiště, sousedé – uzavřený svět dětí",
+        "Generace rodičů vs. děti",
+        "Laskavý humor místo sentimentu",
+        "Typické poláčkovské groteskní situace"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Petr Bajza – vypravěč, jeden z „pěti“.",
-        "Antonín „Tonda“ Jelen – kamarád z party.",
-        "Zilvar z chudobince – člen party, často terč vtípků.",
-        "Karel „Čeněk“ Nedvídek – další z pětice.",
-        "Josef „Pepík“ Štěpař – kamarád z party.",
-        "Dospělí (rodiče, učitelé) – komický protisvět řádu."
+        "Jaromír – nejmladší, vypravěč",
+        "Sourozenci: Ondřej, Hela, Jindra, dále rodina",
+        "Rodiče – matka, otec, autorita i teplo domova",
+        "Učitelé, sousedé, kněz – venkovské typy",
+        "Kamarádi a spolužáci",
+        "Pes/circus epizody dle kapitol"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Klukovská parta – jádro děje a humoru.",
-        "Maloměsto – uzavřený svět historek.",
-        "Naivní vypravěč – komika z omezeného pohledu dítěte.",
-        "Hovorový jazyk – autentický tón vyprávění.",
-        "Nostalgie – vzpomínka na předválečný svět.",
-        "Škola a rodina – zdroje konfliktů i komiky."
+        "Dětství – pohled dítěte na svět",
+        "Humor – i z chudoby a přísnosti",
+        "Rodina – pět dětí, sounáležitost",
+        "Maloměsto – komunita, klepy",
+        "Škola – strach, discipline, legrace",
+        "Poláčkův jazyk – hovorový, vtipný"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Bylo nás pět?",
+      "prompt": "Autor Bylo nás pět?",
       "options": [
-        "Karel Čapek",
-        "Karel Poláček",
-        "Josef Lada",
-        "Jaroslav Hašek"
+        "Viewegh",
+        "Poláček",
+        "Hašek",
+        "Neruda"
       ],
       "correct": 1,
-      "expl": "Humoristický román Karla Poláčka vyšel posmrtně roku 1946."
+      "expl": "Karel Poláček."
     },
     {
-      "prompt": "Kdo je vypravěč?",
+      "prompt": "Kdy vyšlo?",
       "options": [
-        "Učitel",
-        "Petr Bajza",
-        "Zilvarův otec",
-        "Starosta"
+        "1926",
+        "1945",
+        "1990",
+        "1890"
       ],
-      "correct": 1,
-      "expl": "Příběh vypráví chlapec Petr Bajza."
+      "correct": 0,
+      "expl": "Meziválečné vydání."
     },
     {
-      "prompt": "Kolik chlapců tvoří partu v názvu?",
+      "prompt": "Kolik sourozenců?",
       "options": [
         "Tři",
-        "Pět",
+        "Pět dětí v rodině",
         "Deset",
-        "Dva"
+        "Jedno"
       ],
       "correct": 1,
-      "expl": "Název odkazuje na pětici kamarádů."
+      "expl": "Název odkazuje na pět dětí."
     },
     {
-      "prompt": "Kde se děj odehrává?",
+      "prompt": "Kdo vypráví?",
       "options": [
-        "V Praze za války",
-        "V malém českém městě",
-        "V New Yorku",
-        "Na galejích"
+        "Otec",
+        "Jaromír v ich-formě",
+        "Učitel",
+        "Vševěd"
       ],
       "correct": 1,
-      "expl": "Typické poláčkovské maloměsto s ulicemi, školou a sousedy."
+      "expl": "Nejmladší bratr vypravěč."
     },
     {
-      "prompt": "Jaký je základní tón knihy?",
+      "prompt": "Žánr?",
       "options": [
-        "Hororový",
-        "Humoristický a nostalgický",
-        "Naturalisticky krutý",
-        "Vědecký"
+        "Tragedie",
+        "Humoristický román o dětství",
+        "Sci-fi",
+        "Epos"
       ],
       "correct": 1,
-      "expl": "Humor plyne z dětského pohledu a maloměstských situací."
+      "expl": "Poláček humor."
     },
     {
-      "prompt": "Kdo je Zilvar?",
+      "prompt": "Prostředí?",
       "options": [
-        "Ředitel školy",
-        "Kamarád z chudobince, člen party",
-        "Policista",
-        "Farář"
+        "Pražský palác",
+        "Maloměsto/rodinný domov",
+        "Luna",
+        "Moře"
       ],
       "correct": 1,
-      "expl": "Zilvar patří k partě; jeho původ je často předmětem klukovských řečí."
+      "expl": "Venkov/město."
     },
     {
-      "prompt": "Čím je vyprávění zvláštní?",
+      "prompt": "Tón?",
       "options": [
-        "Je ve verších",
-        "Je v ich-formě dětským jazykem",
-        "Je latinsky",
-        "Je bez dialogů"
+        "Bez humoru",
+        "Laskavý humor, groteska",
+        "Horor",
+        "Epická vážnost"
       ],
       "correct": 1,
-      "expl": "Naivní ich-forma vytváří komiku nedorozumění."
+      "expl": "Typický Poláček."
     },
     {
-      "prompt": "Kdy kniha vyšla?",
+      "prompt": "Téma rodiny?",
       "options": [
-        "1918",
-        "1938",
-        "1946",
-        "1968"
-      ],
-      "correct": 2,
-      "expl": "Vyšla roku 1946, po autorově smrti v koncentračním táboře."
-    },
-    {
-      "prompt": "Co je hlavním „dějištěm“ humoru?",
-      "options": [
-        "Dvorské intriky",
-        "Škola, hry, rodina a parta",
-        "Vesmír",
-        "Bitvy"
+        "Chybí",
+        "Sounáležitost, generace, chudoba i radost",
+        "Jen bohatství",
+        "Jen válka"
       ],
       "correct": 1,
-      "expl": "Každodenní klukovské příhody tvoří jádro knihy."
+      "expl": "Rodina je střed."
     },
     {
-      "prompt": "Jaký žánr knize nejlépe sedí?",
+      "prompt": "Škola v knize?",
       "options": [
-        "Tragédie",
-        "Humoristický román",
-        "Epos",
+        "Neexistuje",
+        "Epizody strachu a legrace",
+        "Jen univerzita",
+        "Jen internát"
+      ],
+      "correct": 1,
+      "expl": "Školní historky."
+    },
+    {
+      "prompt": "Poláček vs. Viewegh?",
+      "options": [
+        "Poláček meziválečí, Viewegh normalizace",
+        "Totéž",
+        "Viewegh starší",
+        "Poláček sci-fi"
+      ],
+      "correct": 0,
+      "expl": "Různá éra."
+    },
+    {
+      "prompt": "Jazyk?",
+      "options": [
+        "Archaičtina",
+        "Hovorový humor spisovně",
+        "Němčina",
+        "Latina"
+      ],
+      "correct": 1,
+      "expl": "Srozumitelná čeština."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Nejdelší",
+        "Klasika českého humoru a dětství",
+        "Cizí jazyk",
+        "Bez postav"
+      ],
+      "correct": 1,
+      "expl": "Kanón české prózy."
+    },
+    {
+      "prompt": "Jaromír je…",
+      "options": [
+        "Nejstarší",
+        "Nejmladší vypravěč",
+        "Učitel",
+        "Cizinec"
+      ],
+      "correct": 1,
+      "expl": "Perspektiva nejmladšího."
+    },
+    {
+      "prompt": "Postava kněze?",
+      "options": [
+        "Typ venkovského duchovního v epizodách",
+        "Hlavní hrdina války",
+        "Neexistuje",
         "Sci-fi"
       ],
-      "correct": 1,
-      "expl": "Klasika české humoristické prózy s dětským hrdinou."
+      "correct": 0,
+      "expl": "Součást maloměsta."
     },
     {
-      "prompt": "Proč je kniha nostalgická?",
+      "prompt": "Chudoba?",
       "options": [
-        "Popisuje budoucnost",
-        "Vzpomíná na svět před 1. světovou válkou",
-        "Je o robotice",
-        "Je náboženská"
+        "Ne",
+        "Prosvítá humorně, ne depresivně",
+        "Hlavní téma hrůzy",
+        "Ignorována"
       ],
       "correct": 1,
-      "expl": "Za humorem je stesk po zaniklé maloměstské idyle."
+      "expl": "Poláček neidealizuje, ale nezesmutňuje."
     },
     {
-      "prompt": "Která postava NENÍ typicky v centru party?",
+      "prompt": "Forma?",
       "options": [
-        "Petr Bajza",
-        "Maršál diktátor",
-        "Zilvar",
-        "Tonda Jelen"
+        "Drama",
+        "Epizodický román",
+        "Poezie",
+        "Deník bez děje"
       ],
       "correct": 1,
-      "expl": "Maršál patří do Čapkovy Bílé nemoci, ne do Poláčka."
+      "expl": "Kapitoly epizod."
+    },
+    {
+      "prompt": "Co děti zažívají?",
+      "options": [
+        "Jen politiku",
+        "Hry, školu, sousedské historky",
+        "Jen válku",
+        "Nic"
+      ],
+      "correct": 1,
+      "expl": "Dětský svět."
+    },
+    {
+      "prompt": "Groteska?",
+      "options": [
+        "Ne",
+        "Ano, nadsázka situací",
+        "Pouze tragédie",
+        "Pouze básně"
+      ],
+      "correct": 1,
+      "expl": "Poláčkův styl."
+    },
+    {
+      "prompt": "Identita autora?",
+      "options": [
+        "Poláček židovský původ – jemně v prostředí",
+        "Neznámá",
+        "Sci-fi",
+        "Bez vlivu"
+      ],
+      "correct": 0,
+      "expl": "Kontext biografie."
+    },
+    {
+      "prompt": "Sourozenci Ondřej?",
+      "options": [
+        "Nepostava",
+        "Starší bratr v rodině",
+        "Král",
+        "Pes"
+      ],
+      "correct": 1,
+      "expl": "Součást pěti."
+    },
+    {
+      "prompt": "Hela?",
+      "options": [
+        "Sestra",
+        "Cizí stát",
+        "Učitel",
+        "Nemoc"
+      ],
+      "correct": 0,
+      "expl": "Sourozenec."
+    },
+    {
+      "prompt": "Motiv domova?",
+      "options": [
+        "Silný – bezpečí i pořádek",
+        "Slabý",
+        "Neexistuje",
+        "Jen hotel"
+      ],
+      "correct": 0,
+      "expl": "Domov jako centrum."
+    },
+    {
+      "prompt": "Kdo NENÍ Poláček?",
+      "options": [
+        "Autor humoru",
+        "Autor Bylo nás pět",
+        "Hašek autor této knihy",
+        "Spisovatel"
+      ],
+      "correct": 2,
+      "expl": "Hašek psal Švejka."
+    },
+    {
+      "prompt": "Vyprávěcí forma?",
+      "options": [
+        "Er",
+        "Ich (Jaromír)",
+        "Druhá osoba",
+        "Bez vypravěče"
+      ],
+      "correct": 1,
+      "expl": "Dětské já."
+    },
+    {
+      "prompt": "Cíl humoru?",
+      "options": [
+        "Ponižovat děti",
+        "Humanizovat dětství a rodinu",
+        "Propaganda",
+        "Strach"
+      ],
+      "correct": 1,
+      "expl": "Laskavost."
+    },
+    {
+      "prompt": "Epizoda s psem/cirkusem?",
+      "options": [
+        "Typické kapitoly maloměstského života",
+        "Ne v knize",
+        "Jen ve filmu",
+        "Sci-fi"
+      ],
+      "correct": 0,
+      "expl": "Maloměstské epizody."
+    },
+    {
+      "prompt": "Období děje?",
+      "options": [
+        "Středověk",
+        "Meziválečí / Poláčkovo dětství",
+        "Budoucnost",
+        "Antika"
+      ],
+      "correct": 1,
+      "expl": "Autobiografické prvky."
+    },
+    {
+      "prompt": "Proč ich-forma?",
+      "options": [
+        "Autenticita dětského pohledu",
+        "Náhodou",
+        "Pouze u Poláčka zakázáno",
+        "Kvůli překladu"
+      ],
+      "correct": 0,
+      "expl": "Dítě vidí jinak."
+    },
+    {
+      "prompt": "Konec knihy?",
+      "options": [
+        "Epizodický, bez jedné akce",
+        "Jedna bitva",
+        "Svatba Jaromíra",
+        "Apokalypsa"
+      ],
+      "correct": 0,
+      "expl": "Koláž vzpomínek."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Dětství a rodina stojí za humorné vyprávění",
+        "Rodina škodí",
+        "Humor je hřích",
+        "Děti neposlouchat"
+      ],
+      "correct": 0,
+      "expl": "Teplo a humor."
+    },
+    {
+      "prompt": "Žánr v katalogu?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Rok vydání 1926 znamená?",
+      "options": [
+        "Meziválečná literatura",
+        "Normalizace",
+        "Socialismus 50. let",
+        "Středověk"
+      ],
+      "correct": 0,
+      "expl": "První republika kontext."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Představení party pěti kluků",
-        "Školní a uliční příhody",
-        "Konflikty s dospělými a učiteli",
-        "Kamarádské spory i smíření",
-        "Rodinné historky Bajzů",
-        "Uzavření obrazu dětství na maloměstě"
+        "Rodina pěti dětí v maloměstě",
+        "Jaromírovy školní a domácí epizody",
+        "Humorné situace se sousedy a učiteli",
+        "Sourozenecké hry a drobné konflikty",
+        "Rodiče udržují domov navzdory chudobě",
+        "Dětství jako koláž vzpomínek"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: parta → školní/uliční historky → konflikty s dospělými → spory kamarádů → rodina → obraz dětství."
+    "Pořadí: rodina → škola/domov → sousedé → sourozenci → rodiče → vzpomínkový celek."
   ]
 }

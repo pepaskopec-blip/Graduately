@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Jonathan Swift; překlad: Skoumal",
-        "Žánr: satirický cestopisný román",
+        "Autor: Jonathan Swift",
+        "Žánr: satirická novela / cestopis",
         "Poprvé vydáno: 1726",
-        "Děj/prostředí: Fiktivní země: Lilliput, Brobdingnag, Laputa, země Houyhnhnmů",
-        "Vyprávění/forma: ich-forma cestovatele Gullivera; překlad Skoumal"
+        "Děj/prostředí: čtyři cesty Gullivera do fantastických zemí",
+        "Vyprávění/forma: ich-forma Gulliver; překlad Skoumal"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Anglie 18. století: osvícenská satira.",
-        "Cesty odhalují lidskou malost, pýchu a šílenství vědy.",
-        "Lilliput – malicherná politika.",
-        "Brobdingnag – člověk jako hmyz v očích obrů.",
-        "Houyhnhnmové – rozumní koně vs. zvířecí Jahuové.",
-        "Téma: satira společnosti, rozumu, kolonialismu a lidské přirozenosti."
+        "Anglie 18. století, osvícenství",
+        "Satira na politiku, vědu, válku",
+        "Lilliput – malí, politika",
+        "Brobdingnag – obři, perspektiva",
+        "Laputa – věda odtržená",
+        "Houyhnhnmové – koně rozumní"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Lemuel Gulliver – lékař a cestovatel, vypravěč.",
-        "Císař Lilliputu – vládce malých lidí.",
-        "Obrří Brobdingnagu – zrcadlo lidské tělesnosti.",
-        "Učenci Laputy – odtažitá „věda“ bez smyslu.",
-        "Houyhnhnmové – rozumní koně.",
-        "Jahuové – zvířecí karikatura člověka."
+        "Lemuel Gulliver – cestovatel, vypravěč",
+        "Lilliputié – malí lidé",
+        "Brobdingnaci – obři",
+        "Houyhnhnmové a Yahoové",
+        "Král Brobdingnagu",
+        "Kapitán a rodina Gulliver"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Satira – výsměch nešvarům společnosti.",
-        "Lilliput – malichernost politiky.",
-        "Brobdingnag – relativita velikosti a morálky.",
-        "Laputa – kritika planého intelektualismu.",
-        "Houyhnhnmové – ideál rozumu.",
-        "Jahu – odpudivý obraz člověka."
+        "Satira – nadsázka společnosti",
+        "Relativita velikosti",
+        "Válka o vejce (Lilliput)",
+        "Rozum vs. bestialita (Yahoo)",
+        "Cestopis jako forma",
+        "Swiftova kritika Evropy"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Gulliverovy cesty?",
+      "prompt": "Autor?",
       "options": [
-        "Daniel Defoe",
-        "Jonathan Swift",
-        "Charles Dickens",
-        "Victor Hugo"
+        "Swift",
+        "Defoe",
+        "Orwell",
+        "Hugo"
       ],
-      "correct": 1,
-      "expl": "Swiftova satira vyšla roku 1726."
+      "correct": 0,
+      "expl": "Jonathan Swift."
     },
     {
-      "prompt": "Kdo je Gulliver?",
+      "prompt": "Rok?",
       "options": [
-        "Kůň",
-        "Cestovatel a vypravěč",
-        "Císař Lilliputu",
-        "Jahu výhradně"
-      ],
-      "correct": 1,
-      "expl": "Gulliver procedí čtyři fantastické země."
-    },
-    {
-      "prompt": "Co je Lilliput?",
-      "options": [
-        "Země obrů",
-        "Země maličkých lidí a malicherné politiky",
-        "Planeta Mars",
-        "Pivovar"
-      ],
-      "correct": 1,
-      "expl": "Satira na dvorské a politické šarvátky."
-    },
-    {
-      "prompt": "Co Gulliver zažije v Brobdingnagu?",
-      "options": [
-        "Je obrem mezi trpaslíky",
-        "Je trpaslíkem mezi obry",
-        "Stane se koněm",
-        "Oslepne"
-      ],
-      "correct": 1,
-      "expl": "Relativita velikosti odhaluje lidskou křehkost a ošklivost z blízka."
-    },
-    {
-      "prompt": "Kdo jsou Houyhnhnmové?",
-      "options": [
-        "Pirátští kapitáni",
-        "Rozumní koně",
-        "Trpaslíci",
-        "Prasata z farmy"
-      ],
-      "correct": 1,
-      "expl": "Ideál rozumu kontrastuje s Jahuy."
-    },
-    {
-      "prompt": "Kdo jsou Jahuové?",
-      "options": [
-        "Andělé",
-        "Odporná bytost připomínající člověka",
-        "Králové Lilliputu",
-        "Vynálezci jako Edison"
-      ],
-      "correct": 1,
-      "expl": "Swift ukazuje člověka jako špinavé zvíře bez rozumu."
-    },
-    {
-      "prompt": "Jaký je celkový charakter díla?",
-      "options": [
-        "Zbožná legenda",
-        "Satirický cestopis",
-        "Deník z Amsterodamu",
-        "Absurdní drama o Godotovi"
-      ],
-      "correct": 1,
-      "expl": "Fantastické cesty slouží společenské kritice."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1353",
         "1726",
-        "1862",
-        "1945"
+        "1984",
+        "1600",
+        "1900"
       ],
-      "correct": 1,
-      "expl": "Gulliver’s Travels 1726."
+      "correct": 0,
+      "expl": "18. století."
     },
     {
-      "prompt": "Co kritizuje Laputa?",
+      "prompt": "Kolik cest?",
       "options": [
-        "Zemědělství",
-        "Odtrženou vědu a plané spekulace",
-        "Jen sport",
-        "Jen gotiku"
+        "Čtyři",
+        "Jedna",
+        "Deset",
+        "Sto"
       ],
-      "correct": 1,
-      "expl": "Učenci měří vše abstraktně a zapomínají na život."
+      "correct": 0,
+      "expl": "Struktura knihy."
     },
     {
-      "prompt": "Jaké je vyprávění?",
+      "prompt": "Lilliput?",
       "options": [
-        "Jen sborový zpěv",
-        "Ich-forma fiktivního cestopisu",
-        "Pět aktů",
-        "Jen refrény poetismu"
+        "Země malých",
+        "Obři",
+        "Koně",
+        "Nebe"
       ],
-      "correct": 1,
-      "expl": "Gulliver referuje „pravdivě“ o nemožných zemích – ironie."
+      "correct": 0,
+      "expl": "První cesta."
     },
     {
-      "prompt": "Proč je dílo satirické i vůči Anglii/Evropě?",
+      "prompt": "Brobdingnag?",
       "options": [
-        "Není",
-        "Fantastické země parodují evropské mravy a politiku",
-        "Chválí jen krále bez výhrad",
-        "Je to kuchařka"
+        "Země obřů",
+        "Malí",
+        "Luna",
+        "Praha"
       ],
-      "correct": 1,
-      "expl": "Každá země je zrcadlem nešvarů domova."
+      "correct": 0,
+      "expl": "Druhá cesta."
     },
     {
-      "prompt": "Jak Gulliver dopadne po zemi Houyhnhnmů?",
+      "prompt": "Laputa?",
       "options": [
-        "Zbožňuje Jahuy",
-        "Zhneviví k lidem a těžko snáší lidskou společnost",
-        "Stane se císařem Lilliputu znovu",
-        "Zapomene cestovat"
+        "Létající ostrov vědců",
+        "Ne",
+        "Jatky",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Ideál koní ho odcizí vlastnímu druhu – trpká pointa."
+      "correct": 0,
+      "expl": "Třetí cesta."
+    },
+    {
+      "prompt": "Houyhnhnm?",
+      "options": [
+        "Rozumní koně",
+        "Yahoové",
+        "Lilliputi",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Čtvrtá cesta."
+    },
+    {
+      "prompt": "Yahoo?",
+      "options": [
+        "Bestiální lidé",
+        "Koně",
+        "Králové",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Satira lidstva."
+    },
+    {
+      "prompt": "Satira?",
+      "options": [
+        "Ano hlavní",
+        "Ne",
+        "Pouze pohádka",
+        "Horor"
+      ],
+      "correct": 0,
+      "expl": "Swift."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Skoumal",
+        "Nezval",
+        "Kořán",
+        "Nevrla"
+      ],
+      "correct": 0,
+      "expl": "Katalog."
+    },
+    {
+      "prompt": "Ich-forma?",
+      "options": [
+        "Gulliver vypravěč",
+        "Er",
+        "Bez já",
+        "Drama"
+      ],
+      "correct": 0,
+      "expl": "Cestopis."
+    },
+    {
+      "prompt": "Vejce válka?",
+      "options": [
+        "Lilliput satira",
+        "Ne",
+        "Brobdingnag",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Politické spory."
+    },
+    {
+      "prompt": "Gulliver konec?",
+      "options": [
+        "Odcizen od lidí po cestě 4",
+        "Král",
+        "Ne",
+        "Raj"
+      ],
+      "correct": 0,
+      "expl": "Tragi-komický."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Klasika satiry",
+        "Nejkratší",
+        "Bez smyslu",
+        "Jen film"
+      ],
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Osvícenství?",
+      "options": [
+        "Kontext kritiky",
+        "Středověk",
+        "Ne",
+        "Budoucnost"
+      ],
+      "correct": 0,
+      "expl": "18. st."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Gulliver",
+        "Lilliput",
+        "Hamlet",
+        "Yahoo"
+      ],
+      "correct": 2,
+      "expl": "Shakespeare."
+    },
+    {
+      "prompt": "Brobdingnag král?",
+      "options": [
+        "Kritizuje Evropu",
+        "Ne",
+        "Malý",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Perspektiva."
+    },
+    {
+      "prompt": "Relativita?",
+      "options": [
+        "Velikost mění pohled",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Swift Ir?",
+      "options": [
+        "Irský satirik",
+        "Čech",
+        "Němec",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Anglicky psal."
+    },
+    {
+      "prompt": "Cestopis forma?",
+      "options": [
+        "Fiktivní cestopis",
+        "Epos",
+        "Drama",
+        "Lyrika"
+      ],
+      "correct": 0,
+      "expl": "Žánr."
+    },
+    {
+      "prompt": "Laputa věda?",
+      "options": [
+        "Odtržená absurdní",
+        "Ne",
+        "Užitečná",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Satira vědy."
+    },
+    {
+      "prompt": "Houyhnhnm společnost?",
+      "options": [
+        "Rozumnější než lidé",
+        "Ne",
+        "Yahoo",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Inverze."
+    },
+    {
+      "prompt": "Gulliver rodina?",
+      "options": [
+        "Po návratu cizí",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Závěr."
+    },
+    {
+      "prompt": "Katalog?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Politická satira?",
+      "options": [
+        "Ano",
+        "Ne",
+        "Pouze láska",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Swift."
+    },
+    {
+      "prompt": "První cesta délka?",
+      "options": [
+        "Jedna část knihy",
+        "Celá kniha",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Struktura."
+    },
+    {
+      "prompt": "Velikost Gulliver v Lilliput?",
+      "options": [
+        "Obří",
+        "Malý",
+        "Stejný",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Relativita."
+    },
+    {
+      "prompt": "Velikost v Brobdingnag?",
+      "options": [
+        "Malý",
+        "Obří",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Opak."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Kritika lidské pýchy a společnosti",
+        "Lidé dokonalí",
+        "Ne",
+        "Válka dobrá"
+      ],
+      "correct": 0,
+      "expl": "Satira."
+    },
+    {
+      "prompt": "Adaptace?",
+      "options": [
+        "Filmy, zkrácené verze",
+        "Ne",
+        "Zakázáno",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Kultovní."
+    },
+    {
+      "prompt": "Skoumal?",
+      "options": [
+        "Překladatel",
+        "Gulliver",
+        "Swift",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "CZ."
+    },
+    {
+      "prompt": "Defoe Robinson?",
+      "options": [
+        "Jiný autor cest",
+        "Swift Robinson",
+        "Totéž",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Rozdíl."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Gulliver ztroskotá v Lilliputu",
-        "Zažije politiku maličkých",
-        "V Brobdingnagu je mezi obry",
-        "Navštíví Laputu a podivnou vědu",
-        "Pozná Houyhnhnmy a Jahuy",
-        "Vrací se odcizený lidské společnosti"
+        "Gulliver ztroskotá u Lilliputu",
+        "Cesta mezi obry Brobdingnagu",
+        "Létající ostrov Laputa",
+        "Země Houyhnhnmů a Yahoů",
+        "Gulliver zidealizuje koně",
+        "Návrut a odcizení od lidí"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: Lilliput → malicherná politika → Brobdingnag → Laputa → Houyhnhnmové/Jahuové → odcizený návrat."
+    "Pořadí: Lilliput → Brobdingnag → Laputa → Houyhnhnm → idealizace → návrat."
   ]
 }

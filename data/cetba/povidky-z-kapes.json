@@ -4,197 +4,331 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Karel Čapek",
-        "Žánr: detektivní a humoristické povídky",
-        "Poprvé vydáno: 1929 (z jedné) a 1932 (z druhé kapsy)",
-        "Děj: krátké případy, anekdoty, logika i náhoda",
-        "Forma: povídkový cyklus s vypravěči u stolu"
+        "Autor: Karel Čapek (1890–1938)",
+        "Žánr: detektivní a humoristické povídky (parodie žánru)",
+        "Poprvé vydáno: 1929 (z jedné kapsy) a 1932 (z druhé kapsy)",
+        "Děj: jednotlivé krátké případy; rámec vyprávění u stolu v kavárně",
+        "Forma: povídkový cyklus – přátelé si vyprávějí „historky z kapes“"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "První republika: kavárenská inteligence.",
-        "Čapek si hraje s detektivkou a jejím limitem.",
-        "Humor, humanismus, skepse k jistotám.",
-        "Náhoda často vítězí nad čistou logikou.",
-        "Vyprávění ve společnosti jako rámec."
+        "První republika – pražská kavárenská společnost, inteligence.",
+        "Čapek si hraje s detektivkou: logika vs. náhoda a lidský detail.",
+        "Humor, humanismus, skepse vůči „stoprocentní“ dedukci.",
+        "Detektivní linie (komisař Mejzlík) paroduje sherlockovský styl.",
+        "Vyprávění ve společnosti jako rámec – každá povídka samostatný příběh.",
+        "Typická pointa: překvapení, vtip, malý lidský motiv rozhodne víc než rozum."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vypravěči u stolu – rámec.",
-        "Detektivové a svědkové – střídají se.",
-        "Pachatelé všední i překvapiví.",
-        "Čtenář – háda s logikou.",
-        "Autorův humor – přítomný.",
-        "Oběti malých dramat."
+        "Vypravěči u stolu – rámec sbírky, přátelé v kavárně.",
+        "Policejní komisař Mejzlík – detektiv s přehnanou logikou.",
+        "Pachatelé, svědci a oběti – střídají se v jednotlivých povídkách.",
+        "Postavy z povídek jako Modrá chrysantéma, Levkoj, Uspání aj.",
+        "Čtenář – spoluřeší záhadu, Čapek ho často přechytračí.",
+        "Autorův ironický hlas – přítomný v komentáři k detektivce."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Detektivka s odstupem.",
-        "Náhoda vs. logika.",
-        "Humanismus.",
-        "Anekdota.",
-        "Ironie jistot.",
-        "Kavárenský rámec."
+        "Parodie detektivky – Čapek demýtizuje geniálního detektiva.",
+        "Náhoda vs. logika – pravda bývá banálnější než dedukce.",
+        "Humanismus – zájem o obyčejného člověka, ne jen zločin.",
+        "Kavárenský rámec – sbližuje vypravěče i čtenáře.",
+        "Povídka z kapsy – drobný, vtipný příběh k „vytáhnutí“ u stolu.",
+        "Dvě kapsy – dva svazky, stejný princip, jiné miniaturky."
       ]
     }
   ],
   "quiz": [
     {
       "prompt": "Kdo napsal Povídky z jedné a druhé kapsy?",
-      "options": [
-        "Hašek",
-        "Čapek",
-        "Kafka",
-        "Hrabal"
-      ],
+      "options": ["Jaroslav Hašek", "Karel Čapek", "Franz Kafka", "Bohumil Hrabal"],
       "correct": 1,
-      "expl": "Karel Čapek."
+      "expl": "Autorem je Karel Čapek; první svazek vyšel 1929, druhý 1932."
     },
     {
-      "prompt": "Jaký je základní žánr?",
-      "options": [
-        "Epos",
-        "Detektivní/humoristické povídky",
-        "Audience",
-        "Balada"
-      ],
+      "prompt": "Jaký je základní žánr souboru?",
+      "options": ["Historický epos", "Detektivní a humoristické povídky", "Lyrická skladba", "Tragédie"],
       "correct": 1,
-      "expl": "Povídky s detektivním jádrem."
-    },
-    {
-      "prompt": "Co Čapek často zpochybňuje?",
-      "options": [
-        "Hudbu",
-        "Všemocnost čisté logiky",
-        "Existenci kaváren",
-        "Čtení"
-      ],
-      "correct": 1,
-      "expl": "Náhoda a lidskost."
-    },
-    {
-      "prompt": "Jaký je tón?",
-      "options": [
-        "Jen tragický patos",
-        "Humoristický, bystrý",
-        "Jen horor Poeův",
-        "Jen zákopový"
-      ],
-      "correct": 1,
-      "expl": "Čapkovský humor."
+      "expl": "Čapek kombinuje detektivní zápletku s humorem a parodií."
     },
     {
       "prompt": "Jak jsou povídky rámovány?",
-      "options": [
-        "Jen deníkem vojáka",
-        "Vyprávěním ve společnosti",
-        "Jen úředním spisem",
-        "Jen hexametrem"
-      ],
+      "options": ["Deníkem jednoho hrdiny", "Vyprávěním přátel u stolu v kavárně", "Úředním protokolem", "Hexametrem"],
       "correct": 1,
-      "expl": "Rámec vypravěčů."
+      "expl": "Rámec tvoří společnost, která si předává krátké historky."
     },
     {
-      "prompt": "Proč „z kapes“?",
+      "prompt": "Proč název „z kapes“?",
       "options": [
-        "Náhodný název bez smyslu",
-        "Soubor drobných příběhů „po kapsách“",
-        "Jsou o krádežích kapes výhradně",
-        "Jsou o robotice"
+        "Jde výhradně o krádeže kapesníků",
+        "Jde o drobné příběhy, které si lze „vytáhnout z kapsy“ u stolu",
+        "Autor psal jen v kapse kabátu",
+        "Jde o učebnici šití"
       ],
       "correct": 1,
-      "expl": "Drobné historky."
+      "expl": "Metafora malých, unosných povídek vhodných k vyprávění."
     },
     {
-      "prompt": "Co je typické pointě?",
+      "prompt": "Co Čapek u detektivek často zpochybňuje?",
       "options": [
-        "Žádná",
-        "Překvapení, vtip, lidský detail",
-        "Jen matematický důkaz bez vtipu",
-        "Jen sňatek"
+        "Existenci kaváren",
+        "Všemocnost čisté logiky a dedukce",
+        "Pravopis",
+        "Existenci Prahy"
       ],
       "correct": 1,
-      "expl": "Pointa s humorem."
+      "expl": "Příběhy ukazují, že náhoda a lidský detail často překonají „geniální“ rozum."
     },
     {
-      "prompt": "Jak souvisí s Čapkovým dílem?",
+      "prompt": "Kdo je komisař Mejzlík?",
       "options": [
-        "Nesouvisí",
-        "Humanismus a hra s žánrem",
-        "Jen R.U.R. bez návaznosti",
-        "Jen Bílá nemoc bez humoru"
+        "Hlavní hrdina všech povídek bez výjimky",
+        "Detektiv v detektivních povídkách cyklu, parodie sherlockovského typu",
+        "Čapekův bratr",
+        "Postava z R.U.R."
       ],
       "correct": 1,
-      "expl": "Stejný duch."
+      "expl": "Mejzlík reprezentuje přehnanou logiku, kterou Čapek ironizuje."
     },
     {
-      "prompt": "Kdy zhruba vycházely?",
-      "options": [
-        "1836",
-        "Přelom 20./30. let 20. stol.",
-        "2001",
-        "1415"
-      ],
-      "correct": 1,
-      "expl": "1929/1932."
+      "prompt": "Která povídka patří k známým z kapsy?",
+      "options": ["Modrá chrysantéma", "Havran", "Babička", "Hamlet"],
+      "correct": 0,
+      "expl": "Modrá chrysantéma je jedna z proslulých detektivních miniatur."
     },
     {
-      "prompt": "Co čtenář dělá?",
-      "options": [
-        "Jen počítá daně",
-        "Spoluuhádá a nechá se překvapit",
-        "Jen cenzuruje",
-        "Jen tančí"
-      ],
+      "prompt": "Jaký je typický tón sbírky?",
+      "options": ["Pouze tragický patos", "Humoristický, bystrý, ironický", "Pouze horor", "Úřednický bez emocí"],
       "correct": 1,
-      "expl": "Interaktivní radost z příběhu."
+      "expl": "Typický je čapkovský humor a nadhled nad žánrem."
     },
     {
-      "prompt": "Hlavní kouzlo?",
-      "options": [
-        "Délka eposu",
-        "Krátkost, vtip, nápad",
-        "Robotí vzpoura",
-        "Zákopová statistika"
-      ],
+      "prompt": "Kdy vyšly oba svazky zhruba?",
+      "options": ["1836 a 1840", "1929 a 1932", "2001 a 2005", "1415 a 1420"],
       "correct": 1,
-      "expl": "Povídková elegance."
+      "expl": "Obě kapsy vznikly v meziválečné prvorepublikové době."
     },
     {
-      "prompt": "Téma napříč souborem?",
+      "prompt": "Co je typické pro pointu povídky?",
       "options": [
-        "Jen válka v zákopech",
-        "Pravda, omyl, náhoda, lidská povaha",
-        "Jen lastura",
-        "Jen Claireina pomsta"
+        "Žádné vyřešení",
+        "Překvapení, vtip nebo banální lidský detail",
+        "Pouze matematický důkaz bez vtipu",
+        "Povinný sňatek"
       ],
       "correct": 1,
-      "expl": "Lidská povaha v zápletkách."
+      "expl": "Čapek rád obrátí očekávání čtenáře v závěru."
+    },
+    {
+      "prompt": "Jak souvisí sbírka s ostatním Čapkovým dílem?",
+      "options": [
+        "Nesouvisí vůbec",
+        "Humanismus, hra s žánrem, ironie – stejný duch jako u jiných próz",
+        "Je to jen překlad Twaina",
+        "Je to pokračování R.U.R."
+      ],
+      "correct": 1,
+      "expl": "Čapek znovu spojuje zábavu s myšlenkou o člověku a společnosti."
+    },
+    {
+      "prompt": "Co čtenář při čtení typicky dělá?",
+      "options": [
+        "Jen počítá stránky",
+        "Spoluuhádá záhadu a nechá se překvapit pointou",
+        "Učí se latinku",
+        "Ignoruje děj"
+      ],
+      "correct": 1,
+      "expl": "Detektivní linka zve k aktivnímu čtení, parodie ho pak přechytračí."
+    },
+    {
+      "prompt": "Které prostředí rámce převažuje?",
+      "options": ["Venkov 19. století", "Praha první republiky – kavárna, společnost", "Vesmír", "Středověký hrad"],
+      "correct": 1,
+      "expl": "Rámec odpovídá pražské meziválečné inteligenci."
+    },
+    {
+      "prompt": "Co NENÍ charakteristika cyklu?",
+      "options": ["Humor", "Parodie detektivky", "Jediný souvislý román o jedné rodině", "Krátká forma"],
+      "correct": 2,
+      "expl": "Jde o soubor samostatných povídek spojených rámcem."
+    },
+    {
+      "prompt": "Jak Čapek vnímá detektivní žánr?",
+      "options": [
+        "Bezvýhradně ho opakuje",
+        "Hraje si s ním, demýtizuje geniálního detektiva",
+        "Zakazuje záhady",
+        "Píše jen dokumenty"
+      ],
+      "correct": 1,
+      "expl": "Mejzlík a pointy ukazují limity „stoprocentní“ logiky."
+    },
+    {
+      "prompt": "Které dílo NENÍ Čapek?",
+      "options": ["Povídky z kapes", "R.U.R.", "Revizor", "Válka s mloky"],
+      "correct": 2,
+      "expl": "Revizor je Gogolova komedie."
+    },
+    {
+      "prompt": "Kolik „kapes“ má plný název díla?",
+      "options": ["Jednu", "Dvě – z jedné a z druhé kapsy", "Deset", "Žádnou"],
+      "correct": 1,
+      "expl": "Maturitní četba zahrnuje oba svazky."
+    },
+    {
+      "prompt": "Co je Levkoj v kontextu sbírky?",
+      "options": [
+        "Postava z R.U.R.",
+        "Název jedné z povídek v cyklu",
+        "Čapekův bratr",
+        "Detektivní pes"
+      ],
+      "correct": 1,
+      "expl": "Levkoj patří k známým povídkám z kapsy."
+    },
+    {
+      "prompt": "Jaký kontrast tvoří jádro detektivních povídek?",
+      "options": [
+        "Moře vs. hory",
+        "Chladná dedukce vs. náhoda a lidskost",
+        "Praha vs. Brno",
+        "Den vs. noc bez významu"
+      ],
+      "correct": 1,
+      "expl": "Čapek staví proti sobě rozum a obyčejnou realitu."
+    },
+    {
+      "prompt": "Proč je dílo v maturitní četbě?",
+      "options": [
+        "Je nejkratší kniha v knihovně",
+        "Čapek, parodie, forma povídky, humanismus",
+        "Bez témat a postav",
+        "Je to atlas"
+      ],
+      "correct": 1,
+      "expl": "U maturity se ptá na autora, rámec, žánr a typické povídky."
+    },
+    {
+      "prompt": "Kdo NENÍ typická postava kapsy?",
+      "options": ["Komisař Mejzlík", "Vypravěč u stolu", "Frodo Pytlík", "Pachatel v minipříběhu"],
+      "correct": 2,
+      "expl": "Frodo je z Tolkienova eposu."
+    },
+    {
+      "prompt": "Co znamená humanismus u Čapka zde?",
+      "options": [
+        "Zájem o obyčejného člověka, soucit, nadhled",
+        "Popírání humoru",
+        "Jen politická propaganda",
+        "Odmítání prózy"
+      ],
+      "correct": 0,
+      "expl": "I v detektivce jde o lidi, ne jen o rébus."
+    },
+    {
+      "prompt": "Jaká forma vyprávění v jednotlivých povídkách?",
+      "options": [
+        "Výhradně divadelní dialog bez vypravěče",
+        "Krátká próza, často ich- nebo er-forma v rámci vyprávění u stolu",
+        "Pouze sonety",
+        "Operní libreto"
+      ],
+      "correct": 1,
+      "expl": "Každá miniatura má klasickou povídkovou stavbu."
+    },
+    {
+      "prompt": "Co je Uspání v kontextu díla?",
+      "options": [
+        "Povídka z druhé kapsy",
+        "Čapekův dramatický spis",
+        "Název kavárny",
+        "Postava z Bílé nemoci"
+      ],
+      "correct": 0,
+      "expl": "Uspání patří k povídkám druhého svazku."
+    },
+    {
+      "prompt": "Jaký vztah má sbírka k Sherlocku Holmesovi?",
+      "options": [
+        "Žádný – Čapek neznal detektivky",
+        "Parodický – ironizuje dedukci a „geniální“ detektiva",
+        "Holmes je hlavní hrdina",
+        "Jde o Holmesův deník"
+      ],
+      "correct": 1,
+      "expl": "Mejzlík a pointy reagují na konvence žánru."
+    },
+    {
+      "prompt": "Které téma NENÍ typické?",
+      "options": ["Náhoda a omyl", "Lidská povaha v malém", "Vzpoura robotů", "Ironie vůči jistotám"],
+      "correct": 2,
+      "expl": "Robotí vzpoura patří k R.U.R."
+    },
+    {
+      "prompt": "Co je hlavní kouzlo formátu?",
+      "options": [
+        "Extrémní délka románu",
+        "Krátkost, vtip, nápad, překvapivá pointa",
+        "Bez děje",
+        "Pouze popis krajiny"
+      ],
+      "correct": 1,
+      "expl": "Povídka z kapsy má být lehká a zapamatovatelná."
+    },
+    {
+      "prompt": "Jak maturita obvykle testuje dílo?",
+      "options": [
+        "Jen rok narození autora",
+        "Autor, rámec, žánr, Mejzlík, známé povídky, témata",
+        "Jen počet stran",
+        "Jen cizí jazyk originálu"
+      ],
+      "correct": 1,
+      "expl": "Čeká se přehled o cyklu a charakteristice Čapkovy parodie."
+    },
+    {
+      "prompt": "Který autor je současník Čapka v české próze?",
+      "options": ["Bohumil Hrabal (jiná generace)", "Karel Čapek sám", "Homér", "Dante"],
+      "correct": 0,
+      "expl": "Hrabal patří později; u maturity jde o meziválečný Čapek."
+    },
+    {
+      "prompt": "Jaký závěr lze vyvodit z celého cyklu?",
+      "options": [
+        "Logika vždy zvítězí nad náhodou",
+        "Pravda bývá prozaická; humor a humanismus jsou důležité",
+        "Detektivka je nevhodný žánr",
+        "Kavárny je třeba zakázat"
+      ],
+      "correct": 1,
+      "expl": "Čapek oslavuje bystrost, ale i lidskost a nadhled."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Rámec vyprávění u stolu",
-        "Zadá se záhada",
-        "Nabízejí se logické stopy",
-        "Zvrat / náhoda",
-        "Pointa",
-        "Návrat k humoru společnosti"
+        "Přátelé sedí u stolu v kavárně",
+        "Jeden vypravěč přednese detektivní historku",
+        "Nabízejí se stopy a logické úvahy",
+        "Zvrat – náhoda nebo banální detail",
+        "Pointa povídky",
+        "Společnost reaguje humorem a pokračuje vyprávěním"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: rámec → záhada → stopy → zvrat → pointa → humor."
+    "Správné pořadí: kavárenský rámec → přednes povídky → stopy a dedukce → zvrat → pointa → reakce společnosti."
   ]
 }

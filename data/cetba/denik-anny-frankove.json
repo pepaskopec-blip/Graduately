@@ -5,197 +5,417 @@
       "icon": "book",
       "lines": [
         "Autor: Anne Franková",
-        "Žánr: deníková próza / svědectví",
-        "Poprvé vydáno: 1947 (nizozemsky; česky později)",
-        "Děj/prostředí: Amsterodam za nacistické okupace, skrýš „Zadní dům“",
-        "Vyprávění/forma: autentický deník dívky (Kitty)"
+        "Žánr: deníková próza (memoáry)",
+        "Poprvé vydáno: 1947 (NL)",
+        "Děj/prostředí: Amsterdam, úkryt „Achterhuis“ 1942–1944",
+        "Vyprávění/forma: ich-forma deníkových záznamů"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "2. světová válka, holokaust, pronásledování Židů.",
-        "Rodina Frankových se skrývá v Amsterodamu.",
-        "Deník zachycuje dospívání i strach z odhalení.",
-        "Vztahy ve skrýši jsou napjaté, ale i plné naděje.",
-        "Po udání transport; Anne umírá v koncentračním táboře.",
-        "Téma: válka, identita, dospívání, lidská důstojnost."
+        "Nacistická okupace, pronásledování Židů",
+        "Rodina Frankových v tajném bytě",
+        "Deník jako únik a svědectví",
+        "Strach z prozrazení, nejistota",
+        "Růst dospívající Anny",
+        "Tragický osud po odhalení"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Anne Franková – autorka deníku, dospívající dívka.",
-        "Otto Frank – otec, jediný z rodiny, který přežil.",
-        "Edith Franková – matka.",
-        "Margot Franková – Annina starší sestra.",
-        "Rodina van Pelsových a Fritz Pfeffer – spolubydlící ve skrýši.",
-        "Pomocníci (např. Miep Giesová) – riskují život kvůli úkrytu."
+        "Anne Franková – autorka, dospívající dívka",
+        "Otto Frank – otec",
+        "Edith Frank – matka",
+        "Margot – sestra",
+        "Van Pels/Daans – spoluúkrytí",
+        "Miep Gies – pomocnice"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Zadní dům (Achterhuis) – skrýš v Amsterodamu.",
-        "Deník Kitty – Anniny dopisy imaginární přítelkyni.",
-        "Holokaust – historický kontext genocidy.",
-        "Dospívání – osobní rovina vedle dějin.",
-        "Svědectví – dokumentární síla textu.",
-        "Naděje – Annina víra v dobro člověka i ve strachu."
+        "Holocaust – genocida",
+        "Úkryt – izolace",
+        "Deník Kitty – adresát",
+        "Dospívání v extremu",
+        "Naděje vs. realita",
+        "Svědectví historie"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Deník Anne Frankové?",
+      "prompt": "Autorka?",
       "options": [
-        "Miep Giesová",
         "Anne Franková",
-        "Otto jen jako fikci",
-        "Viktor Hugo"
+        "Viewegh",
+        "Brontë",
+        "Collins"
       ],
-      "correct": 1,
-      "expl": "Jde o autentický deník Anne Frankové."
+      "correct": 0,
+      "expl": "Anne Franková."
     },
     {
-      "prompt": "Kde se rodina skrývala?",
+      "prompt": "Forma?",
       "options": [
-        "V Paříži",
-        "V Amsterodamu v Zadním domě",
-        "V Londýně",
-        "V Praze"
-      ],
-      "correct": 1,
-      "expl": "Skrýš se nazývá Achterhuis – Zadní dům."
-    },
-    {
-      "prompt": "Komu Anne deník často adresuje?",
-      "options": [
-        "Hitlerovi",
-        "Kitty",
-        "Učiteli",
-        "Královně"
-      ],
-      "correct": 1,
-      "expl": "Zápisy mají formu dopisů přítelkyni Kitty."
-    },
-    {
-      "prompt": "Kdo z blízké rodiny válku přežil?",
-      "options": [
-        "Anne",
-        "Otto Frank",
-        "Margot",
-        "Edith"
-      ],
-      "correct": 1,
-      "expl": "Otec Otto jako jediný z rodiny přežil a deník vydal."
-    },
-    {
-      "prompt": "V jaké historické situaci deník vzniká?",
-      "options": [
-        "Za husitství",
-        "Za nacistické okupace a holokaustu",
-        "Za napoleonských válek",
-        "V roce 1968 v Praze"
-      ],
-      "correct": 1,
-      "expl": "Židé se skrývají před deportací a vyhlazením."
-    },
-    {
-      "prompt": "Jak deník končí z hlediska osudu skrýše?",
-      "options": [
-        "Osvobozením hned první den",
-        "Udáním a zatčením obyvatel skrýše",
-        "Emigrací do USA uprostřed zápisů",
-        "Svatbou Anne"
-      ],
-      "correct": 1,
-      "expl": "Po udání jsou obyvatelé zatčeni a deportováni."
-    },
-    {
-      "prompt": "Proč je kniha důležitá pro maturitu / svědomí Evropy?",
-      "options": [
-        "Je to detektivka",
-        "Je osobním svědectvím o holokaustu a dospívání",
-        "Je o trifidech",
-        "Je cimrmanovská komedie"
-      ],
-      "correct": 1,
-      "expl": "Spojuje intimní hlas dívky s dějinnou tragédií."
-    },
-    {
-      "prompt": "Kdy deník poprvé vyšel knižně?",
-      "options": [
-        "1942",
-        "1947",
-        "1989",
-        "1937"
-      ],
-      "correct": 1,
-      "expl": "Nizozemsky vyšel roku 1947 díky Otovi Frankovi."
-    },
-    {
-      "prompt": "Co Anne ve skrýši také prožívá kromě strachu?",
-      "options": [
-        "Jen politické schůze",
-        "Dospívání, konflikty, lásku, touhu psát",
-        "Vojenský výcvik",
-        "Studium medicíny na univerzitě denně"
-      ],
-      "correct": 1,
-      "expl": "Deník je i portrét dospívání v extrémních podmínkách."
-    },
-    {
-      "prompt": "Kdo pomáhá skrýši zvenčí?",
-      "options": [
-        "Gestapo",
-        "Nežidovští přátelé a spolupracovníci (např. Miep Giesová)",
-        "Trifidi",
-        "Javert"
-      ],
-      "correct": 1,
-      "expl": "Bez pomoci zvenčí by úkryt nebyl možný; pomocníci riskují život."
-    },
-    {
-      "prompt": "Jaký žánr textu je nejpřesnější?",
-      "options": [
+        "Deník",
         "Epos",
-        "Deníková próza / svědectví",
-        "Absurdní drama",
-        "Sonet"
+        "Drama",
+        "Báseň"
       ],
-      "correct": 1,
-      "expl": "Forma deníku dává textu bezprostřednost."
+      "correct": 0,
+      "expl": "Deníkové zápisy."
     },
     {
-      "prompt": "Kam byla Anne po zatčení deportována (kontext konce)?",
+      "prompt": "Kde úkryt?",
       "options": [
-        "Do New Yorku studovat",
-        "Do koncentračního tábora; tam umírá",
-        "Domů do klidu",
-        "Na farmu zvířat"
+        "Amsterdam",
+        "Praha",
+        "Berlín",
+        "Paříž"
       ],
-      "correct": 1,
-      "expl": "Anne a Margot umírají v koncentraku (Bergen-Belsen) krátce před koncem války."
+      "correct": 0,
+      "expl": "Nizozemsko."
+    },
+    {
+      "prompt": "Období zápisů?",
+      "options": [
+        "1942–1944",
+        "1914–1918",
+        "1989",
+        "1600"
+      ],
+      "correct": 0,
+      "expl": "Válka."
+    },
+    {
+      "prompt": "Proč v úkrytu?",
+      "options": [
+        "Pronásledování Židů",
+        "Dovolená",
+        "Sport",
+        "Škola"
+      ],
+      "correct": 0,
+      "expl": "Holocaust."
+    },
+    {
+      "prompt": "Kitty?",
+      "options": [
+        "Vymyšlená adresátka deníku",
+        "Sestra",
+        "Učitelka",
+        "Německá officer"
+      ],
+      "correct": 0,
+      "expl": "Deník píše „milé Kitty“."
+    },
+    {
+      "prompt": "Otto Frank?",
+      "options": [
+        "Otec, přežil",
+        "Gestapo",
+        "Neexistuje",
+        "Anne nepíše"
+      ],
+      "correct": 0,
+      "expl": "Jediný z rodiny v úkrytu často přežil."
+    },
+    {
+      "prompt": "Margot?",
+      "options": [
+        "Starší sestra",
+        "Matka",
+        "Trifid",
+        "Učitel"
+      ],
+      "correct": 0,
+      "expl": "Sestra Anny."
+    },
+    {
+      "prompt": "Spoluúkrytí?",
+      "options": [
+        "Van Pels (Daans v některých vydáních)",
+        "Nikdo",
+        "Jen Anne",
+        "Sto lidí"
+      ],
+      "correct": 0,
+      "expl": "Další rodina v bytě."
+    },
+    {
+      "prompt": "Miep Gies?",
+      "options": [
+        "Pomáhala potravinami",
+        "Gestapo",
+        "Anne",
+        "Hitler"
+      ],
+      "correct": 0,
+      "expl": "Ochránkyně."
+    },
+    {
+      "prompt": "Tón deníku?",
+      "options": [
+        "Osobní, dospívající, i humor",
+        "Pouze veselý",
+        "Bez emocí",
+        "Latina"
+      ],
+      "correct": 0,
+      "expl": "Autentický hlas."
+    },
+    {
+      "prompt": "Odhalení?",
+      "options": [
+        "1944, deportace",
+        "Nikdy",
+        "1940",
+        "1990"
+      ],
+      "correct": 0,
+      "expl": "Tragický zlom."
+    },
+    {
+      "prompt": "Osud Anny?",
+      "options": [
+        "Auschwitz, Belsen, smrt 1945",
+        "Přežila",
+        "Emigrace USA",
+        "Neznámý"
+      ],
+      "correct": 0,
+      "expl": "Historický fakt."
+    },
+    {
+      "prompt": "Vydání deníku?",
+      "options": [
+        "Otto po válce",
+        "Anne za života knižně",
+        "Hitler",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Otec vydal."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Svědectví Holocaustu",
+        "Nejdelší",
+        "Fikce",
+        "Bez témat"
+      ],
+      "correct": 0,
+      "expl": "Důležité svědectví."
+    },
+    {
+      "prompt": "Ich-forma?",
+      "options": [
+        "Anne píše o sobě",
+        "Er",
+        "Vševěd",
+        "Bez já"
+      ],
+      "correct": 0,
+      "expl": "Deník."
+    },
+    {
+      "prompt": "Konflikty v úkrytu?",
+      "options": [
+        "Těsná izolace, neshody",
+        "Ne",
+        "Válka venku ne",
+        "Jen sport"
+      ],
+      "correct": 0,
+      "expl": "Psychická zátěž."
+    },
+    {
+      "prompt": "Sny Anny?",
+      "options": [
+        "Spisovatelka, svoboda",
+        "Voják",
+        "Ne",
+        "Královna"
+      ],
+      "correct": 0,
+      "expl": "Ambice."
+    },
+    {
+      "prompt": "Holocaust?",
+      "options": [
+        "Genocida Židů",
+        "Sport",
+        "Ne",
+        "Pouze fikce"
+      ],
+      "correct": 0,
+      "expl": "Kontext."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Deník",
+        "Úkryt",
+        "Hamlet",
+        "Anne"
+      ],
+      "correct": 2,
+      "expl": "Hamlet drama."
+    },
+    {
+      "prompt": "Jazyk originálu?",
+      "options": [
+        "Holština / němčina verze",
+        "Čeština originál",
+        "Latina",
+        "Ruština"
+      ],
+      "correct": 0,
+      "expl": "Anne psala nizozemsky."
+    },
+    {
+      "prompt": "Téma dospívání?",
+      "options": [
+        "Tělo, láska, identita v úkrytu",
+        "Ne",
+        "Pouze politika",
+        "Pouze jídlo"
+      ],
+      "correct": 0,
+      "expl": "Dvojí rovina."
+    },
+    {
+      "prompt": "Strach?",
+      "options": [
+        "Stálý – krok, prozrazení",
+        "Ne",
+        "Jen venku",
+        "Neexistuje"
+      ],
+      "correct": 0,
+      "expl": "Atmosféra."
+    },
+    {
+      "prompt": "Naděje?",
+      "options": [
+        "Deník udržuje naději",
+        "Ne",
+        "Pouze deprese",
+        "Zakázáno"
+      ],
+      "correct": 0,
+      "expl": "Lidská síla."
+    },
+    {
+      "prompt": "Katalog žánr?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Achterhuis?",
+      "options": [
+        "Zadní dům/úkryt",
+        "Město",
+        "Loď",
+        "Hora"
+      ],
+      "correct": 0,
+      "expl": "Prostor úkrytu."
+    },
+    {
+      "prompt": "Edith?",
+      "options": [
+        "Matka Anny",
+        "Sestra",
+        "Gestapo",
+        "Kitty"
+      ],
+      "correct": 0,
+      "expl": "Rodina."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Oběť války, hlas obyčejného dítěte",
+        "Válka dobrá",
+        "Deník zbytečný",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Paměť."
+    },
+    {
+      "prompt": "Upravené vydání?",
+      "options": [
+        "Různé verze textu existují",
+        "Ne",
+        "Jen fikce",
+        "Bez Anne"
+      ],
+      "correct": 0,
+      "expl": "Věda o textu."
+    },
+    {
+      "prompt": "Citace slavná?",
+      "options": [
+        "„Lidé jsou v jádru dobří“ (parafráze)",
+        "Bez myšlenek",
+        "Jen sport",
+        "Latina"
+      ],
+      "correct": 0,
+      "expl": "Známá věta."
+    },
+    {
+      "prompt": "Rok 1947?",
+      "options": [
+        "První vydání",
+        "Narození",
+        "Konec války deníku",
+        "1989"
+      ],
+      "correct": 0,
+      "expl": "Publikace."
+    },
+    {
+      "prompt": "Žánr memoáry?",
+      "options": [
+        "Autobiografický deník",
+        "Román",
+        "Epos",
+        "Komik"
+      ],
+      "correct": 0,
+      "expl": "Ne fikce."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Anne dostává deník a začíná psát",
-        "Rodina se uchýlí do Zadního domu",
-        "Život ve skrýši: napětí, dospívání, naděje",
-        "Zprávy o válce a strach z odhalení rostou",
-        "Skrýš je prozrazena a obyvatelé zatčeni",
-        "Deník přežije jako svědectví (vydá Otto)"
+        "Anne dostane deník a jde do úkrytu",
+        "Život v tajném bytě s rodinou",
+        "Konflikty, strach a dospívání",
+        "Záznamy o naději a realitě",
+        "Úkryt prozrazen 1944",
+        "Deportace a smrt Anny, vydání deníku otcem"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: začátek deníku → skrýš → život v úkrytu → rostoucí ohrožení → zatčení → svědectví deníku."
+    "Pořadí: deník → úkryt → život v izolaci → psaní → prozrazení → osud a vydání."
   ]
 }

@@ -5,44 +5,46 @@
       "icon": "book",
       "lines": [
         "Autor: Karel Čapek (1890–1938)",
-        "Žánr: dystopický / alegorický román, satira",
+        "Žánr: antiutopická satira / novela",
         "Poprvé vydáno: 1936",
-        "Děj: celý svět – objev, obchod a válka s mloky",
-        "Vyprávění: montáž zpráv, reportáží, zápisků a „dokumentů“"
+        "Děj: svět a obchod s mloky (salamany)",
+        "Forma: koláž – články, vědecké zprávy, dialogy"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "30. léta 20. století – krize, kolonialismus, rostoucí fašismus.",
-        "Lidstvo zneužije inteligentní mloky jako levnou pracovní sílu.",
-        "Kapitalismus a geopolitika stupňují katastrofu.",
-        "Satira míří na rasismus, zbrojení i slepou víru v pokrok.",
-        "Román varuje před zničením civilizace vlastní chamtivostí."
+        "Inteligentní mloci na Tahiti – obchodní zázrak.",
+        "Civilizace mloky roste – hrozba pro lidstvo.",
+        "Satira fašismu, kapitalismu, militarismu.",
+        "Přímá paralela s hitlerovským Německem.",
+        "Čapek varuje před lidskou chamtivostí.",
+        "Konec – válka s mloky, jaderná hrozba."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Kapitán van Toch – objeví mloky v ostrovním zálivu.",
-        "G. H. Bondy – průmyslník, rozjede byznys s mloky.",
-        "Mr. Povondra – dveřník, „malý člověk“ sledující dějiny.",
-        "Mloci (např. Chief Salamander) – rostoucí moc non-lidí.",
-        "Novináři, politici, vědci – hlasy montážního vyprávění."
+        "Pan Bondy – podnikatel s mloky.",
+        "Captain van Toch – objevitel.",
+        "Mloci – inteligentní, organizovaní.",
+        "Vědci, politici – krátkozrací.",
+        "Narrator / kolážní hlasy.",
+        "Lidstvo jako sebevrah."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Mlok – alegorie zneužité pracovní síly / „druhého“.",
-        "Byznys a kolonialismus – kořeny katastrofy.",
-        "Montáž – román jako koláž žánrů a dokumentů.",
-        "Satira – výsměch lidské hlouposti a chamtivosti.",
-        "Fašismus / zbrojení – dobový stín 30. let.",
-        "Varování – civilizace může zničit sama sebe."
+        "Salamandři / mloci – alegorie totalitního národa.",
+        "Koláž – montáž různých stylů.",
+        "Satira – groteskní eskalace.",
+        "Fašismus – uniformy, mluví, armáda mloků.",
+        "Ekonomie – mloci jako zboží a vojáci.",
+        "Varování před zneužitím vědy."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Válku s mloky?",
       "options": [
+        "Hašek",
         "Karel Čapek",
-        "Josef Škvorecký",
-        "Milan Kundera",
-        "Ota Pavel"
+        "Orwell",
+        "Vančura"
+      ],
+      "correct": 1,
+      "expl": "Čapek 1936."
+    },
+    {
+      "prompt": "Co jsou mloci v knize?",
+      "options": [
+        "Inteligentní obojživelníci",
+        "Lidé",
+        "Roboti",
+        "Ptáci"
       ],
       "correct": 0,
-      "expl": "Autorem je Karel Čapek."
+      "expl": "Salamandři s vědomím."
     },
     {
-      "prompt": "Kdo mloky objeví?",
+      "prompt": "Kdo objeví mloky?",
       "options": [
+        "Captain van Toch",
         "Gatsby",
-        "Kapitán van Toch",
-        "Saturnin",
-        "Stingo"
+        "Svejk",
+        "Winston"
       ],
-      "correct": 1,
-      "expl": "Kapitán van Toch narazí na mloky v zálivu."
+      "correct": 0,
+      "expl": "Tichomořský objev."
     },
     {
-      "prompt": "K čemu lidé mloky nejdřív využívají?",
+      "prompt": "Bondy?",
       "options": [
-        "Ke psaní elegií",
-        "Jako levnou pracovní sílu v mořích",
-        "Jako učitele latiny",
-        "Jako piloty Spitfiru"
+        "Podnikatel znezužívající mloky",
+        "Kněz",
+        "Němec",
+        "Dítě"
       ],
-      "correct": 1,
-      "expl": "Mloci se stávají zbožím a pracovní silou."
+      "correct": 0,
+      "expl": "Kapitalista."
     },
     {
-      "prompt": "Kdo je G. H. Bondy?",
+      "prompt": "Žánr?",
       "options": [
-        "Rybář Santiago",
-        "Průmyslník, který z mloků udělá byznys",
-        "Český básník",
-        "Benátský sluha"
+        "Antiutopická satira",
+        "Realistická vesnická novela",
+        "Lyrika",
+        "Historický román"
       ],
-      "correct": 1,
-      "expl": "Bondy rozjede obchodní využití mloků."
+      "correct": 0,
+      "expl": "Čapkova satira."
     },
     {
-      "prompt": "Jaký je styl vyprávění románu?",
+      "prompt": "Forma?",
       "options": [
-        "Jen milostné dopisy",
-        "Montáž zpráv, reportáží a „dokumentů“",
-        "Jen sonety",
-        "Jen deník Charlieho"
+        "Koláž – různé texty a styly",
+        "Jeden deník",
+        "Drama",
+        "Epos"
       ],
-      "correct": 1,
-      "expl": "Čapek skládá román z různých textových forem."
+      "correct": 0,
+      "expl": "Montáž."
     },
     {
-      "prompt": "Co román především satirizuje?",
+      "prompt": "Satira míří na?",
       "options": [
-        "Rybaření na Berounce",
-        "Chamtivost, rasismus, politiku a slepý pokrok",
-        "Školní sbor",
-        "Komedii dell’arte"
+        "Fašismus, militarismus, chamtivost",
+        "Jen rybaření",
+        "Lásku",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Satira míří na civilizační choroby 20. století."
+      "correct": 0,
+      "expl": "Politický subtext."
     },
     {
-      "prompt": "Ve kterém roce kniha vyšla?",
+      "prompt": "Mloci se organizují?",
       "options": [
-        "1922",
+        "Ano – stát, armáda",
+        "Ne",
+        "Jen jako domácí mazlíčci",
+        "Umírají hned"
+      ],
+      "correct": 0,
+      "expl": "Eskalace."
+    },
+    {
+      "prompt": "Paralela s historií?",
+      "options": [
+        "Nacistické Německo 30. let",
+        "Antika",
+        "2000",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Čapek varoval."
+    },
+    {
+      "prompt": "Rok vydání?",
+      "options": [
         "1936",
-        "1942",
-        "1968"
+        "1949",
+        "1890",
+        "2005"
       ],
-      "correct": 1,
-      "expl": "Válka s mloky vyšla roku 1936."
+      "correct": 0,
+      "expl": "Před 2. sv. válkou."
     },
     {
-      "prompt": "Jak konflikt s mloky končí v logice díla?",
+      "prompt": "Jak končí?",
       "options": [
-        "Idylickým mírem hned na začátku",
-        "Eskalací k válce ohrožující lidstvo",
-        "Svatbou van Tocha",
-        "Otevřením pekárny"
+        "Válka lidstva s mloky, hrozba zničení",
+        "Svatba",
+        "Mloci jako pets",
+        "Emigrace"
       ],
-      "correct": 1,
-      "expl": "Z obchodu se stane existenční válka."
+      "correct": 0,
+      "expl": "Apokalypsa."
     },
     {
-      "prompt": "Kdo je pan Povondra?",
+      "prompt": "Čapek jiné?",
       "options": [
-        "Vůdce mloků",
-        "Dveřník – „malý člověk“ u Bondyho",
-        "Prezident USA",
-        "Marlín"
+        "R.U.R., Krakatit",
+        "Gatsby",
+        "Kytice",
+        "Saturnin"
       ],
-      "correct": 1,
-      "expl": "Povondra reprezentuje obyčejného svědka dějin."
+      "correct": 0,
+      "expl": "Sci-fi a satira."
     },
     {
-      "prompt": "Proč jsou mloci nebezpečnou alegorií?",
+      "prompt": "Co NENÍ?",
       "options": [
-        "Protože neumějí plavat",
-        "Ukazují, jak člověk vytvoří sílu, která ho zničí",
-        "Protože píší básně",
-        "Protože jsou jen hračky"
+        "Satira",
+        "Varování",
+        "Koláž",
+        "Bezmyšlenkovitá pohádka bez politiky"
       ],
-      "correct": 1,
-      "expl": "Lidstvo si samo vypěstuje nepřítele."
+      "correct": 3,
+      "expl": "Politická alegorie."
     },
     {
-      "prompt": "Jaký žánr je nejpřiléhavější?",
+      "prompt": "Mloci mluví?",
       "options": [
-        "Pastoralní idyla",
-        "Alegorická dystopie / satira",
-        "Jen cestopis bez pointy",
-        "Liturgie"
+        "Ano – jazyk, ideologie",
+        "Ne",
+        "Jen pes",
+        "Latině"
       ],
-      "correct": 1,
-      "expl": "Jde o satirickou dystopii s alegorií."
+      "correct": 0,
+      "expl": "Inteligence."
     },
     {
-      "prompt": "Jaký dobový kontext je klíčový?",
+      "prompt": "Ekonomika?",
       "options": [
-        "Středověké cechy",
-        "30. léta – krize, kolonialismus, nástup totalit",
-        "Jen rok 1989",
-        "Antický Olymp"
+        "Obchod s mloky jako zbožím",
+        "Bez",
+        "Socialismus hotový",
+        "Bez peněz"
       ],
-      "correct": 1,
-      "expl": "Román reaguje na ohrožení civilizace ve 30. letech."
+      "correct": 0,
+      "expl": "Kapitalismus."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Satira, forma, kontext 30. let",
+        "Bez",
+        "Jen biologie mloků",
+        "Mapa"
+      ],
+      "correct": 0,
+      "expl": "Česká literatura."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Groteskní, varovný",
+        "Idyla",
+        "Bez humoru",
+        "Pure romance"
+      ],
+      "correct": 0,
+      "expl": "Černý humor."
+    },
+    {
+      "prompt": "Věda?",
+      "options": [
+        "Zneužita pro zisk",
+        "Chválena bez rizika",
+        "Ne",
+        "Zakázána"
+      ],
+      "correct": 0,
+      "expl": "Kritika."
+    },
+    {
+      "prompt": "Lidstvo?",
+      "options": [
+        "Krátkozraké, sebedestruktivní",
+        "Moudré",
+        "Neexistuje",
+        "Vždy vítězí"
+      ],
+      "correct": 0,
+      "expl": "Pesimismus."
+    },
+    {
+      "prompt": "Tichomoří?",
+      "options": [
+        "Počátek děje",
+        "Praha",
+        "Siberie",
+        "Měsíc"
+      ],
+      "correct": 0,
+      "expl": "Tahiti."
+    },
+    {
+      "prompt": "Uniformy mloků?",
+      "options": [
+        "Parodie fašismu",
+        "Ne",
+        "Bez",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Vizuální satira."
+    },
+    {
+      "prompt": "Čapek smrt?",
+      "options": [
+        "1938 před okupací",
+        "2000",
+        "1950",
+        "1890"
+      ],
+      "correct": 0,
+      "expl": "Autor nezažil válku."
+    },
+    {
+      "prompt": "Kolážní efekt?",
+      "options": [
+        "Ironie z různých perspektiv",
+        "Chaos bez smyslu",
+        "Bez",
+        "Jen báseň"
+      ],
+      "correct": 0,
+      "expl": "Forma = obsah."
+    },
+    {
+      "prompt": "Brother Čapek?",
+      "options": [
+        "Josef – umělec",
+        "Neexistuje",
+        "Shakespeare",
+        "Hitler"
+      ],
+      "correct": 0,
+      "expl": "Rodina Čapků."
+    },
+    {
+      "prompt": "Varování?",
+      "options": [
+        "Před totalitou a obchodem se zbraněmi",
+        "Před mloky v akváriu",
+        "Bez",
+        "Před školou"
+      ],
+      "correct": 0,
+      "expl": "Politické."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Originál česky",
+        "Anglicky jen",
+        "Bez",
+        "Němec"
+      ],
+      "correct": 0,
+      "expl": "Český autor."
+    },
+    {
+      "prompt": "Mloci vs R.U.R.?",
+      "options": [
+        "Obě alegorie – jiný motiv",
+        "Totéž",
+        "Bez",
+        "R.U.R. o mlocích"
+      ],
+      "correct": 0,
+      "expl": "Čapkovo sci-fi."
+    },
+    {
+      "prompt": "Čtenář 1936?",
+      "options": [
+        "Chápal narážky na Evropu",
+        "Bez kontextu vždy",
+        "Děti",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Aktuální satira."
+    },
+    {
+      "prompt": "Závěrečná válka?",
+      "options": [
+        "Lidstvo v ohrožení",
+        "Mloci prohrají bez boje",
+        "Mír",
+        "Svatba"
+      ],
+      "correct": 0,
+      "expl": "Katastrofa."
+    },
+    {
+      "prompt": "Hlavní myšlenka?",
+      "options": [
+        "Lidská chamtivost zbrojí protivníka",
+        "Miluj mloky",
+        "Bez",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Etické varování."
+    },
+    {
+      "prompt": "Kdo je Chief Salamander?",
+      "options": [
+        "Vůdce mloků, který mluví jménem rostoucí moci",
+        "Kapitán van Toch",
+        "Pan Povondra",
+        "Gatsby"
+      ],
+      "correct": 0,
+      "expl": "Salamander reprezentuje organizovanou sílu zneužitých mloků."
+    },
+    {
+      "prompt": "Proč je montážní forma pro Válku s mloky typická?",
+      "options": [
+        "Napodobuje tisk a dokumenty – satira působí jako zpráva z reality",
+        "Je to náhodný experiment bez smyslu",
+        "Nahrazuje děj úplně",
+        "Patří k romantismu 18. st."
+      ],
+      "correct": 0,
+      "expl": "Koláž zpráv, reklam a projevů zesiluje alegorii i humor."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Van Toch objeví inteligentní mloky",
-        "Bondy a svět z nich udělají obchodní artikl",
-        "Mloci se množí a získávají znalosti i zbraně",
-        "Lidstvo přehlíží varování kvůli zisku",
-        "Napětí přeroste v otevřený konflikt",
-        "Válka s mloky ohrozí celou civilizaci"
+        "Objev inteligentních mloků",
+        "Obchod a chov mloků",
+        "Mloci budují civilizaci a armádu",
+        "Satira fašistoidní organizace",
+        "Konflikt lidstva s mloky",
+        "Hrozba zničení světa"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: objev → byznys → růst moci mloků → slepota zisku → konflikt → civilizační ohrožení."
+    "Správné pořadí: objev → obchod → organizace mloků → militarizace → válka → apokalyptická hrozba."
   ]
 }

@@ -5,195 +5,395 @@
       "icon": "book",
       "lines": [
         "Autor: Daniel Keyes (1927–2014)",
-        "Žánr: sci-fi / psychologický román",
-        "Poprvé vydáno: 1966 (román; povídka 1959)",
-        "Děj: USA, experiment zvyšující inteligenci",
-        "Vyprávění: ich-forma – deníkové zprávy Charlieho Gordona"
+        "Žánr: sci-fi novela / psychologická próza",
+        "Poprvé vydáno: 1966 (novela; povídka 1959)",
+        "Děj: USA, vědecký experiment na inteligenci",
+        "Forma: deníkové zápisy Charlieho Gordona"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Moderní Amerika, svět vědy a psychologických experimentů.",
-        "Společnost se na mentálně postižené často dívá s předsudky.",
-        "Laboratoř a výzkum mohou stát nad etikou a lidskostí.",
-        "Úspěch a inteligence nejsou zárukou štěstí.",
-        "Román kritizuje zneužití vědy na člověku."
+        "Společnost hodnotí inteligenci jako měřítko lidské hodnoty.",
+        "Vědecký experiment na mozku – etické otázky.",
+        "Charlie začíná jako mentálně postižený, stává se géniem.",
+        "Osamělost inteligentního člověka mezi bývalými přáteli.",
+        "Algernon – laboratorní myš jako zrcadlo Charlieho osudu.",
+        "Příběh varuje před arogancí vědy i lidské krutosti."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Charlie Gordon – mentálně postižený muž, podstoupí operaci.",
-        "Algernon – myš, na níž byl experiment vyzkoušen dříve.",
-        "Alice Kinnianová – učitelka, Charlieho opora a láska.",
-        "Dr. Strauss a profesor Nemur – vědci řídící experiment.",
-        "Spolupracovníci z pekárny – nejdřív se Charlie mu posmívají."
+        "Charlie Gordon – hlavní hrdina, autora deníku.",
+        "Algernon – myš, první úspěšný experiment.",
+        "Dr. Strauss a profesor Nemur – vědci.",
+        "Alice Kinnian – učitelka, Charlieho opora.",
+        "Rose Gordon – matka, traumatický vztah k synovi.",
+        "Kolegové z pekárny – dříve se smějí, později se bojí."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Progresové zprávy – deníková forma vyprávění.",
-        "Inteligence vs. lidskost – hlavní téma románu.",
-        "Algernon – zrcadlo Charlieho osudu.",
-        "Etika experimentu – věda bez ohledu na člověka.",
-        "Samota – cena za výjimečnost i za návrat zpět.",
-        "Růže – symbol úcty a soucitu (hrob Algernona)."
+        "Deník – forma ukazuje vývoj jazyka a myšlení.",
+        "IQ vs. emoční inteligence – Charlie sílí, ale trpí.",
+        "Algernonův pokles – předzvěst Charlieho konce.",
+        "Květy pro Algernona – soucit a vděčnost.",
+        "Etika experimentu – souhlas a informovanost.",
+        "Osamělost – cena rychlého vědeckého pokroku."
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo je autorem Růže pro Algernon?",
+      "prompt": "Kdo napsal Růži pro Algernona?",
       "options": [
-        "George Orwell",
+        "Isaac Asimov",
         "Daniel Keyes",
-        "Ernest Hemingway",
-        "William Styron"
+        "Ray Bradbury",
+        "Orwell"
       ],
       "correct": 1,
-      "expl": "Román napsal Daniel Keyes."
+      "expl": "Autorem je Daniel Keyes."
     },
     {
-      "prompt": "Jakou formou je kniha vyprávěna?",
+      "prompt": "Jakou formu má novela?",
       "options": [
-        "Jen dialogy",
-        "Deníkovými „progresovými zprávami“ Charlieho",
-        "Dopisy Velkého bratra",
-        "Verši"
+        "Drama",
+        "Deníkové zápisy Charlieho",
+        "Epická báseň",
+        "Dopisy"
       ],
       "correct": 1,
-      "expl": "Text tvoří Charlieho zprávy; jejich styl se mění s IQ."
+      "expl": "Text simuluje Charlieho rostoucí jazykové i myšlenkové schopnosti."
     },
     {
       "prompt": "Kdo je Algernon?",
       "options": [
-        "Charlieho bratr",
-        "Laboratorní myš po stejné operaci",
-        "Lékař",
-        "Učitel"
+        "Pes",
+        "Laboratorní myš",
+        "Charlieův bratr",
+        "Profesor"
       ],
       "correct": 1,
-      "expl": "Algernon je myš, jejíž inteligence byla uměle zvýšena."
+      "expl": "Myš prošla stejnou operací jako Charlie."
     },
     {
-      "prompt": "Proč Charlie podstoupí operaci?",
+      "prompt": "Kde Charlie pracuje na začátku?",
       "options": [
-        "Chce zbohatnout",
-        "Touží být chytřejší a „normální“",
-        "Musí do armády",
-        "Hledá Algernonovo jméno"
+        "V bance",
+        "V pekárně",
+        "Na univerzitě",
+        "V nemocnici"
       ],
       "correct": 1,
-      "expl": "Charlie chce překonat handicap a být přijat."
+      "expl": "Kolegové se mu smějí, ale nechává si to líbit."
     },
     {
-      "prompt": "Co se po operaci s Charliem stane?",
+      "prompt": "Co vědci Charlieovi slibují?",
       "options": [
-        "Nic",
-        "Jeho inteligence prudce stoupne",
-        "Ztratí řeč navždy",
-        "Stane se kouzelníkem"
+        "Zázračnou dietu",
+        "Operaci zvýšení inteligence",
+        "Cestu na Měsíc",
+        "Sňatek"
       ],
       "correct": 1,
-      "expl": "Experiment z něj dočasně udělá geniálního člověka."
+      "expl": "Experiment má zvýšit IQ."
     },
     {
-      "prompt": "Kdo je Alice Kinnianová?",
+      "prompt": "Kdo je Alice Kinnian?",
       "options": [
-        "Vědkyně z Pentagonu",
-        "Charlieho učitelka a později milostný vztah",
-        "Majitelka pekárny",
-        "Sestra profesora Nemura"
+        "Vědkyně",
+        "Učitelka dospělých, podporuje Charlieho",
+        "Charlieho sestra",
+        "Sestra Nemura"
       ],
       "correct": 1,
-      "expl": "Alice Charlieho učí a stane se mu citově blízká."
+      "expl": "Alice je etickou oporou příběhu."
     },
     {
-      "prompt": "Proč je Algernonův osud důležitý?",
+      "prompt": "Co se děje s Charlieho IQ po operaci?",
       "options": [
-        "Předjímá, že účinek operace nemusí trvat",
-        "Dokazuje nesmrtelnost",
-        "Otevírá bojiště",
-        "Zakládá cirkus"
+        "Klesá hned",
+        "Rychle roste na génius",
+        "Nemění se",
+        "Klesá na nulu"
+      ],
+      "correct": 1,
+      "expl": "Charlie začne chápat svět i minulost bolestně jasně."
+    },
+    {
+      "prompt": "Proč se kolegové z pekárny od Charlieho vzdalují?",
+      "options": [
+        "Bojí se jeho inteligence a cizího",
+        "Dostal funkci ředitele",
+        "Odešel do vězení",
+        "Ne – stále ho milují"
       ],
       "correct": 0,
-      "expl": "Úpadek Algernona varuje před návratem Charlieho stavu."
+      "expl": "Charlie už mezi nimi nemá místo."
     },
     {
-      "prompt": "Jak se mění jazyk Charlieho zpráv?",
+      "prompt": "Co odhalí vzpomínky na matku?",
       "options": [
-        "Zůstává stejný",
-        "Od chyb a jednoduchosti k virtuozitě a zase zpět",
-        "Píše jen latinsky",
-        "Píše jen haiku"
+        "Lásku bez podmínek",
+        "Trauma, stud a odmítání postiženého syna",
+        "Emigraci",
+        "Nobelovu cenu"
       ],
       "correct": 1,
-      "expl": "Styl je literární důkaz růstu i úpadku inteligence."
+      "expl": "Rodinná minulost bolí."
     },
     {
-      "prompt": "Jak společnost často zachází s Charliem před operací?",
+      "prompt": "Co se stane s Algernonem?",
       "options": [
-        "S úctou",
-        "S posměchem a využíváním",
-        "Jako s králem",
-        "Ignoruje ho úplně"
+        "Žije navěky",
+        "Inteligence klesá a myš umírá",
+        "Uteče",
+        "Stane se člověkem"
       ],
       "correct": 1,
-      "expl": "V pekárně i jinde je terčem „vtipů“ a ponižování."
+      "expl": "Pokles předpovídá Charlieův osud."
     },
     {
-      "prompt": "Jaké hlavní téma románu vystihuje nejlépe?",
+      "prompt": "Jak Charlie reaguje na Algernonovu smrt?",
       "options": [
-        "Válečná propaganda",
-        "Etika vědy, důstojnost a cena inteligence",
-        "Cirkusová akrobacie",
-        "Maloměstská žárlivost"
+        "Radost",
+        "Položí květiny – odtud název",
+        "Zapomene",
+        "Zničí laboratoř"
       ],
       "correct": 1,
-      "expl": "Keyes se ptá, co z člověka dělá člověka – IQ, nebo lidskost."
+      "expl": "Soucit s myší je vrchol jeho humanity."
     },
     {
-      "prompt": "Co symbolizují růže pro Algernon?",
+      "prompt": "Proč Charlie konfliktuje s Nemurem?",
       "options": [
-        "Bohatství",
-        "Úctu, soucit a památku",
-        "Vítězství ve válce",
-        "Sňatek Alice"
+        "Kvůli fotbalu",
+        "Vědec je arogantní, Charlie vidí chyby experimentu",
+        "Kvůli jídlu",
+        "Kvůli manželce"
       ],
       "correct": 1,
-      "expl": "Charlie nosí růže na Algernonův hrob – gesto úcty."
+      "expl": "Charlie chápe vědu hlouběji než tvůrce experimentu."
     },
     {
-      "prompt": "Jak román končí ohledně Charlieho inteligence?",
+      "prompt": "Jak se mění Charlieův jazyk v deníku?",
       "options": [
-        "Zůstane géniem navždy",
-        "Postupně klesá zpět k původní úrovni",
-        "Změní se v myš",
-        "Odejde do Oceánie"
+        "Beze změny",
+        "Od pravopisných chyb k vědecké přesnosti a zpět",
+        "Do latině",
+        "Do němčiny"
       ],
       "correct": 1,
-      "expl": "Účinek operace pomine; Charlie ztrácí nabyté schopnosti."
+      "expl": "Jazyk je měřítkem inteligence."
+    },
+    {
+      "prompt": "Jak skončí Charlie?",
+      "options": [
+        "Je prezident",
+        "Inteligence klesá, vrací se do pekárny, umírá v ústavu",
+        "Emigruje",
+        "Ožení se a žije šťastně"
+      ],
+      "correct": 1,
+      "expl": "Tragický pád po vrcholu."
+    },
+    {
+      "prompt": "Co téma etiky zdůrazňuje?",
+      "options": [
+        "Experiment bez rizika je v pořádku",
+        "Lidský život není jen IQ",
+        "Věda je vždy zlá",
+        "Deník je neetický"
+      ],
+      "correct": 1,
+      "expl": "Keyes kritizuje redukci člověka na číslo."
+    },
+    {
+      "prompt": "Který žánr sedí nejlépe?",
+      "options": [
+        "Sci-fi s psychologickým jádrem",
+        "Historický román",
+        "Pohádka",
+        "Detektivka"
+      ],
+      "correct": 0,
+      "expl": "Vědecký základ + hluboká psychologie."
+    },
+    {
+      "prompt": "Proč Charlie miloval učení už jako postižený?",
+      "options": [
+        "Ne – nenáviděl",
+        "Toužil být chytřejší a „normální“",
+        "Chtěl být bohatý",
+        "Musel na rozkaz"
+      ],
+      "correct": 1,
+      "expl": "Motivace je touha po přijetí."
+    },
+    {
+      "prompt": "Co znamená „normální“ pro Charlieho?",
+      "options": [
+        "Být bohatý",
+        "Být přijat společností jako rovnocenný",
+        "Být slavný",
+        "Nečíst"
+      ],
+      "correct": 1,
+      "expl": "Společenské normy jsou klíčové."
+    },
+    {
+      "prompt": "Jaký vztah k Alice?",
+      "options": [
+        "Nikdy se nevidí",
+        "Láska, která komplikuje Charlieho proměnu",
+        "Sourozenci",
+        "Nepřátelé"
+      ],
+      "correct": 1,
+      "expl": "Alice miluje Charlieho jako člověka, ne jen IQ."
+    },
+    {
+      "prompt": "Co Charlie objeví o „inteligentních“?",
+      "options": [
+        "Jsou vždy milí",
+        "Mohou být stejně krutí a osamělí",
+        "Neexistují",
+        "Jsou všichni vědci"
+      ],
+      "correct": 1,
+      "expl": "Vysoké IQ neřeší morálku."
+    },
+    {
+      "prompt": "Kde se vrací na konci?",
+      "options": [
+        "Do vesmíru",
+        "Do pekárny / ústavu",
+        "Do školy",
+        "Do vězení"
+      ],
+      "correct": 1,
+      "expl": "Kruhový návrat k počátku."
+    },
+    {
+      "prompt": "Jaký film/novela ocenění?",
+      "options": [
+        "Ignorováno",
+        "Nezískala Nobelovu cenu, ale je světově známá",
+        "Pouze v ČR",
+        "Jen divadlo"
+      ],
+      "correct": 1,
+      "expl": "Dílo je klasikou světové literatury."
+    },
+    {
+      "prompt": "Co NENÍ hlavní téma?",
+      "options": [
+        "Inteligence a identita",
+        "Etika vědy",
+        "Soucit",
+        "Kosmické války"
+      ],
+      "correct": 3,
+      "expl": "Děj je psychologický, ne space opera."
+    },
+    {
+      "prompt": "Proč deník funguje jako forma?",
+      "options": [
+        "Čtenář vidí proměnu zevnitř",
+        "Je to úřední protokol",
+        "Je to poezie",
+        "Je to horor"
+      ],
+      "correct": 0,
+      "expl": "Subjektivní záznam je autentický."
+    },
+    {
+      "prompt": "Kdo se směje na začátku?",
+      "options": [
+        "Charlie sám",
+        "Kolegové z pekárny",
+        "Nikdo",
+        "Algernon"
+      ],
+      "correct": 1,
+      "expl": "Charlie nerozumí posměchu plně."
+    },
+    {
+      "prompt": "Co Charlie chápe po operaci o posměchu?",
+      "options": [
+        "Nic",
+        "Bolest a ponižování minulosti",
+        "Je to lichotka",
+        "Je to věda"
+      ],
+      "correct": 1,
+      "expl": "Vhled bolí víc než nevědomost."
+    },
+    {
+      "prompt": "Jaký symbol mají květiny?",
+      "options": [
+        "Vítězství",
+        "Úcta k malému tvorovi a vlastnímu úpadku",
+        "Svatba",
+        "Válka"
+      ],
+      "correct": 1,
+      "expl": "Růže pro Algernona = soucit."
+    },
+    {
+      "prompt": "Jaký je tón závěru?",
+      "options": [
+        "Čistá radost",
+        "Tragický, dojemný",
+        "Komický bez smutku",
+        "Ironický satira"
+      ],
+      "correct": 1,
+      "expl": "Charlie se vrací k mentálnímu stavu a umírá osamělý."
+    },
+    {
+      "prompt": "Co Keyes kritizuje?",
+      "options": [
+        "Pekárny",
+        "Přehnanou důvěru ve vědu bez humanity",
+        "Deníky",
+        "Myši"
+      ],
+      "correct": 1,
+      "expl": "Experiment má cenu v lidských životech."
+    },
+    {
+      "prompt": "Kolik otázek má maturitní test z knihy typicky?",
+      "options": [
+        "0",
+        "Desítky faktů o ději, postavách, tématech",
+        "Jen autor",
+        "Jen rok"
+      ],
+      "correct": 1,
+      "expl": "Dílo je bohaté na postavy a témata."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Charlie píše jednoduché zprávy a touží být chytřejší",
-        "Podstoupí operaci po úspěchu myši Algernon",
-        "Jeho IQ stoupá, mění se vztahy i sebevnímání",
-        "Prohlédne posměch okolí a osamí mezi vědci",
-        "Algernon upadá – experiment selhává",
-        "Charlie ztrácí inteligenci; zůstává úcta k Algernonovi"
+        "Charlie pracuje v pekárně a píše deník",
+        "Podstoupí operaci zvýšení inteligence",
+        "IQ roste, odhalí bolest minulosti",
+        "Algernonova inteligence klesá a myš umírá",
+        "Charlie chápe vlastní úpadek",
+        "Vrací se k původnímu stavu a umírá"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: touha po změně → operace → vzestup → samota → úpadek Algernona → návrat Charlieho."
+    "Správné pořadí: pekárna → operace → vzestup → Algernon → úpadek → návrat a smrt."
   ]
 }

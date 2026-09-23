@@ -4,10 +4,10 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Guy de Maupassant",
+        "Autor: Guy de Maupassant (1850–1893), francouzský spisovatel",
         "Žánr: realistická / naturalistická novela",
-        "Poprvé vydáno: 1880 (ve sbírce Večery na Médanu)",
-        "Děj / prostředí: Francie po prusko-francouzské válce 1870/71, ústup z Rouenu",
+        "Poprvé vydáno: 1880 (Večery na Médanu)",
+        "Děj / prostředí: Francie po prusko-francouzské válce, ústup z Rouenu",
         "Vyprávění / forma: er-forma, ironický vypravěč, pointa"
       ]
     },
@@ -15,12 +15,12 @@
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Po porážce Francie Pruskem: okupace, útěky měšťanů.",
-        "Maupassant ukazuje pokrytectví „slušné“ společnosti.",
-        "Hrdinkou je prostitutka Elisabeth Roussetová přezdívaná Kulička.",
-        "Morálka měšťáků je pokrytecká: využijí ji a pak ji pohrdají.",
+        "Po porážce 1870/71: okupace, panika měšťanů, útěk z Rouenu.",
+        "Maupassant demaskuje pokrytectví „slušné“ společnosti.",
+        "Hrdinkou je prostitutka Elisabeth Roussetová – Kulička.",
+        "Morálka elity je pokrytecká: využijí ji, pak ji pohrdají.",
         "Novela patří k vrcholům francouzského realismu 19. století.",
-        "Důraz na detail, společenskou kritiku a ostrý závěr."
+        "Pointa je krutá – Kulička pláče, měšťané jedí a zpívají."
       ]
     },
     {
@@ -28,11 +28,11 @@
       "icon": "people",
       "lines": [
         "Kulička (Elisabeth Roussetová) – prostitutka s upřímným charakterem.",
-        "Měšťané ve voze – „slušní“ lidé, kteří ji využijí.",
-        "Jeptišky – jediné, kdo s ní částečně soucítí skrze jídlo víry.",
-        "Pruský důstojník – žádá Kuliččinu „úsluhu“ za propuštění vozu.",
-        "Hrabě / obchodníci – reprezentanti pokrytecké elity.",
-        "Kočí a cesta – rámec uzavřeného společenského mikrokosmu."
+        "Měšťané ve voze – obchodníci, šlechtici, demokrat, manželský pár.",
+        "Jeptišky – reprezentují náboženskou morálku, jedí Kuliččiny sendviče.",
+        "Pruský důstojník – žádá Kuliččinu „společnost“ za propuštění.",
+        "Loiseau – obchodník, nejvíc pokrytecký a posměšný.",
+        "Comtesse de Bréville – šlechtická dáma v hypocrisii."
       ]
     },
     {
@@ -40,162 +40,60 @@
       "icon": "bulb",
       "lines": [
         "Pokrytectví – měšťané odsuzují, ale potřebují Kuličku.",
-        "Vlastenectví vs. sobectví – vlastenecké řeči kryjí strach o majetek.",
-        "Oběť – Kulička se obětuje pro ostatní a je zavržena.",
+        "Vlastenectví vs. sobectví – vlastenecké řeči kryjí strach.",
+        "Oběť – Kulička se obětuje pro ostatní.",
         "Ironie – vypravěč odhaluje pravý charakter „slušných“.",
-        "Válečný kontext – pruská okupace jako spouštěč konfliktu.",
-        "Pointa – závěrečné pohrdání po využití."
+        "Naturalismus – sociální a biologické determinace.",
+        "Pointa – ostrý závěr novelly."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Kuličku?",
-      "options": [
-        "Émile Zola",
-        "Guy de Maupassant",
-        "Honoré de Balzac",
-        "Gustave Flaubert"
-      ],
-      "correct": 1,
-      "expl": "Autorem novely je Guy de Maupassant."
-    },
-    {
-      "prompt": "Kdo je Kulička?",
-      "options": [
-        "Jeptiška",
-        "Prostitutka Elisabeth Roussetová",
-        "Pruská šlechtična",
-        "Manželka hraběte"
-      ],
-      "correct": 1,
-      "expl": "Přezdívka patří upřímné prostitutce Elisabeth."
-    },
-    {
-      "prompt": "V jakém historickém kontextu se děj odehrává?",
-      "options": [
-        "Velká francouzská revoluce",
-        "Po prusko-francouzské válce 1870/71",
-        "1. světová válka",
-        "Napoleonské války výhradně"
-      ],
-      "correct": 1,
-      "expl": "Měšťané prchají z Rouenu za pruské okupace."
-    },
-    {
-      "prompt": "Proč vůz stojí v hostinci?",
-      "options": [
-        "Došel olej",
-        "Pruský důstojník podmiňuje odjezd Kuliččinou „úsluhou“",
-        "Bouře",
-        "Oprava mostu"
-      ],
-      "correct": 1,
-      "expl": "Důstojník žádá noc s Kuličkou výměnou za propuštění."
-    },
-    {
-      "prompt": "Jak se chovají „slušní“ cestující zprvu k Kuličce?",
-      "options": [
-        "S úctou jako k hrdince",
-        "S pohrdáním kvůli jejímu povolání",
-        "Jako k sestře",
-        "Vůbec si jí nevšímají"
-      ],
-      "correct": 1,
-      "expl": "Nejprve jí opovrhují jako prostitutkou."
-    },
-    {
-      "prompt": "Proč ji později přemlouvají?",
-      "options": [
-        "Chtějí ji adoptovat",
-        "Potřebují, aby ustoupila důstojníkovi a mohli odjet",
-        "Chtějí ji vdát",
-        "Hledají průvodkyni"
-      ],
-      "correct": 1,
-      "expl": "Kvůli sobeckému zájmu o odjezd změní tón a přemlouvají ji."
-    },
-    {
-      "prompt": "Jak novela končí?",
-      "options": [
-        "Oslavou Kuličky",
-        "Po oběti ji opět pohrdají a vyloučí ze společenství",
-        "Svatbou s důstojníkem",
-        "Osvobozením Paříže"
-      ],
-      "correct": 1,
-      "expl": "Jakmile jim poslouží, znovu ji odsoudí – vrchol ironie."
-    },
-    {
-      "prompt": "Co je hlavním terčem kritiky?",
-      "options": [
-        "Příroda",
-        "Pokrytectví měšťanské morálky",
-        "Církevní architektura",
-        "Technika železnice"
-      ],
-      "correct": 1,
-      "expl": "Maupassant demaskuje falešnou slušnost společnosti."
-    },
-    {
-      "prompt": "Kdy novela vyšla?",
-      "options": [
-        "1857",
-        "1880",
-        "1905",
-        "1920"
-      ],
-      "correct": 1,
-      "expl": "Kulička vyšla roku 1880."
-    },
-    {
-      "prompt": "Jaký literární směr dílo reprezentuje?",
-      "options": [
-        "Romantismus",
-        "Realismus/naturalismus",
-        "Surrealismus",
-        "Symbolismus výhradně"
-      ],
-      "correct": 1,
-      "expl": "Patří k realistické a naturalistické tradici."
-    },
-    {
-      "prompt": "Proč je Kulička paradoxně „morálnější“ než ostatní?",
-      "options": [
-        "Je bohatší",
-        "Je upřímná, obětavá a nemá falešnou masku ctnosti",
-        "Je vojačka",
-        "Je jeptiška"
-      ],
-      "correct": 1,
-      "expl": "Její otevřenost kontrastuje s pokrytectvím „slušných“."
-    },
-    {
-      "prompt": "Jakou roli hraje jídlo ve voze?",
-      "options": [
-        "Žádnou",
-        "Nejprve se o jídlo nedělí, pak Kuličku využívají i v tomto ohledu; symbol hierarchie",
-        "Jen jako dekorace",
-        "Jde o hostinu Prusů"
-      ],
-      "correct": 1,
-      "expl": "Scény s jídlem odhalují sobectví a pozdější účelové „přátelství“."
-    }
+    {"prompt": "Kdo napsal Kuličku?", "options": ["Zola", "Guy de Maupassant", "Flaubert", "Hugo"], "correct": 1, "expl": "Maupassant patří k mistrem francouzské novely."},
+    {"prompt": "Kdy a kde se děj odehrává?", "options": ["Po válce 1870/71, cesta z Rouenu", "Za revoluce 1789", "V 21. století", "V Itálii"], "correct": 0, "expl": "Měšťané utíkají z okupovaného Rouenu."},
+    {"prompt": "Kdo je Kulička?", "options": ["Kněžka", "Prostitutka Elisabeth Roussetová", "Generálka", "Učitelka"], "correct": 1, "expl": "Kulička je přezdívka podle postavy."},
+    {"prompt": "Proč cestují ve voze?", "options": ["Na dovolenou", "Utíkají před okupací do Havra", "Na svatbu", "Do Paříže za móou"], "correct": 1, "expl": "Společná cesta spojuje různé společenské vrstvy."},
+    {"prompt": "Co brání voze v odjezdu?", "options": ["Pruský důstojník nepropustí bez „ústupku“ Kuličky", "Kolo", "Sníh", "Stávka"], "correct": 0, "expl": "Důstojník chce noc s Kuličkou."},
+    {"prompt": "Jak se měšťané chovají na začátku k Kuličce?", "options": ["S úctou", "Pohrdavě, nechtějí sedět vedle „ nízké “ ženy", "Neznají ji", "Obdivují ji"], "correct": 1, "expl": "Společenská předsudek je silný."},
+    {"prompt": "Proč nakonec tlačí na Kuličku?", "options": ["Aby vařila", "Aby šla k důstojníkovi a umožnila odjezd", "Aby platila", "Aby zpívala"], "correct": 1, "expl": "Vlastní zájem přebije morální řeči."},
+    {"prompt": "Co udělá Kulička?", "options": ["Odmítne navždy", "Obětuje se pro ostatní a jde k Prusům", "Utéká sama", "Zavolá policii"], "correct": 1, "expl": "Je statečnější než „slušní“ cestující."},
+    {"prompt": "Jak měšťané reagují po odjezdu?", "options": ["Děkují s úctou", "Jedí a opět ji pohrdají, posmívají se", "Pláčou", "Vrací peníze"], "correct": 1, "expl": "Pointa odhaluje jejich pokrytectví."},
+    {"prompt": "Jaký žánr novela reprezentuje?", "options": ["Realismus / naturalismus", "Fantasy", "Sci-fi", "Epos"], "correct": 0, "expl": "Maupassant realisticky kritizuje společnost."},
+    {"prompt": "Co je ironie v díle?", "options": ["Kulička je nejhorší", "Nej„morálnější“ v chování je prostitutka", "Prusové jsou hrdinové", "Jeptišky jsou bohaté"], "correct": 1, "expl": "Obrácení hodnot je jádrem novely."},
+    {"prompt": "Kdo jsou jeptišky ve voze?", "options": ["Vojáci", "Náboženské sestry, také jedou z města", "Pruské špionky", "Rodina Kuličky"], "correct": 1, "expl": "Jedí Kuliččiny sendviče, ale nepodpoří ji morálně."},
+    {"prompt": "Co symbolizuje společná jízda?", "options": ["Uzavřený mikrokosmos francouzské společnosti", "Sport", "Náhodu", "Vesmír"], "correct": 0, "expl": "Voze je jevištěm sociální kritiky."},
+    {"prompt": "Jak Maupassant pracuje s pointou?", "options": ["Bez závěru", "Ostrý závěr demaskuje postavy", "Pouze happy end", "Nevysvětlí"], "correct": 1, "expl": "Závěrečná scéna s jídlem a posměchem je slavná."},
+    {"prompt": "Kdo je Loiseau?", "options": ["Pruský důstojník", "Obchodník, typ pokrytce", "Kuliččin otec", "Kočí"], "correct": 1, "expl": "Loiseau je jedním z nejposměšnějších měšťanů."},
+    {"prompt": "Proč maturita zahrnuje Kuličku?", "options": ["Nejdelší román", "Ukázka novely, ironie a společenské kritiky", "Bez děje", "Komiks"], "correct": 1, "expl": "Krátké dílo s velkým významem."},
+    {"prompt": "Co je vlastenectví ve voze?", "options": ["Upřímná oběť", "Často rétorika maskující strach a sobectví", "Nezmiňuje se", "Pouze u Kuličky falešné"], "correct": 1, "expl": "Měšťané mluví o vlasti, ale chtějí jen uniknout."},
+    {"prompt": "Které téma NENÍ středem?", "options": ["Pokrytectví", "Oběť prostitutky", "Vesmírná kolonizace", "Válka a okupace"], "correct": 2, "expl": "Novela je sociální satira 19. století."},
+    {"prompt": "Jak vypravěč hodnotí Kuličku?", "options": ["Objektivně s ironií vůči ostatním", "Nenávidí ji", "Je to Kulička", "Bez postoje"], "correct": 0, "expl": "Er-forma odhaluje pokrytectví elity."},
+    {"prompt": "Co Kulička přinese do vozu?", "options": ["Jídlo – sendviče sdílené s jeptiškami", "Zbraně", "Pruskou uniformu", "Nic"], "correct": 0, "expl": "Jídlo je detail ukazující její štědrost."},
+    {"prompt": "Jak končí novela emocionálně?", "options": ["Kulička slaví", "Kulička pláče; ostatní jedí a posmívají se", "Všichni se usmíří", "Prusové vítězí"], "correct": 1, "expl": "Krutá pointa zvyšuje sociální kritiku."},
+    {"prompt": "Kde poprvé vyšla Kulička?", "options": ["Ve sbírce Večery na Médanu (1880)", "V Lidových novinách 2000", "V antice", "V angličtině 1700"], "correct": 0, "expl": "Maupassant debutoval v této sbírce s Zolou."},
+    {"prompt": "Co je naturalistický prvek?", "options": ["Důraz na prostředí, třídu a determinaci chování", "Magie", "Bohové", "Pouze humor"], "correct": 0, "expl": "Společenské postavení formuje jednání postav."},
+    {"prompt": "Proč odmítá Kulička nejdřív důstojníka?", "options": ["Vlastenecký postoj – nechce spát s okupantem", "Nemá čas", "Miluje Loiseaua", "Je nemocná"], "correct": 0, "expl": "Její hrdost je silnější než u ostatních."},
+    {"prompt": "Co měšťané dělají, když tlačí na Kuličku?", "options": ["Modlí se s ní", "Manipulují – morální nátlak pro vlastní prospěch", "Platí jí", "Jedou pěšky"], "correct": 1, "expl": "Hypocrisie vrcholí společným nátlakem."},
+    {"prompt": "Jaký kontrast tvoří jádro novely?", "options": ["Bohatí vs. chudí bez morálky", "Prostitutka s ctností vs. „ctnostní“ měšťané bez morálky", "Muži vs. ženy bez války", "Prus vs. Francie bez lidí"], "correct": 1, "expl": "Obrácení etických rolí je klíčové."},
+    {"prompt": "Kdo je Comtesse de Bréville?", "options": ["Šlechtice ve voze", "Kulička", "Kočí", "Pruská generálka"], "correct": 0, "expl": "Patří k elitě, která Kuličku opovrhuje."},
+    {"prompt": "Co znamená oběť Kuličky?", "options": ["Nic", "Zachrání cestu ostatním, ale nikdo jí neděkuje", "Zradí vlast", "Získá titul"], "correct": 1, "expl": "Oběť je společensky neoceněná."},
+    {"prompt": "Jak Maupassant ovlivnil prózu?", "options": ["Krátká novela s pointou – vzor pro realismus", "Vynalezl sci-fi", "Psal jen poezii", "Bez vlivu"], "correct": 0, "expl": "Kulička je učebnicový příklad novely."},
+    {"prompt": "Jaké poselství novela nese?", "options": ["Společenská morálka bývá pokrytecká", "Prostituce je vždy špatná", "Válka je dobrá", "Elita je vždy spravedlivá"], "correct": 0, "expl": "Maupassant demaskuje falešné mravní kategorie."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Skupina prchá z Rouenu v dostavníku",
-        "Měšťané pohrdají Kuličkou jako prostitutkou",
-        "Vůz je zadržen pruským důstojníkem",
-        "Cestující přemlouvají Kuličku k oběti",
-        "Kulička ustoupí, aby mohli odjet",
-        "Po odjezdu ji opět odsoudí a vyloučí"
+        "Měšťané a Kulička nastupují do vozu z Rouenu",
+        "Pruský důstojník zadrží odjezd",
+        "Kulička odmítá důstojníka; ostatní ji pohrdají",
+        "Hlad a strach rostou ve voze",
+        "Kulička obětuje se pro ostatní",
+        "Po odjezdu ji měšťané opět opovrhují a posmívají se"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: útěk → pohrdání → zadržení → přemlouvání → oběť → opětovné odsouzení."
+    "Správné pořadí: společná cesta → zadržení → pohrdání → nátlak → oběť → krutá pointa s pokrytectvím."
   ]
 }

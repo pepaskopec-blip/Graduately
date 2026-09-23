@@ -5,44 +5,46 @@
       "icon": "book",
       "lines": [
         "Autor: Vladislav Vančura (1891–1942)",
-        "Žánr: groteskní / poetická novela",
+        "Žánr: poetická novela, groteska",
         "Poprvé vydáno: 1926",
-        "Děj: malé městečko u řeky během jednoho léta",
-        "Vyprávění: stylizovaná er-forma, bohatý a hříčkový jazyk"
+        "Děj: léto na venkově u Rybníka, maloměstské prostředí",
+        "Vyprávění: er-forma, lyrický jazyk, koláž výjevů"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "První republika, idylické maloměsto u řeky.",
-        "Svět je poetický a komický spíš než těžce realistický.",
-        "Do klidu obce vstoupí kouzelník Arnoštek.",
-        "Léto je časem zábav, žárlivosti a drobných skandálů.",
-        "Humor a jazyková virtuozita tvoří atmosféru díla."
+        "Meziválečné Československo, idylické léto plné humoru i tísně.",
+        "Tři muži – major Hugo, vědec Roch, malíř Hampl – sdílejí dovolenou.",
+        "Společenské rozdíly, místní pomluvy a letní nálada.",
+        "Vančura mísí poetiku s groteskními situacemi.",
+        "Příroda a rybník jako kulisa i symbol klidu.",
+        "Léto je „rozmarné“ – lehké, ale i nečekaně tragické."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Antonín Důra – majitel plovárny, usedlý měšťan.",
-        "Kateřina – Důrova žena, touží po rozmaru a pozornosti.",
-        "Kanovník Roch – kněz, přítel Důry, moralista.",
-        "Major Hugo – důstojník, další z „pánů“ u řeky.",
-        "Arnoštek – kouzelník, který rozvíří klid městečka."
+        "Major Hugo – bývalý důstojník, energický organizátor léta.",
+        "Roch – vědec, vzdělanec, často terč posměchu.",
+        "Hampl – malíř, pozorovatel, mírný ironik.",
+        "Pepča – mladá dívka, oběť utopení.",
+        "Místní obyvatelé – soudkyňa, farář, sousedé.",
+        "Tři přátelé tvoří komické i napjaté trojúhelníky."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Rozmar – touha po změně, zábavě a dobrodružství.",
-        "Groteska – směšné i lehce absurdní situace.",
-        "Poetismus – hravost, obraznost a radost z jazyka.",
-        "Maloměsto – uzavřený svět zvyků a pověstí.",
-        "Žárlivost – pohání konflikty mezi postavami.",
-        "Řeka a plovárna – ústřední dějiště léta."
+        "Groteska – nadsázka, absurdní detaily.",
+        "Poetika – obrazný, rytmický jazyk Vančury.",
+        "Léto jako rámec – svoboda vs. společenská klace.",
+        "Smrt Pepči – náhlý stín v rozmarném ději.",
+        "Pomluvy – maloměstská morálka.",
+        "Přátelství tří mužů – generační a charakterový kontrast."
       ]
     }
   ],
@@ -52,148 +54,346 @@
       "options": [
         "Karel Čapek",
         "Vladislav Vančura",
-        "Jaroslav Hašek",
-        "Bohumil Hrabal"
+        "Ota Pavel",
+        "Jan Neruda"
       ],
       "correct": 1,
-      "expl": "Autorem je Vladislav Vančura."
+      "expl": "Autorem je Vančura, dílo vyšlo 1926."
     },
     {
-      "prompt": "Ve kterém roce vyšlo Rozmarné léto poprvé?",
+      "prompt": "Kde se děj zčásti odehrává?",
       "options": [
-        "1918",
+        "Pražský hrad",
+        "Venkov u rybníka / maloměstí",
+        "Tatra",
+        "Paříž"
+      ],
+      "correct": 1,
+      "expl": "Léto tráví hrdinové na venkově u vody."
+    },
+    {
+      "prompt": "Kdo je major Hugo?",
+      "options": [
+        "Kněz",
+        "Bývalý důstojník, jeden ze tří přátel",
+        "Rybář Pepča",
+        "Německý turista"
+      ],
+      "correct": 1,
+      "expl": "Hugo je vitální organizátor prázdnin."
+    },
+    {
+      "prompt": "Kým je Roch?",
+      "options": [
+        "Malíř",
+        "Vědec a intelektuál mezi přáteli",
+        "Soudce",
+        "Poštmistr"
+      ],
+      "correct": 1,
+      "expl": "Roch představuje vědeckou, někdy směšnou erudici."
+    },
+    {
+      "prompt": "Co dělá Hampl?",
+      "options": [
+        "Učí dějepis",
+        "Malíř, pozorovatel děje",
+        "Lovec",
+        "Lékař"
+      ],
+      "correct": 1,
+      "expl": "Hampl maluje a komentuje dění."
+    },
+    {
+      "prompt": "Jaký žánr dílo nejlépe vystihuje?",
+      "options": [
+        "Sci-fi",
+        "Poetická novela s groteskou",
+        "Detektivka",
+        "Epická báseň"
+      ],
+      "correct": 1,
+      "expl": "Vančura kombinuje lyriku a humor."
+    },
+    {
+      "prompt": "Co se stane Pepči?",
+      "options": [
+        "Vdá se za Huga",
+        "Utone v rybníce",
+        "Odchází do Prahy",
+        "Stane se malířkou"
+      ],
+      "correct": 1,
+      "expl": "Tragické utopení naruší idylu léta."
+    },
+    {
+      "prompt": "Proč je léto „rozmarné“?",
+      "options": [
+        "Je zima",
+        "Kolísá mezi lehkostí, humorem a smutnými zvraty",
+        "Trvá jeden den",
+        "Je to sci-fi"
+      ],
+      "correct": 1,
+      "expl": "Nálada se mění od radosti k tragédii."
+    },
+    {
+      "prompt": "Jaký jazyk je typický pro Vančuru?",
+      "options": [
+        "Úřednický",
+        "Poetický, obrazný, kolážovitý",
+        "Archaičtina bez obrazů",
+        "Anglický slang"
+      ],
+      "correct": 1,
+      "expl": "Styl je výrazově bohatý a hudební."
+    },
+    {
+      "prompt": "Kdo je soudkyně v díle?",
+      "options": [
+        "Pepčina matka",
+        "Místní autorita, která soudí pomluvy",
+        "Hugova sestra",
+        "Rochova žena"
+      ],
+      "correct": 1,
+      "expl": "Soudkyně zosobňuje maloměstskou morálku."
+    },
+    {
+      "prompt": "Jaký vztah mají tři muži?",
+      "options": [
+        "Jsou bratři",
+        "Přátelé na prázdninách s rozdílnými charaktery",
+        "Nepřátelé",
+        "Spolupracovníci továrny"
+      ],
+      "correct": 1,
+      "expl": "Jejich interakce tvoří jádro humoru."
+    },
+    {
+      "prompt": "Co symbolizuje rybník?",
+      "options": [
+        "Průmysl",
+        "Léto, odpočinek, ale i nebezpečí vody",
+        "Válka",
+        "Škola"
+      ],
+      "correct": 1,
+      "expl": "Rybník je centrum dění i místo tragédie."
+    },
+    {
+      "prompt": "Jak končí Rochova anabáze?",
+      "options": [
+        "Stane se králem",
+        "Je vykázán / opouští místo po konfliktech",
+        "Zůstane navždy",
+        "Oženě se s Pepčou"
+      ],
+      "correct": 1,
+      "expl": "Roch musí odejít – jeden z groteskních vrcholů."
+    },
+    {
+      "prompt": "Které téma v díle najdeme?",
+      "options": [
+        "Kosmické války",
+        "Maloměstské pomluvy a letní nálada",
+        "Detektivní vyšetřování v Praze",
+        "Hladové hry"
+      ],
+      "correct": 1,
+      "expl": "Dílo je zrcadlem provinčního světa."
+    },
+    {
+      "prompt": "Vančura patří do které literární skupiny?",
+      "options": [
+        "Realismus 19. století",
+        "Avantgarda (Devětsil)",
+        "Romantismus",
+        "Normalizace"
+      ],
+      "correct": 1,
+      "expl": "Vančura byl výrazná avantgardní osobnost."
+    },
+    {
+      "prompt": "Jak je vyprávění pojaté?",
+      "options": [
+        "Drama s replikami",
+        "Er-forma s lyrickými odbočkami",
+        "Deník",
+        "Scénář filmu"
+      ],
+      "correct": 1,
+      "expl": "Vypravěč vytváří obrazné výjevy."
+    },
+    {
+      "prompt": "Co je groteska v Rozmarném létě?",
+      "options": [
+        "Pouze realismus",
+        "Nadsazené, absurdní situace v komickém světle",
+        "Horor bez humoru",
+        "Historický dokument"
+      ],
+      "correct": 1,
+      "expl": "Humor vychází z kontrastů a detailů."
+    },
+    {
+      "prompt": "Proč se Roch stává terčem posměchu?",
+      "options": [
+        "Je bohatý",
+        "Je pedantský vědec v lehkém letním světě",
+        "Je dítě",
+        "Je Němec"
+      ],
+      "correct": 1,
+      "expl": "Jeho vědeckost naráží na prázdninovou atmosféru."
+    },
+    {
+      "prompt": "Jaká je role faráře / místních?",
+      "options": [
+        "Vedou válku",
+        "Dotvářejí obraz maloměsta",
+        "Jsou hlavní hrdinové",
+        "Neobjevují se"
+      ],
+      "correct": 1,
+      "expl": "Podpůrné postavy vytvářejí prostředí."
+    },
+    {
+      "prompt": "Jaký kontrast dílo nabízí?",
+      "options": [
+        "Léto vs. smrt",
+        "Pouze humor",
+        "Pouze politika",
+        "Sci-fi vs. western"
+      ],
+      "correct": 0,
+      "expl": "Idyla léta je narušena Pepčinou smrtí."
+    },
+    {
+      "prompt": "Kdy Vančura zemřel?",
+      "options": [
         "1926",
-        "1938",
-        "1945"
+        "1942 (poprava nacisty)",
+        "1989",
+        "1891"
       ],
       "correct": 1,
-      "expl": "Novela vyšla roku 1926."
+      "expl": "Spisovatel padl za protinacistický odpor."
     },
     {
-      "prompt": "Kde se děj především odehrává?",
+      "prompt": "Co NENÍ typické pro Vančurův styl?",
       "options": [
-        "V Praze",
-        "U plovárny v malém městečku u řeky",
-        "Na frontě",
-        "V klášteře"
+        "Koláž",
+        "Lyrická próza",
+        "Suchý úřednický jazyk bez obrazů",
+        "Groteska"
+      ],
+      "correct": 2,
+      "expl": "Vančura je naopak obrazný a poetický."
+    },
+    {
+      "prompt": "Jak major Hugo jedná?",
+      "options": [
+        "Pasivně",
+        "Energicky, organizuje, rozhoduje",
+        "Jako kněz",
+        "Jako dítě"
       ],
       "correct": 1,
-      "expl": "Ústředním místem je plovárna a okolí řeky."
+      "expl": "Hugo táhne děj svou aktivitou."
     },
     {
-      "prompt": "Kdo je Antonín Důra?",
+      "prompt": "Proč je dílo vhodné k maturitě?",
       "options": [
-        "Kouzelník",
-        "Majitel plovárny",
-        "Starosta Prahy",
-        "Železničář"
-      ],
-      "correct": 1,
-      "expl": "Důra provozuje plovárnu a patří k hlavní trojici „pánů“."
-    },
-    {
-      "prompt": "Kdo rozvíří klid městečka?",
-      "options": [
-        "Arnoštek – kouzelník",
-        "Heydrich",
-        "Gatsby",
-        "Saturnin"
+        "Krátké, bohaté na styl a témata",
+        "Je učebnice",
+        "Je komiks",
+        "Nemá děj"
       ],
       "correct": 0,
-      "expl": "Příchod kouzelníka Arnoštka spustí komické zápletky."
+      "expl": "Ukazuje avantgardní prózu i společenský obraz."
     },
     {
-      "prompt": "Jaká je Kateřina ve vztahu k Důrovi?",
+      "prompt": "Jaký vztah k přírodě dílo má?",
       "options": [
-        "Jeho sestra",
-        "Jeho žena, která touží po rozmaru",
-        "Jeho učitelka",
-        "Cizí turistka"
+        "Příroda chybí",
+        "Příroda je lyricky vykreslena",
+        "Jen město",
+        "Pouze továrna"
       ],
       "correct": 1,
-      "expl": "Kateřina je Důrova manželka; její touha po změně hýbe dějem."
+      "expl": "Krajina je součástí poetiky."
     },
     {
-      "prompt": "Kteří tři „páni“ tvoří ústřední společnost?",
+      "prompt": "Co následuje po Pepčině smrti?",
       "options": [
-        "Důra, kanovník Roch a major Hugo",
-        "Pavel, Ester a Alena",
-        "Charlie, Algernon a Strauss",
-        "Josef, Marie a Petr"
+        "Válka světová hned",
+        "Tíživější tón, rozchod letní idyly",
+        "Svatba",
+        "Nic se nemění"
+      ],
+      "correct": 1,
+      "expl": "Tragédie změní náladu knihy."
+    },
+    {
+      "prompt": "Která postava maluje?",
+      "options": [
+        "Roch",
+        "Hampl",
+        "Hugo",
+        "Pepča"
+      ],
+      "correct": 1,
+      "expl": "Hampl je malíř."
+    },
+    {
+      "prompt": "Jak se dílo liší od realistické novely?",
+      "options": [
+        "Experimentuje s jazykem a groteskou",
+        "Je to přesný reportážní zápis",
+        "Je to báseň v jedné větě",
+        "Je to drama"
       ],
       "correct": 0,
-      "expl": "Trojice Důra–Roch–Hugo je jádrem života u plovárny."
+      "expl": "Vančura je avantgardní autor."
     },
     {
-      "prompt": "Čím je Vančurův styl v této knize typický?",
+      "prompt": "Jaký je vztah k humoru?",
       "options": [
-        "Suchým úředním jazykem",
-        "Bohatou stylizací a jazykovou hrou",
-        "Jen dialogy bez vyprávění",
-        "Anglickými citáty"
+        "Humor chybí",
+        "Humor je důležitý, i když je děj tragický",
+        "Pouze slovní hříčka bez děje",
+        "Jen slapstick"
       ],
       "correct": 1,
-      "expl": "Vančura pracuje s poetickým, hutným a hravým jazykem."
+      "expl": "Komické scény koexistují se smutnými."
     },
     {
-      "prompt": "Jaký tón dílo převážně má?",
+      "prompt": "Co znamená „rozmarné“ v kontextu postav?",
       "options": [
-        "Tragický a válečný",
-        "Humoristický, rozmarný a ironický",
-        "Horrorový",
-        "Dokumentární"
+        "Vědecká přesnost",
+        "Náladovost, lehkost, občasná lehkomyslnost",
+        "Vojenská disciplína",
+        "Náboženská zbožnost"
       ],
       "correct": 1,
-      "expl": "Jde o lehkou, rozmarnou a komickou prózu."
-    },
-    {
-      "prompt": "Co Arnoštek v městečku především způsobí?",
-      "options": [
-        "Požár radnice",
-        "Rozruch, žárlivost a milostné zmatky",
-        "Válku s mloky",
-        "Ztrátu třídní knihy"
-      ],
-      "correct": 1,
-      "expl": "Jeho přítomnost rozhýbe vášně a komedie maloměsta."
-    },
-    {
-      "prompt": "K jakému uměleckému kontextu dílo bývá řazeno?",
-      "options": [
-        "K poetismu / avantgardní hříčce meziválečné literatury",
-        "K baroku",
-        "K socialistickému realismu 50. let",
-        "K gotickému románu"
-      ],
-      "correct": 0,
-      "expl": "Hravost a radost z jazyka souvisí s meziválečnou avantgardou."
-    },
-    {
-      "prompt": "Jaká je základní zápletka Rozmarného léta?",
-      "options": [
-        "Válečný útěk",
-        "Léto plné drobných skandálů po příchodu kouzelníka",
-        "Soudní proces",
-        "Cesta kolem světa"
-      ],
-      "correct": 1,
-      "expl": "Děj tvoří řetězec letních příhod kolem Arnoštka a místních."
+      "expl": "Léto uvolňuje pravidla a rozproudí vášně i konflikty."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Klíd u plovárny: Důra, Roch a Hugo tráví léto",
-        "Do městečka přijede kouzelník Arnoštek",
-        "Kateřina podlehne kouzlu změny a rozmaru",
-        "Mezi muži vzplane žárlivost a komické spory",
-        "Arnoštek rozvíří milostné i společenské poměry",
-        "Léto končí návratem k ironickému maloměstskému klidu"
+        "Tři přátelé přijedou na léto k rybníku",
+        "Probíhají komické konflikty (Roch vs. okolí)",
+        "Léto plné pomluv, lázní a radovánek",
+        "Pepča se utopí v rybníce",
+        "Roch je vykázán z místa",
+        "Léto končí, idyla je narušena"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: klid u plovárny → příchod Arnoštka → Kateřinin rozmar → žárlivost → zmatky → ironický závěr léta."
+    "Správné pořadí: příjezd → konflikty → letní dění → utopení Pepči → odchod Rocha → konec léta."
   ]
 }

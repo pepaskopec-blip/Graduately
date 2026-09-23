@@ -5,196 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: John Steinbeck",
-        "Žánr: novela",
-        "Poprvé vydáno: 1937 (česky např. Vendyš)",
-        "Děj: Kalifornie za velké krize – George a Lennie hledají práci",
-        "Vyprávění: er-forma, úsporný dialogický styl"
+        "Žánr: novela / sociální próza",
+        "Poprvé vydáno: 1937",
+        "Děj: Kalifornie za Velké krize, ranch a chudí dělníci",
+        "Vyprávění: er-forma; realistický, soucitný styl"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Velká hospodářská krize, migrující dělníci.",
-        "Sen o vlastní farmě drží dvojici pohromadě.",
-        "Síla a nevinnost Lenniego vedou k tragédii.",
-        "Samota a křehkost snů chudých lidí.",
-        "Naturalistické prvky osudu a prostředí."
+        "Velká krize 30. let – chudoba, tuláci, práce na rancích.",
+        "Sen o vlastní půdě – „farma s králíky“.",
+        "Osamělost a přátelství mužů bez rodin.",
+        "Sociální bezpráví vůči slabším (Curleyova žena, Crooks).",
+        "Násilí a nešťastná náhoda ničí sen.",
+        "Téma: sen, přátelství, osamělost, lidskost."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "George Milton – chytrý, pečuje o Lenniego.",
-        "Lennie Small – silný, mentálně omezený.",
-        "Candy – starý dělník se psem.",
-        "Curley – agresivní syn majitele.",
-        "Curleyho žena – osamělá, nebezpečná přítomnost.",
-        "Slim – autorita mezi dělníky."
+        "George Milton – chytrý, opatruje Lennieho.",
+        "Lennie Small – silný, mentálně neschopný, miluje zvířata.",
+        "Curley – syn majitele, agresivní.",
+        "Curleyova žena – osamělá, nešťastná.",
+        "Crooks – černý stableman, vyloučený.",
+        "Candy – starý dělník se psem."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Americký sen – illuze vlastní půdy.",
-        "Samota – motiv všech postav.",
-        "Síla a slabost – Lennie.",
-        "Milosrdenství / trest – závěr.",
-        "Krize 30. let – rámec.",
-        "Zvířecí motivy – myši, pes, králíci."
+        "Sen o farmě – naděje a útěk.",
+        "Přátelství George–Lennie – ochrana slabšího.",
+        "Osamělost – ranch bez vazeb.",
+        "Neschopnost Lennie – tragický prvek.",
+        "Zabití psa / králíka – předznamenání konce.",
+        "Georgeovo rozhodnutí – milosrdná střela."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal O myších a lidech?",
-      "options": [
-        "Hemingway",
-        "Steinbeck",
-        "Fitzgerald",
-        "Orwell"
-      ],
-      "correct": 1,
-      "expl": "Autorem je John Steinbeck."
-    },
-    {
-      "prompt": "Kdo je Lennie?",
-      "options": [
-        "Majitel ranchе",
-        "Silný, mentálně omezený dělník",
-        "Bankéř",
-        "Učitel"
-      ],
-      "correct": 1,
-      "expl": "Lennie je Georgeův společník."
-    },
-    {
-      "prompt": "O čem George a Lennie sní?",
-      "options": [
-        "O válce",
-        "O vlastní farmě",
-        "O operním turné",
-        "O emigraci na Měsíc"
-      ],
-      "correct": 1,
-      "expl": "Sen o farmě je jejich cíl."
-    },
-    {
-      "prompt": "V jaké době se děj odehrává?",
-      "options": [
-        "Renesance",
-        "Velká hospodářská krize",
-        "Antika",
-        "Husitské války"
-      ],
-      "correct": 1,
-      "expl": "USA ve 30. letech."
-    },
-    {
-      "prompt": "Proč je Curley nebezpečný?",
-      "options": [
-        "Je kněz",
-        "Agresivní, žárlivý syn majitele",
-        "Je Lennieho bratr",
-        "Je Georgeův učitel"
-      ],
-      "correct": 1,
-      "expl": "Curley vyvolává konflikty."
-    },
-    {
-      "prompt": "Co se stane s Curleyho ženou?",
-      "options": [
-        "Emigruje",
-        "Lennie ji nechtěně zabije",
-        "Stane se majitelkou",
-        "Ožení se s Georgem"
-      ],
-      "correct": 1,
-      "expl": "Tragický zvrat."
-    },
-    {
-      "prompt": "Jak George nakonec jedná?",
-      "options": [
-        "Uteče do města bez rozhodnutí",
-        "Zabije Lenniego z milosrdenství před lynčem",
-        "Nic",
-        "Prodá farmu Curleymu"
-      ],
-      "correct": 1,
-      "expl": "Milosrdný, tragický čin."
-    },
-    {
-      "prompt": "Co symbolizuje Candyho pes?",
-      "options": [
-        "Bohatství",
-        "Zbytečnost slabých v tvrdé společnosti",
-        "Vítězství",
-        "Hudbu"
-      ],
-      "correct": 1,
-      "expl": "Paralela k osudu slabých."
-    },
-    {
-      "prompt": "Jaký je vztah George–Lennie?",
-      "options": [
-        "Nenávist",
-        "Ochrana, závislost, přátelství",
-        "Jen obchod",
-        "Jen rivalita"
-      ],
-      "correct": 1,
-      "expl": "Péče a pouto."
-    },
-    {
-      "prompt": "Proč sen selže?",
-      "options": [
-        "Není sen",
-        "Realita násilí a chudoby ho zničí",
-        "Protože koupí hotel",
-        "Protože vyhrají lístek"
-      ],
-      "correct": 1,
-      "expl": "Osud a společnost sen rozbijí."
-    },
-    {
-      "prompt": "Jaký styl?",
-      "options": [
-        "Barokní patos",
-        "Úsporný, dialogický, naturalistický",
-        "Jen hexametr",
-        "Jen deník krále"
-      ],
-      "correct": 1,
-      "expl": "Steinbeck píše střídmě."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Robotika",
-        "Sen, samota a křehkost lidských plánů",
-        "Cestování luxusem",
-        "Dvorská intrika"
-      ],
-      "correct": 1,
-      "expl": "Americký sen vs. realita."
-    }
+    {"prompt": "Kdo napsal O myších a lidech?", "options": ["Hemingway", "John Steinbeck", "Fitzgerald", "Twain"], "correct": 1, "expl": "Steinbeck, 1937 – klasika americké sociální prózy."},
+    {"prompt": "Kdo je Lennie Small?", "options": ["Silný muž s mentálním postižením", "Majitel ranch", "Kněz", "Detektiv"], "correct": 0, "expl": "Lennie je fyzicky silný, ale důvěřivý a neschopný."},
+    {"prompt": "Kdo je George?", "options": ["Lennieho ochránce a přítel", "Curley", "Šerif", "Lékař"], "correct": 0, "expl": "George Lennie vede a chrání ho."},
+    {"prompt": "O jaký sen usilují?", "options": ["Vlastní farma a „žít ze své půdy“", "Let do vesmíru", "Královský trůn", "Robotí továrna"], "correct": 0, "expl": "Sen o králících a soběstačnosti."},
+    {"prompt": "Proč Lennie miluje měkké zvířata?", "options": ["Rád je hladí, ale neovládá sílu", "Nenávidí zvířata", "Je veterinář", "Je alergický"], "correct": 0, "expl": "Nešťastně zabíjí myši i psa – sila bez kontroly."},
+    {"prompt": "Kdo je Curley?", "options": ["Agresivní syn majitele ranch", "Lennieho bratr", "Učitel", "Emigrant"], "correct": 0, "expl": "Curley provokuje Lennieho."},
+    {"prompt": "Co se stane Curleyově ruce?", "options": ["Lennie ji zlomí v sebeobraně", "Spadne z koně", "Amputace v nemocnici", "Nic"], "correct": 0, "expl": "Lennie v panice zmačká Curleyovu ruku."},
+    {"prompt": "Kdo je Crooks?", "options": ["Černý stableman vyloučený rasismem", "Majitel", "Curley", "George"], "correct": 0, "expl": "Crooks žije sám v stáji – téma osamělosti."},
+    {"prompt": "Kdo je Candy?", "options": ["Starý dělník se starým psem", "Dítě", "Curleyova žena", "Kněz"], "correct": 0, "expl": "Carlson Candyho psa zastřelí – předobraz konce."},
+    {"prompt": "Proč Carlson zastřelí Candyho psa?", "options": ["Je starý a trpí – „milosrdné“ zabití", "Pes kousl", "Pes byl bohatý", "Na rozkaz"], "correct": 0, "expl": "Scéna předznamenává Georgeovo rozhodnutí."},
+    {"prompt": "Co Lennie udělá Curleyově ženě?", "options": ["Omylem ji zabije při hladění vlasů", "Ožení se s ní", "Uteče s ní", "Nic"], "correct": 0, "expl": "Tragická náhoda – Lennie nechápe sílu."},
+    {"prompt": "Jak George končí s Lenniem?", "options": ["Zastřelí ho milosrdně, než ho lynch mob", "Opustí ho", "Pošle do vězení", "Neudělá nic"], "correct": 0, "expl": "George zabije Lennie sám – akt lásky a bolesti."},
+    {"prompt": "Kdy román vyšel?", "options": ["1937", "1957", "1915", "2005"], "correct": 0, "expl": "Období Velké krize."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Kalifornie, ranch", "Praha", "Verona", "Sibiř"], "correct": 0, "expl": "Migrantní dělníci na farmě."},
+    {"prompt": "Jaký je hlavní konflikt?", "options": ["Sen vs. realita; Lennieho neschopnost", "Válka robotů", "Královský spor", "Detektivka"], "correct": 0, "expl": "Přátelství a sen narazí na tragédii."},
+    {"prompt": "Proč je román důležitý pro maturitu?", "options": ["Učí chemii", "Steinbeck, Velká krize, postavy, sen, tragédie", "Je atlas", "Je cookbook"], "correct": 1, "expl": "U maturity: autor, postavy, témata osamělosti."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Osamělost", "Přátelství", "Vzpoura robotů", "Sen o farmě"], "correct": 2, "expl": "Roboti nejsou Steinbeck."},
+    {"prompt": "Co znamená název (od Burns)?", "options": ["Plány myší i lidí často zmaří osud", "Myši vládnou světu", "Lidé jsou myši", "Bez významu"], "correct": 0, "expl": "Parafráze básně – křehkost plánů."},
+    {"prompt": "Jak Curleyova žena trpí?", "options": ["Osamělostí na ranchi", "Bohatstvím", "Mocí", "Nic"], "correct": 0, "expl": "Chce mluvit, sní o slávě – tragická postava."},
+    {"prompt": "Kdo je Slim?", "options": ["Respektovaný dělník na ranchi", "Majitel banky", "Nacista", "Dítě"], "correct": 0, "expl": "Slim chápe Georgeovo rozhodnutí na konci."},
+    {"prompt": "Jaký je styl Steinbecka?", "options": ["Realismus, soucit, jednoduchost", "Groteska Haška", "Sci-fi", "Epos"], "correct": 0, "expl": "Steinbeck píše o chudých s empatií."},
+    {"prompt": "Která postava NENÍ v románu?", "options": ["Lennie", "George", "Winston Smith", "Candy"], "correct": 2, "expl": "Winston je z 1984."},
+    {"prompt": "Proč George s Lenniem cestuje?", "options": ["Hledají práci jako migranti", "Jsou králové", "Studují", "Jsou na dovolené"], "correct": 0, "expl": "Velká krize – tuláci od ranch k ranchi."},
+    {"prompt": "Co Lennie opakuje?", "options": ["Georgeovy instrukce a sen o farmě", "Latinské modlitby", "Rozkazy Curleye", "Nic"], "correct": 0, "expl": "Lennie se učí, co dělat „když se něco stane“."},
+    {"prompt": "Jak končí sen o farmě?", "options": ["Ztroskotá – Lennie i sen mrtví", "Uskuteční se", "Koupí město", "Stane se sci-fi"], "correct": 0, "expl": "Tragédie – sen zůstane nedosažitelný."},
+    {"prompt": "Které dílo NENÍ Steinbeckovo?", "options": ["O myších a lidech", "Na východ od ráje", "Grapes of Wrath (Hrozny hněvu)", "Revizor"], "correct": 3, "expl": "Revizor je Gogol."},
+    {"prompt": "Co představuje psí zabití?", "options": ["Předfiguraci milosrdného zabití Lennieho", "Komediální vtip", "Sport", "Náboženský obřad"], "correct": 0, "expl": "Steinbeck připravuje čtenáře na konec."},
+    {"prompt": "Jaký je vztah k Velké krizi?", "options": ["Román zobrazuje chudobu a migraci", "Ignoruje ekonomiku", "Je fantasy", "Je středověk"], "correct": 0, "expl": "Kontext 30. let je klíčový."},
+    {"prompt": "Proč George neuteče s Lenniem?", "options": ["Ví, že Lennie opakovat chybu – musí jednat", "Nemá nohy", "Je bohatý", "Lennie je generál"], "correct": 0, "expl": "George přijme zodpovědnost – tragický akt."},
+    {"prompt": "Jaký pocit zanechá závěr?", "options": ["Soucit a bolest", "Čistou radost", "Smích bez důvodu", "Nic"], "correct": 0, "expl": "Klasická americká tragédie chudých."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "George a Lennie hledají práci",
-        "Sní o farmě na ranchi",
-        "Napětí s Curleym",
-        "Nešťastná smrt Curleyho ženy",
-        "Hon na Lenniego",
-        "George ho zabije z milosrdenství"
+        "George a Lennie přijdou na ranch",
+        "Sen o farmě, setkání s Curleyem",
+        "Lennie zlomí Curleyovu ruku",
+        "Carlson zastřelí Candyho psa",
+        "Lennie zabije Curleyovu ženu",
+        "George Lennie milosrdně zastřelí"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: práce → sen → napětí → neštěstí → hon → milosrdná smrt."
+    "Správné pořadí: ranch → konflikt s Curleyem → ruka → pes → smrt ženy → milosrdná střela."
   ]
 }

@@ -6,195 +6,94 @@
       "lines": [
         "Autor: Friedrich Dürrenmatt",
         "Žánr: tragická komedie / drama",
-        "Poprvé uvedeno: 1956",
-        "Děj: Güllen – bohatá Claire žádá smrt Illa za starou křivdu",
-        "Forma: drama s groteskní nadsázkou"
+        "Poprvé vydáno: 1956 (Die Physiker – ne, to je jiné; Návštěva 1956)",
+        "Děj: městečko Güllen, miliardářka Claire Zachanassian",
+        "Vyprávění: drama ve třech dějstvích"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Poválečná Evropa: morálka vs. peníze.",
-        "Chudé město prodá svědomí.",
-        "Claire Zachanassian se vrací jako pomsta.",
-        "Humor zesiluje hrůzu korupce.",
-        "Satira na spravedlnost koupenou zlatem."
+        "Poválečné / moderní Evropa – chudoba provincie vs. bohatství.",
+        "Güllen upadá, obyvatelé touží po penězích.",
+        "Claire nabídne miliardu za smrt Alfreda Illa.",
+        "Morálka vs. materiální zkaženost.",
+        "Tragikomický tón – smích i hrůza.",
+        "Téma: vina, pomsta, kolektivní zločin."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Claire Zachanassian – miliardářka.",
-        "Alfred Ill – bývalý milenec.",
-        "Starosta a občané Güllenu – korumpovaní.",
-        "Učitel – svědomí, které selhává.",
-        "Policie / farář – instituce.",
-        "Slepí eunuchové / groteskní doprovod Claire."
+        "Claire Zachanassian – miliardářka, kdysi opuštěná Illem.",
+        "Alfred Ill – majitel obchodu, „respektovaný“ občan.",
+        "Starosta – mluví o cti, pak kapituluje.",
+        "Učitel – nejprve protestuje, pak mlčí.",
+        "Doktoři a občané Güllenu – kolektivní viník.",
+        "Slepí muži Klodi a Lobi – Claireini pomocníci."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Pomsta – motor děje.",
-        "Korupce obce – téma.",
-        "Groteska – styl.",
-        "Spravedlnost za peníze – otázka.",
-        "Kolektivní vina – pointa.",
-        "Tragikomédie – žánr."
+        "Miliarda – cena morálky města.",
+        "Pomsta – Claire chce Illovu smrt, ne peníze pro sebe.",
+        "Kolektivní vina – všichni koupí luxus na dluh.",
+        "Tragikomedie – groteskní situace.",
+        "Güllen – symbol zkažené společnosti.",
+        "Justice – Ill zemře „soudem“ obce."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Návštěvu staré dámy?",
-      "options": [
-        "Brecht",
-        "Dürrenmatt",
-        "Frisch",
-        "Ibsen"
-      ],
-      "correct": 1,
-      "expl": "Friedrich Dürrenmatt."
-    },
-    {
-      "prompt": "Co Claire žádá?",
-      "options": [
-        "Svatbu",
-        "Smrt Illa za starou křivdu",
-        "Novou školu bez podmínky",
-        "Emigraci města"
-      ],
-      "correct": 1,
-      "expl": "Pomsta skrze obec."
-    },
-    {
-      "prompt": "Proč město souhlasí?",
-      "options": [
-        "Z lásky k Illovi",
-        "Chudoba a nabídnuté bohatství",
-        "Z náboženství",
-        "Z omylu v kalendáři"
-      ],
-      "correct": 1,
-      "expl": "Penězi korumpují svědomí."
-    },
-    {
-      "prompt": "Kdo je Ill?",
-      "options": [
-        "Starosta",
-        "Bývalý milenec, oběť pomsty",
-        "Clairein syn",
-        "Učitel jen"
-      ],
-      "correct": 1,
-      "expl": "Alfred Ill."
-    },
-    {
-      "prompt": "Jaký je tón hry?",
-      "options": [
-        "Jen sentimentální",
-        "Groteskní tragikomédie",
-        "Jen naturalistický protokol",
-        "Jen opera seria"
-      ],
-      "correct": 1,
-      "expl": "Smích i děs."
-    },
-    {
-      "prompt": "Co hra kritizuje?",
-      "options": [
-        "Zahradnictví",
-        "Kupčení se spravedlností",
-        "Mořeplavbu",
-        "Jazz"
-      ],
-      "correct": 1,
-      "expl": "Morálka vs. peníze."
-    },
-    {
-      "prompt": "Jak dopadne Ill?",
-      "options": [
-        "Emigruje šťastně",
-        "Je obětován obcí",
-        "Stane se starostou",
-        "Ožení se s Claire znovu bez trestu"
-      ],
-      "correct": 1,
-      "expl": "Obec ho obětuje."
-    },
-    {
-      "prompt": "Jaká je role učitele?",
-      "options": [
-        "Vrah",
-        "Hlas svědomí, který ustoupí",
-        "Bankéř",
-        "Clairein právník"
-      ],
-      "correct": 1,
-      "expl": "Svědomí selže."
-    },
-    {
-      "prompt": "Proč je Claire groteskní?",
-      "options": [
-        "Není",
-        "Tělesné protézy a doprovod zesilují hrůzu",
-        "Jen kvůli smíchu bez smyslu",
-        "Kvůli tanci"
-      ],
-      "correct": 1,
-      "expl": "Groteska jako prostředek."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Láska ideální bez konfliktu",
-        "Pomsta, korupce a kolektivní vina",
-        "Robotika",
-        "Zákopy 1916"
-      ],
-      "correct": 1,
-      "expl": "Svědomí na prodej."
-    },
-    {
-      "prompt": "Kde se odehrává?",
-      "options": [
-        "Verona",
-        "Fiktivní Güllen",
-        "Londýn Dickensův",
-        "Mordor"
-      ],
-      "correct": 1,
-      "expl": "Město Güllen."
-    },
-    {
-      "prompt": "Jaký žánr nejlépe?",
-      "options": [
-        "Balada",
-        "Tragická komedie",
-        "Epos",
-        "Pohádka batolat"
-      ],
-      "correct": 1,
-      "expl": "Tragikomédie."
-    }
+    {"prompt": "Kdo napsal Návštěvu staré dámy?", "options": ["Brecht", "Friedrich Dürrenmatt", "Goethe", "Kafka"], "correct": 1, "expl": "Švýcarský dramatik; hra 1956."},
+    {"prompt": "Jak se jmenuje městečko?", "options": ["Güllen", "Verona", "Praha", "Gütersloh"], "correct": 0, "expl": "Fiktivní Güllen je v zoufalé ekonomické situaci."},
+    {"prompt": "Kdo přijede jako miliardářka?", "options": ["Claire Zachanassian", "Lady Catherine", "Helena Glory", "Julie"], "correct": 0, "expl": "Claire se vrací po letech jako neuvěřitelně bohatá."},
+    {"prompt": "Kdo je Alfred Ill?", "options": ["Starosta", "Obchodník, bývalý Clairein milenec", "Kněz", "Robot"], "correct": 1, "expl": "Ill kdysi zradil Claire – nyní je terč pomsty."},
+    {"prompt": "Co Claire nabídne městu?", "options": ["Miliardu, pokud Ill zemře", "Bezplatnou školu", "Armádu", "Nic"], "correct": 0, "expl": "Podmínka je Illova smrt – obec má rozhodnout."},
+    {"prompt": "Proč Claire nenávidí Illa?", "options": ["Kdysi ji opustil a zničil reputaci (s falešnými svědky)", "Ill ji okradl o dům", "Ill je cizinec", "Bez důvodu"], "correct": 0, "expl": "Mladá Claire byla ponižována – Ill zaplatil svědky."},
+    {"prompt": "Jak reagují občané zpočátku?", "options": ["Odmítnou peníze", "Protestují morálně, ale brzy kupují na dluh", "Utečou", "Zavraždí Claire"], "correct": 1, "expl": "Hypokrizie – nejdřív cti, pak nákupy na úvěr."},
+    {"prompt": "Kdo Ill varuje?", "options": ["Nikdo", "Ill sám cítí, že město ho obětuje", "Claire", "Císař"], "correct": 1, "expl": "Ill postupně chápe, že Güllen ho odsoudí."},
+    {"prompt": "Jak Ill zemře?", "options": ["Přirozeně ve spánku", "Obec ho odsoudí a zabije (justiční fraška)", "V autonehodě", "Na frontě"], "correct": 1, "expl": "Město formálně „soudí“ a popraví Illa pro miliardu."},
+    {"prompt": "Jaký je žánr?", "options": ["Tragikomedie / drama", "Pohádka", "Sci-fi román", "Epos"], "correct": 0, "expl": "Dürrenmatt mísí grotesku, humor a tragédii."},
+    {"prompt": "Co symbolizují nákupy občanů?", "options": ["Prospěch za cenu morálky", "Dobročinnost", "Sport", "Vědu"], "correct": 0, "expl": "Každý si koupí na dluh – už přijal Illovu smrt."},
+    {"prompt": "Kdo jsou Klodi a Lobi?", "options": ["Claireini slepí pomocníci", "Illovi synové", "Starostovi psi", "Lékaři"], "correct": 0, "expl": "Groteskní postavy Claireina doprovodu."},
+    {"prompt": "Proč je hra důležitá pro maturitu?", "options": ["Učí chemii", "Dürrenmatt, morálka, pomsta, tragikomedie", "Je mapa", "Je cookbook"], "correct": 1, "expl": "U maturity: děj, postavy, témata kolektivní viny."},
+    {"prompt": "Kdy hra vznikla?", "options": ["1956", "1836", "1595", "2020"], "correct": 0, "expl": "Poválečná reflexe bohatství a morálky."},
+    {"prompt": "Jak starosta mluví o cti?", "options": ["Zpočátku odmítá, pak mlčí a přijme", "Vždy odmítá", "Je Illův bratr", "Neexistuje"], "correct": 0, "expl": "Politik typicky capituluje před penězi."},
+    {"prompt": "Co učitel ztělesňuje?", "options": ["Intelektuální protest, který selže", "Vítězství morálky", "Válku", "Roboty"], "correct": 0, "expl": "Učitel chápe problém, ale neodolá systému."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Pomsta", "Kolektivní vina", "Vesmírná válka robotů", "Materiální zkaženost"], "correct": 2, "expl": "Roboti nejsou téma Dürrenmattovy hry."},
+    {"prompt": "Proč Claire nepotřebuje peníze?", "options": ["Už je nejbohatší – jde o pomstu", "Je chudá", "Je dítě", "Peníze neexistují"], "correct": 0, "expl": "Nabízí miliardu městu, ne sobě – chce spravedlnost."},
+    {"prompt": "Jak končí hra?", "options": ["Ill přežije", "Ill je mrtvý, město bohatne – morální prohra", "Güllen shoří", "Claire se provdá za Illa"], "correct": 1, "expl": "Tragikomická pointa – ekonomický „ráj“ na vraždě."},
+    {"prompt": "Kde Dürrenmatt pochází / působí?", "options": ["Švýcarsko", "Rusko", "Česko", "Japonsko"], "correct": 0, "expl": "Friedrich Dürrenmatt je švýcarský autor."},
+    {"prompt": "Co je groteska v Návštěvě?", "options": ["Absurdní poměr ceny a morálky", "Pouze romantika", "Realismus bez humoru", "Pohádka pro děti"], "correct": 0, "expl": "Miliarda za život – groteskní obchod."},
+    {"prompt": "Kdo je Ill v obci?", "options": ["Respektovaný občan, kandidát na starostu", "Cizinec", "Dítě", "Kněz"], "correct": 0, "expl": "Právě jeho „cti“ je obětováno."},
+    {"prompt": "Jak občané ospravedlňují zločin?", "options": ["Ekonomickou nouzí a kolektivním rozhodnutím", "Náboženstvím", "Válka", "Náhodou"], "correct": 0, "expl": "Chudoba Güllenu je Dürrenmattova motivace."},
+    {"prompt": "Která postava NENÍ v Návštěvě?", "options": ["Claire", "Ill", "Švejk", "Starosta"], "correct": 2, "expl": "Švejk je Haškův hrdina."},
+    {"prompt": "Kolik dějství má hra?", "options": ["3", "5", "1", "12"], "correct": 0, "expl": "Klasická třídělná dramatická stavba."},
+    {"prompt": "Co Ill cítí v průběhu hry?", "options": ["Stále větší osamění a strach", "Radost", "Nic", "Vítězství"], "correct": 0, "expl": "Ill ví, že město už rozhodlo."},
+    {"prompt": "Jaký kontrast hra vystavuje?", "options": ["Chudoba vs. miliarda; morálka vs. peníze", "Moře vs. hory", "Den vs. noc", "Práce vs. lenost"], "correct": 0, "expl": "Základní konflikt Návštěvy staré dámy."},
+    {"prompt": "Proč je Ill „starý“ v titulku?", "options": ["Claire je starší dáma vracející se pomstít mladistvé křivdě", "Ill je stařec", "Titul ne souvisí", "Jde o babičku Illa"], "correct": 0, "expl": "Návštěva bohaté starší ženy mění osud města."},
+    {"prompt": "Které dílo NENÍ Dürrenmattovo?", "options": ["Návštěva staré dámy", "Fyzici", "R.U.R.", "Ministryně"], "correct": 2, "expl": "R.U.R. napsal Karel Čapek."},
+    {"prompt": "Jaký morální test hra klade?", "options": ["Zda společnost prodá život za peníze", "Zda umíte plavat", "Zda znáte latinu", "Zda vaříte"], "correct": 0, "expl": "Güllen selže – universalní varování."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Claire se vrací do Güllenu",
-        "Nabídne bohatství za Illovu smrt",
-        "Občané nejprve odmítají",
-        "Postupně se korumpují",
-        "Ill pochopí rozsudek obce",
-        "Oběť a „spravedlnost“ za peníze"
+        "Claire Zachanassian přijede do Güllenu",
+        "Nabídne miliardu za Illovu smrt",
+        "Občané protestují, ale začnou nakupovat na dluh",
+        "Ill chápe, že je odsouzen",
+        "Město Illa formálně odsoudí",
+        "Ill zemře, Güllen dostane miliardu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: návrat → nabídka → odmítnutí → korupce → rozsudek → oběť."
+    "Správné pořadí: příjezd Claire → nabídka → nákupy → Illův strach → soud → smrt a peníze."
   ]
 }

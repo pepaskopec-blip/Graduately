@@ -1331,6 +1331,61 @@ def main() -> int:
     inc_lines.append("")
     (SRC / "cetba_catalog.inc").write_text("\n".join(inc_lines) + "\n", encoding="utf-8")
 
+    # Full note packs for the GTK stub/detail page (Swift/Android use content.json).
+    def c_escape(s: str) -> str:
+        return s.replace("\\", "\\\\").replace('"', '\\"')
+
+    notes_lines = [
+        "/* Generated from data/cetba/*.json – do not edit by hand. */",
+        "",
+        "typedef struct {",
+        "    const char *title;",
+        "    const char *const *lines;",
+        "} BookNoteSec;",
+        "",
+        "typedef struct {",
+        "    const BookNoteSec *secs;",
+        "    int nsec;",
+        "} BookNotePack;",
+        "",
+    ]
+    pack_entries = []
+    for i, entry in enumerate(catalog):
+        bid = entry["id"]
+        safe = re.sub(r"[^a-zA-Z0-9_]", "_", bid)
+        content_path = cetba_dir / f"{bid}.json"
+        notes = []
+        if content_path.exists():
+            disk = json.loads(content_path.read_text(encoding="utf-8"))
+            notes = disk.get("notes") or []
+        if not notes:
+            about = [f"Autor: {entry['author']}", f"Žánr: {entry['genre']}"]
+            if entry.get("translator"):
+                about.append(f"Překlad: {entry['translator']}")
+            notes = [{"title": "O knize", "lines": about}]
+        sec_names = []
+        for si, note in enumerate(notes):
+            arr = f"book_{safe}_n{si}"
+            notes_lines.append(f"static const char *const {arr}[] = {{")
+            for line in note.get("lines") or []:
+                notes_lines.append(f'    "{c_escape(line)}",')
+            notes_lines.append("    NULL")
+            notes_lines.append("};")
+            notes_lines.append("")
+            sec_names.append((note.get("title") or "Poznámky", arr))
+        secs_arr = f"book_{safe}_secs"
+        notes_lines.append(f"static const BookNoteSec {secs_arr}[] = {{")
+        for title, arr in sec_names:
+            notes_lines.append(f'    {{"{c_escape(title)}", {arr}}},')
+        notes_lines.append("};")
+        notes_lines.append("")
+        pack_entries.append(f"    {{{secs_arr}, {len(sec_names)}}}")
+    notes_lines.append(f"static const BookNotePack book_note_packs[BOOK_NODES] = {{")
+    notes_lines.append(",\n".join(pack_entries))
+    notes_lines.append("};")
+    notes_lines.append("")
+    (SRC / "cetba_book_notes.inc").write_text("\n".join(notes_lines) + "\n", encoding="utf-8")
+
     subjects = [
         {"key": "Deutsch", "open": True, "target": "roadmap", "icon": "de"},
         {"key": "Správa počítačových sítí", "open": True, "target": "netyears", "icon": "wifi"},

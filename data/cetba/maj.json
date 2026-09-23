@@ -4,198 +4,95 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Karel Hynek Mácha",
-        "Žánr: lyrickoepická báseň / vrchol českého romantismu",
-        "Poprvé vydáno: 1836",
-        "Děj / prostředí: okolí hradu Bezděz / jezera – májová noc, vězení, poprava",
-        "Vyprávění / forma: pásmo lyriky a epiky, bohatý zvukomalba, oxymóra, příroda jako zrcadlo"
+        "Autor: Karel Hynek Mácha (1810–1836)",
+        "Žánr: lyricko-epická skladba, romantická báseň",
+        "Poprvé vydáno: 1836 (posmrtně)",
+        "Děj / prostředí: jezero, hrad, krajina kolem Doksy, 19. století",
+        "Vyprávění / forma: veršovaná skladba, er-forma vypravěče + lyrické vložky"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "České národní obrození; Mácha stojí mimo idylický obrozenecký tón.",
-        "Romantismus: subjekt, příroda, smrt, vězení, rozpor snu a reality.",
-        "Děj je jednoduchý (vražda otce, láska, poprava), význam je filozofický.",
-        "Příroda (máj, jezero, noc) je rovnocenná postavám.",
-        "Jazyk je novátorský: eufonie, kontrast světla a tmy.",
-        "Máj je základním textem moderní české poezie."
+        "Český romantismus: cit, příroda, osud, vina, krása a smrt.",
+        "Máj je vrchol české romantické poezie – hudební, obrazná skladba.",
+        "Děj: Jarmila se utopí, Vilém vrazí, poprava, vězeň, vandrák.",
+        "Příroda reaguje na zločin (bouře, hrom) – personifikace.",
+        "Intertext: Byron, Shelley, slovanský romantismus.",
+        "Máj jako symbol lásky, jara i smrti."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vilém – „strašný lesů pán“, vězeň odsouzený za otcovraždu.",
-        "Jarmila – Vilémova milá, po zradě a zoufalství končí sebevraždou.",
-        "Hynek – poutník / bílý pán, svědek popravy (básnický subjekt).",
-        "Vilémův otec – svůdce Jarmily, zabit synem.",
-        "Kat a dav – publikum popravy, společenský rámec trestu.",
-        "Příroda – aktivní „postava“ májové krásy i hrůzy."
+        "Vilém – vězeň, vrah otce Jarmiliného, milenec Jarmily.",
+        "Jarmila – milenka, utopí se v jezeře.",
+        "Hajný – otec Jarmily, Vilém ho zabil v afektu.",
+        "Vězeň ve vězení – Vilém, lyrické monology.",
+        "Vandrák – putující poutník, komentář k osudu.",
+        "Sbor jeskyň – personifikovaná příroda."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Romantický hrdina – izolovaný, vášnivý, spjatý se smrtí.",
-        "Oxymóron – „májový“ svět krásy i hrůzy zároveň.",
-        "Příroda jako zrcadlo – krajina odráží niterný stav.",
-        "Vězení a poprava – motivy trestu a nicoty.",
-        "Čas a věčnost – filozofické úvahy před smrtí.",
-        "Zvukomalba – hudebnost verše jako smysl textu."
+        "Romantismus – cit, osud, příroda, vina.",
+        "Lyricko-epická skladba – děj + lyrické pasáže.",
+        "Máj – symbol jara, lásky, obnovy i smrti.",
+        "Vina a trest – poprava, vězení.",
+        "Personifikace přírody – hrom, jezero, kraj.",
+        "Intercalare – lyrické vložky (např. vězeň, vandrák)."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Máj?",
-      "options": [
-        "K. J. Erben",
-        "Karel Hynek Mácha",
-        "Jan Neruda",
-        "Svatopluk Čech"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Karel Hynek Mácha."
-    },
-    {
-      "prompt": "Kdy Máj vyšel?",
-      "options": [
-        "1820",
-        "1836",
-        "1853",
-        "1866"
-      ],
-      "correct": 1,
-      "expl": "Máj vyšel roku 1836."
-    },
-    {
-      "prompt": "Za co je Vilém odsouzen?",
-      "options": [
-        "Krádež",
-        "Otcovraždu",
-        "Zradu vlasti",
-        "Čarodějnictví"
-      ],
-      "correct": 1,
-      "expl": "Vilém zabil otce, který svedl Jarmilu."
-    },
-    {
-      "prompt": "Jak skončí Jarmila?",
-      "options": [
-        "Svatbou",
-        "Sebevraždou utopením",
-        "Útěkem do Prahy",
-        "Životem u Hynka"
-      ],
-      "correct": 1,
-      "expl": "Jarmila se v zoufalství utopí."
-    },
-    {
-      "prompt": "K jakému směru Máj patří?",
-      "options": [
-        "Realismus",
-        "Romantismus",
-        "Klasicismus",
-        "Naturalismus"
-      ],
-      "correct": 1,
-      "expl": "Jde o vrchol českého romantismu."
-    },
-    {
-      "prompt": "Co je typické pro Máchův jazyk?",
-      "options": [
-        "Suchý úřední styl",
-        "Zvukomalba, obrazy přírody, oxymóra",
-        "Jen próza",
-        "Cizí citáty bez verše"
-      ],
-      "correct": 1,
-      "expl": "Verš je hudební a obrazný."
-    },
-    {
-      "prompt": "Kdo je Hynek v Máji?",
-      "options": [
-        "Kat",
-        "Poutník / básnický subjekt svědek popravy",
-        "Vilémův bratr",
-        "Jarmilin otec"
-      ],
-      "correct": 1,
-      "expl": "Hynek zprostředkovává pohled na událost."
-    },
-    {
-      "prompt": "Proč je děj „jen“ rámcem?",
-      "options": [
-        "Mácha neuměl vyprávět",
-        "Hlavní je lyrika, příroda a filozofie existence",
-        "Cenzura zakázala děj",
-        "Jde o překlad"
-      ],
-      "correct": 1,
-      "expl": "Epická zápletka slouží lyricko-filozofickému celku."
-    },
-    {
-      "prompt": "Jaký kontrast je ústřední?",
-      "options": [
-        "Město a vesnice",
-        "Krása májové přírody a hrůza smrti/trestu",
-        "Bohatství a chudoba jen ekonomicky",
-        "Válka a mír"
-      ],
-      "correct": 1,
-      "expl": "Májová idyla stojí proti popravě a nicotě."
-    },
-    {
-      "prompt": "Co znamená, že příroda je „zrcadlem“?",
-      "options": [
-        "Jde o meteorologii",
-        "Krajina odráží city a myšlenky postav i subjektu",
-        "Příroda je mapa",
-        "Jen dekorace bez významu"
-      ],
-      "correct": 1,
-      "expl": "Romantická krajina koresponduje s nitrem."
-    },
-    {
-      "prompt": "Jak doba Máje přijala?",
-      "options": [
-        "Okamžitě jako národní epos bez výhrad",
-        "Často s nepochopením; oceněn byl později",
-        "Jako učebnici práva",
-        "Jako komedii"
-      ],
-      "correct": 1,
-      "expl": "Současníci Máje často nepochopili; kanonizace přišla později."
-    },
-    {
-      "prompt": "Které tvrzení o Máji je pravdivé?",
-      "options": [
-        "Jde o baladu z Kytice",
-        "Jde o samostatnou lyrickoepickou báseň",
-        "Je to román ve verších o Napoleonu",
-        "Napsal jej Erben"
-      ],
-      "correct": 1,
-      "expl": "Máj je Máchova samostatná skladba."
-    }
+    {"prompt": "Kdo napsal Máj?", "options": ["Erben", "Karel Hynek Mácha", "Neruda", "Vrchlický"], "correct": 1, "expl": "Mácha dokončil skladbu krátce před smrtí v roce 1836."},
+    {"prompt": "Jaký žánr Máj reprezentuje?", "options": ["Realistický román", "Lyricko-epická romantická skladba", "Drama", "Encyklopedie"], "correct": 1, "expl": "Máj je básnické dílo s dějem i lyrickými částmi."},
+    {"prompt": "Kdo je Vilém?", "options": ["Král", "Vězeň, milenec Jarmily, zabil jejího otce", "Hajný", "Vandrák"], "correct": 1, "expl": "Vilém je hlavní postava tragického děje."},
+    {"prompt": "Co udělá Jarmila?", "options": ["Utíká s Vilémem", "Utopí se v jezeře", "Zabije Viléma", "Stane se královnou"], "correct": 1, "expl": "Jarmila volí smrt po Vilémově zločinu."},
+    {"prompt": "Proč Vilém zabil hajného?", "options": ["V afektu – otec Jarmily bránil lásce", "Pro peníze", "Na rozkaz", "Náhodou bez důvodu"], "correct": 0, "expl": "Vilém reaguje na konflikt s otcem milenky."},
+    {"prompt": "Jak Vilém končí?", "options": ["Svatba", "Poprava (šibenice)", "Exil", "Trůn"], "correct": 1, "expl": "Trest za vraždu je poprava."},
+    {"prompt": "Kdo je vandrák?", "options": ["Putující postava s lyrickými komentáři", "Vilém po útěku", "Hajný", "Bůh"], "correct": 0, "expl": "Vandrák propojuje osudy a přírodu."},
+    {"prompt": "Co symbolizuje máj?", "options": ["Jen měsíc", "Jaro, láska, krása, ale i smrt a osud", "Válka", "Město"], "correct": 1, "expl": "Titulní symbol prostupuje skladbou."},
+    {"prompt": "Jak příroda reaguje na zločin?", "options": ["Ignoruje", "Bouře, hrom, personifikace", "Slunce bez změny", "Jen sníh"], "correct": 1, "expl": "Romantická personifikace krajiny."},
+    {"prompt": "Kdy Máj vyšel?", "options": ["1836", "1850", "2000", "1700"], "correct": 0, "expl": "Posmrtné vydání téhož roku jako Máchaova smrt."},
+    {"prompt": "Jaký směr Mácha reprezentuje?", "options": ["Realismus", "Romantismus", "Naturalismus", "Postmoderna"], "correct": 1, "expl": "Máj je vrchol českého romantismu."},
+    {"prompt": "Co je intercalare?", "options": ["Lyrická vložka ve skladbě", "Postava", "Kapitola románu", "Refrén bez smyslu"], "correct": 0, "expl": "Vložky vězeň, vandrák přerušují děj."},
+    {"prompt": "Kde se děj částečně odehrává?", "options": ["Krajina kolem Doksy a jezera", "Praha bez přírody", "Moře", "Vesmír"], "correct": 0, "expl": "Mácha inspirován krajinou Máchova jezera."},
+    {"prompt": "Proč maturita zahrnuje Máj?", "options": ["Nejdelší román", "Základ českého romantismu a verše", "Bez významu", "Proza"], "correct": 1, "expl": "Učí skladbu, symbol a romantické motivy."},
+    {"prompt": "Které téma je středem?", "options": ["Láska, vina, trest, smrt", "Sport", "Politika 21. stol.", "Vesmír"], "correct": 0, "expl": "Tragický milostný příběh s trestem."},
+    {"prompt": "Kdo je hajný?", "options": ["Otec Jarmily, oběť Viléma", "Vilém", "Vandrák", "Král"], "correct": 0, "expl": "Hajný brání vztahu dcery s Vilémem."},
+    {"prompt": "Jak Mácha pracuje s jazykem?", "options": ["Hudební verš, obrazy, personifikace", "Úřední styl", "Proza", "Anglicky"], "correct": 0, "expl": "Skladba je známá rytmem a obrazností."},
+    {"prompt": "Co je lyricko-epická skladba?", "options": ["Spojení epického děje a lyrických pasáží", "Jen epos", "Jen epigram", "Drama"], "correct": 0, "expl": "Máj má děj i lyrické monology."},
+    {"prompt": "Který prvek NENÍ typický?", "options": ["Příroda", "Osud", "Sci-fi vesmír", "Vina"], "correct": 2, "expl": "Máj je romantická krajina a cit."},
+    {"prompt": "Jak končí Jarmila?", "options": ["Šťastně", "Smrt v jezeře", "Svatba s hajným", "Exil"], "correct": 1, "expl": "Tragický konec milenky."},
+    {"prompt": "Co vězeň ve vězení dělá?", "options": ["Lyrické úvahy o osudu", "Sport", "Vládne", "Vaří"], "correct": 0, "expl": "Vilém jako vězeň medituje nad životem."},
+    {"prompt": "Jaký vliv má Máj na českou literaturu?", "options": ["Ikona romantismu", "Bez vlivu", "Jen pro děti", "Zakázaný"], "correct": 0, "expl": "Nejznámější česká báseň."},
+    {"prompt": "Co je sbor jeskyň?", "options": ["Personifikovaná příroda", "Divadlo", "Armáda", "Město"], "correct": 0, "expl": "Romantický obraz přírody."},
+    {"prompt": "Kdy Mácha zemřel?", "options": ["1836 (mladý)", "1900", "1950", "2000"], "correct": 0, "expl": "Mácha zemřel velmi mladý."},
+    {"prompt": "Jaký kontrast tvoří skladba?", "options": ["Krása máje vs. smrt a trest", "Humor vs. humor", "Město vs. město", "Bez kontrastu"], "correct": 0, "expl": "Láska a krása kontrastují s vraždou a šibenicí."},
+    {"prompt": "Co je romantický osud?", "options": ["Postavy nemohou uniknout následkům činů", "Happy end vždy", "Bez děje", "Komický"], "correct": 0, "expl": "Vilém platí za zločin."},
+    {"prompt": "Jak číst personifikaci?", "options": ["Příroda odráží city a morálku", "Bez významu", "Jen věda", "Sport"], "correct": 0, "expl": "Krajina je účastníkem děje."},
+    {"prompt": "Která postava NENÍ v Máji?", "options": ["Vilém", "Jarmila", "Harapagon", "Vandrák"], "correct": 2, "expl": "Harapagon je Molière."},
+    {"prompt": "Jaké poselství skladba nese?", "options": ["Láska a krása jsou křehké; vina má cenu", "Vražda bez následků", "Pouze humor", "Bez etiky"], "correct": 0, "expl": "Romantická tragédie varuje před násilím."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Jarmila čeká na Viléma u jezera",
-        "Odhalení zrady otce a Vilémova činu",
-        "Vilém ve vězení přemítá o životě a nicotě",
-        "Jarmila se v zoufalství utopí",
-        "Vilém je popraven",
-        "Hynek-poutník nese paměť tragédie krajinou"
+        "Vilém miluje Jarmilu; konflikt s hajným",
+        "Vilém zabije hajného",
+        "Jarmila se utopí v jezeře",
+        "Vilém je chycen a ve vězení",
+        "Poprava na šibenici",
+        "Vandrák a příroda uzavírají meditaci nad osudem"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: čekání Jarmily → odhalení viny → vězeňské meditace → Jarmilina smrt → poprava → poutníkova paměť."
+    "Správné pořadí: láska a konflikt → vražda → Jarmilina smrt → vězení → poprava → lyrický epilog vandrat a přírody."
   ]
 }

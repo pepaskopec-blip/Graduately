@@ -5,196 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: Edgar Allan Poe",
-        "Žánr: povídky (horor, detektivka, groteska)",
-        "Poprvé souborně / kanonicky 19. stol.",
-        "Prostředí: gotické interiéry, města, mysl vypravěče",
-        "Forma: krátká próza s pointou a atmosférou"
+        "Žánr: horor, detektivka, groteska (povídky)",
+        "Poprvé vydáno: různá vydání 19. století",
+        "Děj: povídky – temná psychika, tajemno",
+        "Vyprávění: ich/er forma; gotický styl"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Romantismus/gotika: strach, vina, šílenství.",
-        "Poe zakládá moderní horor i detektivku.",
-        "Vypravěči často nespolehliví.",
-        "Racionalita (Dupin) vs. hrůza podvědomí.",
-        "Efekt jednotného dojmu."
+        "Americká romantika 19. století – gotika.",
+        "Hrůza, vina, monomanie.",
+        "Detektivní logika (Dupin).",
+        "Symbolismus (Havran).",
+        "Smrt, hrobky, mučení.",
+        "Téma: psychika, strach, rozum vs. šílenství."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vypravěči–šílenci – častí hrdinové.",
-        "Augustе Dupin – analytik.",
-        "Oběti a pronásledovaní – gotické postavy.",
-        "Havraní / symbolické bytosti – motivy i mimo poezii.",
-        "Vyšetřovatelé a svědkové.",
-        "Čtenář – součást napětí."
+        "Vypravěč Havran – truchlící muž.",
+        "Dupin – detektiv (Povídky o skandálu…).",
+        "Montresor – vrah v Amontillado.",
+        "Fortunato – oběť.",
+        "Roderick Usher – poslední z rodu.",
+        "Beruška – srdce v povídce."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Gotická atmosféra.",
-        "Nespolehlivý vypravěč.",
-        "Analytická detektivka.",
-        "Vina a svědomí.",
-        "Horor mysli.",
-        "Pointa povídky."
+        "Gotický horor – hrad, hrob, tma.",
+        "Detektivní povídka – logika Dupina.",
+        "Monomanie – posedlost.",
+        "Symbol – havran „Nevermore“.",
+        "Princip jednoty účinku – Poe estetika.",
+        "Psychologický horor."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Čím je Poe významný?",
-      "options": [
-        "Jen účetnictvím",
-        "Zakladatelský vliv na horor a detektivku",
-        "Jen husitskou kronikou",
-        "Jen robotikou"
-      ],
-      "correct": 1,
-      "expl": "Moderní žánry."
-    },
-    {
-      "prompt": "Kdo je Dupin?",
-      "options": [
-        "Šílenec jen",
-        "Analytický detektiv",
-        "Vodník",
-        "Revizor"
-      ],
-      "correct": 1,
-      "expl": "Předchůdce Holmese."
-    },
-    {
-      "prompt": "Co je typické pro jeho horory?",
-      "options": [
-        "Veselí bez stínu",
-        "Atmosféra, vina, šílenství",
-        "Jen reportáž z fronty",
-        "Jen sňatkový trh"
-      ],
-      "correct": 1,
-      "expl": "Gotická psychologie."
-    },
-    {
-      "prompt": "Jaký bývá vypravěč?",
-      "options": [
-        "Vždy objektivní soudce",
-        "Často nespolehlivý",
-        "Jen dítě bez stínu",
-        "Jen robot"
-      ],
-      "correct": 1,
-      "expl": "Nespolehlivost."
-    },
-    {
-      "prompt": "Co je „jednotný dojem“?",
-      "options": [
-        "Daně",
-        "Kompozice k jednomu účinku na čtenáře",
-        "Sportovní výsledek",
-        "Jízdní řád"
-      ],
-      "correct": 1,
-      "expl": "Poeova poetika povídky."
-    },
-    {
-      "prompt": "Jaké prostředí bývá?",
-      "options": [
-        "Jen slunná pláž",
-        "Gotické domy, tma, uzavřenost",
-        "Jen zákopy 1916",
-        "Jen farmy mloků"
-      ],
-      "correct": 1,
-      "expl": "Gotika."
-    },
-    {
-      "prompt": "Co zkoumá detektivní linie?",
-      "options": [
-        "Počasí",
-        "Logiku a analýzu zločinu",
-        "Vaření",
-        "Tanec"
-      ],
-      "correct": 1,
-      "expl": "Racionalita."
-    },
-    {
-      "prompt": "Jaká emoce je klíčová?",
-      "options": [
-        "Jen nuda",
-        "Strach a vina",
-        "Jen úřední radost",
-        "Jen daňová úleva"
-      ],
-      "correct": 1,
-      "expl": "Horor svědomí."
-    },
-    {
-      "prompt": "Proč krátká forma?",
-      "options": [
-        "Náhodou",
-        "Pointa a atmosféra vyžadují celek",
-        "Protože neuměl dlouhé",
-        "Kvůli cenzuře robotů"
-      ],
-      "correct": 1,
-      "expl": "Efekt povídky."
-    },
-    {
-      "prompt": "Hlavní témata souboru?",
-      "options": [
-        "Zelinářství",
-        "Strach, rozum, zločin, šílenství",
-        "Lastura a oheň Goldinga jen",
-        "Audience Havla jen"
-      ],
-      "correct": 1,
-      "expl": "Široký žánrový vějíř."
-    },
-    {
-      "prompt": "Jaký směr?",
-      "options": [
-        "Socialistický realismus",
-        "Romantismus/gotika s moderním vlivem",
-        "Husitský epos",
-        "Dada jen"
-      ],
-      "correct": 1,
-      "expl": "Gotický romantismus."
-    },
-    {
-      "prompt": "Co čtenář často cítí?",
-      "options": [
-        "Jen návod na daně",
-        "Napětí a nejistotu pravdy",
-        "Jen klid účetního",
-        "Jen sňatek Darcyho"
-      ],
-      "correct": 1,
-      "expl": "Efekt hrůzy/záhady."
-    }
+    {"prompt": "Kdo napsal Havrana a další povídky?", "options": ["Dickens", "Edgar Allan Poe", "Twain", "Hemingway"], "correct": 1, "expl": "Poe – zakladatel detektivky a hororu."},
+    {"prompt": "Co opakuje havran v básni?", "options": ["Nevermore (Už nikdy)", "Hello", "War", "Love"], "correct": 0, "expl": "Jediné slovo – symbol věčného smutku."},
+    {"prompt": "O čem je Havran?", "options": ["Truchlení za Lenore", "Válka", "Robot", "Svatba"], "correct": 0, "expl": "Gotická báseň v komnatě."},
+    {"prompt": "Kdo je Dupin?", "options": ["Detektiv v povídkách", "Vrah", "Král", "Havran"], "correct": 0, "expl": "Předchůdce Sherlocka Holmese."},
+    {"prompt": "O čem je Amontillado?", "options": ["Pomsta zazděním ve sklepě", "Láska", "Detektivka na lodi", "Sci-fi"], "correct": 0, "expl": "Montresor zabije Fortunata."},
+    {"prompt": "O čem je Srdce prozrazuje?", "options": ["Vrah slyší bušení srdce pod podlahou", "Láska", "Válka", "Cookbook"], "correct": 0, "expl": "Psychologický horor viny."},
+    {"prompt": "O čem je Jáma a kyvadlo?", "options": ["Mučení inkvizicí", "Svatba", "Detektivka", "Komise"], "correct": 0, "expl": "Strach a smrt."},
+    {"prompt": "O čem je Fall of the House of Usher?", "options": ["Rod Usherů a zhroucení domu", "Švejk", "Praha", "Robot"], "correct": 0, "expl": "Gotický dům = rod."},
+    {"prompt": "Jaký je Poe styl?", "options": ["Gotika, psychologie, napětí", "Realismus Dickens", "Poetismus", "Hašek"], "correct": 0, "expl": "Temnota a logika."},
+    {"prompt": "Proč maturita?", "options": ["Havran, horor, detektivka, symboly", "Chemie", "Atlas", "Cookbook"], "correct": 0, "expl": "Světová maturitní četba."},
+    {"prompt": "Které téma NENÍ?", "options": ["Strach", "Vina", "Robotí R.U.R.", "Monomanie"], "correct": 2, "expl": "Čapek."},
+    {"prompt": "Co „princip jednoty účinku“?", "options": ["Poe estetika – jeden dojem v díle", "Válka", "Cookbook", "Mapa"], "correct": 0, "expl": "Krátká forma, silný efekt."},
+    {"prompt": "Kdy Poe žil?", "options": ["1809–1849", "1929", "2000", "1595"], "correct": 0, "expl": "19. století USA."},
+    {"prompt": "Která postava NENÍ Poe?", "options": ["Dupin", "Montresor", "Elizabeth Bennet", "Usher"], "correct": 2, "expl": "Austen."},
+    {"prompt": "Co gotika u Poe?", "options": ["Tma, hrob, hrůza", "Komise", "Idyla", "Sport"], "correct": 0, "expl": "Základ hororu."},
+    {"prompt": "Které dílo NENÍ Poe?", "options": ["Havran", "Amontillado", "Revizor", "Beruška"], "correct": 2, "expl": "Gogol."},
+    {"prompt": "Jak Havran končí?", "options": ["Pták zůstává, beznaděj", "Svatba", "Vítězství", "Pták letí"], "correct": 0, "expl": "Stín na duši."},
+    {"prompt": "Co detektivní povídka Poe?", "options": ["Logika, deduction", "Pouze magie", "Válka", "Cookbook"], "correct": 0, "expl": "Dupin řeší zločin."},
+    {"prompt": "Jaký jazyk Havran?", "options": ["Rytmická báseň, gotická", "Prozaický zákoník", "Dialog divadla", "Hašek"], "correct": 0, "expl": "Lyrika + horor."},
+    {"prompt": "Co monomanie?", "options": ["Posedlost jednou myšlenkou", "Láska", "Sport", "Mír"], "correct": 0, "expl": "Vrah v Srdci prozrazuje."},
+    {"prompt": "Kde Poe působil?", "options": ["USA", "Čechy", "Rusko", "Antika"], "correct": 0, "expl": "Americký autor."},
+    {"prompt": "Co čtenář u maturity?", "options": ["Zná Havrana, horor, detektivku", "Jen mapu", "Chemii", "Nic"], "correct": 0, "expl": "Výběr povídek."},
+    {"prompt": "Co Lenore?", "options": ["Mrtvá milovaná v Havranovi", "Detektiv", "Král", "Robot"], "correct": 0, "expl": "Důvod smutku."},
+    {"prompt": "Jaký kontrast Poe?", "options": ["Rozum vs. šílenství", "Moře hory", "Den noc", "Práce lenost"], "correct": 0, "expl": "Psychika na hranici."},
+    {"prompt": "Co Fortunato?", "options": ["Oběť v Amontillado", "Detektiv", "Havran", "Král"], "correct": 0, "expl": "Opilý, zazděný."},
+    {"prompt": "Proč povídky?", "options": ["Krátká forma, silný účinek", "Bez důvodu", "Jen básně", "Jen román"], "correct": 0, "expl": "Poe mistr povídky."},
+    {"prompt": "Co symbol havran?", "options": ["Smrt, beznaděj", "Láska", "Mír", "Bohatství"], "correct": 0, "expl": "Černý pták."},
+    {"prompt": "Jak vyprávění hororu?", "options": ["Často ich-forma vina", "Epos", "Bez já", "Drama"], "correct": 0, "expl": "Subjektivní strach."},
+    {"prompt": "Co NENÍ Poe povídka?", "options": ["Havran (báseň)", "Amontillado", "Oliver Twist", "Usher"], "correct": 2, "expl": "Dickens román."},
+    {"prompt": "Jaký tón?", "options": ["Temnota, napětí", "Pouze komedie", "Idyla", "Učebnice"], "correct": 0, "expl": "Gotický horor."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Úvod atmosféry a vypravěče",
-        "Náběh záhady/hrůzy",
-        "Stupňování napětí",
-        "Zvrat nebo odhalení",
-        "Pointa",
-        "Dojezd atmosféry"
+        "Havran: muž truchlí za Lenore",
+        "Pták přiletí do komnaty",
+        "Otázky a odpověď „Nevermore“",
+        "Narůstající zoufalství",
+        "Stín ptáka nad duší",
+        "Beznaděj bez útěchy"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: atmosféra → záhada → stupňování → zvrat → pointa → dojezd."
+    "Správné pořadí (Havran): smutek → přílet → Nevermore → zoufalství → stín → beznaděj."
   ]
 }

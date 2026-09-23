@@ -4,46 +4,47 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Josef Škvorecký",
-        "Žánr: román",
-        "Poprvé vydáno: 1958",
-        "Děj: Kostelec na konci války 1945 – dospívání Dannyho Smiřického",
-        "Vyprávění: ich-forma, jazzový rytmus, hovorovost"
+        "Autor: Josef Škvorecký (1924–2012)",
+        "Žánr: autobiograficky laděný román",
+        "Poprvé vydáno: 1958 (v exilu)",
+        "Děj: květen 1945, Náchodsko, konec války",
+        "Vyprávění: er-forma – Danny Smiřický"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Konec protektorátu a příchod osvobození.",
-        "Danny řeší jazz, dívky a strach.",
-        "Satira na hrdinské pózy i zbabělost.",
-        "Maloměsto v dějinách – všednost vs. patos.",
-        "Generační pohled na válku bez idealizace."
+        "Danny – gymnazista, jazz, holky, strach z války.",
+        "Nacisté ustupují, partyzáni, chaos osvobození.",
+        "Motiv zbabělosti vs. odvahy – ironie titulu.",
+        "Láska k jazzu a americké kultuře.",
+        "Škvorecký – censorship, později exil.",
+        "Jazyk hovorový, generační perspektiva."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Danny Smiřický – vypravěč, saxofonista.",
-        "Irena – dívka jeho touhy.",
-        "Přátelé z kapely – svět jazzu.",
-        "Otec a matka – domácí zázemí.",
-        "Revoluční nadšenci – terč ironie.",
-        "Němci / osvoboditelé – historické pozadí."
+        "Danny Smiřický – vypravěč, student.",
+        "Lída, Irena – dívky.",
+        "Němečtí vojáci, partyzáni.",
+        "Dannyho rodiče, učitelé.",
+        "Konopný – postava okolí.",
+        "Město Náchod – prostředí."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Jazz – svoboda a generační znak.",
-        "Zbabělost vs. hrdinství – ústřední otázka.",
-        "Maloměsto – chronotop.",
-        "Ironie patosu – styl.",
-        "Dospívání – osobní linie.",
-        "Konec války – historický rámec."
+        "Květen 1945 – konec okupace.",
+        "Jazz – symbol svobody a identity.",
+        "Zbabělci – sebeironie, strach mládí.",
+        "Erotika a válka – kontrast.",
+        "Cenzura – kniha u nás později.",
+        "Exilový autor – svoboda slova."
       ]
     }
   ],
@@ -51,150 +52,370 @@
     {
       "prompt": "Kdo napsal Zbabělce?",
       "options": [
-        "Hrabal",
-        "Škvorecký",
         "Kundera",
-        "Fuks"
+        "Josef Škvorecký",
+        "Hrabal",
+        "Otčenášek"
       ],
       "correct": 1,
-      "expl": "Autorem je Josef Škvorecký."
+      "expl": "Škvorecký 1958."
     },
     {
-      "prompt": "Kdo je Danny?",
+      "prompt": "Kdo vypráví?",
       "options": [
-        "Generál",
-        "Mladý jazzman a vypravěč",
-        "Farár",
-        "Revizor"
+        "Danny Smiřický",
+        "Gatsby",
+        "Winston",
+        "Svejk"
       ],
-      "correct": 1,
-      "expl": "Danny Smiřický vypráví."
+      "correct": 0,
+      "expl": "Gymnazista."
     },
     {
-      "prompt": "V jakém roce se děj odehrává?",
+      "prompt": "Kdy děj?",
       "options": [
-        "1938",
         "Květen 1945",
-        "1968",
-        "1914"
-      ],
-      "correct": 1,
-      "expl": "Konec války 1945."
-    },
-    {
-      "prompt": "Co je pro Dannyho důležité?",
-      "options": [
-        "Účetnictví",
-        "Jazz a dívky i strach ze smrti",
-        "Jen politika bez osobního",
-        "Jen sport"
-      ],
-      "correct": 1,
-      "expl": "Osobní svět vs. dějiny."
-    },
-    {
-      "prompt": "Jaký je postoj k „hrdinství“?",
-      "options": [
-        "Bezvýhradná oslava",
-        "Ironický, demytizující",
-        "Jen náboženský",
-        "Jen dětský"
-      ],
-      "correct": 1,
-      "expl": "Škvorecký demytizuje pózy."
-    },
-    {
-      "prompt": "Proč název Zbabělci?",
-      "options": [
-        "Oslavuje zbabělost",
-        "Ironicky zkoumá strach a odvahu obyčejných lidí",
-        "Je o zvířatech",
-        "Je o robotice"
-      ],
-      "correct": 1,
-      "expl": "Téma strachu a morálky."
-    },
-    {
-      "prompt": "Jaký styl?",
-      "options": [
-        "Hexametr",
-        "Hovorový, jazzový rytmus prózy",
-        "Jen zákoník",
-        "Jen deník účetního"
-      ],
-      "correct": 1,
-      "expl": "Typický škvorecký jazyk."
-    },
-    {
-      "prompt": "Kde se děj odehrává?",
-      "options": [
-        "Praha jen",
-        "Fiktivní Kostelec (Náchodsko)",
-        "New York",
-        "Řím"
-      ],
-      "correct": 1,
-      "expl": "Maloměsto Kostelec."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1945",
-        "1958",
+        "1920",
         "1989",
-        "1921"
+        "1848"
       ],
-      "correct": 1,
-      "expl": "1958."
+      "correct": 0,
+      "expl": "Konec války."
     },
     {
-      "prompt": "Co jazz symbolizuje?",
+      "prompt": "Kde?",
       "options": [
-        "Otroctví",
-        "Svobodu, modernost, generaci",
-        "Cenzuru",
-        "Daně"
+        "Náchodsko",
+        "Long Island",
+        "Paříž Halles",
+        "Moře"
       ],
-      "correct": 1,
-      "expl": "Jazz je znak svobody."
+      "correct": 0,
+      "expl": "České pohraničí."
     },
     {
-      "prompt": "Jak kniha pracuje s dějinami?",
+      "prompt": "Proč zbabělci?",
       "options": [
-        "Ignoruje je",
-        "Prolíná všední dospívání s velkou historií",
-        "Jen kronika bitev",
-        "Jen mýtus bez lidí"
+        "Ironie – strach mládí v chaosu",
+        "Všichni hrdinové",
+        "Bez",
+        "Detektivka"
       ],
-      "correct": 1,
-      "expl": "Dějiny skrz osobní zkušenost."
+      "correct": 0,
+      "expl": "Titul."
     },
     {
-      "prompt": "Hlavní téma?",
+      "prompt": "Jazz?",
       "options": [
-        "Zemědělství",
-        "Strach, dospívání a konec války bez patosu",
-        "Robotika",
-        "Antika"
+        "Dannyho vášeň, symbol svobody",
+        "Ne",
+        "Zakázáno bez významu",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Demytizace hrdinství a zrání."
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Škvorecký?",
+      "options": [
+        "Později v exilu v Kanadě",
+        "Nikdy neodešel",
+        "Němec",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Osud autora."
+    },
+    {
+      "prompt": "Cenzura?",
+      "options": [
+        "Kniha u nás dlouho problematická",
+        "Bez",
+        "Vždy volná",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Normalizace."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Autobiografický román",
+        "Báseň",
+        "Drama",
+        "Epos"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Danny věk?",
+      "options": [
+        "Gymnazista – mládí",
+        "Starý",
+        "Dítě",
+        "Generál"
+      ],
+      "correct": 0,
+      "expl": "Perspektiva."
+    },
+    {
+      "prompt": "Válka končí?",
+      "options": [
+        "Chaos osvobození",
+        "Bez",
+        "1940",
+        "2000"
+      ],
+      "correct": 0,
+      "expl": "Květen."
+    },
+    {
+      "prompt": "Lásky?",
+      "options": [
+        "Lída, Irena aj.",
+        "Bez",
+        "Jen Gatsby",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Erotika."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Konec války",
+        "Jazz",
+        "Mládí",
+        "Kosmické mloky"
+      ],
+      "correct": 3,
+      "expl": "Jiné dílo."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Hovorový, ironický",
+        "Epický bez humoru",
+        "Bez",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Styl."
+    },
+    {
+      "prompt": "Partyzáni?",
+      "options": [
+        "Součást osvobození",
+        "Ne",
+        "Jen Němci",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Děj."
+    },
+    {
+      "prompt": "Němci ustupují?",
+      "options": [
+        "Ano",
+        "Ne",
+        "Bez",
+        "2000"
+      ],
+      "correct": 0,
+      "expl": "Květen 45."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Generace 45, jazz, Škvorecký",
+        "Bez",
+        "Mapa",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Česká próza."
+    },
+    {
+      "prompt": "Emigrace autora?",
+      "options": [
+        "Po 68",
+        "Nikdy",
+        "1890",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Historie."
+    },
+    {
+      "prompt": "Danny strach?",
+      "options": [
+        "Válka, sex, budoucnost",
+        "Bez",
+        "Jen jazz",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Psychologie."
+    },
+    {
+      "prompt": "Americká kultura?",
+      "options": [
+        "Idealizace",
+        "Ne",
+        "Zakázáno bez motivu",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Jazz."
+    },
+    {
+      "prompt": "Škvorecký jiné?",
+      "options": [
+        "Mirákl, Tankový prapor",
+        "Gatsby",
+        "Bez",
+        "Wolker"
+      ],
+      "correct": 0,
+      "expl": "Tvorba."
+    },
+    {
+      "prompt": "Vyprávění?",
+      "options": [
+        "Er-forma",
+        "Deník",
+        "Drama",
+        "Báseň"
+      ],
+      "correct": 0,
+      "expl": "Román."
+    },
+    {
+      "prompt": "Ironie?",
+      "options": [
+        "Zbabělci – self-deprecation",
+        "Bez",
+        "Bez humoru",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Titul."
+    },
+    {
+      "prompt": "Publikum?",
+      "options": [
+        "Mladí i dospělí",
+        "Bez",
+        "Jen děti",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Generační."
+    },
+    {
+      "prompt": "Okupace?",
+      "options": [
+        "Končí – radost i chaos",
+        "Začíná",
+        "Bez",
+        "2000"
+      ],
+      "correct": 0,
+      "expl": "Květen."
+    },
+    {
+      "prompt": "Jazyk?",
+      "options": [
+        "Hovorová čeština",
+        "Angličtina",
+        "Bez",
+        "Latině"
+      ],
+      "correct": 0,
+      "expl": "Styl."
+    },
+    {
+      "prompt": "Hrdinství?",
+      "options": [
+        "Problematizováno",
+        "Jasné",
+        "Bez",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Antihero."
+    },
+    {
+      "prompt": "Rok vydání?",
+      "options": [
+        "1958",
+        "1945",
+        "2000",
+        "1869"
+      ],
+      "correct": 0,
+      "expl": "Exil."
+    },
+    {
+      "prompt": "Náchod?",
+      "options": [
+        "Reálné město",
+        "Fikce",
+        "USA",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Prostředí."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Mladí v historickém zlomu",
+        "Bez",
+        "Válka je hra",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Generační novela."
+    },
+    {
+      "prompt": "Jak Danny reaguje na konec války a příchod Sovětů?",
+      "options": [
+        "S mísením naděje, strachu a ironie – generace na rozhraní",
+        "Bez emocí",
+        "Okamžitě emigruje",
+        "Stává se rybářem"
+      ],
+      "correct": 0,
+      "expl": "Román zachycuje psychiku mládí v květnu 1945."
+    },
+    {
+      "prompt": "Proč je jazz ve Zbabělcích důležitý?",
+      "options": [
+        "Symbol svobody, identity a jiného světa než ideologie",
+        "Jen kulisa bez významu",
+        "Zakázaný bez zmínky",
+        "Nahrazuje děj"
+      ],
+      "correct": 0,
+      "expl": "Dannyho vášeň pro jazz kontrastuje s politickým tlakem."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Konec války v Kostelci",
-        "Danny hraje jazz a řeší vztahy",
-        "Pozoruje revoluční nadšení",
-        "Prožívá strach i touhu po odvaze",
-        "Město zažívá převrat dní",
-        "Ironický pohled na „hrdiny“ a zbabělce"
+        "Danny žije okupaci a jazz",
+        "Květen 1945 – chaos",
+        "Osvobození a strach",
+        "Lásky a party",
+        "Setkání s realitou války",
+        "Závěr – mládí v nové době"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: konec války → jazz/vztahy → revoluční pózy → strach → převrat dní → ironická bilance."
+    "Správné pořadí: okupace → květen 45 → osvobození → vztahy → zrání → nová éra."
   ]
 }

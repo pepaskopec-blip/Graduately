@@ -4,198 +4,407 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Zdeněk Svěrák, Ladislav Smoljak",
-        "Žánr: divadelní hra / mystifikační komedie (Jára Cimrman)",
-        "Poprvé vydáno: 1970s– (Cimrmanovo České nebe)",
-        "Děj/prostředí: Nebe jako úřad; čeští velikáni u cimrmanovské komise",
-        "Vyprávění/forma: komedie Divadla Járy Cimrmana, mystifikace"
+        "Autoři: Zdeněk Svěrák, Ladislav Smoljak",
+        "Žánr: komické drama / fraška",
+        "Poprvé vydáno: 1976 (Divadlo Jára Cimrmana)",
+        "Děj/prostředí: parodické dějiny českého nebe",
+        "Vyprávění/forma: divadelní scény, humor, pastiše"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Svět Cimrmanova divadla: vážná historie parodována humorem.",
-        "Čeští národní hrdinové jsou souzeni / přijímáni do „nebe“.",
-        "Mystifikace: Cimrman jako univerzální génius.",
-        "Ironie vůči národním mýtům a školním klišé.",
-        "Forma spojuje odborný „referát“ a scénky.",
-        "Téma: národní identita, humor, mystifikace, dějiny."
+        "Normalizace – ne přímá politika, ale metafora",
+        "„Nebe“ jako symbol vlasti / duchovního prostoru",
+        "Groteskní historie od pradávna po modernu",
+        "Cimrmanovský styl – pseudovědecký humor",
+        "Satira na národní mýty a malost",
+        "Spolupráce Svěrák–Smoljak"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Jára Cimrman – nepřítomný génius v pozadí celého cyklu.",
-        "Komise / úředníci nebe – hodnotí české velikány.",
-        "Historické postavy (např. Hus, Komenský aj.) – parodované ikony.",
-        "Výpravěči/herci Cimrmanova divadla – rámec představení.",
-        "Žadatelé o vstup do českého nebe – komické typy.",
-        "Divák – spoluúčastník mystifikace."
+        "Jára Cimrman – „největší Čech“, v této hře v roli vypravěče/historika",
+        "Různí historičtí komici typy",
+        "Postavy z parodovaných dějin",
+        "Ensemble divadla",
+        "Vědci a vynálezci groteskně",
+        "Kolektivní humor bez jednoho hrdiny"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Mystifikace – fiktivní Cimrman vydávaný za reálného génia.",
-        "Národní mýtus – terč laskavé ironie.",
-        "Divadlo Járy Cimrmana – specifický typ českého humoru.",
-        "Seminář + hra – typická struktura představení.",
-        "České nebe – metafora „pantheonu“ národních velikánů.",
-        "Satira – kritika pompéznosti a školních frází."
+        "Parodie dějin – české nebe jako téma",
+        "Cimrman – fiktivní génius",
+        "Národní identita s nadsázkou",
+        "Divadelní fraška – rychlé gagy",
+        "Smoljak/Svěrák dialog",
+        "Nebe vs. realita země"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo je autorskou dvojicí Českého nebe?",
+      "prompt": "Autoři?",
       "options": [
-        "Voskovec a Werich",
         "Svěrák a Smoljak",
-        "Čapek a Langer",
-        "Havel a Kohout"
+        "Čapek bratři",
+        "Shakespeare",
+        "Viewegh"
       ],
-      "correct": 1,
-      "expl": "Hra patří do repertoáru Divadla Járy Cimrmana (Svěrák, Smoljak)."
+      "correct": 0,
+      "expl": "Dvojice autorů Cimrmanova divadla."
     },
     {
-      "prompt": "K jakému divadelnímu kontextu hra patří?",
+      "prompt": "Žánr?",
       "options": [
-        "Národnímu divadlu baroka",
-        "Divadlu Járy Cimrmana",
-        "Antické tragédii",
-        "Opeře"
+        "Tragedie",
+        "Komické drama / fraška",
+        "Epos",
+        "Sci-fi"
       ],
       "correct": 1,
-      "expl": "Jde o cimrmanovskou mystifikační komedii."
+      "expl": "Humor divadla Jára Cimrmana."
     },
     {
-      "prompt": "Kdo je Jára Cimrman?",
+      "prompt": "Co je „české nebe“?",
       "options": [
-        "Skutečný středověký král",
-        "Fiktivní univerzální génius mystifikace",
-        "Rakouský císař",
-        "Postava z Bídníků"
+        "Meteorologický atlas",
+        "Parodické téma o české zemi a duchu",
+        "Bible",
+        "Učebnice"
       ],
       "correct": 1,
-      "expl": "Cimrman je vymyšlená postava „největšího Čecha“."
+      "expl": "Metafora vlasti v grotesce."
     },
     {
-      "prompt": "Čím se hra zabývá?",
+      "prompt": "Kdy hra vznikla?",
       "options": [
-        "Vesmírnou válkou",
-        "Přijímáním českých velikánů do „nebe“ / národního pantheonu",
-        "Tovární výrobou",
-        "Detektivkou z Londýna"
+        "1890",
+        "1976",
+        "2000",
+        "1942"
       ],
       "correct": 1,
-      "expl": "Paroduje, jak národ slaví své hrdiny."
+      "expl": "Součást Cimrmanova divadla."
     },
     {
-      "prompt": "Jaký je základní tón?",
+      "prompt": "Jára Cimrman?",
       "options": [
-        "Tragický naturalismus",
-        "Humor, ironie a mystifikace",
-        "Horror",
-        "Liturgie"
+        "Skutečný král",
+        "Fiktivní český génius divadla",
+        "Hasič",
+        "Německý spisovatel"
       ],
       "correct": 1,
-      "expl": "Cimrmanovský humor spojuje „vědu“ s nesmyslem."
+      "expl": "Centrální postava značky."
     },
     {
-      "prompt": "Co je typická struktura cimrmanovského večera?",
+      "prompt": "Styl humoru?",
       "options": [
-        "Jen balet",
-        "Odborný seminář a následná hra",
-        "Jen pantomima",
-        "Filmová projekce"
+        "Bez vtipu",
+        "Pseudověda, paradox, groteska",
+        "Pouze tragédie",
+        "Horor"
       ],
       "correct": 1,
-      "expl": "Nejdřív „badatelský“ úvod, pak vlastní hra."
+      "expl": "Typické Cimrmanovo."
     },
     {
-      "prompt": "Co hra ironizuje?",
+      "prompt": "Divadlo?",
       "options": [
-        "Matematiku",
-        "Národní sebechválu a školní mýty",
-        "Vaření",
-        "Sportovní výsledky výhradně"
+        "Národní bez Smoljaka",
+        "Divadlo Jára Cimrmana",
+        "Broadway",
+        "Antika"
       ],
       "correct": 1,
-      "expl": "Laskavě paroduje, jak Česi slaví dějiny."
+      "expl": "Základní kontext."
     },
     {
-      "prompt": "Jaký žánr je nejpřesnější?",
+      "prompt": "Proč maturitní?",
       "options": [
-        "Antiutopický román",
-        "Mystifikační divadelní komedie",
-        "Sonetový cyklus",
-        "Deník"
+        "Nejkratší",
+        "České drama konce 20. stol., kultura",
+        "Anglicky",
+        "Bez textu"
       ],
       "correct": 1,
-      "expl": "Jde o jevištní komedii s mystifikací."
+      "expl": "Reprezentuje českou komedii."
     },
     {
-      "prompt": "Proč je Cimrman „nepřítomný“?",
+      "prompt": "Parodie?",
       "options": [
-        "Je to Bůh",
-        "Je fiktivní postava, o níž se jen referuje a hraje",
-        "Emigroval do děje Hamlet",
-        "Je strom"
+        "Vážná historie bez nadsázky",
+        "Nadsázka českých dějin a mýtů",
+        "Jen sci-fi",
+        "Jen poezie"
       ],
       "correct": 1,
-      "expl": "Humor stojí na tom, že génius je všude dokazován, ale neukázán jako realita."
+      "expl": "Historie jako gag."
     },
     {
-      "prompt": "Co znamená „české nebe“ metaforicky?",
+      "prompt": "Smoljak role?",
       "options": [
-        "Počasí",
-        "Pantheon / výběr národních velikánů",
-        "Horský klub",
-        "Nemocnice"
+        "Spoluautor",
+        "Nepiš",
+        "Shakespeare",
+        "Překladatel Godota"
       ],
-      "correct": 1,
-      "expl": "Nebe je obraz „kdo patří mezi velikány národa“."
+      "correct": 0,
+      "expl": "Spolu se Svěrákm."
     },
     {
-      "prompt": "Které tvrzení platí?",
+      "prompt": "Svěrák role?",
       "options": [
-        "Hra je vážnou hagiografií bez humoru",
-        "Kombinuje parodii dějin s divadelní komikou",
-        "Je překladem Becketta",
-        "Je sci-fi o trifidech"
+        "Spoluautor",
+        "Victor Hugo",
+        "Beckett",
+        "Nezval"
       ],
-      "correct": 1,
-      "expl": "Podstatou je parodie a mystifikace, ne zbožná legenda."
+      "correct": 0,
+      "expl": "Spoluautor."
     },
     {
-      "prompt": "Kdo bývá cílem cimrmanovské satiry?",
+      "prompt": "Tón?",
       "options": [
-        "Jen zvířata",
-        "Pedanterie, úřednost a národní fráze",
-        "Jen cizí jazyky",
-        "Jen sportovci"
+        "Pouze smutek",
+        "Lehkost, wordplay",
+        "Naturalismus",
+        "Operní"
       ],
       "correct": 1,
-      "expl": "Směšné je často „vážné“ vykládání banality."
+      "expl": "Komický dialog."
+    },
+    {
+      "prompt": "Politický subtext?",
+      "options": [
+        "Groteska může metaforicky reagovat na éru",
+        "Přímý manifest",
+        "Ne",
+        "Jen válka"
+      ],
+      "correct": 0,
+      "expl": "Normalizační kontext jemně."
+    },
+    {
+      "prompt": "Forma?",
+      "options": [
+        "Román",
+        "Divadelní hra",
+        "Báseň",
+        "Esej"
+      ],
+      "correct": 1,
+      "expl": "Drama v katalogu."
+    },
+    {
+      "prompt": "Postavy historické?",
+      "options": [
+        "Groteskně parodované",
+        "Přesně dokumentární",
+        "Chybí",
+        "Jen cizinci"
+      ],
+      "correct": 0,
+      "expl": "Ne učebnice."
+    },
+    {
+      "prompt": "Cílové publikum?",
+      "options": [
+        "Diváci divadla, maturanti",
+        "Jen děti",
+        "Jen vědci",
+        "Nikdo"
+      ],
+      "correct": 0,
+      "expl": "Divadelní text."
+    },
+    {
+      "prompt": "Co NENÍ Cimrman?",
+      "options": [
+        "Značka divadla",
+        "Fiktivní postava",
+        "Reálný panovník",
+        "Humor"
+      ],
+      "correct": 2,
+      "expl": "Cimrman není reálná historická osoba."
+    },
+    {
+      "prompt": "České nebe vs Vyšetřování ztráty třídní knihy?",
+      "options": [
+        "Obě Smoljak/Svěrák",
+        "Obě Shakespeare",
+        "Stejný název",
+        "Obě poezie"
+      ],
+      "correct": 0,
+      "expl": "Stejný autorský tým."
+    },
+    {
+      "prompt": "Jazyk?",
+      "options": [
+        "Středověká čeština bez humoru",
+        "Spisovná čeština, vtipné repliky",
+        "Němčina",
+        "Latina"
+      ],
+      "correct": 1,
+      "expl": "Srozumitelný humor."
+    },
+    {
+      "prompt": "Hlavní děj?",
+      "options": [
+        "Lineární válka",
+        "Souvislý skečový průběh parodie nebe/dějin",
+        "Detektivka",
+        "Lyrika"
+      ],
+      "correct": 1,
+      "expl": "Fraškovitá stavba."
+    },
+    {
+      "prompt": "Smysl nebe v titulu?",
+      "options": [
+        "Astronomie",
+        "Symbol vlasti a duchovního",
+        "Jen počasí",
+        "Cizina"
+      ],
+      "correct": 1,
+      "expl": "Metafora."
+    },
+    {
+      "prompt": "Inscenace?",
+      "options": [
+        "Původně DJC Žižkov",
+        "Globe London",
+        "Antika",
+        "Jen radio"
+      ],
+      "correct": 0,
+      "expl": "Cimrmanovo divadlo."
+    },
+    {
+      "prompt": "Vztah k historii?",
+      "options": [
+        "Respekt bez vtipu",
+        "Hra s historií, ne lekce",
+        "Přesný učebnicový text",
+        "Zakázaná"
+      ],
+      "correct": 1,
+      "expl": "Parodie."
+    },
+    {
+      "prompt": "Ensemble?",
+      "options": [
+        "Jeden herec",
+        "Soubor postav / herecký soubor",
+        "Pouze orchestr",
+        "Film"
+      ],
+      "correct": 1,
+      "expl": "Divadelní forma."
+    },
+    {
+      "prompt": "Maturita – co znát?",
+      "options": [
+        "Autory, žánr, Cimrman, parodii",
+        "Jen rok 1066",
+        "Jen anglicky",
+        "Nic"
+      ],
+      "correct": 0,
+      "expl": "Základní kontext."
+    },
+    {
+      "prompt": "Groteska?",
+      "options": [
+        "Ano",
+        "Ne",
+        "Jen tragédie",
+        "Jen dokument"
+      ],
+      "correct": 0,
+      "expl": "Cimrman styl."
+    },
+    {
+      "prompt": "Konec hry?",
+      "options": [
+        "Komické finále ve stylu souboru",
+        "Hamletova smrt",
+        "Bitva",
+        "Ticho"
+      ],
+      "correct": 0,
+      "expl": "Fraška."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Humor o identitě bez pompy",
+        "Nacionalismus vážně",
+        "Nenávist",
+        "Bez témat"
+      ],
+      "correct": 0,
+      "expl": "Sebeironie národa."
+    },
+    {
+      "prompt": "Katalog žánr?",
+      "options": [
+        "Drama",
+        "Poezie",
+        "Próza",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Drama."
+    },
+    {
+      "prompt": "Rok 1976?",
+      "options": [
+        "Normalizace",
+        "Středověk",
+        "Budoucnost",
+        "1848"
+      ],
+      "correct": 0,
+      "expl": "Kontext vzniku."
+    },
+    {
+      "prompt": "Typická replika styl?",
+      "options": [
+        "Dlouhá pseudovědecká úvaha s pointou",
+        "Bez dialogu",
+        "Jen pění",
+        "Latinská mše"
+      ],
+      "correct": 0,
+      "expl": "Cimrmanovský projev."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Seminář uvádí téma českého nebe",
-        "Představí se pravidla přijímání velikánů",
-        "Historické postavy procházejí „řízením“",
-        "Komika odhaluje národní klišé",
-        "Cimrmanova legenda se mísí do hodnocení",
-        "Závěr upevní mystifikaci i pointu o národě"
+        "Uvedení do parodie „českého nebe“",
+        "Groteskní obrazy dějin",
+        "Cimrmanovské výklady a gagy",
+        "Satira na národní mýty",
+        "Souborové scénky",
+        "Komické finále frašky"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: seminář → pravidla nebe → přehlídka velikánů → odhalení klišé → cimrmanská legenda → pointa o národu."
+    "Pořadí: úvod → parodie dějin → gagy → satira → scénky → finále."
   ]
 }

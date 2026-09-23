@@ -4,23 +4,23 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Karel Kryl",
-        "Žánr: protestní / autorská poezie a písňové texty",
-        "Poprvé vydáno: 1972 (exilové vydání; texty z přelomu 60./70. let)",
-        "Děj / prostředí: Československo po srpnu 1968, nesvoboda a emigrace",
-        "Vyprávění / forma: básně a písně – metafora, ironie, allegorie, refrén"
+        "Autor: Karel Kryl (1944–1994), písničkář a básník",
+        "Žánr: protestní poezie, autorská píseň, sbírka textů",
+        "Poprvé vydáno: 1972 (exil; texty z přelomu 60./70. let)",
+        "Děj / prostředí: Československo po srpnu 1968, normalizace, emigrace",
+        "Vyprávění / forma: lyrické básně a písně, metafora, ironie, refrén"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Po okupaci 1968 nastává normalizace: cenzura, strach, emigrace.",
-        "Kryl je symbolem odporu; jeho písně kolovaly i jako samizdat.",
-        "Kníška sbírá texty, které propojují poezii s protest songem.",
+        "Po okupaci vojsky Varšavské smlouvy následuje normalizace a cenzura.",
+        "Kryl emigruje; písně kolují jako samizdat a symbol odporu.",
+        "Kníška sbírá texty propojující poezii s protest songem.",
         "Motivy: svoboda, zrada, pokrytectví moci, vina mlčení.",
-        "Jazyk je úderný, obrazný, často s biblickými a pohádkovými narážkami.",
-        "Dílo patří k klíčovým textům české protestní kultury 20. století."
+        "Jazyk je úderný, obrazný, s biblickými a pohádkovými narážkami.",
+        "Dílo patří k pilířům české protestní kultury 20. století."
       ]
     },
     {
@@ -28,11 +28,11 @@
       "icon": "people",
       "lines": [
         "Básnický subjekt – hlas svědka a moralisty proti moci.",
-        "Bratříčku, zavírej vrátka – bratr jako oslovení národa/generace.",
-        "Anděl / ďábel – alegorie dobra a zla v politice i člověku.",
-        "Král a blázen – figury moci a pravdy v písních.",
-        "Emigrant – postava vyhnance, která ztrácí domov i jistoty.",
-        "Dav / mlčící většina – kolektivní vina a strach."
+        "Bratříčku (Bratříčku, zavírej vrátka) – oslovení národa, varování.",
+        "Král a blázen – alegorie moci a pravdy (např. píseň Král a klaun).",
+        "Anděl / ďábel – dobro a zlo v politice i v člověku.",
+        "Emigrant – ztráta domova, vina vyhnanství.",
+        "Dav mlčících – kolektivní strach a kompromis."
       ]
     },
     {
@@ -41,161 +41,59 @@
       "lines": [
         "Protest song – píseň jako nástroj odporu.",
         "Alegorie – skryté politické významy v obrazech.",
-        "Normalizace – doba po 1968, proti ní Kryl protestuje.",
-        "Emigrace – ztráta domova i svobody promluvit doma.",
-        "Ironie a sarkasmus – zbraň proti propagandě.",
-        "Svědomí – vyzývání k osobní odpovědnosti."
+        "Normalizace – doba po 1968, proti ní Kryl brojí.",
+        "Emigrace – ztráta domova i možnosti mluvit doma.",
+        "Ironie – rozbití oficiální rétoriky.",
+        "Morální odpovědnost – kdo mlčí, také nese vinu."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo je autorem Kníšky Karla Kryla?",
-      "options": [
-        "Jaroslav Seifert",
-        "Karel Kryl",
-        "Vladimír Holan",
-        "Josef Kainar"
-      ],
-      "correct": 1,
-      "expl": "Sbírka textů patří písničkáři a básníkovi Karlu Krylovi."
-    },
-    {
-      "prompt": "S jakou historickou situací jsou texty nejvíce spjaty?",
-      "options": [
-        "První republikou",
-        "Okupací 1968 a normalizací",
-        "Husitskými válkami",
-        "Sametovou revolucí výhradně"
-      ],
-      "correct": 1,
-      "expl": "Krylovy písně reagují na srpen 1968 a následnou nesvobodu."
-    },
-    {
-      "prompt": "Jaký žánr Kníška především představuje?",
-      "options": [
-        "Román",
-        "Protestní poezii a písňové texty",
-        "Drama",
-        "Sci-fi"
-      ],
-      "correct": 1,
-      "expl": "Jde o básně a texty písní s protestním a morálním nábojem."
-    },
-    {
-      "prompt": "Co je typické pro Krylův jazyk?",
-      "options": [
-        "Suchý úřední styl",
-        "Metafora, ironie a alegorie",
-        "Jen dialekt",
-        "Latinské traktáty"
-      ],
-      "correct": 1,
-      "expl": "Kryl pracuje s obrazy, ironií a skrytými politickými významy."
-    },
-    {
-      "prompt": "Píseň Bratříčku, zavírej vrátka vznikla jako reakce na:",
-      "options": [
-        "Mnichov 1938",
-        "Srpnovou okupaci 1968",
-        "Únor 1948",
-        "Rok 1989"
-      ],
-      "correct": 1,
-      "expl": "Patří k nejznámějším reakcím na okupaci Československa."
-    },
-    {
-      "prompt": "Proč Kryl emigroval?",
-      "options": [
-        "Za prací do Hollywoodu",
-        "Kvůli nesvobodě a perzekuci po roce 1968",
-        "Z důvodů studia medicíny",
-        "Nebyl emigrant"
-      ],
-      "correct": 1,
-      "expl": "Po okupaci a zákazu působení odešel do exilu."
-    },
-    {
-      "prompt": "Co je hlavním tématem mnoha textů?",
-      "options": [
-        "Milostná idyla bez politiky",
-        "Svoboda, zrada a vina mlčení",
-        "Technický pokrok",
-        "Sport"
-      ],
-      "correct": 1,
-      "expl": "Kryl tematizuje svobodu, zradu, strach a odpovědnost."
-    },
-    {
-      "prompt": "Jak texty často šířily v ČSSR?",
-      "options": [
-        "Jen oficiálním rozhlasem",
-        "Samizdatem, nahrávkami a ústně",
-        "Výhradně ve školách",
-        "Jen v kostele"
-      ],
-      "correct": 1,
-      "expl": "Oficiálně zakázané texty kolovaly neoficiálně."
-    },
-    {
-      "prompt": "Co znamená alegorie v Krylovi?",
-      "options": [
-        "Doslovný reportážní popis",
-        "Obrazný přenos politického smyslu",
-        "Rým",
-        "Žánr románu"
-      ],
-      "correct": 1,
-      "expl": "Alegorie umožňuje říkat politickou pravdu skrze obrazy."
-    },
-    {
-      "prompt": "Kdy vyšla Kníška v exilu (orientačně)?",
-      "options": [
-        "1958",
-        "1972",
-        "1995",
-        "2005"
-      ],
-      "correct": 1,
-      "expl": "Exilové vydání textů je spojeno s počátkem 70. let (1972)."
-    },
-    {
-      "prompt": "Čím se Kryl liší od „čisté“ lyrické poezie bez kontextu?",
-      "options": [
-        "Nemá rýmy",
-        "Je přímo angažovaný vůči moci a nesvobodě",
-        "Píše jen prózu",
-        "Odmítá metaforu"
-      ],
-      "correct": 1,
-      "expl": "Jeho tvorba je protestní a společensky angažovaná."
-    },
-    {
-      "prompt": "Jaké poselství maturita často zdůrazňuje?",
-      "options": [
-        "Poslušnost režimu",
-        "Osobní svědomí a odpor vůči lži a útlaku",
-        "Útěchu v majetku",
-        "Odmítnutí kultury"
-      ],
-      "correct": 1,
-      "expl": "Kryl vyzývá k pravdě, odvaze a odmítnutí mlčení."
-    }
+    {"prompt": "Kdo je autorem Kníšky?", "options": ["Halík", "Karel Kryl", "Hrabal", "Okudař"], "correct": 1, "expl": "Kryl je autorem textů i skladatel písní; Kníška je sbírka jeho poezie."},
+    {"prompt": "V jakém historickém kontextu texty vznikají?", "options": ["První republika bez krizí", "Po srpnu 1968 a normalizaci", "Středověk", "Rok 1989 jen"], "correct": 1, "expl": "Krylovy texty reagují na okupaci a potlačení svobody."},
+    {"prompt": "Jaký žánr Kníška reprezentuje?", "options": ["Román", "Protestní poezie a písně", "Drama", "Encyklopedie"], "correct": 1, "expl": "Jde o lyrické texty určené i ke zpěvu."},
+    {"prompt": "Proč Kryl emigroval?", "options": ["Za obchodem", "Kvůli represím a nemožnosti svobodně tvořit", "Za sportem", "Bez důvodu"], "correct": 1, "expl": "Po okupaci emigroval do Německa; písně zůstaly symbolem odporu doma."},
+    {"prompt": "Co znamená píseň Bratříčku, zavírej vrátka?", "options": ["Výzva k zábavě", "Varování před nebezpečím a zradou", "Popis přírody", "Návod na vaření"], "correct": 1, "expl": "Bratříčku oslovuje národ a varuje před odevzdáním svobody."},
+    {"prompt": "Jak Kryl pracuje s metaforou?", "options": ["Vůbec", "Politické dění vyjadřuje obrazy (král, blázen, zima)", "Pouze přímou reportáží", "Jen cizím jazykem"], "correct": 1, "expl": "Alegorie umožňuje obcházet cenzuru a mluvit k čtenáři i posluchači."},
+    {"prompt": "Co je samizdat v kontextu Kryla?", "options": ["Oficiální tisk", "Nepovolené šíření textů mimo cenzuru", "Film", "Rozhlas státu"], "correct": 1, "expl": "Písně a texty kolovaly neoficiálně v normalizaci."},
+    {"prompt": "Jaký tón převládá?", "options": ["Bezbřehý optimismus", "Ironie, bolest, morální naléhavost", "Pouze humor bez smyslu", "Prázdná popisnost"], "correct": 1, "expl": "Kryl spojuje osobní i kolektivní zklamání s nadějí na svědomí."},
+    {"prompt": "Kdo je „král“ v písních?", "options": ["Historická postava bez významu", "Alegorie moci, často groteskní a pokrytecké", "Dítě", "Sportovec"], "correct": 1, "expl": "Král symbolizuje režim nebo autoritu, která zklame."},
+    {"prompt": "Proč maturita zahrnuje Kníšku?", "options": ["Je nejdelší román", "Ukazuje poezii 20. stol. v politickém kontextu", "Nemá význam", "Je v angličtině"], "correct": 1, "expl": "Učí číst lyrický text v souvislosti s dějinami."},
+    {"prompt": "Co je normalizace?", "options": ["Období svobody 1968", "Upevnění komunistické moci po okupaci 1968", "První světová válka", "Sametová revoluce"], "correct": 1, "expl": "Normalizace potlačila reformy Pražského jara."},
+    {"prompt": "Jak Kryl vnímá mlčení lidí?", "options": ["Chválí ho", "Vnímá ho jako morální selhání", "Nezmiňuje", "Považuje za hrdinství"], "correct": 1, "expl": "Motiv viny davu a kompromisu se opakuje."},
+    {"prompt": "Kdy Kryl zemřel?", "options": ["1994", "1968", "2005", "1848"], "correct": 0, "expl": "Karel Kryl zemřel v roce 1994; po listopadu 89 se vrátil do veřejného života."},
+    {"prompt": "Jak se liší píseň a báseň v Kníšce?", "options": ["Písně mají refrén a hudební formu", "Nic se neliší", "Básně jsou jen pro děti", "Písně nemají text"], "correct": 0, "expl": "Mnoho textů známe i z Krylova zpěvu s kytarou."},
+    {"prompt": "Co symbolizuje zima nebo tma v textech?", "options": ["Jen počasí", "Temnota doby, strach, útlak", "Radost", "Léto"], "correct": 1, "expl": "Obrazné prostředí odpovídá politické situaci."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Svoboda a útlak", "Emigrace", "Vesmírné války", "Ironie vůči moci"], "correct": 2, "expl": "Kryl píše o české realitě 20. století, ne sci-fi."},
+    {"prompt": "Co je protest song?", "options": ["Píseň oslavující moc", "Hudební projev odporu nebo kritiky", "Jen instrumentál", "Anthem sportu"], "correct": 1, "expl": "Kryl je v Česku symbolem autorské protestní písně."},
+    {"prompt": "Jak čtenář chápe alegorii Král a klaun?", "options": ["Jako groteskní obraz moci a pravdy", "Jako cookbook", "Bez významu", "Jako vědecký článek"], "correct": 0, "expl": "Postavy stojí pro reálné politické vztahy."},
+    {"prompt": "Proč exilové vydání 1972?", "options": ["Kryl nemohl oficiálně publikovat v normalizaci", "Kniha byla zakázaná jen v Německu", "Neexistuje", "Bylo to dětské vydání"], "correct": 0, "expl": "V totalitě vyšly texty v zahraničí nebo samizdatově."},
+    {"prompt": "Jaký nástroj Kryl typicky doprovází?", "options": ["Kytara", "Harfa bez hlasu", "Jen klavír klasické", "Žádný"], "correct": 0, "expl": "Kryl je známý jako kytarista a zpěvák."},
+    {"prompt": "Co znamená morální odpovědnost v textech?", "options": ["Každý nese díl viny za stav společnosti", "Nikdo není odpovědný", "Jen vláda USA", "Jen církev"], "correct": 0, "expl": "Kryl apeluje na svědomí jednotlivce i národa."},
+    {"prompt": "Jak pracuje s biblickými narážkami?", "options": ["Vůbec", "Obrazy dobra, zla a křižovatky osudu", "Jen jako encyklopedie", "Jako vtip bez smyslu"], "correct": 1, "expl": "Biblické motivy zvyšují váhu morálních otázek."},
+    {"prompt": "Co je typické pro jazyk Kníšky?", "options": ["Úderné, obrazné, s refrénem", "Suchý úřední styl", "Pouze archaismy", "Anglicky"], "correct": 0, "expl": "Lyrika je hutná a zapamatovatelná."},
+    {"prompt": "Jak reaguje na srpnovou okupaci 1968?", "options": ["Ignoruje", "Texty reflektují zradu, bolest a ztrátu naděje jara", "Oslavuje okupaci", "Píše jen o lásce"], "correct": 1, "expl": "Okupace je východiskem protestního tónu sbírky."},
+    {"prompt": "Kdo je adresátem „bratříčku“?", "options": ["Jeden bratr v rodině", "Symbolicky národ, blízký člověk, varovaný před nebezpečím", "Cizinec", "Král"], "correct": 1, "expl": "Oslovení je intimní i kolektivní."},
+    {"prompt": "Proč jsou texty stále aktuální?", "options": ["Mluví o univerzální svobodě a svědomí", "Jsou zastaralé", "Nejsou čitelné", "Jsou jen hudební"], "correct": 0, "expl": "Otázky moci a odvahy mluvit platí i mimo 70. léta."},
+    {"prompt": "Co NENÍ charakteristika Kryla?", "options": ["Protest", "Emigrace", "Oficiální pochvala normalizace", "Ironie"], "correct": 2, "expl": "Kryl normalizaci kritizoval, ne oslavoval."},
+    {"prompt": "Jak vnímat emigranta v písních?", "options": ["Postavu bez emocí", "Člověka v konfliktu domov–svoboda–vina", "Vždy boháče", "Vždy zrádce"], "correct": 1, "expl": "Exil je v Krylových textech bolestný i morálně složitý."},
+    {"prompt": "Co spojuje Kníšku s další českou lyricou 20. stol.?", "options": ["Nic", "Tradici disidentské a protestní kultury", "Pouze humor", "Pouze sci-fi"], "correct": 1, "expl": "Kryl stojí vedle Hrabala, Holanů apod. v jiných žánrech, ale v politické lyrice je ikonou."},
+    {"prompt": "Jaký efekt má refrén v písních?", "options": ["Ztěžuje čtení", "Upevňuje poselství a zapamatovatelnost", "Nemá funkci", "Je jen v angličtině"], "correct": 1, "expl": "Opakování (např. varování) je hudebně i významově klíčové."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Okupace a šok ze zrady svobody",
-        "Písně jako svědectví a protest",
-        "Střet jednotlivce s mocí a cenzurou",
-        "Emigrace a ztráta domova",
-        "Ironické odhalování pokrytectví",
-        "Výzva ke svědomí a paměti"
+        "Pražské jaro a naděje na svobodu",
+        "Okupace vojsky a konec reform",
+        "Kryl emigruje; texty kolují v samizdatu",
+        "Kníška v exilu sbírá protestní poezii",
+        "Písně varují před mlčením a zradou",
+        "Dílo zůstává symbolem morálního odporu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: okupace → protestní písně → střet s cenzurou → emigrace → ironie vůči moci → výzva ke svědomí."
+    "Správné pořadí: jaro 68 → okupace → exil → sbírka → varování v textech → trvalý význam protestní kultury."
   ]
 }

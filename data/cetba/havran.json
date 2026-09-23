@@ -5,197 +5,417 @@
       "icon": "book",
       "lines": [
         "Autor: Edgar Allan Poe",
-        "Žánr: gotická / symbolistně laděná baladická báseň",
+        "Žánr: balada / lyricko-epická báseň",
         "Poprvé vydáno: 1845",
-        "Děj/prostředí: Komorní noční komnata truchlícího milence",
-        "Vyprávění/forma: narativní báseň, strofy, refrain „Nevermore“ / „Nikdy víc“"
+        "Děj/prostředí: půlnoční komnata, mluvčí a havran",
+        "Vyprávění/forma: ich-forma, rým, refrain „Nevermore“"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Americký romantismus / gotika 19. století.",
-        "Lyriický hrdina truchlí za mrtvou Lenoru.",
-        "Havran vstupuje jako posel beznaděje.",
-        "Opakování „Nevermore“ stupňuje zoufalství.",
-        "Atmosféra půlnoci, stínu a posedlosti.",
-        "Téma: smutek, paměť, šílenství, nenávratnost ztráty."
+        "Gotická atmosféra, tma, prosinec",
+        "Smrt milované Lenore",
+        "Mystický havran na bustě Pallas",
+        "Psychický rozpad vypravěče",
+        "Symbolika noční můry",
+        "Americká romantika"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Lyriický subjekt – truchlící učenec/milenec.",
-        "Lenora – mrtvá milá, předmět žalu.",
-        "Havran – symbol osudové odpovědi „nikdy víc“.",
-        "Pallas Athéna (busta) – havran na ní usedne.",
-        "Ticho komnaty – „protějšek“ dialogu.",
-        "Paměť – síla, která nedovolí zapomenout."
+        "Vypravěč – sám, truchlící",
+        "Havran – mluví jediné slovo",
+        "Lenore – mrtvá milovaná (zmínka)",
+        "Pallas – busta bohyně",
+        "Anděl / démon symbolicky",
+        "Nepřítomní hosté"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Nevermore / Nikdy víc – klíčový refrain.",
-        "Gotická atmosféra – noc, stín, děs.",
-        "Symbol havrana – zlá věštba, trvalost žalu.",
-        "Lenora – ideál ztracené lásky.",
-        "Gradace – od zvědavosti k šílenství.",
-        "Zvukomalba – rytmus a rýmy stupňují náladu."
+        "Nevermore – refrén beznaděje",
+        "Havran – paměť, zlo",
+        "Lenore – ztracená láska",
+        "Půlnoc – hranice života/smrti",
+        "Gotický interiér",
+        "Opakující se struktura strof"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Havrana?",
+      "prompt": "Autor?",
       "options": [
-        "Walt Whitman",
-        "Edgar Allan Poe",
-        "Emily Dickinsonová",
-        "Stevenson"
+        "Poe",
+        "Whitman",
+        "Orwell",
+        "Nezval"
       ],
-      "correct": 1,
-      "expl": "Poeova nejslavnější báseň vyšla 1845."
+      "correct": 0,
+      "expl": "Edgar Allan Poe."
     },
     {
-      "prompt": "Jak se jmenuje mrtvá milá?",
+      "prompt": "Rok?",
       "options": [
-        "Juliet",
-        "Lenora",
-        "Ofélie",
-        "Anne"
+        "1845",
+        "1600",
+        "1920",
+        "2000"
       ],
-      "correct": 1,
-      "expl": "Lyriický hrdina truchlí za Lenorou."
+      "correct": 0,
+      "expl": "19. století."
     },
     {
-      "prompt": "Co havran odpovídá?",
+      "prompt": "Žánr?",
       "options": [
-        "Always",
-        "Nevermore / Nikdy víc",
-        "Amen",
+        "Balada / báseň",
+        "Román",
+        "Drama",
+        "Esej"
+      ],
+      "correct": 0,
+      "expl": "Poezie."
+    },
+    {
+      "prompt": "Refrén?",
+      "options": [
+        "Nevermore (Nikdy více)",
+        "To be",
+        "451",
         "Godot"
       ],
-      "correct": 1,
-      "expl": "Jediné slovo se stává osudovým verdiktem."
+      "correct": 0,
+      "expl": "Havran opakuje."
     },
     {
-      "prompt": "Kam havran usedne?",
+      "prompt": "Kdo vypráví?",
       "options": [
-        "Na postel",
-        "Na bustu Pallady",
-        "Na strom venku jen",
-        "Na trůn Claudia"
+        "Truchlící muž ich",
+        "Havran ich",
+        "Lenore",
+        "Vševěd"
       ],
-      "correct": 1,
-      "expl": "Usednutí na Palladu je slavný obraz básně."
+      "correct": 0,
+      "expl": "Subjekt."
     },
     {
-      "prompt": "Jaká je základní nálada?",
+      "prompt": "Lenore?",
       "options": [
-        "Humor cimrmanovský",
-        "Gotický žal a stupňované zoufalství",
-        "Oslava vynálezů",
-        "Válečná satira"
+        "Mrtvá milovaná",
+        "Havran",
+        "Královna",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Od melancholie k posedlosti a beznaději."
+      "correct": 0,
+      "expl": "Motiv."
     },
     {
-      "prompt": "Kdy báseň vyšla?",
+      "prompt": "Kdy děj?",
       "options": [
-        "1726",
-        "1845",
-        "1928",
-        "1953"
+        "Půlnoc, prosinec",
+        "Poledne",
+        "Léto",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "The Raven 1845."
+      "correct": 0,
+      "expl": "Atmosféra."
     },
     {
-      "prompt": "Proč je refrain důležitý?",
+      "prompt": "Havran kde?",
       "options": [
-        "Je jídelníček",
-        "Opakováním uzavírá naději a stupňuje horor",
-        "Jmenuje trifidy",
-        "Učí matematiku"
+        "Na bustě Pallas",
+        "V lese",
+        "V moři",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Každá otázka končí stejnou negativní odpovědí."
+      "correct": 0,
+      "expl": "Obraz."
     },
     {
-      "prompt": "Jaký žánrový rámec báseň má?",
+      "prompt": "Pallas?",
       "options": [
-        "Komedie",
-        "Narativní gotická báseň",
-        "Drama o 5 aktech",
-        "Deník"
+        "Busta bohyně moudrosti",
+        "Město",
+        "Lenore",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Vypráví příběh setkání s havranem ve verších."
+      "correct": 0,
+      "expl": "Symbol."
     },
     {
-      "prompt": "Co hrdina od havrana postupně chce vědět?",
+      "prompt": "Tón?",
       "options": [
-        "Kurz akcií",
-        "Zda uvidí Lenoru / zda skončí žal",
-        "Recept na elixír Jekylla",
-        "Cestu do Lilliputu"
+        "Temný, melancholický",
+        "Veselý",
+        "Komický",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Otázky míří k posmrtnému shledání a úlevě – odpověď je vždy ne."
+      "correct": 0,
+      "expl": "Gotika."
     },
     {
-      "prompt": "Co symbolizuje havran?",
+      "prompt": "Struktura?",
       "options": [
-        "Jarní obnovu",
-        "Trvalost ztráty a zlou věštbu",
-        "Vítězství revoluce",
-        "Lékařský pokrok"
+        "Strofy s refrénem",
+        "Proza",
+        "Drama",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Je poslem nenávratnosti."
+      "correct": 0,
+      "expl": "Forma."
     },
     {
-      "prompt": "Jak končí vnitřní stav hrdiny?",
+      "prompt": "Vypravěč stav?",
       "options": [
-        "Uzdravením a svatbou",
-        "Zhroucením do zoufalství pod stínem havrana",
-        "Odchodem do pivovaru",
-        "Vynálezem žárovky"
+        "Klesá do beznaděje",
+        "Radost",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Duše zůstává v zajetí „nikdy víc“."
+      "correct": 0,
+      "expl": "Psychika."
     },
     {
-      "prompt": "Proč je text vhodný k maturitní poezii?",
+      "prompt": "Proč maturitní?",
       "options": [
-        "Protože je anonymní",
-        "Ukazuje romantickou gotiku, symbol a hudebnost verše",
-        "Protože je účetní kniha",
-        "Protože je cimrmanovský seminář"
+        "Klasika poezie",
+        "Nejdelší román",
+        "Bez smyslu",
+        "Jen film"
       ],
-      "correct": 1,
-      "expl": "Forma i motivy patří k základům světové romantické poezie."
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Gotika?",
+      "options": [
+        "Ano",
+        "Ne",
+        "Realismus",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Směr."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Havran",
+        "Lenore",
+        "Hamlet celá hra",
+        "Nevermore"
+      ],
+      "correct": 2,
+      "expl": "Hamlet drama."
+    },
+    {
+      "prompt": "Poe národnost?",
+      "options": [
+        "Americký",
+        "Český",
+        "Irský",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "USA."
+    },
+    {
+      "prompt": "Katalog?",
+      "options": [
+        "Poezie",
+        "Próza",
+        "Drama",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Poezie."
+    },
+    {
+      "prompt": "Havran symbol?",
+      "options": [
+        "Vzpomínka, zlo, bezmoc",
+        "Ne",
+        "Láska",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Interpretace."
+    },
+    {
+      "prompt": "Otázky vypravěče?",
+      "options": [
+        "Na havrana o Lenore a smyslu",
+        "Ne",
+        "Sport",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Dialog."
+    },
+    {
+      "prompt": "Konec?",
+      "options": [
+        "Vypravěč v beznaději",
+        "Svatba",
+        "Raj",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Tma."
+    },
+    {
+      "prompt": "Rým?",
+      "options": [
+        "Použit",
+        "Ne",
+        "Proza",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Balada."
+    },
+    {
+      "prompt": "December?",
+      "options": [
+        "Zmíněno – zima",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Atmosféra."
+    },
+    {
+      "prompt": "Tapeta?",
+      "options": [
+        "Gotický pokoj",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Prostředí."
+    },
+    {
+      "prompt": "Anděl Lenore?",
+      "options": [
+        "Vypravěč se ptá",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Strofa."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Ztráta a beznaděj lze vyjádřit symbolem",
+        "Radost",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Téma."
+    },
+    {
+      "prompt": "Poe jiná díla?",
+      "options": [
+        "Jiná básně, povídky",
+        "Hamlet",
+        "1984",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Autor."
+    },
+    {
+      "prompt": "Mluví havran víc?",
+      "options": [
+        "Jen Nevermore",
+        "Dlouhé monology",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Refrén."
+    },
+    {
+      "prompt": "Ich-forma?",
+      "options": [
+        "Ano",
+        "Er",
+        "Bez já",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Lyrika."
+    },
+    {
+      "prompt": "Balada charakter?",
+      "options": [
+        "Příběh + lyrické",
+        "Epos",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Žánr."
+    },
+    {
+      "prompt": "Čtení maturita?",
+      "options": [
+        "Autor, refrén, symbolika",
+        "Jen překlad",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Základ."
+    },
+    {
+      "prompt": "Knocking?",
+      "options": [
+        "Zpočátku klepání",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Začátek."
+    },
+    {
+      "prompt": "Bust?",
+      "options": [
+        "Socha Pallas",
+        "Lenore",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Detail."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Hrdina o půlnoci truchlí za Lenorou",
-        "Slyší ťukání a otevírá dveře/okno",
-        "Vletí havran a usedne na Palladu",
-        "Dialog otázek a odpovědi „Nevermore“",
-        "Gradace od zvědavosti k zoufalství",
-        "Havran zůstává – žal je trvalý"
+        "Vypravěč truchlí v půlnočním pokoji",
+        "Klepání a příchod havrana",
+        "Havran usedne na bustu Pallas",
+        "Vypravěč klade otázky o Lenore",
+        "Havran opakuje Nevermore",
+        "Beznaděj vypravěče roste do konce"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: půlnoční žal → ťukání → příchod havrana → „Nevermore“ → gradace zoufalství → trvalý stín žalu."
+    "Pořadí: truchlení → klepání → havran → otázky → refrén → beznaděj."
   ]
 }

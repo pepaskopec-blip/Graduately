@@ -5,197 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: William Shakespeare",
-        "Žánr: tragédie",
-        "Poprvé vydáno: 1597 (kvarto); psáno cca 1595–96",
-        "Děj / prostředí: Verona (a Mantova) v renesanční Itálii",
-        "Vyprávění / forma: drama ve verších i próze; sonetové pasáže"
+        "Žánr: tragédie (drama)",
+        "Poprvé vydáno: kolem 1595 (tištěno později)",
+        "Děj: Verona, spor rodu Montecchi a Capuletů",
+        "Vyprávění: drama v pěti dějstvích, dialogy a monology"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Renesanční představa lásky, cti a rodového nepřátelství.",
-        "Verona: spor rodů Montague a Capulet rozděluje město.",
-        "Mládež jedné noci vs. nenávist generací.",
-        "Osud, náhoda a ukvapenost vedou k tragédii.",
-        "Shakespeare spojuje lyriku lásky s pouličním násilím.",
-        "Téma: láska vs. nenávist, osud, smíření skrze smrt."
+        "Renesanční Verona – rodové nenávisti a souboje.",
+        "Láska Romeo a Julie vs. rodinný konflikt.",
+        "Osud, náhoda a unáhlená rozhodnutí.",
+        "Mladí proti starším (Romeo, Julie vs. rodiče).",
+        "Jazyk: básnický, metaforický, kontrastní.",
+        "Téma: láska, nenávist, smrt, smíření rodů."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Romeo Montague – zamilovaný mladík.",
-        "Julie Capuletová – jeho milovaná, teprve čtrnáctiletá.",
-        "Mnich Lorenzo – tajně je oddá; plán s lektvarem selže.",
-        "Mercutio – Romeův přítel, vtipný a vášnivý.",
-        "Tybalt – Juliin bratranec, agresivní šermíř.",
-        "Chůva – Juliina důvěrnice."
+        "Romeo Montecchi – vášnivý mladík, zamilovaný do Julie.",
+        "Julie Capulet – mladá dívka, statečnější než okolí.",
+        "Mercutio – Romeův přítel, vtipný, zabit Tybaltem.",
+        "Tybalt – Julin sestřenec, hašteřivý, zabije Mercutia.",
+        "Friar Laurence – františkán, sňatku a lektvaru.",
+        "Nurse – chůva, Julii blízká."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Rodová nenávist – konflikt Montague × Capulet.",
-        "Láska na první pohled – balkonová scéna.",
-        "Osud / hvězdy – „star-crossed lovers“.",
+        "Tragédie – pád hlavních hrdinů.",
+        "Nenávist rodů – Montecchi vs. Capuletové.",
+        "Osud (fate) – hvězdy, předtuchy.",
         "Lektvar – falešná smrt Julie.",
-        "Ukvapenost – Romeova sebevražda z omylu.",
-        "Smíření – otcové po dětech ukončí spor."
+        "Balcony scene – slavný milenecký dialog.",
+        "Smíření – rodové usmíření až po smrti milenců."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Romea a Julii?",
-      "options": [
-        "William Shakespeare",
-        "Christopher Marlowe",
-        "Molière",
-        "Sofoklés"
-      ],
-      "correct": 0,
-      "expl": "Autorem je William Shakespeare."
-    },
-    {
-      "prompt": "Kde se děj odehrává?",
-      "options": [
-        "V Londýně",
-        "Ve Veroně (a Mantově)",
-        "V Římě císařském",
-        "V Athénách"
-      ],
-      "correct": 1,
-      "expl": "Hlavním místem je Verona, Romeo pak prchá do Mantovy."
-    },
-    {
-      "prompt": "Které rody se nenávidí?",
-      "options": [
-        "Lancaster a York",
-        "Montague a Capulet",
-        "Medici a Borgia",
-        "Bennet a Darcy"
-      ],
-      "correct": 1,
-      "expl": "Spor rodů Montague a Capulet tvoří konflikt hry."
-    },
-    {
-      "prompt": "Kdo tajně Romea a Julii oddá?",
-      "options": [
-        "Chůva",
-        "Mnich Lorenzo",
-        "Mercutio",
-        "Paris"
-      ],
-      "correct": 1,
-      "expl": "Mnich Lorenzo doufá, že sňatek usmíří rody."
-    },
-    {
-      "prompt": "Koho Romeo zabije po Mercutiově smrti?",
-      "options": [
-        "Parise hned na plese",
-        "Tybalta",
-        "Lorenzo",
-        "Benvolia"
-      ],
-      "correct": 1,
-      "expl": "Pomstí Mercutia a zabije Tybalta; je vyhoštěn."
-    },
-    {
-      "prompt": "Co má Juliin lektvar způsobit?",
-      "options": [
-        "Věčné mládí",
-        "Zdánlivou smrt, aby se vyhnula sňatku s Parisem",
-        "Zapomenutí Romea",
-        "Neviditelnost"
-      ],
-      "correct": 1,
-      "expl": "Má vypadat mrtvá a pak se probudit u Romea."
-    },
-    {
-      "prompt": "Proč Romeo spáchá sebevraždu?",
-      "options": [
-        "Prohraje v kostkách",
-        "Domnívá se, že Julie je mrtvá",
-        "Car ho odsoudí",
-        "Mercutio mu to poručí"
-      ],
-      "correct": 1,
-      "expl": "Nedoručený vzkaz a zdánlivá smrt ho dovedou k jedu."
-    },
-    {
-      "prompt": "Jak Julie zemře?",
-      "options": [
-        "Uteče do kláštera",
-        "Probudí se, najde mrtvého Romea a zabije se dýkou",
-        "Tybalt ji zabije",
-        "Otráví Parise a uteče"
-      ],
-      "correct": 1,
-      "expl": "Po Romeovi volí smrt jeho dýkou."
-    },
-    {
-      "prompt": "Co tragédie nakonec způsobí mezi rody?",
-      "options": [
-        "Větší válku",
-        "Smíření nad mrtvými dětmi",
-        "Sňatek chůvy s mnichom",
-        "Přestěhování do Mantovy všech"
-      ],
-      "correct": 1,
-      "expl": "Otcové pochopí cenu nenávisti a uzavřou mír."
-    },
-    {
-      "prompt": "Kdo je Mercutio?",
-      "options": [
-        "Juliin otec",
-        "Romeův přítel, který zemře po souboji s Tybaltem",
-        "Princ Verony",
-        "Lékárník"
-      ],
-      "correct": 1,
-      "expl": "Mercutiova smrt spustí řetězec pomsty."
-    },
-    {
-      "prompt": "Jaká je slavná scéna na začátku vztahu?",
-      "options": [
-        "Soudní přelíčení",
-        "Balkonová scéna",
-        "Námořní bitva",
-        "Korunovace"
-      ],
-      "correct": 1,
-      "expl": "Romeo a Julie si vyznávají lásku u balkonu."
-    },
-    {
-      "prompt": "Jaký žánr hra je?",
-      "options": [
-        "Komedie omylů bez smrti",
-        "Tragédie",
-        "Pastoralní idyla",
-        "Detektivka"
-      ],
-      "correct": 1,
-      "expl": "Končí smrtí milenců; jde o tragédii."
-    }
+    {"prompt": "Kdo napsal Roméa a Julii?", "options": ["Molière", "William Shakespeare", "Goethe", "Dante"], "correct": 1, "expl": "Tragédie je jedním z nejznámějších Shakespeareových dramat."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Paříž", "Verona", "Londýn", "Praha"], "correct": 1, "expl": "Shakespeare zasadil příběh do italské Verony."},
+    {"prompt": "Mezi kterými rody zuří spor?", "options": ["Montecchi a Capuletové", "Medici a Borgiové", "Habsburkové a Přemyslovci", "Starkové a Lannisteři"], "correct": 0, "expl": "Rodová nenávist je motor tragédie."},
+    {"prompt": "Kdo je Romeo na začátku zamilovaný?", "options": ["Do Julie hned", "Do Rosaline", "Do Nurse", "Do Mercutia"], "correct": 1, "expl": "Romeo nejprve touží po Rosaline, pak potká Julii."},
+    {"prompt": "Kde se Romeo a Julie poprvé setkají?", "options": ["Na balu u Capuletů", "V klášteře", "Na popravišti", "Na lodi"], "correct": 0, "expl": "Romeo přijde maskovaně na Capuletův večírek."},
+    {"prompt": "Kdo je Mercutio?", "options": ["Romeův přítel, vtipný a impulzivní", "Julin otec", "Kněz", "Revizor"], "correct": 0, "expl": "Mercutio je často považován za nejživější postavu hry."},
+    {"prompt": "Kdo zabije Mercutia?", "options": ["Romeo", "Tybalt", "Julie", "Nurse"], "correct": 1, "expl": "Tybalt v souboji zabije Mercutia – zlom děje."},
+    {"prompt": "Co Romeo udělá poté?", "options": ["Uteče do exilu bez pomsty", "Zabije Tybalta a musí uprchnout z Verony", "Ožení se s Rosaline", "Stane se knězem"], "correct": 1, "expl": "Romeova pomsta vede k vyhnanství."},
+    {"prompt": "Kdo sjedná tajný sňatek?", "options": ["Friar Laurence", "Tybalt", "Mercutio", "Chlestakov"], "correct": 0, "expl": "Františkán doufá, že sňatkem ukončí spor rodů."},
+    {"prompt": "Kdo je Nurse?", "options": ["Julie chůva a důvěrnice", "Romeova matka", "Královna", "Vražedkyně"], "correct": 0, "expl": "Chůva pomáhá Julii s tajnou láskou."},
+    {"prompt": "Proč má Julie brát lektvar?", "options": ["Aby usnula jako mrtvá a vyhnula se sňatku s Parisem", "Aby zabila Romea", "Aby získala moc", "Aby cestovala"], "correct": 0, "expl": "Friar Laurence plánuje falešnou smrt a sjednocení s Romeem."},
+    {"prompt": "Proč Romeo bere jed?", "options": ["Myslí si, že Julie je mrtvá", "Je to trest soudu", "Nurse mu ho dá", "Chce spát"], "correct": 0, "expl": "Romeo se dozví o Julii smrti a v hrobce se zabije."},
+    {"prompt": "Jak Julie umírá?", "options": ["V souboji", "Probodne se Romeovým dýkem v hrobce", "Od lektvaru navždy", "Stářím"], "correct": 1, "expl": "Julie se probudí, vidí mrtvého Romea a zabije se."},
+    {"prompt": "Jak hra končí pro rody?", "options": ["Válka pokračuje", "Rodiče se usmíří nad těly milenců", "Montecchi vyhrají", "Capuletové zmizí"], "correct": 1, "expl": "Tragédie vede k poměření síly a smíření."},
+    {"prompt": "Jaký je žánr?", "options": ["Komedie", "Tragédie", "Pohádka", "Učebnice"], "correct": 1, "expl": "Oba hlavní hrdinové umírají – klasická tragédie."},
+    {"prompt": "Co je slavná „balkónová scéna“?", "options": ["Romeo a Julie vyznávají lásku", "Souboj Tybalta", "Svatba", "Poprava"], "correct": 0, "expl": "Julie na balkóně, Romeo dole – ikonický dialog."},
+    {"prompt": "Kdo je Paris?", "options": ["Nápadník Julie, kterého rodina preferuje", "Romeův bratr", "Král Verony", "Mercutio"], "correct": 0, "expl": "Rodiče chtějí Julii provdat za Paris."},
+    {"prompt": "Která replika patří k hře?", "options": ["Být či nebýt", "Romeo, Romeo, proč jsi Romeo?", "Vánoce nebyly bílé", "Vlk, vlko!"], "correct": 1, "expl": "Julie lamentuje nad Romeovým jménem a rodem."},
+    {"prompt": "Proč je hra důležitá pro maturitu?", "options": ["Učí účetnictví", "Shakespeare, tragédie, postavy, jazyk, témata", "Je mapa", "Je cookbook"], "correct": 1, "expl": "U maturity: děj, postavy, citace, tragédie, láska a konflikt."},
+    {"prompt": "Kdo je Tybalt?", "options": ["Julin sestřenec, hašteřivý duelant", "Kněz", "Romeův otec", "Chůva"], "correct": 0, "expl": "Tybalt nenávidí Montecchi a provokuje souboj."},
+    {"prompt": "Co znamená téma osudu?", "options": ["Postavy vnímají hvězdy a předtuchy", "Nic", "Pouze komedie", "Ekonomika"], "correct": 0, "expl": "Shakespeare pracuje s pocitem nevyhnutelnosti."},
+    {"prompt": "Kolik dějství má hra?", "options": ["5", "3", "12", "1"], "correct": 0, "expl": "Klasická pětaktová struktura tragédie."},
+    {"prompt": "Která postava NENÍ v Roméovi a Julii?", "options": ["Mercutio", "Tybalt", "Othello", "Nurse"], "correct": 2, "expl": "Othello je jiné Shakespeareovo drama."},
+    {"prompt": "Jaký kontrast hra zdůrazňuje?", "options": ["Láska vs. rodová nenávist", "Práce vs. lenost", "Věda vs. víra", "Moře vs. hory"], "correct": 0, "expl": "Osobní cit stojí proti kolektivní nenávisti."},
+    {"prompt": "Proč Friar Laurence plán selže?", "options": ["Nedorozumění, zpoždění zprávy, unáhlení Romea", "Julie nechce Romea", "Tybalt přežije", "Verona neexistuje"], "correct": 0, "expl": "Tragédie je i o náhodě – dopis k Romeo nedorazí včas."},
+    {"prompt": "Kdy vznikla hra?", "options": ["Kolem 1595 (renesance)", "1850", "1920", "Antika"], "correct": 0, "expl": "Shakespeare píše na konci 16. století."},
+    {"prompt": "Kdo je Benvolio?", "options": ["Romeův příbuzný, snaží se mířit konflikty", "Julin otec", "Vrah", "Císař"], "correct": 0, "expl": "Benvolio je klidnější protiklad Tybaltovi."},
+    {"prompt": "Které tvrzení je správné?", "options": ["Julie je mladší než okolí často předpokládá – ale statečná", "Julie je královna", "Romeo nikdy nemiluje", "Hra končí svatbou"], "correct": 0, "expl": "Julie roste v odvaze – od balkónu po rozhodnutí o lektvaru."},
+    {"prompt": "Co NENÍ typické téma?", "options": ["Láska", "Nenávist rodů", "Industrializace robotů", "Smrt milenců"], "correct": 2, "expl": "Roboti patří k R.U.R., ne k Shakespeareovi."},
+    {"prompt": "Jaký jazyk Shakespeare používá?", "options": ["Básnický dialog, metafora, rytmus", "Pouze próza bez obrazů", "Češtinu", "Latinské legrámy"], "correct": 0, "expl": "Tragédie kombinuje verš a prózu, bohaté obrazy."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Romeo a Julie se zamilují na plese Capuletů",
-        "Tajný sňatek u mnicha Lorenza",
-        "Tybalt zabije Mercutia; Romeo zabije Tybalta a je vyhoštěn",
-        "Julie vypije lektvar zdánlivé smrti",
-        "Romeo uvěří, že zemřela, a otráví se",
-        "Julie se probudí a zabije se; rody se smíří"
+        "Romeo potká Julii na Capuletově večírku",
+        "Tajný sňatek u Friar Laurence",
+        "Tybalt zabije Mercutia, Romeo zabije Tybalta",
+        "Romeo v exile, plán s lektvarem",
+        "Julie „umírá“, Romeo se zabije v hrobce",
+        "Julie se probudí a umírá – rody se usmíří"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: ples → sňatek → souboje a vyhoštění → lektvar → Romeova smrt → Julie a smíření rodů."
+    "Správné pořadí: setkání → sňatek → souboj a vyhnanství → lektvar → Romeo v hrobce → Julie a smíření rodů."
   ]
 }

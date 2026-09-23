@@ -7,195 +7,93 @@
         "Autor: Bohumil Hrabal",
         "Žánr: novela; válečná groteska",
         "Poprvé vydáno: 1965",
-        "Děj / prostředí: malá železniční stanice v protektorátu Čechy a Morava",
-        "Vyprávění / forma: ich-forma – vypráví výpravčí Miloš Hrma"
+        "Děj: malá stanice v protektorátu",
+        "Vyprávění: ich-forma Miloše Hrmy"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Protektorát za 2. světové války; Němci kontrolují železnici.",
-        "„Ostře sledované“ vlaky vezou zbraně a materiál na frontu.",
-        "Hrabal mísí sex, humor a smrt v absurdní válečné každodennosti.",
-        "Dospívání a sexuální nejistota se prolínají s odbojem.",
-        "Malá stanice je mikrokosmem české zkušenosti války.",
-        "Téma: zbabělost, odvaha, iniciace a smysl činu."
+        "Protektorát Čechy a Morava – okupace, železnice.",
+        "Vlaky vezou zbraně – ostře sledované.",
+        "Sexuální nejistota a dospívání vs. válka.",
+        "Humor, razítka, absurdita.",
+        "Malý čin odboje na konci.",
+        "Téma: iniciace, zbabělost, odvaha."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Miloš Hrma – mladý výpravčí, vypravěč; řeší sexuální traumata.",
-        "Výpravčí Hubička – svůdník, orazítkuje telegrafistku.",
-        "Telegrafistka Zdenička – objekt Hubičkova žertu.",
-        "Přednosta stanice – úřední autorita s holuby.",
-        "Výpravčí Virginia / Viktoria Freie – žena, která Miloše „zasvětí“.",
-        "Němečtí důstojníci – moc okupace na kolejích."
+        "Miloš Hrma – mladý výpravčí, vypravěč.",
+        "Výpravčí Hubička – svůdník, razítka na Zdeničce.",
+        "Zdenička – telegrafistka.",
+        "Přednosta stanice – holubi, autorita.",
+        "Virginia / Viktoria Freie – zasvěcení Miloše.",
+        "Němečtí důstojníci – moc okupace."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Iniciace – sexuální i odbojová dospělost.",
-        "Razítka na těle – groteskní humorný motiv.",
+        "Iniciace – sexuální i odbojová.",
+        "Razítka – groteskní erotický motiv.",
         "Ostře sledovaný vlak – cíl sabotáže.",
-        "Sebevražda / pokus – Milošův stud a krize.",
-        "Humor a smrt – Hrabalova válečná poetika.",
-        "Česká zbabělost vs. hrdinství – ironie malého činu."
+        "Sebevražedný pokus – Milošův stud.",
+        "Groteska – smích a smrt.",
+        "Český malý hrdinství – ironie."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Ostře sledované vlaky?",
-      "options": [
-        "Bohumil Hrabal",
-        "Jaroslav Hašek",
-        "Arnošt Lustig",
-        "Josef Škvorecký"
-      ],
-      "correct": 0,
-      "expl": "Autorem je Bohumil Hrabal."
-    },
-    {
-      "prompt": "Kdo je vypravěč?",
-      "options": [
-        "Hubička",
-        "Miloš Hrma",
-        "Přednosta",
-        "Německý důstojník"
-      ],
-      "correct": 1,
-      "expl": "Příběh vypráví mladý výpravčí Miloš Hrma."
-    },
-    {
-      "prompt": "V jaké době se novela odehrává?",
-      "options": [
-        "Za 1. republiky",
-        "Za protektorátu (2. sv. válka)",
-        "V 90. letech",
-        "Ve středověku"
-      ],
-      "correct": 1,
-      "expl": "Děj je zasazen do protektorátu Čechy a Morava."
-    },
-    {
-      "prompt": "Co udělá Hubička Zdeničce?",
-      "options": [
-        "Vezme si ji",
-        "Orazítkuje jí zadek služebními razítky",
-        "Udá ji Němcům",
-        "Učí ji anglicky"
-      ],
-      "correct": 1,
-      "expl": "Groteskní scéna s razítky vyvolá vyšetřování."
-    },
-    {
-      "prompt": "Proč se Miloš pokusí o sebevraždu?",
-      "options": [
-        "Ztratil práci",
-        "Kvůli sexuálnímu selhání a studu",
-        "Byl odhalen jako špion",
-        "Zabil přednostu"
-      ],
-      "correct": 1,
-      "expl": "Po neúspěchu s dívkou se Miloš stydí a řeže si žíly."
-    },
-    {
-      "prompt": "Kdo Miloše sexuálně „zasvětí“?",
-      "options": [
-        "Zdenička",
-        "Viktoria Freie",
-        "Hubičkova matka",
-        "Německá zdravotní sestra z vlaku"
-      ],
-      "correct": 1,
-      "expl": "Viktoria Freie mu pomůže překonat traumata."
-    },
-    {
-      "prompt": "Co jsou „ostře sledované vlaky“?",
-      "options": [
-        "Turistické rychlíky",
-        "Vojenské transporty se zbraněmi",
-        "Dětské vláčky",
-        "Poštovní vozy s razítky"
-      ],
-      "correct": 1,
-      "expl": "Jde o německé transporty bedlivě střežené za války."
-    },
-    {
-      "prompt": "Jak novela končí?",
-      "options": [
-        "Miloš emigruje",
-        "Miloš při sabotáži vlaku zahyne",
-        "Hubička je popraven",
-        "Přednosta vyhraje válku"
-      ],
-      "correct": 1,
-      "expl": "Miloš se zapojí do odboje a při akci umírá."
-    },
-    {
-      "prompt": "Kdy novela vyšla?",
-      "options": [
-        "1945",
-        "1965",
-        "1977",
-        "1989"
-      ],
-      "correct": 1,
-      "expl": "Ostře sledované vlaky vyšly roku 1965."
-    },
-    {
-      "prompt": "Jaký ráz má Hrabalovo zobrazení války?",
-      "options": [
-        "Jen patetické hrdinství",
-        "Groteskní směs humoru, sexu a smrti",
-        "Čistě dokumentární reportáž",
-        "Pohádková alegorie"
-      ],
-      "correct": 1,
-      "expl": "Hrabal válku vidí skrz absurditu všedního dne."
-    },
-    {
-      "prompt": "Kde Miloš pracuje?",
-      "options": [
-        "V továrně",
-        "Na malé železniční stanici",
-        "V krematoriu",
-        "V redakci"
-      ],
-      "correct": 1,
-      "expl": "Celý příběh se točí kolem venkovské stanice."
-    },
-    {
-      "prompt": "Co je ústředním tématem Milošova zrání?",
-      "options": [
-        "Politická kariéra",
-        "Sexuální iniciace spojená s odvahou k činu",
-        "Studijní úspěch",
-        "Sňatek s Zdeničkou"
-      ],
-      "correct": 1,
-      "expl": "Osobní dospělost a odbojový čin jdou ruku v ruce."
-    }
+    {"prompt": "Kdo napsal Ostře sledované vlaky?", "options": ["Hašek", "Bohumil Hrabal", "Remarque", "Kafka"], "correct": 1, "expl": "Hrabal, 1965 – film J. Menzela (1966)."},
+    {"prompt": "Kdo vypravuje?", "options": ["Miloš Hrma", "Hubička", "Švejk", "Ditě"], "correct": 0, "expl": "Ich-forma mladého výpravčího."},
+    {"prompt": "Kdy a kde děj?", "options": ["Protektorát, malá železniční stanice", "1. sv. válka fronta", "Regency Anglie", "Verona"], "correct": 0, "expl": "Okupace a železnice."},
+    {"prompt": "Co jsou „ostře sledované vlaky“?", "options": ["Vlaky se zbraněmi pro frontu", "Turistické vlaky", "Vlaky do školy", "Metro"], "correct": 0, "expl": "Němci hlídají dopravu materiálu."},
+    {"prompt": "Kdo je Hubička?", "options": ["Starší výpravčí, svůdník", "Generál", "Kněz", "Dítě"], "correct": 0, "expl": "Hubička razítkuje tělo telegrafistky."},
+    {"prompt": "Co je groteskní scéna s razítky?", "options": ["Hubička obtiskne razítka na Zdeniččino tělo", "Vlaky explodují", "Miloš se stane králem", "Nic"], "correct": 0, "expl": "Typická hrabalovská groteska."},
+    {"prompt": "Proč Miloš pokusí sebe zabít?", "options": ["Sexuální selhání a stud", "Válka skončila", "Rád", "Na rozkaz"], "correct": 0, "expl": "Trauma dospívání ve válce."},
+    {"prompt": "Kdo Miloše „zasvětí“?", "options": ["Virginia / Viktoria Freie", "Zdenička", "Hubička", "Přednosta"], "correct": 0, "expl": "Sexuální iniciace před finále."},
+    {"prompt": "Jak končí novela?", "options": ["Miloš se vrhne pod vlak (sabotáž/akt)", "Svatba", "Mír 1945 slavnostně", "Miloš emigruje"], "correct": 0, "expl": "Malý čin odboje – kontroverzní hrdinství."},
+    {"prompt": "Jaký je tón?", "options": ["Groteska, humor, smrt", "Pouze idyla", "Epos", "Učebnice"], "correct": 0, "expl": "Hrabal mísí erotiku, smích a válku."},
+    {"prompt": "Kdo je přednosta?", "options": ["Vedoucí stanice, holubi", "Německý generál", "Milošův otec", "Robot"], "correct": 0, "expl": "Komická autorita stanice."},
+    {"prompt": "Proč maturita?", "options": ["Hrabal, protektorát, groteska, film", "Chemie", "Atlas", "Cookbook"], "correct": 0, "expl": "Klasická česká maturitní četba."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Iniciace", "Válka", "Robotí vzpoura", "Odboj"], "correct": 2, "expl": "R.U.R. je jiné dílo."},
+    {"prompt": "Jaký film vznikl?", "options": ["J. Menzel, Oscar 1967", "Disney", "Bez filmu", "Hollywood 2020"], "correct": 0, "expl": "Slavná adaptace Hrabal–Menzel."},
+    {"prompt": "Co je Zdenička?", "options": ["Telegrafistka", "Generálka", "Královna", "Učitelka"], "correct": 0, "expl": "Objekt Hubičkova žertu."},
+    {"prompt": "Jak Miloš vnímá válku?", "options": ["Přes osobní tělo a malou stanici", "Jako generál", "Ignoruje", "Sci-fi"], "correct": 0, "expl": "Mikrokosmos okupace."},
+    {"prompt": "Která postava NENÍ v novelě?", "options": ["Miloš", "Hubička", "Josef Švejk jako výpravčí", "Přednosta"], "correct": 2, "expl": "Švejk je Hašek."},
+    {"prompt": "Co je ich-forma?", "options": ["Vypráví Miloš", "Er bez já", "Drama", "Epos"], "correct": 0, "expl": "Subjektivní pohled mladíka."},
+    {"prompt": "Jaký kontrast Hrabal staví?", "options": ["Sex a smrt / válka", "Moře hory", "Den noc", "Práce lenost"], "correct": 0, "expl": "Základ grotesky."},
+    {"prompt": "Kdy vyšlo?", "options": ["1965", "1921", "1890", "2010"], "correct": 0, "expl": "Před pražským jarem."},
+    {"prompt": "Co symbolizuje vlak?", "options": ["Válku a cíl činu", "Pouze dopravu", "Lásku", "Nemoc"], "correct": 0, "expl": "Finále na kolejích."},
+    {"prompt": "Které dílo NENÍ Hrabal?", "options": ["Ostře sledované vlaky", "Obsluhoval jsem anglického krále", "Proměna", "Příliš hlučná samota"], "correct": 2, "expl": "Kafka."},
+    {"prompt": "Jak německá moc vystupuje?", "options": ["Okupanti na stanici", "Nepřítomní", "Přátelé", "Děti"], "correct": 0, "expl": "Kontext protektorátu."},
+    {"prompt": "Co je „malé hrdinství“?", "options": ["Ironický čin obyčejného mladíka", "Generál vítězí", "Bez činu", "Robot"], "correct": 0, "expl": "Hrabal demýtizuje velké hrdiny."},
+    {"prompt": "Proč groteska?", "options": ["Válka je absurdní – smích i hrůza", "Bez důvodu", "Pohádka", "Reklama"], "correct": 0, "expl": "Hrabalova poetika."},
+    {"prompt": "Jaký věk má Miloš?", "options": ["Mladý dospívající", "Stařec", "Dítě 5 let", "Generál"], "correct": 0, "expl": "Iniciační věk."},
+    {"prompt": "Co předchází finále?", "options": ["Zkušenost s Virginii", "Svatba", "Mír", "Exil"], "correct": 0, "expl": "Sexuální dospělost před činem."},
+    {"prompt": "Jak čtenář chápe závěr?", "options": ["Odvaha i absurdita malého činu", "Čisté vítězství", "Komise bez významu", "Nic"], "correct": 0, "expl": "Otevřená interpretace odboje."},
+    {"prompt": "Kde stanice?", "options": ["České okolí (fiktivní stanice)", "Paříž", "Sibiř", "Afrika"], "correct": 0, "expl": "Protektorátní krajina."},
+    {"prompt": "Co NENÍ motiv?", "options": ["Razítka", "Vlaky", "Středověké turnaje", "Stud"], "correct": 2, "expl": "Turnaje nepatří sem."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Miloš nastoupí na stanici a řeší stud",
-        "Hubička orazítkuje Zdeničku",
-        "Milošův pokus o sebevraždu",
-        "Viktoria Freie ho zasvětí",
-        "Plán sabotáže ostře sledovaného vlaku",
-        "Miloš při akci umírá"
+        "Miloš nastoupí na stanici",
+        "Hubička a razítka, groteska",
+        "Milošův stud a pokus o sebevraždu",
+        "Léčení a setkání s Virginii",
+        "Sexuální iniciace",
+        "Miloš a vlak – ostře sledovaný čin"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: nástup → razítka → sebevražedný pokus → iniciace → plán sabotáže → Milošova smrt."
+    "Správné pořadí: stanice → Hubička → pokus → Virginie → iniciace → vlak."
   ]
 }

@@ -1212,10 +1212,11 @@ static void lit_note_card(GtkWidget *parent, const char *title,
 /* ------------------------------------------------------------------ */
 
 #include "cetba_catalog.inc"
+#include "cetba_book_notes.inc"
 
 static int stub_book_idx = -1;
 static GtkWidget *stub_title_lbl;
-static GtkWidget *stub_about_box;
+static GtkWidget *stub_notes_box;
 
 static GtkWidget *book_rail;
 static GtkWidget *book_nodes[BOOK_NODES];
@@ -1336,38 +1337,24 @@ void book_rail_theme_reset(void) {
 
 static void rebuild_stub_about(int idx) {
     GtkWidget *child;
-    static char author_buf[192];
-    static char genre_buf[96];
-    static char transl_buf[192];
-    const char *lines[4];
-    int n = 0;
+    const BookNotePack *pack;
+    GtkDrawingAreaDrawFunc icons[4] = {
+        draw_book_icon, draw_globe_icon, draw_people_icon, draw_bulb_icon
+    };
 
-    if (!stub_about_box || idx < 0 || idx >= BOOK_NODES)
+    if (!stub_notes_box || idx < 0 || idx >= BOOK_NODES)
         return;
 
-    while ((child = gtk_widget_get_first_child(stub_about_box)))
-        gtk_box_remove(GTK_BOX(stub_about_box), child);
+    while ((child = gtk_widget_get_first_child(stub_notes_box)))
+        gtk_box_remove(GTK_BOX(stub_notes_box), child);
 
-    g_snprintf(author_buf, sizeof author_buf, "Autor: %s",
-               book_defs[idx].author);
-    g_snprintf(genre_buf, sizeof genre_buf, "Žánr: %s",
-               book_defs[idx].genre);
-    lines[n++] = author_buf;
-    lines[n++] = genre_buf;
-    if (book_defs[idx].translator) {
-        g_snprintf(transl_buf, sizeof transl_buf, "Překlad: %s",
-                   book_defs[idx].translator);
-        lines[n++] = transl_buf;
-    }
-    lines[n++] = tr("cetba_stub_soon");
-
-    for (int i = 0; i < n; i++) {
-        GtkWidget *l = gtk_label_new(lines[i]);
-        gtk_widget_set_halign(l, GTK_ALIGN_START);
-        gtk_label_set_wrap(GTK_LABEL(l), TRUE);
-        gtk_label_set_xalign(GTK_LABEL(l), 0.0);
-        gtk_widget_add_css_class(l, "notes-body");
-        gtk_box_append(GTK_BOX(stub_about_box), l);
+    pack = &book_note_packs[idx];
+    if (!pack->secs || pack->nsec <= 0)
+        return;
+    for (int i = 0; i < pack->nsec; i++) {
+        GtkDrawingAreaDrawFunc icon = icons[i < 4 ? i : 0];
+        lit_note_card(stub_notes_box, pack->secs[i].title, icon,
+                      pack->secs[i].lines);
     }
 }
 
@@ -1644,11 +1631,6 @@ GtkWidget *build_cetba_stub_page(void) {
     GtkWidget *top;
     GtkWidget *center;
     GtkWidget *scroll;
-    GtkWidget *box;
-    GtkWidget *card;
-    GtkWidget *head;
-    GtkWidget *ic;
-    GtkWidget *t;
     GtkWidget *sub;
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -1675,7 +1657,7 @@ GtkWidget *build_cetba_stub_page(void) {
     gtk_box_append(GTK_BOX(center), stub_title_lbl);
 
     sub = gtk_label_new(NULL);
-    i18n_bind(sub, "cetba_entry_sub", 0);
+    i18n_bind(sub, "cetba1984_sub", 0);
     gtk_widget_set_halign(sub, GTK_ALIGN_CENTER);
     gtk_widget_add_css_class(sub, "roadmap-sub");
     gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
@@ -1691,27 +1673,8 @@ GtkWidget *build_cetba_stub_page(void) {
     gtk_widget_set_margin_bottom(scroll, 14);
     gtk_box_append(GTK_BOX(page), scroll);
 
-    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), box);
-
-    card = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
-    gtk_widget_add_css_class(card, "notes-card");
-    gtk_widget_set_margin_bottom(card, 14);
-    gtk_box_append(GTK_BOX(box), card);
-
-    head = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    gtk_box_append(GTK_BOX(card), head);
-    ic = icon_area_new(draw_book_icon, 0, 0, 0, 26);
-    gtk_widget_set_valign(ic, GTK_ALIGN_CENTER);
-    gtk_box_append(GTK_BOX(head), ic);
-    t = gtk_label_new("O knize");
-    gtk_widget_set_halign(t, GTK_ALIGN_START);
-    gtk_widget_set_valign(t, GTK_ALIGN_CENTER);
-    gtk_widget_add_css_class(t, "notes-title");
-    gtk_box_append(GTK_BOX(head), t);
-
-    stub_about_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
-    gtk_box_append(GTK_BOX(card), stub_about_box);
+    stub_notes_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), stub_notes_box);
 
     return page;
 }

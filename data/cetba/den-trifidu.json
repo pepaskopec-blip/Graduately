@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: John Wyndham; překlad: Kořán",
+        "Autor: John Wyndham",
         "Žánr: postapokalyptický sci-fi román",
         "Poprvé vydáno: 1951",
-        "Děj/prostředí: Anglie po globální katastrofě",
-        "Vyprávění/forma: ich-forma Bill Masen; překlad Kořán"
+        "Děj/prostředí: Británie po katastrofě, rostliny trifidy",
+        "Vyprávění/forma: er-forma, Bill Masen vypravěč; překlad Kořán"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Moderní civilizace se zhroutí po oslepnutí většiny lidí.",
-        "Trifidi – pohyblivé masožravé rostliny – útočí na slepé.",
-        "Boj o přežití, organizaci komunit a morálku.",
-        "Otázka: budovat novou společnost, nebo jen přežít?",
-        "Kritika závislosti na technice a křehkosti řádu.",
-        "Téma: katastrofa, slepota, ekologická hrozba, lidskost."
+        "Meteoritní roj oslepí většinu lidí",
+        "Trifidy – mobilní rostliny zabíjí slepé",
+        "Kolaps civilizace, boj o přežití",
+        "Malé komunity vs. chaos",
+        "Vědecké vysvětlení vs. nábožný strach",
+        "Otázka adaptace lidstva"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Bill Masen – vypravěč, vidící, znalec trifidů.",
-        "Josella Playtonová – Billova partnerka.",
-        "Coker – organizátor, snaží se pomáhat slepým.",
-        "Dr. Vorless – teoretik nové společnosti.",
-        "Skupiny přeživších – různé morální přístupy.",
-        "Trifidi – biologická hrozba jako „postava“ konfliktu."
+        "Bill Masen – biolog, přežije se zavázanýma očima",
+        "Josella – spisovatelka, partnerka",
+        "Coker – realista, organizátor",
+        "Colonel Jacques – vojenský vůdce",
+        "Děti a uprchlici",
+        "Trifidy jako „protivník“"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Trifid – jedovatá, pohyblivá masožravá rostlina.",
-        "Slepota – katastrofa po „zelených blescích“ / kométách.",
-        "Postapokalypsa – život po pádu civilizace.",
-        "Komunita – pokusy znovu uspořádat společnost.",
-        "Biohazard – umělý/nevypočitatelný zásah do přírody.",
-        "Přežití vs. etika – klíčové dilema hrdinů."
+        "Trifidy – jedovaté lana, pohybují se",
+        "Slepota – masová katastrofa",
+        "Ostrov – únik a nový začátek",
+        "Sebeobrana a morálka",
+        "Sci-fi realismus Wyndhama",
+        "Příroda pomstychtivá"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Den trifidů?",
+      "prompt": "Autor?",
       "options": [
-        "H. G. Wells",
-        "John Wyndham",
-        "Ray Bradbury",
-        "George Orwell"
+        "Wyndham",
+        "Bradbury",
+        "Orwell",
+        "Collins"
       ],
-      "correct": 1,
-      "expl": "Klasika britské sci-fi; česky často v překladu Kořána."
+      "correct": 0,
+      "expl": "John Wyndham."
     },
     {
-      "prompt": "Co jsou trifidi?",
+      "prompt": "Rok?",
       "options": [
-        "Robotí psi",
-        "Pohyblivé masožravé rostliny s jedem",
-        "Vesmírné lodě",
-        "Policisté"
-      ],
-      "correct": 1,
-      "expl": "Trifidi zabíjejí žihadlem a živí se masem."
-    },
-    {
-      "prompt": "Proč je civilizace v ohrožení?",
-      "options": [
-        "Jen kvůli daním",
-        "Většina lidí oslepne a trifidi útočí",
-        "Kvůli povodni jediné vesnice",
-        "Kvůli zemětřesení v Praze"
-      ],
-      "correct": 1,
-      "expl": "Slepota zbaví lidstvo výhody; trifidi získají převahu."
-    },
-    {
-      "prompt": "Kdo je Bill Masen?",
-      "options": [
-        "Slepý král",
-        "Vidící vypravěč, který trifidy zná z práce",
-        "Vůdce trifidů",
-        "Pilot"
-      ],
-      "correct": 1,
-      "expl": "Bill má obvaz na očích při „blescích“, proto neoslepne."
-    },
-    {
-      "prompt": "Kdo je Josella?",
-      "options": [
-        "Vědkyně trifidů",
-        "Billova společnice v boji o přežití",
-        "Diktátorka",
-        "Sestra Cokera výhradně"
-      ],
-      "correct": 1,
-      "expl": "S Billem tvoří pár hledající bezpečné útočiště."
-    },
-    {
-      "prompt": "Jaký žánr knize sedí?",
-      "options": [
-        "Rytířský epos",
-        "Postapokalyptická sci-fi",
-        "Pastoralní idyla",
-        "Liturgická hra"
-      ],
-      "correct": 1,
-      "expl": "Katastrofa + spekulace o budoucnosti společnosti."
-    },
-    {
-      "prompt": "Co kniha mj. kritizuje?",
-      "options": [
-        "Hudbu",
-        "Křehkost moderní civilizace a slepou důvěru v pokrok",
-        "Vaření",
-        "Gotickou katedrálu"
-      ],
-      "correct": 1,
-      "expl": "Stačí jeden zásah – a složitý systém se zhroutí."
-    },
-    {
-      "prompt": "Kdy román vyšel?",
-      "options": [
-        "1937",
         "1951",
         "1984",
-        "2008"
+        "2000",
+        "1890"
       ],
-      "correct": 1,
-      "expl": "The Day of the Triffids vyšel roku 1951."
+      "correct": 0,
+      "expl": "Poválečné sci-fi."
     },
     {
-      "prompt": "Jakou roli hraje Coker?",
+      "prompt": "Co jsou trifidy?",
       "options": [
-        "Je trifid",
-        "Snaží se organizovat pomoc a přežití",
-        "Je Billův otec",
-        "Je Godot"
+        "Ptáci",
+        "Mobilní rostliny s jedovatými lashmi",
+        "Lidé",
+        "Auta"
       ],
       "correct": 1,
-      "expl": "Reprezentuje aktivní, někdy konfliktní přístup k záchraně lidí."
+      "expl": "Uměle vyšlechtěné rostliny."
     },
     {
-      "prompt": "Proč je Bill vůči trifidům ve výhodě?",
+      "prompt": "Proč většina oslepne?",
       "options": [
-        "Umí létat",
-        "Zná je z práce a vidí",
-        "Je jedovatý",
-        "Je slepý"
+        "Válka",
+        "Sledování zeleného meteorického roje",
+        "Mor",
+        "Hlad"
       ],
       "correct": 1,
-      "expl": "Zkušenost + zrak mu dávají šanci bojovat a plánovat."
+      "expl": "Klíčová katastrofa."
     },
     {
-      "prompt": "Jaké dilema komunita řeší?",
+      "prompt": "Hrdina Bill?",
       "options": [
-        "Zda číst Dekameron",
-        "Jak žít dál: etika, práce, obrana, budoucnost",
-        "Zda stavět pyramidy",
-        "Zda zrušit řeč"
+        "Biolog se zavázanýma očima v nemocnici",
+        "Hasič",
+        "Král",
+        "Trifid"
       ],
-      "correct": 1,
-      "expl": "Nejde jen o útěk, ale o podobu nové společnosti."
+      "correct": 0,
+      "expl": "Přežije díky obvazům."
     },
     {
-      "prompt": "Čím katastrofa začíná pro většinu lidí?",
+      "prompt": "Josella?",
       "options": [
-        "Svatební hostinou",
-        "Oslepující „nebeskou“ úkazovou nocí",
-        "Volbami",
-        "Olympiádou"
+        "Partnerka, spisovatelka",
+        "Trifid",
+        "Generál",
+        "Neexistuje"
       ],
-      "correct": 1,
-      "expl": "Po světelné podívané ráno většina procitne slepá."
+      "correct": 0,
+      "expl": "Důležitá postava."
+    },
+    {
+      "prompt": "Coker?",
+      "options": [
+        "Organizátor přeživších",
+        "Trifid",
+        "Dítě",
+        "Meteor"
+      ],
+      "correct": 0,
+      "expl": "Pragmatik."
+    },
+    {
+      "prompt": "Kolonel?",
+      "options": [
+        "Vojenský vůdce komunity",
+        "Rostlina",
+        "Billův bratr",
+        "Kněz"
+      ],
+      "correct": 0,
+      "expl": "Struktura moci."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Postapokalyptické sci-fi",
+        "Pohádka",
+        "Epos",
+        "Lyrika"
+      ],
+      "correct": 0,
+      "expl": "Katastrofa + věda."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Kořán",
+        "Nezval",
+        "Nevrla",
+        "Skoumal"
+      ],
+      "correct": 0,
+      "expl": "Katalog Kořán."
+    },
+    {
+      "prompt": "Prostředí?",
+      "options": [
+        "Británie",
+        "Pouze Mars",
+        "Praha",
+        "Antarktida"
+      ],
+      "correct": 0,
+      "expl": "Anglie."
+    },
+    {
+      "prompt": "Trifidy proč nebezpečné?",
+      "options": [
+        "Jed a pohyb",
+        "Jen hezké",
+        "Nejsou",
+        "Zpívají"
+      ],
+      "correct": 0,
+      "expl": "Zabíjejí slepé."
+    },
+    {
+      "prompt": "Ostrov na konci?",
+      "options": [
+        "Naděje na adaptaci lidstva",
+        "Ne v knize",
+        "Smrt všech",
+        "Trifidí království"
+      ],
+      "correct": 0,
+      "expl": "Finále na ostrově."
+    },
+    {
+      "prompt": "Téma?",
+      "options": [
+        "Přežití, morálka, příroda",
+        "Jen láska",
+        "Jen sport",
+        "Středověk"
+      ],
+      "correct": 0,
+      "expl": "Katastrofický román."
+    },
+    {
+      "prompt": "Wyndham styl?",
+      "options": [
+        "Realistické sci-fi",
+        "Pouze fantasy",
+        "Bez děje",
+        "Poezie"
+      ],
+      "correct": 0,
+      "expl": "„Logical disaster“."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Klasické sci-fi",
+        "Nejkratší",
+        "Bez témat",
+        "Jen film"
+      ],
+      "correct": 0,
+      "expl": "Kanón žánru."
+    },
+    {
+      "prompt": "Bill v nemocnici?",
+      "options": [
+        "Operace očí, bandáže zachrání zrak",
+        "Slepý navždy hned",
+        "Trifid",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Výchozí situace."
+    },
+    {
+      "prompt": "Komunity přeživších?",
+      "options": [
+        "Boj o jídlo, pořádek, strach",
+        "Raj",
+        "Neexistují",
+        "Jen armáda"
+      ],
+      "correct": 0,
+      "expl": "Společenský kolaps."
+    },
+    {
+      "prompt": "Náboženský fanatismus?",
+      "options": [
+        "Objevuje se u některých skupin",
+        "Ne",
+        "Celá kniha modlitby",
+        "Zakázáno"
+      ],
+      "correct": 0,
+      "expl": "Kritika reakcí."
+    },
+    {
+      "prompt": "Trifidí původ?",
+      "options": [
+        "Laboratoř / olej",
+        "Nebe",
+        "Dinosauři",
+        "Magie"
+      ],
+      "correct": 0,
+      "expl": "Světová závislost na oleji."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Meteoritní slepota",
+        "Trifidy",
+        "Hamlet",
+        "Přežití"
+      ],
+      "correct": 2,
+      "expl": "Hamlet jiné."
+    },
+    {
+      "prompt": "Josella role?",
+      "options": [
+        "Emoční partnerství s Bill",
+        "Generál",
+        "Trifid",
+        "Meteor"
+      ],
+      "correct": 0,
+      "expl": "Lidský vztah."
+    },
+    {
+      "prompt": "Finále tón?",
+      "options": [
+        "Otevřená naděje i nejistota",
+        "Všichni mrtví",
+        "Svatba",
+        "Komunismus"
+      ],
+      "correct": 0,
+      "expl": "Adaptace."
+    },
+    {
+      "prompt": "Er-forma?",
+      "options": [
+        "Bill vypravěč",
+        "Ich Anne",
+        "Vševěd",
+        "Bez vypravěče"
+      ],
+      "correct": 0,
+      "expl": "Masen vypráví."
+    },
+    {
+      "prompt": "Katalog žánr?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Den trifidů titul?",
+      "options": [
+        "První den dominance trifidů",
+        "Pondělí",
+        "Vánoce",
+        "Den D"
+      ],
+      "correct": 0,
+      "expl": "Začátek katastrofy."
+    },
+    {
+      "prompt": "Slepí lidé?",
+      "options": [
+        "Bezbranní vůči trifidům",
+        "Silnější",
+        "Neexistují",
+        "Vidí"
+      ],
+      "correct": 0,
+      "expl": "Dramatická situace."
+    },
+    {
+      "prompt": "Věda v knize?",
+      "options": [
+        "Bill biolog – racionalita",
+        "Ne",
+        "Pouze magie",
+        "Zakázána"
+      ],
+      "correct": 0,
+      "expl": "Vědecký hrdina."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Civilizace křehká, příroda může převrátit",
+        "Vždy vítězí",
+        "Trifidi neexistují",
+        "Slepota výhoda"
+      ],
+      "correct": 0,
+      "expl": "Varování."
+    },
+    {
+      "prompt": "Film?",
+      "options": [
+        "Existují adaptace",
+        "Neexistuje nikdy",
+        "Zakázáno",
+        "Jen opera"
+      ],
+      "correct": 0,
+      "expl": "Kultovní."
+    },
+    {
+      "prompt": "Kořán?",
+      "options": [
+        "Český překladatel",
+        "Autor",
+        "Trifid",
+        "Postava"
+      ],
+      "correct": 0,
+      "expl": "Překlad."
+    },
+    {
+      "prompt": "Vztah k 1984?",
+      "options": [
+        "Jiné sci-fi, jiný autor",
+        "Totéž",
+        "Orwell Wyndham",
+        "Stejný děj"
+      ],
+      "correct": 0,
+      "expl": "Různá díla."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Většina lidí oslepne po nebeském úkazu",
-        "Bill zjišťuje rozvrat Londýna",
-        "Trifidi začínají zabíjet bezbranné",
-        "Bill se spojí s Josellou",
-        "Přeživší hledají funkční komunitu",
-        "Boj o bezpečný domov proti trifidům"
+        "Zelený roj oslepí lidstvo",
+        "Bill Masen přežívá se zrakem",
+        "Chaos a trifidi zabíjejí slepé",
+        "Bill a Josella hledají bezpečí",
+        "Konflikty komunit a kolonel",
+        "Únik na ostrov a nejistá budoucnost"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: slepota → rozvrat města → útoky trifidů → Bill a Josella → hledání komunity → boj o domov."
+    "Pořadí: slepota → Bill → trifidi → útěk → komunity → ostrov."
   ]
 }

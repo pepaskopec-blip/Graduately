@@ -4,35 +4,35 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Alexandr Solženicyn",
-        "Žánr: novela / táborská literatura (lágr)",
-        "Poprvé vydáno: 1962 (časopis Novyj mir)",
-        "Děj / prostředí: jeden den v sovětském gulagu (sibiřský pracovní tábor)",
-        "Vyprávění / forma: er-forma, detailní chronologie jednoho dne"
+        "Autor: Alexandr Solovjov (Solženicyn), 1918–2008",
+        "Žánr: realistická próza, gulagovská novela",
+        "Poprvé vydáno: 1962 (časopis Nový svět)",
+        "Děj / prostředí: Sibiř, tábor SHIZ-84, leden 1951",
+        "Vyprávění / forma: er-forma, chronika jednoho dne vězně"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Sovětský svaz za Stalina: systém gulagů pro politické i jiné vězně.",
-        "Dílo vyšlo v období tání po Stalinově smrti a otřáslo veřejností.",
-        "Autor čerpal z vlastní zkušenosti vězně.",
-        "Jeden „obyčejný“ den ukazuje celý mechanismus táborového života.",
-        "Důraz na drobné detaily: jídlo, práce, zima, hierarchie vězňů.",
-        "Kritika totality je nepřímá – skrze všední utrpení a přežívání."
+        "Stalinismus: trest za drobné „zločiny“, systém gulagů a nútěné práce.",
+        "Den vězně je řízen rozkazem, kamerou strachu a bojem o přežití.",
+        "Tábor není místo mučení popsaného naturalisticky, ale každodenní útlak.",
+        "Solidarita, lstivost i malé vítězství (jídlo, teplo) mají obrovskou cenu.",
+        "Novela otevřela v SSSR diskusi o gulagu; autor později dostal Nobelovu cenu.",
+        "Titulní hrdina je „obyčejný“ Rus, ne hrdina ideologie."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ivan Denisovič Šuchov – hlavní hrdina, praktický a houževnatý vězeň.",
-        "Tiurin – předák brigády 104, chrání své muže.",
-        "Cezar Markovič – intelektuál s výhodami díky balíčkům.",
-        "Aljoška – zbožný baptistá, nachází útěchu ve víře.",
-        "Buojnovskij – bývalý námořní kapitán, bouří se proti nespravedlnosti.",
-        "Fěťukov – slabý vězeň, žebrá a ztrácí důstojnost."
+        "Ivan Denisovič Šuchov – dělník, trest 10 let, zkušený táborový vězeň.",
+        "Tiurin – velitel brigády, tvrdý, ale brání svou partu.",
+        "Fetiukov – vězeň, který se plazí před mocí, končí v kobce.",
+        "Buynovsky – bývalý námořní důstojník, idealista, bitý dozorci.",
+        "Alyoška – baptistický vězeň, víra a pokora.",
+        "Der – dozorce, symbol bezcitné moci tábora."
       ]
     },
     {
@@ -40,162 +40,60 @@
       "icon": "bulb",
       "lines": [
         "Gulag – systém sovětských pracovních táborů.",
-        "Jeden den – kompoziční princip, který reprezentuje celý osud.",
-        "Přežití – umění získat jídlo, teplo a respekt.",
-        "Brigáda – základní pracovní a sociální jednotka tábora.",
-        "Důstojnost – Šuchov si ji udržuje prací a drobnými zásadami.",
-        "Totalita – anonymní násilí režimu přítomné v každém detailu."
+        "Jeden den – forma zdůrazňující monotónnost i tíhu času.",
+        "Brigáda – skupina vězňů, základ přežití a solidarity.",
+        "Kobka – trestová cela, hrozba pro každého.",
+        "Dignita v nouzi – Šuchov si zachovává lidskost v detailech.",
+        "Alyoškova víra – kontrast k ateistické moci i k pragmatismu."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo je autorem Jednoho dne Ivana Denisoviče?",
-      "options": [
-        "Michail Bulgakov",
-        "Alexandr Solženicyn",
-        "Boris Pasternak",
-        "Ivan Turgeněv"
-      ],
-      "correct": 1,
-      "expl": "Novelu napsal Alexandr Solženicyn na základě vlastní zkušenosti."
-    },
-    {
-      "prompt": "Jaký je základní kompoziční rámec díla?",
-      "options": [
-        "Celý život hrdiny",
-        "Jeden den v táboře",
-        "Týden na útěku",
-        "Rok revoluce"
-      ],
-      "correct": 1,
-      "expl": "Celý příběh sleduje jediný den od budíčku do večerky."
-    },
-    {
-      "prompt": "Kde se děj odehrává?",
-      "options": [
-        "V moskevském bytě",
-        "V sovětském pracovním táboře (gulagu)",
-        "Na frontě",
-        "V klášteře"
-      ],
-      "correct": 1,
-      "expl": "Prostředím je sibiřský pracovní tábor gulagu."
-    },
-    {
-      "prompt": "Čím se Šuchov vyznačuje?",
-      "options": [
-        "Vzpourou a útěkem",
-        "Praktičností, pracovitostí a snahou udržet důstojnost",
-        "Kolaborací s vedením tábora",
-        "Náboženským fanatismem"
-      ],
-      "correct": 1,
-      "expl": "Šuchov přežívá díky šikovnosti, práci a drobným zásadám."
-    },
-    {
-      "prompt": "Kdy novela poprvé vyšla?",
-      "options": [
-        "1937",
-        "1953",
-        "1962",
-        "1974"
-      ],
-      "correct": 2,
-      "expl": "Vyšla roku 1962 v časopise Novyj mir v období politického tání."
-    },
-    {
-      "prompt": "Kdo je Tiurin?",
-      "options": [
-        "Náčelník tábora",
-        "Předák brigády 104",
-        "Šuchovův syn",
-        "Dozorce"
-      ],
-      "correct": 1,
-      "expl": "Tiurin vede brigádu a snaží se chránit své vězně."
-    },
-    {
-      "prompt": "Proč je Cezar Markovič na tom lépe než ostatní?",
-      "options": [
-        "Je dozorcem",
-        "Dostává balíčky a má výhody",
-        "Je nemocný a nepracuje",
-        "Je Šuchovův příbuzný"
-      ],
-      "correct": 1,
-      "expl": "Cezar díky zásilkám a konexím získává lepší jídlo a postavení."
-    },
-    {
-      "prompt": "Co je hlavním tématem novely?",
-      "options": [
-        "Romantická láska",
-        "Přežití a lidská důstojnost v totalitním táboře",
-        "Válečné hrdinství",
-        "Cestopis Sibiře"
-      ],
-      "correct": 1,
-      "expl": "Dílo ukazuje, jak člověk v gulagu bojuje o přežití i o sebeúctu."
-    },
-    {
-      "prompt": "Jak autor kritizuje režim?",
-      "options": [
-        "Otevřenými politickými projevy hrdiny",
-        "Nepřímo skrze všední detaily táborového života",
-        "Fantaskní alegorií",
-        "Humoristickými anekdotami o Stalinovi"
-      ],
-      "correct": 1,
-      "expl": "Kritika je v podrobném popisu bídy, zimy, práce a nespravedlnosti."
-    },
-    {
-      "prompt": "Kdo je Aljoška?",
-      "options": [
-        "Dozorce",
-        "Zbožný baptistá hledající útěchu ve víře",
-        "Předák",
-        "Šuchovův nepřítel"
-      ],
-      "correct": 1,
-      "expl": "Aljoška představuje duchovní odolnost uprostřed tábora."
-    },
-    {
-      "prompt": "Proč je „obyčejný“ den Šuchova považován za šťastný?",
-      "options": [
-        "Byl propuštěn",
-        "Nepřišel o příděl, dobře pracoval a přežil bez trestu",
-        "Dostal milost od Stalina",
-        "Utekl"
-      ],
-      "correct": 1,
-      "expl": "V táboře je „šťastný den“ ten, kdy člověk jen přežije o něco snáze."
-    },
-    {
-      "prompt": "K čemu slouží detailní popisy jídla a práce?",
-      "options": [
-        "K oslavě socialismu",
-        "Ukázat, že v táboře rozhodují drobnosti o životě a smrti",
-        "Jsou jen dekorací",
-        "Nahradit dialogy"
-      ],
-      "correct": 1,
-      "expl": "Detaily jídla, tepla a práce tvoří jádro boje o přežití."
-    }
+    {"prompt": "Kdo napsal Jeden den Ivana Denisoviče?", "options": ["Dostojevskij", "Alexandr Solovjov (Solženicyn)", "Tolstoj", "Bulgakov"], "correct": 1, "expl": "Solženicyn román publikoval v roce 1962; sám strávil roky v táborech."},
+    {"prompt": "Jaký časový rozsah děj pokrývá?", "options": ["Celý život hrdiny", "Jeden den v táboře", "Jeden rok", "24 hodin v Moskvě"], "correct": 1, "expl": "Forma jednoho dne zvýrazňuje opakující se útlak i drobné radosti."},
+    {"prompt": "Kde se děj odehrává?", "options": ["V Moskvě", "V pracovním táboře SHIZ-84 na Sibiři", "V Paříži", "Na frontě 2. sv. války"], "correct": 1, "expl": "Tábor v mrazivém lednu 1951 je hlavním prostředím."},
+    {"prompt": "Za co je Šuchov v táboře?", "options": ["Za vraždu", "Za údajnou spolupráci s Němci (desertérství)", "Za krádež banky", "Za protisovětskou agitaci"], "correct": 1, "expl": "Šuchov byl odsouzen na 10 let; obvinění je typické pro dobu represí."},
+    {"prompt": "Kdo vede Šuchovovu brigádu?", "options": ["Der", "Tiurin", "Fetiukov", "Stalin"], "correct": 1, "expl": "Tiurin je zkušený velitel, který umí jednat s dozory i chránit muže."},
+    {"prompt": "Co je hlavní prací brigády v popisovaný den?", "options": ["Těžba uhlí v dole", "Stavba zdi v mrazu", "Pěstování brambor", "Výroba zbraní"], "correct": 1, "expl": "Vězni staví zeď z cihel; práce venku v mrazu je fyzicky krutá."},
+    {"prompt": "Proč je pro Šuchova důležité jídlo?", "options": ["Je gurmán", "Kalorie znamenají přežití; každá lžíce má cenu", "Chce vařit pro dozory", "Nesmí jíst"], "correct": 1, "expl": "Táborový denní režim stojí na hladu a boji o porci."},
+    {"prompt": "Kdo je Fetiukov a jak končí?", "options": ["Velitel tábora", "Vězeň, který se plazí; skončí v kobce", "Kněz", "Šuchovův bratr"], "correct": 1, "expl": "Fetiukov lichotí moci, ale stejně je potrestán – systém je nelítostný."},
+    {"prompt": "Co symbolizuje Alyoška baptista?", "options": ["Zradu", "Víru a vnitřní svobodu uprostřed útlaku", "Bohatství", "Dozor"], "correct": 1, "expl": "Alyoška nachází smysl v modlitbě a morálce, ne v systému."},
+    {"prompt": "Jak Šuchov zachází s cihlami a prací?", "options": ["Pracuje nedbalě", "Pečlivě, s hrdostí řemeslníka – zachovává důstojnost", "Odmítá pracovat", "Kradne cihly"], "correct": 1, "expl": "Kvalitní práce je forma sebeúcty v degradujících podmínkách."},
+    {"prompt": "Co je kobka v táboře?", "options": ["Restaurace", "Trestová cela v mrazu", "Knihovna", "Nemocnice"], "correct": 1, "expl": "Hrozba kobky udržuje strach; Fetiukov ji za den navštíví."},
+    {"prompt": "Proč román vyvolal senzaci v SSSR?", "options": ["Byl první schválenou prózou o gulagu", "Byl komiksovou adaptací", "Popisoval budoucnost", "Nebyl vůbec publikován"], "correct": 0, "expl": "Chruščovova otopa umožnila publikaci; téma bylo dříve tabu."},
+    {"prompt": "Jaký je tón vyprávění?", "options": ["Patetický heroismus", "Střízlivý, věcný, bez zbytečné patetiky", "Groteskní komedie", "Pohádkový"], "correct": 1, "expl": "Solženicyn popisuje fakta chladně; emoce vyrůstají z detailů."},
+    {"prompt": "Co Šuchov považuje na konci dne?", "options": ["Za nejhorší den života", "Za téměř šťastný den – přežil, jedl, pracoval", "Za den svatby", "Za den propuštění"], "correct": 1, "expl": "Závěrečná ironie: v táboře stačí malé věci k pocitu „štěstí“."},
+    {"prompt": "Kdo je Der?", "options": ["Vězeň", "Dozorce, představitel moci", "Lékař", "Tiurinův bratr"], "correct": 1, "expl": "Der reprezentuje bezcitnou administrativu trestu."},
+    {"prompt": "Jaký žánr nejlépe vystihuje dílo?", "options": ["Sci-fi", "Realistická gulagovská novela", "Romantický epos", "Detektivka"], "correct": 1, "expl": "Dílo dokumentuje zkušenost tábora realistickou formou."},
+    {"prompt": "Co je brigáda v táboře?", "options": ["Politická strana", "Pracovní skupina vězňů pod velitelem", "Rodina dozorců", "Církevní společenství"], "correct": 1, "expl": "Solidarita v brigádě může zlepšit šanci na přežití."},
+    {"prompt": "Proč Buynovsky trpí?", "options": ["Je nemocný", "Konfrontuje dozory jako bývalý důstojník", "Je dítě", "Neumí pracovat"], "correct": 1, "expl": "Jeho hrdost a vzdělání ho v systému tábora trestají."},
+    {"prompt": "Jak román vztahuje k totalitě?", "options": ["Totalitu oslavuje", "Ukazuje dehumanizaci a strach v každodennosti", "Nezmiňuje politiku", "Popisuje jen přírodu"], "correct": 1, "expl": "Tábor je mikrokosmos stalinistického útlaku."},
+    {"prompt": "Kdy autor sám strávil v táborech?", "options": ["Nikdy", "Po 2. sv. válce (kritika Stalina v dopise)", "Za carismu", "V 90. letech"], "correct": 1, "expl": "Solženicyn byl odsouzen za kritiku režimu; psal z vlastní zkušenosti."},
+    {"prompt": "Co Šuchov dělá s chlebem a porcí?", "options": ["Vyhazuje je", "Šetří, plánuje, chrání před krádeží", "Dává dozorcům", "Nejí"], "correct": 1, "expl": "Jídlo je táborová měna i symbol přežití."},
+    {"prompt": "Jaký význam má mrazivé počasí?", "options": ["Jen kulisa", "Další nepřítel vězňů, zvyšuje fyzické utrpení", "Nezmiňuje se", "Slouží k odpočinku"], "correct": 1, "expl": "Mráz při práci na zdi je součástí trestu."},
+    {"prompt": "Která postava reprezentuje „plazení se“?", "options": ["Tiurin", "Fetiukov", "Šuchov", "Alyoška"], "correct": 1, "expl": "Fetiukov lichotí a ponižuje se, stejně ale neunikne trestu."},
+    {"prompt": "Co znamená „dignita v nouzi“ u Šuchova?", "options": ["Povýšení do dozoru", "Lidskost v detailech – práce, pořádek, slušnost", "Vzdor v podobě vraždy", "Úplná apatie"], "correct": 1, "expl": "Šuchov si udržuje sebeúctu, i když systém ji ničí."},
+    {"prompt": "Jaký Nobelův význam má Solženicyn?", "options": ["Za poezii", "Za literaturu (1970)", "Za mír 2000", "Nedostal Nobelovu cenu"], "correct": 1, "expl": "Nobelova cena za literaturu 1970; autor ji přijal až 1974."},
+    {"prompt": "Proč forma „jednoho dne“ funguje?", "options": ["Den je nudný bez děje", "Opakuje se každý den; jeden den ukazuje celý mechanismus útlaku", "Den je fiktivní", "Den trvá rok"], "correct": 1, "expl": "Monotónnost je horší než jednorázová katastrofa."},
+    {"prompt": "Co NENÍ typické pro román?", "options": ["Popis práce a jídla", "Naturalistické popisy mučíren", "Postavy vězňů", "Mrazivé počasí"], "correct": 1, "expl": "Dílo spíše věcně popisuje každodennost než explicitní mučení."},
+    {"prompt": "Jak Tiurin pomáhá brigádě?", "options": ["Zrazuje ji", "Vyjednává materiál, chrání muže před zbytečnými tresty", "Nevede ji", "Prodává je"], "correct": 1, "expl": "Tiurin je praktický vůdce v nelidském systému."},
+    {"prompt": "Jaký je vztah Šuchova k Alyoškovi?", "options": ["Nenávist", "Respekt k víře, i když sám není věřící", "Sourozenec", "Dozor"], "correct": 1, "expl": "Na konci dne si Šuchov vyslechne Alyoškovo slovo o smyslu."},
+    {"prompt": "Jaké poselství román přináší?", "options": ["Tábor je dobrodružství", "I v totálním systému záleží na lidskosti, solidaritě a vnitřní svobodě", "Vězni si zaslouží trest", "Práce není důležitá"], "correct": 1, "expl": "Malé vítězství a morálka jsou formou odporu proti dehumanizaci."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Ranní budíček a kontrola v baráku",
-        "Snídaně a výdej práce brigádě",
-        "Těžká práce na staveništi v mrazu",
-        "Polední příděl a drobné výhody dne",
-        "Návrat do tábora a večerní sčítání",
-        "Šuchov usíná s pocitem relativně dobrého dne"
+        "Ranní budíček a kontrola v barracích",
+        "Šuchov bojuje o jídlo a teplo",
+        "Brigáda odchází stavět zeď v mrazu",
+        "Tiurin vyjednává cihly a chrání partu",
+        "Fetiukov končí v kobce; Buynovsky je bit",
+        "Večer: Šuchov považuje den za téměř dobrý"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: budíček → snídaně a výdej práce → práce v mrazu → polední příděl → večerní sčítání → „šťastný“ spánek."
+    "Správné pořadí: ráno v táboře → jídlo a příprava → práce na zdi → vedení Tiurina → tresty → večerní reflexe Šuchova."
   ]
 }

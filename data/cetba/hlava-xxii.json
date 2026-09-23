@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Joseph Heller; překlad: Jindra",
-        "Žánr: antiwar satirický román / černý humor",
+        "Autor: Joseph Heller",
+        "Žánr: anti válečný / absurdní román",
         "Poprvé vydáno: 1961",
-        "Děj/prostředí: Americká letecká základna ve Středomoří za 2. sv. války",
-        "Vyprávění/forma: nelineární vyprávění, paradoxní logika; překlad Jindra"
+        "Děj/prostředí: WWII, letecká základna Pianosa",
+        "Vyprávění/forma: er-forma, nelineární, ironie; překlad Jindra"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "2. světová válka jako pozadí absurdní byrokracie.",
-        "Vojáci mají létat stále více misí.",
-        "Hlava XXII: kdo je blázen, může být uvolněn – ale žádost dokazuje zdravý rozum.",
-        "Satira na armádu, kapitalismus a nesmysl moci.",
-        "Smrt a strach střídá groteska.",
-        "Téma: absurdita války, byrokracie, přežití, vina."
+        "Druhá světová válka – absurdita",
+        "Byrokracie armády",
+        "Opakující se nálety",
+        "Catch-22 logická past",
+        "Smrt Yossarianových přátel",
+        "Touha desertovat"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Kapitán Yossarian – bombardér, chce přežít.",
-        "Milo Minderbinder – obchodník se syndikátem.",
-        "Plukovník Cathcart – zvyšuje počet misí.",
-        "Chaplain / kaplan – svědek morálního chaosu.",
-        "Nately, Snowden, McWatt aj. – spolubojovníci a oběti.",
-        "Doc Daneeka – lékař v pasti paragrafu 22."
+        "Yossarian – bombardér, chce přežít",
+        "Colonel Cathcart – eskaluje nálety",
+        "Milieu Minderbinder – obchodník M&M",
+        "Doc Daneeka – „mrtvý“ doktor",
+        "Nately – mladý pilot",
+        "Snowden – smrt v letadle"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Hlava XXII – paradoxní předpis bez východiska.",
-        "Černý humor – smích nad hrůzou.",
-        "Byrokracie – nesmyslná pravidla řídí život i smrt.",
-        "Mise – počet náletů stále rostoucí.",
-        "Snowdenova smrt – traumatický střed Yossarianovy zkušenosti.",
-        "Syndikát Milo – válka jako byznys."
+        "Catch-22 – past pravidel",
+        "Absurdita války",
+        "Obchod s válkou (M&M)",
+        "Snowden „Au chaud“",
+        "Přežít vs. povinnost",
+        "Černý humor"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Hlavu XXII?",
+      "prompt": "Autor?",
       "options": [
-        "Kurt Vonnegut",
-        "Joseph Heller",
-        "Ernest Hemingway",
+        "Heller",
+        "Remarque",
+        "Hemingway",
         "Orwell"
       ],
-      "correct": 1,
-      "expl": "Hellerův román z roku 1961 definoval moderní antiwar satiru."
+      "correct": 0,
+      "expl": "Joseph Heller."
     },
     {
-      "prompt": "Co je „hlava XXII“?",
+      "prompt": "Rok?",
       "options": [
-        "Název letadla",
-        "Paradoxní předpis: žádat o uvolnění dokazuje zdravý rozum",
-        "Jméno generála",
-        "Kód trifida"
-      ],
-      "correct": 1,
-      "expl": "Past bez východiska – logika moci, ne spravedlnost."
-    },
-    {
-      "prompt": "Kdo je Yossarian?",
-      "options": [
-        "Generál",
-        "Bombardér, který chce především přežít",
-        "Obchodník Milo výhradně",
-        "Prezident Snow"
-      ],
-      "correct": 1,
-      "expl": "Hlavní hrdina bojuje proti nesmyslu misí a smrti."
-    },
-    {
-      "prompt": "Co dělá plukovník Cathcart?",
-      "options": [
-        "Snižuje mise na nulu",
-        "Stále zvyšuje počet povinných misí",
-        "Léčí Snowdena",
-        "Píše poezii Nezvalovi"
-      ],
-      "correct": 1,
-      "expl": "Ambice velení prodlužuje vojákům nebezpečí."
-    },
-    {
-      "prompt": "Kdo je Milo Minderbinder?",
-      "options": [
-        "Kaplan",
-        "Podnikavec řídící syndikát i za cenu zrady",
-        "Německý pilot",
-        "Lékárník v Amsterodamu"
-      ],
-      "correct": 1,
-      "expl": "Válka je pro něj obchod; moralita mizí."
-    },
-    {
-      "prompt": "Jaký je styl vyprávění?",
-      "options": [
-        "Přísně lineární deník Anne",
-        "Nelineární, opakující se scény, paradoxní humor",
-        "Jen blankvers",
-        "Jen seminář Cimrmana"
-      ],
-      "correct": 1,
-      "expl": "Čas se láme; klíčové trauma se odhaluje postupně."
-    },
-    {
-      "prompt": "Kdy román vyšel?",
-      "options": [
-        "1945",
         "1961",
-        "2008",
-        "1886"
+        "1945",
+        "1984",
+        "2000"
       ],
-      "correct": 1,
-      "expl": "Catch-22 vyšel 1961."
+      "correct": 0,
+      "expl": "Poválečný román."
     },
     {
-      "prompt": "Co je Snowdenův význam?",
+      "prompt": "Yossarian?",
       "options": [
-        "Je to prezident",
-        "Jeho smrt je jádro Yossarianova traumatu",
-        "Je to havran",
-        "Je to Edison"
+        "Bombardér toužící utéct",
+        "Generál",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Scéna se Snowdenem vysvětluje Yossarianův strach a poznání smrti."
+      "correct": 0,
+      "expl": "Hrdina."
     },
     {
-      "prompt": "Jaký žánr je nejpřiléhavější?",
+      "prompt": "Catch-22?",
       "options": [
-        "Idyla",
-        "Válečná satira / černý humor",
-        "Gotická balada",
-        "Dekameronovská novela výhradně"
+        "Pravidlová past – nemůžeš být prohlážen bláznem",
+        "Letadlo",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Antiwar román s absurdní komikou."
+      "correct": 0,
+      "expl": "Titul."
     },
     {
-      "prompt": "Proč Yossarian působí „bláznivě“?",
+      "prompt": "Válka?",
       "options": [
-        "Chce víc misí",
-        "V absurdním systému je touha přežít jediný zdravý postoj",
-        "Nemiluje život",
-        "Je trifid"
+        "WWII",
+        "Vietnam",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Pointa hlavy XXII: zdravý člověk se bojí smrti."
+      "correct": 0,
+      "expl": "Kontext."
     },
     {
-      "prompt": "Co satira míří vedle armády ještě na?",
+      "prompt": "Pianosa?",
       "options": [
-        "Jen na vaření",
-        "Byznys, kariérismus a byrokracii",
-        "Jen na poetismus",
-        "Jen na husitství"
+        "Italská základna fikce",
+        "Praha",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Miloův syndikát ukazuje válku jako trh."
+      "correct": 0,
+      "expl": "Místo."
     },
     {
-      "prompt": "Jaký je vztah humoru a hrůzy?",
+      "prompt": "M&M?",
       "options": [
-        "Humor popírá válku jako neexistující",
-        "Černý humor odhaluje hrůzu tím, že ji zesměšňuje",
-        "Humor chybí úplně",
-        "Je to dětská říkanka"
+        "Milieu prodává na černém trhu",
+        "Ne",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Smích je zbraň proti nesmyslu i výraz zoufalství."
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Cathcart?",
+      "options": [
+        "Zvyšuje nálety",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Důstojník."
+    },
+    {
+      "prompt": "Snowden?",
+      "options": [
+        "Smrt odhalí absurditu",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Scéna."
+    },
+    {
+      "prompt": "Doc Daneeka?",
+      "options": [
+        "„Mrtvý“ na papíře",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Byrokracie."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Anti válečný absurdní román",
+        "Pohádka",
+        "Epos",
+        "Lyrika"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Jindra",
+        "Nezval",
+        "Dušek",
+        "Nevrla"
+      ],
+      "correct": 0,
+      "expl": "Katalog."
+    },
+    {
+      "prompt": "Nelineární?",
+      "options": [
+        "Ano čas skáče",
+        "Ne",
+        "Lineární",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Forma."
+    },
+    {
+      "prompt": "Humor?",
+      "options": [
+        "Černý ironický",
+        "Ne",
+        "Slapstick",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Styl."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Klasika 20. stol.",
+        "Nejkratší",
+        "Bez smyslu",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Yossarian",
+        "Catch-22",
+        "Hamlet",
+        "M&M"
+      ],
+      "correct": 2,
+      "expl": "Shakespeare."
+    },
+    {
+      "prompt": "Remarque vs Heller?",
+      "options": [
+        "Obě válka, jiný styl",
+        "Totéž",
+        "Remarque Catch",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Různí."
+    },
+    {
+      "prompt": "Nately?",
+      "options": [
+        "Zamilovaný, tragicky",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Nálety?",
+      "options": [
+        "Opakující se nebezpečné",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Desertace?",
+      "options": [
+        "Yossarian chce",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Cíl."
+    },
+    {
+      "prompt": "Er-forma?",
+      "options": [
+        "Ano",
+        "Ich Katniss",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Absurdita?",
+      "options": [
+        "Byrokracie války",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Téma."
+    },
+    {
+      "prompt": "Katalog?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "22?",
+      "options": [
+        "Číslo v pasti",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Titul."
+    },
+    {
+      "prompt": "Snowden v letadle?",
+      "options": [
+        "Krvavá smrt",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Trauma."
+    },
+    {
+      "prompt": "Otrava?",
+      "options": [
+        "Yossarian v nemocnici",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Epizody."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Válka a byrokracie jsou absurdní",
+        "Válka slavná",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Anti válka."
+    },
+    {
+      "prompt": "Série?",
+      "options": [
+        "Jedna kniha (+ sequel)",
+        "10",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Hlava XXII."
+    },
+    {
+      "prompt": "Ironie?",
+      "options": [
+        "Hlavní prostředek",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Styl."
+    },
+    {
+      "prompt": "Jindra?",
+      "options": [
+        "Překladatel",
+        "Yossarian",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "CZ."
+    },
+    {
+      "prompt": "Konec?",
+      "options": [
+        "Yossarian se rozhodne utéct",
+        "Válka slaví",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Únik."
+    },
+    {
+      "prompt": "Letectvo?",
+      "options": [
+        "Bombardéry",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Armáda."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Yossarian létá mise a touží vypadnout",
-        "Cathcart zvyšuje počet náletů",
-        "Hlava XXII blokuje všechny úniky",
-        "Milo buduje válečný obchodní syndikát",
-        "Odhaluje se trauma Snowdenovy smrti",
-        "Yossarian volí vzpouru / útěk jako cestu přežití"
+        "Yossarian na základně Pianosa",
+        "Opakované nebezpečné nálety",
+        "Catch-22 blokuje prohlášení blázna",
+        "Smrt přátel včetně Snowdena",
+        "Byrokratické absurdity a M&M",
+        "Rozhodnutí utéct z armády"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: mise a strach → růst náletů → past hlavy XXII → Miloův byznys → Snowdenovo trauma → Yossarianova vzpoura/útěk."
+    "Pořadí: základna → nálety → Catch-22 → smrti → absurdita → útěk."
   ]
 }

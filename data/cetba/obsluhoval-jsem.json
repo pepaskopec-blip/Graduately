@@ -6,195 +6,94 @@
       "lines": [
         "Autor: Bohumil Hrabal",
         "Žánr: román / novela s pikareskními rysy",
-        "Poprvé vydáno: 1971",
-        "Děj: Ditie – číšník procházející 20. stoletím od hotelů po lágry",
-        "Vyprávění: ich-forma, hrabalovská řeč a nadsázka"
+        "Poprvé vydáno: 1971 (česky; různá vydání)",
+        "Děj: 20. století očima číšníka Dita",
+        "Vyprávění: ich-forma; hrabalovská řeč, groteska"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Od první republiky přes protektorát k poválečnu.",
-        "Ditie touží po společenství a „být viděn“.",
-        "Servírování jako pohled zdola na dějiny.",
-        "Komika i hrůza dějin vedle sebe.",
-        "Podnikání, kolaborace, trest, nový režim."
+        "Od první republiky přes protektorát po poválečný socialismus.",
+        "Hotely a hostince jako jeviště dějin shora.",
+        "Ditie touží po uznání a „velikosti“.",
+        "Komplice s mocí, trest, normalizace.",
+        "Groteska mísí smích s tragédií.",
+        "Téma: malý člověk, dějiny, vinna, touha."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ditie – vypravěč, číšník.",
-        "Lízinka – žena spjatá s jeho vzestupem.",
-        "Hoteloví hosté – svět elity.",
-        "Protektorátní moc – pokušení.",
-        "Spoluvězni / soudruzi – poválečné účtování.",
-        "Dítě – naděje a ztráta."
+        "Ditě (Jan Ditie) – vypravěč, číšník.",
+        "Líza – láska, spojená s Ditieho vzestupem.",
+        "Hoteloví hosté – politici, Němci, elita.",
+        "Tichý Šimon – poválečný soudce Ditieho osudu.",
+        "Protektorátní moc – pokušení kolaborace.",
+        "Dítě (syn) – naděje a ztráta."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Pohled zdola – poetika servisu.",
-        "Touha po uznání – Ditieho motor.",
-        "Dějiny v anekdotě – Hrabalův postup.",
-        "Vinna a přežití – morální ambivalence.",
-        "Hotel – jeviště století.",
-        "Groteska – smích i děs."
+        "Pohled zdola – servis vidí moc zblízka.",
+        "Touha po velikosti – Ditieho motor.",
+        "Kolaborace – servírování mocným.",
+        "Groteska – Hrabalův humor i děs.",
+        "Hotel – mikrokosmos století.",
+        "Soud / Tichý Šimon – morální bilance."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Obsluhoval jsem anglického krále?",
-      "options": [
-        "Škvorecký",
-        "Hrabal",
-        "Kundera",
-        "Otčenášek"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Bohumil Hrabal."
-    },
-    {
-      "prompt": "Kdo je Ditie?",
-      "options": [
-        "Král",
-        "Číšník a vypravěč",
-        "Generál",
-        "Farár"
-      ],
-      "correct": 1,
-      "expl": "Ditie obsluhuje a vypráví."
-    },
-    {
-      "prompt": "Jak Ditie vidí dějiny?",
-      "options": [
-        "Jen z trůnu",
-        "Zespoda, skrze hotel a servis",
-        "Jen z fronty",
-        "Jen z laboratoře"
-      ],
-      "correct": 1,
-      "expl": "Servíranský pohled."
-    },
-    {
-      "prompt": "O čem sní?",
-      "options": [
-        "O tichu bez lidí",
-        "O uznání, hotelnictví, „být někdo“",
-        "O emigraci na Měsíc",
-        "O stát se katem"
-      ],
-      "correct": 1,
-      "expl": "Touha po statusu."
-    },
-    {
-      "prompt": "Jaký je styl?",
-      "options": [
-        "Suchý protokol",
-        "Hrabalovská řeč, nadsázka, proud vyprávění",
-        "Jen hexametr",
-        "Jen anglický esej"
-      ],
-      "correct": 1,
-      "expl": "Typický Hrabal."
-    },
-    {
-      "prompt": "Proč je postava ambivalentní?",
-      "options": [
-        "Není",
-        "Kolísá mezi kariérou, vinou a trestem",
-        "Je robot",
-        "Je svatý bez chyby"
-      ],
-      "correct": 1,
-      "expl": "Morální šedá zóna."
-    },
-    {
-      "prompt": "Co hotel symbolizuje?",
-      "options": [
-        "Les",
-        "Jeviště společenských změn",
-        "Kostel jen",
-        "Továrnu na roboty"
-      ],
-      "correct": 1,
-      "expl": "Mikrocosmos doby."
-    },
-    {
-      "prompt": "Jak vstupuje válka/protektorát?",
-      "options": [
-        "Vůbec",
-        "Jako pokušení i nebezpečí pro Ditieho vzestup",
-        "Jen jako počasí",
-        "Jen jako sport"
-      ],
-      "correct": 1,
-      "expl": "Dějiny zasahují kariéru."
-    },
-    {
-      "prompt": "Co přijde po válce?",
-      "options": [
-        "Nic",
-        "Účtování, pád, nové pořádky",
-        "Korunovace",
-        "Odjezd do antiky"
-      ],
-      "correct": 1,
-      "expl": "Poválečné změny."
-    },
-    {
-      "prompt": "Proč je kniha maturitní?",
-      "options": [
-        "Je jízdní řád",
-        "Spojuje dějiny 20. stol. s originálním stylem a antihrdinou",
-        "Je telefonní seznam",
-        "Je kuchařka bez děje"
-      ],
-      "correct": 1,
-      "expl": "Silný text o století."
-    },
-    {
-      "prompt": "Jaká je role Lízinky?",
-      "options": [
-        "Žádná",
-        "Soukromí a vzestup/ pád Ditieho",
-        "Jen účetní",
-        "Jen vypravěčka zákonů"
-      ],
-      "correct": 1,
-      "expl": "Vztahová linie."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Zelinářství",
-        "Touha po uznání vs. dějinná vina",
-        "Antická pomsta",
-        "Robotická vzpoura"
-      ],
-      "correct": 1,
-      "expl": "Antihrdina v dějinách."
-    }
+    {"prompt": "Kdo napsal Obsluhoval jsem anglického krále?", "options": ["Hašek", "Bohumil Hrabal", "Kundera", "Neruda"], "correct": 1, "expl": "Hrabal, 1971 – jedna z maturitních četeb."},
+    {"prompt": "Kdo vypravuje?", "options": ["Jan Ditě, číšník", "Anglický král", "Švejk", "Kafka"], "correct": 0, "expl": "Ich-forma Ditieho vzpomínek."},
+    {"prompt": "Proč je v názvu „anglický král“?", "options": ["Ditie obsluhuje i symboly moci (včetně exilového krále)", "Děj je jen v Anglii", "Ditie je král", "Bez souvislosti"], "correct": 0, "expl": "Ironický titul – servírování mocných v historii."},
+    {"prompt": "Jaké období román pokrývá?", "options": ["20. století v Čechách", "Středověk", "Antika", "Budoucnost"], "correct": 0, "expl": "Republika, protektorát, poválečí režimy."},
+    {"prompt": "Co Ditie nejvíc touží?", "options": ["Po uznání a velikosti", "Po klidu v klášteře", "Po válce", "Po robotice"], "correct": 0, "expl": "Malý člověk chce být viděn a důležitý."},
+    {"prompt": "Kdo je Líza?", "options": ["Ditieho milovaná", "Německá generálka", "Učitelka", "Robot"], "correct": 0, "expl": "Líza je spojena s Ditieho životem a vinou."},
+    {"prompt": "Jaký je Hrabalův styl?", "options": ["Dlouhé věty, groteska, humor", "Strohý realismus bez obrazů", "Hexametr", "Drama"], "correct": 0, "expl": "Typická hrabalovská poetika."},
+    {"prompt": "Kde Ditie pracuje?", "options": ["V hotelech a hostincích", "V dole", "Na moři", "V klášteře"], "correct": 0, "expl": "Číšnická dráha = pohled zdola."},
+    {"prompt": "Co je kolaborace v románu?", "options": ["Služba mocným v protektorátu", "Sport", "Věda", "Nemoc"], "correct": 0, "expl": "Ditie se potácí mezi přežitím a morálkou."},
+    {"prompt": "Kdo je Tichý Šimon?", "options": ["Poválečný soudce Ditieho", "Král", "Německý generál", "Dítě"], "correct": 0, "expl": "Symbol účtování po válce."},
+    {"prompt": "Jak román pracuje s dějinami?", "options": ["Anekdoticky z perspektivy servisu", "Ignoruje je", "Jen učebnicově", "Sci-fi"], "correct": 0, "expl": "Velké dějiny v malých hotelových scénách."},
+    {"prompt": "Proč je kniha důležitá pro maturitu?", "options": ["Učí chemii", "Hrabal, 20. stol., ich-forma, groteska, témata", "Je atlas", "Je cookbook"], "correct": 1, "expl": "U maturity: autor, kontext, Ditie, styl."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Touha po uznání", "Dějiny zdola", "Vzpoura robotů R.U.R.", "Vinna"], "correct": 2, "expl": "Roboti nejsou Hrabal."},
+    {"prompt": "Co je groteska u Hrabala?", "options": ["Smích vedle hrůzy", "Pouze pohádka", "Bez humoru", "Jen válka"], "correct": 0, "expl": "Typický Hrabalův mix."},
+    {"prompt": "Jak Ditie vzpomíná?", "options": ["Ve vzpomínkách číšníka na konci života", "Jako dítě", "Jako robot", "Bez já"], "correct": 0, "expl": "Retrospektivní ich-forma."},
+    {"prompt": "Která postava NENÍ Hrabalova?", "options": ["Ditě", "Miloš Hrma", "Líza", "Tichý Šimon"], "correct": 1, "expl": "Miloš Hrma je z Ostře sledovaných vlaků."},
+    {"prompt": "Co symbolizuje hotel?", "options": ["Jeviště setkání s mocí", "Vězení", "Kostel", "Lesk bez významu"], "correct": 0, "expl": "Místo, kde malý člověk servíruje velkým."},
+    {"prompt": "Jak končí Ditieho touha po velikosti?", "options": ["Ironicky a tragicky – malost zůstane", "Stane se králem", "Vítězí vždy", "Bez pointy"], "correct": 0, "expl": "Hrabal demaskuje iluzi slávy."},
+    {"prompt": "Kdy román vyšel?", "options": ["1971", "1921", "1890", "2015"], "correct": 0, "expl": "Poválečná reflexe v normalizační době."},
+    {"prompt": "Co je pikareskní rys?", "options": ["Putování a epizody „lišáka“", "Epos", "Tragedie", "Lyrika"], "correct": 0, "expl": "Ditie prochází místy a režimy."},
+    {"prompt": "Jaký vztah k protektorátu?", "options": ["Moralní krize servírování okupantům", "Ignorace", "Pouze hrdinství", "Sci-fi"], "correct": 0, "expl": "Kolaborace jako téma."},
+    {"prompt": "Které dílo NENÍ Hrabalovo?", "options": ["Obsluhoval jsem anglického krále", "Ostře sledované vlaky", "Revizor", "Příliš hlučná samota"], "correct": 2, "expl": "Revizor je Gogol."},
+    {"prompt": "Proč ich-forma?", "options": ["Subjektivní vinna a vzpomínka", "Objektivní učebnice", "Bez vypravěče", "Drama"], "correct": 0, "expl": "Ditie sám bilancuje život."},
+    {"prompt": "Co Ditie „obsluhuje“ metaforicky?", "options": ["Moc a dějiny bez vlastní velikosti", "Pouze jídlo", "Roboty", "Hvězdy"], "correct": 0, "expl": "Servis = podřízenost vůči moci."},
+    {"prompt": "Jak Hrabal líčí malého člověka?", "options": ["S humorem i soucitem", "S nenávistí", "Bez charakteru", "Jako hrdinu války"], "correct": 0, "expl": "Typický Hrabalův přístup."},
+    {"prompt": "Co je motiv syna / dítěte?", "options": ["Naděje a ztráta v Ditieho životě", "Robot", "Král", "Učitel"], "correct": 0, "expl": "Osobní rovina vedle historické."},
+    {"prompt": "Jaký kontrast Hrabal používá?", "options": ["Velké dějiny vs. hotelový servis", "Moře vs. hory", "Den vs. noc", "Práce vs. lenost"], "correct": 0, "expl": "Základní poetika knihy."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Čechy (hotely, okolí)", "Verona", "Londýn celý román", "Mars"], "correct": 0, "expl": "České dějiny 20. století."},
+    {"prompt": "Co čtenář má po dočtení?", "options": ["Pochopení Hrabalovy grotesky a historie zdola", "Návod na servis", "Chemii", "Nic"], "correct": 0, "expl": "Maturitní cíl – kontext a témata."},
+    {"prompt": "Jak Ditie vnímá sebe?", "options": ["Chce být velký, často je směšný", "Vždy hrdina", "Robot", "Císař"], "correct": 0, "expl": "Tragičnost i komika ega."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Ditie začíná jako číšník",
-        "Učí se svět hotelů",
-        "Zažívá vzestup a kompromisy doby",
-        "Protektorát/poválečno ho zkouší",
-        "Přichází pád a trest",
-        "Bilance života zdola"
+        "Mladý Ditě začíná jako číšník",
+        "Vzestup v hotelech, setkání s mocí",
+        "Protektorát – obsluha okupantů",
+        "Líza a osobní i politické krize",
+        "Poválečné soudy a Tichý Šimon",
+        "Bilance života malého člověka"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: začátky → hotely → vzestup → dějinné kompromisy → pád → bilance."
+    "Správné pořadí: začátky → vzestup → protektorát → Líza → soud → bilance."
   ]
 }

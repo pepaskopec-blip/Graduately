@@ -5,9 +5,9 @@
       "icon": "book",
       "lines": [
         "Autor: Erich Maria Remarque",
-        "Žánr: válečný román",
-        "Poprvé vydáno: 1929 (česky např. Gel)",
-        "Děj: západní fronta 1. světové války – skupina mladých vojáků",
+        "Žánr: protiválečný román; generační próza",
+        "Poprvé vydáno: 1929 (německy Im Westen nichts Neues)",
+        "Děj: západní fronta 1. světové války, německá armáda",
         "Vyprávění: ich-forma Paula Bäumera"
       ]
     },
@@ -15,186 +15,86 @@
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Protiválečný román generace zničené zákopy.",
-        "Škola a propaganda stojí proti realitě fronty.",
-        "Přátelství vojáků je jedinou jistotou.",
-        "Domov už nerozumí těm, kdo se vrátili.",
-        "Smrt je všední a nesmyslná."
+        "1. světová válka: zákopy, dělostřelectvo, plyn, strojová válka.",
+        "Mladí dobrovolníci byli sváděni učiteli k „slavnému boji za vlast“.",
+        "Fronta ničí tělo i duši; smrt je všední a bezcílná.",
+        "Domov už nechápe zkušenost vojáků – propast generací.",
+        "Kamarádství ve squatu je jedinou oporou proti absurditě.",
+        "Remarque míří proti romantizaci války."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Paul Bäumer – vypravěč.",
-        "Stanislaus Katczinsky (Kat) – zkušený kamarád.",
-        "Tjaden, Müller, Kropp – spolužáci/vojáci.",
-        "Kantorek – učitel, který je nabádal.",
-        "Himmelstoss – tyranský výcvikář.",
-        "Francouzský voják – lidskost nepřítele."
+        "Paul Bäumer – vypravěč, student proměněný v cynického vojáka.",
+        "Stanislaus Katczinsky (Kat) – čtyřicátník, mazaný kamarád.",
+        "Albert Kropp, Müller, Leer, Tjaden – spolužáci z třídy.",
+        "Kantorek – učitel, který je nabádal k odchodu na frontu.",
+        "Himmelstoss – tyranský cvičitel, později zocelený frontou.",
+        "Francouzský voják Gérard Duval – Paul ho zabije v zákopu."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Ztráta generace – hlavní téma.",
-        "Zákop – chronotop války.",
-        "Kamarádství – hodnota.",
-        "Propaganda vs. zkušenost.",
-        "Odlidštění – důsledek fronty.",
-        "Antiválečný protest."
+        "Ztráta generace – mladí zničeni dřív, než začnou žít.",
+        "Zákop – symbol odlidštění a strachu.",
+        "Kamarádství – sdílení chleba, krytí, smích.",
+        "Propaganda vs. realita – Kantorek a fronta.",
+        "Odcizení od civilního světa – domov je cizí.",
+        "Antiválečné poselství – válka nemá smysl."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Na západní frontě klid?",
-      "options": [
-        "Hemingway",
-        "Remarque",
-        "Heller",
-        "Orwell"
-      ],
-      "correct": 1,
-      "expl": "Autorem je E. M. Remarque."
-    },
-    {
-      "prompt": "Kdo vypráví?",
-      "options": [
-        "Kat",
-        "Paul Bäumer",
-        "Kantorek",
-        "Himmelstoss"
-      ],
-      "correct": 1,
-      "expl": "Ich-forma Paula."
-    },
-    {
-      "prompt": "Jaký je základní postoj knihy k válce?",
-      "options": [
-        "Oslavný",
-        "Protiválečný",
-        "Neutrální kuchařský",
-        "Náboženský hymnus"
-      ],
-      "correct": 1,
-      "expl": "Jde o antiválečný román."
-    },
-    {
-      "prompt": "Co dělá Kantorek?",
-      "options": [
-        "Léčí raněné",
-        "Štve studenty do války ideály",
-        "Velí armádě",
-        "Je Paulův bratr"
-      ],
-      "correct": 1,
-      "expl": "Učitel jako nástroj propagandy."
-    },
-    {
-      "prompt": "Kdo je Kat?",
-      "options": [
-        "Nepřítel",
-        "Zkušený přítel na frontě",
-        "Učitel",
-        "Generál"
-      ],
-      "correct": 1,
-      "expl": "Kat je Paulova opora."
-    },
-    {
-      "prompt": "Proč je návrat domů cizí?",
-      "options": [
-        "Domov je v tropách",
-        "Civilisté nerozumějí frontové zkušenosti",
-        "Paul neumí německy",
-        "Nádraží neexistuje"
-      ],
-      "correct": 1,
-      "expl": "Odcizení veterána."
-    },
-    {
-      "prompt": "Jak Paul často vnímá nepřítele?",
-      "options": [
-        "Jen jako démona",
-        "Jako člověka v téže pasti",
-        "Jako učitele",
-        "Jako robota"
-      ],
-      "correct": 1,
-      "expl": "Humanizace nepřítele."
-    },
-    {
-      "prompt": "Co je „klid na frontě“ v ironii názvu?",
-      "options": [
-        "Oslava míru",
-        "Oficiální hlášení vs. smrt jednotlivce",
-        "Předpověď počasí",
-        "Název hostince"
-      ],
-      "correct": 1,
-      "expl": "Ironie vojenských zpráv."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1914",
-        "1929",
-        "1945",
-        "1968"
-      ],
-      "correct": 1,
-      "expl": "1929."
-    },
-    {
-      "prompt": "Jaký je osud generace?",
-      "options": [
-        "Bohatství",
-        "Zničení a ztráta budoucnosti",
-        "Vláda světa",
-        "Emigrace do antiky"
-      ],
-      "correct": 1,
-      "expl": "Ztracená generace."
-    },
-    {
-      "prompt": "Co fronta dělá s lidskostí?",
-      "options": [
-        "Posiluje ji vždy",
-        "Ohrožuje a otupuje ji",
-        "Nemění nic",
-        "Mění vojáky v básníky vždy"
-      ],
-      "correct": 1,
-      "expl": "Odlidštění je téma."
-    },
-    {
-      "prompt": "Hlavní hodnota ve válce podle knihy?",
-      "options": [
-        "Medaile",
-        "Kamarádství",
-        "Propaganda",
-        "Účetnictví"
-      ],
-      "correct": 1,
-      "expl": "Přátelství drží pohromadě."
-    }
+    {"prompt": "Kdo napsal Na západní frontě klid?", "options": ["Thomas Mann", "Erich Maria Remarque", "Franz Kafka", "Ernest Hemingway"], "correct": 1, "expl": "Autorem je Erich Maria Remarque; román vyšel v roce 1929."},
+    {"prompt": "Kdo vypravuje příběh?", "options": ["Kantorek", "Paul Bäumer", "Kat", "Generál"], "correct": 1, "expl": "Paul Bäumer vypráví v ich-formě o frontě a o sobě."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Na východní frontě za 2. světové", "Na západní frontě 1. světové války", "V Praze za protektorátu", "Ve Vietnamu"], "correct": 1, "expl": "Román sleduje německé vojáky na západní frontě první světové války."},
+    {"prompt": "Kdo je Kat?", "options": ["Paulův učitel", "Zkušený starší kamarád ve squatu", "Francouzský generál", "Paulova sestra"], "correct": 1, "expl": "Katczinsky je mazaný čtyřicátník, který pomáhá přežít a udržuje morálku."},
+    {"prompt": "Jak Paul a spolužáci přišli k armádě?", "options": ["Byli verbováni násilím", "Nechali se strhnout Kantorekovou propagandou", "Byli odsouzeni soudem", "Byli cizinci"], "correct": 1, "expl": "Učitel Kantorek je nabádal k dobrovolnému odchodu – „železný mladý muž“."},
+    {"prompt": "Co symbolizuje Kantorek?", "options": ["Moudrého mentora", "Válečnou propagandu a lži z domova", "Lékařskou etiku", "Náboženský mír"], "correct": 1, "expl": "Kantorek reprezentuje romantizaci války, kterou fronta vyvrací."},
+    {"prompt": "Jak Paul vnímá Himmelstosse na začátku?", "options": ["Jako hrdinu", "Jako tyrana ve výcviku", "Jako otce", "Jako lékaře"], "correct": 1, "expl": "Himmelstoss šikanuje rekruty; později fronta i jeho mění."},
+    {"prompt": "Co se stane Kemmerichovi?", "options": ["Stane se generálem", "Umírá po amputaci; Paul je u něj", "Desertuje", "Síní Nobelovu cenu"], "correct": 1, "expl": "Kemmerichova smrt je jedna z prvních tvrdých lekcí – boty přejdou Müllerovi."},
+    {"prompt": "Proč Müller chce Kemmerichovy boty?", "options": ["Sbírá umění", "Na frontě je praktické vybavení důležitější než sentiment", "Je obchodník", "Nenávidí Kemmericha"], "correct": 1, "expl": "Román ukazuje, jak válka redukuje vztahy na přežití a věci."},
+    {"prompt": "Co Paul prožije v zákopu s francouzským vojákem?", "options": ["Šachovou partii", "Zabije Duvala a lituje – vidí v něm člověka, ne nepřítele", "Svatbu", "Kněžské vysvěcení"], "correct": 1, "expl": "Scéna s Duvelem zhumanizuje „nepřítele“ a zdůrazní absurditu války."},
+    {"prompt": "Jak Paul reaguje na návštěvu domova?", "options": ["Cítí se jako hrdina", "Cítí se cizí; civilisté nechápou frontu", "Zůstane navždy doma", "Stane se ministrem"], "correct": 1, "expl": "Matka, otcové, učitelé žijí v jiném světě – Paul už mezi nimi nepatří."},
+    {"prompt": "Co je hlavní hodnotou ve squatu?", "options": ["Kariéra", "Kamarádství a solidarita", "Sběr medailí", "Psaní básní pro tisk"], "correct": 1, "expl": "Vojáci si dělí jídlo, kryjí se a vydrží jen díky sobě navzájem."},
+    {"prompt": "Jak končí Kat?", "options": ["Generál armády", "Umírá – Paul ho nese a přitom Kat dostává střelu do hlavy", "Emigruje do USA", "Stane se učitelem"], "correct": 1, "expl": "Smrt Kata je pro Paula zlom – ztrácí poslední pevnou oporu."},
+    {"prompt": "Jaký je původní německý název a co znamená?", "options": ["Im Osten alles Neu", "Im Westen nichts Neues – na západě nic nového", "Kein Krieg", "Der Frieden"], "correct": 1, "expl": "Vojenská zpráva hlásí klid – ironie vůči masovému mýlu o velkých zprávách z fronty."},
+    {"prompt": "Jak zemře Paul Bäumer?", "options": ["Ve stáří doma", "Krátce před koncem války – klidně, téměř bez bolesti", "V duelu", "V letecké nehodě jako pilot"], "correct": 1, "expl": "Paul padne v říjnu 1918; report zní, že na západě není nic nového."},
+    {"prompt": "Které téma román nejvíc zdůrazňuje?", "options": ["Slávu války", "Zničení mladé generace a nesmysl války", "Růst hospodářství", "Středověké rytířství"], "correct": 1, "expl": "Remarque ukazuje fyzické i psychické zničení a prázdnotu válečných hesel."},
+    {"prompt": "Co je typickým prostředím děje?", "options": ["Salóny a plesy", "Zákopy, dělostřelectvo, plynové útoky", "Univerzitní kampus", "Moře a piráti"], "correct": 1, "expl": "Chronotopem je fronta – bláto, kryty, hlod, strach."},
+    {"prompt": "Jak román líčí autoritu armády?", "options": ["Jako vždy spravedlivou", "Jako součást systému, který žere lidi", "Jako neexistující", "Jako komedii bez násilí"], "correct": 1, "expl": "Disciplína, šikana i absurdita rozkazů patří k obrazu války."},
+    {"prompt": "Proč Paul nemůže „normálně“ studovat?", "options": ["Nemá peníze", "Válka ho odtrhla od mládí a znalostí", "Je v exilu", "Je slepý od narození"], "correct": 1, "expl": "Paul říká, že jeho generace stojí před propastí – válka jim vzala budoucnost."},
+    {"prompt": "Co znamená „ztráta generace“?", "options": ["Emigrace do Ameriky", "Mladí muži zničeni dřív, než stihnou dospět do života", "Ztráta knih", "Demografický baby boom"], "correct": 1, "expl": "Termín popisuje trauma 1. světové války – mrtví i psychicky zlomení."},
+    {"prompt": "Jak je zobrazeno násilí?", "options": ["Romanticky", "Věcně, drsně, bez glorifikace", "Jen jako metafora", "Vůbec se neobjevuje"], "correct": 1, "expl": "Remarque popisuje zranění, strach a smrt matter-of-fact stylem."},
+    {"prompt": "Kdo je Tjaden?", "options": ["Paulův spolužák a voják ve squatu", "Ruský car", "Lékař", "Novinář"], "correct": 0, "expl": "Tjaden patří k Paulově partě – typický „malý“ voják fronty."},
+    {"prompt": "Proč je román důležitý pro maturitu?", "options": ["Je učebnicí chemie", "Ukazuje 1. světovou válku, ich-formu a antiválečná témata", "Je právní kód", "Je atlas"], "correct": 1, "expl": "U maturity: autor, kontext, postavy, vypravěč, témata a jazyk."},
+    {"prompt": "Jaký vztah mají vojáci k rozkazům?", "options": ["Vždy je chápou jako smysluplné", "Často vidí absurditu, ale poslušnost je nutná k přežití", "Vždy desertují", "Rozkazy neexistují"], "correct": 1, "expl": "Paul poslouchá, ale uvnitř ví, že mnoho bojů nemá logiku."},
+    {"prompt": "Co Paul cítí k lidem doma, kteří válku oslavují?", "options": ["Obdiv", "Hořkost a vztek – nechápou realitu", "Lhostejnost bez emocí", "Radost"], "correct": 1, "expl": "Kantorek a podobní mluví o cti, zatímco vojáci umírají v blátě."},
+    {"prompt": "Jaký je styl vyprávění?", "options": ["Epický vypravěč bez já", "Ich-forma, přímá zkušenost Paula", "Dopisový deník cizí osoby", "Drama bez prózy"], "correct": 1, "expl": "Paulův hlas dává románu autenticitu a subjektivní tíhu."},
+    {"prompt": "Které tvrzení o Müllerovi je správné?", "options": ["Je Paulův učitel", "Je spolužák; praktický, chce Kemmerichovy boty", "Je francouzský špion", "Je námořník"], "correct": 1, "expl": "Müller reprezentuje tvrdost fronty – přežití je důležitější než sentiment."},
+    {"prompt": "Co není typické pro Remarqueův obraz fronty?", "options": ["Strach a únava", "Kamarádství", "Glorifikace hrdinských bitev bez krve", "Smrt kamarádů"], "correct": 2, "expl": "Román právě boj proti slavnostnímu obrazu války."},
+    {"prompt": "Kdy román poprvé vyšel?", "options": ["1914", "1929", "1945", "2000"], "correct": 1, "expl": "Vydání 1929 – meziválečí reakce na trauma 1. světové války."},
+    {"prompt": "Jaký význam má závěr s Paulovou smrtí?", "options": ["Válka je vítězstvím", "Jednotlivec je obětí systému; zpráva o „klidu“ je krutá ironie", "Paul se stane legendou", "Válka pokračuje věčně v textu"], "correct": 1, "expl": "Paul umírá těsně před koncem – osobní ztráta vs. anonymní válečná zpráva."},
+    {"prompt": "Která postava NEPATŘÍ k Paulově partě?", "options": ["Kat", "Kropp", "Kantorek jako voják v partě", "Tjaden"], "correct": 2, "expl": "Kantorek zůstává doma jako symbol propagandy, ne bojuje v jejich squatu."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Škola a odvod",
-        "Výcvik a týrání",
-        "Život v zákopech",
-        "Ztráty přátel",
-        "Cizota domova",
-        "Paulova smrt / zničení generace"
+        "Kantorek nabádá mladíky k odchodu na frontu",
+        "Výcvik u Himmelstosse a první ztráty (Kemmerich)",
+        "Život ve squatu, Kat jako opora",
+        "Paul zabije francouzského vojáka Duvala",
+        "Návštěva domova a odcizení",
+        "Smrt Kata a Paulova smrt krátce před koncem války"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: odvod → výcvik → zákopy → ztráty → cizota domova → zničení."
+    "Správné pořadí: propaganda → výcvik a ztráty → fronta s Katem → Duval → domov → smrt Kata a Paula."
   ]
 }

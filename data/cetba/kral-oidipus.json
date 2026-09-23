@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Sofoklés",
+        "Autor: Sofokles (cca 496–406 př. n. l.), athénský tragik",
         "Žánr: antická tragédie",
-        "Poprvé uvedeno: kolem 429 př. n. l.",
-        "Děj / prostředí: Théby, královský palác",
-        "Vyprávění / forma: drama – dialogy, sbor (chór), jednota děje"
+        "Poprvé vydáno / uvedeno: kolem 429 př. n. l. (Athény)",
+        "Děj / prostředí: Théby, mýtus o králi Oidipovi",
+        "Vyprávění / forma: dramatická forma, jednota času a místa, chór"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Antické Řecko: víra v osud (moira) a věštby.",
-        "Tragédie ukazuje střet lidské vůle s předurčením.",
-        "Oidipus je vzor tragického hrdiny: hledá pravdu a zničí se jí.",
-        "Dílo patří k vrcholům athénského divadla 5. století př. n. l.",
-        "Témata: vina, nevědomost, poznání, slepota (doslovná i obrazná).",
-        "Aristotelés v Poetice uvádí Oidipa jako vzor tragédie."
+        "Antické Théby trpí morem; lidé hledají viníka.",
+        "Král Oidipus slíbil vysvobodit město od prokletí.",
+        "Tragédie stojí na neznalosti vlastní identity a osudu.",
+        "Bohové a věštba – člověk nemůže uniknout tomu, co je mu souzeno.",
+        "Jednota času, místa a děje – klasická pravidla antické tragédie.",
+        "Téma: poznání sebe sama stojí život i důstojnost."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Oidipus – thébský král, nevědomky zabije otce a vezme matku.",
-        "Iokasté – Oidipova manželka a matka.",
-        "Kreón – Iokastin bratr, Oidipův švagr.",
-        "Teiresiás – slepý věštec, zná pravdu.",
-        "Posel / pastýř – přinášejí důkazy o Oidipově původu.",
-        "Sbor Thébanů – komentuje děj a vyjadřuje obecné postoje."
+        "Oidipus – král Théb, statečný, ale slepý k pravdě o sobě.",
+        "Iokasté – Oidipova manželka, ve skutečnosti matka.",
+        "Kréón – Iokastin bratr, racionální, obviňovaný z intrik.",
+        "Tiresias – slepý vědec, vidí pravdu dříve než král.",
+        "Posel z Korintu, pastýř – odhalují minulost Oidipa.",
+        "Chór thébských stařců – komentuje děj a morálku."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Osud (moira) – nevyhnutelné předurčení.",
-        "Tragická ironie – divák ví víc než hrdina.",
-        "Hybris – pýcha, která vede k pádu.",
-        "Anagnórisis – rozpoznání pravdy o sobě.",
-        "Peripetie – obrat od moci k pádu.",
-        "Slepota – Teiresiás vidí; Oidipus vidí, až když se oslepí."
+        "Věštba – Oidipus zabije otce a ožení se s matkou.",
+        "Hamartia – tragická chyba v pýše a netrpělivosti.",
+        "Anagnórisis – poznání pravdy o zločinech.",
+        "Peripetie – obrat od slávy k pádu.",
+        "Katarze – očista diváka strachem a soucitem.",
+        "Oidipovský komplex (Freud) – odvozený pojem, ne u Sofokla."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Krále Oidipa?",
-      "options": [
-        "Eurípidés",
-        "Sofoklés",
-        "Aischylos",
-        "Homér"
-      ],
-      "correct": 1,
-      "expl": "Autorem tragédie je Sofoklés."
-    },
-    {
-      "prompt": "Jaké proroctví Oidipovi hrozí?",
-      "options": [
-        "Že se stane bohem",
-        "Že zabije otce a ožení se s matkou",
-        "Že zničí Athény",
-        "Že bude věčně mladý"
-      ],
-      "correct": 1,
-      "expl": "Věštba předpovídá otcovraždu a incest."
-    },
-    {
-      "prompt": "Proč Théby trpí morem?",
-      "options": [
-        "Kvůli suchu",
-        "Kvůli nepotrestané vraždě Láia",
-        "Kvůli válce se Spartou",
-        "Kvůli zradě Kreóna"
-      ],
-      "correct": 1,
-      "expl": "Město je stiženo, dokud není odhalen vrah krále Láia – Oidipus."
-    },
-    {
-      "prompt": "Kdo je Teiresiás?",
-      "options": [
-        "Voják",
-        "Slepý věštec, který zná pravdu",
-        "Oidipův syn",
-        "Posel z Korintu výhradně"
-      ],
-      "correct": 1,
-      "expl": "Teiresiás Oidipovi naznačí, že vrahem je on sám."
-    },
-    {
-      "prompt": "Co je anagnórisis v této hře?",
-      "options": [
-        "Svatba",
-        "Oidipovo rozpoznání vlastní identity a viny",
-        "Odchod sboru",
-        "Válka"
-      ],
-      "correct": 1,
-      "expl": "Vrcholí zjištěním, že splnil věštbu."
-    },
-    {
-      "prompt": "Jak Oidipus potrestá sám sebe?",
-      "options": [
-        "Uteče do Persie",
-        "Oslepí se a odchází do vyhnanství",
-        "Zabije Kreóna",
-        "Spálí Théby"
-      ],
-      "correct": 1,
-      "expl": "Po sebevraždě Iokasty se Oidipus oslepí."
-    },
-    {
-      "prompt": "Co je tragická ironie?",
-      "options": [
-        "Vtipné dialogy",
-        "Rozpor mezi tím, co ví divák, a co neví hrdina",
-        "Happy end",
-        "Zpěv sboru bez významu"
-      ],
-      "correct": 1,
-      "expl": "Divák zná Oidipův osud dříve než on sám."
-    },
-    {
-      "prompt": "Kdo je Iokasté?",
-      "options": [
-        "Jen chůva",
-        "Oidipova manželka i matka",
-        "Teiresiova dcera",
-        "Královna Athén"
-      ],
-      "correct": 1,
-      "expl": "Iokasté je zároveň Oidipova žena a matka."
-    },
-    {
-      "prompt": "Jaký je hlavní konflikt tragédie?",
-      "options": [
-        "Láska a žárlivost",
-        "Lidská snaha poznat pravdu versus nevyhnutelný osud",
-        "Boj o majetek",
-        "Komedie omylů"
-      ],
-      "correct": 1,
-      "expl": "Oidipus hledá pravdu a právě tím naplní osud."
-    },
-    {
-      "prompt": "K čemu slouží sbor?",
-      "options": [
-        "Jen k tanci",
-        "Komentuje děj a vyjadřuje obecné postoje obce",
-        "Nahrazuje všechny dialogy",
-        "Je jen kulisou"
-      ],
-      "correct": 1,
-      "expl": "Chór je typickou součástí antické tragédie."
-    },
-    {
-      "prompt": "Co znamená hybris u Oidipa?",
-      "options": [
-        "Pokoru",
-        "Pýchu a sebejistotu, s níž vzdoruje varováním",
-        "Lásku k Iokastě",
-        "Strach z moru"
-      ],
-      "correct": 1,
-      "expl": "Oidipova sebejistota přispívá k jeho pádu."
-    },
-    {
-      "prompt": "Proč je Oidipus vzorem tragického hrdiny?",
-      "options": [
-        "Je zcela zlý",
-        "Je ušlechtilý, ale pádem odhalí pravdu o sobě a vyvolá katarzi",
-        "Je komický",
-        "Neví nic a nic neudělá"
-      ],
-      "correct": 1,
-      "expl": "Jeho pád z výšin moci k poznání a utrpení je klasický tragický oblouk."
-    }
+    {"prompt": "Kdo napsal Krále Oidipa?", "options": ["Euripides", "Sofokles", "Aischylos", "Homér"], "correct": 1, "expl": "Sofokles je jeden ze tří velkých athénských tragiků."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Sparta", "Théby", "Athény", "Troja"], "correct": 1, "expl": "Théby jsou postiženy morem a prokletím."},
+    {"prompt": "Jaký problém trápí Théby na začátku?", "options": ["Válka s Persy", "Mor a neznámý viník zločinu", "Hladomor bez moru", "Povodeň"], "correct": 1, "expl": "Lidé žádají Oidipa, aby město zachránil."},
+    {"prompt": "Co slíbil Oidipus občanům?", "options": ["Nové hradby", "Najde viníka vraždy krále Láia a město vysvobodí", "Odejde do exilu hned", "Zruší bohy"], "correct": 1, "expl": "Král se zavazuje trestat vraha bývalého krále."},
+    {"prompt": "Kdo je Tiresias?", "options": ["Vrah", "Slepý větec, který zná pravdu", "Oidipův syn", "Cizí voják"], "correct": 1, "expl": "Tiresias odhalí, že viníkem je sám Oidipus."},
+    {"prompt": "Proč Oidipus nejdřív Tiresia neposlouchá?", "options": ["Je hluchý", "Pýcha – odmítá obvinění", "Spí", "Tiresias nemluví"], "correct": 1, "expl": "Oidipus je netrpělivý a arogantní vůči věštci."},
+    {"prompt": "Koho Oidipus obviní z intriky?", "options": ["Kréóna", "Chór", "Posla", "Sama sebe"], "correct": 0, "expl": "Domnívá se, že Kréón usiluje o trůn."},
+    {"prompt": "Co odhalí posel z Korintu?", "options": ["Oidipus není syn korintského krále Polyba", "Oidipus je bůh", "Iokasté je cizinka", "More skončilo"], "correct": 0, "expl": "Oidipus byl adoptován; začne pátrat po pravých rodičích."},
+    {"prompt": "Kdo byl Laios?", "options": ["Oidipův syn", "Bývalý král Théb, Oidipův biologický otec", "Kréónův otec", "Pastýř bez role"], "correct": 1, "expl": "Věštba předpověděla, že syn Láia zabije otce."},
+    {"prompt": "Co Oidipus udělal na křižovatce?", "options": ["Pomohl starci", "V afektu zabil cestovatele (Láia)", "Koupil koně", "Modlil se"], "correct": 1, "expl": "Neznal otce; spor o průjezd vedl k vraždě."},
+    {"prompt": "Kdo je Sfinga v mýtu?", "options": ["Had", "Bytost s hádankou; Oidipus ji porazil", "Kréónova žena", "Chór"], "correct": 1, "expl": "Vítězství nad Sfingou učinilo Oidipa králem."},
+    {"prompt": "Kdo se stane Oidipovou manželkou?", "options": ["Antigona", "Iokasté – vlastní matka", "Cizí princezna", "Tiresias"], "correct": 1, "expl": "Oidipus se oženil s vdovou po Láiovi, aniž znal vztah."},
+    {"prompt": "Co je anagnórisis?", "options": ["Hudba chóru", "Poznání pravdy hrdinou", "Vstup na jeviště", "Konec hry"], "correct": 1, "expl": "Oidipus pochopí, že splnil věštbu."},
+    {"prompt": "Jak Iokasté reaguje na podezření?", "options": ["Radost", "Popírá, pak spáchá sebevraždu", "Utíká do Korintu", "Zabije Oidipa"], "correct": 1, "expl": "Iokasté chápe dřív a nevydrží pravdu."},
+    {"prompt": "Co Oidipus udělá po poznání?", "options": ["Oslaví svatbu", "Vydloubne si oči a žádá vyhnanství", "Stane se bohem", "Obviní chór"], "correct": 1, "expl": "Symbolické potrestání – viděl, ale neviděl pravdu."},
+    {"prompt": "Kdo převezme moc na konci?", "options": ["Kréón", "Oidipus navždy", "Tiresias", "Laios"], "correct": 0, "expl": "Kréón zůstává jako vládce; Oidipus odchází."},
+    {"prompt": "Co je hamartia u Oidipa?", "options": ["Nemoc", "Tragická chyba – pýcha, netrpělivost, touha po pravdě bez snášení", "Línost", "Zrada Kréóna"], "correct": 1, "expl": "Hrdina není zlý, ale má tragickou vadu charakteru."},
+    {"prompt": "Jaký význam má chór?", "options": ["Komický intermezzo", "Komentuje děj a reakce obce", "Hraje hlavní roli", "Neobjevuje se"], "correct": 1, "expl": "Chór thébských stařců vyjadřuje city města."},
+    {"prompt": "Co je katarze?", "options": ["Smích diváka", "Očistný efekt strachu a soucitu", "Hudba bez děje", "Scéna bez významu"], "correct": 1, "expl": "Aristoteles tragédii vysvětluje právě katarzí."},
+    {"prompt": "Proč nelze věštbě uniknout?", "options": ["Bohové a osud jsou silnější než lidské plány", "Věštba je vtip", "Oidipus neposlouchal", "Laios žije"], "correct": 0, "expl": "Tragédie ukazuje osudovost mýtu."},
+    {"prompt": "Které pravidlo antické tragédie dodržuje hra?", "options": ["Jednota času, místa a děje", "Pět dějství bez pravidel", "Pouze komické prvky", "Bez chóru"], "correct": 0, "expl": "Děj se soustředí na den odhalení v Thébách."},
+    {"prompt": "Co znamená „oidipovský komplex“ u Freuda?", "options": ["Sofoklovo pojmenování", "Moderní psychoanalytický pojem odvozený od mýtu, ne od Sofokla", "Chór", "Věštba"], "correct": 1, "expl": "Freud použil jméno; antická hra má jiný kontext."},
+    {"prompt": "Kdo zabil Sfingu?", "options": ["Kréón", "Oidipus správnou hádankou", "Iokasté", "Posel"], "correct": 1, "expl": "Vítězství nad Sfingou přineslo korunu."},
+    {"prompt": "Proč Oidipus pátrá po vrahovi Láia?", "options": ["Neví, že hledá sám sebe", "Ví od začátku", "Na příkaz Kréóna bez důvodu", "Kvůli pokladu"], "correct": 0, "expl": "Ironie tragédie – trestá sám sebe."},
+    {"prompt": "Jaký kontrast tvoří Oidipus?", "options": ["Bohatý vs. chudý", "Vidí svět, ale ne pravdu o sobě; pak slepý, ale chápe", "Mladý vs. starý bez významu", "Muž vs. žena bez děje"], "correct": 1, "expl": "Motiv slepota–vidění je klíčový."},
+    {"prompt": "Které tvrzení o Iokasté je správné?", "options": ["Je Oidipova dcera", "Je Oidipova matka i manželka", "Je Kréónova dcera bez vztahu", "Je bohyně"], "correct": 1, "expl": "Incest je jádrem odhalení."},
+    {"prompt": "Co je peripetie?", "options": ["Obrat osudu hrdiny od štěstí k neštěstí", "Úvod hry", "Píseň chóru", "Smích"], "correct": 0, "expl": "Od slavného krále k prokletému vyhnanci."},
+    {"prompt": "Proč maturita zahrnuje Krále Oidipa?", "options": ["Je nejnovější román", "Základ tragédie, mýtu a dramaturgie", "Je komiks", "Bez významu"], "correct": 1, "expl": "Učí strukturu tragédie a antické mytologie."},
+    {"prompt": "Jak končí Oidipus v této hře?", "options": ["Na trůnu navždy", "Odchází do vyhnanství, zničen poznáním", "Svatba s novou ženou", "Vítězí nad bohy"], "correct": 1, "expl": "Finále je pokání a vyhnanství (pokračuje v Oidipovi v Kolónu)." },
+    {"prompt": "Jaké poselství tragédie nese?", "options": ["Člověk musí poznat sám sebe, i za cenu bolesti", "Pýcha vždy vyhrává", "Bohové neexistují", "Lži jsou lepší"], "correct": 0, "expl": "Poznání pravdy je morální i existenciální nutnost."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Théby stíhá mor; Oidipus pátrá po vrahovi Láia",
-        "Teiresiás naznačí, že vrahem je Oidipus",
-        "Oidipus podezírá Kreóna a snaží se pravdu vyvrátit",
-        "Přicházejí svědectví o jeho původu",
-        "Iokasté pochopí pravdu a spáchá sebevraždu",
-        "Oidipus se oslepí a odchází do vyhnanství"
+        "Théby trpí morem; Oidipus slíbí najít viníka",
+        "Tiresias obviní Oidipa; král to odmítá",
+        "Posel a pastýř odhalí Oidipovu minulost",
+        "Oidipus pozná, že zabil otce a vzal si matku",
+        "Iokasté spáchá sebevraždu",
+        "Oidipus oslepí sám sebe a odchází do vyhnanství"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: mor a pátrání → Teiresiás → podezření Kreóna → odhalení původu → Iokastina smrt → Oidipovo oslepení."
+    "Správné pořadí: mor a slib → Tiresias → odhalení rodu → anagnórisis → smrt Iokasté → sebeztrestání a exil."
   ]
 }

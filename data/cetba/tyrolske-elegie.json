@@ -5,44 +5,46 @@
       "icon": "book",
       "lines": [
         "Autor: Karel Havlíček Borovský (1821–1856)",
-        "Žánr: satirická skladba / elegie s ironií",
-        "Vznik: 1852 (v internaci); širší ohlas později",
-        "Obsah: cesta do vyhnanství do Brixenu a kritika moci",
-        "Forma: veršovaná satira s parodií elegického tónu"
+        "Žánr: satirická politická poezie",
+        "Poprvé vydáno: 1855 (Tábor)",
+        "Děj: reakce na potlačení revoluce 1848–49",
+        "Forma: elegie – ironické, kritické básně"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Bachův absolutismus po porážce revoluce 1848/49.",
-        "Havlíček je internován do Brixenu v Tyrolsku.",
-        "Policejní dohled, cenzura a nesvoboda tvoří pozadí.",
-        "Autor ironizuje „ochranu“ státu i vlastní „elegii“.",
-        "Dílo je dokumentem odporu českého novináře-satirika."
+        "Havlíček – publicista, satirik, národní buditel.",
+        "Tyrolské elegie – posměch Rakousku po revoluci.",
+        "Napoleon III., Habsburkové, reakce.",
+        "Exil v Brixenu / Tyrolsko – autobiografický rámec.",
+        "Jazyk – hovorový, ironický, úderný.",
+        "Věznění a cenzura – Havlíček jako symbol odporu."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Básnický subjekt (Havlíček) – vyhnanec s ironickým nadhledem.",
-        "Policejní doprovod – „strážci“ na cestě do Brixenu.",
-        "Představitelé moci / byrokracie – terč satiry.",
-        "Domov a Čechy – nepřítomný, ale bolestně vzpomínaný prostor.",
-        "Tyrolsko / Brixen – místo internace."
+        "Karel Havlíček Borovský – básník, novinář.",
+        "Císař František Josef – terč satiry.",
+        "Rakouská monarchie – útlak.",
+        "Český národ – addresát naděje.",
+        "Napoleon III. – politické aluze.",
+        "Satirické personifikace."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Elegie – žalozpěv; zde často parodovaný tón.",
-        "Satira – výsměch moci a pokrytectví.",
-        "Internace / vyhnanství – trest za žurnalistickou kritiku.",
-        "Bachův absolutismus – režim nesvobody 50. let 19. stol.",
-        "Ironie – klíčový prostředek Havlíčkova stylu.",
-        "Cenzura – důvod i téma odporu."
+        "Satira – výsměch moci.",
+        "Elegie – ironicky pojatý žánr.",
+        "Revolution 1848 – zmařená naděje.",
+        "Exil – zkušenost autora.",
+        "Národní obrození – kontext.",
+        "Publicistická funkce poezie."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Tyrolské elegie?",
       "options": [
-        "Jiří Wolker",
+        "Neruda",
         "Karel Havlíček Borovský",
-        "Jakub Arbes",
-        "Milan Kundera"
+        "Wolker",
+        "Vrchlický"
       ],
       "correct": 1,
-      "expl": "Autorem je Karel Havlíček Borovský."
+      "expl": "Havlíček, 1855."
     },
     {
-      "prompt": "Proč Havlíček píše o Tyrolsku?",
+      "prompt": "Proč „tyrolské“?",
       "options": [
-        "Chodil tam lyžovat",
-        "Byl internován do Brixenu",
-        "Vlastnil tam cirkus",
-        "Hledal mloky"
+        "Vznik v souvislosti s Havlíčkovým pobytem v Tyrolsku / Brixen",
+        "Popis hor bez politiky",
+        "Německá opera",
+        "Sport"
       ],
-      "correct": 1,
-      "expl": "Po zásahu moci byl poslán do Brixenu."
+      "correct": 0,
+      "expl": "Autobiografický rámec."
     },
     {
-      "prompt": "Jaký je základní tón skladby?",
+      "prompt": "Hlavní funkce?",
       "options": [
-        "Sladce idylický bez výhrad",
-        "Satirický a ironický (elegie jako parodie)",
-        "Jen laboratorní",
-        "Jen milostný sonet"
+        "Satira Rakouska a reakce",
+        "Láska k přírodě bez politiky",
+        "Sci-fi",
+        "Cookbook"
       ],
-      "correct": 1,
-      "expl": "„Elegie“ je často ironická satira."
+      "correct": 0,
+      "expl": "Politická poezie."
     },
     {
-      "prompt": "Co je Bachův absolutismus?",
+      "prompt": "1848?",
       "options": [
-        "Hudební směr",
-        "Nesvobodný režim v rakouské monarchii po 1848/49",
-        "Školní předmět",
-        "Značka vína"
+        "Revolution potlačena – téma elegií",
+        "Nezmíněno",
+        "Rok smrti Wolker",
+        "2000"
       ],
-      "correct": 1,
-      "expl": "Jde o policejně-byrokratickou éru Alexandra Bacha."
+      "correct": 0,
+      "expl": "Kontext."
     },
     {
-      "prompt": "Čím byl Havlíček především?",
+      "prompt": "Havlíček profese?",
       "options": [
-        "Pilotem RAF",
-        "Novinářem, kritikem a satirikem",
-        "Kuchařem Truffaldina",
-        "Malířem Gatsbyho"
+        "Novinář, satirik, básník",
+        "Holič",
+        "Pilot",
+        "Malíř"
       ],
-      "correct": 1,
-      "expl": "Havlíček je ikona české žurnalistiky a satiry."
+      "correct": 0,
+      "expl": "Publicista."
     },
     {
-      "prompt": "Co skladba kritizuje?",
+      "prompt": "Forma?",
       "options": [
-        "Rybaření",
-        "Absolutismus, policii a nesvobodu slova",
-        "Jen počasí v Praze",
-        "Školní třídní knihu"
+        "Satirické elegie",
+        "Realistický román",
+        "Drama",
+        "Epos"
       ],
-      "correct": 1,
-      "expl": "Terčem je moc a její „péče“ o nepohodlné."
+      "correct": 0,
+      "expl": "Lyric satire."
     },
     {
-      "prompt": "Kde leží Brixen?",
+      "prompt": "Jazyk?",
       "options": [
-        "V Čechách u Berounky",
-        "V Tyrolsku",
-        "V Brooklynu",
-        "Na Kubě"
+        "Ironický, hovorový, úderný",
+        "Archaičtina bez smyslu",
+        "Angličtina",
+        "Bez humoru"
       ],
-      "correct": 1,
-      "expl": "Brixen (Bressanone) je v Tyrolsku."
+      "correct": 0,
+      "expl": "Typický Havlíček."
     },
     {
-      "prompt": "Jaká forma díla je přesná?",
+      "prompt": "Císař?",
       "options": [
-        "Próza o Algernonovi",
-        "Veršovaná satirická skladba",
-        "Jen úřední protokol",
-        "Komedie dell’arte"
+        "Habsburská monarchie kritizována",
+        "Chválen bez ironie",
+        "Neexistuje",
+        "Americký"
       ],
-      "correct": 1,
-      "expl": "Jde o verše s elegicko-satirickým rámcem."
+      "correct": 0,
+      "expl": "Politická kritika."
     },
     {
-      "prompt": "Proč je název „elegie“ příznačný i zavádějící?",
+      "prompt": "Havlíček zemřel?",
       "options": [
-        "Protože to není literatura",
-        "Tvárí se jako žalozpěv, ale je plný ironie a satiry",
-        "Protože slaví Bacha",
-        "Protože jde o kuchyni"
+        "1856",
+        "1924",
+        "2000",
+        "1700"
       ],
-      "correct": 1,
-      "expl": "Havlíček paroduje žalozpěvný žánr."
+      "correct": 0,
+      "expl": "Krátce po elegiích."
     },
     {
-      "prompt": "K jakému století Havlíček patří?",
+      "prompt": "Vězení / cenzura?",
       "options": [
-        "K 18. jen jako Goldoni",
-        "K 19.",
-        "K 21.",
-        "K antice"
+        "Havlíček perzekvován",
+        "Ne",
+        "Vítěz",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Havlíček žil v 19. století (1821–1856)."
+      "correct": 0,
+      "expl": "Symbol odporu."
     },
     {
-      "prompt": "Co předcházelo internaci?",
+      "prompt": "Napoleon III.?",
       "options": [
-        "Výhra v loterii",
-        "Jeho kritická žurnalistika nepohodlná moci",
-        "Svatba s Terezou",
-        "Lov marlína"
+        "Politické aluze v elegiích",
+        "Hlavní hrdina románu",
+        "Ne",
+        "Český král"
       ],
-      "correct": 1,
-      "expl": "Moc trestala Havlíčkovu publicistiku."
+      "correct": 0,
+      "expl": "Evropská politika."
     },
     {
-      "prompt": "Jaký je hlavní smysl Tyrolských elegií na maturitě?",
+      "prompt": "Co NENÍ?",
       "options": [
-        "Návod na lyžování",
-        "Satira na nesvobodu a svědectví o vyhnanství",
-        "Oslava cenzury",
-        "Kuchařka"
+        "Satira",
+        "Politika",
+        "Národní téma",
+        "Bezmyšlenkovitá poprvky bez kontextu"
       ],
-      "correct": 1,
-      "expl": "Dílo spojuje osobní zkušenost internace s politickou satirou."
+      "correct": 3,
+      "expl": "Elegie jsou politické."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Kontext obrození, satira",
+        "Jen mapa Tyrol",
+        "Bez",
+        "Komiks"
+      ],
+      "correct": 0,
+      "expl": "Klasická česká poezie."
+    },
+    {
+      "prompt": "Elegie obvykle?",
+      "options": [
+        "Smutek – Havlíček ironizuje žánr",
+        "Vždy svatba",
+        "Vždy sci-fi",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Inverze žánru."
+    },
+    {
+      "prompt": "Čtenář?",
+      "options": [
+        "Má znát historii 1848",
+        "Bez znalosti",
+        "Jen děti",
+        "Cizinci bez překladu"
+      ],
+      "correct": 0,
+      "expl": "Historický kontext."
+    },
+    {
+      "prompt": "Národní buditel?",
+      "options": [
+        "Ano",
+        "Ne",
+        "Němec",
+        "Bez role"
+      ],
+      "correct": 0,
+      "expl": "Havlíček v kánonu."
+    },
+    {
+      "prompt": "Kde vycházely?",
+      "options": [
+        "Tábor / ilegální tisk",
+        "New York",
+        "Moskva",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "České vydání."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Ironický, kritický",
+        "Sladký bez obsahu",
+        "Horor",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Satirický."
+    },
+    {
+      "prompt": "Havlíček a Borová?",
+      "options": [
+        "Pseudonym / místo",
+        "Cizí země",
+        "Postava",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Autorovo jméno."
+    },
+    {
+      "prompt": "Vztah k Vrchlickému?",
+      "options": [
+        "Jiná generace a styl",
+        "Totéž",
+        "Vrchlický napsal elegie",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Různí básníci."
+    },
+    {
+      "prompt": "Cíl satiry?",
+      "options": [
+        "Reakční moc, absurdita",
+        "Chudí",
+        "Příroda",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Politická moc."
+    },
+    {
+      "prompt": "Proč maturita?",
+      "options": [
+        "Základ české satiry a obrození",
+        "Bez",
+        "Jen Tyrolsko mapa",
+        "Jen rok"
+      ],
+      "correct": 0,
+      "expl": "Kulturní memory."
+    },
+    {
+      "prompt": "Básnický prostředek?",
+      "options": [
+        "Ironie, personifikace",
+        "Bez",
+        "Jen rým",
+        "Proza"
+      ],
+      "correct": 0,
+      "expl": "Satirické figury."
+    },
+    {
+      "prompt": "Havlíček legacy?",
+      "options": [
+        "Symbol svobody slova",
+        "Zapomenut",
+        "Němec",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Národní autor."
+    },
+    {
+      "prompt": "Revolution naděje?",
+      "options": [
+        "Zklamání → satira",
+        "Splněno",
+        "Ne",
+        "2000"
+      ],
+      "correct": 0,
+      "expl": "Motivace elegií."
+    },
+    {
+      "prompt": "Publikum 19. st.?",
+      "options": [
+        "Čtenáři Národních listů aj.",
+        "Bez",
+        "Jen císař",
+        "Hollywood"
+      ],
+      "correct": 0,
+      "expl": "Publicistická síť."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Originál česky",
+        "Anglicky jen",
+        "Bez",
+        "Latině"
+      ],
+      "correct": 0,
+      "expl": "Česká klasika."
+    },
+    {
+      "prompt": "Počet elegií?",
+      "options": [
+        "Cyklus básní (známý soubor)",
+        "Jedna věta",
+        "Román",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Sbírka."
+    },
+    {
+      "prompt": "Vzdělání maturanta?",
+      "options": [
+        "Historie 1848, satira",
+        "Jen biologie",
+        "Bez",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Interdisciplinární."
+    },
+    {
+      "prompt": "Havlíček smrt?",
+      "options": [
+        "Tuberkulóza / vyčerpání",
+        "Poprava elegií",
+        "2000",
+        "Neumírá"
+      ],
+      "correct": 0,
+      "expl": "Tragický konec autora."
+    },
+    {
+      "prompt": "K čemu Havlíček Tyrolské elegie využívá?",
+      "options": [
+        "K satirické a osobní reflexi exilu, politiky i národní situace",
+        "K popisu rybaření",
+        "K návodu na zeměměřičství",
+        "K psaní detektivky"
+      ],
+      "correct": 0,
+      "expl": "Elegie jsou politicko-lyrickou zbraní v době cenzury."
+    },
+    {
+      "prompt": "Jaký význam má Brixen / Tyrolsko v kontextu sbírky?",
+      "options": [
+        "Místo Havlíčkova vyhnanství, odkud píše s nadhledem na domov",
+        "Fiktivní planeta",
+        "Sídlo Gatsbyho",
+        "Lokalita bez souvislosti s autorem"
+      ],
+      "correct": 0,
+      "expl": "Autobiografický rámec vysvětluje název i tón elegií."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Havlíček je za kritiku moci postižen",
-        "Musí nastoupit cestu do tyrolské internace",
-        "Ironicky líčí „péči“ policie a úřadů",
-        "Elegický tón střídá satira a výsměch",
-        "Brixen se stává symbolem nesvobody",
-        "Skladba zůstává svědectvím odporu slova"
+        "Revolution 1848 je potlačena",
+        "Havlíček v exile / Tyrolsku",
+        "Píše ironické elegie",
+        "Satirizuje Habsburky a reakci",
+        "Oslovuje český národ",
+        "Elegie jako zbraň publicisty"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: postih → cesta do vyhnanství → ironie policie → satira „elegie“ → Brixen → svědectví odporu."
+    "Správné pořadí: porážka revoluce → exil → satirické elegie → kritika moci → národní apel → literární odkaz."
   ]
 }

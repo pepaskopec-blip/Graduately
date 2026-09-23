@@ -5,195 +5,245 @@
       "icon": "book",
       "lines": [
         "Autor: Jan Otčenášek (1924–1979)",
-        "Žánr: novela / milostná próza s válečnou tematikou",
-        "Poprvé vydáno: 1958",
-        "Děj: Praha za protektorátu (kolem 1942), skrývání židovské dívky",
-        "Vyprávění: er-forma, soustředěná na vztah a strach"
+        "Žánr: novela, milostný příběh za okupace",
+        "Poprvé vydáno: 1962",
+        "Děj: Praha za protektorátu, léta 1941–1942",
+        "Vyprávění: er-forma, soustředěný děj kolem Pavla a Ester"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Protektorát Čechy a Morava pod německou okupací.",
-        "Po atentátu na Heydricha panují represálie a strach.",
-        "Židé jsou perzekvováni; skrývání znamená smrtelné riziko.",
-        "Město je temné, plné kontrol a hrozby udání.",
-        "Láska dvou mladých lidí naráží na dějinné násilí."
+        "Německá okupace, pronásledování Židů, transporty do Terezína.",
+        "Škola funguje pod dohledem, ale studenti čtou i zakázané texty.",
+        "Skrývání pronásledovaných je trestné; každý soused může udat.",
+        "Láska mezi Čechem a Židovkou je vystavena strachu i smrti.",
+        "Paralela s Shakespearovým Romeem a Julií – milenci proti světu.",
+        "Tma v názvu = okupace, tajnost i nejistota osudu."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Pavel – český student, skrývá Ester a miluje ji.",
-        "Ester – židovská dívka na útěku po zásahu proti rodině.",
-        "Pavlova matka – bojí se o syna i o důsledky úkrytu.",
-        "Alena – Pavlova bývalá přítelkyně, žárlí a nechápe situaci.",
-        "Sousedé a okolí – ztělesňují nebezpečí udavačství."
+        "Pavel – gymnazista, zamiluje se do Ester, statečný až do konce.",
+        "Ester – židovská dívka v utajení u rodiny Sedlákových.",
+        "Hanka Sedláková – spolužačka, pomáhá skrývat Ester.",
+        "Petr – Pavlův strýc, účastník odboje, varuje před nebezpečím.",
+        "Pavelův otec – realista, bojí se následků pro syna i rodinu.",
+        "Učitelé a spolužáci – rámec školního světa za okupace."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Tma – okupace, strach, skrývání i morální tma doby.",
-        "Romeo a Julie – milostný motiv dvou milenců proti světu.",
-        "Skrývání – akt pomoci i osudová past.",
-        "Udavačství – společenský strach a zrada.",
-        "Oběť – tragické vyústění lásky v nesvobodě.",
-        "Protektorát – historický rámec příběhu."
+        "Okupace – totalitní režim, který ničí lidské vztahy.",
+        "Utajení – Ester žije „v temnu“, bez oficiální identity.",
+        "Milostná paralela – Romeo a Julie v pražské podobě.",
+        "Oběť a statečnost – Pavel volí lásku před bezpečím.",
+        "Transport – symbol konečné ztráty naděje na společný život.",
+        "Etické dilema rodin – pomoc vs. strach z udání."
       ]
     }
   ],
   "quiz": [
     {
       "prompt": "Kdo je autorem novely Romeo, Julie a tma?",
-      "options": [
-        "Jan Otčenášek",
-        "Karel Čapek",
-        "Josef Škvorecký",
-        "Ota Pavel"
-      ],
-      "correct": 0,
-      "expl": "Autorem je Jan Otčenášek; novela vyšla roku 1958."
+      "options": ["Jan Skácel", "Jan Otčenášek", "Arnošt Lustig", "Jiří Wolker"],
+      "correct": 1,
+      "expl": "Novelu napsal Jan Otčenášek; vyšla v roce 1962."
     },
     {
-      "prompt": "V jaké době se děj odehrává?",
-      "options": [
-        "Za první republiky",
-        "Za protektorátu během 2. světové války",
-        "Po roce 1948",
-        "V 19. století"
-      ],
+      "prompt": "V jakém období se děj odehrává?",
+      "options": ["První republika 1920", "Protektorát Čechy a Morava, léta 1941–1942", "Poválečná normalizace", "Listopad 1989"],
       "correct": 1,
-      "expl": "Příběh se odehrává v okupované Praze za protektorátu."
+      "expl": "Děj je zasazen do okupované Prahy krátce po vypuknutí války."
     },
     {
       "prompt": "Kdo je Ester?",
-      "options": [
-        "Česká učitelka",
-        "Židovská dívka, která se skrývá",
-        "Německá úřednice",
-        "Pavlova sestra"
-      ],
+      "options": ["Pavlova sestra", "Židovská dívka skrývaná u Sedlákových", "Učitelka němčiny", "Německá studentka"],
       "correct": 1,
-      "expl": "Ester je židovská dívka potřebující úkryt."
+      "expl": "Ester je pronásledovaná Židovka, která žije v utajení u Hanky Sedlákové."
     },
     {
-      "prompt": "Jak se jmenuje mladý Čech, který Ester skrývá?",
-      "options": [
-        "Jan",
-        "Pavel",
-        "Karel",
-        "Tomáš"
-      ],
+      "prompt": "Kdo je hlavní hrdina a jaký je jeho věk?",
+      "options": ["Petr – dospělý odbojář", "Pavel – student gymnázia", "Major Hugo – voják", "Strýc Sedlák – lékař"],
       "correct": 1,
-      "expl": "Hlavním hrdinou je student Pavel."
+      "expl": "Pavel je mladý gymnazista, který prožívá první vážnou lásku."
     },
     {
       "prompt": "Proč je vztah Pavla a Ester nebezpečný?",
-      "options": [
-        "Rodiče jim to zakázali",
-        "Skrývání Židovky hrozí smrtí za okupace",
-        "Ester je vdaná",
-        "Pavel je Němec"
-      ],
+      "options": ["Rodiče nesouhlasí se sňatkem", "Ester je v utajení a kontakt s ní ohrožuje všechny", "Pavel je vdaný", "Škola zakazuje chození"],
       "correct": 1,
-      "expl": "Pomoc Židům byla za protektorátu krutě trestána."
+      "expl": "Každé setkání s ukrytou Židovkou může vést k zatčení a transportu."
     },
     {
       "prompt": "Na co odkazuje název Romeo, Julie a tma?",
-      "options": [
-        "Na Shakespeara a temnotu okupace",
-        "Na divadelní hru o cirkusu",
-        "Na báseň Wolkera",
-        "Na detektivku"
-      ],
+      "options": ["Na operu v Národním divadle", "Na milostný příběh proti nepřátelskému světu za okupace", "Na básnickou sbírku Wolkerovu", "Na film z roku 1968"],
+      "correct": 1,
+      "expl": "Otčenášek přenáší motiv zakázané lásky do podmínek holocaustu."
+    },
+    {
+      "prompt": "Kde se Pavel s Ester tajně schází?",
+      "options": ["Na Václavském náměstí", "V bytě Sedlákových / u okna (paralela s balkonem)", "V Terezíně", "Na venkově u strýce"],
+      "correct": 1,
+      "expl": "Schůzky probíhají skrytě v domě, kde Ester bydlí; evokuje to slavnou scénu Shakespeara."
+    },
+    {
+      "prompt": "Jakou roli hraje Petr?",
+      "options": ["Německý důstojník", "Pavlova strýc, zapojený do odboje", "Hankin otec", "Rabín"],
+      "correct": 1,
+      "expl": "Petr reprezentuje odpor proti okupaci a varuje Pavla před lehkomyslností."
+    },
+    {
+      "prompt": "Co se stalo s Esterinou rodinou?",
+      "options": ["Emigrovala do USA", "Byla deportována / zlikvidována nacisty", "Přestěhovala se na venkov legálně", "Přešla na křesťanství a byla ušetřena"],
+      "correct": 1,
+      "expl": "Ester je jedna z mála přeživších z rodiny; ostatní padli oběť persekuci."
+    },
+    {
+      "prompt": "Jak reaguje Pavelův otec na synovu lásku?",
+      "options": ["Radostně ji podporuje", "Bojí se následků a chce syna ochránit", "Udá syna gestapu", "Neřeší to"],
+      "correct": 1,
+      "expl": "Otec chápe nebezpečí okupace a snaží se Pavla držet stranou rizika."
+    },
+    {
+      "prompt": "Jaký literární text ve škole připomíná vztah hrdinů?",
+      "options": ["Babička", "Romeo a Julie", "Kytice", "1984"],
+      "correct": 1,
+      "expl": "Shakespearova tragédie slouží jako přímý vzor i kontrast k pražskému ději."
+    },
+    {
+      "prompt": "Co symbolizuje „tma“ v názvu?",
+      "options": ["Jen noční schůzky", "Okupaci, strach, utajení i bezperspektivnost", "Výpadek elektřiny", "Zimní období"],
+      "correct": 1,
+      "expl": "Tma znamená temnou dobu dějin i nejistotu milenců."
+    },
+    {
+      "prompt": "Jak Hanka pomáhá Ester?",
+      "options": ["Získá pro ni falešné doklady sama", "Skrývá ji doma a tají před okolím", "Provda ji Němcům", "Posílá ji do Švýcarska"],
+      "correct": 1,
+      "expl": "Rodina Sedlákových riskuje trest, když u sebe drží pronásledovanou dívku."
+    },
+    {
+      "prompt": "Jaký je hlavní konflikt novely?",
+      "options": ["Třídní boj dělníků", "Láska a lidskost vs. rasistický totalitní režim", "Sportovní rivalita", "Náboženská reformace"],
+      "correct": 1,
+      "expl": "Osobní vztah naráží na politiku genocidy a strach z udání."
+    },
+    {
+      "prompt": "Jaký žánr dílo nejlépe vystihuje?",
+      "options": ["Sci-fi novela", "Milostná novela s válečným a existenčním pozadím", "Detektivka", "Satirická groteska"],
+      "correct": 1,
+      "expl": "Jádrem je milostný příběh zasazený do doby holocaustu."
+    },
+    {
+      "prompt": "Proč Pavel riskuje setkávání s Ester?",
+      "options": ["Kvůli penězům", "Z lásky a přesvědčení, že lidskost má smysl", "Na příkaz školy", "Aby získal vyznamenání"],
+      "correct": 1,
+      "expl": "Pavel jedná z citu i morální povinnosti vůči pronásledované."
+    },
+    {
+      "prompt": "Co hrozí rodině, která skrývá Žida?",
+      "options": ["Jen pokuta", "Zatčení, koncentrák nebo poprava", "Přestup na jinou školu", "Nic – bylo to běžné"],
+      "correct": 1,
+      "expl": "Pomoc pronásledovaným byla za okupace trestná smrtí."
+    },
+    {
+      "prompt": "Jak novela končí pro Pavla?",
+      "options": ["Emigruje do Anglie", "Umírá při pokusu zachránit / následovat Ester", "Žení se s Hankou", "Stává se knězem"],
+      "correct": 1,
+      "expl": "Pavel zvolí osud milenky a platí za to životem – tragický závěr."
+    },
+    {
+      "prompt": "Co se stane s Ester na konci?",
+      "options": ["Přežije v ilegalitě", "Je odvedena transportem (Terezín)", "Vdá se za Němce", "Odjede s Pavlem"],
+      "correct": 1,
+      "expl": "Utajení selže; Ester je chycena perzekučním mechanismem."
+    },
+    {
+      "prompt": "Které téma v díle NENÍ dominantní?",
+      "options": ["Láska za války", "Oběť a odvaha", "Rasismus a genocida", "Humor sitcomu z 90. let"],
+      "correct": 3,
+      "expl": "Novela je vážná, tragická; nejde o komediální formu."
+    },
+    {
+      "prompt": "Jak je vyprávění pojaté?",
+      "options": ["Deníkové zápisky Ester", "Er-forma soustředěná na Pavla", "Epická báseň", "Drama s replikami"],
+      "correct": 1,
+      "expl": "Vypravěč sleduje hlavně Pavlovy prožitky a rozhodnutí."
+    },
+    {
+      "prompt": "Proč je školní prostředí důležité?",
+      "options": ["Ukazuje normální život mládí v nenormální době", "Je to sci-fi laboratoř", "Slouží jen jako kulisa bez významu", "Popisuje výuku latině"],
       "correct": 0,
-      "expl": "Název spojuje milostný motiv Romea a Julie s „tmou“ válečné doby."
+      "expl": "Gymnázium zdůrazňuje kontrast mezi mládím a okupačním terorem."
     },
     {
-      "prompt": "Co se stane s Esterinou rodinou?",
-      "options": [
-        "Emigruje do USA",
-        "Je zasažena nacistickou perzekucí",
-        "Odjede na venkov",
-        "Přestoupí na křesťanství"
-      ],
-      "correct": 1,
-      "expl": "Ester zůstane sama po zásahu proti rodině."
-    },
-    {
-      "prompt": "Jakou roli hraje v příběhu strach z udání?",
-      "options": [
-        "Žádnou",
-        "Klíčovou – ohrožuje milence i okolí",
-        "Jen komickou",
-        "Týká se jen Němců"
-      ],
-      "correct": 1,
-      "expl": "Atmosféra strachu a možnosti udání určuje chování postav."
-    },
-    {
-      "prompt": "Jaký je základní konflikt novely?",
-      "options": [
-        "Láska versus válečná nesvoboda a antisemitismus",
-        "Spor o majetek",
-        "Rivalita studentů",
-        "Cestování do ciziny"
-      ],
+      "prompt": "Jaký vztah má novela k české literatuře 60. let?",
+      "options": ["Patří k reflexi holocaustu a morálky za války", "Je čistě experimentální text", "Je překlad z ruštiny", "Je dětská knížka"],
       "correct": 0,
-      "expl": "Milostný vztah naráží na historické násilí a rasovou perzekuci."
+      "expl": "Otčenášek přispěl k vážné próze o druhé světové válce."
     },
     {
-      "prompt": "Jaký žánr nejlépe vystihuje dílo?",
-      "options": [
-        "Sci-fi román",
-        "Milostná novela s válečnou tematikou",
-        "Komedie",
-        "Epos"
-      ],
+      "prompt": "Co znamená motiv okna / balkonu?",
+      "options": ["Reklamu na okna", "Naději na setkání a paralelu s Julií", "Pohled do Terezína", "Vězení"],
       "correct": 1,
-      "expl": "Jde o krátkou milostnou prózu ve válečném prostředí."
+      "expl": "Okno umožňuje tajné schůzky a odkazuje ke Shakespearovi."
     },
     {
-      "prompt": "Proč je motiv „tmy“ v názvu důležitý?",
-      "options": [
-        "Označuje jen noční Prahu",
-        "Symbolizuje strach, okupaci a beznaděj",
-        "Jde o jméno ulice",
-        "Je to přezdívka Pavla"
-      ],
+      "prompt": "Kdo je Hanka vůči Ester?",
+      "options": ["Sestra", "Spolužačka a ochránkyně v domě", "Gestapák v přestrojení", "Učitelka"],
       "correct": 1,
-      "expl": "Tma je metafora doby – strach, skrývání a morální temnota."
+      "expl": "Hanka je blízká Ester i Pavlovi a stojí mezi nimi a nebezpečím."
     },
     {
-      "prompt": "Jak novela končí vzhledem k milostnému vztahu?",
-      "options": [
-        "Šťastným sňatkem",
-        "Tragicky – láska podlehne tlaku okupace",
-        "Emigrací do Švýcarska",
-        "Komickým nedorozuměním"
-      ],
+      "prompt": "Jak funguje strach z udání v díle?",
+      "options": ["Vůbec se neobjevuje", "Prolíná rodinnými hádkami i rozhodnutími postav", "Je jen v epilogu", "Týká se jen Němců"],
       "correct": 1,
-      "expl": "Příběh směřuje k tragickému vyústění v duchu Romea a Julie."
+      "expl": "Atmosféra podezíravosti ovlivňuje každý krok hrdinů."
+    },
+    {
+      "prompt": "Jaký rozdíl je mezi Pavlem a Julií z Shakespeara?",
+      "options": ["Pavel je dospělý král", "Pavel jedná v reálné totalitní hrozící smrti milionů", "Pavel nemiluje", "Pavel je Němec"],
+      "correct": 1,
+      "expl": "Historický kontext genocidy zvyšuje sázky oproti renesanční tragédii."
+    },
+    {
+      "prompt": "Proč Otčenášek volil milostnou formu?",
+      "options": ["Aby čtenáře citově vtáhl do osudu jednotlivců", "Aby napsal učebnici dějepisu", "Aby parodoval romantiku", "Aby vydal cookbook"],
+      "correct": 0,
+      "expl": "Osobní příběh zosobňuje oběť holocaustu lépe než statistika."
+    },
+    {
+      "prompt": "Jaké poselství dílo nejspíš nese?",
+      "options": ["Lidskost má cenu i za cenu největšího rizika", "Válka je hra", "Láska vždy končí svatbou", "Okupace neexistovala"],
+      "correct": 0,
+      "expl": "Pavel a Ester ukazují morální volbu tváří v tvář zlu."
+    },
+    {
+      "prompt": "Která postava reprezentuje aktivní odpor?",
+      "options": ["Pavelův otec jako gestapák", "Strýc Petr", "Hankin pes", "Německý turista"],
+      "correct": 1,
+      "expl": "Petr je vázán na odbojové prostředí a realitu nebezpečí."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Pavel žije v okupované Praze a potká Ester",
-        "Ester se po zásahu proti rodině potřebuje skrývat",
-        "Pavel ji ukryje a vznikne mezi nimi láska",
-        "Strach z udání a okolí vztah ohrožuje",
-        "Situace se vyostří pod tlakem represálií",
-        "Tragický konec milenců ve stínu okupace"
+        "Pavel na gymnáziu za okupace čte Romea a Julii",
+        "Seznámí se s Ester skrytou u Sedlákových",
+        "Navazují tajný milostný vztah u okna",
+        "Petr a rodina varují před rostoucím nebezpečím",
+        "Ester je prozrazena a odvedena transportem",
+        "Pavel ji následuje a umírá"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: setkání → skrývání → láska → ohrožení → vyostření → tragický konec."
+    "Správné pořadí: škola a Shakespear → seznámení s Ester → tajná láska → varování → transport → Pavlova smrt."
   ]
 }

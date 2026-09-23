@@ -5,44 +5,46 @@
       "icon": "book",
       "lines": [
         "Autor: Jakub Arbes (1840–1914)",
-        "Žánr: romaneto (novela s tajemstvím a úvahou)",
-        "Poprvé vydáno: 1873",
-        "Děj: Praha, obraz sv. Xaveria a záhada „pokladu“",
-        "Vyprávění: er-forma s napětím, logikou a filozofickým přesahem"
+        "Žánr: historicko-romantický román",
+        "Poprvé vydáno: 1869 (román)",
+        "Děj: 16.–17. st., cesty sv. Františka Xaverského",
+        "Forma: epická próza s romantickými prvky"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "České země v 19. století, Praha a její památky.",
-        "Romaneto spojuje detektivní záhadu s úvahou o poznání.",
-        "Církevní umění a legenda o světcovi tvoří kulisu příběhu.",
-        "Věda, rozum a fantazie se střetávají v pátrání.",
-        "Arbes bývá řazen k českým „romanetům“ po vzoru Poea."
+        "František Xaverský – jezuitský misionář v Asii.",
+        "Arbes kombinuje historii, dobrodružství a idealismus.",
+        "Romantický hrdina šíří křesťanství.",
+        "Exotické prostředí – Indie, Japonsko, Maluku.",
+        "Vzory českého romantismu a pokrokové myšlenky.",
+        "Dílo je méně čtené, ale maturitní klasika."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vypravěč / pátrač – sleduje stopu obrazu a záhady.",
-        "Maličký – přítel, s nímž se vede dialog o tajemství.",
-        "Svatý Xaverius (obraz/legenda) – střed mystéria.",
-        "Postavy minulosti spojené s obrazem – nositelé stopy „pokladu“.",
-        "Pražské prostředí – svědkové a kulisa pátrání."
+        "František Xaverský – hlavní hrdina, světec.",
+        "Ignác z Loyoly – zakladatel jezuitů.",
+        "Místní vládci a obyvatelé Asie.",
+        "Arbesův vypravěčský styl – barvitý.",
+        "Nepřátelé víry – pronásledování.",
+        "Společníci misie."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Romaneto – kratší próza s tajemstvím a pointou.",
-        "Obraz sv. Xaveria – klíč k záhadě.",
-        "Poklad – doslovný i metaforický cíl pátrání.",
-        "Rozum vs. fantazie – metoda odhalování pravdy.",
-        "Praha – genia loci a historická paměť.",
-        "Pointa – překvapivé vysvětlení záhady."
+        "Misionářství – šíření víry v exotickém světě.",
+        "Romantismus – idealizace, dobrodružství.",
+        "Historická postava – reálný Xaverský (1506–1552).",
+        "Kulturní střet Evropy a Asie.",
+        "Oběť a oddanost – světectví.",
+        "Arbes – pokrokový publicista."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Svatého Xaveria?",
       "options": [
-        "Karel Havlíček Borovský",
+        "Jirásek",
         "Jakub Arbes",
-        "Jiří Wolker",
-        "Vladislav Vančura"
+        "Neruda",
+        "Čapek"
       ],
       "correct": 1,
-      "expl": "Autorem romaneta je Jakub Arbes."
+      "expl": "Arbes, romantický autor."
     },
     {
-      "prompt": "Co je romaneto?",
+      "prompt": "O kom román je?",
       "options": [
-        "Druh polky",
-        "Novela s tajemstvím, napětím a často filozofickou pointou",
-        "Válečný deník",
-        "Školní řád"
+        "O Napoleonovi",
+        "O sv. Františku Xaverském",
+        "O Svejkovi",
+        "O Gatsby"
       ],
       "correct": 1,
-      "expl": "Romaneto je Arbesův typ prózy blízký detektivně-filozofické novele."
+      "expl": "Jezuitský misionář."
     },
     {
-      "prompt": "Co je ústředním „předmětem“ záhady?",
+      "prompt": "Kdy Xaverský žil?",
       "options": [
-        "Třídní kniha",
-        "Obraz svatého Xaveria",
-        "Marlín",
-        "Saturninův kufr"
+        "16. století (1506–1552)",
+        "20. st.",
+        "Antika",
+        "1990"
       ],
-      "correct": 1,
-      "expl": "Pátrání se točí kolem obrazu světce."
+      "correct": 0,
+      "expl": "Historická postava."
     },
     {
-      "prompt": "Ve kterém městě se děj odehrává?",
+      "prompt": "Kde působil?",
       "options": [
-        "V Benátkách",
-        "V Praze",
-        "V Brooklynu",
-        "V Kostnici"
+        "Asie – Indie, Japonsko, Moluky",
+        "Pouze Praha",
+        "USA",
+        "Antarktida"
       ],
-      "correct": 1,
-      "expl": "Prostorem je Praha."
+      "correct": 0,
+      "expl": "Misijní cesty."
     },
     {
-      "prompt": "Kdy Svatý Xaverius vyšel?",
+      "prompt": "Žánr?",
       "options": [
-        "1746",
-        "1873",
-        "1926",
-        "1952"
+        "Historicko-romantický román",
+        "Sci-fi",
+        "Detektivka",
+        "Báseň"
       ],
-      "correct": 1,
-      "expl": "Romaneto vyšlo roku 1873."
+      "correct": 0,
+      "expl": "Romantická epika."
     },
     {
-      "prompt": "Čím je Arbes literárně blízký?",
+      "prompt": "Arbes patří kam?",
       "options": [
-        "Jen socialistickému realismu",
-        "Tradici tajemné novely (mj. vliv E. A. Poea)",
-        "Jen básním Wolkera",
-        "Jen komedii dell’arte"
+        "Český romantismus / realizmus přechod",
+        "Devětsil",
+        "Baroko",
+        "Postmoderna"
       ],
-      "correct": 1,
-      "expl": "Romaneta rozvíjejí záhadu a pointu v duchu tajemné novely."
+      "correct": 0,
+      "expl": "19. století."
     },
     {
-      "prompt": "Co postavy v příběhu hledají?",
+      "prompt": "Ignác z Loyoly?",
       "options": [
-        "Mloky",
-        "Vysvětlení záhady spojené s obrazem / „pokladem“",
-        "Třídní knihu",
-        "Algernona"
+        "Zakladatel jezuitů, Xaveriův druh",
+        "Král",
+        "Němec",
+        "Rybář"
       ],
-      "correct": 1,
-      "expl": "Pátrání spojuje stopu obrazu s myšlenkou pokladu."
+      "correct": 0,
+      "expl": "Spoluzakladatel řádu."
     },
     {
-      "prompt": "Jaký typ vyprávění romaneto využívá?",
+      "prompt": "Hlavní motiv?",
       "options": [
-        "Jen rýmy",
-        "Napínavé pátrání spojené s úvahou",
-        "Jen statistiky",
-        "Jen scénář filmu bez textu"
+        "Misionářská oddanost a dobrodružství",
+        "Lov srn",
+        "Detektivka",
+        "Komunismus"
       ],
-      "correct": 1,
-      "expl": "Napětí jde ruku v ruce s logikou a úvahou."
+      "correct": 0,
+      "expl": "Víra a cesty."
     },
     {
-      "prompt": "Proč je „poklad“ v romanetu dvojznačný?",
+      "prompt": "Styl Arbesa?",
       "options": [
-        "Protože neexistuje čeština",
-        "Může jít o hmotný zisk i o poznání / smysl záhady",
-        "Protože je jen v Tyrolsku",
-        "Protože patří Gatsbymu"
+        "Barvitý, romantický",
+        "Suchý úřednický",
+        "Bez obrazů",
+        "Pouze dialog"
       ],
-      "correct": 1,
-      "expl": "Pointa často posouvá význam hledaného „pokladu“."
+      "correct": 0,
+      "expl": "Typický romantismus."
     },
     {
-      "prompt": "K jakému století Arbes patří?",
+      "prompt": "Proč „svatý“?",
       "options": [
-        "K 12.",
-        "K 19.",
-        "K 21.",
-        "K antice"
+        "Xaverský byl kanonizován",
+        "Fikce",
+        "Ironie",
+        "Bez důvodu"
       ],
-      "correct": 1,
-      "expl": "Arbes je autor 19. století."
+      "correct": 0,
+      "expl": "Církevní světec."
     },
     {
-      "prompt": "Jaký je typický závěr romaneta?",
+      "prompt": "Kulturní střet?",
       "options": [
-        "Bez pointy",
-        "Odhalení záhady s překvapivou pointou",
-        "Emigrace do USA",
-        "Svatba Truffaldina"
+        "Evropa vs. asijské kultury",
+        "Ne",
+        "Jen Praha",
+        "Jen sport"
       ],
-      "correct": 1,
-      "expl": "Romaneto spěje k vysvětlení a pointě."
+      "correct": 0,
+      "expl": "Misie naráží na zvyky."
     },
     {
-      "prompt": "Co tvoří atmosféru Svatého Xaveria?",
+      "prompt": "Arbes jinak?",
       "options": [
-        "Cirkusová hudba",
-        "Pražské reálie, legenda a tajemství obrazu",
-        "Jen golfový proud",
-        "Školní sbor"
+        "Publicista, pokrokové názory",
+        "Němec",
+        "Bez tvorby",
+        "Komik"
       ],
-      "correct": 1,
-      "expl": "Praha, umění a mystérium světce vytvářejí napětí."
+      "correct": 0,
+      "expl": "Aktivní v publicistice."
+    },
+    {
+      "prompt": "Kdy vyšel román?",
+      "options": [
+        "1869",
+        "1950",
+        "2000",
+        "1700"
+      ],
+      "correct": 0,
+      "expl": "19. st."
+    },
+    {
+      "prompt": "Co NENÍ v díle?",
+      "options": [
+        "Exotické cesty",
+        "Idealizace hrdiny",
+        "Pouze pražská realistická vesnice bez děje",
+        "Náboženské motivy"
+      ],
+      "correct": 2,
+      "expl": "Děj je exotický."
+    },
+    {
+      "prompt": "Xaverský zemřel?",
+      "options": [
+        "Na ostrově Sancian / v misii",
+        "V Praze hradě",
+        "V USA",
+        "Neumírá"
+      ],
+      "correct": 0,
+      "expl": "Historický konec."
+    },
+    {
+      "prompt": "Romantický hrdina?",
+      "options": [
+        "Obětuje se pro ideál",
+        "Cynik",
+        "Villain",
+        "Dítě"
+      ],
+      "correct": 0,
+      "expl": "Idealizovaná postava."
+    },
+    {
+      "prompt": "Maturita – proč?",
+      "options": [
+        "Česká romantická próza, historie",
+        "Bez významu",
+        "Jen jméno",
+        "Komiks"
+      ],
+      "correct": 0,
+      "expl": "Součást přehledu."
+    },
+    {
+      "prompt": "Jezuité?",
+      "options": [
+        "Řád, misie, vzdělání",
+        "Sportovní klub",
+        "Německá armáda",
+        "Bez role"
+      ],
+      "correct": 0,
+      "expl": "Kontext víry."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Dobrodružný i idealistický",
+        "Pouze komedie",
+        "Horor",
+        "Bez děje"
+      ],
+      "correct": 0,
+      "expl": "Romantická adventura."
+    },
+    {
+      "prompt": "Arbes vs Jirásek?",
+      "options": [
+        "Arbes romantik, Jirásek jiný styl",
+        "Totéž",
+        "Arbes není Čech",
+        "Jirásek napsal Xaveria"
+      ],
+      "correct": 0,
+      "expl": "Různí autoři."
+    },
+    {
+      "prompt": "Pronásledování?",
+      "options": [
+        "Misie naráží na nebezpečí",
+        "Neexistuje",
+        "Jen v Praze",
+        "Jen humor"
+      ],
+      "correct": 0,
+      "expl": "Konflikty na cestách."
+    },
+    {
+      "prompt": "Historická přesnost?",
+      "options": [
+        "Román idealizuje, ne učebnice",
+        "Dokument",
+        "Sci-fi",
+        "Bez děje"
+      ],
+      "correct": 0,
+      "expl": "Fikce s historickým jádrem."
+    },
+    {
+      "prompt": "Hlavní poselství?",
+      "options": [
+        "Oběť pro víru a lidstvo",
+        "Materialismus",
+        "Válka je dobrá",
+        "Bez morálky"
+      ],
+      "correct": 0,
+      "expl": "Etický ideal."
+    },
+    {
+      "prompt": "Vyprávění?",
+      "options": [
+        "Epická próza třetí osoba",
+        "Deník",
+        "Drama",
+        "Elegie"
+      ],
+      "correct": 0,
+      "expl": "Román."
+    },
+    {
+      "prompt": "Exotika?",
+      "options": [
+        "Barví prostředí",
+        "Chybí",
+        "Jen Praha",
+        "Jen moře u Kub"
+      ],
+      "correct": 0,
+      "expl": "Asie je klíčová."
+    },
+    {
+      "prompt": "Kanonicita?",
+      "options": [
+        "Xaverský uctíván církví",
+        "Ne",
+        "Vymyšlený",
+        "Antihero"
+      ],
+      "correct": 0,
+      "expl": "Světec."
+    },
+    {
+      "prompt": "Délka?",
+      "options": [
+        "Román",
+        "Jedna báseň",
+        "Bez textu",
+        "Pouze titul"
+      ],
+      "correct": 0,
+      "expl": "Epická rozsah."
+    },
+    {
+      "prompt": "Arbes zemřel?",
+      "options": [
+        "1914",
+        "2000",
+        "1800",
+        "1990"
+      ],
+      "correct": 0,
+      "expl": "Přelom 19./20. st."
+    },
+    {
+      "prompt": "Souvislost s Kolakovicem?",
+      "options": [
+        "Arbes psal i jiné romantické prózy",
+        "Ne",
+        "Stejná kniha",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Arbesova tvorba je širší."
+    },
+    {
+      "prompt": "Čtenář si odnese?",
+      "options": [
+        "Obraz misijní epochy a romantismu",
+        "Návod Excel",
+        "Mapu USA",
+        "Recept"
+      ],
+      "correct": 0,
+      "expl": "Kulturní a literární."
+    },
+    {
+      "prompt": "S kým je Xaverský úzce spojen v historii jezuitů?",
+      "options": [
+        "S Ignácem z Loyoly",
+        "S Napoleonem",
+        "S Havlíčkem",
+        "S Gatsbym"
+      ],
+      "correct": 0,
+      "expl": "Ignác z Loyoly byl spoluzakladatel řádu a Xaveriův blízký spolupracovník."
+    },
+    {
+      "prompt": "Jak Arbes v románu pracuje s historickou postavou?",
+      "options": [
+        "Idealizuje ji v duchu romantismu, ne jako suchou kroniku",
+        "Píše jen encyklopedii bez děje",
+        "Záměrně popírá existenci světce",
+        "Převádí ji do sci-fi"
+      ],
+      "correct": 0,
+      "expl": "Jde o romantickou fikci inspirovanou reálným misionářem."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Zájem o obraz sv. Xaveria a jeho historii",
-        "Stopa vede k legendě a domnělému pokladu",
-        "Pátrání v pražských reáliích a pramenech",
-        "Domněnky se střetávají s logikou a fakty",
-        "Záhada se postupně vysvětluje",
-        "Pointa odhalí smysl „pokladu“ a celého tajemství"
+        "Xaverský vstupuje do jezuitů",
+        "Vydává se na misie do Asie",
+        "Kazí, léčí, navazuje kontakty",
+        "Naráží na kulturní a náboženské bariéry",
+        "Pokračuje v oběti a cestách",
+        "Umírá v misijní službě – světectví"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: obraz → legenda/poklad → pátrání → střet domněnek a logiky → vysvětlení → pointa."
+    "Správné pořadí: jezuita → cesta do Asie → kázání → překážky → oběť → smrt světce."
   ]
 }

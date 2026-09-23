@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Vladimir Nabokov",
-        "Žánr: kontroverzní psychologický román / nespolehlivé vyprávění",
-        "Poprvé vydáno: 1955 (Paříž)",
-        "Děj / prostředí: USA po 2. světové válce – města, motely, cesty",
-        "Vyprávění / forma: ich-forma Humberta Humberta, stylově brilantní a manipulativní"
+        "Autor: Vladimir Nabokov (1899–1977), rusko-americký spisovatel",
+        "Žánr: moderní román, kontroverzní próza",
+        "Poprvé vydáno: 1955 (Paříž, Olympia Press)",
+        "Děj / prostředí: USA 40.–50. léta, cesty po amerických silnicích",
+        "Vyprávění / forma: ich-forma, Humbertův deník / vzpomínka"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Poválečná Amerika: automobilismus, motely, konzumní kultura.",
-        "Román je umělecky mistrovský a eticky otřesný zároveň.",
-        "Humbert je nespolehlivý vypravěč – estetizuje zločin a zneužití.",
-        "Téma: moc, manipulace, ztráta dětství, vina a posedlost.",
-        "Dílo vyvolalo skandál; dnes se čte i jako kritika vypravěčské manipulace.",
-        "Pro maturitu je klíčové oddělit krásu stylu od morálního hodnocení činu."
+        "Román je psán jako Humbertův „svědectví“ – nespolehlivý vypravěč.",
+        "Lolita (Dolores Haze) je dívka; Humbert je dospělý s obsesí.",
+        "Kniha vyvolala skandál – etika, cenzura, interpretace.",
+        "Nabokov pracuje s jazykem, ironií, literárními aluzemi.",
+        "Road movie struktura – pronásledování, Quilty, útěk.",
+        "Tragický konec – Lolita umírá, Humbert vězí."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Humbert Humbert – vypravěč, pedofilní intelektuál a manipulátor.",
-        "Dolores „Lolita“ Hazeová – dospívající dívka, oběť zneužití.",
-        "Charlotte Hazeová – Lolitina matka, vdova, vdá se za Humberta.",
-        "Clare Quilty – rival, také zneužívá Lolitu, Humbertův „dvojník“.",
-        "John / Jean Farlowovi – sousedé, součást amerického pozadí.",
-        "Právník / rámec rukopisu – Humbert píše zpověď ve vězení."
+        "Humbert Humbert – vypravěč, intelektuál, pedofilní obsese.",
+        "Dolores Haze (Lolita) – dívka, oběť manipulace.",
+        "Charlotte Haze – Lolitiná matka, Humbert si ji chce vzít.",
+        "Clare Quilty – spisovatel, stínový protihráč, únos Lolity.",
+        "Annabel Leigh – Humbertova dětská láska (motiv vzpomínky).",
+        "Rita – žena po Lolité na cestách."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Nespolehlivý vypravěč – Humbert zkresluje skutečnost jazykem.",
-        "Nymfička – Humbertův pojem, kterým omlouvá posedlost.",
-        "Manipulace – kontrola nad Lolitiným životem a čtenářem.",
-        "Cesta / motel – prostor úniku i vězení.",
-        "Dvojnictví – Quilty jako temný odraz Humberta.",
-        "Etika vs. estetika – krása stylu nekryje zločin."
+        "Nespolehlivý vypravěč – Humbert ospravedlňuje sebe.",
+        "Obsese a manipulace – moc dospělého nad dítětem.",
+        "Estetizace jazyka vs. morální hrůza – Nabokovova ironie.",
+        "Road novel – cesty po Americe.",
+        "Citace Poe, literatura – intertext.",
+        "Etická kontroverze – čtení jako demaskace, ne oslava."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Lolitu?",
-      "options": [
-        "Ernest Hemingway",
-        "Vladimir Nabokov",
-        "John Updike",
-        "J. D. Salinger"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Vladimir Nabokov."
-    },
-    {
-      "prompt": "Kdo je vypravěčem?",
-      "options": [
-        "Lolita",
-        "Humbert Humbert",
-        "Quilty",
-        "Charlotte"
-      ],
-      "correct": 1,
-      "expl": "Román je Humbertovou ich-formou a zpovědí."
-    },
-    {
-      "prompt": "Proč je vypravěč nespolehlivý?",
-      "options": [
-        "Zapomíná jména měst",
-        "Estetizuje a omlouvá zneužití, zkresluje Lolitin pohled",
-        "Je dítě",
-        "Nemluví anglicky"
-      ],
-      "correct": 1,
-      "expl": "Jazyková virtuozita slouží k manipulaci čtenáře."
-    },
-    {
-      "prompt": "Kdo je Clare Quilty?",
-      "options": [
-        "Policista",
-        "Humbertův rival a další zneuživatel Lolity",
-        "Učitel matematiky",
-        "Charlottein bratr"
-      ],
-      "correct": 1,
-      "expl": "Quilty je dramatická postava dvojníka a soka."
-    },
-    {
-      "prompt": "Kdy román poprvé vyšel?",
-      "options": [
-        "1939",
-        "1955",
-        "1969",
-        "1980"
-      ],
-      "correct": 1,
-      "expl": "Lolita vyšla roku 1955 v Paříži."
-    },
-    {
-      "prompt": "Kde se převážná část děje odehrává?",
-      "options": [
-        "V carském Rusku",
-        "V USA (cesty a motely)",
-        "V Londýně výhradně",
-        "V gulagu"
-      ],
-      "correct": 1,
-      "expl": "Humbert a Lolita jezdí po Americe."
-    },
-    {
-      "prompt": "Jak se Humbert dostane k Lolitě „legálně“ zvenčí?",
-      "options": [
-        "Adopcí soudem",
-        "Sňatkem s její matkou Charlotte",
-        "Únosem ze školy hned na začátku",
-        "Jako lékař"
-      ],
-      "correct": 1,
-      "expl": "Ožení se s Charlotte, aby byl blízko dceři."
-    },
-    {
-      "prompt": "Co se stane s Charlotte?",
-      "options": [
-        "Emigruje",
-        "Zemře při nehodě poté, co odhalí Humbertovy úmysly",
-        "Vdá se za Quiltyho",
-        "Uvězní Humberta"
-      ],
-      "correct": 1,
-      "expl": "Po přečtení deníku naběhne pod auto."
-    },
-    {
-      "prompt": "Jaké je klíčové maturitní čtení románu?",
-      "options": [
-        "Oslava zneužití",
-        "Analýza manipulace, moci a nespolehlivého vyprávění",
-        "Jen cestopis USA",
-        "Humoristická idyla"
-      ],
-      "correct": 1,
-      "expl": "Text má být čten kriticky vůči Humbertově rétorice."
-    },
-    {
-      "prompt": "Co označuje Humbert slovem „nymfička“?",
-      "options": [
-        "Druh motýla výhradně",
-        "Jeho ideologický konstrukt dospívající dívky jako objektu touhy",
-        "Auta",
-        "Motel"
-      ],
-      "correct": 1,
-      "expl": "Jde o Humbertův pojem, kterým racionalizuje posedlost."
-    },
-    {
-      "prompt": "Jak román končí?",
-      "options": [
-        "Humbert a Lolita žijí šťastně",
-        "Humbert zabije Quiltyho a píše zpověď; Lolita žije jinde a později umírá",
-        "Humbert je osvobozen soudem bez viny",
-        "Charlotte se vrátí"
-      ],
-      "correct": 1,
-      "expl": "Vrcholí vražda Quiltyho a Humbertova vězeňská zpověď."
-    },
-    {
-      "prompt": "Proč byl román skandální?",
-      "options": [
-        "Kvůli politice",
-        "Kvůli tématu sexuálního zneužití dítěte",
-        "Kvůli překladu",
-        "Kvůli délce"
-      ],
-      "correct": 1,
-      "expl": "Téma pedofilie vyvolalo cenzurní a morální konflikty."
-    }
+    {"prompt": "Kdo napsal Lolitu?", "options": ["Kafka", "Vladimir Nabokov", "Orwell", "Hemingway"], "correct": 1, "expl": "Nabokov román dokončil v americkém exilu."},
+    {"prompt": "Kdo vypráví příběh?", "options": ["Lolita", "Humbert Humbert", "Quilty", "Charlotte"], "correct": 1, "expl": "Humbert píše svou verzi pro soudní proces."},
+    {"prompt": "Jak se jmenuje dívka a její přezdívka?", "options": ["Dolores Haze – Lolita", "Jane Eyre", "Maria", "Anna Karenina"], "correct": 0, "expl": "Lolita je Humbertova přezdívka pro Dolores."},
+    {"prompt": "Kde Humbert poprvé potká Lolitu?", "options": ["V Ramsdale u Hazových", "V Paříži", "V Rusku", "V Londýně"], "correct": 0, "expl": "Humbert bydlí u rodiny Haze."},
+    {"prompt": "Co udělá Humbert s Charlotte?", "options": ["Ožení se s ní, aby byl blízko Lolité", "Zabije ji hned", "Ignoruje", "Prodá dům"], "correct": 0, "expl": "Sňatek je součást manipulace."},
+    {"prompt": "Jak Charlotte umírá?", "options": ["Autonehoda po odhalení Humbertových dopisů", "Stářím", "Válka", "Quilty"], "correct": 0, "expl": "Charlotte běží před autem po bouřce."},
+    {"prompt": "Kdo je Clare Quilty?", "options": ["Policista", "Spisovatel, stínový rival, únosce", "Lolitin otec", "Humbertův bratr"], "correct": 1, "expl": "Quilty pronásleduje pár a Lolitu si vezme."},
+    {"prompt": "Jaký je vztah Humbert–Lolita?", "options": ["Rovnocenná láska", "Manipulace dospělého a oběť", "Otcovský bez problému", "Sourozenci"], "correct": 1, "expl": "Román demaskuje Humbertovu rétoriku."},
+    {"prompt": "Proč je Humbert nespolehlivý vypravěč?", "options": ["Lže a estetizuje zločin", "Mluví pravdu vždy", "Nemluví", "Je dítě"], "correct": 0, "expl": "Čtenář musí číst proti vypravěči."},
+    {"prompt": "Jak končí Lolita?", "options": ["Šťastně s Humbertem", "Dolores umírá po těžkém životě; Humbert zabije Quiltyho", "Quilty vyhrává svatbou", "Všichni se smíří"], "correct": 1, "expl": "Tragický konec oběti i vypravěče."},
+    {"prompt": "Kdy román vyšel?", "options": ["1955", "1847", "2000", "1914"], "correct": 0, "expl": "První vydání v Paříži u Olympia Press."},
+    {"prompt": "Jaký žánr román reprezentuje?", "options": ["Moderní/controverzní román, road novel", "Pohádka", "Epos", "Učebnice"], "correct": 0, "expl": "Spojuje cestu, psychologii a jazykovou hru."},
+    {"prompt": "Co je Annabel Leigh?", "options": ["Humbertova dětská láska (aluzce na Poe)", "Lolitiná sestra", "Quiltyho manželka", "Auto"], "correct": 0, "expl": "Motiv ztracené dětské lásky vysvětluje obsesi."},
+    {"prompt": "Proč maturita zahrnuje Lolitu?", "options": ["Bez kontroverze", "Moderní próza, vypravěč, etika čtení", "Nejkratší", "Jen humor"], "correct": 1, "expl": "Učí kriticky číst nespolehlivého vypravěče."},
+    {"prompt": "Které téma je středem?", "options": ["Manipulace a moc", "Vesmírná válka", "Venkovský realismus", "Antická tragédie"], "correct": 0, "expl": "Děj staví na Humbertově kontrole nad dívkou."},
+    {"prompt": "Jak Nabokov pracuje s jazykem?", "options": ["Chudý styl", "Bohatý, hříčkový, anglicky s wordplay", "Bez stylu", "Pouze česky"], "correct": 1, "expl": "Jazyk je součást estetiky i ironie."},
+    {"prompt": "Co NENÍ typické?", "options": ["Cesty po USA", "Skandální téma", "Středověký rytíř", "Quilty"], "correct": 2, "expl": "Děj je moderní americký."},
+    {"prompt": "Kdo je Rita?", "options": ["Žena po Lolité na cestách", "Lolita", "Soudkyně", "Učitelka"], "correct": 0, "expl": "Humbert s Ritou cestuje po ztrátě Lolity."},
+    {"prompt": "Jak číst román eticky?", "options": ["Oslavovat Humberta", "Vidět oběť a demaskovat vypravěčovu rétoriku", "Ignorovat Lolitu", "Jen disney"], "correct": 1, "expl": "Interpretace zdůrazňuje Dolores, ne romantizaci."},
+    {"prompt": "Co Humbert dělá Quiltymu na konci?", "options": ["Odpustí", "Zastřelí ho", "Ožení se s ním", "Ignoruje"], "correct": 1, "expl": "Vrchní scéna je groteskní konfrontace."},
+    {"prompt": "Jaký film režíroval Kubrick?", "options": ["Lolita (1962)", "1984", "Barry Lyndon", "Shining"], "correct": 0, "expl": "Kubrick natočil adaptaci v roce 1962."},
+    {"prompt": "Co je road novel struktura?", "options": ["Cesty autem po Americe", "Jen jeden dům", "Vesmír", "Antika"], "correct": 0, "expl": "Motel, silnice, útěk před společností."},
+    {"prompt": "Proč byl román cenzurován?", "options": ["Obsah pedofilie a morální kontroverze", "Příliš krátký", "Bez jazyka", "V latině"], "correct": 0, "expl": "Mnoho zemí knihu zpočátku odmítlo."},
+    {"prompt": "Kdo je obětí v interpretaci?", "options": ["Humbert", "Dolores Haze", "Quilty", "Charlotte"], "correct": 1, "expl": "Moderní čtení zdůrazňuje Lolitu jako oběť."},
+    {"prompt": "Co je intertext u Nabokova?", "options": ["Reference na Poe, literaturu", "Bez referencí", "Jen Bible", "Sport"], "correct": 0, "expl": "Annabel Leigh odkazuje na Poeovu báseň."},
+    {"prompt": "Jak Humbert ospravedlňuje činy?", "options": ["Krásnou řečí a literárními aluzemi", "Přiznáním viny bez slov", "Mlčením", "Bez slov"], "correct": 0, "expl": "Rétorika je součástí manipulace."},
+    {"prompt": "Kde Humbert končí?", "options": ["Ve vězení, píše deník", "Na trůně", "V exilu bohatý", "U Lolity šťastný"], "correct": 0, "expl": "Vyprávění je z vězení před soudem."},
+    {"prompt": "Jaký kontrast Nabokov vytváří?", "options": ["Krásný jazyk vs. morálně otřesný obsah", "Bez kontrastu", "Jen humor", "Jen válka"], "correct": 0, "expl": "Estetika vs. etika je klíč interpretace."},
+    {"prompt": "Co Dolores dělá po útěku od Humberta?", "options": ["Žije s Quiltym, později těžký osud, manžel Dick", "Stane se královnou", "Vraždí", "Nic"], "correct": 0, "expl": "Lolitain dospělý osud je tragický."},
+    {"prompt": "Jaké poselství lze vyčíst při kritickém čtení?", "options": ["Glorifikace zločinu", "Varování před manipulací a nespolehlivým vypravěčem", "Bez významu", "Oslava dětství"], "correct": 1, "expl": "Román je literární, ne morální apologie Humberta."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Humbert se ubytuje u Hazeových a posedne ho Lolita",
-        "Ožení se s Charlotte, aby zůstal blízko dívky",
-        "Charlotte odhalí pravdu a zahyne při nehodě",
-        "Humbert odjíždí s Lolitou na cesty po USA",
-        "Lolita uteče s Quiltym",
-        "Humbert zabije Quiltyho a píše zpověď"
+        "Humbert přijde do Ramsdale k Hazovým",
+        "Sňatek s Charlotte; Lolita v jeho moci",
+        "Charlotteina smrt; cesty s Lolitou",
+        "Quilty Lolitu odvede",
+        "Humbert hledá Lolitu; najde ji těhotnou a chudou",
+        "Zabije Quiltyho; píše deník ve vězení"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: posedlost → sňatek s Charlotte → její smrt → cesty s Lolitou → útěk k Quiltymu → vražda a zpověď."
+    "Správné pořadí: Ramsdale → Charlotte → cesty → Quilty → setkání s Dolores → Quiltyho smrt a deník."
   ]
 }

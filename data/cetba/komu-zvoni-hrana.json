@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Ernest Hemingway",
-        "Žánr: válečný román",
+        "Autor: Ernest Hemingway (1899–1961), americký spisovatel",
+        "Žánr: válečný román, moderní próza",
         "Poprvé vydáno: 1940",
-        "Děj / prostředí: španělská občanská válka, gerilová akce u mostu",
-        "Vyprávění / forma: er-forma, vnitřní monology Roberta Jordana"
+        "Děj / prostředí: španělská občanská válka 1937, hora Guadarrama",
+        "Vyprávění / forma: er-forma, střídmý „hemingwayovský“ styl"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Španělsko 1936–1939: válka republikánů proti frankistům.",
-        "Hemingway čerpal z vlastní zkušenosti válečného zpravodaje.",
-        "Téma: povinnost, láska, smrt a smysl oběti.",
-        "Akce kolem zničení mostu spojuje osobní a politický osud.",
-        "Název odkazuje na Johna Donna: smrt jednoho se týká všech.",
-        "Styl: úsporný, napínavý, s důrazem na dialog a gesto."
+        "Občanská válka: republikáni vs. frankisté, mezinárodní brigády.",
+        "Robert Jordan je americký dobrovolník na straně republiky.",
+        "Úkol: odpálit most a zdržet fašistický postup.",
+        "Hora, jeskyně, partizáni – intimní svět uprostřed kruté války.",
+        "Titul cituje Donne: „Nikdo není sám o sobě ostrov… proto komu zvoní hrana, zvoní i tobě.“",
+        "Láska k Marii a smysl smrti v boji za svobodu."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Robert Jordan – americký dobrovolník, má vyhodit most.",
-        "María – mladá dívka traumatizovaná válkou, Jordanova láska.",
-        "Pilar – silná žena gerily, praktická vůdkyně skupiny.",
-        "Pablo – Pilařin muž, zbabělý a nespolehlivý vůdce.",
-        "Anselmo – starý průvodce, věrný a morální.",
-        "El Sordo – velitel sousední skupiny gerilců."
+        "Robert Jordan – americký dynamitář, intelektuál v uniformě.",
+        "Maria – mladá dívka osvobozená republikány, Jordanova láska.",
+        "Pablo – vůdce partyzánů, chladný realista, bojí se rizika.",
+        "Pilar – Pablova žena, silná, věrná republice.",
+        "Anselmo – starý průvodce, morální svědomí party.",
+        "El Sordo – vůdce další skupiny, statečný, padne v boji."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Občanská válka – dobový rámec konfliktu.",
-        "Most – strategický cíl i symbol osudu.",
-        "Láska ve válce – vztah Jordana a Maríe.",
-        "Oběť – jednotlivec umírá pro celek.",
-        "„Komu zvoní hrana“ – propojenost lidských osudů.",
-        "Gerila – partyzánský boj v horách."
+        "Most – symbol úkolu i oběti pro větší věc.",
+        "Solidarita – smrt jednoho se týká všech (Donne).",
+        "Hemingwayův styl – krátké věty, málo adjektiv, „iceberg“.",
+        "Občanská válka ve Španělsku – boj demokracie vs. fašismus.",
+        "Láska v době války – Maria jako naděje a křehkost.",
+        "Povinnost vs. strach – Jordanův vnitřní konflikt."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Komu zvoní hrana?",
-      "options": [
-        "John Steinbeck",
-        "Ernest Hemingway",
-        "William Faulkner",
-        "F. Scott Fitzgerald"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Ernest Hemingway."
-    },
-    {
-      "prompt": "Ve které válce se děj odehrává?",
-      "options": [
-        "1. světová",
-        "Španělská občanská válka",
-        "2. světová výhradně",
-        "Vietnamská"
-      ],
-      "correct": 1,
-      "expl": "Román je zasazen do španělské občanské války."
-    },
-    {
-      "prompt": "Jaký úkol má Robert Jordan?",
-      "options": [
-        "Zabít Franca",
-        "Vyhodit strategický most",
-        "Utéct do Francie",
-        "Napsat reportáž"
-      ],
-      "correct": 1,
-      "expl": "Jordan je pověřen zničením mostu před ofenzívou."
-    },
-    {
-      "prompt": "Kdo je María?",
-      "options": [
-        "Frankistická špionka",
-        "Mladá dívka, Jordanova milovaná",
-        "Pilařina sestra bez vztahu k ději",
-        "Americká novinářka"
-      ],
-      "correct": 1,
-      "expl": "María přežila traumatizaci a s Jordanem prožije lásku."
-    },
-    {
-      "prompt": "Kdo je Pilar?",
-      "options": [
-        "Slabouchá služebná",
-        "Silná žena gerily a faktická vůdkyně",
-        "Jordanova matka",
-        "Zdravotní sestra v Madridu"
-      ],
-      "correct": 1,
-      "expl": "Pilar je dominantní, praktická a odvážná postava skupiny."
-    },
-    {
-      "prompt": "Proč je Pablo problematický?",
-      "options": [
-        "Je příliš odvážný",
-        "Je zbabělý, sobecký a nespolehlivý",
-        "Nemluví španělsky",
-        "Je kněz"
-      ],
-      "correct": 1,
-      "expl": "Pablo váhá, pije a ohrožuje akci svou zradou a strachem."
-    },
-    {
-      "prompt": "Odkud pochází název románu?",
-      "options": [
-        "Ze španělské hymny",
-        "Z meditace Johna Donna o lidské sounáležitosti",
-        "Z Bible Genesis",
-        "Z Jordanova deníku"
-      ],
-      "correct": 1,
-      "expl": "Název cituje Donnovu myšlenku, že smrt kohokoli se týká všech."
-    },
-    {
-      "prompt": "Kdy román vyšel?",
-      "options": [
-        "1929",
-        "1940",
-        "1952",
-        "1961"
-      ],
-      "correct": 1,
-      "expl": "Komu zvoní hrana vyšla roku 1940."
-    },
-    {
-      "prompt": "Jak příběh končí?",
-      "options": [
-        "Jordan uteče s Maríí do Ameriky",
-        "Jordan je zraněn a zůstane krýt ústup, očekává smrt",
-        "Pablo se stane prezidentem",
-        "Most není zničen"
-      ],
-      "correct": 1,
-      "expl": "Po úspěšné akci je Jordan zraněn a obětuje se."
-    },
-    {
-      "prompt": "Co je hlavním tématem?",
-      "options": [
-        "Komedie omylů",
-        "Povinnost, láska, smrt a smysl oběti",
-        "Venkovská idyla",
-        "Detektivní záhada"
-      ],
-      "correct": 1,
-      "expl": "Román zkoumá, proč má smysl riskovat život pro druhé."
-    },
-    {
-      "prompt": "Kdo je Anselmo?",
-      "options": [
-        "Frankistický generál",
-        "Starý věrný průvodce gerily",
-        "Jordanův bratr",
-        "Inkvizitor"
-      ],
-      "correct": 1,
-      "expl": "Anselmo je morální a spolehlivý starý bojovník."
-    },
-    {
-      "prompt": "Jaký je Hemingwayův styl v románu?",
-      "options": [
-        "Barokně ozdobný",
-        "Úsporný, napínavý, s důrazem na dialog a akci",
-        "Jen veršovaný",
-        "Epistolární"
-      ],
-      "correct": 1,
-      "expl": "Typický je střídmý styl a napětí akce."
-    }
+    {"prompt": "Kdo napsal Komu zvoní hrana?", "options": ["Faulkner", "Ernest Hemingway", "Steinbeck", "Fitzgerald"], "correct": 1, "expl": "Román vyšel v roce 1940; Hemingway sledoval válku jako novinář."},
+    {"prompt": "Kdy a kde se děj odehrává?", "options": ["Španělská občanská válka, hory u Madridu", "2. sv. válka v Normandii", "Vietnam", "První sv. válka v Itálii"], "correct": 0, "expl": "Děj je v roce 1937 v oblasti Guadarrama."},
+    {"prompt": "Kdo je Robert Jordan?", "options": ["Frankistický generál", "Americký dobrovolník, expert na demolice", "Španělský kněz", "Novinář bez úkolu"], "correct": 1, "expl": "Jordan má za úkol odpálit most."},
+    {"prompt": "Co znamená titul románu?", "options": ["Popis kostela", "Citát Donne: smrt každého se týká všech", "Jméno mostu", "Název písně bez významu"], "correct": 1, "expl": "Titul vyjadřuje solidaritu a lidskou propojenost."},
+    {"prompt": "Kdo je Maria?", "options": ["Jordanova láska, oběť války", "Frankistická špionka", "Generálka", "Jordanova sestra"], "correct": 0, "expl": "Maria prožila traumu; v Jordanovi nachází lásku."},
+    {"prompt": "Jaký je vztah Pabla a Pilar?", "options": ["Sourozenci", "Manželé; Pablo je vůdce, Pilar silnější morálně", "Nepřátelé bez vazby", "Důstojníci"], "correct": 1, "expl": "Pablo postupně couvá z boje; Pilar drží partu."},
+    {"prompt": "Co má Jordan udělat?", "options": ["Postavit most", "Odpálit most za úsvitu", "Ukrást letadlo", "Podepsat mír"], "correct": 1, "expl": "Most má zdržet fašistický postup během útoku."},
+    {"prompt": "Proč je úkol riskantní?", "options": ["Nikdo nehlídá", "Partyzáni jsou rozdělení, Pablo sabotuje, nepřítel blízko", "Jordan je nemocný", "Most neexistuje"], "correct": 1, "expl": "Vnitřní rozpory party zvyšují nebezpečí."},
+    {"prompt": "Kdo je Anselmo?", "options": ["Starý průvodce, ctí morálku války", "Fašista", "Jordanův bratr z USA", "Pilot"], "correct": 0, "expl": "Anselmo pomáhá Jordanovi a trpí kvůli zabíjení."},
+    {"prompt": "Co se stane El Sordovi?", "options": ["Stane se králem", "Je obklíčen a padne v boji", "Emigruje", "Zradí republiku"], "correct": 1, "expl": "El Sordo a jeho muži umírají hrdinsky na kopci."},
+    {"prompt": "Jak Jordan končí?", "options": ["Svatba v Madridu", "Zraněn u mostu; zůstává, aby zdržel nepřítele", "Utíká do USA", "Stává se generálem"], "correct": 1, "expl": "Finální oběť je morální i praktická."},
+    {"prompt": "Jaký styl je typický pro Hemingwaye?", "options": ["Dlouhé patetické věty", "Střídmý jazyk, dialog, „iceberg“ – hodně pod hladinou", "Pouze poezie", "Groteskní humor"], "correct": 1, "expl": "Emoce jsou často pod textem, ne v patosu."},
+    {"prompt": "Na čí straně Jordan bojuje?", "options": ["Frankisté", "Republikáni / demokratická strana", "Neutralita", "Nacisté Německa"], "correct": 1, "expl": "Jordan je v mezinárodní brigádě na straně republiky."},
+    {"prompt": "Proč Pablo ukradne výbušniny?", "options": ["Chce zmařit nebezpečný útok a zachránit partu", "Chce být bohatý", "Na příkaz Jordana", "Pro zábavu"], "correct": 0, "expl": "Pablo jedná sobecky z strachu o přežití."},
+    {"prompt": "Co symbolizuje most?", "options": ["Jen stavba", "Spojení úkolu, oběti a vojenského plánu", "Kostel", "Hranice bez děje"], "correct": 1, "expl": "Most je středem napětí celého románu."},
+    {"prompt": "Jaký je význam lásky Jordan–Maria?", "options": ["Bez vlivu na děj", "Dává Jordanovi lidský smysl i bolest ztráty", "Komický prvek", "Past od fašistů"], "correct": 1, "expl": "Láska kontrastuje s brutalitou války."},
+    {"prompt": "Kdo režíroval slavnou filmovou adaptaci?", "options": ["Sam Wood (1943)", "Spielberg", "Kubrick", "Nolan"], "correct": 0, "expl": "Film z 40. let s Gary Cooperem a Ingrid Bergmanovou."},
+    {"prompt": "Co je mezinárodní brigáda?", "options": ["Frankistická armáda", "Dobrovolníci z ciziny bojující za republiku", "Nevládní organizace dnes", "Pouze španělští kněží"], "correct": 1, "expl": "Jordan reprezentuje cizince v španělské válce."},
+    {"prompt": "Proč maturanti čtou román?", "options": ["Je nejkratší", "Spojuje válku, etiku, styl modernismu a historii Španělska", "Nemá postavy", "Je komiks"], "correct": 1, "expl": "Dílo je klíčové pro Hemingwaye i 20. století."},
+    {"prompt": "Jak Pilar vnímá Pabla?", "options": ["Obdivuje jeho statečnost vždy", "Kritizuje jeho zbabělost, ale zůstává v partě", "Nezná ho", "Je to cizinec"], "correct": 1, "expl": "Pilar je duší party; Pablo je její protiklad."},
+    {"prompt": "Co Jordan cítí k zabíjení?", "options": ["Radost", "Morální tíhu; válka není abstraktní", "Nic", "Pouze nudu"], "correct": 1, "expl": "Jordan přemýšlí o smrti i když plní rozkaz."},
+    {"prompt": "Které téma NENÍ středem?", "options": ["Oběť pro věc", "Solidarita", "Vesmírná kolonizace", "Láska ve válce"], "correct": 2, "expl": "Román je realistická válečná próza."},
+    {"prompt": "Kde party zimuje?", "options": ["V jeskyni v horách", "V Paříži", "Na lodi", "V paláci"], "correct": 0, "expl": "Jeskyně je útočiště i místem intimity a plánů."},
+    {"prompt": "Co se stane s výbušninami po Pablově krádeži?", "options": ["Jordan získá náhradu a plán pokračuje", "Úkol končí hned", "Frankisté je najdou", "Maria je odpálí"], "correct": 0, "expl": "Parta získá materiál zpět (Pablo částečně pomůže)." },
+    {"prompt": "Jaký význam má smrt El Sorda pro děj?", "options": ["Žádný", "Ukazuje neúprosnost války a cenu odporu", "Komický", "Znamená konec války"], "correct": 1, "expl": "Scéna na kopci je vrchol tragismu."},
+    {"prompt": "Co Jordan přemýšlí o otci?", "options": ["Otec byl republikán", "Otec se střelil; Jordan řeší sebevraždu a smysl", "Otec byl král", "Nezmiňuje otce"], "correct": 1, "expl": "Rodinná minulost ovlivňuje Jordanův pohled na smrt."},
+    {"prompt": "Proč „komu zvoní hrana“ v maturitní interpretaci?", "options": ["Jen o kostelech", "O tom, že smrt a osud jednoho se dotýkají celku", "O hudbě", "O mostě"], "correct": 1, "expl": "Donneova myšlenka propojuje hrdiny s lidstvem."},
+    {"prompt": "Jak Hemingway vykresluje fašisty?", "options": ["Jako abstraktní nepřítele války", "Jako konkrétní vojenskou hrozbu bez patosu", "Jako kamarády", "Vůbec"], "correct": 1, "expl": "Nepřítel je reálný, válka je konkrétní."},
+    {"prompt": "Co Maria symbolizuje?", "options": ["Obnovu života a naděje po zlu", "Jen špionáž", "Bohatství", "Válku"], "correct": 0, "expl": "Maria je zraněná, ale milující protiváha války."},
+    {"prompt": "Jaký je hlavní konflikt románu?", "options": ["Sportovní soutěž", "Plnění nebezpečného úkolu vs. lidský vztah a strach", "Soudní proces", "Detektivní hádanka bez války"], "correct": 1, "expl": "Jordan musí sladit povinnost, lásku a smrt."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Jordan přijíždí k gerile s úkolem zničit most",
-        "Seznamuje se s Pilar, Pablem a Maríí",
-        "Připravuje akci a prožívá lásku s Maríí",
-        "Konflikty uvnitř skupiny (Pablova nespolehlivost)",
-        "Most je vyhodit, ale za cenu ztrát",
-        "Zraněný Jordan zůstává krýt ústup"
+        "Jordan se připojí k partyzánům v horách",
+        "Seznámí se s Marií a plánuje odpálení mostu",
+        "Pablo ukradne výbušniny; napětí v partě",
+        "El Sordo padne v boji s fašisty",
+        "Jordan odpálí most, ale je zraněn",
+        "Zůstává na místě, aby zdržel nepřítele"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: příjezd s úkolem → seznámení se skupinou → příprava a láska → vnitřní konflikty → zničení mostu → Jordanova oběť."
+    "Správné pořadí: příjezd k partě → láska a plán → sabotáž Pabla → smrt El Sorda → most → Jordanova oběť."
   ]
 }

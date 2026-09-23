@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: George Orwell; překlad: Gössell",
-        "Žánr: alegorická novela / antiutopie",
+        "Autor: George Orwell",
+        "Žánr: alegorická antiutopická novela",
         "Poprvé vydáno: 1945",
-        "Děj/prostředí: Farma v Anglii jako model totalitního státu",
-        "Vyprávění/forma: er-forma, zvířecí alegorie; překlad Gössell"
+        "Děj/prostředí: farma Manor, zvířecí revoluce",
+        "Vyprávění/forma: er-forma, alegorie na SSSR; překlad Gössell"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Alegorie ruské revoluce a stalinismu.",
-        "Zvířata svrhnou člověka, pak vznikne nová tyranie.",
-        "Prasata přepíší zásady a ovládnou ostatní.",
-        "Propaganda, teror a kult vůdce.",
-        "Pointa: noví páni se podobají starým.",
-        "Téma: moc, zrada revoluce, manipulace, rovnost."
+        "Vzpoura proti panu Jonesovi",
+        "Pravidla Animalismu",
+        "Postupná moc prasat",
+        "Propaganda Squealer",
+        "Pracovní útlak ostatních",
+        "Proměna v totalitu"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Napoleon – prase-diktátor (odkaz na Stalina).",
-        "Sněhová koule – vyhnaný vůdce (Trockij).",
-        "Old Major – ideolog vzpoury (Marx/Lenin).",
-        "Boxer – pracovitý kůň, oběť režimu.",
-        "Piští / Squealer – propagandista.",
-        "Farmář Jones – původní lidský pán."
+        "Napoleon – prase, diktátor",
+        "Snowball – prase, rival",
+        "Boxer – kůň, „I will work harder“",
+        "Squealer – prase, propaganda",
+        "Old Major – prase, vize revoluce",
+        "Benjamin – osel, skeptic"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Alegorie – zvířata = politické síly.",
-        "Sedm přikázání – zásady postupně přepisované.",
-        "„Všechna zvířata jsou si rovna…“ – závěrečný cynismus.",
-        "Propaganda – Piští překrucuje fakta.",
-        "Kult vůdce – Napoleonova moc.",
-        "Zrada revoluce – od ideálu k tyranii."
+        "Alegorie – revoluce 1917",
+        "Pravidla sedm – mění se",
+        "„Všichni zvířata rovna“",
+        "Chytrá prasata vs. dělníci",
+        "Boxer – oběť systému",
+        "Lidská tvář prasat"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Farmu zvířat?",
+      "prompt": "Autor?",
       "options": [
-        "Aldous Huxley",
-        "George Orwell",
-        "Ray Bradbury",
-        "Joseph Heller"
+        "Orwell",
+        "Bradbury",
+        "Havel",
+        "Swift"
       ],
-      "correct": 1,
-      "expl": "Orwellova alegorie vyšla roku 1945."
+      "correct": 0,
+      "expl": "George Orwell."
     },
     {
-      "prompt": "Co farma především alegoricky zobrazuje?",
+      "prompt": "Rok?",
       "options": [
-        "Průmysl automobilů",
-        "Ruskou revoluci a totalitu",
-        "České nebe",
-        "Mor ve Florencii"
-      ],
-      "correct": 1,
-      "expl": "Prasata a psi odpovídají mocenským strukturám SSSR."
-    },
-    {
-      "prompt": "Kdo je Napoleon?",
-      "options": [
-        "Kůň",
-        "Prase, které se stane diktátorem",
-        "Člověk-farmář",
-        "Slepice"
-      ],
-      "correct": 1,
-      "expl": "Napoleon vyžene Sněhovou kouli a zavede teror."
-    },
-    {
-      "prompt": "Kdo je Boxer?",
-      "options": [
-        "Propagandista",
-        "Oddaný pracovitý kůň zrazený režimem",
-        "Pes Napoleona",
-        "Old Major"
-      ],
-      "correct": 1,
-      "expl": "Boxer dře do úpadu; nakonec ho prodají na jatka."
-    },
-    {
-      "prompt": "Co se stane se sedmi přikázáními?",
-      "options": [
-        "Zůstanou beze změny",
-        "Jsou postupně přepisována ve prospěch prasat",
-        "Jsou v latině",
-        "Zmizí hned první den beze stopy významu"
-      ],
-      "correct": 1,
-      "expl": "Manipulace jazykem ukazuje, jak se falšuje ideál."
-    },
-    {
-      "prompt": "Jak zní závěrečný cynický dodatek o rovnosti?",
-      "options": [
-        "Všichni jsou bratři navždy",
-        "Všechna zvířata jsou si rovna, ale některá jsou si rovnější",
-        "Jen lidé vládnou",
-        "Bůh je prase"
-      ],
-      "correct": 1,
-      "expl": "Pointa: formální rovnost kryje hierarchii."
-    },
-    {
-      "prompt": "Kdo šíří propagandů?",
-      "options": [
-        "Boxer",
-        "Piští (Squealer)",
-        "Jones výhradně po útěku",
-        "Godot"
-      ],
-      "correct": 1,
-      "expl": "Squealer „vysvětluje“ každé porušení zásad."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1937",
         "1945",
-        "1949",
-        "1961"
+        "1984",
+        "1953",
+        "1862"
       ],
-      "correct": 1,
-      "expl": "Animal Farm 1945; 1984 pak 1949."
+      "correct": 0,
+      "expl": "Po válce."
     },
     {
-      "prompt": "Co se stane se Sněhovou koulí?",
+      "prompt": "Alegorie?",
       "options": [
-        "Stane se králem lidí",
-        "Je vyhnána jako „zrádce“",
-        "Vede trifidy",
-        "Píše deník Kitty"
+        "Sovětská revoluce a Stalin",
+        "Středověk",
+        "USA",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Po mocenském boji ji Napoleon vyloučí a demonizuje."
+      "correct": 0,
+      "expl": "Zvířata = lidé."
     },
     {
-      "prompt": "Jaký žánr je nejpřesnější?",
+      "prompt": "Old Major?",
       "options": [
-        "Deník",
-        "Alegorická antiutopická novela",
-        "Sonet",
-        "Antická tragédie"
+        "Vize revoluce",
+        "Diktátor",
+        "Jones",
+        "Kůň"
       ],
-      "correct": 1,
-      "expl": "Krátká próza s politickou alegorií."
+      "correct": 0,
+      "expl": "Marx/Lenin obraz."
     },
     {
-      "prompt": "Čím příběh končí vizuálně/pointou?",
+      "prompt": "Jones?",
       "options": [
-        "Svatbou Boxera",
-        "Prasata a lidé jsou k nerozeznání",
-        "Návratem k ideálu Majorovy řeči beze změny",
-        "Odemčením nebe"
+        "Původní pán farmy",
+        "Prase",
+        "Kůň",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Zvířata vidí stejné tváře pánů – revoluce zradila sebe."
+      "correct": 0,
+      "expl": "Czar/kapitalista."
     },
     {
-      "prompt": "Kdo je Old Major?",
+      "prompt": "Napoleon vs Snowball?",
       "options": [
-        "Farmář",
-        "Staré prase s vizí vzpoury",
+        "Rivalové mezi prasaty",
+        "Bratři v klidu",
+        "Ne",
+        "Lidé"
+      ],
+      "correct": 0,
+      "expl": "Stalin/Trockij obraz."
+    },
+    {
+      "prompt": "Squealer?",
+      "options": [
+        "Propaganda",
+        "Kůň",
+        "Jones",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Překrucuje pravdu."
+    },
+    {
+      "prompt": "Boxer?",
+      "options": [
+        "Obětavý kůň, prodán jatky",
+        "Prase",
         "Pes",
-        "Hyde"
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Jeho sen o rovnosti spustí revoluci, kterou později zničí moc."
+      "correct": 0,
+      "expl": "Proletariát."
+    },
+    {
+      "prompt": "Pravidla?",
+      "options": [
+        "Postupně měněna prasaty",
+        "Ne",
+        "Stálá",
+        "Jen jedno"
+      ],
+      "correct": 0,
+      "expl": "Manipulace."
+    },
+    {
+      "prompt": "Benjamin?",
+      "options": [
+        "Cynický osel",
+        "Optimista",
+        "Diktátor",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Skeptik."
+    },
+    {
+      "prompt": "Konec?",
+      "options": [
+        "Prasata jako lidé u stolu",
+        "Raj",
+        "Jones vrácen",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Totalita."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Alegorická antiutopie",
+        "Pohádka bez významu",
+        "Epos",
+        "Lyrika"
+      ],
+      "correct": 0,
+      "expl": "Satira."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Gössell",
+        "Nezval",
+        "Kořán",
+        "Nevrla"
+      ],
+      "correct": 0,
+      "expl": "Katalog."
+    },
+    {
+      "prompt": "1984 vs Farma?",
+      "options": [
+        "Orwell obě, jiné téma",
+        "Bradbury",
+        "Stejný děj",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Dva romány."
+    },
+    {
+      "prompt": "Animalismus?",
+      "options": [
+        "Ideologie revoluce",
+        "Náboženství",
+        "Ne",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Ideologie."
+    },
+    {
+      "prompt": "Větrný mlýn?",
+      "options": [
+        "Snowballův plán, Napoleon zničí",
+        "Ne",
+        "Jones",
+        "Nebe"
+      ],
+      "correct": 0,
+      "expl": "Industrializace."
+    },
+    {
+      "prompt": "Psí garda?",
+      "options": [
+        "Napoleonova stráž",
+        "Ne",
+        "Boxer",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Represe."
+    },
+    {
+      "prompt": "Milk and apples?",
+      "options": [
+        "Prasata si přisvojí",
+        "Ne",
+        "Všichni",
+        "Zakázáno"
+      ],
+      "correct": 0,
+      "expl": "Privilegia elity."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Klasika alegorie",
+        "Nejkratší",
+        "Bez smyslu",
+        "Jen film"
+      ],
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Napoleon",
+        "Boxer",
+        "Hamlet",
+        "Squealer"
+      ],
+      "correct": 2,
+      "expl": "Shakespeare."
+    },
+    {
+      "prompt": "Er-forma?",
+      "options": [
+        "Ano",
+        "Ich Anne",
+        "Drama",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Satira?",
+      "options": [
+        "Ano politická",
+        "Ne",
+        "Pouze pohádka",
+        "Horor"
+      ],
+      "correct": 0,
+      "expl": "Orwell."
+    },
+    {
+      "prompt": "Boxer motto?",
+      "options": [
+        "Budu tvrději pracovat",
+        "Ne",
+        "Válka",
+        "Spím"
+      ],
+      "correct": 0,
+      "expl": "Známá věta."
+    },
+    {
+      "prompt": "Jatky?",
+      "options": [
+        "Boxer prodán",
+        "Raj",
+        "Ne",
+        "Snowball"
+      ],
+      "correct": 0,
+      "expl": "Zrada."
+    },
+    {
+      "prompt": "Lidská tvář?",
+      "options": [
+        "Závěrečná scéna",
+        "Ne",
+        "Jones",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Pointa."
+    },
+    {
+      "prompt": "Všichni rovni?",
+      "options": [
+        "Slogan zneužitý",
+        "Ne",
+        "Vždy platí",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Paradox."
+    },
+    {
+      "prompt": "Moses vrabec?",
+      "options": [
+        "Příběh Cukrové hory – opium",
+        "Ne",
+        "Hrdina",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Náboženství."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Revolution může zkazit",
+        "Revolution vždy dobrá",
+        "Ne",
+        "Zvířata ne"
+      ],
+      "correct": 0,
+      "expl": "Varování."
+    },
+    {
+      "prompt": "Katalog?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Farm Manor?",
+      "options": [
+        "Původní název",
+        "Ne",
+        "Praha",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Anglie."
+    },
+    {
+      "prompt": "Orwell jméno?",
+      "options": [
+        "Eric Blair",
+        "Nezval",
+        "Hugo",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Skutečné jméno."
+    },
+    {
+      "prompt": "Battle of Cowshed?",
+      "options": [
+        "Obrana farmy",
+        "Ne",
+        "Boxer",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Válka."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Old Major předá vizi vzpoury",
-        "Zvířata vyženou Jonese",
-        "Prasata převezmou vedení a přikázání",
-        "Napoleon vyžene Sněhovou kouli",
-        "Teror, propaganda a přepisování zásad",
-        "Prasata se vyrovnají lidem – zrada ideálu"
+        "Old Major vyzve ke vzpouře",
+        "Jones svržen, Animalismus",
+        "Snowball a Napoleon soupeří",
+        "Napoleon se zmocní moci",
+        "Útlak, propaganda, Boxer jatky",
+        "Prasata nelze od lidí rozeznat"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: vize Majora → vyhnání Jonese → vláda prasat → vyhnání Sněhové koule → teror a přepisování → prasata jako lidé."
+    "Pořadí: vize → revoluce → rivalita → diktatura → útlak → zrada ideálů."
   ]
 }

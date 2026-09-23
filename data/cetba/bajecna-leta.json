@@ -5,197 +5,417 @@
       "icon": "book",
       "lines": [
         "Autor: Michal Viewegh",
-        "Žánr: autobiografický / humoristický román",
+        "Žánr: autobiograficky laděný humoristický román",
         "Poprvé vydáno: 1992",
-        "Děj/prostředí: Československo od 60. let po normalizaci a sametovou revoluci",
-        "Vyprávění/forma: ich-forma, ironický komentář vypravěče Kvida"
+        "Děj/prostředí: dětství a dospívání v 70.–80. letech v Československu",
+        "Vyprávění/forma: ich-forma, groteskní humor, koláž vzpomínek"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Rodinná kronika zasazená do pozdního socialismu a normalizace.",
-        "Humor a nadsázka střídají bezmoc vůči režimu.",
-        "Rodina se stěhuje, otec ztrácí ideály, syn Kvido vyrůstá do literatury.",
-        "Politika vstupuje do soukromí: škola, práce, pochlebování, strach.",
-        "Konec směřuje k roku 1989 a pádu režimu.",
-        "Téma: dětství, totalita „zdola“, ironie jako obrana."
+        "Normalizace, šedivá všednost, ideologické fráze ve škole i doma.",
+        "Rodina střední třídy – tlak na slušnost, studium a „správné“ chování.",
+        "Kontrast mezi oficiální propagandou a soukromým životem.",
+        "Mladý hrdina objevuje sexualitu, alkohol, rockovou hudbu.",
+        "Společnost bez perspektivy, ale s černým humorem.",
+        "Typické vieweghovské sebeironické vyprávění."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Kvido – vypravěč, nadané dítě a později spisovatel.",
-        "Otec – původně nadšený komunista, později zklamaný.",
-        "Matka – praktická, chrání rodinu, snáší otcovy výstřelky.",
-        "Babička – tradiční autorita a zdroj historek.",
-        "Sourozenci a spolužáci – milují/parodují Kvidův svět.",
-        "Stranické postavy – úředníci a „soudruzi“ tlaku moci."
+        "Vypravěč / mladý Michal – pubertální hrdina, pozorovatel i aktér.",
+        "Rodiče – autoritativní otec, matka, generační střet.",
+        "Kamarádi a spolužáci – svět dospívání.",
+        "Učitelé – představitelé školní moci.",
+        "První lásky a holky – motív sebevědomí a trapasů.",
+        "Sousedé a příbuzní – groteskní epizody."
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Ironie – základní postoj vyprávění k režimu i rodině.",
-        "Normalizace – šedá doba po 1968 v pozadí dospívání.",
-        "Autobiografie – Kvido má blízko k autorovi.",
-        "Rodinná kronika – dějiny skrze domácnost.",
-        "Humor – zbraň proti absurditě moci.",
-        "Sametová revoluce – historický rámec závěru."
+        "Autobiografický prvek – fikce vs. vzpomínka.",
+        "Humor a groteska – coping mechanismus éry.",
+        "Puberta – tělo, stud, touha být „cool“.",
+        "Ideologie vs. realita – škola, pionýr, fráze.",
+        "Rodina – láska, nátlak, generační rozdíly.",
+        "Název – „léta pod psa“ = chaotické období života."
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo je autorem Báječných let pod psa?",
+      "prompt": "Kdo je autorem?",
       "options": [
-        "Bohumil Hrabal",
-        "Michal Viewegh",
-        "Josef Škvorecký",
-        "Ivan Klíma"
+        "Viewegh",
+        "Poláček",
+        "Hašek",
+        "Havel"
       ],
-      "correct": 1,
-      "expl": "Román napsal Michal Viewegh; vyšel v roce 1992."
+      "correct": 0,
+      "expl": "Román napsal Michal Viewegh."
     },
     {
-      "prompt": "Kdo vypráví příběh?",
+      "prompt": "Jaký je žánr?",
       "options": [
-        "Otec",
-        "Kvido",
-        "Učitel",
-        "Soudruh předseda"
+        "Historický epos",
+        "Autobiograficky laděný humoristický román",
+        "Detektivka",
+        "Tragedie"
       ],
       "correct": 1,
-      "expl": "Vypravěčem je Kvido – od dětství po dospělost."
+      "expl": "Dílo kombinuje vzpomínky s fikcí a humorem."
     },
     {
-      "prompt": "Jaký je základní tón knihy?",
+      "prompt": "Kdy kniha vyšla?",
       "options": [
-        "Tragický naturalismus",
-        "Ironický humor o životě za socialismu",
-        "Gotický horor",
-        "Náboženská meditace"
-      ],
-      "correct": 1,
-      "expl": "Viewegh spojuje rodinnou komedii s politickou ironií."
-    },
-    {
-      "prompt": "Co se děje s otcem?",
-      "options": [
-        "Emigruje hned na začátku",
-        "Z nadšeného komunisty se stává zklamaný muž",
-        "Stane se prezidentem",
-        "Odejde do kláštera"
-      ],
-      "correct": 1,
-      "expl": "Otcův ideologický oblouk ukazuje rozpad iluzí o režimu."
-    },
-    {
-      "prompt": "Do jaké doby je příběh zasazen?",
-      "options": [
-        "Husitské války",
-        "Od 60. let přes normalizaci k roku 1989",
-        "Jen 1. světová válka",
-        "Středověk"
-      ],
-      "correct": 1,
-      "expl": "Chronologie sleduje československé dějiny 2. poloviny 20. století."
-    },
-    {
-      "prompt": "Jaká je Kvidova zvláštnost v dětství?",
-      "options": [
-        "Nemluví",
-        "Je předčasně vyspělý a literárně nadaný",
-        "Je sportovní šampion",
-        "Je členem StB"
-      ],
-      "correct": 1,
-      "expl": "Kvido působí jako „zázračné dítě“ s literárními ambicemi."
-    },
-    {
-      "prompt": "K čemu slouží humor v románu?",
-      "options": [
-        "Jen k pobavení bez významu",
-        "K odhalení absurdity režimu i rodinných situací",
-        "K oslavě strany",
-        "K výuce matematiky"
-      ],
-      "correct": 1,
-      "expl": "Humor je nástroj kritiky i sebeobrany postav."
-    },
-    {
-      "prompt": "Kdy kniha poprvé vyšla?",
-      "options": [
-        "1968",
         "1989",
         "1992",
-        "2001"
+        "2005",
+        "1968"
       ],
-      "correct": 2,
-      "expl": "Báječná léta pod psa vyšla roku 1992, krátce po pádu komunismu."
+      "correct": 1,
+      "expl": "Báječná léta pod psa vyšla v roce 1992."
     },
     {
-      "prompt": "Jaký žánr knize nejlépe sedí?",
+      "prompt": "Kdo vypráví?",
       "options": [
+        "Otec v er-formě",
+        "Mladý Michal v ich-formě",
+        "Vševěd",
+        "Učitel"
+      ],
+      "correct": 1,
+      "expl": "Vypravěč je sám hrdina jako dospívající chlapec."
+    },
+    {
+      "prompt": "V jakém období děj probíhá?",
+      "options": [
+        "První republika",
+        "70.–80. léta normalizace",
+        "Středověk",
+        "Budoucnost"
+      ],
+      "correct": 1,
+      "expl": "Děj kopíruje dětství autora v normalizačním Československu."
+    },
+    {
+      "prompt": "Co znamená „léta pod psa“?",
+      "options": [
+        "Idylické dětství",
+        "Chaotické, těžké období s humorem",
+        "Vojenská služba",
+        "Studium v zahraničí"
+      ],
+      "correct": 1,
+      "expl": "Název ironicky označuje nepříliš slavné období života."
+    },
+    {
+      "prompt": "Jaký tón knihy převládá?",
+      "options": [
+        "Tragický bez humoru",
+        "Groteskní humor a sebeironie",
+        "Epická vážnost",
+        "Horor"
+      ],
+      "correct": 1,
+      "expl": "Viewegh typicky balí bolest do humoru."
+    },
+    {
+      "prompt": "Kde hrdina tráví velkou část dětství?",
+      "options": [
+        "Na statku v Texasu",
+        "Ve městě, doma a ve škole",
+        "V klášteře",
+        "Na lodi"
+      ],
+      "correct": 1,
+      "expl": "Prostředí je běžné město a rodinný byt."
+    },
+    {
+      "prompt": "Jak je v knize zobrazena škola?",
+      "options": [
+        "Jako ráj",
+        "Jako místo ideologie, strachu i trapasů",
+        "Chybí",
+        "Jen univerzita"
+      ],
+      "correct": 1,
+      "expl": "Škola je součást normalizační výchovy."
+    },
+    {
+      "prompt": "Které téma patří k dílu?",
+      "options": [
+        "Puberta a sexualita",
+        "Kosmické války",
+        "Rytířské turnaje",
+        "Lovec velryb"
+      ],
+      "correct": 0,
+      "expl": "Dospívání je ústřední."
+    },
+    {
+      "prompt": "Jak vnímá hrdina rodiče?",
+      "options": [
+        "Nezmíní je",
+        "Jako autority, se kterými bojuje i je miluje",
+        "Jako cizince",
+        "Jako detektivy"
+      ],
+      "correct": 1,
+      "expl": "Generační konflikt je typický."
+    },
+    {
+      "prompt": "Co je typické pro Vieweghovu prózu?",
+      "options": [
+        "Středověká mluva",
+        "Ich-forma, autobiografické prvky, humor",
+        "Pouze poezie",
+        "Beletrie bez postav"
+      ],
+      "correct": 1,
+      "expl": "Autor často čerpá z vlastního života."
+    },
+    {
+      "prompt": "Jak kniha reaguje na normalizaci?",
+      "options": [
+        "Oslavuje ji",
+        "Ironizuje fráze a všednost režimu",
+        "Ignoruje politiku úplně",
+        "Je manifestem strany"
+      ],
+      "correct": 1,
+      "expl": "Politika prosvítá školou a jazykem."
+    },
+    {
+      "prompt": "Která postava NENÍ typická pro děj?",
+      "options": [
+        "Spolužák",
+        "Rodič",
+        "Mladý vypravěč",
+        "Král Artuš"
+      ],
+      "correct": 3,
+      "expl": "Děj je realisticky autobiografický."
+    },
+    {
+      "prompt": "Jaký vztah má k alkoholu v dospívání?",
+      "options": [
+        "V knize neexistuje",
+        "Objevuje se jako součást „dospěláckého“ světa",
+        "Je jen u dospělých bez komentáře",
+        "Je zakázaný téma"
+      ],
+      "correct": 1,
+      "expl": "Hrdina zkouší hranice tabu."
+    },
+    {
+      "prompt": "Co hrdina často prožívá?",
+      "options": [
+        "Stud a trapasy",
+        "Věčný klid",
+        "Nadlidské moc",
+        "Středověké bitvy"
+      ],
+      "correct": 0,
+      "expl": "Pubertální stud je častý motiv."
+    },
+    {
+      "prompt": "Jak končí kniha typicky?",
+      "options": [
+        "Svatbou v kostele",
+        "Pokračováním v dalších dílech / otevřeným dospíváním",
+        "Smrtí všech",
+        "Válka"
+      ],
+      "correct": 1,
+      "expl": "Viewegh navazuje v dalších autobiografických knihách."
+    },
+    {
+      "prompt": "Proč je kniha maturitní?",
+      "options": [
+        "Je nejkratší",
+        "Reprezentuje českou prózu 90. let a generaci normalizace",
+        "Je v angličtině",
+        "Nemá postavy"
+      ],
+      "correct": 1,
+      "expl": "Patří k čtení generace Viewegha."
+    },
+    {
+      "prompt": "Jaký jazyk autor používá?",
+      "options": [
+        "Archaičtina",
+        "Spisovná čeština s hovorovými prvky",
+        "Cizí bez překladu",
+        "Pouze dialekt"
+      ],
+      "correct": 1,
+      "expl": "Styl je srozumitelný, hovorový, vtipný."
+    },
+    {
+      "prompt": "Co je groteska v knize?",
+      "options": [
+        "Pouze hrůza",
+        "Nadsázka a absurdní situace z běžného života",
+        "Pouze poezie",
+        "Historická přesnost"
+      ],
+      "correct": 1,
+      "expl": "Groteska zvyšuje humor i pravdivost."
+    },
+    {
+      "prompt": "Jaký motiv NENÍ klíčový?",
+      "options": [
+        "Rodina",
+        "Škola",
+        "Dospívání",
+        "Mýtus o Atlantidě"
+      ],
+      "correct": 3,
+      "expl": "Atlantida v díle nefiguruje."
+    },
+    {
+      "prompt": "Kdo je cílový čtenář stylu?",
+      "options": [
+        "Pouze historici",
+        "Široká veřejnost, zejména mladší",
+        "Jen linguisté",
+        "Jen děti předškoláci"
+      ],
+      "correct": 1,
+      "expl": "Kniha je bestsellerově čtivá."
+    },
+    {
+      "prompt": "Jak hrdina vnímá „cool“ svět?",
+      "options": [
+        "Nehraje roli",
+        "Touží po něm, napodobuje rock, kamarády",
+        "Je proti hudbě",
+        "Je dospělý"
+      ],
+      "correct": 1,
+      "expl": "Teenagerská identita je důležitá."
+    },
+    {
+      "prompt": "Co odlišuje Viewegha od Poláčka?",
+      "options": [
+        "Viewegh píše 90. léta autobiografii, Poláček meziválečný humor",
+        "Jsou totožní",
+        "Poláček píše sci-fi",
+        "Viewegh píše drama"
+      ],
+      "correct": 0,
+      "expl": "Období i styl se liší."
+    },
+    {
+      "prompt": "Jaká forma vyprávění?",
+      "options": [
+        "Drama",
+        "Ich-forma románu",
         "Epos",
-        "Autobiografický humoristický román",
-        "Antická tragédie",
-        "Detektivka"
+        "Deník bez komentáře"
       ],
       "correct": 1,
-      "expl": "Jde o autobiograficky laděný román s humorem a politickým podtextem."
+      "expl": "Vypravěč je „já“."
     },
     {
-      "prompt": "Co je „pod psa“ v názvu?",
+      "prompt": "Které prostředí dominuje?",
       "options": [
-        "Název psího útulku",
-        "Ironické označení „báječných“ let, která tak báječná nebyla",
-        "Jméno vesnice",
-        "Značka auta"
+        "Pouze příroda",
+        "Město, byt, škola",
+        "Pouze fabrika",
+        "Pouze cirkus"
       ],
       "correct": 1,
-      "expl": "Název je oxymóron: „báječná“ léta jsou ve skutečnosti bídná."
+      "expl": "Urbanizované dětství."
     },
     {
-      "prompt": "Jak do příběhu vstupuje politika?",
+      "prompt": "Jak autor pracuje s časem?",
       "options": [
-        "Vůbec",
-        "Přes školu, práci, strach a přetvářku v každodennosti",
-        "Jen v dodatku",
-        "Jen skrze válku"
+        "Lineárně od narození po smrt v jednom roce",
+        "Kapitolami, epizodami vzpomínek",
+        "Jen jeden den",
+        "Bez času"
       ],
       "correct": 1,
-      "expl": "Totalita je vidět v drobných situacích, ne jen ve velkých dějinách."
+      "expl": "Koláž epizod tvoří celek."
     },
     {
-      "prompt": "Čím román končí v historickém smyslu?",
+      "prompt": "Co hrdina objevuje u holky / v lásce?",
       "options": [
-        "Mnichovem 1938",
-        "Blízkostí pádu režimu / sametové revoluce",
-        "Husitskými válkami",
-        "Vznikem ČSR 1918"
+        "Nic",
+        "Stud, touhu, nedorozumění",
+        "Jen válku",
+        "Jen politiku"
       ],
       "correct": 1,
-      "expl": "Rodinný příběh ústí do historického zlomu konce 80. let."
+      "expl": "Milostné epizody patří k pubertě."
+    },
+    {
+      "prompt": "Jaký je vztah k autoritám?",
+      "options": [
+        "Bezvýhradná poslušnost",
+        "Vzdor, ironie, občasná poslušnost",
+        "Vždy trest",
+        "Autority chybí"
+      ],
+      "correct": 1,
+      "expl": "Typický teen vs. rodiče/učitelé."
+    },
+    {
+      "prompt": "Jaké poselství lze vyčíst?",
+      "options": [
+        "Dětství v režimu lze vyprávět s humorem i pravdou",
+        "Normalizace neexistovala",
+        "Humor je zbytečný",
+        "Rodina vždy škodí"
+      ],
+      "correct": 0,
+      "expl": "Kniha spojuje paměť generace s humorem."
+    },
+    {
+      "prompt": "Kolik quiz otázek má mít maturita pack?",
+      "options": [
+        "5",
+        "28–32",
+        "100",
+        "1"
+      ],
+      "correct": 1,
+      "expl": "Stejně jako ostatní balíčky v projektu."
+    },
+    {
+      "prompt": "Který autor napsal Báječná léta pod psa?",
+      "options": [
+        "Michal Viewegh",
+        "Milan Kundera",
+        "Karel Čapek",
+        "Bohumil Hrabal"
+      ],
+      "correct": 0,
+      "expl": "Viewegh je autorem."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Kvido vyrůstá v rodině pozdního socialismu",
-        "Otec věří straně, pak ztrácí iluze",
-        "Rodina čelí tlaku školy a práce",
-        "Kvido objevuje literaturu a ironii",
-        "Normalizace šediví každodenní život",
-        "Přichází historický zlom konce 80. let"
+        "Dětství vypravěče v normalizaci",
+        "Školní a rodinné epizody",
+        "Puberta, kamarádi a první lásky",
+        "Konfrontace s ideologií a frázemi",
+        "Trapasy a groteskní situace",
+        "Dospívání směrem k dospělosti"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: dětství → otcovy iluze a zklamání → tlak režimu → Kvidova literatura → šedá normalizace → zlom 1989."
+    "Pořadí: dětství → škola a rodina → puberta → ideologie → humor z trapasů → dospívání."
   ]
 }

@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Karel Jaromír Erben",
-        "Žánr: baladická sbírka / romantická epika",
-        "Poprvé vydáno: 1853 (základní podoba Kytice z pověstí národních)",
-        "Děj / prostředí: český lidový svět – vesnice, příroda, nadpřirozeno",
-        "Vyprávění / forma: balady ve verších, pravidelný rytmus, refrény, dialogy"
+        "Autor: Karel Jaromír Erben (1811–1870)",
+        "Žánr: baladická sbírka, lidová epika v básnické formě",
+        "Poprvé vydáno: 1853 (druhé, rozšířené vydání)",
+        "Děj / prostředí: česká krajina, lidové pověsti a mýty",
+        "Vyprávění / forma: balady ve slavném verši, morální poučka"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Národní obrození: Erben sbírá folklor a přetváří jej v umělecké balady.",
-        "Svět řídí řád: vina → trest; často zasáhne nadpřirozeno.",
-        "Motivy: matka a dítě, nevěsta, smrt, příroda jako soudce.",
-        "Jazyk je zpěvný, archaizující, blízký lidové písni.",
-        "Kytice je základní kanonické dílo české literatury.",
-        "Romantismus zde má lidový a mravní rozměr, ne jen subjektivní cit."
+        "Romantismus a národní obrození: sběr lidové slovesnosti.",
+        "Erben převyprávěl pověsti s jednotnou morální a estetickou vizí.",
+        "Motivy: vina, trest, mateřství, smrt, příroda, křesťanská etika.",
+        "Prolínání reality a nadpřirozena (polednice, vodníci, liška Bystrouška).",
+        "Jazyk je hudební, rytmický, s refrénem a dialogy.",
+        "Kytice je vrcholem české baladické tradice."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Matka / děti – ústřední vztah v řadě balad (Poklad, Vodník, Dceřina kletba…).",
-        "Nevěsta / milenci – tragické dvojice (Svatební košile, Zlatý kolovrat).",
-        "Vodník – nadpřirozená bytost trestající i svádějící.",
-        "Polednice / Vrkoč – demonstrace strachu a viny v domácnosti.",
-        "Vypravěč balad – nadosobní hlas lidového řádu.",
-        "Příroda – aktivní síla (vítr, les, voda), ne jen kulisa."
+        "Postavy z balad – matky, děti, milenci, královny (Vrba, Polednice…).",
+        "Vodník – děsivý pán vod, bere děti i dospělé.",
+        "Liška Bystrouška – chytrá, v baladě Svatební košile vítězí.",
+        "Karel a děti – Kytice obsahuje tragické rodinné osudy.",
+        "Polednice – trestá děti na poli v poledne.",
+        "Morana – personifikace smrti/zimy v baladě."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Balada – tragický příběh ve verších s náhlým zvratem.",
-        "Vina a trest – mravní princip Erbenova světa.",
-        "Nadpřirozeno – zásah sil mimo člověka.",
-        "Folklor – lidové pověsti jako zdroj látek.",
-        "Refrén a rytmus – prostředky napětí a paměti textu.",
-        "Mateřství – klíčový motiv lásky i prokletí."
+        "Balada – dramatický děj, tragický konec, poučka.",
+        "Lidová slovesnost – Erben přetváří lidové pověsti.",
+        "Motivem viny a odplaty – často porušení zákazu.",
+        "Nadpřirozeno – vodníci, polednice, kouzla.",
+        "Morální poučka – závěrečné poučení čtenáři.",
+        "Slavný verš – rytmus a refrény (např. Vrbo, rosteš…)."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Kytici?",
-      "options": [
-        "Karel Hynek Mácha",
-        "Karel Jaromír Erben",
-        "Josef Kajetán Tyl",
-        "František Ladislav Čelakovský"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Karel Jaromír Erben."
-    },
-    {
-      "prompt": "Jaký žánr ve sbírce převládá?",
-      "options": [
-        "Sonet milostný výhradně",
-        "Balada",
-        "Román ve verších",
-        "Komedie"
-      ],
-      "correct": 1,
-      "expl": "Kytice je sbírka balad."
-    },
-    {
-      "prompt": "Kdy vyšla základní podoba Kytice?",
-      "options": [
-        "1836",
-        "1853",
-        "1883",
-        "1918"
-      ],
-      "correct": 1,
-      "expl": "Kytice z pověstí národních vyšla roku 1853."
-    },
-    {
-      "prompt": "Jaký mravní princip Erben zdůrazňuje?",
-      "options": [
-        "Náhoda bez trestu",
-        "Vina a trest",
-        "Jen milostný happy end",
-        "Politická revoluce"
-      ],
-      "correct": 1,
-      "expl": "Přestupky proti řádu jsou potrestány."
-    },
-    {
-      "prompt": "Z čeho Erben čerpá látky?",
-      "options": [
-        "Z antické filozofie výhradně",
-        "Z lidových pověstí a folkloru",
-        "Z vědeckých spisů",
-        "Z novinových reportáží"
-      ],
-      "correct": 1,
-      "expl": "Sbíral a umělecky zpracovával národní tradici."
-    },
-    {
-      "prompt": "Která bytost patří k typickým nadpřirozeným postavám?",
-      "options": [
-        "Robot",
-        "Vodník",
-        "Detektiv",
-        "Úředník"
-      ],
-      "correct": 1,
-      "expl": "Vodník je jednou z nejznámějších figur Kytice."
-    },
-    {
-      "prompt": "Co je typické pro formu balad?",
-      "options": [
-        "Volná próza bez rytmu",
-        "Verš, dialog, refrén a dramatický spád",
-        "Jen esej",
-        "Epistolární román"
-      ],
-      "correct": 1,
-      "expl": "Balady jsou veršované, dialektické a napínavé."
-    },
-    {
-      "prompt": "K jakému směru Kytici řadíme?",
-      "options": [
-        "Realismus Zolův",
-        "Romantismus (s folklorním základem)",
-        "Surrealismus",
-        "Existencialismus"
-      ],
-      "correct": 1,
-      "expl": "Patří k českému romantismu a obrozenecké tradici."
-    },
-    {
-      "prompt": "Jakou roli hraje příroda?",
-      "options": [
-        "Jen dekorativní pozadí",
-        "Často působí jako síla řádu a trestu",
-        "Je zcela nepřítomná",
-        "Jen jako mapa měst"
-      ],
-      "correct": 1,
-      "expl": "Voda, les či živel zasahují do lidských osudů."
-    },
-    {
-      "prompt": "Proč je mateřství tak důležité?",
-      "options": [
-        "Erben neměl jiné téma",
-        "Vztah matka–dítě je jádrem viny, lásky i kletby",
-        "Jde jen o humor",
-        "Matky v Kytici chybí"
-      ],
-      "correct": 1,
-      "expl": "Mnohé balady staví na mateřské lásce a jejím selhání."
-    },
-    {
-      "prompt": "Co odlišuje Erbena od Máchy?",
-      "options": [
-        "Erben nepíše verše",
-        "Erben je nadosobní, folklorní a mravní; Mácha subjektivnější",
-        "Mácha sbíral jen pověsti",
-        "Nic je neodlišuje"
-      ],
-      "correct": 1,
-      "expl": "Erbenův romantismus je lidový a etický, Máchův subjektivní."
-    },
-    {
-      "prompt": "Která balada NENÍ typicky spojována s Kyticí?",
-      "options": [
-        "Polednice",
-        "Vodník",
-        "Svatební košile",
-        "Máj jako součást Kytice"
-      ],
-      "correct": 3,
-      "expl": "Máj je samostatná Máchova skladba, ne součást Erbenovy Kytice."
-    }
+    {"prompt": "Kdo sestavil Kytici?", "options": ["Neruda", "Karel Jaromír Erben", "Nezval", "Vrchlický"], "correct": 1, "expl": "Erben vydal sbírku balad v polovině 19. století."},
+    {"prompt": "Jaký žánr Kytice reprezentuje?", "options": ["Román", "Baladická sbírka", "Drama", "Encyklopedie"], "correct": 1, "expl": "Jednotlivé balady jsou samostatné příběhy."},
+    {"prompt": "Co je typické pro baladu?", "options": ["Dlouhý klidný popis", "Dramatický děj, tragédie, morální poučka", "Sci-fi", "Bez rýmu"], "correct": 1, "expl": "Balada má napětí a často krutý konec."},
+    {"prompt": "O čem je balada Vodník?", "options": ["O rybáři bez děje", "O vodníkovi, který bere lidi do vody", "O válce", "O Praze"], "correct": 1, "expl": "Vodník je klasická postava lidové pověry."},
+    {"prompt": "Co dělá Polednice?", "options": ["Vaří oběd", "Trestá děti, které jsou na poli v poledne", "Učí v škole", "Staví most"], "correct": 1, "expl": "Balada Polednice varuje před poledním horkem a neposlušností."},
+    {"prompt": "Která balada obsahuje lišku Bystroušku?", "options": ["Vrba", "Svatební košile", "Morana", "Lilie"], "correct": 1, "expl": "Liška pomáhá proti vodníkovi v této baladě."},
+    {"prompt": "Co je morální poučka?", "options": ["Závěrečné poučení pro čtenáře", "Titul knihy", "Jméno postavy", "Refrén bez smyslu"], "correct": 0, "expl": "Erben často uzavírá baladu poučkou."},
+    {"prompt": "Proč Erben upravoval lidové pověsti?", "options": ["Náhodně", "Sjednotil je poeticky a morálně pro sbírku", "Z ničil", "Přeložil z angličtiny"], "correct": 1, "expl": "Erben je umělecky přetvořil, ne jen zapsal."},
+    {"prompt": "Jaký verš je typický?", "options": ["Slavný verš s rytmem a refrénem", "Proza", "Blank verse anglicky", "Bez verše"], "correct": 0, "expl": "Hudebnost jazyka je charakteristická."},
+    {"prompt": "O čem je balada Vrba?", "options": ["O matce a dětech u vrbového proutí", "O králi", "O vesmíru", "O sportu"], "correct": 0, "expl": "Vrba je známá refrénovitá balada o rodině."},
+    {"prompt": "Kdy vyšla Kytice poprvé v podstatě v dnešní podobě?", "options": ["1853", "2000", "1700", "1920"], "correct": 0, "expl": "Druhé vydání 1853 obsahuje většinu balad."},
+    {"prompt": "Jaký literární směr Erben reprezentuje?", "options": ["Realismus bez romantismu", "Romantismus a národní obrození", "Sci-fi", "Postmoderna"], "correct": 1, "expl": "Erben navazuje na lidovou tradici v romantické poezii."},
+    {"prompt": "Co je nadpřirozeno v Kytici?", "options": ["Nic", "Vodníci, polednice, kouzla, smrt personifikovaná", "Jen technologie", "Vesmír"], "correct": 1, "expl": "Lidová víra prostupuje baladami."},
+    {"prompt": "Proč maturita zahrnuje Kytici?", "options": ["Nejdelší román", "Základ české balady a lidové tradice", "Bez významu", "Jen anglicky"], "correct": 1, "expl": "Učí baladu, verš a interpretaci lidových motivů."},
+    {"prompt": "Co je balada Morana?", "options": ["O jarní bohyni smrti/zimy", "O autu", "O Praze", "O škole"], "correct": 0, "expl": "Morana je personifikace konce zimy / smrti."},
+    {"prompt": "Jak Erben pracuje s přírodou?", "options": ["Ignoruje", "Příroda je živá, symbolická, někdy hrozící", "Jen město", "Bez obrazů"], "correct": 1, "expl": "Krajina je součástí děsu i krásy."},
+    {"prompt": "Které téma se opakuje?", "options": ["Vina a trest", "Vesmírné lety", "Politika 21. století", "Sport"], "correct": 0, "expl": "Porušení zákazu často vede k tragédii."},
+    {"prompt": "Co je balada Lilie?", "options": ["Milostná idyla bez smrti", "Příběh s motivem hřbitova a mrtvých", "Komická hra", "Epos"], "correct": 1, "expl": "Lilie patří k temnějším baladám sbírky."},
+    {"prompt": "Kdo je Erben mimo Kytice?", "options": ["Sběratel lidových písní, historik, publicista", "Jen malíř", "Politik bez literatury", "Cizinec"], "correct": 0, "expl": "Erben byl významná osobnost obrození."},
+    {"prompt": "Jaký kontrast tvoří Svatební košile?", "options": ["Vodník vs. chytrá liška", "Bohatí vs. chudí bez děje", "Válka vs. mír", "Praha vs. Brno"], "correct": 0, "expl": "Liška Bystrouška přechytračí vodníka."},
+    {"prompt": "Co znamená refrén ve Vrbě?", "options": ["Opakování zvyšuje napětí a hudebnost", "Chyba tisku", "Anglický text", "Bez významu"], "correct": 0, "expl": "Refrén je součást baladické formy."},
+    {"prompt": "Který prvek NENÍ typický?", "options": ["Tragický konec", "Poučka", "Vesmírná opera", "Nadpřirozeno"], "correct": 2, "expl": "Kytice je lidová a krajinná poezie."},
+    {"prompt": "Jak číst baladu Zlatý kolovrat?", "options": ["Jako pohádku bez násilí", "Tragický příběh s trestem za zločin", "Sci-fi", "Reportáž"], "correct": 1, "expl": "Balada obsahuje kruté motivy lidové pověsti."},
+    {"prompt": "Co spojuje Kytici s národním obrozením?", "options": ["Cizí jazyk", "České motivy, identita, lidová tradice", "Bez národního významu", "Pouze němčina"], "correct": 1, "expl": "Sbírka je kulturním symbolem národa."},
+    {"prompt": "Jak Erben uzavírá balady?", "options": ["Bez závěru", "Morální poučkou nebo pointou", "Reklamou", "Anglicky"], "correct": 1, "expl": "Poučka vysvětluje etický význam."},
+    {"prompt": "Co je balada Holoubek?", "options": ["Milostná píseň s tragickým rozměrem", "Učebnice", "Román", "Fejeton"], "correct": 0, "expl": "Holoubek patří k známým baladám Kytice."},
+    {"prompt": "Jaký vztah má dítě k dospělým v baladách?", "options": ["Vždy poslušné bez děje", "Neposlušnost často vede k trestu", "Bez dětí", "Jen komedie"], "correct": 1, "expl": "Varování rodičům a dětem je časté."},
+    {"prompt": "Proč jsou balady stále živé?", "options": ["Univerzální motivy strachu, viny, lásky", "Zastaralé", "Nečitelné", "Bez jazyka"], "correct": 0, "expl": "Erbenova forma je nadčasová."},
+    {"prompt": "Co je slavný verš?", "options": ["Rytmická forma vhodná pro recitaci a píseň", "Prozaický odstavec", "Anglický sonet", "Bez rytmu"], "correct": 0, "expl": "Verš podporuje hudebnost Kytice."},
+    {"prompt": "Jaké poselství Kytice často nese?", "options": ["Respektuj zákony přírody a morálky, jinak hrozí trest", "Vše je dovoleno", "Pouze humor", "Bez etiky"], "correct": 0, "expl": "Balady varují před pýchou, neposlušností a zlem."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Lidský přestupek proti mravnímu řádu",
-        "Varování nebo znamení (často z přírody či nadpřirozena)",
-        "Hrdina/hrdinka varování nedbá",
-        "Nadpřirozený nebo tragický zásah",
-        "Trest a ztráta (dítě, milý, život)",
-        "Mravní pointa balady"
+        "Erben sbírá a upravuje lidové pověsti",
+        "Skládá balady do sbírky Kytice",
+        "Postavy poruší zákaz nebo pád do hříchu",
+        "Nadpřirozeno nebo osud trestá viníky",
+        "Tragický konec balady",
+        "Morální poučka pro čtenáře"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: vina → varování → nedbání → zásah → trest → mravní pointa."
+    "Správné pořadí: inspirace lidovou tradicí → sbírka → vina → trest → tragédie → poučka (typická struktura erbenovské balady)."
   ]
 }

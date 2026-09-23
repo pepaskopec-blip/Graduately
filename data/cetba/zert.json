@@ -4,46 +4,47 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Milan Kundera",
-        "Žánr: román",
+        "Autor: Milan Kundera (1929–2023)",
+        "Žánr: philosophický román",
         "Poprvé vydáno: 1967",
-        "Děj: Ludvík Jahn a důsledky politického „žertu“ v socialistickém Československu",
-        "Vyprávění: střídání vypravěčů, analytická próza"
+        "Děj: Československo 50.–60. let, pomsta za žert",
+        "Vyprávění: er-forma, retrospektivy, komentáře autora"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "50.–60. léta: ideologie, lavírování, paměť.",
-        "Pohlednice s žertem zničí Ludvíkovu kariéru.",
-        "Pomsta a láska se mísí s politickou historií.",
-        "Hudba, folklor a intelektuální debaty tvoří vrstvy.",
-        "Témata: vina, smích, ideologie, paměť těla."
+        "Ludvík Jahn – student, pošle žertovný dopis.",
+        "Poslanec Pavel Zeman – trest, vyhoštění z KSČ.",
+        "Pomsta na Zemanově milence Markétě.",
+        "Téma historie, osudu, ironie.",
+        "Kundera – formy románu, existenciální otázky.",
+        "Normalizace – kniha rezonovala i později."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ludvík Jahn – vypravěč, pomsta za minulost.",
-        "Helena – žena spjatá s jeho plánem.",
-        "Jaroslav – folklorista, přítel.",
-        "Kostka – křesťanský intelektuál.",
-        "Lucie – milostná linie z minulosti.",
-        "Strana / soudruzi – mechanismus moci."
+        "Ludvík Jahn – hlavní hrdina.",
+        "Markéta – Zemanova milenka, pomsta.",
+        "Pavel Zeman – poslanec, oběť žertu.",
+        "Kostra, Helena – další postavy.",
+        "Autorův komentář – rovina vypravěče.",
+        "Studenti, politická komise."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Žert – spouštěč katastrofy.",
-        "Ideologie – ničí soukromí.",
-        "Pomsta – motiv přítomnosti.",
-        "Paměť a tělo – Kunderova poetika.",
-        "Polyfonie vyprávění – více hlasů.",
-        "Smích a zapomnění – filozofický přesah."
+        "Žert – drobnost s fatálními následky.",
+        "Komunistický režim 50. let.",
+        "Pomsta – kruhové dějiny.",
+        "Láska a moc.",
+        "Ironie osudu – Ludvík nevyhrává.",
+        "Kundera – román jako dialog s čtenářem."
       ]
     }
   ],
@@ -52,149 +53,369 @@
       "prompt": "Kdo napsal Žert?",
       "options": [
         "Škvorecký",
-        "Kundera",
-        "Hrabal",
-        "Vaculík"
+        "Milan Kundera",
+        "Havel",
+        "Čapek"
       ],
       "correct": 1,
-      "expl": "Autorem je Milan Kundera."
+      "expl": "Kundera 1967."
     },
     {
-      "prompt": "Co spustí Ludvíkův pád?",
+      "prompt": "Co Ludvík udělá?",
       "options": [
-        "Autonehoda",
-        "Politický žert na pohlednici",
-        "Výhra v loterii",
-        "Emigrace hned"
+        "Pošle žertovný postcard poslanci",
+        "Zavraždí",
+        "Uteče",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Pohlednice je vzata vážně mocí."
+      "correct": 0,
+      "expl": "Trigger děje."
     },
     {
-      "prompt": "V jaké době se příběh pohybuje?",
+      "prompt": "Důsledek žertu?",
       "options": [
-        "Husitské války",
-        "Socialistické Československo 50.–60. let",
-        "Antický Řím",
-        "Současný New York jen"
+        "Vyhoštění z KSČ, gulag práce",
+        "Nobelovka",
+        "Svatba",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Politický kontext ČSSR."
+      "correct": 0,
+      "expl": "Režim."
     },
     {
-      "prompt": "Jaká je Ludvíkova motivace později?",
+      "prompt": "Pomsta?",
       "options": [
-        "Zahrádkaření",
-        "Pomsta za zničený život",
-        "Vstup do kláštera",
-        "Sportovní kariéra"
+        "Na Zemanově milence Markétě",
+        "Na Tomovi",
+        "Bez",
+        "Na mlokovi"
       ],
-      "correct": 1,
-      "expl": "Chce se mstít."
+      "correct": 0,
+      "expl": "Plán Ludvíka."
     },
     {
-      "prompt": "Jak je román vyprávěn?",
+      "prompt": "Kdy děj?",
       "options": [
-        "Jen jedním dětským hlasem",
-        "Střídáním vypravěčů",
-        "Jen veršem",
-        "Jen scénářem filmu němého"
+        "50.–60. léta ČSSR",
+        "1945",
+        "1984",
+        "1890"
       ],
-      "correct": 1,
-      "expl": "Polyfonní struktura."
+      "correct": 0,
+      "expl": "Socialismus."
     },
     {
-      "prompt": "Co Kundera zkoumá?",
+      "prompt": "Zeman?",
       "options": [
-        "Jen recepty",
-        "Ideologii, smích, paměť a vztahy",
-        "Jen zeměměřičství",
-        "Jen botaniku"
+        "Poslanec, oběť",
+        "Pilot",
+        "Sluha",
+        "Gatsby"
       ],
-      "correct": 1,
-      "expl": "Filozofující román o moci a soukromí."
+      "correct": 0,
+      "expl": "Politik."
     },
     {
-      "prompt": "Kdo je Jaroslav?",
+      "prompt": "Markéta?",
       "options": [
-        "Policista",
-        "Přítel spjatý s folklorem",
-        "Revizor",
-        "Robot"
+        "Milenka, nástroj pomsty",
+        "Sestra",
+        "Bez",
+        "Němka"
       ],
-      "correct": 1,
-      "expl": "Jaroslav reprezentuje jiný svět hodnot."
+      "correct": 0,
+      "expl": "Postava."
     },
     {
-      "prompt": "Proč je „žert“ nebezpečný?",
+      "prompt": "Jak pomsta dopadne?",
       "options": [
-        "Není",
-        "V ideologickém systému nemá humor milost",
-        "Protože je anglicky",
-        "Protože je o jídle"
+        "Ludvík neuspěje – ironie",
+        "Dokonalá",
+        "Bez",
+        "Smrt všech"
       ],
-      "correct": 1,
-      "expl": "Moc nezná ironii."
+      "correct": 0,
+      "expl": "Kunderova ironie."
     },
     {
-      "prompt": "Kdy kniha vyšla?",
+      "prompt": "Kundera styl?",
       "options": [
-        "1948",
+        "Filosofické odbočky, struktura",
+        "Bez",
+        "Jen báseň",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Moderní román."
+    },
+    {
+      "prompt": "Téma historie?",
+      "options": [
+        "Osobní osud vs. ideologie",
+        "Bez",
+        "Sci-fi",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Jádro."
+    },
+    {
+      "prompt": "Rok vydání?",
+      "options": [
         "1967",
-        "1989",
-        "1920"
+        "1958",
+        "2000",
+        "1949"
       ],
-      "correct": 1,
-      "expl": "1967."
+      "correct": 0,
+      "expl": "Před 68."
     },
     {
-      "prompt": "Jak končí pomsta?",
+      "prompt": "Co NENÍ?",
       "options": [
-        "Dokonalým triumfem",
-        "Nejde podle plánu, ironie se obrací",
-        "Svatbou se stranou",
-        "Oslavou pohlednice"
+        "Politika",
+        "Pomsta",
+        "Ironie",
+        "Kosmické mloky"
       ],
-      "correct": 1,
-      "expl": "Pomsta selhává/ironicky se láme."
+      "correct": 3,
+      "expl": "Jiné dílo."
     },
     {
-      "prompt": "Jaká je role Lucie?",
+      "prompt": "Ludvík po trestu?",
       "options": [
-        "Žádná",
-        "Klíčová milostná a existenciální linie",
-        "Jen úřednice bez vztahu",
-        "Jen vypravěčka zákonů"
+        "Manuální práce, outsider",
+        "Ministr",
+        "Bez",
+        "Král"
       ],
-      "correct": 1,
-      "expl": "Lucie patří k Ludvíkově minulosti."
+      "correct": 0,
+      "expl": "Stigma."
     },
     {
-      "prompt": "Hlavní téma?",
+      "prompt": "Film?",
       "options": [
-        "Cestování",
-        "Moc, vina, smích a nemožnost napravit minulost",
-        "Robotika",
-        "Balady o vodníkovi"
+        "1969 Jaromil Jireš",
+        "Bez",
+        "Gatsby",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Ideologie proti soukromému životu."
+      "correct": 0,
+      "expl": "Nová vlna."
+    },
+    {
+      "prompt": "Kostra?",
+      "options": [
+        "Přítel Ludvíka",
+        "Bez",
+        "Němec",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Helena?",
+      "options": [
+        "Manželka Ludvíka",
+        "Bez",
+        "Daisy",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Rodina."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Struktura, témata, kontext 50. let",
+        "Bez",
+        "Mapa",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Česká próza."
+    },
+    {
+      "prompt": "Ironie?",
+      "options": [
+        "Pomsta se obrátí proti pomstiteli",
+        "Bez",
+        "Bez humoru",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Závěr."
+    },
+    {
+      "prompt": "Autor komentář?",
+      "options": [
+        "Kundera přerušuje děj",
+        "Ne",
+        "Bez",
+        "Shakespeare"
+      ],
+      "correct": 0,
+      "expl": "Forma."
+    },
+    {
+      "prompt": "KSČ?",
+      "options": [
+        "Politická moc",
+        "Bez",
+        "Jazz klub",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Režim."
+    },
+    {
+      "prompt": "Existenciální?",
+      "options": [
+        "Smysl, náhoda, osud",
+        "Bez",
+        "Jen sport",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Filosofie."
+    },
+    {
+      "prompt": "Kundera později?",
+      "options": [
+        "Emigrace do Francie",
+        "Nikdy",
+        "1890",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Autor."
+    },
+    {
+      "prompt": "Žert definice?",
+      "options": [
+        "Drobnost s velkými důsledky",
+        "Válka",
+        "Bez",
+        "Láska only"
+      ],
+      "correct": 0,
+      "expl": "Titul."
+    },
+    {
+      "prompt": "Markéta a Ludvík?",
+      "options": [
+        "Aféra jako pomsta",
+        "Sourozenci",
+        "Bez",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Děj."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Ironický, vážný",
+        "Pure comedy",
+        "Bez",
+        "Pohádka"
+      ],
+      "correct": 0,
+      "expl": "Kundera."
+    },
+    {
+      "prompt": "Struktura?",
+      "options": [
+        "Retrospektivy, kapitoly",
+        "Jeden den",
+        "Bez",
+        "Báseň"
+      ],
+      "correct": 0,
+      "expl": "Román."
+    },
+    {
+      "prompt": "Normalizace?",
+      "options": [
+        "Kniha rezonovala",
+        "Bez",
+        "2000",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Kontext."
+    },
+    {
+      "prompt": "Láska a moc?",
+      "options": [
+        "Propleteno",
+        "Bez",
+        "Bez tématu",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Téma."
+    },
+    {
+      "prompt": "Vypravěč?",
+      "options": [
+        "Ludvík + autor",
+        "Nick",
+        "Bez",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Perspektivy."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Historie ničí i drobné činy",
+        "Bez",
+        "Vždy vyhraj",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Kunderova myšlenka."
+    },
+    {
+      "prompt": "Kdo je Kostka v Žertu?",
+      "options": [
+        "Křesťanský intelektuál, s nímž Ludvík debatuje o smyslu",
+        "Velitel SNB",
+        "Rybář Santiago",
+        "Gatsby"
+      ],
+      "correct": 0,
+      "expl": "Kostka reprezentuje jinou etickou perspektivu než režim."
+    },
+    {
+      "prompt": "Jak dopadne Ludvíkova pomsta skrze Helenu?",
+      "options": [
+        "Neplní očekávání – ironie a selhání plánu",
+        "Dokonalý triumf",
+        "Helena zatčena hned",
+        "Ludvík emigruje bez důsledků"
+      ],
+      "correct": 0,
+      "expl": "Kundera ukazuje, že minulost nelze jednoduše „opravit“ pomstou."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Ludvík napíše osudový žert",
-        "Je potrestán režimem",
-        "Žije s následky let",
-        "Plánuje pomstu skrze Helenu",
-        "Setkává se s minulostí a přáteli",
-        "Pomsta se zhroutí v ironii"
+        "Ludvík pošle žertovný dopis",
+        "Trest – vyhoštění z strany, práce",
+        "Léta plynou – hořkost",
+        "Plán pomsty přes Markétu",
+        "Aféra a zklamání",
+        "Pomsta se nezdaří – ironický konec"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: žert → trest → léta následků → plán pomsty → setkání → ironický krach."
+    "Správné pořadí: žert → trest → léta → plán pomsty → Markéta → neúspěch pomsty."
   ]
 }

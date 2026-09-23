@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Suzanne Collins; překlad: Dušek",
+        "Autor: Suzanne Collins",
         "Žánr: dystopický young adult román",
-        "Poprvé vydáno: 2008",
-        "Děj/prostředí: Panem: Kapitol a chudé distrikty; aréna Her",
-        "Vyprávění/forma: ich-forma přítomného času (Katniss); překlad Dušek"
+        "Poprvé vydáno: 2008 (I. Aréna smrti)",
+        "Děj/prostředí: Panem, Kapitol, aréna",
+        "Vyprávění/forma: ich-forma Katniss; překlad Dušek"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Postapokalyptická Severní Amerika (Panem).",
-        "Kapitol ovládá 12 distriktů terorem a spektáklem.",
-        "Hladové hry: každoroční televizní souboj dětí na život a na smrt.",
-        "Chudoba distriktů vs. přepych Kapitolu.",
-        "Odpor se rodí z osobní vzpoury a symbolů.",
-        "Téma: moc, média, násilí jako zábava, přežití, morálka."
+        "Postapokalyptický stát Panem",
+        "Kapitol vládne 12 okresům",
+        "Hladové hry – televizní boj na smrt",
+        "Chudoba okresů vs. luxus Kapitolu",
+        "Rebelii potlačují",
+        "Survival a mediální show"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Katniss Everdeenová – lovkyně z distriktu 12, dobrovolnice.",
-        "Peeta Mellark – pekařský syn, spolutribut.",
-        "Gale Hawthorne – Katnissin přítel z lovu.",
-        "Haymitch Abernathy – mentor, bývalý vítěz.",
-        "Effie Trinketová – eskortá z Kapitolu.",
-        "Prezident Snow – vládce Panemu (v pozadí moci)."
+        "Katniss Everdeen – vypravěčka, lovkyně",
+        "Peeta Mellark – spoluhráč z Pece",
+        "Gale – přítel z Distraktu 12",
+        "Haymitch – vítěz, mentor",
+        "Effie Trinket – escort",
+        "Cinna – stylista"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Panem – stát Kapitolu a distriktů.",
-        "Hladové hry – televizní zabíjení tributů.",
-        "Tribut – chlapec a dívka z každého distriktu.",
-        "Distrikt 12 – chudý uhelný kraj Katniss.",
-        "Mockingjay / symbol – zárodek odporu.",
-        "Spektákl – násilí jako zábava mocných."
+        "Aréna – bojiště",
+        "Sponzoři – pomoc diváků",
+        "Předstíraná láska",
+        "Mockingjay symbol",
+        "Tribut – tributář",
+        "Odpor proti Kapitolu"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Hladové hry?",
+      "prompt": "Autorka?",
       "options": [
-        "J. K. Rowlingová",
-        "Suzanne Collins",
-        "Veronica Rothová",
-        "Bradbury"
+        "Collins",
+        "Rowling",
+        "Orwell",
+        "Viewegh"
       ],
-      "correct": 1,
-      "expl": "První díl trilogie vyšel 2008."
+      "correct": 0,
+      "expl": "Suzanne Collins."
     },
     {
-      "prompt": "Kdo je Katniss?",
+      "prompt": "Rok?",
       "options": [
-        "Prezidentka",
-        "Dívka z distriktu 12, která jde dobrovolně místo sestry",
-        "Mentorka z Kapitolu",
-        "Tribut z distriktu 1 výhradně"
-      ],
-      "correct": 1,
-      "expl": "Přihlásí se místo Prim a stane se hrdinkou arény."
-    },
-    {
-      "prompt": "Co jsou Hladové hry?",
-      "options": [
-        "Sportovní olympiáda bez násilí",
-        "Televizní souboj mladých tributů na život a na smrt",
-        "Školní test",
-        "Divadelní hra Cimrmana"
-      ],
-      "correct": 1,
-      "expl": "Kapitol jimi trestá a baví se zároveň."
-    },
-    {
-      "prompt": "Kdo je Peeta?",
-      "options": [
-        "Voják Snowa",
-        "Spolutribut z distriktu 12, pekařův syn",
-        "Galeův otec",
-        "Hlavní kameraman"
-      ],
-      "correct": 1,
-      "expl": "V aréně i mimo ni je klíčový vztah Katniss–Peeta."
-    },
-    {
-      "prompt": "Proč Kapitol hry pořádá?",
-      "options": [
-        "Z vědecké zvědavosti",
-        "Jako trest za povstání a nástroj kontroly skrze strach a show",
-        "Aby vybral krále Lilliputu",
-        "Aby léčil bílou nemoc"
-      ],
-      "correct": 1,
-      "expl": "Spektákl má distrikty ponižovat a zastrašovat."
-    },
-    {
-      "prompt": "Kdo je Haymitch?",
-      "options": [
-        "Prezident",
-        "Mentor a bývalý vítěz Her",
-        "Tribut dítě",
-        "Trifid"
-      ],
-      "correct": 1,
-      "expl": "Alkoholik s traumatem, ale strategicky pomáhá."
-    },
-    {
-      "prompt": "Kde Katniss žije před hrami?",
-      "options": [
-        "V Kapitolu v paláci",
-        "V distriktu 12",
-        "V Amsterodamu",
-        "V Elsinoru"
-      ],
-      "correct": 1,
-      "expl": "Distrikt 12 je chudý uhelný kraj."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1949",
         "2008",
-        "1862",
-        "1928"
+        "1984",
+        "1950",
+        "1862"
       ],
-      "correct": 1,
-      "expl": "The Hunger Games 2008; česky mimo jiné v překladu Duška."
+      "correct": 0,
+      "expl": "První díl."
     },
     {
-      "prompt": "Jaký je vyprávěcí postup?",
+      "prompt": "Panem?",
       "options": [
-        "Jen sbor",
-        "Ich-forma (Katniss), často přítomný čas",
-        "Jen úřední protokol",
-        "Pásmo Nezvala"
+        "Dystopický stát",
+        "Praha",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Bezprostřední ich-forma vtahuje do arény."
+      "correct": 0,
+      "expl": "Prostředí."
     },
     {
-      "prompt": "Co Katniss umí a využívá?",
+      "prompt": "Katniss?",
       "options": [
-        "Jen zpěv opery",
-        "Lov a lukostřelbu",
-        "Jen účetnictví",
-        "Alchymii Jekylla"
+        "Hrdinka z Distraktu 12",
+        "Kapitol",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Lovecké dovednosti jí dávají šanci přežít."
+      "correct": 0,
+      "expl": "Ich."
     },
     {
-      "prompt": "Jaký žánr knize sedí?",
+      "prompt": "Peeta?",
       "options": [
-        "Antická óda",
+        "Chlapec z Pece, péká chleba",
+        "Kapitol",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Partner."
+    },
+    {
+      "prompt": "Hladové hry?",
+      "options": [
+        "Boj na smrt na TV",
+        "Sport",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Koncept."
+    },
+    {
+      "prompt": "12 okresů?",
+      "options": [
+        "Pod Kapitolem",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Struktura."
+    },
+    {
+      "prompt": "Haymitch?",
+      "options": [
+        "Mentor, vítěz",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Mockingjay pin?",
+      "options": [
+        "Symbol od Madge/symbol odporu",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Předstíraná láska?",
+      "options": [
+        "Strategie v aréně",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Peeta+Katniss."
+    },
+    {
+      "prompt": "Gale?",
+      "options": [
+        "Přítel doma",
+        "Kapitol",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Love triangle."
+    },
+    {
+      "prompt": "Effie?",
+      "options": [
+        "Escort Kapitolu",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Cinna?",
+      "options": [
+        "Stylista Katniss",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Podpora."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Dušek",
+        "Nezval",
+        "Kořán",
+        "Nevrla"
+      ],
+      "correct": 0,
+      "expl": "Katalog."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
         "Dystopický YA román",
-        "Husitská kronika",
-        "Deník z 17. století"
+        "Epos",
+        "Drama",
+        "Lyrika"
       ],
-      "correct": 1,
-      "expl": "Young adult dystopie o moci a médiích."
+      "correct": 0,
+      "expl": "Próza."
     },
     {
-      "prompt": "Co je ústředním mediálním motivem?",
+      "prompt": "Aréna I. díl?",
       "options": [
-        "Ticho jako u Becketta výhradně",
-        "Násilí vysílané jako zábava",
-        "Jen rádio Edison",
-        "Cimrmanův seminář"
+        "Lesní aréna",
+        "Moře",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Kamery a show Kapitolu jsou nástroj moci."
+      "correct": 0,
+      "expl": "Boj."
+    },
+    {
+      "prompt": "Rue?",
+      "options": [
+        "Tribut z 11, smrt",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Emoce."
+    },
+    {
+      "prompt": "Kapitol?",
+      "options": [
+        "Bohaté centrum",
+        "Chudé",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Moc."
+    },
+    {
+      "prompt": "Vítězství I. díl?",
+      "options": [
+        "Katniss a Peeta oba",
+        "Jen Gale",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Pravidlo změněno."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Moderní dystopie",
+        "Nejstarší",
+        "Bez témat",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Čtení."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Katniss",
+        "Peeta",
+        "Hamlet",
+        "Haymitch"
+      ],
+      "correct": 2,
+      "expl": "Shakespeare."
+    },
+    {
+      "prompt": "Téma média?",
+      "options": [
+        "Hry jako show",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Kritika."
+    },
+    {
+      "prompt": "Lov?",
+      "options": [
+        "Katniss dovednost",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Přežití."
+    },
+    {
+      "prompt": "Prim?",
+      "options": [
+        "Mladší sestra",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Do volunteer?",
+      "options": [
+        "Katniss místo Prim",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Začátek."
+    },
+    {
+      "prompt": "Sponzoři?",
+      "options": [
+        "Posílají dárky",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Pravidla."
+    },
+    {
+      "prompt": "Katalog titul?",
+      "options": [
+        "Hladové hry – I. Aréna smrti",
+        "1984",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Katalog."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Moc a zábava z utrpení jsou nebezpečné",
+        "Hry dobré",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Dystopie."
+    },
+    {
+      "prompt": "Snow president?",
+      "options": [
+        "Vůdce Kapitolu",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Antagonista."
+    },
+    {
+      "prompt": "Berries?",
+      "options": [
+        "Finále – hrozba sebevraždy",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Vítězství."
+    },
+    {
+      "prompt": "Ich-forma?",
+      "options": [
+        "Katniss",
+        "Er",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Vypravěč."
+    },
+    {
+      "prompt": "Trilogie?",
+      "options": [
+        "3 knihy celkem",
+        "1",
+        "10",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Série."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Prim je vylosována; Katniss se hlásí dobrovolně",
-        "Tributové jedou do Kapitolu a na trénink",
-        "Hry v aréně začínají krveprolitím",
-        "Katniss uzavírá spojenectví a bojuje o život",
-        "S Peetou hrají „lásku“ pro diváky i přežití",
-        "Společné vítězství naruší pravidla Kapitolu"
+        "Katniss se přihlásí místo Prim",
+        "Příprava v Kapitolu a trénink",
+        "Vstup do arény Hladových her",
+        "Boj o přežití a smrt Rue",
+        "Strategie s Peetou a sponzory",
+        "Vítězství obou a provokace Kapitolu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: dobrovolnictví za Prim → Kapitol a trénink → start arény → boj a spojenectví → show lásky s Peetou → společné vítězství proti pravidlům."
+    "Pořadí: dobrovolnice → Kapitol → aréna → přežití → Peeta → vítězství."
   ]
 }

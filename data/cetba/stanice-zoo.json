@@ -4,9 +4,9 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Christiane F. (zaznamenali Kai Hermann a Horst Rieck)",
+        "Autor: Christiane F. (Christiane Felscherinow; zaznamenali Kai Hermann a Horst Rieck)",
         "Žánr: dokumentární próza / autentická zpověď",
-        "Poprvé vydáno: 1978 (Wir Kinder vom Bahnhof Zoo)",
+        "Poprvé vydáno: 1978 (Wir Kinder vom Bahnhof Zoo); česky My děti ze stanice ZOO",
         "Děj / prostředí: Západní Berlín 70. let – stanice Zoo, drogová scéna",
         "Vyprávění / forma: ich-forma Christiane, reportážní styl založený na rozhovorech"
       ]
@@ -19,8 +19,8 @@
         "Kniha vznikla z novinářských rozhovorů s Christiane Felscherinow.",
         "Ukazuje propad od dětství a večírků k závislosti.",
         "Stanice Zoo je centrem drogové scény a obchodu s tělem.",
-        "Text varuje před drogami bez moralizující pohádky – skrze svědectví.",
-        "Patří k nejznámějším dokumentárním příběhům o závislosti."
+        "Text varuje před drogami skrze svědectví, bez pohádkového moralizování.",
+        "Patří k nejznámějším dokumentárním příběhům o závislosti dospívajících."
       ]
     },
     {
@@ -54,148 +54,346 @@
       "options": [
         "O válečném hrdinství",
         "O drogové závislosti dospívajících v Berlíně",
-        "O středověku",
+        "O středověké legendě",
         "O venkovské idyle"
       ],
       "correct": 1,
-      "expl": "Jde o svědectví o heroinové scéně 70. let."
+      "expl": "Jde o svědectví o heroinové scéně Západního Berlína 70. let."
     },
     {
       "prompt": "Kdo je Christiane F.?",
       "options": [
-        "Fiktivní detektiv",
+        "Fiktivní detektivka",
         "Skutečná dívka, jejíž zpověď kniha zaznamenává",
-        "Policistka",
-        "Lékárnice"
+        "Policistka na stanici Zoo",
+        "Autorka sci-fi románů"
       ],
       "correct": 1,
-      "expl": "Christiane Felscherinow je autentická vypravěčka příběhu."
+      "expl": "Christiane Felscherinow vypráví vlastní zkušenost; text vznikl z rozhovorů."
     },
     {
-      "prompt": "Kde se děj odehrává?",
+      "prompt": "Kde se děj především odehrává?",
       "options": [
-        "V Praze",
-        "V Západním Berlíně u stanice Zoo",
-        "V New Yorku výhradně",
-        "V Moskvě"
+        "V Praze 90. let",
+        "V Západním Berlíně 70. let kolem stanice Zoo",
+        "V New Yorku za prohibice",
+        "V Paříži za komuny"
       ],
       "correct": 1,
-      "expl": "Centrem scény je berlínská stanice Zoologischer Garten."
+      "expl": "Centrem je drogová scéna kolem berlínského Bahnhof Zoo."
     },
     {
       "prompt": "Jak kniha vznikla?",
       "options": [
-        "Jako román z fantazie bez podkladů",
+        "Jako čistá fikce bez předlohy",
         "Z novinářských rozhovorů s Christiane",
-        "Jako oficiální vládní brožura",
-        "Jako veršovaná skladba"
+        "Jako deník napsaný ve vězení",
+        "Jako básnická sbírka"
       ],
       "correct": 1,
-      "expl": "Text zpracovali novináři na základě rozhovorů."
-    },
-    {
-      "prompt": "Proč Christiane prostitutuje?",
-      "options": [
-        "Z kariérních důvodů",
-        "Aby získala peníze na heroin",
-        "Na příkaz školy",
-        "Pro film"
-      ],
-      "correct": 1,
-      "expl": "Prostituce je důsledkem a nástrojem závislosti."
-    },
-    {
-      "prompt": "Kdy kniha vyšla?",
-      "options": [
-        "1958",
-        "1968",
-        "1978",
-        "1998"
-      ],
-      "correct": 2,
-      "expl": "Originál vyšel roku 1978."
+      "expl": "Kai Hermann a Horst Rieck zaznamenali její výpověď reportážním stylem."
     },
     {
       "prompt": "Kdo je Detlef?",
       "options": [
-        "Učitel",
-        "Christianeán přítel ze scény, také závislý",
-        "Policista",
-        "Lékař"
+        "Christianeina matka",
+        "Její přítel, také závislý",
+        "Dealer s heroinem",
+        "Sociální pracovník"
       ],
       "correct": 1,
-      "expl": "Detlef je její partner v drogovém propadu."
+      "expl": "Detlef patří k nejbližším osobám v příběhu závislosti."
     },
     {
-      "prompt": "Jaký je styl vyprávění?",
+      "prompt": "Čím se Christiane často živí, aby měla na dávku?",
       "options": [
-        "Barokní epos",
-        "Dokumentární ich-forma blízká reportáži",
-        "Antiká tragédie ve verších",
-        "Sci-fi"
+        "Prací v knihovně",
+        "Prostitucí",
+        "Studiem medicíny",
+        "Prodejem obrazů"
       ],
       "correct": 1,
-      "expl": "Text působí jako autentická zpověď."
+      "expl": "Text ukazuje, jak závislost vede k prostituci mladistvých."
     },
     {
-      "prompt": "Co kniha ukazuje o „zábavě“ na začátku?",
+      "prompt": "Jaká droga je v knize ústřední?",
       "options": [
-        "Že je neškodná navždy",
-        "Že večírky a drogy mohou rychle přerůst v závislost",
-        "Že vedou jen ke sportu",
-        "Že končí maturitou"
+        "Alkohol",
+        "Heroin",
+        "Nikotin",
+        "Kofein"
       ],
       "correct": 1,
-      "expl": "Cesta začíná subkulturou a končí heroinem."
+      "expl": "Příběh sleduje propad do heroinové závislosti."
     },
     {
-      "prompt": "Jaká je role matky?",
+      "prompt": "Jaký je žánr knihy?",
       "options": [
-        "Dealerka",
-        "Snaží se pomáhat, ale často je bezmocná",
-        "Hlavní vypravěčka místo dcery",
-        "Nepřítelem policie"
+        "Rytířský román",
+        "Dokumentární próza / autentická zpověď",
+        "Antická tragédie",
+        "Science fiction"
       ],
       "correct": 1,
-      "expl": "Rodina naráží na limity pomoci při závislosti."
-    },
-    {
-      "prompt": "Proč je text maturitně relevantní?",
-      "options": [
-        "Oslavuje drogy",
-        "Jako svědectví o závislosti, společnosti a ztrátě dětství",
-        "Jako návod",
-        "Jako komedie"
-      ],
-      "correct": 1,
-      "expl": "Čte se jako varovné autentické svědectví."
+      "expl": "Nejde o klasickou fikci, ale o svědectví založené na rozhovorech."
     },
     {
       "prompt": "Co symbolizuje stanice Zoo?",
       "options": [
-        "Turistický ráj bez problémů",
+        "Školní úspěch",
         "Centrum drogové scény a úpadku",
-        "Školu",
-        "Nemocnici výhradně"
+        "Turistickou atrakci bez stinné stránky",
+        "Sídlo vlády"
       ],
       "correct": 1,
-      "expl": "Název odkazuje na místo, kde se scéna soustředí."
+      "expl": "Bahnhof Zoo je místem obchodu s drogami i tělem."
+    },
+    {
+      "prompt": "Jak kniha působí na čtenáře především?",
+      "options": [
+        "Jako návod k užívání drog",
+        "Jako varovné svědectví o závislosti",
+        "Jako komedie o dospívání",
+        "Jako detektivka s happy endem"
+      ],
+      "correct": 1,
+      "expl": "Síla textu je v autenticitě a v zobrazení propadu bez zkrášlení."
+    },
+    {
+      "prompt": "Jaká je role matky v příběhu?",
+      "options": [
+        "Je hlavní dealerkou",
+        "Snaží se dceru zachránit, ale často je bezmocná",
+        "O dceru nestojí",
+        "Vede drogový gang"
+      ],
+      "correct": 1,
+      "expl": "Rodina vidí problém, ale systém i závislost ji přerůstají."
+    },
+    {
+      "prompt": "Proč text není „hrdinský“ příběh o překonání?",
+      "options": [
+        "Protože Christiane vyhrává olympiádu",
+        "Protože ukazuje realitu závislosti bez romantizace",
+        "Protože chybí postavy",
+        "Protože je to jen seznam vtipů"
+      ],
+      "correct": 1,
+      "expl": "Dokumentárnost odmítá falešné happy endy a heroizaci."
+    },
+    {
+      "prompt": "Která formulace nejlépe vystihuje vyprávění?",
+      "options": [
+        "Er-forma vševědoucího historika",
+        "Ich-forma Christiane v reportážním stylu",
+        "Veršovaná epopej",
+        "Soubor sonetů"
+      ],
+      "correct": 1,
+      "expl": "Čtenář slyší její hlas; novináři text sestavili z rozhovorů."
+    },
+    {
+      "prompt": "Co kniha ukazuje o institucích (škola, policie, sociální péče)?",
+      "options": [
+        "Všechny problémy okamžitě vyřeší",
+        "Často nestíhají nebo zasahují pozdě",
+        "Neexistují",
+        "Jsou hlavními dealery"
+      ],
+      "correct": 1,
+      "expl": "Instituce jsou přítomné, ale závislost a scéna je přerůstají."
+    },
+    {
+      "prompt": "Jak začíná Christianina cesta k drogám typicky v knize?",
+      "options": [
+        "Povinnou školní praxí v nemocnici",
+        "Přes party scénu, kamarády a experimentování",
+        "Studiem teologie",
+        "Prací v bance"
+      ],
+      "correct": 1,
+      "expl": "Propad jde od subkultury a experimentů k heroinu."
+    },
+    {
+      "prompt": "Proč je kniha stále čtená ve škole / k maturitě?",
+      "options": [
+        "Protože je krátká pohádka",
+        "Protože otevírá témata závislosti, dospívání a společnosti",
+        "Protože nemá žádný obsah",
+        "Protože je to jen cestopis"
+      ],
+      "correct": 1,
+      "expl": "Nabízí silné společenské svědectví a látku k diskusi."
+    },
+    {
+      "prompt": "Co znamená „dokumentárnost“ u této knihy?",
+      "options": [
+        "Že jde o soudní spis bez příběhu",
+        "Že staví na autentické výpovědi a faktech ze života",
+        "Že nemá žádné postavy",
+        "Že je to výhradně fikční fantasy"
+      ],
+      "correct": 1,
+      "expl": "Autenticita je základní rys žánru i účinku textu."
+    },
+    {
+      "prompt": "Jak text zachází s moralizováním?",
+      "options": [
+        "Káže dlouhé kázání bez příběhu",
+        "Varuje především skrze konkrétní svědectví, ne skrze pohádku",
+        "Vyzdvihuje drogy jako řešení",
+        "Ignoruje důsledky"
+      ],
+      "correct": 1,
+      "expl": "Síla je v ukázání důsledků, ne v abstraktním kázání."
+    },
+    {
+      "prompt": "Kdo knihu „napsal“ ve smyslu literární podoby?",
+      "options": [
+        "Jen anonymní dav",
+        "Christiane vypráví; Hermann a Rieck text zaznamenali a sestavili",
+        "Jen Tennessee Williams",
+        "Jen Karel Čapek"
+      ],
+      "correct": 1,
+      "expl": "Jde o spolupráci svědkyně a novinářů."
+    },
+    {
+      "prompt": "Co je typickým důsledkem závislosti v knize?",
+      "options": [
+        "Okamžité zbohatnutí bez rizika",
+        "Ztráta zdraví, vztahů a bezpečného dětství",
+        "Zisk Nobelovy ceny",
+        "Přestěhování na farmu bez problémů"
+      ],
+      "correct": 1,
+      "expl": "Text ukazuje totální rozklad běžného života."
+    },
+    {
+      "prompt": "Proč název odkazuje na stanici ZOO?",
+      "options": [
+        "Protože kniha je o zvířatech v kleci doslova",
+        "Protože Bahnhof Zoo je klíčové místo scény, o níž Christiane mluví",
+        "Protože jde o průvodce zoo",
+        "Protože se odehrává jen v Praze"
+      ],
+      "correct": 1,
+      "expl": "Stanice je reálným i symbolickým centrem příběhu."
+    },
+    {
+      "prompt": "Jaká je perspektiva vyprávění vůči drogové scéně?",
+      "options": [
+        "Zvenčí jako suchá statistika bez lidí",
+        "Zevnitř – očima dospívající závislé",
+        "Jen z pohledu policie",
+        "Jen z pohledu dealerů jako hrdinů"
+      ],
+      "correct": 1,
+      "expl": "Ich-forma dává intimní a šokující pohled zevnitř."
+    },
+    {
+      "prompt": "Která teze je s knihou v souladu?",
+      "options": [
+        "Závislost je jen „špatná nálada“",
+        "Závislost ničí tělo, vztahy i budoucnost",
+        "Drogová scéna je bezpečná zábava",
+        "Prostituce s drogami nesouvisí"
+      ],
+      "correct": 1,
+      "expl": "Celý text je litanií důsledků závislosti."
+    },
+    {
+      "prompt": "Jak kniha pracuje s časem dospívání?",
+      "options": [
+        "Ukazuje spokojené stáří důchodců",
+        "Ukazuje zkrácené / ztracené dětství a dospívání",
+        "Ignoruje věk postav",
+        "Odehrává se jen ve školní lavici bez konfliktů"
+      ],
+      "correct": 1,
+      "expl": "Christiane a její okolí přicházejí o běžné dospívání."
+    },
+    {
+      "prompt": "Co je „scéna“ v kontextu knihy?",
+      "options": [
+        "Divadelní představení ve Národním",
+        "Sociální prostředí party, drog a stanice Zoo",
+        "Sportovní turnaj",
+        "Školní sbor"
+      ],
+      "correct": 1,
+      "expl": "Scéna označuje subkulturu, v níž se Christiane pohybuje."
+    },
+    {
+      "prompt": "Proč je Detlef důležitý pro motivaci děje?",
+      "options": [
+        "Je učitelem matematiky",
+        "Vztah s ním je součástí společného propadu do závislosti",
+        "Je prezidentem",
+        "V knize se nevyskytuje"
+      ],
+      "correct": 1,
+      "expl": "Partnerský vztah je svázán se společným užíváním a přežitím."
+    },
+    {
+      "prompt": "Která formulace nejlépe vystihuje společenský rozměr knihy?",
+      "options": [
+        "Jde jen o soukromý deníček bez kontextu",
+        "Osobní zpověď odhaluje širší problém města a doby",
+        "Jde o receptář kuchyně",
+        "Jde o portréty panovníků"
+      ],
+      "correct": 1,
+      "expl": "Individuální osud ukazují jako symptom společenské krize."
+    },
+    {
+      "prompt": "Jaký je typický vztah Christiane k „normálnímu“ světu (škola, domov)?",
+      "options": [
+        "Bezproblémové začlenění",
+        "Narůstající odcizení a konflikty",
+        "Vede školu jako ředitelka",
+        "Nezná domov ani školu"
+      ],
+      "correct": 1,
+      "expl": "Závislost ji odděluje od běžných jistot dospívání."
+    },
+    {
+      "prompt": "Proč text není fantasy ani alegorie o zvířatech?",
+      "options": [
+        "Protože Zoo je jen metafora bez reality",
+        "Protože jde o reálné svědectví z berlínské drogové scény",
+        "Protože autor neexistuje",
+        "Protože kniha nemá děj"
+      ],
+      "correct": 1,
+      "expl": "Nepleťte si ji se Skleněnou zoologickou zahradou T. Williamse ani s bajkou."
+    },
+    {
+      "prompt": "Co by měl čtenář pochopit jako hlavní varování?",
+      "options": [
+        "Že drogy jsou vždy neškodná zábava",
+        "Že závislost rychle ovládne život a okolí často nestíhá pomoci",
+        "Že stačí jedna party bez následků",
+        "Že instituce vždy zachrání každého včas"
+      ],
+      "correct": 1,
+      "expl": "Kniha ukazuje, jak rychle a totálně závislost přeroste člověka i pomoc okolí."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Christiane vyrůstá a vstupuje do party scény",
-        "První drogy a sestup k heroinu",
-        "Vztah s Detlefem a společná závislost",
-        "Prostituce kvůli penězům na dávku",
-        "Život u stanice Zoo na dně scény",
-        "Pokusy o záchranu a svědectví o propadu"
+        "Christiane vyrůstá a vstupuje do berlínské party scény",
+        "Začne experimentovat s drogami a propadá heroinu",
+        "S Detlefem sdílí závislost a život kolem stanice Zoo",
+        "Prostitucí a krádežemi shání peníze na dávky",
+        "Rodina a instituce se snaží zasáhnout, často bezmocně",
+        "Svědectví ukazuje následky závislosti bez zkrášlení"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: party scéna → heroin → vztah a závislost → prostitutce → dno u Zoo → svědectví a pokusy o záchranu."
+    "Správné pořadí: vstup do scény → heroin → vztah a Zoo → shánění dávek → zásahy okolí → svědectví o důsledcích."
   ]
 }

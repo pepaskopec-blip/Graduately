@@ -5,44 +5,46 @@
       "icon": "book",
       "lines": [
         "Autor: Jiří Wolker (1900–1924)",
-        "Žánr: básnická sbírka (proletářská poezie)",
+        "Žánr: lyrická poezie, proletářská",
         "Poprvé vydáno: 1922",
-        "Obsah: sociální motivy, smrt, láska, revoluční naděje",
-        "Forma: volný verš i baladické postupy, obraznost a patos"
+        "Děj: reflexe války, revoluce, sociální bídy",
+        "Forma: básnické sbírky – volný verš i rým"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Počátek 20. let 20. století, poválečná chudoba a sociální napětí.",
-        "Proletářská poezie staví do středu dělníka a kolektiv.",
-        "Wolker spojuje osobní cit se sociálním svědomím.",
-        "Smrt a nemoc jsou přítomné (autor sám zemřel mladý).",
-        "Sbírka patří k vrcholům české proletářské lyriky."
+        "Wolker – mladý komunistický básník.",
+        "Těžká hodina – metafora krizových momentů.",
+        "Témata: chudoba, válka, naděje proletariátu.",
+        "Influence symbolistů i moderny.",
+        "Předčasná smrt – tuberkulóza.",
+        "Sbírka Host do domu souvisí s tvorbou."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Básnický subjekt – „já“ citlivé k bolesti chudých.",
-        "Dělníci a chudí – hrdinové sociálních básní a balad.",
-        "Matka / rodina – motivy péče a oběti.",
-        "Milostný protějšek – osobní lyrika vedle sociální.",
-        "Kolektiv – naděje na spravedlivější řád."
+        "Jiří Wolker – básník, publicista.",
+        "Proletář / dělník v básních.",
+        "Matka, děti, chudina – postavy lyriky.",
+        "Revolutionary naděje – budoucnost.",
+        "Příroda jako kontrast městu.",
+        "Symbolická hodina zkoušky."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Proletářská poezie – umění ve službách sociální spravedlnosti.",
-        "Balada – dramatický příběh v básni (např. o chudých).",
-        "Těžká hodina – chvíle krize, rozhodnutí i umírání.",
-        "Sociální cit – soucit s utlačovanými.",
-        "Revoluční naděje – víra ve změnu řádu.",
-        "Obraznost – konkrétní věci (chléb, práce, smrt) jako symboly."
+        "Proletářská poezie – třídní solidarita.",
+        "Těžká hodina – čas zkoušky, bolesti.",
+        "Válka – zklamání, utrpení.",
+        "Naděje – světlá budoucnost.",
+        "Symbolismus – obrazy, metafory.",
+        "Mladá smrt autora – mýtus."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Těžkou hodinu?",
       "options": [
-        "Karel Hynek Mácha",
+        "Seifert",
         "Jiří Wolker",
-        "Karel Havlíček Borovský",
-        "Vladimír Holan"
+        "Havlíček",
+        "Neruda"
       ],
       "correct": 1,
-      "expl": "Autorem sbírky je Jiří Wolker."
+      "expl": "Wolker, 1922."
     },
     {
-      "prompt": "Jaký směr sbírka reprezentuje?",
+      "prompt": "Jaká forma?",
       "options": [
-        "Dekadenci bez sociálna",
-        "Proletářskou poezii",
-        "Pouze baroko",
-        "Jen absurdní drama"
+        "Próza",
+        "Lyric poetry – sbírka",
+        "Drama",
+        "Epos"
       ],
       "correct": 1,
-      "expl": "Těžká hodina je vrchol proletářské poezie."
+      "expl": "Básnická sbírka."
     },
     {
-      "prompt": "Kdy sbírka vyšla?",
+      "prompt": "Wolker žil?",
       "options": [
-        "1918",
-        "1922",
-        "1938",
-        "1968"
+        "1900–1924",
+        "1890–1940",
+        "2000",
+        "1850"
       ],
-      "correct": 1,
-      "expl": "Těžká hodina vyšla roku 1922."
+      "correct": 0,
+      "expl": "Krátký život."
     },
     {
-      "prompt": "Co je typickým tématem Wolkerovy poezie?",
+      "prompt": "Těžká hodina znamená?",
       "options": [
-        "Jen dvorská láska",
-        "Sociální bolest, práce, smrt a naděje",
-        "Burzovní spekulace",
-        "Cirkusová akrobacie"
+        "Lehký večer",
+        "Krizový okamžik, bolest, zkoušku",
+        "Svatba",
+        "Dovolenou"
       ],
       "correct": 1,
-      "expl": "Wolker spojuje sociální cit s osobní lyrikou."
+      "expl": "Metafora titulu."
     },
     {
-      "prompt": "Co označuje „těžká hodina“?",
+      "prompt": "Hlavní témata?",
       "options": [
-        "Přestávku ve škole",
-        "Chvíli krize, bolesti či umírání / rozhodování",
-        "Sportovní zápas",
-        "Svátek mloků"
+        "Chudoba, válka, naděje",
+        "Sci-fi",
+        "Lov srn",
+        "Detektivka"
       ],
-      "correct": 1,
-      "expl": "Název odkazuje na těžkou životní chvíli."
+      "correct": 0,
+      "expl": "Proletářská lyrika."
     },
     {
-      "prompt": "Jakou formu Wolker často využívá?",
+      "prompt": "Wolker politicky?",
       "options": [
-        "Jen úřední dopisy",
-        "Baladu a sociální lyriku",
-        "Jen sonety o golfu",
-        "Prózu o Gatsbym"
+        "Levicový, komunistické sympatie",
+        "Monarchista",
+        "Bez názorů",
+        "Cizí"
       ],
-      "correct": 1,
-      "expl": "Známé jsou sociální balady i lyrické básně."
+      "correct": 0,
+      "expl": "Revolutionary básník."
     },
     {
-      "prompt": "Proč je Wolker spojen se „sociálním svědomím“?",
+      "prompt": "Host do domu?",
       "options": [
-        "Psál jen o aristokracii",
-        "Staví do středu chudé a volá po spravedlnosti",
-        "Ignoruje společnost",
-        "Píše jen recepty"
+        "Další Wolkerova sbírka",
+        "Román",
+        "Film",
+        "Hra Goldoniho"
       ],
-      "correct": 1,
-      "expl": "Proletářská poezie chce být hlasem utlačovaných."
+      "correct": 0,
+      "expl": "Související tvorba."
     },
     {
-      "prompt": "Jaký osud měl autor?",
+      "prompt": "Styl?",
       "options": [
-        "Dožil se 100 let v USA",
-        "Zemřel velmi mladý na tuberkulózu",
-        "Byl rytířem z Tyrol",
-        "Velel RAF"
+        "Volný verš, obraznost, emoce",
+        "Strofický epic",
+        "Proza dialog",
+        "Bez metafor"
       ],
-      "correct": 1,
-      "expl": "Wolker zemřel roku 1924 ve 24 letech."
+      "correct": 0,
+      "expl": "Moderní lyrika."
     },
     {
-      "prompt": "Co je balada v kontextu sbírky?",
+      "prompt": "Proletář v básních?",
       "options": [
-        "Taneční kurz",
-        "Báseň s dramatickým, často tragickým příběhem",
-        "Daňové přiznání",
-        "Komedie dell’arte"
+        "Hrdina dělnické třídy",
+        "Nepřítel",
+        "Neexistuje",
+        "Král"
       ],
-      "correct": 1,
-      "expl": "Balada vypráví příběh – u Wolkera často sociální."
+      "correct": 0,
+      "expl": "Třídní témata."
     },
     {
-      "prompt": "Jaký tón mají básně Těžké hodiny?",
+      "prompt": "Válka?",
       "options": [
-        "Jen veselý kabaret",
-        "Citový, sociální, někdy patetický a vážný",
-        "Jen statistický",
-        "Jen ironie Saturnina"
+        "Zklamání, utrpení",
+        "Slavnost",
+        "Chybí",
+        "Vtip"
       ],
-      "correct": 1,
-      "expl": "Sbírka je vážná, citová a angažovaná."
+      "correct": 0,
+      "expl": "1. sv. válka ovlivnila generaci."
     },
     {
-      "prompt": "Čím se sbírka liší od čistě intimní lyriky?",
+      "prompt": "Naděje?",
       "options": [
-        "Nemá verše",
-        "Propojuje osobní cit s kolektivním a sociálním tématem",
-        "Je psána jen latinsky",
-        "Je to román"
+        "Světlá budoucnost pro lid",
+        "Bez naděje",
+        "Pouze smutek",
+        "Emigrace"
       ],
-      "correct": 1,
-      "expl": "„Já“ se otevírá k bolesti druhých a k naději změny."
+      "correct": 0,
+      "expl": "Optimismus v těžké hodině."
     },
     {
-      "prompt": "K jakému období české literatury sbírka patří?",
+      "prompt": "Wolker zemřel na?",
       "options": [
-        "K nationalismu 19. stol. pouze",
-        "K meziválečné / poválečné sociální poezii 20. let",
-        "K gotice",
-        "K antice"
+        "Tuberkulózu",
+        "Válku v bitvě",
+        "Stáří",
+        "Autonehodu"
       ],
-      "correct": 1,
-      "expl": "Je dílem počátku 20. let 20. století."
+      "correct": 0,
+      "expl": "Mladá smrt."
+    },
+    {
+      "prompt": "Generace?",
+      "options": [
+        "Meziválečná avantgarda / levicová mládež",
+        "Baroko",
+        "2000",
+        "Středověk"
+      ],
+      "correct": 0,
+      "expl": "Kontext."
+    },
+    {
+      "prompt": "Co NENÍ typické?",
+      "options": [
+        "Sociální témata",
+        "Emoce",
+        "Lyrika",
+        "Naturalistický román o vraždě"
+      ],
+      "correct": 3,
+      "expl": "Wolker je básník."
+    },
+    {
+      "prompt": "Báseň a obraz?",
+      "options": [
+        "Vizuální metafory",
+        "Bez obrazů",
+        "Jen próza",
+        "Jen humor"
+      ],
+      "correct": 0,
+      "expl": "Symbolistické prvky."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Témata, verš, autor",
+        "Jen rok",
+        "Mapa",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Poezie na seznamu."
+    },
+    {
+      "prompt": "Čeština?",
+      "options": [
+        "Spisovná, citlivá",
+        "Angličtina",
+        "Archaičtina bez smyslu",
+        "Němčina"
+      ],
+      "correct": 0,
+      "expl": "Wolkerova čeština."
+    },
+    {
+      "prompt": "Influence?",
+      "options": [
+        "Symbolismus, moderna",
+        "Antický epos",
+        "Bez",
+        "Hollywood"
+      ],
+      "correct": 0,
+      "expl": "Literární tradice."
+    },
+    {
+      "prompt": "Tón sbírky?",
+      "options": [
+        "Vážný, nadějí prodchnutý",
+        "Pure comedy",
+        "Horor",
+        "Bez emocí"
+      ],
+      "correct": 0,
+      "expl": "Krizové chvíle."
+    },
+    {
+      "prompt": "Dělník?",
+      "options": [
+        "Solidarita, úcta",
+        "Posměch",
+        "Neexistuje",
+        "Villain"
+      ],
+      "correct": 0,
+      "expl": "Proletářská poezie."
+    },
+    {
+      "prompt": "Příroda?",
+      "options": [
+        "Kontrast k městu/chudobě",
+        "Chybí",
+        "Jen vesmír",
+        "Jen moře"
+      ],
+      "correct": 0,
+      "expl": "Lyricismus."
+    },
+    {
+      "prompt": "Wolker a Wolkerova ulice?",
+      "options": [
+        "Praha pamatuje",
+        "Ne",
+        "Berlin",
+        "Nic"
+      ],
+      "correct": 0,
+      "expl": "Kult autora."
+    },
+    {
+      "prompt": "Revolution?",
+      "options": [
+        "Naděje v lepší společnost",
+        "Proti",
+        "Bez",
+        "Jen válka"
+      ],
+      "correct": 0,
+      "expl": "Ideály."
+    },
+    {
+      "prompt": "Krátce: proč číst?",
+      "options": [
+        "Pochopit meziválečnou levicovou lyriku",
+        "Návod k jídlu",
+        "Geografie",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Literární historie."
+    },
+    {
+      "prompt": "Verš?",
+      "options": [
+        "Volný i tradiční prvky",
+        "Jen rýmovaný sonet",
+        "Proza",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Flexibilní forma."
+    },
+    {
+      "prompt": "Emoce?",
+      "options": [
+        "Empatie k chudým",
+        "Chlad",
+        "Bez",
+        "Ironie sitcom"
+      ],
+      "correct": 0,
+      "expl": "Humanismus."
+    },
+    {
+      "prompt": "Současníci?",
+      "options": [
+        "Seifert, Nezval – jinak",
+        "Shakespeare",
+        "Keyes",
+        "Jirotka"
+      ],
+      "correct": 0,
+      "expl": "Česká poezie 20. st."
+    },
+    {
+      "prompt": "Titulní metafora?",
+      "options": [
+        "Hodina zkoušky života",
+        "Hodiny na věži",
+        "Školní hodina",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Symbol."
+    },
+    {
+      "prompt": "Publikum?",
+      "options": [
+        "Čtenář hledající smysl v bídě",
+        "Jen děti",
+        "Jen vědci",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Engaged poetry."
+    },
+    {
+      "prompt": "Wolker věk smrti?",
+      "options": [
+        "24 let",
+        "80",
+        "50",
+        "10"
+      ],
+      "correct": 0,
+      "expl": "Mladý autor."
+    },
+    {
+      "prompt": "Jak souvisí Těžká hodina s Wolkerovou sbírkou Host do domu?",
+      "options": [
+        "Jsou to blízké etapy jeho krátké tvorby – obě patří k maturitnímu přehledu",
+        "Host do domu je próza o mlokách",
+        "Nejsou nijak spojeny",
+        "Host do domu napsal Neruda"
+      ],
+      "correct": 0,
+      "expl": "Wolker je autorem obou básnických sbírek z raného 20. století."
+    },
+    {
+      "prompt": "Proč je Wolker důležitý pro českou meziválečnou literaturu?",
+      "options": [
+        "Spojuje cit, obraznost a levicové sociální téma v mladém věku",
+        "Psal jen německy",
+        "Nebyl publikován",
+        "Patří k baroku"
+      ],
+      "correct": 0,
+      "expl": "Krátký život, silná lyrika a angažovanost z něj dělají symbol generace."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Básník vnímá bolest chudých a sociální křivdy",
-        "Osobní cit se prolíná s obrazy práce a bídy",
-        "Baladické příběhy dramatizují osudy slabých",
-        "Téma smrti a „těžké hodiny“ nabývá naléhavosti",
-        "Objevuje se naděje na spravedlivější řád",
-        "Sbírka vrcholí spojením soucitu, patosu a výzvy"
+        "Wolker vnímá bídu a válku",
+        "Přichází těžké hodiny zkoušky",
+        "Básně líčí proletářský život",
+        "Objevuje se naděje v solidaritě",
+        "Lyrika spojuje osobní a kolektivní",
+        "Světlo na konci těžké hodiny"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: sociální vnímání → osobní i pracovní obrazy → balady → smrt/krize → naděje → patos výzvy."
+    "Správné pořadí: bída/válka → krize → proletář → naděje → lyrička syntéza → perspektiva."
   ]
 }

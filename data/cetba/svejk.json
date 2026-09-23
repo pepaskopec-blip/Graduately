@@ -5,197 +5,96 @@
       "icon": "book",
       "lines": [
         "Autor: Jaroslav Hašek",
-        "Žánr: satirický / pikareskní román",
-        "Poprvé vydáno: 1921–1923 (nedokončeno)",
-        "Děj / prostředí: Rakousko-Uhersko za 1. světové války",
-        "Vyprávění / forma: er-forma; anekdoty, dialogy, „historky“"
+        "Žánr: satirický pikareskní román; humor, anekdota",
+        "Poprvé vydáno: 1921–1923 (nedokončeno – autor zemřel 1923)",
+        "Děj: Rakousko-Uhersko za 1. světové války, cesta Josefa Švejka do armády",
+        "Vyprávění: er-forma; řetězec historek, dialogů a absurdních situací"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "1. světová válka a rozpadající se Rakousko-Uhersko.",
-        "Armáda jako absurdní mašinerie hloupých nařízení.",
-        "Český „malý člověk“ přežívá díky lsti a předstírané blbosti.",
-        "Satira na byrokracii, vlastenectví a válečnou propaganda.",
-        "Praha, Budějovice, fronta – putování Švejka systémem.",
-        "Humor jako zbraň proti nesmyslu moci."
+        "1. světová válka a rozpadající se monarchie – absurdita rozkazů.",
+        "Armáda a byrokracie jako mašinerie hlouposti.",
+        "Český malý člověk přežívá lstí, „švejkováním“ a předstíranou naivitou.",
+        "Satira na vlastenectví, církev, špionáž a válečnou propagandu.",
+        "Praha, Budějovice, fronta – putování systémem.",
+        "Humor jako obrana proti nesmyslu moci."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Josef Švejk – „dobrý voják“, blbost jako strategie přežití.",
-        "Nadporučík Lukáš – Švejkův pán, často v nesnázích.",
-        "Polní kurát Otto Katz – pijan a hráč.",
-        "Bat’a / Baloun – nenasytný voják (podle vydání).",
-        "Poručík Dub – kariérista a donašeč.",
-        "Policejní rada Bretschneider – provokatér v hospodě."
+        "Josef Švejk – dobrý voják, blbost jako strategie.",
+        "Nadporučík Lukáš – pán Švejka, často v nesnázích.",
+        "Polní kurát Otto Katz – pijan, hráč, „patriot“.",
+        "Poručík Dub – kariérista, donašeč, nenávidí Čechy.",
+        "Policejní rada Bretschneider – provokatér v hospodách.",
+        "Majitel císařských lázní Müller – další z autorit."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Idiotství jako maska – chytrá hloupost.",
-        "Anekdota – základní stavební jednotka textu.",
-        "Byrokracie – úřady a armáda jako absurdní systém.",
-        "Švejkování – přetvářka a ironická poslušnost.",
-        "Válka – nonsens, ne hrdinství.",
-        "Hospoda – prostor lidové moudrosti a řečí."
+        "Švejkování – ironická poslušnost, přetvářka hloupého.",
+        "Anekdota – stavební jednotka textu.",
+        "Byrokracie – úřady, armáda, nesmyslné formuláře.",
+        "Satira – smích vede k odhalení absurdity.",
+        "Válka – nonsens, ne hrdinský epos.",
+        "Hospoda U kalicha – prostor lidové moudrosti."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Osudy dobrého vojáka Švejka?",
-      "options": [
-        "Jaroslav Hašek",
-        "Bohumil Hrabal",
-        "Karel Čapek",
-        "Josef Škvorecký"
-      ],
-      "correct": 0,
-      "expl": "Autorem je Jaroslav Hašek."
-    },
-    {
-      "prompt": "V jaké válce se děj odehrává?",
-      "options": [
-        "Druhá světová",
-        "První světová",
-        "Třicetiletá",
-        "Husitské války"
-      ],
-      "correct": 1,
-      "expl": "Švejk putuje rakousko-uherskou armádou za 1. světové války."
-    },
-    {
-      "prompt": "Jaká je Švejkova základní strategie?",
-      "options": [
-        "Otevřená vzpoura",
-        "Předstíraná blbost a přehnaná poslušnost",
-        "Dezerce do Ruska hned na začátku",
-        "Kariéra generála"
-      ],
-      "correct": 1,
-      "expl": "Švejk „švejkují“ – přežívá skrz zdánlivou hloupost."
-    },
-    {
-      "prompt": "Kdo je nadporučík Lukáš?",
-      "options": [
-        "Švejkův nepřítel z hospody",
-        "Švejkův důstojník a pán",
-        "Císař",
-        "Policista"
-      ],
-      "correct": 1,
-      "expl": "Švejk slouží jako řádový u Lukáše."
-    },
-    {
-      "prompt": "Jak román vznikl?",
-      "options": [
-        "Jako jediný krátký sonet",
-        "Na pokračování; zůstal nedokončen",
-        "Jako tajný deník císaře",
-        "Jako školní učebnice"
-      ],
-      "correct": 1,
-      "expl": "Hašek zemřel dřív, než dílo dokončil."
-    },
-    {
-      "prompt": "Kdo je Bretschneider?",
-      "options": [
-        "Polní kurát",
-        "Policejní provokatér, který Švejka zatýká",
-        "Švejkův bratr",
-        "Ruský generál"
-      ],
-      "correct": 1,
-      "expl": "Bretschneider v hospodě hledá velezradu."
-    },
-    {
-      "prompt": "Jaký je hlavní tón díla?",
-      "options": [
-        "Tragický patos bez humoru",
-        "Satira a lidový humor",
-        "Mystický symbolismus",
-        "Čistě romantický"
-      ],
-      "correct": 1,
-      "expl": "Hašek válku zesměšňuje satirou a anekdotami."
-    },
-    {
-      "prompt": "Co Švejk často vypráví?",
-      "options": [
-        "Politické projevy",
-        "Nekonečné historky „to se mi jednou stalo“",
-        "Modlitby v latině",
-        "Vědecké přednášky"
-      ],
-      "correct": 1,
-      "expl": "Anekdotické historky jsou typický Švejkův projev."
-    },
-    {
-      "prompt": "Kdy začaly vycházet Osudy…?",
-      "options": [
-        "1914",
-        "1921",
-        "1938",
-        "1945"
-      ],
-      "correct": 1,
-      "expl": "První díly vycházely od roku 1921."
-    },
-    {
-      "prompt": "Co dílo kritizuje?",
-      "options": [
-        "Jen venkovskou architekturu",
-        "Armádu, byrokracii a válečnou absurditu",
-        "Hudební školství",
-        "Církevní architekturu výhradně"
-      ],
-      "correct": 1,
-      "expl": "Satira míří na nesmyslnost rakouské mašinerie a války."
-    },
-    {
-      "prompt": "Kdo je poručík Dub?",
-      "options": [
-        "Švejkův nejlepší přítel",
-        "Kariérista a donašeč",
-        "Anglický špion",
-        "Hostinský"
-      ],
-      "correct": 1,
-      "expl": "Dub představuje hloupou služební horlivost."
-    },
-    {
-      "prompt": "Jaký typ hrdiny Švejk je?",
-      "options": [
-        "Antický tragický hrdina",
-        "Pikareskní antihrdina",
-        "Byronský romantický hrdina",
-        "Detektiv"
-      ],
-      "correct": 1,
-      "expl": "Švejk je pikareskní figura putující absurdním světem."
-    }
+    {"prompt": "Kdo napsal Osudy dobrého vojáka Švejka za světové války?", "options": ["Karel Čapek", "Jaroslav Hašek", "Bohumil Hrabal", "Franz Kafka"], "correct": 1, "expl": "Autorem je Jaroslav Hašek; román zůstal nedokončený jeho smrtí v roce 1923."},
+    {"prompt": "Proč je román nedokončený?", "options": ["Autor ho záměrně nechal otevřený", "Hašek zemřel dřív, než stihl dílo dokončit", "Zákaz cenzury", "Chybí poslední kapitola v tiskárně"], "correct": 1, "expl": "Hašek zemřel v roce 1923; kniha končí uprostřed Švejkova putování."},
+    {"prompt": "Kdo je hlavní hrdina?", "options": ["Nadporučík Lukáš", "Josef Švejk", "Poručík Dub", "Bretschneider"], "correct": 1, "expl": "Josef Švejk je „dobrý voják“, který absurdní svět boří zdánlivou hloupostí."},
+    {"prompt": "Co je Švejkování?", "options": ["Vojenská disciplína", "Předstíraná naivita a poslušnost, která systém rozbíjí", "Pouze alkoholismus", "Vlastenecká propaganda"], "correct": 1, "expl": "Švejk plní rozkazy tak, že je jejich absurdita zřejmá – chytrá maska hloupého."},
+    {"prompt": "Kdo je nadporučík Lukáš?", "options": ["Švejkův nadřízený a pán", "Rakouský císař", "Lékař", "Novinář"], "correct": 0, "expl": "Lukáš Švejka „vlastní“ a často trpí důsledky jeho historek."},
+    {"prompt": "Proč Švejk skončí v blázinci na začátku?", "options": ["Zlodějna", "Kvůli absurdním odpovědím na vojenské otázky – simuluje nebo projevuje blbost", "Vražda", "Desertace"], "correct": 1, "expl": "Scéna s rakouskými vs. ruskými monarchy satiricky ukazuje Švejkův „pacifismus“."},
+    {"prompt": "Kdo je policejní rada Bretschneider?", "options": ["Švejkův kamarád", "Provokatér, který v hospodách vylákává „velezrady“", "Kněz", "Generál"], "correct": 1, "expl": "Bretschneider sbírá důkazy proti hostům – satira na politickou policii."},
+    {"prompt": "Kdo je poručík Dub?", "options": ["Maďarský patriot a donašeč", "Švejkův bratr", "Lékař", "Císař"], "correct": 0, "expl": "Dub je kariérista, nenávidí Čechy a rád udává – karikatura vlastence."},
+    {"prompt": "Jaký je vztah románu k 1. světové válce?", "options": ["Oslavuje hrdinství", "Satiricky ukazuje absurditu a nesmysl války", "Ignoruje válku", "Je pohádkou"], "correct": 1, "expl": "Hašek míří proti romantizaci války a monarchie."},
+    {"prompt": "Kde Švejk často vypráví historky?", "options": ["V kosmu", "V hospodě, na marši, u autorit", "Jen v kostele", "Jen na soudu"], "correct": 1, "expl": "Dialog a anekdota jsou jádrem stylu – Švejk mluví a tím rozbíjí moc."},
+    {"prompt": "Kdo je polní kurát Otto Katz?", "options": ["Asketa", "Pijan, hráč, „patriot“ s pochybnou minulostí", "Generál", "Dítě"], "correct": 1, "expl": "Katz satiricky zobrazuje církev a vlastenectví v armádě."},
+    {"prompt": "Jaký stát je prostředím děje?", "options": ["Československo 1938", "Rakousko-Uhersko za 1. světové války", "Sovětský svaz", "Napoleonská Francie"], "correct": 1, "expl": "Švejk slouží císařské armádě – český malý člověk v mocnostech monarchie."},
+    {"prompt": "Co je typickým stavebním prvkem textu?", "options": ["Jeden souvislý thriller", "Anekdota za anekdotou, odbočky a dialogy", "Epický hexametr", "Drama bez prózy"], "correct": 1, "expl": "Pikareskní forma – epizody a historky místo klasické zápletky."},
+    {"prompt": "Proč Švejk nosí vozík s invalidou?", "options": ["Je trest", "Satirická epizoda – služba a absurdita", "Je to sport", "Je generál"], "correct": 1, "expl": "Mnoho epizod zesměšňuje vojenskou službu a nařízení."},
+    {"prompt": "Jak Hašek líčí českého vojáka?", "options": ["Jako slavného hrdinu", "Jako chytrého přeživšího v absurdním systému", "Jako zrádce vždy", "Jako neviditelného"], "correct": 1, "expl": "Švejk reprezentuje českou zkušenost v cizí armádě – humor a odpor."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Satira na byrokracii", "Válečný nonsens", "Absolutní vážnost hrdinských eposů bez ironie", "Hospodské historky"], "correct": 2, "expl": "Román je antihrdinský a komický, ne slavnostní epos."},
+    {"prompt": "Jaký význam má humor v románu?", "options": ["Jen zábava bez myšlenky", "Odhaluje absurditu moci a války", "Obhajuje válku", "Nahrazuje děj úplně"], "correct": 1, "expl": "Smích je u Haška zbraní – čtenář vidí nesmysl systému."},
+    {"prompt": "Kdo je Švejkův „nepřítel“ mezi důstojníky?", "options": ["Lukáš vždy", "Často Dub a různé kariéristy", "Nikdo", "Jen císař osobně"], "correct": 1, "expl": "Dub a podobní reprezentují malichernou moc a donášení."},
+    {"prompt": "Co symbolizuje hospoda U kalicha?", "options": ["Místo exekuce", "Prostor lidové selské moudrosti a ironie", "Banka", "Škola"], "correct": 1, "expl": "Hospoda je kontrast k úředním a vojenským institucím."},
+    {"prompt": "Jak Švejk reaguje na rozkazy?", "options": ["Vždy desertuje", "Poslušně je plní, ale způsobem, který odhalí absurditu", "Ignoruje je úplně", "Píše básně"], "correct": 1, "expl": "Zdánlivá poslušnost je forma odporu – jádro švejkování."},
+    {"prompt": "Proč je román důležitý pro maturitu?", "options": ["Je chemická tabulka", "Česká klasika: satira, válka, styl anekdot, Švejk", "Je mapa Evropy", "Je zákoník"], "correct": 1, "expl": "U maturity: Hašek, kontext 1. sv. války, postavy, humor, švejkování."},
+    {"prompt": "Kdy román vycházel?", "options": ["1890", "1921–1923", "1968", "2010"], "correct": 1, "expl": "První díly za Haškova života, dokončení zabránila smrt."},
+    {"prompt": "Jaký je vztah k autobiografii?", "options": ["Hašek sám znal armádu a absurditu války – silné autobiografické rysy", "Čistá sci-fi", "Antická legenda", "Beletrie bez reálií"], "correct": 0, "expl": "Hašek prošel armádou a světem hospod – zkušenost v textu cítit."},
+    {"prompt": "Co je pikareskní román?", "options": ["Román o jednom dni", "Putování rošťáka/lišáka epizodami", "Lyrika", "Tragedie"], "correct": 1, "expl": "Švejk prochází místy a situacemi, sbírá historky."},
+    {"prompt": "Která postava je provokatér?", "options": ["Bretschneider", "Švejk", "Lukáš", "Katz"], "correct": 0, "expl": "Policejní rada Bretschneider vylákává výroky pro represi."},
+    {"prompt": "Jak končí dílo v originálu?", "options": ["Švejk vítězí nad válkou", "Nedokončené – Švejk stále na cestě / ve válce", "Svatba", "Mír 1918 slavnostně"], "correct": 1, "expl": "Nedokončenost patří k osudu knihy – válka a putování pokračují."},
+    {"prompt": "Co satiricky zobrazuje postava Katze?", "options": ["Církev a vlastenectví v armádě", "Vědu", "Sport", "Školství"], "correct": 0, "expl": "Polní kurát Katz je komická figura faráře-vojáka."},
+    {"prompt": "Jaký jazyk je typický?", "options": ["Knihovní archaismus", "Hovorová čeština, argot, dialog", "Latina celá kniha", "Angličtina"], "correct": 1, "expl": "Hašek používá živou mluvu, hospodské výrazy a ironii."},
+    {"prompt": "Které tvrzení o Lukášovi je správné?", "options": ["Je Švejkův nadřízený, často trpí důsledky Švejkových akcí", "Je císař", "Je vždy klidný a bohatý", "Nepozná Švejka"], "correct": 0, "expl": "Lukáš je „pán“ Švejka v systému služby – komický pár."},
+    {"prompt": "Co Hašek kritizuje nejvíc?", "options": ["Pouze počasí", "Válku, monarchii, byrokracii a falešné vlastenectví", "Pouze zemědělství", "Sport"], "correct": 1, "expl": "Satira míří na mocenské struktury a válečný nonsens."},
+    {"prompt": "Které dílo NENÍ Haškovo?", "options": ["Osudy dobrého vojáka Švejka", "Povídky z kapes", "Ostro sledované vlaky", "Dobrý voják Švejk – divadlo"], "correct": 2, "expl": "Ostře sledované vlaky napsal Bohumil Hrabal, ne Hašek."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Švejk je zatčen po řečech o atentátu",
-        "Projde blázincem a odvodem",
-        "Stane se ordonance u Lukáše",
-        "Putuje s armádou (Budějovice a dál)",
-        "Zažívá frontové a štábní absurdity",
-        "Román končí nedokončen uprostřed cesty"
+        "Švejk a absurdní výslech – cesta do blázince",
+        "Hospoda, Bretschneider a Švejkův návrat k službě",
+        "Švejk u nadporučíka Lukáše v Praze",
+        "Cesta do Budějovic a další epizody na cestě",
+        "Služba u polního kuráta Katze a fronta",
+        "Putování pokračuje – román zůstává nedokončen"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: zatčení → odvod → u Lukáše → putování → frontové absurdity → nedokončený konec."
+    "Správné pořadí: blázinec → hospoda a služba → Lukáš → cesta na jih → Katz a fronta → nedokončené putování."
   ]
 }

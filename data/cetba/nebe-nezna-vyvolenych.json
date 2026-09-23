@@ -5,196 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: Erich Maria Remarque",
-        "Žánr: román",
-        "Poprvé vydáno: 1942 (česky Holubovi)",
-        "Děj: emigranti prchající před nacismem, láska Joan a Ravica",
-        "Vyprávění: er-forma / prožitkový styl"
+        "Žánr: román; emigrantská / láskyplná próza",
+        "Poprvé vydáno: 1961 (Der Himmel kennt keine Günstlinge)",
+        "Děj: 2. světová válka, emigranti v Paříži a okolí",
+        "Vyprávění: er-forma; prožitkový styl"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "2. světová válka, útěk a bezdomoví emigrantů.",
-        "Láska vzniká v nestabilitě.",
-        "Hranice, papíry, strach z zatčení.",
-        "Humanismus proti totalitě.",
-        "Křehkost štěstí ve válce."
+        "2. světová válka – útěk před nacismem, bezdomoví.",
+        "Paříž emigrantů, strach z gestapa a udání.",
+        "Láska v nestabilitě – Joan a Ravic.",
+        "Lékař bez papírů, ilegální praxe.",
+        "Humanismus vs. totalita.",
+        "Téma: osud, náhoda, křehkost štěstí."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ravic – emigrant, lékař bez papírů.",
-        "Joan Madou – jeho láska.",
-        "Boris Morosow – přítel.",
-        "Policie / úřady – hrozba.",
-        "Uprchlíci – společenství osudu.",
-        "Paříž – chronotop exilu."
+        "Ravic – německý emigrant, lékař v ilegalitě.",
+        "Joan Madou – jeho milovaná, křehká osud.",
+        "Boris Morosow – Ravicův přítel, společník osudu.",
+        "Policejní komisař – hrozba zatčení.",
+        "Emigrantská komunita – sdílený strach.",
+        "Bezdorf – místo Ravicova úkrytu (v díle)."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Emigrace – základní situace.",
-        "Láska ve válce – téma.",
-        "Bezpapírovost – bezpráví.",
-        "Přátelství – opora.",
-        "Totalita – příčina útěku.",
-        "Ztráta – tragický stín."
+        "Emigrace – základní situace hrdinů.",
+        "Bezpapírovost – bezpráví a nejistota.",
+        "Láska ve válce – krátké štěstí.",
+        "Osud – nebe nezná vyvolené (titul).",
+        "Lékařská etika – Ravic pomáhá i v ilegalitě.",
+        "Tragický konec – Joanina smrt."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Nebe nezná vyvolených?",
-      "options": [
-        "Remarque",
-        "Hemingway",
-        "Heller",
-        "Orwell"
-      ],
-      "correct": 0,
-      "expl": "E. M. Remarque."
-    },
-    {
-      "prompt": "O čem román je?",
-      "options": [
-        "O farmě mloků",
-        "O lásce emigrantů prchajících před nacismem",
-        "O robotike",
-        "O baladách"
-      ],
-      "correct": 1,
-      "expl": "Exil a láska."
-    },
-    {
-      "prompt": "Kdo je Ravic?",
-      "options": [
-        "Policista",
-        "Emigrant a lékař",
-        "Generál SS",
-        "Farár"
-      ],
-      "correct": 1,
-      "expl": "Ravic bez papírů."
-    },
-    {
-      "prompt": "Kdo je Joan?",
-      "options": [
-        "Úřednice jen",
-        "Ravicova láska",
-        "Mlok",
-        "Učitelka Kantorek"
-      ],
-      "correct": 1,
-      "expl": "Joan Madou."
-    },
-    {
-      "prompt": "Jaké nebezpečí hrozí?",
-      "options": [
-        "Daně z čaje",
-        "Zatčení, vydání, nestabilita exilu",
-        "Jen déšť",
-        "Jen opera"
-      ],
-      "correct": 1,
-      "expl": "Exilové bezpráví."
-    },
-    {
-      "prompt": "Kde se děj často odehrává?",
-      "options": [
-        "Verona",
-        "Paříž v čase války/exilu",
-        "Mordor",
-        "Kostelec 1945 jen"
-      ],
-      "correct": 1,
-      "expl": "Pařížský exil."
-    },
-    {
-      "prompt": "Jaký je tón?",
-      "options": [
-        "Jen komický švejkovský",
-        "Vážný, citový, protiválečný",
-        "Jen úřední",
-        "Jen absurdní Kafka bez lásky"
-      ],
-      "correct": 1,
-      "expl": "Remarquovský humanismus."
-    },
-    {
-      "prompt": "Co „nebe nezná vyvolených“ naznačuje?",
-      "options": [
-        "Vyvolenost bohatých",
-        "Nikdo nemá zaručené štěstí/osudovou ochranu",
-        "Meteorologii",
-        "Církevní hierarchii jen"
-      ],
-      "correct": 1,
-      "expl": "Osud nešetří nikoho."
-    },
-    {
-      "prompt": "Jaká je role přátelství?",
-      "options": [
-        "Žádná",
-        "Opora v exilu",
-        "Jen konkurence",
-        "Jen daně"
-      ],
-      "correct": 1,
-      "expl": "Boris aj."
-    },
-    {
-      "prompt": "Proč je láska křehká?",
-      "options": [
-        "Není",
-        "Válka a nestabilita ji ohrožují",
-        "Protože je o robotike",
-        "Protože je účetní"
-      ],
-      "correct": 1,
-      "expl": "Kontext ohrožení."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Zelinářství",
-        "Exil, láska a lidskost proti totalitě",
-        "Revizorova komika",
-        "Lastura a oheň"
-      ],
-      "correct": 1,
-      "expl": "Humanismus."
-    },
-    {
-      "prompt": "Jak souvisí s Remarquem obecně?",
-      "options": [
-        "Napsal jen komedie",
-        "Opět antiválečný/humanitní pohled",
-        "Jen fantasy",
-        "Jen balady"
-      ],
-      "correct": 1,
-      "expl": "Typická Remarquova poloha."
-    }
+    {"prompt": "Kdo napsal Nebe nezná vyvolených?", "options": ["Erich Maria Remarque", "Hemingway", "Hrabal", "Kafka"], "correct": 0, "expl": "Remarque po válce a emigrantských tématech."},
+    {"prompt": "Kdy román vyšel?", "options": ["1961", "1929", "1945", "2000"], "correct": 0, "expl": "Německy Der Himmel kennt keine Günstlinge."},
+    {"prompt": "Kdo je Ravic?", "options": ["Německý emigrant a lékař", "Francouzský generál", "Nacista", "Dítě"], "correct": 0, "expl": "Ravic uprchl před režimem a pracuje v Paříži ilegálně."},
+    {"prompt": "Kdo je Joan Madou?", "options": ["Ravicova milovaná", "Gestapanka", "Královna", "Učitelka"], "correct": 0, "expl": "Joan je křehká postava lásky ve válce."},
+    {"prompt": "Kde se děj převážně odehrává?", "options": ["Paříž a okolí emigrace", "Praha 1348", "Verona", "Moskva"], "correct": 0, "expl": "Emigrantská Paříž za 2. světové války."},
+    {"prompt": "Co znamená titul?", "options": ["Bohatí vyhrávají", "Osud nešetří nikoho – nebe nemá oblíbence", "Nebe je modré", "Titul bez významu"], "correct": 1, "expl": "I láska a dobré úmysly končí tragicky."},
+    {"prompt": "Jaký je vztah k Na západní frontě klid?", "options": ["Stejný autor – válka a ztráta", "Stejný děj", "Kafka napsal oba", "Bez souvislosti"], "correct": 0, "expl": "Remarque pokračuje v humanistických válečných tématech."},
+    {"prompt": "Proč je Ravic v nebezpečí?", "options": ["Emigrant bez dokladů, hrozí gestapo", "Je bohatý", "Je král", "Je na dovolené"], "correct": 0, "expl": "Bezpapírovost znamená neustálý strach."},
+    {"prompt": "Kdo je Boris Morosow?", "options": ["Ravicův přítel v emigraci", "Nacista", "Joanin bratr", "Robot"], "correct": 0, "expl": "Boris sdílí osud uprchlíků."},
+    {"prompt": "Jak román končí pro Joan?", "options": ["Šťastně v Americe", "Tragicky umírá", "Stane se lékařkou", "Vdá se za jiného"], "correct": 1, "expl": "Tragický konec potvrzuje titul – osud nešetří."},
+    {"prompt": "Jaký je hlavní konflikt?", "options": ["Láska a přežití vs. válka a pronásledování", "Sport", "Robotí vzpoura", "Středověké turnaje"], "correct": 0, "expl": "Emigranti hledají lidskost uprostřed války."},
+    {"prompt": "Proč je román důležitý pro maturitu?", "options": ["Učí chemii", "Remarque, 2. sv. válka, emigrace, láska, osud", "Je atlas", "Je cookbook"], "correct": 1, "expl": "U maturity: autor, postavy, témata, kontext."},
+    {"prompt": "Jak Ravic pomáhá lidem?", "options": ["Jako lékař i v ilegalitě", "Jako generál", "Jako kněz", "Nepomáhá"], "correct": 0, "expl": "Lékařská etika přetrvává navzdory riziku."},
+    {"prompt": "Co je typické pro Remarqueův styl?", "options": ["Prožitková ich/er próza, jednoduchost a cit", "Pouze humor Haška", "Drama Shakespeara", "Sci-fi"], "correct": 0, "expl": "Remarque píše srozumitelně o těžkých tématech."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Emigrace", "Láska", "Vzpoura robotů R.U.R.", "Válka"], "correct": 2, "expl": "Roboti nepatří k Remarqueovi."},
+    {"prompt": "Co hrozí emigrantům?", "options": ["Zatčení, udání, deportace", "Pouze daň", "Sport", "Nic"], "correct": 0, "expl": "Gestapo a kolaborace – stálý strach."},
+    {"prompt": "Jaký je vztah Ravic–Joan?", "options": ["Láska v nestabilním světě", "Sourozenci", "Nepřátelé", "Učitel–žák"], "correct": 0, "expl": "Krátké štěstí uprostřed nejistoty."},
+    {"prompt": "Která postava NENÍ v románu?", "options": ["Ravic", "Joan", "Paul Bäumer jako hlavní hrdina tohoto románu", "Boris"], "correct": 2, "expl": "Paul Bäumer je hrdina Na západní frontě klid."},
+    {"prompt": "Co symbolizuje „vyvolení“ v titulku?", "options": ["Iluzi, že osud někoho chrání", "Sportovní tým", "Náboženský řád", "Banku"], "correct": 0, "expl": "Nikdo není chráněn – ani milenci."},
+    {"prompt": "Jaká válka formuje děj?", "options": ["2. světová", "Thirty years war only", "Antická", "Budoucí sci-fi"], "correct": 0, "expl": "Nacismus a emigrace jsou klíčové."},
+    {"prompt": "Kde Remarque často situoval emigranty?", "options": ["Západní Evropa (Paříž)", "Antarktida", "Měsíc", "Pouze Berlín"], "correct": 0, "expl": "Paříž je centrum exilu v románu."},
+    {"prompt": "Jaký tón má závěr?", "options": ["Tragický", "Čistá komedie", "Beletrie pro děti", "Technický manuál"], "correct": 0, "expl": "Remarque neustále balancuje naději a ztrátu."},
+    {"prompt": "Co je „bezpapírovost“?", "options": ["Stav ilegality bez ochrany státu", "Bohatství", "Vojenský řád", "Umění"], "correct": 0, "expl": "Bez dokladů jsi vydán na milost okolností."},
+    {"prompt": "Které dílo NENÍ Remarqueovo?", "options": ["Nebe nezná vyvolených", "Na západní frontě klid", "Proměna", "Tři kamarádi"], "correct": 2, "expl": "Proměnu napsal Kafka."},
+    {"prompt": "Jak vyprávění funguje?", "options": ["Er-forma, soustředěná na prožitky", "Drama pěti dějství", "Epos", "Pouze dopisy"], "correct": 0, "expl": "Remarque využívá klasickou prózu."},
+    {"prompt": "Proč Joan patří k „křehkým“ postavám?", "options": ["Osud ji zasáhne tvrdě navzdory lásce", "Je nezranitelná", "Je robot", "Je generál"], "correct": 0, "expl": "Joan ztělesňuje zranitelnost ve válce."},
+    {"prompt": "Co emigrantská komunita sdílí?", "options": ["Strach, pomoc, osud", "Pouze bohatství", "Válku proti robotům", "Sport"], "correct": 0, "expl": "Solidarita i zrada – reálný exil."},
+    {"prompt": "Jaký humanismus Remarque prosazuje?", "options": ["Soucit s oběťmi války a pronásledování", "Válka je sláva", "Pouze moc", "Technokracie"], "correct": 0, "expl": "Lidé na útěku zůstávají lidmi."},
+    {"prompt": "Které období autor prožil?", "options": ["1. i 2. světová válka, emigrace", "Středověk", "Antika", "Jen 21. století"], "correct": 0, "expl": "Remarque znal válku i exil z vlastní zkušenosti."},
+    {"prompt": "Co čtenář má po dočtení cítit?", "options": ["Váhu osudu a křehkosti míru", "Pouze smích", "Návod na daň", "Nic"], "correct": 0, "expl": "Román je varování i elegie."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Ravic žije v ilegálním exilu",
-        "Potká Joan",
-        "Láska dává smysl nestabilitě",
-        "Úřady a válka stupňují tlak",
-        "Ztráty a odluky",
-        "Tragická cena vyhnanství"
+        "Ravic jako emigrant v Paříži",
+        "Seznámení s Joan a láska",
+        "Ilegální lékařská pomoc a strach z gestapa",
+        "Přátelství s Borisem, útěky a úkryty",
+        "Krátké štěstí milenců",
+        "Tragický osud Joan – nebe nešetří"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: exil → setkání → láska → tlak → ztráty → tragická bilance."
+    "Správné pořadí: exil → láska → ilegalita → přátelství → štěstí → tragický konec."
   ]
 }

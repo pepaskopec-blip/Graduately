@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Charles Baudelaire",
-        "Žánr: symbolistická / moderní lyrika (sbírka básní)",
-        "Poprvé vydáno: 1857 (rozšířená vydání později)",
-        "Děj / prostředí: Paříž 19. století, vnitřní svět básníka – splín a krása",
-        "Vyprávění / forma: cykly básní, bohatá obraznost, synestézie, apostrofy"
+        "Autor: Charles Baudelaire (1821–1867), francouzský básník",
+        "Žánr: moderní poezie, symbolistická sbírka",
+        "Poprvé vydáno: 1857 (soud za nemravnost)",
+        "Děj / prostředí: moderní město (Paříž), vnitřní svět básníka",
+        "Vyprávění / forma: lyrické básně, cykly (např. Spleen, Víno, Květy zla)"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Paříž druhé poloviny 19. století: moderní velkoměsto, úpadek i poezie.",
-        "Sbírka byla cenzurována; některé básně označeny za nemravné.",
-        "Baudelaire je klíčový předchůdce symbolismu a moderní poezie.",
-        "Témata: splín (ennui), krása ve zlu, erotika, smrt, umění.",
-        "Básník je „prokletý“ – citlivý outsider ve společnosti.",
-        "Českému čtenáři je známá i Nezvalovým překladem."
+        "Druhá polovina 19. století: industrializace, městská anonymita, krize víry.",
+        "Baudelaire vytváří „moderní“ estetiku krásy v ošklivém a hříšném.",
+        "Sbírka byla stíhána za obscénnost – symbol vzdoru proti puritanismu.",
+        "Motivy: smrt, smyslnost, nuda (spleen), umění, démonismus.",
+        "Vliv na symbolismus a moderní evropskou poezii.",
+        "Albatros, Holka s košíkem – ikonické básně cyklu."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Básnický subjekt – flâneur, milenec, svědek města a vlastní duše.",
-        "Milovaná žena / múza – zdroj touhy i utrpení.",
-        "Čtenář – často oslovován jako „bližní“ a pokrytec.",
-        "Satan / zlo – alegorické figury pokušení a vzpoury.",
-        "Paříž – personifikované velkoměsto jako postava moderny.",
-        "Umění – jediná možnost překonat splín krásou."
+        "Básnický subjekt – flanér, vnímavý k městu i temnotě duše.",
+        "Ženy – milenky, coury, matky – objekty i symboly touhy a bolesti.",
+        "Démon / ďábel – vnitřní pokušení a krása zla.",
+        "Umělec – albatros, vězeň snů (básně o tvorbě).",
+        "Dav a město – anonymní moderní prostředí.",
+        "Stvořitel a stvoření – teologické pochybnosti."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Spleen (splín) – nuda, tíha existence moderního člověka.",
-        "Idéál – touha po kráse a absolutnu.",
-        "Korespondence – vzájemné odpovídání smyslů a obrazů.",
-        "Prokletý básník – umělec na okraji společnosti.",
-        "Krása ve zlu – estetizace ošklivého a hříšného.",
-        "Flâneur – poutník městem, pozorovatel moderny."
+        "Spleen – nuda, melancholie, existenciální prázdnota.",
+        "Symbolismus – obraz nese víc významů (květy = krása i hřích).",
+        "Krása v modernitě – estetika i v odpudivém.",
+        "Flanér – chodec městem, pozorovatel.",
+        "Synestézie – smysly se prolínají (hudba–barva).",
+        "Cyklus básní – tematické celky ve sbírce."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Květy zla?",
-      "options": [
-        "Arthur Rimbaud",
-        "Charles Baudelaire",
-        "Paul Verlaine",
-        "Stéphane Mallarmé"
-      ],
-      "correct": 1,
-      "expl": "Autorem sbírky je Charles Baudelaire."
-    },
-    {
-      "prompt": "Kdy sbírka poprvé vyšla?",
-      "options": [
-        "1830",
-        "1857",
-        "1880",
-        "1900"
-      ],
-      "correct": 1,
-      "expl": "Les Fleurs du mal vyšly roku 1857."
-    },
-    {
-      "prompt": "Proč byla sbírka cenzurována?",
-      "options": [
-        "Kvůli politické satirě na krále výhradně",
-        "Kvůli údajné nemravnosti některých básní",
-        "Kvůli chybám v sazbě",
-        "Nebyla cenzurována"
-      ],
-      "correct": 1,
-      "expl": "Část básní byla soudně napadena jako pohoršující."
-    },
-    {
-      "prompt": "Co je spleen u Baudelaira?",
-      "options": [
-        "Nemoc plic",
-        "Existenciální nuda a tíha moderního života",
-        "Druh květiny",
-        "Taneční forma"
-      ],
-      "correct": 1,
-      "expl": "Spleen označuje splín – prázdnotu a úzkost."
-    },
-    {
-      "prompt": "Jaký směr Baudelaire připravuje?",
-      "options": [
-        "Klasicismus",
-        "Symbolismus a moderní lyriku",
-        "Realistický román výhradně",
-        "Gotický román"
-      ],
-      "correct": 1,
-      "expl": "Je klíčovým předchůdcem symbolismu."
-    },
-    {
-      "prompt": "Co znamená „krása ve zlu“?",
-      "options": [
-        "Odmítnutí umění",
-        "Estetické zobrazení hříchu, ošklivosti a úpadku",
-        "Jen popis zahrady",
-        "Náboženskou apologetiku"
-      ],
-      "correct": 1,
-      "expl": "Baudelaire hledá poezii i v temných motivech."
-    },
-    {
-      "prompt": "Kdo je flâneur?",
-      "options": [
-        "Úředník",
-        "Pozorovatel a poutník velkoměstem",
-        "Voják",
-        "Kněz"
-      ],
-      "correct": 1,
-      "expl": "Flâneur bloumá městem a zaznamenává moderní život."
-    },
-    {
-      "prompt": "Jaká je typická forma sbírky?",
-      "options": [
-        "Jeden románový děj",
-        "Cykly básní s motivickými okruhy",
-        "Jen drama",
-        "Denní zápisky bez veršů"
-      ],
-      "correct": 1,
-      "expl": "Sbírka je členěna do tematických oddílů."
-    },
-    {
-      "prompt": "Jaký vztah má básník k městu?",
-      "options": [
-        "Ignoruje je",
-        "Paříž je zdrojem inspirace i úzkosti",
-        "Chce je zbořit",
-        "Žije jen na venkově"
-      ],
-      "correct": 1,
-      "expl": "Velkoměsto je ústředním prostorem moderní lyriky."
-    },
-    {
-      "prompt": "Co jsou korespondence (synestézie)?",
-      "options": [
-        "Úřední dopisy",
-        "Prolínání smyslových vjemů a obrazů",
-        "Rýmové schéma ABAB výhradně",
-        "Cenzurní záznamy"
-      ],
-      "correct": 1,
-      "expl": "Baudelaire spojuje vůně, barvy a zvuky v jediný obraz."
-    },
-    {
-      "prompt": "Který český básník sbírku významně překládal?",
-      "options": [
-        "Karel Hynek Mácha",
-        "Vítězslav Nezval",
-        "Jan Neruda",
-        "Jaroslav Vrchlický výhradně"
-      ],
-      "correct": 1,
-      "expl": "V katalogu je uveden překlad Nezvalův."
-    },
-    {
-      "prompt": "Jaké je základní napětí sbírky?",
-      "options": [
-        "Válka a mír",
-        "Spleen versus Idéál (tíha vs. touha po kráse)",
-        "Bohatství a chudoba jen ekonomicky",
-        "Komedie a tragédie divadelní"
-      ],
-      "correct": 1,
-      "expl": "Ústřední polarita je mezi splínem a ideálem."
-    }
+    {"prompt": "Kdo napsal Květy zla?", "options": ["Verlaine", "Charles Baudelaire", "Rimbaud", "Hugo"], "correct": 1, "expl": "Baudelaire vydal sbírku v roce 1857."},
+    {"prompt": "Proč byla sbírka senzační i soudní?", "options": ["Byla příliš krátká", "Obvinění z nemravnosti a obscénnosti", "Byla v latině", "Nebyla publikována"], "correct": 1, "expl": "Soud přispěl k slávě sbírky."},
+    {"prompt": "Co znamená „spleen“ u Baudelaira?", "options": ["Radost", "Melancholie, nuda, existenciální tíha", "Hlad", "Válka"], "correct": 1, "expl": "Spleen je klíčový motiv moderní duše."},
+    {"prompt": "Jaký je vztah krásy a zla v titulu?", "options": ["Zlo je ošklivé vždy", "Krása může vyrůstat i z hříchu a temnoty", "Titul nemá význam", "Jde o zahradnictví"], "correct": 1, "expl": "Baudelaire estetizuje i temné stránky života."},
+    {"prompt": "Kdo je flanér?", "options": ["Voják", "Pozorovatel města, chodec moderní metropole", "Kněz", "Král"], "correct": 1, "expl": "Flanér prochází Paříží a sbírá dojmy."},
+    {"prompt": "Co symbolizuje báseň Albatros?", "options": ["Sport", "Umělce na souši – nemohoucího mimo svůj živel", "Válku", "Jídlo"], "correct": 1, "expl": "Albatros na palubě je groteskní; ve vzduchu krásný."},
+    {"prompt": "Jaký žánr sbírka reprezentuje?", "options": ["Epos", "Moderní lyrická poezie / symbolism", "Drama", "Román"], "correct": 1, "expl": "Květy zla jsou vrchol francouzské moderny."},
+    {"prompt": "Kde se básně nejčastěji odehrávají?", "options": ["Venkov bez města", "Moderní město, ulice, vnitřní svět", "Vesmír", "Středověký hrad"], "correct": 1, "expl": "Paříž a psychika jsou dvě scény."},
+    {"prompt": "Co je synestézie v poezii?", "options": ["Gramatická chyba", "Propojení smyslů v obrazech", "Rým bez významu", "Proza"], "correct": 1, "expl": "Baudelaire slučuje barvy, vůně a zvuky."},
+    {"prompt": "Proč maturita zahrnuje Květy zla?", "options": ["Nejdelší román", "Základ moderní poezie a symbolu", "Bez významu", "Jen historie"], "correct": 1, "expl": "Učí číst symbol a moderní lyriku."},
+    {"prompt": "Jak Baudelaire vnímá ženu v cyklech?", "options": ["Jen idealizace", "Směs touhy, bolesti, hříchu a krásy", "Bez zmínky", "Pouze matka"], "correct": 1, "expl": "Ženské figury jsou složité symboly."},
+    {"prompt": "Co je démonismus?", "options": ["Náboženská oslava", "Přitažlivost zla a temných sil", "Věda", "Sport"], "correct": 1, "expl": "Baudelaire zkoumá pokušení a hřích."},
+    {"prompt": "Který básník patří ke stejné tradici?", "options": ["Homér", "Verlaine, Mallarmé (symbolisté)", "Hašek", "Rais"], "correct": 1, "expl": "Baudelaire předchází francouzský symbolism."},
+    {"prompt": "Co znamená cyklus ve sbírce?", "options": ["Náhodný soubor", "Tematicky spojené básně (Spleen, Víno…)", "Jeden epos", "Drama"], "correct": 1, "expl": "Sbírka má vnitřní strukturu."},
+    {"prompt": "Jaký je vztah k náboženství?", "options": ["Jednoduchá víra", "Pochybnost, konflikt víry a hříchu", "Bez tématu", "Pouze modlitby"], "correct": 1, "expl": "Moderní krize víry prostupuje lyrikou."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Spleen", "Město", "Vesmírné operace", "Smyslnost"], "correct": 2, "expl": "Baudelaire píše o moderním člověku, ne sci-fi."},
+    {"prompt": "Co je „krása v modernitě“?", "options": ["Jen antické ideály", "Hledání estetického i v odpudivém a obyčejném", "Odmítání umění", "Pouze příroda"], "correct": 1, "expl": "Baudelaire reformuluje estetiku 19. století."},
+    {"prompt": "Jak sbírka ovlivnila Evropu?", "options": ["Vůbec", "Vzor pro symbolismus a moderní poezii", "Zakázala poezii", "Jen Francii bez vlivu"], "correct": 1, "expl": "Vliv na Mallarmého, Verlaine, i českou modernu."},
+    {"prompt": "Co je báseň Holka s košíkem?", "options": ["Politický manifest", "Obraz mladé dělnice – krása v prostém", "Epos", "Vtip"], "correct": 1, "expl": "Typický baudelaireovský obraz moderního města."},
+    {"prompt": "Jaký jazyk básně používají?", "options": ["Pouze archaismy", "Hutné obrazy, rytmus, symbol", "Úřední styl", "Bez metafor"], "correct": 1, "expl": "Jazyk je koncentrovaný a obrazný."},
+    {"prompt": "Proč „květy“ a „zlo“ v titulu?", "options": ["Paradox krásy v hříchu a temnotě", "Zahradnický katalog", "Náhodný název", "Jméno postavy"], "correct": 0, "expl": "Titul shrnuje estetiku sbírky."},
+    {"prompt": "Kdy Baudelaire žil?", "options": ["1821–1867", "1900–1950", "1600–1650", "1990–2020"], "correct": 0, "expl": "Patří k druhé polovině 19. století."},
+    {"prompt": "Co čtenář cítí u motivu smrti?", "options": ["Nic", "Tíhu, tajemství, někdy i krásu", "Pouze smích", "Sport"], "correct": 1, "expl": "Smrt je častý lyrický motiv."},
+    {"prompt": "Jak číst symbol ve sbírce?", "options": ["Jen doslovně", "Obraz má víc vrstev (city, společnost, víra)", "Ignorovat", "Jako matematiku"], "correct": 1, "expl": "Symbolismus vyžaduje interpretaci."},
+    {"prompt": "Co je moderní metropole pro Baudelaira?", "options": ["Ráj", "Prostor anonymity, vzrušení i spleenu", "Venkov", "Klášter"], "correct": 1, "expl": "Město formuje moderní vnímání."},
+    {"prompt": "Jaký vztah má sbírka k umění?", "options": ["Umění není téma", "Básně o tvorbě, umělci, albatrosovi", "Jen malířství bez poezie", "Zákaz umění"], "correct": 1, "expl": "Reflexe umění je součástí cyklu."},
+    {"prompt": "Proč byl soud důležitý?", "options": ["Zničil básníka", "Přitáhl pozornost k nové estetice", "Bez efektu", "Vynesl trest smrti"], "correct": 1, "expl": "Skandál pomohl prosadit moderní poezii."},
+    {"prompt": "Co NENÍ charakteristika Květů zla?", "options": ["Symbol", "Spleen", "Realistický venkovský román bez poezie", "Město"], "correct": 2, "expl": "Jde o lyrickou sbírku, ne prózu."},
+    {"prompt": "Jak Baudelaire pracuje s vínem?", "options": ["Cyklus Víno – únik, inspirace, iluze", "Nezmiňuje", "Pouze reklama", "Jako jediné téma"], "correct": 0, "expl": "Víno je symbol i v cyklech sbírky."},
+    {"prompt": "Jaké poselství sbírka má pro čtenáře?", "options": ["Moderní člověk prožívá krásu i temnotu současně", "Poezie je zbytečná", "Vraťte se do středověku", "Jen morální poučka"], "correct": 0, "expl": "Květy zla otevírají moderní vnímání světa."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Básník prožívá splín moderního města",
-        "Hledá krásu v erotice, umění i zlu",
-        "Oslovuje čtenáře a odhaluje pokrytectví",
-        "Prolíná smysly v symbolistických obrazech",
-        "Konfrontuje Idéál s úpadkem a smrtí",
-        "Umění zůstává cestou, jak splín překonat"
+        "Baudelaire sbírá básně moderního města a duše",
+        "Vydání 1857 a skandál soudní",
+        "Cyklus Spleen vyjadřuje melancholii",
+        "Obrazy žen, umění a démonismu",
+        "Symbol krásy v temnotě (Květy zla)",
+        "Trvalý vliv na symbolismus a moderní poezii"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: splín města → hledání krásy → oslovení čtenáře → synestézie → střet ideálu a úpadku → umění jako východisko."
+    "Správné pořadí: tvorba sbírky → skandál → spleen a cykly → témata → estetika titulu → literární odkaz."
   ]
 }

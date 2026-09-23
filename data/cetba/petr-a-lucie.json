@@ -4,197 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Romain Rolland",
-        "Žánr: novela",
-        "Poprvé vydáno: 1920 (česky Zaorálek)",
-        "Děj: Paříž za 1. světové války – láska Petra a Lucie",
-        "Vyprávění: er-forma, lyrický, protiválečný tón"
+        "Autor: Vítězslav Nezval",
+        "Žánr: poetický / poetistický román",
+        "Poprvé vydáno: 1929",
+        "Děj: Praha 20. let, láska Petra a Lucie",
+        "Vyprávění: er-forma; poetistická obraznost, hra"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Válka ničí civilní život i milence.",
-        "Petr a Lucie hledají čistou lásku uprostřed strachu.",
-        "Hudba a umění jako útočiště.",
-        "Kontrast něhy a válečné brutality.",
-        "Tragický konec pod bombami."
+        "Poetismus – radost ze života, město, metafora.",
+        "Praha jako poetistické jeviště.",
+        "Láska jako hra a sen.",
+        "Citlivost vs. realita (nemoc, smrt).",
+        "Nezval a Devětsil – avantgarda.",
+        "Téma: láska, mládí, křehkost, obraz."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Petr – mladík.",
-        "Lucie – dívka, jeho láska.",
-        "Otec / rodina – tlak doby.",
-        "Pařížané – město ve válce.",
-        "Umělci / hudba – útočiště.",
-        "Válka – neviditelný vrah."
+        "Petr – mladý muž, zamilovaný.",
+        "Lucie – dívka, partnerka, křehká.",
+        "Praha – město procházek a snů.",
+        "Rodina / okolí – realita.",
+        "Poetistický svět – barvy, hra.",
+        "Osud – Luciina nemoc a konec."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Láska vs. válka – ústřední konflikt.",
-        "Mládi – křehkost.",
-        "Paříž – chronotop.",
-        "Protiválečný humanismus.",
-        "Tragický osud – pointa.",
-        "Lyrismus – styl."
+        "Poetismus – avantgardní směr 20. let.",
+        "Láska jako hra – lehkost i hloubka.",
+        "Praha – poetistický prostor.",
+        "Obraz a metafora – Nezvalův styl.",
+        "Tragický konec – Luciina smrt.",
+        "Cit – romantika moderní formy."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Petra a Lucii?",
-      "options": [
-        "Remarque",
-        "Rolland",
-        "Hemingway",
-        "Hugo"
-      ],
-      "correct": 1,
-      "expl": "Romain Rolland."
-    },
-    {
-      "prompt": "V jaké válce se novela odehrává?",
-      "options": [
-        "2. světová",
-        "1. světová válka",
-        "Trojská",
-        "Studená"
-      ],
-      "correct": 1,
-      "expl": "1. světová válka."
-    },
-    {
-      "prompt": "Kde?",
-      "options": [
-        "Londýn",
-        "Paříž",
-        "Berlín",
-        "Praha"
-      ],
-      "correct": 1,
-      "expl": "Paříž."
-    },
-    {
-      "prompt": "O čem sní milenci?",
-      "options": [
-        "O frontě",
-        "O lásce a míru uprostřed války",
-        "O obchodu",
-        "O korunovaci"
-      ],
-      "correct": 1,
-      "expl": "Láska proti válce."
-    },
-    {
-      "prompt": "Jaký je tón?",
-      "options": [
-        "Jen satirický švejkovský",
-        "Lyrický, něžný, tragický",
-        "Jen naturalistický naturalismus bez lyriky",
-        "Jen úřední"
-      ],
-      "correct": 1,
-      "expl": "Lyrická novela."
-    },
-    {
-      "prompt": "Jak milenci končí?",
-      "options": [
-        "Emigrací šťastnou",
-        "Zahynou při bombardování",
-        "Svatbou na frontě",
-        "Korunovací"
-      ],
-      "correct": 1,
-      "expl": "Tragický konec."
-    },
-    {
-      "prompt": "Proč je text protiválečný?",
-      "options": [
-        "Oslavuje generály",
-        "Ukazuje, jak válka ničí nevinné",
-        "Je návod na zbraně",
-        "Je sportovní reportáž"
-      ],
-      "correct": 1,
-      "expl": "Humanistický protest."
-    },
-    {
-      "prompt": "Co jim dává sílu?",
-      "options": [
-        "Penězi jen",
-        "Láska, umění, vzájemnost",
-        "Nenávist",
-        "Daně"
-      ],
-      "correct": 1,
-      "expl": "Vztah jako útočiště."
-    },
-    {
-      "prompt": "Jaký žánr?",
-      "options": [
-        "Epos heroický",
-        "Novela",
-        "Komedie Revizor",
-        "Balada Erbenova"
-      ],
-      "correct": 1,
-      "expl": "Novela."
-    },
-    {
-      "prompt": "Co kontrastuje s láskou?",
-      "options": [
-        "Zahrada",
-        "Brutalita a strach války",
-        "Jen počasí",
-        "Jen škola"
-      ],
-      "correct": 1,
-      "expl": "Válka vs. něha."
-    },
-    {
-      "prompt": "Proč je kniha krátká a silná?",
-      "options": [
-        "Je prázdná",
-        "Soustředí se na osud dvou lidí jako symbol",
-        "Je telefonní seznam",
-        "Je zákoník"
-      ],
-      "correct": 1,
-      "expl": "Symbol generace."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Robotika",
-        "Láska zničená válkou",
-        "Zákopové taktiky detailně",
-        "Dvorská intrika"
-      ],
-      "correct": 1,
-      "expl": "Humanismus proti válce."
-    }
+    {"prompt": "Kdo napsal Petra a Lucii?", "options": ["Seifert", "Vítězslav Nezval", "Hrabal", "Neruda"], "correct": 1, "expl": "Nezval, 1929 – vrchol poetistické prózy."},
+    {"prompt": "Jaký směr román reprezentuje?", "options": ["Poetismus", "Socialistický realismus", "Romantismus Erben", "Beat generation"], "correct": 0, "expl": "Česká avantgarda 20. let."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Praha", "Verona", "Londýn", "Mordor"], "correct": 0, "expl": "Město procházek a metafor."},
+    {"prompt": "Kdo jsou hlavní hrdinové?", "options": ["Petr a Lucie", "Romeo a Julie", "Frodo a Sam", "Švejk a Lukáš"], "correct": 0, "expl": "Mladí milenci v poetistické Praze."},
+    {"prompt": "Jaký je tón začátku?", "options": ["Radost, hra, obrazy", "Válka", "Groteska Haška", "Sci-fi"], "correct": 0, "expl": "Poetismus slaví život a město."},
+    {"prompt": "Jak končí Lucie?", "options": ["Umírá (nemoc) – tragický konec", "Královna", "Emigrace", "Svatba bez smutku"], "correct": 0, "expl": "Idyla praskne realitou."},
+    {"prompt": "Co je poetismus?", "options": ["Avantgarda – radost, metafora, město", "Válka", "Realismus 19. stol.", "Robotika"], "correct": 0, "expl": "Devětsil, Nezval, Teige…"},
+    {"prompt": "Proč maturita?", "options": ["Nezval, poetismus, Praha, styl", "Chemie", "Atlas", "Cookbook"], "correct": 0, "expl": "Česká maturitní četba."},
+    {"prompt": "Jaký styl Nezval?", "options": ["Poetické obrazy, hra se slovy", "Strohý realismus", "Hexametr antický", "Drama"], "correct": 0, "expl": "Próza i poezie splývají."},
+    {"prompt": "Které téma NENÍ?", "options": ["Láska", "Město", "Robotí vzpoura", "Mládí"], "correct": 2, "expl": "R.U.R."},
+    {"prompt": "Kdy vyšlo?", "options": ["1929", "1957", "1890", "2010"], "correct": 0, "expl": "Meziválečí avantgarda."},
+    {"prompt": "Kdo Nezval?", "options": ["Devětsil, surrealismus později", "Hašek Švejk", "Kafka", "Gogol"], "correct": 0, "expl": "Klíčová osobnost avantgardy."},
+    {"prompt": "Jak vyprávění?", "options": ["Er-forma poetistická", "Ich Petr celé", "Drama", "Epos"], "correct": 0, "expl": "Lyrizovaná próza."},
+    {"prompt": "Co Praha v románu?", "options": ["Prostor snů a procházek", "Pouze mapa", "Vězení", "Vesnice"], "correct": 0, "expl": "Poetistické město."},
+    {"prompt": "Která postava NENÍ?", "options": ["Petr", "Lucie", "Winston Smith", "—"], "correct": 2, "expl": "Orwell."},
+    {"prompt": "Jaký kontrast?", "options": ["Poetistická radost vs. smrt", "Moře hory", "Den noc", "Práce lenost"], "correct": 0, "expl": "Křehkost štěstí."},
+    {"prompt": "Které dílo NENÍ Nezval?", "options": ["Petr a Lucie", "Akrobat", "Revizor", "Poetistické manifesty"], "correct": 2, "expl": "Gogol."},
+    {"prompt": "Co láska v románu?", "options": ["Hra, sen, cit", "Politika", "Válka", "Obchod"], "correct": 0, "expl": "Centrum poetismu."},
+    {"prompt": "Proč tragický konec?", "options": ["Realita nemoci vs. idyla", "Válka", "Náhodná věta", "Bez důvodu"], "correct": 0, "expl": "Nezval neničí iluzi."},
+    {"prompt": "Co Devětsil?", "options": ["Umělecká skupina avantgardy", "Armáda", "Banka", "Kostel"], "correct": 0, "expl": "Kontext Nezvala."},
+    {"prompt": "Jaký jazyk?", "options": ["Bohaté metafory, obrazy", "Úřední", "Latina", "Argot"], "correct": 0, "expl": "Poetistická próza."},
+    {"prompt": "Co Petr prožívá?", "options": ["Lásku a ztrátu Lucie", "Válku", "Roboty", "Král"], "correct": 0, "expl": "Hrdina citu."},
+    {"prompt": "Jak román vnímat u maturity?", "options": ["Autor, směr, děj, styl, témata", "Jen datum", "Jen mapa", "Ignorovat"], "correct": 0, "expl": "Komplexní četba."},
+    {"prompt": "Co NENÍ poetismus?", "options": ["Radost z obrazu a města", "Věčná válka", "Hra", "Avantgarda"], "correct": 1, "expl": "Poetismus je radostný."},
+    {"prompt": "Kdo surrealismus u Nezvala?", "options": ["Pozdější fáze tvorby", "Neexistuje", "Jen Švejk", "Jen Kafka"], "correct": 0, "expl": "Po poetismu surrealismus."},
+    {"prompt": "Co Lucie symbolizuje?", "options": ["Křehké mládí a krása", "Moc", "Robot", "Válka"], "correct": 0, "expl": "Oběť času a nemoci."},
+    {"prompt": "Jaký věk autor?", "options": ["Meziválečná generace", "Středověk", "Antika", "21. stol."], "correct": 0, "expl": "1900–1958 Nezval."},
+    {"prompt": "Co čtenář po dočtení?", "options": ["Chápe poetismus a Nezvala", "Chemii", "Nic", "Mapu"], "correct": 0, "expl": "Maturitní cíl."},
+    {"prompt": "Který pár je z Nezvala?", "options": ["Petr a Lucie", "Romeo a Julie", "Elizabeth a Darcy", "Frodo a Sam"], "correct": 0, "expl": "Titulní hrdinové."},
+    {"prompt": "Proč „poetický román“?", "options": ["Próza s poetickými prostředky a obrazností", "Pouze verše", "Učebnice", "Zákoník"], "correct": 0, "expl": "Lyrizace prózy – obrazy, metafora, rytmus vět."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Setkání Petra a Lucie",
-        "Rozvíjí se jejich láska",
-        "Válka stupňuje ohrožení",
-        "Hledají útočiště v sobě a umění",
-        "Bombardování zasáhne město",
-        "Milenci umírají"
+        "Petr a Lucie se seznámí v Praze",
+        "Procházky, radost a poetistické obrazy",
+        "Láska roste – hra a sen",
+        "Prozaická realita – nemoc Lucie",
+        "Petr prožívá ztrátu",
+        "Tragický konec – Lucie umírá"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: setkání → láska → ohrožení → útočiště → bombardování → smrt."
+    "Správné pořadí: seznámení → radost → láska → nemoc → ztráta → smrt Lucie."
   ]
 }

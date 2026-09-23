@@ -4,198 +4,96 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Umberto Eco",
-        "Žánr: historický detektivní román / semiologický román",
-        "Poprvé vydáno: 1980",
+        "Autor: Umberto Eco (1932–2016), italský sémiotik a spisovatel",
+        "Žánr: historická detektivka, postmoderní román",
+        "Poprvé vydáno: 1980 (Il nome della rosa)",
         "Děj / prostředí: benediktinský klášter v severní Itálii, rok 1327",
-        "Vyprávění / forma: ich-forma Adsona z Melku, rámec rukopisu"
+        "Vyprávění / forma: vzpomínka mnicha Adsona z Melku, er-forma"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Středověk: spor o chudobu církve, inkvizice a moc papeže i císaře.",
-        "Klášter je centrem vzdělanosti; knihovna je labyrintem i symbolem moci.",
-        "Eco spojuje detektivku s filozofií, teologií a sémiotikou (naukou o znacích).",
-        "Vraždy souvisejí se zakázanou knihou (Aristotelova Poetika o komedii).",
-        "Konflikt mezi smíchem, poznáním a dogmatem.",
-        "Postava Jorgeho z Burgosu brání „pravdu“ zákazem smíchu."
+        "Středověk: spor o chudobu (františkáni vs. papežský dvůr), inkvizice.",
+        "Klášter jako uzavřený svět knih, moci, tajemství a vražd.",
+        "Labyrint knihovny symbolizuje nebezpečí zakázaného vědění.",
+        "Eco kombinuje detektivku s filosofií, teologií a historií.",
+        "Film Jean-Jacques Annauda (1986) se Seanem Connerym.",
+        "Titulní růže – nejasný symbol krásy, tajemství a smrti."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vilém z Baskervillu – františkánský detektiv, žák logiky a empirie.",
-        "Adso z Melku – Vilémův mladý žák a vypravěč.",
-        "Jorge z Burgosu – slepý mnich, strážce zakázané knihy.",
-        "Opat Abbone – představený kláštera, chrání prestiž instituce.",
-        "Bernard Gui – inkvizitor, přichází vyšetřovat kacířství.",
-        "Salvatore – zrůdný mnich mluvící směsicí jazyků."
+        "William z Baskervillu – františkán, logik, vzor Sherlocka Holmese.",
+        "Adso z Melku – mladý benediktin, vypravěč, Williamův učedník.",
+        "Jorge z Burgosu – slepý mnich, fanatik proti smíchu a heretickým knihám.",
+        "Opat Abo – vůdce kláštera, skrývá politické intriky.",
+        "Salvatore a Remigio – postavy zločinu a minulosti heresie.",
+        "Dívka z vesnice – Adsova krátká láska, symbol světa mimo klášter."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Labyrint knihovny – symbol poznání i jeho kontroly.",
-        "Zakázaná kniha – Aristoteles o komedii; smích jako nebezpečí.",
-        "Sémiotika – čtení stop a znaků (Vilémova metoda).",
-        "Inkvizice – mocenský nástroj církve.",
-        "Smích vs. dogma – spor o svobodu myšlení.",
-        "Středověký spor o chudobu – dobový politicko-náboženský kontext."
+        "Detektivní pátrání – série vražd kolem knihovny.",
+        "Labyrint knihovny – geometrie tajemství a moci.",
+        "Smích – Jorge považuje komedii Aristotelovu za nebezpečnou.",
+        "Heretické spisy – boj o to, co smí být čteno.",
+        "Sémiotika – Eco pracuje se znameními a výklady.",
+        "Požár kláštera – zničení knih i pravdy."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo je autorem Jména růže?",
-      "options": [
-        "Italo Calvino",
-        "Umberto Eco",
-        "Alessandro Manzoni",
-        "Dante Alighieri"
-      ],
-      "correct": 1,
-      "expl": "Román napsal italský sémiotik a spisovatel Umberto Eco."
-    },
-    {
-      "prompt": "Ve kterém století se děj odehrává?",
-      "options": [
-        "10. století",
-        "14. století (rok 1327)",
-        "16. století",
-        "18. století"
-      ],
-      "correct": 1,
-      "expl": "Příběh je zasazen do roku 1327 do benediktinského kláštera."
-    },
-    {
-      "prompt": "Kdo vyšetřuje záhadné smrti mnichů?",
-      "options": [
-        "Bernard Gui",
-        "Vilém z Baskervillu",
-        "Opat Abbone",
-        "Salvatore"
-      ],
-      "correct": 1,
-      "expl": "Detektivní roli má františkán Vilém z Baskervillu."
-    },
-    {
-      "prompt": "Kdo je vypravěčem?",
-      "options": [
-        "Vilém",
-        "Adso z Melku",
-        "Jorge",
-        "Papež"
-      ],
-      "correct": 1,
-      "expl": "Příběh vypráví starý Adso jako vzpomínku na mládí."
-    },
-    {
-      "prompt": "Co Jorge z Burgosu nejvíce odmítá?",
-      "options": [
-        "Modlitbu",
-        "Smích a komedii jako ohrožení víry",
-        "Práci v kuchyni",
-        "Císaře"
-      ],
-      "correct": 1,
-      "expl": "Jorge považuje smích za nebezpečný pro autoritu víry a skrývá knihu o komedii."
-    },
-    {
-      "prompt": "Jakou metodou Vilém pátrá?",
-      "options": [
-        "Jen mučením",
-        "Logikou, pozorováním stop a čtením znaků",
-        "Náhodou",
-        "Jen modlitbou"
-      ],
-      "correct": 1,
-      "expl": "Vilém postupuje empiricky a sémioticky – čte stopy jako znaky."
-    },
-    {
-      "prompt": "Co je středem klášterního tajemství?",
-      "options": [
-        "Zlatý poklad",
-        "Labyrintová knihovna a zakázaná kniha",
-        "Tajný tunel do Říma",
-        "Alchymistická laboratoř bez knih"
-      ],
-      "correct": 1,
-      "expl": "Knihovna-labyrint ukrývá zakázaný spis a stává se dějištěm zločinů."
-    },
-    {
-      "prompt": "Kdo je Bernard Gui?",
-      "options": [
-        "Knihovník",
-        "Inkvizitor",
-        "Císařský vyslanec",
-        "Adsonův otec"
-      ],
-      "correct": 1,
-      "expl": "Bernard Gui je inkvizitor, který přichází trestat kacíře."
-    },
-    {
-      "prompt": "Kdy román vyšel?",
-      "options": [
-        "1960",
-        "1970",
-        "1980",
-        "1990"
-      ],
-      "correct": 2,
-      "expl": "Jméno růže vyšlo roku 1980."
-    },
-    {
-      "prompt": "Jaký žánr dílo kombinuje?",
-      "options": [
-        "Jen lyriku",
-        "Historický román a detektivku s filozofií",
-        "Sci-fi",
-        "Pohádku"
-      ],
-      "correct": 1,
-      "expl": "Eco spojuje středověkou historii, detektivní zápletku a myšlenky o znacích a pravdě."
-    },
-    {
-      "prompt": "Proč je smích v knize tak důležitý?",
-      "options": [
-        "Je jen komickou vložkou",
-        "Symbolizuje svobodu myšlení ohrožující dogma",
-        "Slouží jen k odlehčení",
-        "Jde o lidovou zábavu mnichů"
-      ],
-      "correct": 1,
-      "expl": "Spor o smích je sporem o to, zda smí člověk zpochybňovat autoritu."
-    },
-    {
-      "prompt": "Jak román končí?",
-      "options": [
-        "Klášter slaví svatbu",
-        "Knihovna shoří a poznání je zčásti zničeno",
-        "Vilém se stane opatem",
-        "Adso se stane inkvizitorem"
-      ],
-      "correct": 1,
-      "expl": "Požár zničí knihovnu; zůstává nostalgia po ztraceném poznání."
-    }
+    {"prompt": "Kdo je autorem Jména růže?", "options": ["Dan Brown", "Umberto Eco", "Dante Alighieri", "Italo Calvino"], "correct": 1, "expl": "Eco vydal román v roce 1980; je to jeho první bestseller."},
+    {"prompt": "Kdy a kde se děj odehrává?", "options": ["1327, benediktinský klášter v Itálii", "1789, Paříž", "2000, Řím", "1066, Anglie"], "correct": 0, "expl": "Děj je v době středověkých sporů o moc církve a chudobu."},
+    {"prompt": "Kdo vypráví příběh?", "options": ["William z Baskervillu", "Starý Adso z Melku vzpomíná na mládí", "Opat Abo", "Jorge z Burgosu"], "correct": 1, "expl": "Adso jako stařec zapisuje události z roku 1327."},
+    {"prompt": "Kdo je William z Baskervillu?", "options": ["Opat", "Františkánský mnich a logik, detektiv", "Templář", "Vesnický kovář"], "correct": 1, "expl": "William připomíná Sherlocka Holmese – dedukce a pozorování."},
+    {"prompt": "Proč William přijede do kláštera?", "options": ["Za lovem", "Jako vyslanec při jednání o chudobě františkánů", "Za trestem", "Kvůli svatbě"], "correct": 1, "expl": "Politicko-církevní jednání je rámec pro detektivní děj."},
+    {"prompt": "Co se děje v klášteře?", "options": ["Nic neobvyklého", "Série záhadných smrtí mnichů", "Pouze stavba katedrály", "Válka s Turky"], "correct": 1, "expl": "Vraždy souvisejí s knihovnou a zakázanými texty."},
+    {"prompt": "Co je klíčové místo tajemství?", "options": ["Kuchyně", "Labyrint klášterní knihovny", "Hřbitov ve městě", "Vinný sklep bez knih"], "correct": 1, "expl": "Knihovna je geometricky složitá a střežená."},
+    {"prompt": "Kdo je Jorge z Burgosu?", "options": ["Mladý novic", "Slepý stařec, fanatický odpůrce nebezpečných knih", "Williamův bratr", "Král"], "correct": 1, "expl": "Jorge zastupuje extrémní cenzuru a strach ze vědění."},
+    {"prompt": "Proč je nebezpečná kniha o smíchu?", "options": ["Je prázdná", "Jorge ji považuje za heretickou; Aristotelova komedie", "Je v němčině", "Je příliš krátká"], "correct": 1, "expl": "Motiv druhé knihy Poetiky – smích podkopává autoritu."},
+    {"prompt": "Jak vraždy souvisí s knihami?", "options": ["Vůbec", "Oběti četly nebo hledaly zakázaný spis", "Knihy jsou jen kulisa", "Vraždí dozorce"], "correct": 1, "expl": "Detektivní linka vede ke knihovně a k cenzurovanému textu."},
+    {"prompt": "Kdo je Adsova dívka z vesnice?", "options": ["Opatova sestra", "Prostá dívka, symbol světa mimo klášter", "Inkvisitorka", "Rytířka"], "correct": 1, "expl": "Krátký milostný epizod ukazuje Adsovi jiný život než mnich."},
+    {"prompt": "Jak román končí?", "options": ["Svatba v klášteře", "Požár kláštera; knihovna i mnoho knih zahyne", "William se stane papežem", "Klášter zůstane nedotčen"], "correct": 1, "expl": "Zničení knihovny je tragickým vrcholem."},
+    {"prompt": "Jaký žánr dominuje?", "options": ["Sci-fi", "Historická detektivka s filosofickými rovinami", "Milostný román bez děje", "Bajka"], "correct": 1, "expl": "Eco míchá detektivku, historii a reflexi nad interpretací."},
+    {"prompt": "Co znamená název Jméno růže?", "options": ["Jasný symbol v textu", "Záměrně nejednoznačný symbol – krása, tajemství, smrt", "Jméno vraha", "Název kláštera"], "correct": 1, "expl": "Eco říká, že růže je tajemství bez jedné definice."},
+    {"prompt": "Kdo režíroval známou filmovou adaptaci?", "options": ["Spielberg", "Jean-Jacques Annaud", "Fellini", "Kubrick"], "correct": 1, "expl": "Film z roku 1986; Williama hraje Sean Connery."},
+    {"prompt": "Jak William řeší záhady?", "options": ["Náhodou", "Logikou, pozorováním a znalostí středověku", "Magickými formulí", "Pouze modlitbou"], "correct": 1, "expl": "Dedukční metoda je vědomá narážka na detektivní literaturu."},
+    {"prompt": "Co je inkvizice v kontextu děje?", "options": ["Sport", "Církevní soud proti heretikům", "Klášterní kuchyně", "Knihovní systém"], "correct": 1, "expl": "Bernard Gui a strach z kacířství prostupují atmosférou."},
+    {"prompt": "Které téma Eco zdůrazňuje?", "options": ["Nebezpečí cenzury a fanatismu", "Oslava války", "Moderní technologie", "Sport"], "correct": 0, "expl": "Boj o knihy je bojem o moc nad myšlením."},
+    {"prompt": "Kdo je Salvatore?", "options": ["Opat", "Postava mluvící smíšenými jazyky, spojená se zločinem", "Williamův učitel", "Rytíř bez role"], "correct": 1, "expl": "Salvatore patří k postavám temné minulosti kláštera."},
+    {"prompt": "Proč je román postmoderní?", "options": ["Ignoruje historii", "Hrá si s intertextem, výkladem a nejistotou významu", "Je bez děje", "Má jen obrázky"], "correct": 1, "expl": "Eco jako sémiotik pracuje s vrstvami významů a citacemi."},
+    {"prompt": "Jaký vztah má Adso k Williamovi?", "options": ["Nepřítel", "Učedník a vypravěč, obdivuje mistra", "Bratr", "Dozorce"], "correct": 1, "expl": "Adso učí se pozorovat svět i víru."},
+    {"prompt": "Co reprezentuje labyrint?", "options": ["Jen architekturu", "Složitost poznání a nebezpečí hledání pravdy", "Dětskou hru", "Zahradu"], "correct": 1, "expl": "Vstup do knihovny je metaforou nebezpečného vědění."},
+    {"prompt": "Který spor prostupuje klášterem?", "options": ["Fotbal vs. hokej", "Chudoba a moc františkánů vs. papežský dvůr", "Válka se Vikingy", "Rozvod krále"], "correct": 1, "expl": "Historický rámec 1327 vysvětluje přítomnost William a Bernarda."},
+    {"prompt": "Proč maturanti čtou Jméno růže?", "options": ["Je nejkratší kniha", "Spojuje děj, historii, detektivku a filosofické otázky", "Nemá postavy", "Je učebnice chemie"], "correct": 1, "expl": "Román učí číst vrstevnatě a historicky."},
+    {"prompt": "Jak William reaguje na Jorgeho fanatismus?", "options": ["Souhlasí", "Odhaluje logicky souvislosti zločinů", "Utíká hned první den", "Stane se opatem"], "correct": 1, "expl": "William demaskuje pachatele dedukcí."},
+    {"prompt": "Co Adso na konci lituje?", "options": ["Že neviděl růži", "Ztráty knih, mistra i mládí v klášteře", "Že se nestal králem", "Že nehrál fotbal"], "correct": 1, "expl": "Vzpomínka je smutná i poučná – vědění může zahynout."},
+    {"prompt": "Který prvek NENÍ typický pro román?", "options": ["Středověké prostředí", "Vesmírné lodě", "Knihovna", "Inkvisice"], "correct": 1, "expl": "Děj je pevně středověký, bez sci-fi."},
+    {"prompt": "Jak Eco pracuje s intertextem?", "options": ["Citace Bible, Aristotela, středověkých pramenů", "Nepoužívá reference", "Jen moderní pop", "Jen české písně"], "correct": 0, "expl": "Román je plný odkazů na teologii, filosofii a literaturu."},
+    {"prompt": "Kdo je Remigio?", "options": ["Opat", "Mnich s temnou minulostí heretického bratrstva", "Adsova matka", "Papež"], "correct": 1, "expl": "Remigio je zapleten do zločinů a strachu z odhalení."},
+    {"prompt": "Jaké poselství lze vyčíst z požáru?", "options": ["Knihy jsou zbytečné", "Fanatismus a tajemství ničí i to, co chtěly chránit", "Oheň je náhodný", "Požár ničí jen jídlo"], "correct": 1, "expl": "Klášter a knihovna hoří – knowledge a moc končí v popelu."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Vilém a Adso přijíždějí do kláštera",
-        "Začínají záhadná úmrtí mnichů",
+        "William a Adso přijíždějí do kláštera",
+        "Začínají umírat mniši za záhadných okolností",
         "Pátrání vede do labyrintu knihovny",
-        "Přichází inkvizitor Bernard Gui",
-        "Odhalení Jorgeho a zakázané knihy o komedii",
-        "Požár zničí knihovnu"
+        "Odhalí se souvislost se zakázanou knihou o smíchu",
+        "Jorge a konflikt o cenzuru vyústí v tragédii",
+        "Požár zničí klášter; Adso vzpomíná po letech"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: příjezd → vraždy → labyrint knihovny → inkvizice → odhalení Jorgeho → požár knihovny."
+    "Správné pořadí: příjezd → vraždy → knihovna → Aristotelova komedie → Jorge → požár a vzpomínka Adsova."
   ]
 }

@@ -4,198 +4,95 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Alois Mrštík a Vilém Mrštík",
-        "Žánr: realistické drama / vesnická tragédie",
-        "Poprvé uvedeno: 1894",
-        "Děj / prostředí: slovácká vesnice, rodina Lízalových",
-        "Vyprávění / forma: drama v dialektu, konflikty v dialogu, sbor vesnice"
+        "Autor: Alois a Vilém Mrštíkové (1854–1932 / 1863–1912)",
+        "Žánr: realistické drama, venkovská tragédie",
+        "Poprvé vydáno / uvedeno: 1894",
+        "Děj / prostředí: moravský venkov, hospoda, dvorec",
+        "Vyprávění / forma: divadelní hra, dialogy, venkovská mluva"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Konec 19. století: moravský venkov, patriarchát a majetkové sňatky.",
-        "Bratři Mrštíkové zobrazují vesnici bez idealizace.",
-        "Maryša je donucena ke sňatku, který nechce.",
-        "Tragédie vyrůstá z peněz, cti a útlaku ženy.",
-        "Jazyk využívá dialektu pro autenticičnost prostředí.",
-        "Jedno z klíčových děl české realistické dramatické literatury."
+        "Konec 19. století: venkov, společenské poměry, soudní proces.",
+        "Maryša – mladá vdova, týraná tchyní a okolím.",
+        "Láska k Filipovi kontrastuje s tlakem na sňatek s Vávrou.",
+        "Realistické drama bez patosu – sociální a morální konflikt.",
+        "Proces s Maryšou – oběť systému a pomluv.",
+        "Mrštíkové patří k vrcholu české realistické dramaturgie."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Maryša – dcera Lízalových, donucena vdát se za Vávru.",
-        "Francek – Maryšin milý, voják, kterého jí otec rozmluví.",
-        "Lízal – otec, řídí sňatek podle majetku.",
-        "Lízalka – matka, kolísá mezi dcerou a hospodářstvím.",
-        "Vávra – vdovec, bohatý mlynář, Maryšin manžel.",
-        "Strojař / vesnice – sociální tlak a svědkové konfliktu."
+        "Maryša – mladá vdova, statečná, oběť pomluv a tchyně.",
+        "Filip – milenec Maryši, sedlák.",
+        "Vávra – bohatý sedlák, touží po Maryši a statku.",
+        "Maryšina tchyně – krutá, panovačná, ničí snahu vdovy.",
+        "Metoděj – kněz, morální autorita.",
+        "Sedláci a vesnice – soud a společenský tlak."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Nucený sňatek – majetek nad láskou.",
-        "Patriarchát – moc otce nad dcerou.",
-        "Dialekt – prostředek realismu a místní barvy.",
-        "Ženská otázka – Maryšina omezená svoboda.",
-        "Vina a zoufalství – cesta k vraždě.",
-        "Vesnická morálka – čest, pomluvy, tlak okolí."
+        "Realistické drama – všední konflikt bez idealizace.",
+        "Vdovství a majetek – ekonomický tlak na Maryšu.",
+        "Pomluva a soud – společenské odsouzení.",
+        "Venkovská mluva – autenticita dialogů.",
+        "Generační a rodinný útlak – tchyně.",
+        "Tragédie oběti – Maryša prohrává s systémem."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Maryšu?",
-      "options": [
-        "Alois Jirásek",
-        "Alois a Vilém Mrštíkové",
-        "Gabriela Preissová",
-        "Karel Václav Rais"
-      ],
-      "correct": 1,
-      "expl": "Autory jsou bratři Alois a Vilém Mrštíkové."
-    },
-    {
-      "prompt": "Proč má Maryša vdát Vávru?",
-      "options": [
-        "Z lásky",
-        "Kvůli majetku a rozhodnutí rodičů",
-        "Na příkaz císaře",
-        "Protože Francek zemřel"
-      ],
-      "correct": 1,
-      "expl": "Sňatek je majetkový a vynucený otcem."
-    },
-    {
-      "prompt": "Kdo je Francek?",
-      "options": [
-        "Vávrův syn",
-        "Maryšin milý, kterého musí opustit",
-        "Starosta",
-        "Učitel"
-      ],
-      "correct": 1,
-      "expl": "Francek je Maryšina láska, bráněná sňatkem."
-    },
-    {
-      "prompt": "Jak Maryša konflikt vyřeší?",
-      "options": [
-        "Útěkem do Ameriky",
-        "Zavraždí Vávru (otráví ho)",
-        "Smířením s otcem bez činu",
-        "Vstupem do kláštera"
-      ],
-      "correct": 1,
-      "expl": "V zoufalství Vávru otráví."
-    },
-    {
-      "prompt": "Kdy měla hra premiéru?",
-      "options": [
-        "1866",
-        "1894",
-        "1918",
-        "1938"
-      ],
-      "correct": 1,
-      "expl": "Maryša byla uvedena roku 1894."
-    },
-    {
-      "prompt": "K jakému směru drama patří?",
-      "options": [
-        "Romantismus",
-        "Realismus",
-        "Surrealismus",
-        "Absurdní drama"
-      ],
-      "correct": 1,
-      "expl": "Jde o realistické vesnické drama."
-    },
-    {
-      "prompt": "Co je hlavní motiv tragédie?",
-      "options": [
-        "Válečný hrdinství",
-        "Nucený sňatek a útlak ženy",
-        "Detektivní záhada",
-        "Dvorská intrika"
-      ],
-      "correct": 1,
-      "expl": "Maryša se stává obětí majetkového sňatku."
-    },
-    {
-      "prompt": "Jakou roli hraje dialekt?",
-      "options": [
-        "Jen překlep",
-        "Posiluje autenticitu slováckého prostředí",
-        "Nahrazuje děj",
-        "Je anglický"
-      ],
-      "correct": 1,
-      "expl": "Nářečí ukotvuje realismus místa."
-    },
-    {
-      "prompt": "Kdo je Vávra?",
-      "options": [
-        "Maryšin bratr",
-        "Bohatý vdovec a mlynář",
-        "Farár",
-        "Francekův přítel"
-      ],
-      "correct": 1,
-      "expl": "Vávra je nevítaný ženich z majetkových důvodů."
-    },
-    {
-      "prompt": "Jaký je Lízal jako otec?",
-      "options": [
-        "Velkorysý zastánce lásky",
-        "Patriarchální, řídí dceru podle hospodářství",
-        "Nepřítomný",
-        "Komický šašek"
-      ],
-      "correct": 1,
-      "expl": "Otec prosazuje sňatek kvůli majetku a cti."
-    },
-    {
-      "prompt": "Co vesnice v dramatu představuje?",
-      "options": [
-        "Útočiště svobody",
-        "Sociální tlak, pomluvy a kontrolu",
-        "Hlavní postavu lásky",
-        "Dvůr císaře"
-      ],
-      "correct": 1,
-      "expl": "Kolektiv vsi posiluje útlak jednotlivce."
-    },
-    {
-      "prompt": "Proč je Maryša maturitně důležitá?",
-      "options": [
-        "Je to komedie o sňatku",
-        "Ukazuje realisticky tragédii nuceného sňatku a postavení ženy",
-        "Je veršovaná pohádka",
-        "Oslavuje patriarchát"
-      ],
-      "correct": 1,
-      "expl": "Drama demaskuje vesnickou morálku a nesvobodu ženy."
-    }
+    {"prompt": "Kdo napsal Maryšu?", "options": ["Čapek", "Alois a Vilém Mrštíkové", "Nemcová", "Hašek"], "correct": 1, "expl": "Bratři Mrštíkové uvedli hru v roce 1894."},
+    {"prompt": "Jaký žánr Maryša reprezentuje?", "options": ["Realistické drama", "Opera", "Epos", "Sci-fi"], "correct": 0, "expl": "Hra je dialogová venkovská tragédie."},
+    {"prompt": "Kdo je Maryša?", "options": ["Mladá vdova na venkově", "Královna", "Učitelka", "Voják"], "correct": 0, "expl": "Titulní hrdinka je v konfliktu s okolím."},
+    {"prompt": "Koho miluje Maryša?", "options": ["Vávru", "Filipa", "Metoděje", "Tchyni"], "correct": 1, "expl": "Filip je její milenec."},
+    {"prompt": "Kdo chce Maryšu za ženu?", "options": ["Filip", "Vávra – bohatý sedlák", "Kněz", "Soudce"], "correct": 1, "expl": "Vávra touží po ní i po statku."},
+    {"prompt": "Kdo Maryšu nejvíc týrá?", "options": ["Filip", "Tchyně", "Metoděj", "Vesnice bez nikoho"], "correct": 1, "expl": "Tchyně je krutá a panovačná."},
+    {"prompt": "Co je středem konfliktu?", "options": ["Válka", "Láska, majetek, pomluvy, soud", "Vesmír", "Sport"], "correct": 1, "expl": "Venkovský sociální drama."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Moravský venkov", "Praha", "Moře", "Paříž"], "correct": 0, "expl": "Prostředí hospody a dvora."},
+    {"prompt": "Jak hra končí?", "options": ["Happy end svatbou", "Tragicky – Maryša je zničena procesem a okolím", "Vávra vítězí šťastně", "Filip král"], "correct": 1, "expl": "Oběť prohrává s pomluvami a systémem."},
+    {"prompt": "Kdo je Metoděj?", "options": ["Kněz", "Sedlák Vávra", "Soudce", "Tchyně"], "correct": 0, "expl": "Kněz reprezentuje morální rovinu."},
+    {"prompt": "Proč maturita zahrnuje Maryšu?", "options": ["Nejdelší román", "České realistické drama a venkov", "Bez děje", "Komiks"], "correct": 1, "expl": "Učí drama, dialog a sociální kontext."},
+    {"prompt": "Co je venkovská mluva?", "options": ["Autentické dialogy moravského venkova", "Anglicky", "Bez dialogů", "Latin"], "correct": 0, "expl": "Mrštíkové pracují s nářečím."},
+    {"prompt": "Které téma NENÍ středem?", "options": ["Vdovství", "Pomluva", "Vesmírná flotila", "Majetek"], "correct": 2, "expl": "Hra je realistická venkovská."},
+    {"prompt": "Co Vávra představuje?", "options": ["Chudobu", "Bohatství a tlak na sňatek", "Kněze", "Dítě"], "correct": 1, "expl": "Ekonomický motiv sňatku."},
+    {"prompt": "Jak Mrštíkové vykreslují vesnici?", "options": ["Realisticky – pomluvy, soud", "Idylicky", "Bez lidí", "Futuristicky"], "correct": 0, "expl": "Společenská kritika venkova."},
+    {"prompt": "Kdy hra vznikla?", "options": ["1894", "2000", "1700", "1948"], "correct": 0, "expl": "Konec 19. století."},
+    {"prompt": "Co je proces v hře?", "options": ["Soudní líčení s Maryšou", "Sport", "Svatba", "Válka"], "correct": 0, "expl": "Společenské odsouzení vrcholí soudem."},
+    {"prompt": "Jaký vztah má Filip k Maryši?", "options": ["Láska, ale slabší než tlak okolí", "Nenávist", "Sourozenec", "Kněz"], "correct": 0, "expl": "Láska nestačí proti systému."},
+    {"prompt": "Proč je Maryša obětí?", "options": ["Systém pomluv, tchyně a majetku ji zničí", "Vlastní volba bez tlaku", "Válka", "Magie"], "correct": 0, "expl": "Tragédie bez viny hrdinky."},
+    {"prompt": "Co je realistické drama?", "options": ["Každodenní konflikt bez nadpřirozena", "Pohádka", "Epos", "Opera"], "correct": 0, "expl": "Mrštíkové zobrazují reálný venkov."},
+    {"prompt": "Kdo jsou autoři – vztah?", "options": ["Bratři", "Otec a syn", "Cizinci", "Jeden autor"], "correct": 0, "expl": "Alois a Vilém Mrštíkové."},
+    {"prompt": "Jaký kontrast tvoří jádro?", "options": ["Láska Maryši–Filip vs. tlak Vávry a tchyně", "Moře vs. hory", "Praha vs. Brno", "Humor vs. humor"], "correct": 0, "expl": "Osobní city vs. sociální moc."},
+    {"prompt": "Co symbolizuje majetek?", "options": ["Tlak na vdovu", "Nic", "Vesmír", "Sport"], "correct": 0, "expl": "Statky a sňatky řídí osudy."},
+    {"prompt": "Jak končí Vávra?", "options": ["Není absolutní vítěz – morálně problematický", "Král", "Emigrace", "Neznámo"], "correct": 0, "expl": "Interpretace ukazuje prázdnotu „vítězství“."},
+    {"prompt": "Proč je tchyně důležitá?", "options": ["Zdroj útlaku v domě", "Pomáhá Maryši", "Neobjevuje se", "Královna"], "correct": 0, "expl": "Rodinný tyran."},
+    {"prompt": "Jaká je role kněze?", "options": ["Moralita a soud společnosti", "Voják", "Milující", "Soudce sám"], "correct": 0, "expl": "Metoděj komentuje morálku."},
+    {"prompt": "Co NENÍ charakteristika hry?", "options": ["Dialog", "Venkov", "Vesmírná opera", "Tragédie"], "correct": 2, "expl": "Maryša je uzavřené venkovské drama."},
+    {"prompt": "Jak čtenář vnímá Maryšu?", "options": ["Soucit k oběti", "Opovržení", "Smích", "Nezájem"], "correct": 0, "expl": "Hrdinka evokuje empatii."},
+    {"prompt": "Jaké poselství hra nese?", "options": ["Společnost může zničit jedince pomluvou a tlakem", "Venkov je ráj", "Bohatství šťastí", "Bez etiky"], "correct": 0, "expl": "Realistická kritika morálky venkova."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Maryša miluje Francka, rodiče sňatek odmítají",
-        "Lízal prosadí sňatek s bohatým Vávrou",
-        "Maryša vstupuje do nešťastného manželství",
-        "Francek se vrací a napětí roste",
-        "Domácí útlak a žárlivost Vávry vrcholí",
-        "Maryša Vávru otráví"
+        "Maryša jako vdova pod tlakem tchyně",
+        "Láska k Filipovi; Vávra usiluje o sňatek",
+        "Konflikt na venkově a v hospodě",
+        "Pomluvy a společenské odsouzení",
+        "Soudní proces s Maryšou",
+        "Tragický konec – Maryša prohrává"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: láska k Franckovi → nucený sňatek → nešťastné manželství → Franckův návrat → vyhrocení → vražda Vávry."
+    "Správné pořadí: vdovství a útlak → Filip a Vávra → konflikt → pomluvy → soud → tragédie Maryši."
   ]
 }

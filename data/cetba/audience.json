@@ -5,197 +5,417 @@
       "icon": "book",
       "lines": [
         "Autor: Václav Havel",
-        "Žánr: absurdní jednoaktovka / dramatický dialog",
-        "Poprvé vydáno: 1975 (samizdat; oficiálně později)",
-        "Děj/prostředí: Pivovar v normalizačním Československu",
-        "Vyprávění/forma: dialog Vaněk–Sládek; komorní scéna"
+        "Žánr: drama (jednoaktovka, absurdní / groteskní)",
+        "Poprvé vydáno: 1975 (součást Vaněkovy trilogie)",
+        "Děj/prostředí: kancelář vedoucího skladu pivovaru",
+        "Vyprávění/forma: divadelní dialog, jedno dějství, jazyk moci vs. jazyk obyčejného člověka"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Doba normalizace: politický tlak, špiclování a „přizpůsobení se“.",
-        "Disident Vaněk je „přeložen“ do pivovaru jako manuální pracovník.",
-        "Sládek představuje člověka, který se režimu přizpůsobuje a zároveň se stydí.",
-        "Hra ukazuje moralní dilema: kariéra vs. svědomí, alkohol jako únik.",
-        "Součást cyklu „vaňkovek“ (Audience, Vernisáž, Protest).",
-        "Téma: vina, přetvářka, komunikace v nesvobodě."
+        "Dílo vzniklo v normalizačním období; metaforicky kritizuje totalitní společnost.",
+        "Hrdina Vaněk je bývalý spisovatel přeřazený na manuální práci.",
+        "Moc se projevuje v byrokracii, strachu a pokrytectví „nadřízených“.",
+        "Rozhovor není o práci, ale o testu loajality a ideologické poslušnosti.",
+        "Groteska: banální situace skrývá vážný tlak na svědomí jedince.",
+        "Havel rozvíjí téma „slov odpovědnosti“ a falešné ideologické fráze."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ferdinand Vaněk – disident a dramatik, pracuje v pivovaru.",
-        "Sládek – mistr v pivovaru, alkoholik, chce Vaňka „ukecat“ ke spolupráci.",
-        "Brewery/pivovar – prostředí jako obraz normalizační společnosti.",
-        "(nepřítomný) režim – tlak StB a nadřízených v pozadí dialogu.",
-        "Vaněk jako typ – literární alter ego Havla v dalších hrách.",
-        "Divák – má poznat sebe v kompromisech Sládka i v principu Vaňka."
+        "Ferdinand Vaněk – bývalý spisovatel, dělník ve skladu pivovaru.",
+        "Vedoucí skladu (Šéf) – malý funkcionář toužící po kariéře, ideologicky nejistý.",
+        "Vaněkova manželka (zmíněna) – představuje tlak rodiny a strach ze ztráty výdělku.",
+        "Kolegové (nepřítomní) – symbol kolektivního dohledu.",
+        "Šéf jako typ – přizpůsobivý člověk, který opakuje fráze moci.",
+        "Vaněk jako typ disidenta – mlčí, ale nepodléhá."
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Vaňkovky – krátké hry s postavou Ferdinanda Vaňka.",
-        "Normalizace – období po 1968, utužení komunistické moci.",
-        "Audience – „pohovor“; zde schůzka mistra s podřízeným.",
-        "Svědomí – Vaněk odmítá psát posudky/udání.",
-        "Alkohol – Sládkův únik a prostředek nátlaku.",
-        "Absurdita – rozmělňování dialogu, opakování, nedorozumění."
+        "Audience – „audience u vedoucího“ = výslech, nátlak, pokus o spolupráci.",
+        "Hovory o pravdě – rozdíl mezi oficiální rétorikou a skutečným prožíváním.",
+        "Strach a kariéra – vedoucí se bojí, ale chce postup.",
+        "Práce vs. svědomí – Vaněk odmítá hrát ideologickou hru.",
+        "Groteska – vážné téma v banálním prostředí skladu.",
+        "Jazyk moci – prázdné fráze, které mají nahradit morální rozhodnutí."
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal hru Audience?",
+      "prompt": "Kdo je autorem hry Audience?",
       "options": [
-        "Karel Čapek",
+        "Jaroslav Hašek",
         "Václav Havel",
-        "Josef Škvorecký",
-        "Milan Kundera"
+        "Karel Čapek",
+        "Ladislav Smoljak"
       ],
       "correct": 1,
-      "expl": "Audience je jednoaktovka Václava Havla z cyklu vaňkovek."
+      "expl": "Audience napsal Václav Havel jako součást Vaněkovy trilogie."
     },
     {
-      "prompt": "Kde se hra odehrává?",
+      "prompt": "Jaký je žánr díla?",
       "options": [
-        "V parlamentu",
-        "V pivovaru",
-        "Ve vězení",
-        "V kavárně"
+        "Epos",
+        "Jednoaktové drama",
+        "Lyrická báseň",
+        "Detektivní román"
       ],
       "correct": 1,
-      "expl": "Vaněk pracuje v pivovaru; dialog probíhá v místnosti mistra Sládka."
+      "expl": "Jde o jednoaktovou divadelní hru s dialogem dvou postav."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "Na ministerstvu",
+        "V kanceláři vedoucího skladu pivovaru",
+        "V divadle",
+        "V exilu"
+      ],
+      "correct": 1,
+      "expl": "Celá hra probíhá v kanceláři vedoucího skladu."
     },
     {
       "prompt": "Kdo je Ferdinand Vaněk?",
       "options": [
-        "Pivovarský mistr",
-        "Disident a dramatik nucený k manuální práci",
-        "Estébák",
-        "Hostinský"
+        "Vedoucí skladu",
+        "Bývalý spisovatel přeřazený na manuální práci",
+        "Ministr",
+        "Hasič"
       ],
       "correct": 1,
-      "expl": "Vaněk je intelektuál a disident „převedený“ do výroby."
+      "expl": "Vaněk je inteligent přeřazený do dělnické profese – alter ego Havla."
     },
     {
-      "prompt": "Co chce Sládek po Vaňkovi?",
+      "prompt": "Proč vedoucí Vaněka „předvolá“?",
       "options": [
-        "Aby napsal hru o pivovaru",
-        "Aby psal zprávy/posudky a „spolupracoval“",
-        "Aby se stal ředitelem",
-        "Aby odešel do emigrace"
+        "Kvůli inventuře",
+        "Aby ho ideologicky „ převýchovali“ a získali informace",
+        "Kvůli dovolené",
+        "Kvůli pivu zdarma"
       ],
       "correct": 1,
-      "expl": "Sládek ho tlačí ke kompromisu – psát hlášení, která ulehčí Sládkovi situaci."
+      "expl": "Rozhovor je nátlak na poslušnost a spolupráci s mocí."
     },
     {
-      "prompt": "Proč Vaněk spolupráci odmítá?",
+      "prompt": "Jak vedoucí vnímá svou pozici?",
       "options": [
-        "Nemá čas",
-        "Nechce zradit svědomí a stát se udavačem",
-        "Neumí psát",
-        "Bojí se alkoholu"
+        "Jako mučedníka",
+        "Jako malého funkcionáře toužícího po kariéře",
+        "Jako disidenta",
+        "Jako umělce"
       ],
       "correct": 1,
-      "expl": "Jádrem hry je Vaňkova neochota vzdát se morální integrity."
+      "expl": "Vedoucí se přizpůsobuje systému a chce postup."
     },
     {
-      "prompt": "Jakou roli hraje alkohol?",
+      "prompt": "Jak Vaněk reaguje na nátlak?",
       "options": [
-        "Jen komický prvek",
-        "Prostředek nátlaku i úniku ze studu a strachu",
-        "Není důležitý",
-        "Oslavuje svobodu"
+        "Okamžitě udává",
+        "Mlčí, ironizuje, nepodléhá",
+        "Odejde z práce",
+        "Napadne vedoucího"
       ],
       "correct": 1,
-      "expl": "Sládek pije, aby snášel svou roli; alkoholem i Vaňka „změkčuje“."
+      "expl": "Vaněk odmítá hrát hru moci, i když riskuje problémy."
     },
     {
-      "prompt": "K jakému žánru Audience patří?",
+      "prompt": "Co je typické pro Havlovy hry s Vaněkem?",
       "options": [
-        "Historická epopej",
-        "Absurdní/komorní drama dialogu",
-        "Román ve verších",
-        "Detektivka"
+        "Historický realismus 19. století",
+        "Groteskní situace a jazyk moci",
+        "Pohádková fantasy",
+        "Přírodní lyrika"
       ],
       "correct": 1,
-      "expl": "Jde o krátké drama postavené na dialogu a absurdních situacích normalizace."
+      "expl": "Havel ukazuje absurditu režimu skrze banální rozhovory."
     },
     {
-      "prompt": "Audience patří do cyklu:",
+      "prompt": "Kdy hra vznikla / poprvé vyšla?",
       "options": [
-        "Her o Jánošíkovi",
-        "Vaňkovek",
-        "Čapkových her",
-        "Shakespearovských adaptací"
+        "1948",
+        "1975",
+        "1989",
+        "2000"
       ],
       "correct": 1,
-      "expl": "Spolu s Vernisáží a Protestem tvoří tzv. vaňkovky."
+      "expl": "Audience patří k Vaněkově trilogii z normalizačního období (1975)."
     },
     {
-      "prompt": "Co hra především kritizuje?",
+      "prompt": "Jaké další hry tvoří Vaněkovu trilogii kromě Audience?",
       "options": [
-        "Pivovarnictví",
-        "Přizpůsobení se nesvobodě a morální úpadek",
-        "Emigraci",
-        "Církev"
+        "Hamlet a Macbeth",
+        "Protest a Vyrozumění",
+        "R.U.R. a Bílá nemoc",
+        "Čekání na Godota a Endgame"
       ],
       "correct": 1,
-      "expl": "Ukazuje, jak režim nutí lidi ke kompromisům a jak se s tím vyrovnávají."
+      "expl": "Trilogie: Audience, Protest, Vyrozumění."
     },
     {
-      "prompt": "Jaký je vztah Sládka k Vaňkovi?",
+      "prompt": "Proč je hra „absurdní“?",
       "options": [
-        "Čistě nepřátelský",
-        "Směs obdivu, závisti, nátlaku a studu",
-        "Otcovsky láskyplný",
-        "Lhostejný"
+        "Protože se dějí zázraky",
+        "Protože vážný nátlak probíhá v banální situaci skladu",
+        "Protože je bez dialogu",
+        "Protože je v rýmu"
       ],
       "correct": 1,
-      "expl": "Sládek Vaňka zároveň respektuje i nenávidí za to, že se nepodřídil."
+      "expl": "Absurdita je v rozporu mezi tématem a prostředím."
     },
     {
-      "prompt": "Kdy hra vznikla?",
+      "prompt": "Co symbolizuje pivovar / sklad?",
       "options": [
-        "Ve 30. letech",
-        "V polovině 70. let (normalizace)",
-        "Po roce 1989",
-        "Za 1. republiky"
+        "Exkluzivní elita",
+        "Běžné pracovní prostředí, kde se testuje loajalita",
+        "Církev",
+        "Škola"
       ],
       "correct": 1,
-      "expl": "Audience vznikla roku 1975 v období normalizace, šířila se samizdatem."
+      "expl": "Moc se prosazuje i v obyčejné fabrice."
     },
     {
-      "prompt": "Čím je Vaněk typický hrdina?",
+      "prompt": "Jak vedoucí mluví o „pravdě“?",
       "options": [
-        "Bojovný revolucionář se zbraní",
-        "Tichý, zásadový intelektuál",
-        "Kariérista",
-        "Komik"
+        "Jasně a otevřeně",
+        "Používá ideologické fráze a ospravedlňuje se",
+        "V latině",
+        "Vůbec nemluví"
       ],
       "correct": 1,
-      "expl": "Vaněk nekáže, ale trvá na tom, že určité věci dělat nebude."
+      "expl": "Vedoucí opakuje fráze, ale neumí nést morální odpovědnost."
+    },
+    {
+      "prompt": "Proč Vaněk nechce „spolupracovat“?",
+      "options": [
+        "Neví jak",
+        "Odmítá kompromis se lží a strachem",
+        "Chce být vedoucím",
+        "Je mu jedno"
+      ],
+      "correct": 1,
+      "expl": "Hrdina volí svědomí před kariérním nebo materiálním klidem."
+    },
+    {
+      "prompt": "Jaký vztah mají oba muži k alkoholu v hře?",
+      "options": [
+        "Nepijí",
+        "Pivo je součástí prostředí a uvolnění napětí",
+        "Pijí jen Vaněk",
+        "Pivo zakazují"
+      ],
+      "correct": 1,
+      "expl": "Pivovar jako prostředí ovlivňuje tón rozhovoru."
+    },
+    {
+      "prompt": "Co hrozí Vaněkovi, pokud neuspokojí vedoucího?",
+      "options": [
+        "Pouze pokuta",
+        "Další perzekuce, problémy v práci i rodině",
+        "Okamžitá sláva",
+        "Povýšení"
+      ],
+      "correct": 1,
+      "expl": "Normalizační režim trestal odmítnutí spolupráce."
+    },
+    {
+      "prompt": "Které téma Havel v Audience NEřeší primárně?",
+      "options": [
+        "Morální odpovědnost",
+        "Jazyk moci",
+        "Kosmické cestování",
+        "Strach z autorit"
+      ],
+      "correct": 2,
+      "expl": "Hra je společenská groteska, ne sci-fi."
+    },
+    {
+      "prompt": "Jak končí hra typicky v interpretaci?",
+      "options": [
+        "Vítězstvím vedoucího",
+        "Bez jasného „happy endu“ – napětí a Vaněkovo trvání na svém",
+        "Svatbou",
+        "Válka"
+      ],
+      "correct": 1,
+      "expl": "Zůstává konflikt mezi mocí a svědomím."
+    },
+    {
+      "prompt": "Proč je Audience maturitní četbou?",
+      "options": [
+        "Kvůli pohádkovému ději",
+        "Ukazuje českou literaturu 20. století a disidentskou zkušenost",
+        "Je nejkratší kniha",
+        "Je bez témat"
+      ],
+      "correct": 1,
+      "expl": "Dílo reprezentuje Havla a období normalizace."
+    },
+    {
+      "prompt": "Kdo je autorem termínu „slov odpovědnosti“ v kontextu Havla?",
+      "options": [
+        "Shakespeare",
+        "Václav Havel",
+        "Orwell",
+        "Kafka"
+      ],
+      "correct": 1,
+      "expl": "Havel zdůrazňoval, že slova mají morální váhu."
+    },
+    {
+      "prompt": "Jaký je tón dialogu?",
+      "options": [
+        "Epický popis přírody",
+        "Napětí mezi frázemi moci a Vaněkovou ironií",
+        "Pouze monolog",
+        "Pouze pění"
+      ],
+      "correct": 1,
+      "expl": "Dialog odhaluje charakter obou postav."
+    },
+    {
+      "prompt": "Vedoucí se bojí hlavně…",
+      "options": [
+        "Přízraků",
+        "Ztráty postavení a problémů s nadřízenými",
+        "Vaněkova talentu na pivo",
+        "Cizinců"
+      ],
+      "correct": 1,
+      "expl": "Jeho kariéra závisí na ideologické spolehlivosti."
+    },
+    {
+      "prompt": "Vaněk v hře představuje…",
+      "options": [
+        "Typ spolupracovníka režimu",
+        "Typ člověka, který nezradí svědomí",
+        "Krále",
+        "Detektiva"
+      ],
+      "correct": 1,
+      "expl": "Vaněk je Havlovo alter ego disidenta."
+    },
+    {
+      "prompt": "Kolik hlavních mluvících postav je v Audience?",
+      "options": [
+        "Pět",
+        "Dvě",
+        "Deset",
+        "Žádná"
+      ],
+      "correct": 1,
+      "expl": "Dialog vedoucího a Vaněka tvoří jádro hry."
+    },
+    {
+      "prompt": "Jak souvisí Audience s normalizací?",
+      "options": [
+        "Vznikla v období po roce 1968 jako metafora tlaku režimu",
+        "Popisuje středověk",
+        "Je z roku 1848",
+        "Je americký western"
+      ],
+      "correct": 0,
+      "expl": "Hra reaguje na politickou situaci v Československu 70. let."
+    },
+    {
+      "prompt": "Proč vedoucí opakuje fráze?",
+      "options": [
+        "Nemá slovní zásobu",
+        "Nahrazuje nimi vlastní rozhodnutí a odpovědnost",
+        "Učí se latinu",
+        "Je básník"
+      ],
+      "correct": 1,
+      "expl": "Ideologický jazyk má ulevit od morální volby."
+    },
+    {
+      "prompt": "Co Vaněk odmítá udělat?",
+      "options": [
+        "Pracovat",
+        "Hrát roli informátora / ideologicky se „ přizpůsobit“",
+        "Pít pivo",
+        "Chodit do skladu"
+      ],
+      "correct": 1,
+      "expl": "Jde o odmítnutí spolupráce s mocí."
+    },
+    {
+      "prompt": "Jaký literární směr je nejblíže Havlovu divadlu?",
+      "options": [
+        "Romantismus",
+        "Divadlo absurdní / groteskní",
+        "Klasicismus",
+        "Naturalismus venkova"
+      ],
+      "correct": 1,
+      "expl": "Havel navazuje na absurdní drama, ale s českým politickým kontextem."
+    },
+    {
+      "prompt": "Co je „audience“ v anglickém významu slova?",
+      "options": [
+        "Publikum / jednání s nadřízeným",
+        "Hasičský sbor",
+        "Pivní sud",
+        "Soudní trest"
+      ],
+      "correct": 0,
+      "expl": "Název ironicky evokuje setkání, které je ve skutečnosti výslech."
+    },
+    {
+      "prompt": "Která postava je víc „pro systém“?",
+      "options": [
+        "Vaněk",
+        "Vedoucí skladu",
+        "Obě stejně",
+        "Ani jedna"
+      ],
+      "correct": 1,
+      "expl": "Vedoucí se snaží vyhovět nadřízeným."
+    },
+    {
+      "prompt": "Jaké poselství je pro maturitu klíčové?",
+      "options": [
+        "Poslušnost za každou cenu",
+        "Člověk může odmítnout lhát, i když za to platí",
+        "Práce je vždy důležitější než pravda",
+        "Fráze nahrazují etiku"
+      ],
+      "correct": 1,
+      "expl": "Hra obhajuje svědomí proti ideologickému nátlaku."
+    },
+    {
+      "prompt": "V jakém žánru je Audience v katalogu maturitní četby?",
+      "options": [
+        "Poezie",
+        "Drama",
+        "Próza",
+        "Epos"
+      ],
+      "correct": 1,
+      "expl": "V katalogu je uvedeno jako drama."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Vaněk přichází za Sládkem do kanceláře",
-        "Sládek ho obšťastňuje pivem a řečí",
-        "Naznačuje problém s nadřízenými a StB",
-        "Žádá Vaňka o psaní posudků/hlášení",
-        "Vaněk odmítá zradit svědomí",
-        "Dialog končí bez skutečného řešení, v napětí a studu"
+        "Vaněk pracuje ve skladu pivovaru jako dělník",
+        "Vedoucí ho předvolá na rozhovor v kanceláři",
+        "Vedoucí tlakem a frázemi testuje Vaněkovo přizpůsobení",
+        "Vaněk odmítá ideologickou spolupráci",
+        "Napětí mezi kariérou vedoucího a Vaněkovým svědomím roste",
+        "Hra končí bez smíření – moc a disident zůstávají v konfliktu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: příchod → pití a řeči → nátlak režimu → žádost o hlášení → Vaňkovo odmítnutí → otevřený, trapný závěr."
+    "Správné pořadí: Vaněk ve skladu → předvolání → nátlak vedoucího → Vaněkovo odmítnutí → eskalace napětí → nevyřešený konflikt."
   ]
 }

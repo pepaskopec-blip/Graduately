@@ -4,198 +4,407 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Samuel Beckett; překlad: Ouředník",
-        "Žánr: absurdní drama",
-        "Poprvé vydáno: 1952 (francouzsky; anglicky 1954)",
-        "Děj/prostředí: Neurčité pusté místo u cesty se stromem",
-        "Vyprávění/forma: dvě jednání, cyklická struktura; překlad Ouředník"
+        "Autor: Samuel Beckett",
+        "Žánr: drama absurdní",
+        "Poprvé vydáno: 1952 (fr. En attendant Godot)",
+        "Děj/prostředí: neurčená krajina, strom, silnice",
+        "Vyprávění/forma: dialog dvou postav, minimální děj, český překlad Ouředník"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Poválečná Evropa: krize smyslu, víry a jistot.",
-        "Hrdinové čekají na Godota, který nepřichází.",
-        "Čas se vleče, dialog se opakuje, děj „nejde kupředu“.",
-        "Vztah Estragon–Vladimir: závislost, hry, zoufalství.",
-        "Pozzo a Lucky ukazují pán–sluha a krutost moci.",
-        "Téma: absurdita existence, čekání, přátelství, naděje."
+        "Poválečný existencialismus, ztráta smyslu",
+        "Absurdita života – čekání bez výsledku",
+        "Bez historického konkrétna – univerzální situace",
+        "Chudoba, triviální rozhovory, rutina",
+        "Godot nepřichází – nedosažitelná naděje",
+        "Vliv na divadlo 20. století"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vladimir (Didi) – intelektuálnější z dvojice čekajících.",
-        "Estragon (Gogo) – tělesnější, zapomnětlivý společník.",
-        "Pozzo – panovačný pán, později slepý.",
-        "Lucky – Pozzův sluha s monologem „myšlení“.",
-        "Chlapec – posel, který hlásí, že Godot zase nepřijde.",
-        "Godot – nepřítomná postava, cíl čekání."
+        "Vladimír (Didi) – rozvážnější z dvojice",
+        "Estragon (Gogo) – fyzicky slabší, bolesti nohou",
+        "Pozzo – pán, vede na provaze Lucka",
+        "Lucky – nosič, „myslí“ v monologu",
+        "Chlapec – posel od Godota, Godot nepřijde",
+        "Godot – nikdy se neobjeví"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Absurdní drama – život bez jasného smyslu a cíle.",
-        "Čekání – základní situace a metafora lidského údělu.",
-        "Godot – možná Bůh, spása, smysl – ale nepřichází.",
-        "Cykličnost – druhé jednání opakuje první.",
-        "Pán a sluha – vztah Pozzo–Lucky.",
-        "Ticho a pauza – stejně důležité jako řeč."
+        "Čekání – metafora lidského stavu",
+        "Absurdita – opakování bez pointy",
+        "Strom – skromná krajina, listí v druhém dějství",
+        "Pomoc – Didi a Gogo si navzájem (boty, jídlo)",
+        "Čas – věty „najednou je večer“",
+        "Smysl života – otázka bez odpovědi"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Čekání na Godota?",
+      "prompt": "Autor?",
       "options": [
-        "Eugene Ionesco",
-        "Samuel Beckett",
-        "Jean-Paul Sartre",
-        "Albert Camus"
+        "Beckett",
+        "Ionesco",
+        "Shakespeare",
+        "Čapek"
       ],
-      "correct": 1,
-      "expl": "Beckettovo klíčové absurdní drama; nejdřív vyšlo francouzsky."
+      "correct": 0,
+      "expl": "Samuel Beckett."
     },
     {
-      "prompt": "Na koho Vladimir a Estragon čekají?",
+      "prompt": "Žánr?",
       "options": [
-        "Na Pozza",
-        "Na Godota",
-        "Na Luckyho",
-        "Na krále"
+        "Opera",
+        "Absurdní drama",
+        "Epos",
+        "Detektivka"
       ],
       "correct": 1,
-      "expl": "Celá hra stojí na čekání na Godota, který nepřijde."
+      "expl": "Klíčové dílo absurdního divadla."
     },
     {
-      "prompt": "Kolik jednání má hra?",
+      "prompt": "Kolik dějství?",
       "options": [
         "Jedno",
-        "Dvě",
+        "Dvě (opakující se struktura)",
         "Pět",
         "Deset"
       ],
       "correct": 1,
-      "expl": "Dvě jednání s téměř zrcadlovou strukturou."
+      "expl": "Dvě dějství podobně."
     },
     {
-      "prompt": "Kdo jsou Pozzo a Lucky?",
+      "prompt": "Kdo čeká?",
       "options": [
-        "Andělé",
-        "Pán a jeho sluha, kteří míjejí čekající",
-        "Godotovi synové",
-        "Policisté"
+        "Hamlet",
+        "Vladimír a Estragon",
+        "Godot sám",
+        "Nikdo"
       ],
       "correct": 1,
-      "expl": "Jejich vztah ukazuje závislost a krutost; v 2. jednání jsou změněni."
+      "expl": "Dvojice tramps."
     },
     {
-      "prompt": "Co je typické pro absurdní drama?",
+      "prompt": "Přijde Godot?",
       "options": [
-        "Logický happy end",
-        "Rozbití dějové logiky, opakování, ztráta smyslu",
-        "Historická přesnost bitev",
-        "Veršovaná óda"
+        "Ano hned",
+        "Ne (aspoň v průběhu hry)",
+        "Ano v epilogu",
+        "Je to Estragon"
       ],
       "correct": 1,
-      "expl": "Děj se „nic neděje“ – a právě to je pointa."
+      "expl": "Godot je nedosažitelný."
     },
     {
-      "prompt": "Přijde Godot nakonec?",
+      "prompt": "Kde se děj odehrává?",
       "options": [
-        "Ano, v závěru",
-        "Ne, jen vzkazuje, že přijde jindy",
-        "Ano, jako Pozzo",
-        "Ano, jako chlapec"
+        "Paříž salón",
+        "Silnice u stromu",
+        "Luna",
+        "Praha"
       ],
       "correct": 1,
-      "expl": "Chlapec opakovaně říká, že Godot dnes nepřijde, ale zítra ano."
+      "expl": "Minimalistické jeviště."
     },
     {
-      "prompt": "Jaké je prostředí hry?",
+      "prompt": "Kdo je Pozzo?",
       "options": [
-        "Královský dvůr",
-        "Pusté místo u cesty se stromem",
-        "Továrna",
-        "Kostel"
+        "Bůh",
+        "Pán vedoucí Lucka na provaze",
+        "Kněz",
+        "Hasič"
       ],
       "correct": 1,
-      "expl": "Scéna je záměrně neurčitá a chudá."
+      "expl": "Objeví se v obou dějstvích."
     },
     {
-      "prompt": "Kdo pronese dlouhý monolog „myšlení“?",
+      "prompt": "Lucky?",
       "options": [
-        "Vladimir",
-        "Lucky",
-        "Estragon",
+        "Král",
+        "Nosič Pozzova, monolog",
+        "Godot",
+        "Strom"
+      ],
+      "correct": 1,
+      "expl": "Slavný chaotický monolog."
+    },
+    {
+      "prompt": "Rok premiéry?",
+      "options": [
+        "1850",
+        "1952",
+        "1989",
+        "1600"
+      ],
+      "correct": 1,
+      "expl": "1952 Paříž."
+    },
+    {
+      "prompt": "Jazyk hry?",
+      "options": [
+        "Bez slov",
+        "Triviální dialog, filozofické otázky",
+        "Pouze zpěv",
+        "Latina"
+      ],
+      "correct": 1,
+      "expl": "Paradox hluboké banality."
+    },
+    {
+      "prompt": "Co dělají Didi a Gogo?",
+      "options": [
+        "Válka",
+        "Čekají, hádají se, hraje hry",
+        "Pilí zlato",
+        "Učí školu"
+      ],
+      "correct": 1,
+      "expl": "Rutina čekání."
+    },
+    {
+      "prompt": "Chlapec?",
+      "options": [
+        "Přináší zprávu od Godota",
+        "Zabije Pozza",
+        "Je Godot",
+        "Neexistuje"
+      ],
+      "correct": 0,
+      "expl": "Posel."
+    },
+    {
+      "prompt": "Strom v druhém dějství?",
+      "options": [
+        "Mizí",
+        "Má listí – čas uběhl",
+        "Hoří",
+        "Promění se v dům"
+      ],
+      "correct": 1,
+      "expl": "Jediná změna prostředí."
+    },
+    {
+      "prompt": "Téma absurdního divadla?",
+      "options": [
+        "Jasný happy end",
+        "Smysl života nejistý, opakování",
+        "Historická přesnost",
+        "Pouze komedie slapstick"
+      ],
+      "correct": 1,
+      "expl": "Existenciální prázdnota."
+    },
+    {
+      "prompt": "Beckett – národnost?",
+      "options": [
+        "Irsko / psal francouzsky i anglicky",
+        "Jen český",
+        "Jen ruský",
+        "Jen německý"
+      ],
+      "correct": 0,
+      "expl": "Irský autor."
+    },
+    {
+      "prompt": "Překlad maturita?",
+      "options": [
+        "Ouředník",
+        "Nevrla",
+        "Nezval",
+        "Gössell"
+      ],
+      "correct": 0,
+      "expl": "V katalogu Ouředník."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Nejdelší",
+        "Zásadní drama 20. stol.",
+        "Bez významu",
+        "Pouze film"
+      ],
+      "correct": 1,
+      "expl": "Kanón světového divadla."
+    },
+    {
+      "prompt": "Godot symbol?",
+      "options": [
+        "Konkrétní člověk",
+        "Naděje/Bůh/smysl, který nepřijde",
+        "Strom",
+        "Pes"
+      ],
+      "correct": 1,
+      "expl": "Interpretace otevřená."
+    },
+    {
+      "prompt": "Opakování dějství?",
+      "options": [
+        "Stejná struktura – absurdita rutiny",
+        "Totálně jiný děj",
+        "Jen jedno",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Cyklus čekání."
+    },
+    {
+      "prompt": "Estragonovy boty?",
+      "options": [
+        "Epizoda pomoci a starosti",
+        "Nezmíněny",
+        "Hlavní zbraň",
         "Godot"
       ],
-      "correct": 1,
-      "expl": "Lucky na povel „mysli“ chrlí zmatený proud řeči."
+      "correct": 0,
+      "expl": "Lidská péče v prázdnu."
     },
     {
-      "prompt": "Co se změní ve druhém jednání u Pozza?",
+      "prompt": "Pozzo slepne?",
       "options": [
-        "Stane se králem",
-        "Oslepne",
-        "Je to Godot",
-        "Zmizí navždy hned na začátku"
+        "Ve druhém dějství – křehkost moci",
+        "Ne",
+        "Hned na začátku",
+        "Lucky"
+      ],
+      "correct": 0,
+      "expl": "Proměna postav."
+    },
+    {
+      "prompt": "Monolog Luckyho?",
+      "options": [
+        "Chaotická „věda“ a rétorika",
+        "Krátké ano",
+        "Zpěv opery",
+        "Mlčení"
+      ],
+      "correct": 0,
+      "expl": "Satira slov."
+    },
+    {
+      "prompt": "Vladimír vs Estragon?",
+      "options": [
+        "Didi víc přemýšlí, Gogo fyzicky trpí",
+        "Totéž",
+        "Jsou bratři králové",
+        "Nepřátelé"
+      ],
+      "correct": 0,
+      "expl": "Doplňují se."
+    },
+    {
+      "prompt": "Konflikt?",
+      "options": [
+        "Bitva",
+        "Spíš vnitřní – nuda, strach, čekání",
+        "Detektivní",
+        "Soudní"
       ],
       "correct": 1,
-      "expl": "Pozzo je slepý, Lucky němý – čas vše zhoršil."
+      "expl": "Minimum vnějšího děje."
     },
     {
-      "prompt": "Jaký je vztah Didi a Goga?",
+      "prompt": "Konec hry?",
       "options": [
-        "Nepřátelství na život a na smrt",
-        "Vzájemná závislost, hádky i péče",
-        "Jsou to bratři Godota",
-        "Neznají se"
+        "Godot přijde",
+        "Opět rozhodnutí odejít a zůstat čekat",
+        "Svatba",
+        "Válka"
       ],
       "correct": 1,
-      "expl": "Nemohou se rozejít; přátelství je jejich jediná jistota."
+      "expl": "Otevřený cyklus."
     },
     {
-      "prompt": "Kdy hra poprvé vyšla?",
+      "prompt": "Ionesco vs Beckett?",
       "options": [
-        "1922",
-        "1952",
-        "1968",
-        "1989"
+        "Obě absurdní drama, jiná díla",
+        "Totéž kniha",
+        "Ionesco napsal Godota",
+        "Beckett Revizor"
+      ],
+      "correct": 0,
+      "expl": "Stejný směr, jiní autoři."
+    },
+    {
+      "prompt": "Co NENÍ v Godotovi?",
+      "options": [
+        "Dialog",
+        "Čekání",
+        "Epická bitva",
+        "Strom"
+      ],
+      "correct": 2,
+      "expl": "Bez epické akce."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Život může být čekáním bez jistoty",
+        "Vždy přijde spása",
+        "Čekání zbytečné vůbec neřešit",
+        "Godot je hrdina"
+      ],
+      "correct": 0,
+      "expl": "Existenciální otázka."
+    },
+    {
+      "prompt": "Forma?",
+      "options": [
+        "Báseň",
+        "Divadelní hra",
+        "Román",
+        "Esej"
       ],
       "correct": 1,
-      "expl": "En attendant Godot vyšlo 1952; anglická verze brzy poté."
+      "expl": "Drama."
     },
     {
-      "prompt": "Co Godot nejspíš symbolizuje?",
+      "prompt": "Titulní jméno Godot?",
       "options": [
-        "Jen konkrétního souseda",
-        "Naději, spásu či smysl, který nepřichází",
+        "Vyslovuje se, nikdo nepřichází",
+        "Hlavní mluvící postava",
         "Strom",
-        "Jídlo"
+        "Pes"
       ],
-      "correct": 1,
-      "expl": "Výklady se liší; jisté je, že čekání samo utváří lidský úděl ve hře."
+      "correct": 0,
+      "expl": "Absence je pointa."
+    },
+    {
+      "prompt": "Druhé dějství podobné prvnímu?",
+      "options": [
+        "Ano – opakování s malými změnami",
+        "Ne",
+        "Je to operní finále",
+        "Je kratší o polovinu"
+      ],
+      "correct": 0,
+      "expl": "Struktura absurdní rutiny."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Vladimir a Estragon čekají u stromu",
-        "Hádají se, hrají hry, zvažují odchod",
+        "Vladimír a Estragon čekají u stromu",
         "Přicházejí Pozzo a Lucky",
-        "Chlapec hlásí, že Godot nepřijde",
-        "Druhé jednání téměř opakuje první",
-        "Znovu čekají – Godot opět nepřichází"
+        "Monolog a rozhovory, Godot nejde",
+        "Chlapec: Godot nepřijde zítra",
+        "Druhé dějství – opět čekání",
+        "Rozhodnutí odejít, ale zůstávají v cyklu"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: čekání → hry a dialogy → Pozzo a Lucky → zpráva chlapce → opakování ve 2. jednání → další čekání bez Godota."
+    "Pořadí: čekání → Pozzo/Lucky → zpráva → druhé dějství → opakování → cyklus čekání."
   ]
 }

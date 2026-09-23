@@ -5,196 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: Jane Austenová",
-        "Žánr: společenský román",
-        "Poprvé vydáno: 1813 (česky Poláčková)",
-        "Děj: anglický venkov – Elizabeth Bennetová a Darcy",
-        "Vyprávění: er-forma s ironií a volnou řečí postav"
+        "Žánr: společenský / láskopisný román",
+        "Poprvé vydáno: 1813",
+        "Děj: anglická venkovská šlechta, rodina Bennettových",
+        "Vyprávění: er-forma; ironický vypravěč"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Regency Anglie: sňatek, majetek, stav.",
-        "Pýcha a předsudek brání porozumění.",
-        "Ironie vůči sňatkovému trhu.",
-        "Ženská inteligence vs. konvence.",
-        "Vývoj postav k sebepoznání."
+        "Regency Anglie – třída, sňatek, majetek, mravy.",
+        "Ženy často závislé na dobré partii.",
+        "Společenské plesy, návštěvy, pomluvy.",
+        "Pýcha a předsudek brání Elizabeth a Darcymu.",
+        "Austen ironicky kritizuje společnost.",
+        "Téma: láska, sebe poznání, třída."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Elizabeth Bennetová – bystrá hrdinka.",
-        "Mr. Darcy – pyšný gentleman.",
-        "Jane – sestra, jemná.",
-        "Mr. Collins – servilní kněz.",
-        "Lady Catherine – aristokratická arogance.",
-        "Wickham – svůdný lhář."
+        "Elizabeth Bennet – bystrá hrdinka, odmítá předsudky.",
+        "Fitzwilliam Darcy – bohatý aristokrat, zpočátku haughty.",
+        "Jane Bennet – Elizabethina sestra, laskavá.",
+        "Charles Bingley – Darcyho přítel, miluje Jane.",
+        "Pan Wickham – okouzlující, ale nepoctivý.",
+        "Paní Bennet – matka tlačící na sňatky."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Pýcha – Darcyho maska.",
-        "Předsudek – Elizabethin omyl.",
-        "Sňatek a majetek – společenský tlak.",
-        "Ironie – Austenové styl.",
-        "Sebepoznání – cesta hrdinů.",
-        "Stavovskost – konflikt."
+        "Pýcha – Darcyho povýšenost.",
+        "Předsudek – Elizabethino souzení.",
+        "Sňatek – ekonomická i emocionální otázka.",
+        "Třída – bohatství a společenské postavení.",
+        "Ironie – Austenův styl.",
+        "Dopis – Darcy vysvětluje Wickhamovu minulost."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Pýchu a předsudek?",
-      "options": [
-        "Brontëová",
-        "Austenová",
-        "Woolfová",
-        "Shelleyová"
-      ],
-      "correct": 1,
-      "expl": "Jane Austenová."
-    },
-    {
-      "prompt": "Kdo je Elizabeth?",
-      "options": [
-        "Lady Catherine",
-        "Bystrá dcera Bennetových",
-        "Darcyho matka",
-        "Collinsova šéfová"
-      ],
-      "correct": 1,
-      "expl": "Hlavní hrdinka."
-    },
-    {
-      "prompt": "Proč Darcy působí odpudivě?",
-      "options": [
-        "Je chudý",
-        "Pýcha a společenský odstup",
-        "Je zločinec odsouzený",
-        "Neumí anglicky"
-      ],
-      "correct": 1,
-      "expl": "Pýcha kazí první dojem."
-    },
-    {
-      "prompt": "Co je Elizabethin předsudek?",
-      "options": [
-        "Vůči hudbě",
-        "Unáhlený soud o Darcym vlivem Wickhama aj.",
-        "Vůči čaji",
-        "Vůči tanci"
-      ],
-      "correct": 1,
-      "expl": "Předsudek zkreslí pravdu."
-    },
-    {
-      "prompt": "Kdo je Wickham?",
-      "options": [
-        "Zcela spolehlivý kněz",
-        "Charmantní, ale nečestný důstojník",
-        "Darcyho otec",
-        "Farmář"
-      ],
-      "correct": 1,
-      "expl": "Wickham lže o Darcym."
-    },
-    {
-      "prompt": "O čem román ironizuje?",
-      "options": [
-        "Moře",
-        "Sňatkový trh a snobství",
-        "Robotiku",
-        "Zákopy"
-      ],
-      "correct": 1,
-      "expl": "Společenská satira."
-    },
-    {
-      "prompt": "Jak se vztah vyvíjí?",
-      "options": [
-        "Nemění se",
-        "Od odporu k respektu a lásce skrze poznání",
-        "Jen nenávist",
-        "Jen obchod"
-      ],
-      "correct": 1,
-      "expl": "Charakterový vývoj."
-    },
-    {
-      "prompt": "Kdo je Mr. Collins?",
-      "options": [
-        "Hrdina války",
-        "Servilní duchovní a dědic",
-        "Zloděj",
-        "Malíř"
-      ],
-      "correct": 1,
-      "expl": "Komická postava konvencí."
-    },
-    {
-      "prompt": "Proč je sňatek téma?",
-      "options": [
-        "Není",
-        "Ekonomické zajištění žen ve společnosti",
-        "Jen sport",
-        "Jen náboženství bez majetku"
-      ],
-      "correct": 1,
-      "expl": "Sňatek = status i přežití."
-    },
-    {
-      "prompt": "Jaký styl?",
-      "options": [
-        "Naturalismus brutalit",
-        "Ironie, dialog, společenský postřeh",
-        "Jen verš",
-        "Jen deník vojáka"
-      ],
-      "correct": 1,
-      "expl": "Austenové ironie."
-    },
-    {
-      "prompt": "Kdo je Lady Catherine?",
-      "options": [
-        "Chudá služka",
-        "Aristokratka tlačící na stavovské sňatky",
-        "Elizabethina sestra",
-        "Wickhamova žena"
-      ],
-      "correct": 1,
-      "expl": "Tlak aristokracie."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Fronta",
-        "Sebepoznání, stav a láska",
-        "Robotí vzpoura",
-        "Balady o vodníkovi"
-      ],
-      "correct": 1,
-      "expl": "Pýcha a předsudek jako překážky."
-    }
+    {"prompt": "Kdo napsal Pýchu a předsudek?", "options": ["Charlotte Brontëová", "Jane Austenová", "George Eliot", "Virginia Woolfová"], "correct": 1, "expl": "Román vyšel 1813 a je Austenovou nejznámější prózou."},
+    {"prompt": "Kolik sester má rodina Bennetů (dcer)?", "options": ["2", "5", "10", "1"], "correct": 1, "expl": "Pět sester – Elizabeth, Jane, Mary, Kitty, Lydia."},
+    {"prompt": "Kdo je Elizabeth Bennet?", "options": ["Nejstarší sestra", "Druhá nejstarší, bystrá hrdinka románu", "Služka", "Vévodkyně"], "correct": 1, "expl": "Elizabeth je inteligentní a ironická protagonista."},
+    {"prompt": "Kdo je Fitzwilliam Darcy?", "options": ["Chudý kněz", "Bohatý aristokrat, Bingleyho přítel", "Wickhamův otec", "Farmář"], "correct": 1, "expl": "Darcy působí na Elizabeth povýšeně – pýcha."},
+    {"prompt": "Kdo je Charles Bingley?", "options": ["Elizabethin strýc", "Bohatý muž, který miluje Jane", "Vrah", "Král"], "correct": 1, "expl": "Bingley pronajme Netherfield a zamiluje se do Jane."},
+    {"prompt": "Proč Darcy zpočátku odjede a oddálí Bingleyho?", "options": ["Myslí si, že Jane nemiluje Bingleyho a rodina není vhodná", "Nemá peníze", "Je nemocný", "Nenávidí Anglii"], "correct": 0, "expl": "Darcy jedná z pýchy a „ochrany“ přítele."},
+    {"prompt": "Kdo je George Wickham?", "options": ["Darcymu důvěryhodný důstojník", "Okouzlující důstojník s temnou minulostí vůči Darcymu", "Kněz", "Lékař"], "correct": 1, "expl": "Wickham lže o Darcym – Elizabeth uvěří předsudku."},
+    {"prompt": "Co Elizabeth odmítne od Darcyho?", "options": ["První nabídku k sňatku – uražena jeho způsobem", "Dědictví", "Dům", "Knihu"], "correct": 0, "expl": "Slavná scéna – Darcy se nabídne hrdě, Elizabeth odmítne."},
+    {"prompt": "Co změní Elizabethin názor na Darcyho?", "options": ["Dopis vysvětlující Wickhamovu minulost a Darcyho činy", "Peníze", "Hrozba", "Kouzlo"], "correct": 0, "expl": "Po dopise Elizabeth přehodnotí předsudky."},
+    {"prompt": "Co udělá Lydia?", "options": ["Uteče s Wickhamem – skandál rodiny", "Stane se královnou", "Založí školu", "Odejde do kláštera"], "correct": 0, "expl": "Lydiin útěk ohrozí pověst celé rodiny."},
+    {"prompt": "Kdo pomůže Wickhamovu sňatku s Lydií?", "options": ["Darcy (tajně)", "Elizabeth", "Paní Bennet", "Wickham sám"], "correct": 0, "expl": "Darcy platí a jedná – projev dobrého srdce."},
+    {"prompt": "Jak román končí?", "options": ["Elizabeth a Darcy se vezmou, Bingley a Jane také", "Všichni zůstanou sami", "Elizabeth uteče", "Darcy zbankrotuje"], "correct": 0, "expl": "Klasický happy-end po sebepoznání."},
+    {"prompt": "Jaký je styl Austenové?", "options": ["Ironický společenský realismus", "Gotický horor", "Sci-fi", "Epos"], "correct": 0, "expl": "Jemná ironie vůči společnosti a postavám."},
+    {"prompt": "Proč paní Bennet tlačí na sňatky?", "options": ["Majetek rodiny přejde synovi – dcery potřebují partii", "Nenávidí děti", "Je královna", "Zákaz práce"], "correct": 0, "expl": "Ekonomická realita regency – sňatek jako jistota."},
+    {"prompt": "Kde se Bingley poprvé objeví?", "options": ["Netherfield – sousedství Bennetů", "Paříž", "Verona", "Praha"], "correct": 0, "expl": "Pronajatý statek spustí děj a plesy."},
+    {"prompt": "Kdo je pan Collins?", "options": ["Mrzký dědic statku, nabádá k sňatku", "Darcy", "Wickham", "Bingley"], "correct": 0, "expl": "Collins je komická postava servility vůči Lady Catherine."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Pýcha a předsudek", "Sňatek a třída", "Vzpoura robotů", "Sebepoznání"], "correct": 2, "expl": "Roboti jsou z R.U.R., ne od Austenové."},
+    {"prompt": "Proč je román důležitý pro maturitu?", "options": ["Učí chemii", "Austen, společnost, postavy, ironie, sňatek", "Je atlas", "Je zákoník"], "correct": 1, "expl": "U maturity: autor, děj, Elizabeth vs. Darcy, témata."},
+    {"prompt": "Kdy román vyšel?", "options": ["1813", "1929", "1595", "2001"], "correct": 0, "expl": "Regency období, počátek 19. století."},
+    {"prompt": "Jak Elizabeth vidí Darcyho na začátku?", "options": ["Okamžitě ideální", "Povýšeného a nepříjemného – předsudek", "Jako chudého", "Jako dítě"], "correct": 1, "expl": "První dojem u plesu formuje její názor."},
+    {"prompt": "Kdo je Lady Catherine de Bourgh?", "options": ["Darcyho příbuzná, autoritativní patronka", "Elizabethina sestra", "Wickhamova manželka", "Služka"], "correct": 0, "expl": "Lady Catherine představuje starou aristokracii."},
+    {"prompt": "Co je Netherfield?", "options": ["Statek, který Bingley pronajme", "Léčebna", "Vězení", "Loď"], "correct": 0, "expl": "Místo setkání společnosti a začátku lásky Jane."},
+    {"prompt": "Jaký vztah mají Jane a Bingley?", "options": ["Nenávist", "Jemná vzájemná láska", "Sourozenec", "Učitel–žák"], "correct": 1, "expl": "Jane a Bingley jsou kontrast k Elizabeth–Darcy konfliktu."},
+    {"prompt": "Co znamená název?", "options": ["Darcyho pýcha a Elizabethin předsudek brání lásce", "Pouze válka", "Pouze počasí", "Geografie"], "correct": 0, "expl": "Obě vlastnosti se musí překonat."},
+    {"prompt": "Která postava NENÍ Bennetová?", "options": ["Elizabeth", "Jane", "Emma Woodhouse", "Lydia"], "correct": 2, "expl": "Emma je hrdinka jiného Austenova románu."},
+    {"prompt": "Jak vyprávění funguje?", "options": ["Er-forma s ironickým odstupem", "Ich-forma Elizabeth", "Drama", "Epos"], "correct": 0, "expl": "Vypravěč často sdílí Elizabethin pohled, ale s ironií."},
+    {"prompt": "Proč Darcy pomůže s Lydií?", "options": ["Láska k Elizabeth a pocit odpovědnosti", "Nenávidí Wickhama jen ze sportu", "Zákaz", "Náhodou"], "correct": 0, "expl": "Darcy jedná diskrétně – charakter se ukáže činy."},
+    {"prompt": "Které dílo NENÍ Austenovo?", "options": ["Pýcha a předsudek", "Emma", "Na západní frontě klid", "Mansfieldské panství"], "correct": 2, "expl": "Remarque napsal válečný román."},
+    {"prompt": "Jak Elizabeth reaguje na druhou Darcyho nabídku?", "options": ["Přijme – po změně obou", "Odmítne navždy", "Uteče", "Pošle Wickhama"], "correct": 0, "expl": "Oba se poučili – sňatek z lásky."},
+    {"prompt": "Jak Austen ironicky líčí paní Bennet?", "options": ["Jako hysterickou matku fixovanou na sňatky dcer", "Jako vzornou vědkyni", "Jako válečnou hrdinku", "Jako královnu"], "correct": 0, "expl": "Paní Bennet komicky tlačí na vdání, protože ekonomicky jinou jistotu nemá."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "První dojem z Darcyho",
-        "Wickham živí předsudek",
-        "Elizabeth odmítá nevhodné sňatky",
-        "Odhalení Wickhamovy lži",
-        "Darcy pomáhá rodině",
-        "Vzájmené pochopení a sňatek"
+        "Bingley přijede do Netherfield, ples a setkání",
+        "Elizabeth soudí Darcyho pýchou, Wickham lže",
+        "Darcy se nabídne – Elizabeth odmítne",
+        "Darcyho dopis a nové pochopení",
+        "Lydia uteče s Wickhamem, Darcy pomůže",
+        "Elizabeth a Darcy se sblíží a vezmou se"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: první dojem → předsudek → odmítnutí → pravda → pomoc → sňatek."
+    "Správné pořadí: Bingley a ples → předsudky → první nabídka → dopis → Lydia → happy-end."
   ]
 }

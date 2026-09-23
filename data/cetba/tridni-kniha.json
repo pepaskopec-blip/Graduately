@@ -4,196 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Ladislav Smoljak a Zdeněk Svěrák (Divadlo Járy Cimrmana)",
-        "Žánr: divadelní hra / komedie",
-        "Poprvé uvedeno: 1967 (jako součást cimrmanovského pořadu)",
+        "Autoři: Ladislav Smoljak, Zdeněk Svěrák (Divadlo Járy Cimrmana)",
+        "Žánr: divadelní komedie",
+        "Poprvé uvedeno: 1967 (Cimrmanovo divadlo)",
         "Děj: škola, vyšetřování zmizelé třídní knihy",
-        "Forma: drama – dialogy, výstupy učitelů, parodie vyšetřování"
+        "Forma: dialogy, absurdní vyšetřování"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "České školství jako uzavřený svět řádů a protokolů.",
-        "Cimrmanovský humor paroduje vědu, úřad i pedagogiku.",
-        "„Vyšetřování“ je nadsazená detektivka v učitelské sborovně.",
-        "Satira míří na byrokracii, autoritu a malichernost.",
-        "Hra patří k neznámějším textům Divadla Járy Cimrmana."
+        "Parodie detektivky v učitelské sborovně.",
+        "Třídní kniha – symbol školního řádu.",
+        "Cimrmanovský humor – malichernost vs. velkolepost.",
+        "Učitelé jako podezřelí i vyšetřovatelé.",
+        "Satira byrokracie a autority.",
+        "Jazykové hříčky Smoljaka a Svěráka."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Ředitel školy – řídí „vyšetřování“ ztráty.",
-        "Učitelé (např. Nechleb), – podezřelí i vyšetřovatelé v jednom.",
-        "Žáci – nepřítomní, ale všudypřítomný důvod třídní knihy.",
-        "Jára Cimrman (mýtus) – rámec divadla a „vědeckého“ výkladu.",
-        "Sborovna – kolektiv plný rivality a hlášek."
+        "Ředitel školy – vede vyšetřování.",
+        "Učitel Nechleb aj. – komické figury.",
+        "Učitelé sborovny – rivalita.",
+        "Jára Cimrman – rámec divadla (mýtus).",
+        "Žáci – nepřítomní, ale důvod knihy.",
+        "Vyšetřovatelé absurdní logiky."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Třídní kniha – předmět sporu i symbol školního řádu.",
-        "Parodie detektivky – vyšetřování malichernosti.",
-        "Cimrmanologie – fiktivní věda kolem Járy Cimrmana.",
-        "Sborovna – prostor učitelských konfliktů.",
-        "Humor hlášek – jazyková komika Smoljaka a Svěráka.",
-        "Byrokracie – řád důležitější než smysl."
+        "Třídní kniha – záznam žáků, předmět sporu.",
+        "Parodie krimi – ztráta knihy jako zločin.",
+        "Cimrmanologie – fiktivní věda.",
+        "Sborovna – uzavřený svět.",
+        "Humor hlášek – jazyková komika.",
+        "Byrokracie – pravidlo nad smysl."
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo je autorem Vyšetřování ztráty třídní knihy?",
+      "prompt": "Kdo napsal hru?",
       "options": [
-        "Karel Čapek",
-        "Ladislav Smoljak a Zdeněk Svěrák",
-        "Jan Otčenášek",
-        "Jiří Wolker"
+        "Goldoni",
+        "Smoljak a Svěrák",
+        "Čapek",
+        "Vrchlický"
       ],
       "correct": 1,
-      "expl": "Hru napsali Smoljak a Svěrák pro Divadlo Járy Cimrmana."
+      "expl": "Cimrmanovo divadlo."
     },
     {
-      "prompt": "Co ve hře zmizelo?",
+      "prompt": "Titul hry?",
       "options": [
-        "Marlín",
+        "Vyšetřování ztráty třídní knihy",
+        "Sluha dvou pánů",
+        "Revizor",
+        "R.U.R."
+      ],
+      "correct": 0,
+      "expl": "Maturitní název."
+    },
+    {
+      "prompt": "Kde děj?",
+      "options": [
+        "Škola – sborovna",
+        "Moře",
+        "RAF",
+        "Terezín"
+      ],
+      "correct": 0,
+      "expl": "Školní prostředí."
+    },
+    {
+      "prompt": "Co zmizelo?",
+      "options": [
         "Třídní kniha",
-        "Obraz sv. Xaveria",
-        "Algernon"
+        "Gatsby",
+        "Marlin",
+        "Mloci"
       ],
-      "correct": 1,
-      "expl": "Předmětem vyšetřování je ztráta třídní knihy."
+      "correct": 0,
+      "expl": "Předmět vyšetřování."
     },
     {
-      "prompt": "Jaký je žánr textu?",
+      "prompt": "Žánr?",
       "options": [
-        "Elegie",
-        "Divadelní komedie / parodie",
-        "Naturalistický román",
-        "Antický epos"
+        "Komedie / parodie",
+        "Tragedie",
+        "Epos",
+        "Lyrika"
       ],
-      "correct": 1,
-      "expl": "Jde o jevištní komedii."
+      "correct": 0,
+      "expl": "Humor."
     },
     {
-      "prompt": "Kde se děj odehrává?",
+      "prompt": "Cimrman?",
       "options": [
-        "Na moři u Kuby",
-        "Ve škole / sborovně",
-        "V Osvětimi",
-        "Na Olympu"
+        "Fiktivní génius divadla",
+        "Reálný učitel",
+        "Němec",
+        "Pilot"
       ],
-      "correct": 1,
-      "expl": "Prostorem je školní prostředí."
+      "correct": 0,
+      "expl": "Značka divadla."
     },
     {
-      "prompt": "K čemu slouží „vyšetřování“ ve hře?",
+      "prompt": "Humor?",
       "options": [
-        "K vážnému kriminálnímu thrilleru bez humoru",
-        "K parodii detektivky a učitelské byrokracie",
-        "K lovu srnců",
-        "K výcviku RAF"
+        "Absurdní vyšetřování",
+        "Horor",
+        "Bez",
+        "Pure romance"
       ],
-      "correct": 1,
-      "expl": "Humor vzniká z nadsazeného pátrání po maličkosti."
+      "correct": 0,
+      "expl": "Parodie."
     },
     {
-      "prompt": "S jakým divadlem je hra spojena?",
+      "prompt": "Učitel Nechleb?",
       "options": [
-        "S Národním divadlem 18. stol. Goldoniho jen",
-        "S Divadlem Járy Cimrmana",
-        "S Broadway pouze",
-        "S antickým amfiteátrem"
+        "Postava z Cimrmanových her",
+        "Gatsby",
+        "Winston",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Jde o cimrmanovský repertoár."
+      "correct": 0,
+      "expl": "Komická figura."
     },
     {
-      "prompt": "Co je typickým prostředkem humoru?",
+      "prompt": "Satira?",
       "options": [
-        "Jen ticho",
-        "Hlášky, nedorozumění a parodie autority",
-        "Jen statistika",
-        "Jen latin"
+        "Byrokracie, škola",
+        "Bez",
+        "Jen moře",
+        "Válka"
       ],
-      "correct": 1,
-      "expl": "Jazyková komika a situace jsou základ."
+      "correct": 0,
+      "expl": "Společenská."
     },
     {
-      "prompt": "Kdo obvykle vede školní „pátrání“?",
+      "prompt": "Rok uvedení?",
       "options": [
-        "Santiago",
-        "Ředitel a učitelé",
-        "Chief Salamander",
-        "Nathan Landau"
+        "1967",
+        "1925",
+        "1869",
+        "2000"
       ],
-      "correct": 1,
-      "expl": "Vyšetřují sami pedagogové."
+      "correct": 0,
+      "expl": "Divadlo."
     },
     {
-      "prompt": "Proč je třídní kniha symbolická?",
+      "prompt": "Forma?",
       "options": [
-        "Je zlatá",
-        "Ztělesňuje řád, docházku a školní moc",
-        "Je živá",
-        "Je marlín"
+        "Divadelní dialogy",
+        "Román",
+        "Báseň",
+        "Memoáry"
       ],
-      "correct": 1,
-      "expl": "Bez ní se hroutí byrokratický provoz školy."
+      "correct": 0,
+      "expl": "Drama."
     },
     {
-      "prompt": "Jaký je celkový tón hry?",
+      "prompt": "Proč maturita?",
       "options": [
-        "Tragický holocaustový",
-        "Komický, satirický a nadsazený",
-        "Jen naturalisticky krutý",
-        "Jen elegický z Brixenu"
+        "Česká divadelní komedie",
+        "Bez",
+        "Jen mapa",
+        "Komiks"
       ],
-      "correct": 1,
-      "expl": "Hra baví parodií a humorem."
+      "correct": 0,
+      "expl": "Kultura."
     },
     {
-      "prompt": "Co cimrmanovský rámec dodává?",
+      "prompt": "Třídní kniha symbol?",
       "options": [
-        "Úřední zákaz smíchu",
-        "Fiktivní „vědu“ a předscénu kolem Cimrmana",
-        "Jen překlad Hemingwaye",
-        "Jen Zolův determinismus"
+        "Řád, evidence, malichernost",
+        "Láska",
+        "Válka",
+        "Bez"
       ],
-      "correct": 1,
-      "expl": "Předscéna a cimrmanologie jsou součást pořadu."
+      "correct": 0,
+      "expl": "Škola."
     },
     {
-      "prompt": "Proč je hra oblíbená na maturitě / v kultuře?",
+      "prompt": "Co NENÍ?",
       "options": [
-        "Pro temnou vraždu na Seině",
-        "Pro srozumitelný humor a satiru na školu i úřad",
-        "Pro složitý Newspeak",
-        "Pro mýtus o Prométheovi"
+        "Komedie",
+        "Parodie",
+        "Škola",
+        "Seriózní naturalistický román Zola"
       ],
-      "correct": 1,
-      "expl": "Je čtivá/hratelná a kulturně zapsaná hláškami."
+      "correct": 3,
+      "expl": "Jiný žánr."
+    },
+    {
+      "prompt": "Smoljak Svěrák?",
+      "options": [
+        "Autorská dvojice",
+        "Piloti",
+        "Němci",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Cimrman."
+    },
+    {
+      "prompt": "Vyšetřování?",
+      "options": [
+        "Přehnané, detektivní parodie",
+        "Real NYPD",
+        "Bez",
+        "Sci-fi"
+      ],
+      "correct": 0,
+      "expl": "Komický děj."
+    },
+    {
+      "prompt": "Publikum?",
+      "options": [
+        "Směje se absurditě",
+        "Pláče",
+        "Bez",
+        "Spí"
+      ],
+      "correct": 0,
+      "expl": "Divadlo."
+    },
+    {
+      "prompt": "Jazyk?",
+      "options": [
+        "Hovorný, hříčky",
+        "Archaičtina",
+        "Angličtina",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Svěrák/Smoljak."
+    },
+    {
+      "prompt": "Žáci?",
+      "options": [
+        "Důvod existence knihy",
+        "Hrdinové bez školy",
+        "Ne",
+        "Piloti"
+      ],
+      "correct": 0,
+      "expl": "Kontext."
+    },
+    {
+      "prompt": "Sborovna?",
+      "options": [
+        "Místo děje",
+        "Moře",
+        "RAF",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Prostor."
+    },
+    {
+      "prompt": "Další Cimrman?",
+      "options": [
+        "Hospoda na mýtince aj.",
+        "Gatsby",
+        "1984",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Divadlo."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Lehký, absurdní",
+        "Tragický",
+        "Horor",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Komedie."
+    },
+    {
+      "prompt": "Autorita ředitele?",
+      "options": [
+        "Parodována",
+        "Bez",
+        "Vždy moudrá",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Satira."
+    },
+    {
+      "prompt": "Detektivka prvky?",
+      "options": [
+        "Podezření, výslech",
+        "Bez",
+        "Jen láska",
+        "Válka"
+      ],
+      "correct": 0,
+      "expl": "Parodie."
+    },
+    {
+      "prompt": "Česká kultura?",
+      "options": [
+        "Ikona",
+        "Neznámé",
+        "Bez",
+        "Německé"
+      ],
+      "correct": 0,
+      "expl": "Populární."
+    },
+    {
+      "prompt": "Hra vs román?",
+      "options": [
+        "Text pro divadlo",
+        "Epos",
+        "Bez",
+        "Lyrika"
+      ],
+      "correct": 0,
+      "expl": "Drama."
+    },
+    {
+      "prompt": "Malichernost?",
+      "options": [
+        "Velká věc z maličkosti",
+        "Bez",
+        "Válka",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Humor."
+    },
+    {
+      "prompt": "Cimrman žil?",
+      "options": [
+        "Fiktivně – vtip",
+        "2000",
+        "1890 real",
+        "Bez"
+      ],
+      "correct": 0,
+      "expl": "Mýtus."
+    },
+    {
+      "prompt": "Maturita tip?",
+      "options": [
+        "Děj, humor, smysl parodie",
+        "Jen rok",
+        "Bez",
+        "Mapa"
+      ],
+      "correct": 0,
+      "expl": "Interpretace."
+    },
+    {
+      "prompt": "Závěr hry?",
+      "options": [
+        "Rozuzlení komické",
+        "Všichni mrtví tragicky",
+        "Bez",
+        "Válka"
+      ],
+      "correct": 0,
+      "expl": "Komedie."
+    },
+    {
+      "prompt": "O co jde v ději Třídní knihy?",
+      "options": [
+        "O absurdní vyšetřování ztráty třídní knihy ve škole",
+        "O válku s mloky",
+        "O rybaření na Kubě",
+        "O jazz v Náchodsku"
+      ],
+      "correct": 0,
+      "expl": "Ztráta knihy spustí groteskní školní „vyšetřování“."
+    },
+    {
+      "prompt": "Jaký humor je typický pro Třídní knihu?",
+      "options": [
+        "Situační absurdita, byrokracie a jazykové hříčky",
+        "Naturalistický determinismus",
+        "Gotický horor",
+        "Epická báseň"
+      ],
+      "correct": 0,
+      "expl": "Smoljak–Svěrák pracují s pravidly, která přerostou smysl."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Ve škole zmizí třídní kniha",
+        "Zmizí třídní kniha",
         "Ředitel zahájí vyšetřování",
-        "Učitelé se navzájem podezírají",
-        "Výslechy produkují nedorozumění a hlášky",
-        "Byrokracie a autorita se zesměšní",
-        "Komedie dospěje k cimrmanovské pointě"
+        "Učitelé jsou vyslýcháni",
+        "Absurdní důkazy a pomluvy",
+        "Cimrmanovské vysvětlení",
+        "Případ se uzavře komicky"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: ztráta knihy → vyšetřování → podezírání → výslechy → satira řádu → pointa."
+    "Správné pořadí: ztráta knihy → vyšetřování → výslechy → absurdita → vysvětlení → konec."
   ]
 }

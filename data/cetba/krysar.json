@@ -4,11 +4,11 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Viktor Dyk",
-        "Žánr: novella / básnická próza s prvky balady a alegorie",
+        "Autor: Viktor Dyk (1877–1931), český básník a prozaik",
+        "Žánr: novela, lyrizovaná próza, alegorie",
         "Poprvé vydáno: 1915",
-        "Děj / prostředí: město Hammeln (porýnská legenda o krysaři)",
-        "Vyprávění / forma: er-forma, lyrizovaná próza, refrénovité motivy"
+        "Děj / prostředí: město Hameln (porýnská legenda o krysaři)",
+        "Vyprávění / forma: er-forma, rytmická prósa, refrénovité opakování"
       ]
     },
     {
@@ -16,23 +16,23 @@
       "icon": "globe",
       "lines": [
         "Dyk zpracovává středověkou německou pověst o krysaři z Hameln.",
-        "Vzniká za 1. světové války; čte se i jako alegorie zrady a odplaty.",
-        "Měšťané jsou sobečtí, pokrytečtí a nedodrží slovo.",
-        "Krysař je cizinec – umělec i mstitel.",
-        "Láska ke Kristýnce je osobní motiv vedle kolektivní viny města.",
-        "Jazyk je rytmický, téměř básnický; opakují se klíčové věty."
+        "Vznik za 1. světové války; čte se i jako alegorie zrady a odplaty.",
+        "Měšťané jsou sobečtí, pokrytečtí, nedodrží slovo.",
+        "Krysař je cizinec – umělec, milenec i mstitel.",
+        "Láska ke Kristýnce je osobní rovina vedle viny města.",
+        "Jazyk je téměř básnický; opakují se klíčové věty a obrazy."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Krysař – cizinec s píšťalou, zbaví město krys a mstí se za zradu.",
+        "Krysař – cizinec s píšťalou, zbaví město krys, mstí se za zradu.",
         "Kristýnka – dívka, kterou Krysař miluje.",
         "Sepp Jörgen – rybář, prostý a věrný, přežije katastrofu.",
-        "Agnes – Kristýnčina matka / okolí měšťanského světa.",
-        "Konšelé a měšťané – sobečtí, nedodrží odměnu.",
-        "Bonifác – rival, představitel měšťanské mediocrity (dle adaptací/textu)."
+        "Měšťané a konšelé – sobečtí, odmítnou zaplatit dohodnutou odměnu.",
+        "Agnes – matka Kristýnky, svět měšťanské morálky.",
+        "Bonifác – rival, představitel průměrnosti a závisti."
       ]
     },
     {
@@ -40,162 +40,60 @@
       "icon": "bulb",
       "lines": [
         "Píšťala – nástroj moci, svodu i trestu.",
-        "Zrada slova – město nezaplatí dohodnutou odměnu.",
+        "Zrada slova – město nezaplatí slíbenou cenu.",
         "Alegorie – měšťanská malost a kolektivní vina.",
         "Láska a smrt – vztah ke Kristýnce končí tragicky.",
-        "Voda / propast – symbol zániku města.",
-        "Cizinec – umělec mimo společnost, která ho zneužije."
+        "Cizinec – věčný outsider, který odhalí morálku společnosti.",
+        "Právo na odplatu – etický i právní dluh města."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Krysaře?",
-      "options": [
-        "Karel Jaromír Erben",
-        "Viktor Dyk",
-        "Karel Hynek Mácha",
-        "Jiří Wolker"
-      ],
-      "correct": 1,
-      "expl": "Autorem novely je Viktor Dyk."
-    },
-    {
-      "prompt": "Z jaké látky Dyk vychází?",
-      "options": [
-        "Z české pohádky o Rumcajsovi",
-        "Z německé pověsti o krysaři z Hameln",
-        "Z antického mýtu o Orfeovi výhradně",
-        "Z bible"
-      ],
-      "correct": 1,
-      "expl": "Základem je legenda o Pied Piper of Hamelin."
-    },
-    {
-      "prompt": "Proč se Krysař mstí?",
-      "options": [
-        "Protože prohrál ve hře",
-        "Město mu nezaplatí za vyhnání krys",
-        "Kristýnka ho požádá o pomstu",
-        "Chce se stát konšelem"
-      ],
-      "correct": 1,
-      "expl": "Měšťané poruší dohodu o odměně."
-    },
-    {
-      "prompt": "Kdo je Kristýnka?",
-      "options": [
-        "Krysařova sestra",
-        "Dívka, kterou Krysař miluje",
-        "Konšelova žena bez vztahu k ději",
-        "Čarodějnice"
-      ],
-      "correct": 1,
-      "expl": "Láska ke Kristýnce je osobní linií příběhu."
-    },
-    {
-      "prompt": "Kdo katastrofu přežije?",
-      "options": [
-        "Všichni konšelé",
-        "Sepp Jörgen, prostý rybář",
-        "Jen Krysař",
-        "Nikdo"
-      ],
-      "correct": 1,
-      "expl": "Přežije věrný a prostý Sepp Jörgen."
-    },
-    {
-      "prompt": "Kdy novela vyšla?",
-      "options": [
-        "1836",
-        "1890",
-        "1915",
-        "1945"
-      ],
-      "correct": 2,
-      "expl": "Krysař vyšel roku 1915."
-    },
-    {
-      "prompt": "Jaký je jazyk díla?",
-      "options": [
-        "Čistě úřední",
-        "Lyrizovaný, rytmický, s opakujícími se motivy",
-        "Jen dialekt bez obraznosti",
-        "Anglický originál"
-      ],
-      "correct": 1,
-      "expl": "Dyk píše básnickou prózou s refrény."
-    },
-    {
-      "prompt": "Co symbolizuje píšťala?",
-      "options": [
-        "Jen dětskou hračku",
-        "Moc svést, zachránit i potrestat",
-        "Bohatství města",
-        "Církevní hodnost"
-      ],
-      "correct": 1,
-      "expl": "Píšťala je nástroj zázraku i pomsty."
-    },
-    {
-      "prompt": "Jaké téma je klíčové?",
-      "options": [
-        "Technický pokrok",
-        "Zrada, odplata a měšťanská malost",
-        "Komedie sňatků",
-        "Cestopis"
-      ],
-      "correct": 1,
-      "expl": "Město zradí slovo a dojde trestu."
-    },
-    {
-      "prompt": "Jak lze číst dílo alegoricky (dobově)?",
-      "options": [
-        "Jako kuchařku",
-        "Jako obraz zrady a kolektivní viny (i ve válce)",
-        "Jako sportovní reportáž",
-        "Jako učebnici práva"
-      ],
-      "correct": 1,
-      "expl": "Vznik za války podporuje čtení o zradě a odplatě."
-    },
-    {
-      "prompt": "Čím se Krysař liší od měšťanů?",
-      "options": [
-        "Je bohatší",
-        "Je cizinec a umělec mimo jejich sobectví",
-        "Je konšelem",
-        "Je rybářem"
-      ],
-      "correct": 1,
-      "expl": "Stojí mimo společnost, kterou zachrání a potrestá."
-    },
-    {
-      "prompt": "Jak příběh vrcholí?",
-      "options": [
-        "Svatbou Krysaře",
-        "Odvedením obyvatel a zánikem města ve vodě/propasti",
-        "Omluvou konšelů a smířením",
-        "Korunovací"
-      ],
-      "correct": 1,
-      "expl": "Krysař odvede město k záhubě; přežije Sepp."
-    }
+    {"prompt": "Kdo napsal Krysaře?", "options": ["Neruda", "Viktor Dyk", "Hašek", "Čapek"], "correct": 1, "expl": "Dyk vydal novelu v roce 1915; patří k české moderně."},
+    {"prompt": "Na jaké legendě novela staví?", "options": ["O Vlastovi", "O krysaři z Hameln", "O Ikarovi", "O Golemovi"], "correct": 1, "expl": "Porýnská pověst o muži, který odvedl děti píšťalou."},
+    {"prompt": "Kdo je hlavní hrdina?", "options": ["Sepp Jörgen", "Krysař – cizinec s píšťalou", "Bonifác", "Konšel"], "correct": 1, "expl": "Krysař přichází do města a řeší problém krys."},
+    {"prompt": "Proč město Krysaře najme?", "options": ["Kvůli povodni", "Město sužují krysy", "Chce tanec", "Hledá krále"], "correct": 1, "expl": "Krysy ohrožují obyvatele; Krysař slíbí pomoc."},
+    {"prompt": "Co měšťané udělají po vyhnání krys?", "options": ["Zaplatí slíbenou odměnu", "Odmítnou zaplatit dohodnutou cenu", "Odejdou z města", "Postaví sochu"], "correct": 1, "expl": "Zrada slova spouští pomstu."},
+    {"prompt": "Koho Krysař miluje?", "options": ["Agnes", "Kristýnku", "Vdovu konšela", "Nikoho"], "correct": 1, "expl": "Láska ke Kristýnce je intimní linie novely."},
+    {"prompt": "Kdo je Sepp Jörgen?", "options": ["Krysařův nepřítel", "Prostý rybář, věrný a přeživší", "Král", "Krysa"], "correct": 1, "expl": "Sepp představuje jiný, ne měšťanský svět."},
+    {"prompt": "Jak Krysař pomstí zradu?", "options": ["Soudní žalobou", "Píšťalou odvede děti z města", "Spálí radnici", "Odejde bez reakce"], "correct": 1, "expl": "Legendární scéna odchodu dětí za pišťalou."},
+    {"prompt": "Proč je novela alegorická?", "options": ["Popisuje jen historii", "Měšťanská zrada a odplata vypovídá o morálce společnosti", "Je bez významu", "Je učebnice chemie"], "correct": 1, "expl": "Dyk čte legendu i v kontextu války a pokrytectví."},
+    {"prompt": "Jaký je styl Dykovy prózy?", "options": ["Úřední report", "Lyrizovaná, rytmická prósa s refrény", "Sci-fi", "Detektivka"], "correct": 1, "expl": "Text působí téměř jako báseň v próze."},
+    {"prompt": "Co symbolizuje píšťala?", "options": ["Jen hudební nástroj", "Moc nad lidmi – nejdřív krysy, pak děti", "Kříž", "Mince"], "correct": 1, "expl": "Píšťala je nástroj svodu i trestu."},
+    {"prompt": "Kdy novela vznikla?", "options": ["1915", "1848", "1989", "2000"], "correct": 0, "expl": "Vznik v první světové válce ovlivňuje alegorické čtení."},
+    {"prompt": "Kdo jsou měšťané v díle?", "options": ["Idealní občané", "Sobečtí, nedodrží slovo", "Vojáci", "Cizinci"], "correct": 1, "expl": "Kolektivní vina města je jádrem."},
+    {"prompt": "Jak končí vztah Krysař–Kristýnka?", "options": ["Svatbou", "Tragicky – láska se mísí s osudem pomsty", "Bez kontaktu", "Komedií"], "correct": 1, "expl": "Osobní i kolektivní tragédie se proplétají."},
+    {"prompt": "Kde se děj odehrává?", "options": ["Praha", "Hameln (Hamelyn)", "Vídeň", "Paříž"], "correct": 1, "expl": "Německé město v legendě i u Dyka."},
+    {"prompt": "Proč je Krysař cizinec?", "options": ["Bez důvodu", "Outsider odhaluje morálku uzavřené komunity", "Je místní kněz", "Je král"], "correct": 1, "expl": "Přichází zvenku a mění osud města."},
+    {"prompt": "Co je tématem zrady?", "options": ["Politická jen v moderně", "Porušení daného slova a smlouvy", "Zrada v kartách", "Sport"], "correct": 1, "expl": "Město nezaplatí – morální i smluvní porušení."},
+    {"prompt": "Který prvek NENÍ typický?", "options": ["Legenda", "Lyrizace", "Vesmírná válka", "Alegorie"], "correct": 2, "expl": "Novela je komorní legendární příběh."},
+    {"prompt": "Jak Dyk pracuje s opakováním?", "options": ["Refrénovité motivy a věty", "Nepoužívá", "Jen v angličtině", "Nahodile"], "correct": 0, "expl": "Opakování zvyšuje rytmus a napětí."},
+    {"prompt": "Kdo je Bonifác?", "options": ["Rival, měšťanská postava", "Krysa", "Rybář", "Vdova"], "correct": 0, "expl": "Bonifác patří k městskému prostředí a rivalitám."},
+    {"prompt": "Proč maturita zahrnuje Krysaře?", "options": ["Nejdelší román", "Ukázka moderní lyrizované prózy a alegorie", "Bez stylu", "Jen historie"], "correct": 1, "expl": "Učí číst legendu i symboliku."},
+    {"prompt": "Co znamená kolektivní vina?", "options": ["Vina jednoho vojáka", "Celé město nesou odpovědnost za zradu", "Vina Krysaře", "Bez viny"], "correct": 1, "expl": "Měšťané jednají společně proti Krysařovi."},
+    {"prompt": "Jaký kontrast tvoří Sepp Jörgen?", "options": ["Měšťan vs. prostý člověk mimo pokrytectví", "Bohatý vs. chudý bez morálky", "Dítě vs. dospělý", "Válka vs. mír bez děje"], "correct": 0, "expl": "Rybář představuje jinou hodnotovou osu."},
+    {"prompt": "Co je er-forma v novelě?", "options": ["Vypravěč „on“", "Vypravěč neviditelný, děj sledujeme zvenku er-formou Dykova stylu", "Dyk používá vypravěče třetí osoby s lyrickým nádechem", "Jen dialogy"], "correct": 2, "expl": "Novela je psána er-formou s poetickým jazykem."},
+    {"prompt": "Jak interpretovat novelu ve válce 1914–18?", "options": ["Ignorovat kontext", "Zrada slibů může odkazovat na politickou zradu a malost", "Jen dětská pohádka", "Reklama"], "correct": 1, "expl": "Contemporary readers viděli paralely s válkou."},
+    {"prompt": "Kdo přežije katastrofu dětí?", "options": ["Všichni měšťané", "Sepp Jörgen a dospělí; děti odcházejí", "Nikdo", "Jen Krysař"], "correct": 1, "expl": "Legenda: děti mizí; dospělí zůstávají s vinou."},
+    {"prompt": "Co je právo na odměnu?", "options": ["Krysař nemá nárok", "Etický dluh města za vykonanou službu", "Jen daň", "Pokuta"], "correct": 1, "expl": "Nezaplacení je start pomsty."},
+    {"prompt": "Jaký žánr nejlépe sedí?", "options": ["Novela / lyrizovaná próza", "Epos", "Sci-fi", "Učebnice"], "correct": 0, "expl": "Krátké hutné dílo s poetickým jazykem."},
+    {"prompt": "Co čtenář cítí vůči městu?", "options": ["Obdiv", "Odsudek pokrytectví", "Nezájem", "Smích bez děje"], "correct": 1, "expl": "Měšťané si zaslouží morální soud."},
+    {"prompt": "Jaké poselství novela nese?", "options": ["Slovo a smlouva mají cenu; zrada se mstí", "Krysy jsou roztomilé", "Cizinci jsou vždy zlí", "Láska vždy vyhrává"], "correct": 0, "expl": "Dyk varuje před malostí a nečestností."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Město trpí přemnožením krys",
-        "Krysař nabídne pomoc za odměnu",
-        "Píšťalou vyvede krysy z města",
-        "Měšťané odmítnou zaplatit",
-        "Krysař ztratí Kristýnku a rozhodne se mstít",
-        "Odvede obyvatele k záhubě; přežije Sepp Jörgen"
+        "Krysař přichází do Hamelnu a slíbí vyhnat krysy",
+        "Píšťalou vyžene krysy z města",
+        "Měšťané odmítnou zaplatit dohodnutou odměnu",
+        "Krysař miluje Kristýnku; město ho zradí",
+        "Krysař znovu hraje na píšťalu – odvádí děti",
+        "Město zůstává s vinou a tragickým následkem"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: krysy → dohoda → vyhnání krys → zrada → osobní ztráta a pomsta → zánik města."
+    "Správné pořadí: příchod → vyhnání krys → nezaplacení → láska a zrada → odchod dětí → vina města."
   ]
 }

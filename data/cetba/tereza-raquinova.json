@@ -7,42 +7,44 @@
         "Autor: Émile Zola (1840–1902)",
         "Žánr: naturalistický román",
         "Poprvé vydáno: 1867",
-        "Děj: Paříž, milostný trojúhelník a vražda",
-        "Vyprávění: er-forma, důraz na vášeň, tělo a svědomí"
+        "Děj: Paříž, obchod s galanterii u Seiny",
+        "Vyprávění: er-forma, determinismus, psychologický tlak"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Francie 19. století, pařížské maloměšťáctví a obchod.",
-        "Naturalismus zkoumá člověka jako produkt dědičnosti a prostředí.",
-        "Temný obchod a řeka Seine tvoří dusivou kulisu zločinu.",
-        "Vášeň se mění v nenávist a halucinace viny.",
-        "Román je jedním ze Zolových raných naturalistických děl."
+        "Tereza žije s manželstvím s chromým Camillem a tchyní.",
+        "Milostná aféra s Laurentem – společný zločin.",
+        "Utopení Camilla – vina a noční můry.",
+        "Sňatek Terezy a Laurenta – peklo místo štěstí.",
+        "Mamka Raquinová – němá svědkyně.",
+        "Naturalismus – prostředí a pudy řídí osud."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Tereza Raquinová – vdaná žena, propadne vášni k Laurentovi.",
-        "Camille – Terezin slabý manžel, oběť milenců.",
-        "Laurent – milenec, spoluviník vraždy.",
-        "Paní Raquinová – Camilleova matka, později ochrnutá svědkyně.",
-        "Přátelé z „čtvrtků“ – společenská maska měšťanského života."
+        "Thérèse Raquin – hlavní hrdinka, utlačovaná, vášnivá.",
+        "Camille Raquin – nemotorný, slabý manžel.",
+        "Laurent – Laurentova touha po Tereze, lenoch.",
+        "Madame Raquin – matka Camilla, majitelka obchodu.",
+        "Michaud, Grivet – pravidelní hosté domu.",
+        "Policie / soud – hrozba odhalení."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Naturalismus – člověk jako výsledek pudů, dědičnosti a prostředí.",
-        "Vášeň – pohání zločin i pozdější rozklad vztahu.",
-        "Vražda na Seině – klíčový zločin milenců.",
-        "Svědomí / halucinace – trest přichází zevnitř.",
-        "Temnota obchodu – dusivý prostor viny.",
-        "Determinismus – omezená svoboda postav."
+        "Naturalismus – člověk produkt dědičnosti a prostředí.",
+        "Criminelles trio – vražda z vášně.",
+        "Vina – halucinace mrtvého Camilla.",
+        "Mamka jako soudce – němý výčitka.",
+        "Seina – místo vraždy.",
+        "Determinismus – nelze uniknout následkům."
       ]
     }
   ],
@@ -50,150 +52,370 @@
     {
       "prompt": "Kdo napsal Terezu Raquinovou?",
       "options": [
-        "Gustave Flaubert",
+        "Hugo",
         "Émile Zola",
-        "Victor Hugo",
-        "Milan Kundera"
+        "Flaubert",
+        "Maupassant"
       ],
       "correct": 1,
-      "expl": "Autorem je Émile Zola."
+      "expl": "Zola, naturalista."
     },
     {
-      "prompt": "Jaký směr román reprezentuje?",
+      "prompt": "Kde děj?",
       "options": [
-        "Romantismus bez stínů",
-        "Naturalismus",
-        "Poetismus",
-        "Absurdní drama"
-      ],
-      "correct": 1,
-      "expl": "Tereza Raquinová je klasika naturalismu."
-    },
-    {
-      "prompt": "Kdo je Camille?",
-      "options": [
-        "Terezin milenec",
-        "Terezin manžel, kterého milenci zabijí",
-        "Soudce",
-        "Malíř Gatsby"
-      ],
-      "correct": 1,
-      "expl": "Camille je manžel a oběť."
-    },
-    {
-      "prompt": "Kdo je Laurent?",
-      "options": [
-        "Camilleův otec",
-        "Terezin milenec a spoluvrah",
-        "Kněz",
-        "Pilot"
-      ],
-      "correct": 1,
-      "expl": "Laurent je milenec a vrah."
-    },
-    {
-      "prompt": "Jak milenci Camille zabijí?",
-      "options": [
-        "Otravou čaje v kostele",
-        "Utopením při výletě na Seině",
-        "Soucitem",
-        "Soudním sporem"
-      ],
-      "correct": 1,
-      "expl": "Vražda se odehraje na řece."
-    },
-    {
-      "prompt": "Co se stane se vztahem Terezy a Laurenta po vraždě?",
-      "options": [
-        "Zůstane idylický",
-        "Rozpadá se pod tíhou viny a odporu",
-        "Odejdou do Ameriky šťastni",
-        "Založí školu"
-      ],
-      "correct": 1,
-      "expl": "Vášeň se mění v nenávist a hrůzu."
-    },
-    {
-      "prompt": "Jakou roli hraje paní Raquinová?",
-      "options": [
-        "Komická služka",
-        "Matka Camille; později ochrnutá, ale vědomá si zločinu",
-        "Prefektka policie",
-        "Bohyně Olympu"
-      ],
-      "correct": 1,
-      "expl": "Po mrtvici nemůže mluvit, ale chápe pravdu."
-    },
-    {
-      "prompt": "Ve kterém roce román vyšel?",
-      "options": [
-        "1867",
-        "1925",
-        "1952",
-        "1979"
+        "Paříž, obchod u Seiny",
+        "Praha",
+        "Londýn",
+        "Venkov"
       ],
       "correct": 0,
-      "expl": "Tereza Raquinová vyšla roku 1867."
+      "expl": "Městské prostředí."
     },
     {
-      "prompt": "Kde se děj především odehrává?",
+      "prompt": "Kdo je Tereza?",
       "options": [
-        "V Praze",
-        "V Paříži",
-        "Na Kubě",
-        "V Kostnici"
+        "Vdova po Camillovi na konci začátku",
+        "Manželka Camilla, milenka Laurenta",
+        "Policistka",
+        "Němka"
       ],
       "correct": 1,
-      "expl": "Prostorem je Paříž."
+      "expl": "Ústřední postava."
     },
     {
-      "prompt": "Co naturalismus zdůrazňuje?",
+      "prompt": "Camille?",
       "options": [
-        "Jen náhodu zázraků",
-        "Pudy, prostředí a determinaci člověka",
-        "Jen dvorskou etiketu",
-        "Jen školní humor"
+        "Atlet",
+        "Slabý, chromý manžel",
+        "Detektiv",
+        "Král"
       ],
       "correct": 1,
-      "expl": "Člověk je zkoumán „vědecky“ – pudy a prostředí."
+      "expl": "Oběť vraždy."
     },
     {
-      "prompt": "Jak jsou vrahové „potrestáni“?",
+      "prompt": "Laurent?",
       "options": [
-        "Jen pokutou",
-        "Především vlastním svědomím, strachem a rozkladem vztahu",
-        "Odměnou od císaře",
-        "Povýšením"
+        "Camillův přítel, milenec Terezy",
+        "Kněz",
+        "Dítě",
+        "Učitel"
       ],
-      "correct": 1,
-      "expl": "Zola ukazuje vnitřní trest – halucinace a nenávist."
+      "correct": 0,
+      "expl": "Spoluviník."
     },
     {
-      "prompt": "Proč je román temný a dusivý?",
+      "prompt": "Jak Camille zemře?",
       "options": [
-        "Protože je to komedie",
-        "Protože zločin, vina a prostředí ničí postavy",
-        "Protože chybí Paříž",
-        "Protože jde o báje"
+        "Utopení při „hře“ u Seiny",
+        "Stářím",
+        "Válka",
+        "Nehoda auta"
+      ],
+      "correct": 0,
+      "expl": "Plánovaná vražda."
+    },
+    {
+      "prompt": "Co po vraždě?",
+      "options": [
+        "Klid",
+        "Vina, noční můry, nenávist",
+        "Bohatství bez problémů",
+        "Emigrace"
       ],
       "correct": 1,
-      "expl": "Atmosféra viny je stejně důležitá jako samotná vražda."
+      "expl": "Manželé si ničí život."
+    },
+    {
+      "prompt": "Madame Raquin?",
+      "options": [
+        "Němá po mrtvici, svědkyně",
+        "Mrtvá hned",
+        "Vrah",
+        "Nevidí"
+      ],
+      "correct": 0,
+      "expl": "Děsivý svědek."
+    },
+    {
+      "prompt": "Naturalismus?",
+      "options": [
+        "Člověk určen prostředím a pudy",
+        "Pouze pohádka",
+        "Sci-fi",
+        "Bez teorie"
+      ],
+      "correct": 0,
+      "expl": "Zolův program."
+    },
+    {
+      "prompt": "Jak končí?",
+      "options": [
+        "Svatba dětí",
+        "Tereza a Laurent se zabijí / double suicide",
+        "Detektiv vyřeší",
+        "Camille žije"
+      ],
+      "correct": 1,
+      "expl": "Tragický konec."
+    },
+    {
+      "prompt": "Žánr?",
+      "options": [
+        "Naturalistický román",
+        "Komedie",
+        "Epos",
+        "Bajka"
+      ],
+      "correct": 0,
+      "expl": "Francouzský naturalismus."
+    },
+    {
+      "prompt": "Proč sňatek T+L?",
+      "options": [
+        "Láska",
+        "Chce získat dědictví / udržet aféru",
+        "Rozkaz matky",
+        "Nevědomky"
+      ],
+      "correct": 1,
+      "expl": "Praktický i vášnivý motiv."
+    },
+    {
+      "prompt": "Hosté u mamky?",
+      "options": [
+        "Pravidelná hra domina",
+        "Nikdo",
+        "Válka",
+        "Cirkus"
+      ],
+      "correct": 0,
+      "expl": "Rámec všednosti."
+    },
+    {
+      "prompt": "Vina se projeví?",
+      "options": [
+        "Halucinace Camilla",
+        "Ne",
+        "Jen radost",
+        "Sport"
+      ],
+      "correct": 0,
+      "expl": "Psychologický tlak."
+    },
+    {
+      "prompt": "Zola patří?",
+      "options": [
+        "Naturalisté",
+        "Romantici 18. st.",
+        "Beat generation",
+        "Česká avantgarda"
+      ],
+      "correct": 0,
+      "expl": "École naturaliste."
+    },
+    {
+      "prompt": "Co NENÍ téma?",
+      "options": [
+        "Vášeň a zločin",
+        "Vina",
+        "Determinismus",
+        "Kosmické války"
+      ],
+      "correct": 3,
+      "expl": "Realistický pařížský děj."
+    },
+    {
+      "prompt": "Rok vydání?",
+      "options": [
+        "1867",
+        "1990",
+        "1700",
+        "2005"
+      ],
+      "correct": 0,
+      "expl": "19. století."
+    },
+    {
+      "prompt": "Seina?",
+      "options": [
+        "Scéna vraždy",
+        "Nepodstatná",
+        "Hrad",
+        "Les"
+      ],
+      "correct": 0,
+      "expl": "Řeka."
+    },
+    {
+      "prompt": "Tereza dětství?",
+      "options": [
+        "Vychována u Raquinových",
+        "Sirotek u tety",
+        "Královna",
+        "Němec"
+      ],
+      "correct": 0,
+      "expl": "Utlačovaná pozice."
+    },
+    {
+      "prompt": "Laurent před aférou?",
+      "options": [
+        "Lenoch, malíř amatér",
+        "Generál",
+        "Kněz",
+        "Dítě"
+      ],
+      "correct": 0,
+      "expl": "Společenský typ."
+    },
+    {
+      "prompt": "Maturita?",
+      "options": [
+        "Naturalismus, psychologie viny",
+        "Bez významu",
+        "Jen jména",
+        "Komiks"
+      ],
+      "correct": 0,
+      "expl": "Klasická francouzská próza."
+    },
+    {
+      "prompt": "Tón?",
+      "options": [
+        "Temný, deterministický",
+        "Lehká komedie",
+        "Pohádka",
+        "Satira bez vážnosti"
+      ],
+      "correct": 0,
+      "expl": "Tragédie vášně."
+    },
+    {
+      "prompt": "Camillova matka po mrtvici?",
+      "options": [
+        "Ochrnutí, komunikace obtížná",
+        "Tančí",
+        "Mluví víc",
+        "Odchází"
+      ],
+      "correct": 0,
+      "expl": "Němý soudce."
+    },
+    {
+      "prompt": "Policie?",
+      "options": [
+        "Hrozí odhalení, napětí",
+        "Neexistuje",
+        "Hned zatýká",
+        "Komedie"
+      ],
+      "correct": 0,
+      "expl": "Detektivní prvek."
+    },
+    {
+      "prompt": "Vztah T+L po svatbě?",
+      "options": [
+        "Nenávist, mutual destruction",
+        "Idyla",
+        "Rozchod klidný",
+        "Děti"
+      ],
+      "correct": 0,
+      "expl": "Peklo manželství."
+    },
+    {
+      "prompt": "Zola jiné dílo?",
+      "options": [
+        "Nana, Germinal",
+        "1984",
+        "Gatsby",
+        "Saturnin"
+      ],
+      "correct": 0,
+      "expl": "Součást cyklu Rougon-Macquart."
+    },
+    {
+      "prompt": "Determinismus znamená?",
+      "options": [
+        "Osud formován prostředím",
+        "Svoboda bez limitů",
+        "Náhoda bez důsledků",
+        "Magie"
+      ],
+      "correct": 0,
+      "expl": "Naturalistická idea."
+    },
+    {
+      "prompt": "Proč utopení?",
+      "options": [
+        "Vypadá jako nehoda",
+        "Nemožné",
+        "Camille plavce",
+        "Na souši"
+      ],
+      "correct": 0,
+      "expl": "Lehké alibi."
+    },
+    {
+      "prompt": "Čtenář cítí?",
+      "options": [
+        "Tlak viny a dusno",
+        "Pouze smích",
+        "Nic",
+        "Jen radost"
+      ],
+      "correct": 0,
+      "expl": "Psychologický horor."
+    },
+    {
+      "prompt": "Titulní postava?",
+      "options": [
+        "Thérèse Raquin",
+        "Madame Bovary",
+        "Julie",
+        "Ester"
+      ],
+      "correct": 0,
+      "expl": "Jméno v titulu."
+    },
+    {
+      "prompt": "Proč se Tereza a Laurent po vraždě nenávidí?",
+      "options": [
+        "Vina je dusí – obviňují se a ničí aféru",
+        "Camille je stále naživu",
+        "Matka je proti",
+        "Policie je okamžitě zatýká"
+      ],
+      "correct": 0,
+      "expl": "Zločin je spojil, ale psychický tlak je rozdělí."
+    },
+    {
+      "prompt": "Jakou roli hraje pravidelná hra domina u Raquinových?",
+      "options": [
+        "Zdůrazňuje všednost, která kontrastuje s vášní a zločinem",
+        "Je hlavním motivem vraždy",
+        "Neobjevuje se v díle",
+        "Slouží jen jako komická epizoda bez významu"
+      ],
+      "correct": 0,
+      "expl": "Monotónní večery ukazují útlak a rutinu před explozí vášně."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Tereza žije v dusivém manželství s Camillem",
-        "Propukne vášeň mezi Terezou a Laurentem",
-        "Milenci Camille utopením zabijí",
-        "Po čase se vezmou, ale vztah se rozkládá vinou",
-        "Paní Raquinová prohlédne a zůstane němým svědkem",
-        "Vina vyvrcholí vzájemnou nenávistí a zkázou"
+        "Tereza žije utlačeně s Camillem",
+        "Aféra s Laurentem",
+        "Vražda Camilla u Seiny",
+        "Sňatek viníků",
+        "Vina a halucinace",
+        "Sebevražda / zhoubný konec"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: dusivé manželství → vášeň → vražda → sňatek ve vině → odhalení matkou → zkáza milenců."
+    "Správné pořadí: útlak → aféra → vražda → svatba → vina → sebevražda."
   ]
 }

@@ -5,195 +5,417 @@
       "icon": "book",
       "lines": [
         "Autor: Ernest Hemingway (1899–1961)",
-        "Žánr: novela / parabola o boji člověka",
+        "Žánr: novela",
         "Poprvé vydáno: 1952",
-        "Děj: kubánské pobřeží, stařec Santiago na moři",
-        "Vyprávění: er-forma, úsporný „hemingwayovský“ styl"
+        "Děj: kubánský rybář Santiago a moře",
+        "Vyprávění: er-forma, středně objektivní styl"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Rybářská vesnice na Kubě v polovině 20. století.",
-        "Moře je živitel i nepřítel, prostor zkoušky.",
-        "Chudoba a úcta k řemeslu formují život rybářů.",
-        "Příroda je krásná, krutá a lhostejná k člověku.",
-        "Novela je podobenstvím o důstojnosti v prohře."
+        "Santiago – starý rybář v smůle.",
+        "Souboj s obří marlinou na otevřeném moři.",
+        "Téma houževnatosti, důstojnosti, osamění.",
+        "Hemingwayův „kód hrdiny“ – čest i v porážce.",
+        "Shoři – chlapec, který rybáře miluje.",
+        "Symbolika moře, lva ze snů."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Santiago – starý rybář, dlouho bez úlovku, hrdina boje s rybou.",
-        "Manolin – chlapec, Santiagův žák a přítel.",
-        "Obří marlín – soupeř i důstojný protivník na moři.",
-        "Žraloci – ničí úlovek, symbol bezohledné přírody.",
-        "Ostatní rybáři – obec, která Santiaga soudí i lituje."
+        "Santiago – stařec, rybář.",
+        "Manolin (Shoři) – mladý pomocník.",
+        "Marlin – obří ryba, soupeř.",
+        "Žraloci – ničí úlovek.",
+        "Rybáři v přístavu – komunita.",
+        "Moře – pole i protivník."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Boj s rybou – zkouška vůle, zručnosti a vytrvalosti.",
-        "Důstojnost – člověk může být zničen, ale ne poražen.",
-        "Moře – svoboda, nebezpečí, živitel.",
-        "Samota – dialog Santiaga se sebou a s přírodou.",
-        "Mentorství – vztah Santiaga a Manolina.",
-        "Podobenství – konkrétní příběh nese obecný smysl."
+        "Kód hrdiny – statečnost tváří v tvář porážce.",
+        "Marlin – krása, síla, respekt.",
+        "Žraloci – nevyhnutelná ztráta.",
+        "Lvi ve snu – mládí a síla.",
+        "Osamění – starý muž na moři.",
+        "„Člověk není stvořen pro porážku“."
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Stařec a moře?",
+      "prompt": "Kdo napsal Stařce a moře?",
       "options": [
-        "F. Scott Fitzgerald",
+        "Fitzgerald",
         "Ernest Hemingway",
-        "William Styron",
-        "Daniel Keyes"
+        "Melville",
+        "Styron"
       ],
       "correct": 1,
-      "expl": "Autorem je Ernest Hemingway."
+      "expl": "Hemingway, 1952."
     },
     {
       "prompt": "Kdo je Santiago?",
       "options": [
-        "Pilot RAF",
+        "Mladý pirát",
         "Starý kubánský rybář",
-        "Brooklynský spisovatel",
-        "Benátský sluha"
+        "Učitel",
+        "Němec"
       ],
       "correct": 1,
-      "expl": "Santiago je starý rybář a hlavní hrdina."
+      "expl": "Hlavní hrdina."
     },
     {
-      "prompt": "Proč Santiago vypluje daleko na moře?",
+      "prompt": "Kolik dní bez úlovku?",
       "options": [
-        "Hledá poklad",
-        "Chce ulovit velkou rybu po období smůly",
-        "Utíká před policií",
-        "Veze poštu"
+        "84 dní smůly",
+        "1 den",
+        "1000",
+        "0"
       ],
-      "correct": 1,
-      "expl": "Po dlouhé sérii neúspěchů jde pro velký úlovek."
+      "correct": 0,
+      "expl": "Dlouhá série neúspěchu."
     },
     {
       "prompt": "Kdo je Manolin?",
       "options": [
-        "Kapitán lodi",
-        "Chlapec, který má Santiaga rád a učí se od něj",
+        "Chlapec, který se stará o Santiaga",
         "Žralok",
-        "Starosta"
+        "Marlin",
+        "Král"
       ],
-      "correct": 1,
-      "expl": "Manolin je Santiagův mladý přítel a pomocník."
+      "correct": 0,
+      "expl": "Shoři / Manolin."
     },
     {
-      "prompt": "Jaký živočich Santiago uloví?",
+      "prompt": "Co Santiago chytí?",
       "options": [
-        "Velrybu keporkaka",
-        "Obřího marlína",
-        "Mloka",
-        "Srnu"
+        "Sardinky",
+        "Obří marlina",
+        "Krab",
+        "Nic"
       ],
       "correct": 1,
-      "expl": "Jeho protivníkem je obrovský marlín."
+      "expl": "Souboj trvá dny."
     },
     {
-      "prompt": "Co se stane s úlovkem cestou zpět?",
+      "prompt": "Kde probíhá souboj?",
       "options": [
-        "Dostane cenu v New Yorku",
-        "Žraloci maso zničí",
-        "Manolin ho uvaří hned na moři",
-        "Změní se v zlato"
+        "Na moři daleko od břehu",
+        "V lese",
+        "V Praze",
+        "Na souši"
+      ],
+      "correct": 0,
+      "expl": "Otevřené moře."
+    },
+    {
+      "prompt": "Co marlin symbolizuje?",
+      "options": [
+        "Pouze jídlo",
+        "Krásu, sílu, respekt hrdiny",
+        "Zlo",
+        "Boha"
       ],
       "correct": 1,
-      "expl": "Žraloci ohlodají rybu; zbude kostra."
+      "expl": "Santiago marlina obdivuje."
     },
     {
-      "prompt": "Jaký je slavný smysl Santiagova boje?",
+      "prompt": "Co zničí úlovek?",
       "options": [
-        "Že bohatství je vše",
-        "Že člověka lze zničit, ale ne porazit",
-        "Že moře neexistuje",
-        "Že děti nemají lovit"
+        "Bouře",
+        "Žraloci",
+        "Policie",
+        "Manolin"
       ],
       "correct": 1,
-      "expl": "Jde o důstojnost vytrvalosti i v prohře."
+      "expl": "Cestou zpět žraloci."
     },
     {
-      "prompt": "Ve kterém roce novela vyšla?",
+      "prompt": "Jak Santiago končí?",
       "options": [
-        "1925",
-        "1942",
-        "1952",
-        "1979"
+        "Vítězí bohatý",
+        "Přiveze jen kostru – morální vítězství",
+        "Umírá moře",
+        "Emigruje"
+      ],
+      "correct": 1,
+      "expl": "Fyzická porážka, duch statečný."
+    },
+    {
+      "prompt": "Nobelova cena?",
+      "options": [
+        "Hemingway ji dostal mj. za toto dílo",
+        "Nikdy",
+        "Melville",
+        "Keyes"
+      ],
+      "correct": 0,
+      "expl": "1954 Nobel."
+    },
+    {
+      "prompt": "Fráze o porážce?",
+      "options": [
+        "Člověk může být zničen, ale ne poražen",
+        "Válka je mír",
+        "Bůh mrtvý",
+        "Bez fráze"
+      ],
+      "correct": 0,
+      "expl": "Klíčové poselství."
+    },
+    {
+      "prompt": "Lvi ve snu?",
+      "options": [
+        "Symbol mládí Afriky / síly",
+        "Realita",
+        "Nepřítel",
+        "Žraloci"
+      ],
+      "correct": 0,
+      "expl": "Santiago o nich sní."
+    },
+    {
+      "prompt": "Styl Hemingwaye?",
+      "options": [
+        "Krátké věty, málo adjektiv",
+        "Dlouhé periodické věty",
+        "Verš",
+        "Drama"
+      ],
+      "correct": 0,
+      "expl": "Iceberg theory."
+    },
+    {
+      "prompt": "Délka?",
+      "options": [
+        "Novela – kratší než román",
+        "Epos",
+        "Báseň",
+        "Trilogie"
+      ],
+      "correct": 0,
+      "expl": "Kompaktní dílo."
+    },
+    {
+      "prompt": "Kubánské prostředí?",
+      "options": [
+        "Havana, rybářská vesnice",
+        "New York",
+        "Paříž",
+        "Siberie"
+      ],
+      "correct": 0,
+      "expl": "Karibik."
+    },
+    {
+      "prompt": "Manolin na konci?",
+      "options": [
+        "Plánuje znovu rybařit se Santiagem",
+        "Zapomene",
+        "Umírá",
+        "Odchází"
+      ],
+      "correct": 0,
+      "expl": "Naděje v generaci."
+    },
+    {
+      "prompt": "Téma osamění?",
+      "options": [
+        "Ano, stařec sám na moři",
+        "Ne",
+        "Jen komedie",
+        "Jen politika"
+      ],
+      "correct": 0,
+      "expl": "Existenciální osamění."
+    },
+    {
+      "prompt": "Co NENÍ téma?",
+      "options": [
+        "Houževnatost",
+        "Důstojnost",
+        "Kosmické války",
+        "Respekt k přírodě"
       ],
       "correct": 2,
-      "expl": "Stařec a moře vyšel roku 1952."
+      "expl": "Realistická novela."
     },
     {
-      "prompt": "Jaký je Hemingwayův styl?",
+      "prompt": "Marlin vs Santiago?",
       "options": [
-        "Velmi květnatý barok",
-        "Úsporný, přesný, s důrazem na čin a detail",
-        "Jen rýmované verše",
-        "Úřední vyhlášky"
+        "Respekt soupeřů",
+        "Nenávist",
+        "Bez boje",
+        "Marlin vyhrává bohatství"
       ],
-      "correct": 1,
-      "expl": "Typický je střídmý „iceberg“ styl."
+      "correct": 0,
+      "expl": "Rytířský souboj."
     },
     {
-      "prompt": "Kde se děj odehrává?",
+      "prompt": "Kostra ryby?",
       "options": [
-        "V Alpách",
-        "U kubánského pobřeží / na moři",
-        "V Praze",
-        "V Osvětimi"
+        "Ukazuje v přístavu – směs obdivu a smutku",
+        "Spálí se",
+        "Neexistuje",
+        "Jí se celá"
       ],
-      "correct": 1,
-      "expl": "Prostorem je kubánská vesnice a Golfský proud."
+      "correct": 0,
+      "expl": "Symbol vítězství i ztráty."
     },
     {
-      "prompt": "Proč jsou žraloci v novele důležití?",
+      "prompt": "Hemingway život?",
       "options": [
-        "Jsou komičtí společníci",
-        "Ničí úlovek a dokreslují krutost přírody",
-        "Učí Santiaga číst",
-        "Zakládají cirkus"
+        "1899–1961, dobrodruh",
+        "2000",
+        "1700",
+        "Čech"
       ],
-      "correct": 1,
-      "expl": "Bez žraloků by „vítězství“ zůstalo materiální – tak zůstane morální."
+      "correct": 0,
+      "expl": "Americký autor."
     },
     {
-      "prompt": "Jaký žánrový charakter novela má?",
+      "prompt": "Překlad Vrba?",
       "options": [
-        "Školní fraška",
-        "Parabola / novela o boji člověka s přírodou",
-        "Komedie dell’arte",
-        "Elegie z Brixenu"
+        "Český překlad známý",
+        "Neexistuje",
+        "Anglicky jen",
+        "Německy"
       ],
-      "correct": 1,
-      "expl": "Konkrétní lov nese obecný smysl o lidské důstojnosti."
+      "correct": 0,
+      "expl": "Maturitní seznam."
+    },
+    {
+      "prompt": "Věk Santiaga?",
+      "options": [
+        "Stařec – osmdesátky",
+        "Dítě",
+        "Dvacet",
+        "Sto padesát"
+      ],
+      "correct": 0,
+      "expl": "Titul."
+    },
+    {
+      "prompt": "Návnada?",
+      "options": [
+        "Sardinky, chytrost",
+        "Pouze síla",
+        "Magie",
+        "Nic"
+      ],
+      "correct": 0,
+      "expl": "Rybařské detaily."
+    },
+    {
+      "prompt": "Bolest?",
+      "options": [
+        "Santiago trpí, ale pokračuje",
+        "Bez bolesti",
+        "Komediální",
+        "Bez děje"
+      ],
+      "correct": 0,
+      "expl": "Fyzické vypětí."
+    },
+    {
+      "prompt": "Náboženské prvky?",
+      "options": [
+        "Kříž, bolest – možná paralely",
+        "Kázání",
+        "Bez ničeho",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Interpretace křesťanská."
+    },
+    {
+      "prompt": "Pro maturitu?",
+      "options": [
+        "Symbolika, styl, témata",
+        "Jen mapa",
+        "Jen autor rok",
+        "Nic"
+      ],
+      "correct": 0,
+      "expl": "Klasická maturitní četba."
+    },
+    {
+      "prompt": "Hemingway válka?",
+      "options": [
+        "1. sv. válka, novinář",
+        "Nebyl",
+        "Jen učitel",
+        "Král"
+      ],
+      "correct": 0,
+      "expl": "Zkušenost ovlivnila psaní."
+    },
+    {
+      "prompt": "Tón závěru?",
+      "options": [
+        "Hořkosladký – porážka i důstojnost",
+        "Čistá radost",
+        "Horor",
+        "Satira"
+      ],
+      "correct": 0,
+      "expl": "Tragédie i vítězství ducha."
+    },
+    {
+      "prompt": "Co si Santiago říká?",
+      "options": [
+        "Motivuje se sám – dialog",
+        "Mlčí vždy",
+        "Zpívá operu",
+        "Modlí se jen"
+      ],
+      "correct": 0,
+      "expl": "Vnitřní monolog."
+    },
+    {
+      "prompt": "Proč Manolin nemůže chodit s Santiagem rybařit?",
+      "options": [
+        "Rodiče ho přesvědčili, že Santiago je smolař",
+        "Santiago ho zakázal",
+        "Manolin je nemocný",
+        "Zákaz státu"
+      ],
+      "correct": 0,
+      "expl": "Chlapec by chtěl, ale rodina preferuje úspěšnější rybáře po sérii neúspěchů."
+    },
+    {
+      "prompt": "Jak rybáři reagují na kostru marlina?",
+      "options": [
+        "S úctou k Santiagově výkonu, i když z masa nic nezbylo",
+        "S opovržením bez výjimky",
+        "Vůbec ji nevidí",
+        "Spálí ji hned"
+      ],
+      "correct": 0,
+      "expl": "Kostra dokazuje, že marlina skutečně chytil – směs obdivu a soucitu."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Santiago je dlouho bez úlovku; zůstává mu Manolin",
-        "Vypluje sám daleko na moře",
-        "Záhákne obřího marlína a bojuje s ním dny",
-        "Rybu přemůže, ale cesta domů je dlouhá",
-        "Žraloci úlovek zničí",
-        "Vrátí se s kostrou – poražen hmotně, ne důstojností"
+        "Santiago má dlouhou smůlu",
+        "Vyplouvá daleko na moře",
+        "Chytí obřího marlina",
+        "Třídenní souboj a vítězství",
+        "Žraloci sežerou maso cestou",
+        "Vrátí se s kostrou – Manolin u něj zůstane"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: smůla → vyplutí → boj s marlínem → návrat → žraloci → důstojná „prohra“."
+    "Správné pořadí: smůla → vyplutí → marlin → souboj → žraloci → návrat a kostra."
   ]
 }

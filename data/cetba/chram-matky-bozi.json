@@ -4,198 +4,418 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Victor Hugo; překlad: Tomášková",
-        "Žánr: romantický historický román",
+        "Autor: Victor Hugo",
+        "Žánr: historicko-romantický román",
         "Poprvé vydáno: 1831",
-        "Děj/prostředí: Paříž konce 15. století, katedrála Notre-Dame",
-        "Vyprávění/forma: šíroce epické vyprávění, popis architektury; překlad Tomášková"
+        "Děj/prostředí: Paříž 15. století, katedrála Notre-Dame",
+        "Vyprávění/forma: er-forma, historické vsuvky; překlad Tomášková"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Středověká Paříž viděná romantickým okem 19. století.",
-        "Katedrála jako živoucí střed děje i symbol.",
-        "Konflikt lásky, žárlivosti, cirkusu a církevní moci.",
-        "Krása a ošklivost, vyloučení a soucit.",
-        "Hugo brání gotickou památku před zničením.",
-        "Téma: láska, osud, sociální vyloučení, umění a víra."
+        "Středověk, lidová slavnost i násilí",
+        "Církev a městská moc",
+        "Outsideri společnosti",
+        "Architektura jako hrdina",
+        "Láska, žárlivost, osud",
+        "Romantismus 19. st. pohled na minulost"
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Quasimodo – hrbáč, zvoník katedrály.",
-        "Esmeralda – tanečnice, předmět lásky i nenávisti.",
-        "Claude Frollo – arcijáhen, posedlý Esmeraldou.",
-        "Phoebus de Châteaupers – kapitán, Esmeraldina láska.",
-        "Gringoire – básník, komický poutník dějem.",
-        "Katedrála Notre-Dame – „postava“ kamene a prostoru."
+        "Quasimodo – zvoník, hrbáč",
+        "Esmeralda – cikánská tanečnice",
+        "Claude Frollo – arciděkan, posedlost",
+        "Phoebus – kapitán, svůdník",
+        "Gringoire – básník",
+        "Jehan Frollo – bratr Claude"
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "Romantismus – vášeň, kontrast krásy a ošklivosti.",
-        "Katedrála – střed děje i národní památka.",
-        "Quasimodo – outsider se schopností lásky a oběti.",
-        "Frollova posedlost – destruktivní touha.",
-        "Osud / ananké – tragické směřování postav.",
-        "Lid Paříže – dav jako síla i hrozba."
+        "Katedrála – symbol dobra a útočiště",
+        "Quasimodo – vnější ošklivost, vnitřní dobro",
+        "Esmeralda – oběť předsudků",
+        "Frollo – posedlost a zlo",
+        "Soud a poprava",
+        "Gotická architektura"
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Chrám Matky Boží v Paříži?",
+      "prompt": "Autor?",
       "options": [
-        "Alexandre Dumas",
-        "Victor Hugo",
-        "Balzac",
+        "Hugo",
+        "Dickens",
+        "Zola",
         "Flaubert"
       ],
-      "correct": 1,
-      "expl": "Hugoův romantický román z roku 1831."
+      "correct": 0,
+      "expl": "Victor Hugo."
     },
     {
-      "prompt": "Kdo je Quasimodo?",
+      "prompt": "Rok?",
       "options": [
-        "Kapitán",
-        "Hrbáč a zvoník katedrály",
-        "Král Francie",
-        "Arcijáhen"
-      ],
-      "correct": 1,
-      "expl": "Zohavený zvoník miluje Esmeraldu a chrání ji."
-    },
-    {
-      "prompt": "Kdo je Esmeralda?",
-      "options": [
-        "Jeptiška",
-        "Cikánská tanečnice, kolem níž se točí vášně",
-        "Frollova sestra",
-        "Královna"
-      ],
-      "correct": 1,
-      "expl": "Její krása vyvolá Frollovu posedlost i Quasimodovu lásku."
-    },
-    {
-      "prompt": "Kdo je Claude Frollo?",
-      "options": [
-        "Zvoník",
-        "Arcijáhen zničený touhou po Esmeraldě",
-        "Kapitán Phoebus",
-        "Básník Gringoire výhradně"
-      ],
-      "correct": 1,
-      "expl": "Vzdělaný kněz se stane demonstrací ničivé vášně."
-    },
-    {
-      "prompt": "Koho Esmeralda miluje?",
-      "options": [
-        "Quasimoda hned naplno",
-        "Kapitána Phoeba",
-        "Frolla",
-        "Godota"
-      ],
-      "correct": 1,
-      "expl": "Milostný trojúhelník je jádrem tragédie."
-    },
-    {
-      "prompt": "Kdy román vyšel?",
-      "options": [
-        "1482 dějově i tiskem",
         "1831",
-        "1862 jen Bídníci, ne tento",
-        "1928"
+        "1862",
+        "1600",
+        "2000"
       ],
-      "correct": 1,
-      "expl": "Notre-Dame de Paris 1831; děj je v roce 1482."
+      "correct": 0,
+      "expl": "Romantismus."
     },
     {
-      "prompt": "Proč je katedrála důležitá?",
+      "prompt": "Katedrála?",
       "options": [
-        "Je jen kulisou bez významu",
-        "Je symbolem, dějištěm i „hrdinou“ kamene",
-        "Je továrna",
-        "Je televizní stěna"
+        "Notre-Dame Paříž",
+        "Praha",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Hugo popisuje architekturu jako živoucí bytost a paměť národa."
+      "correct": 0,
+      "expl": "Titul."
     },
     {
-      "prompt": "Jaký žánr knize sedí?",
+      "prompt": "Quasimodo?",
       "options": [
-        "Sci-fi",
-        "Romantický historický román",
-        "Absurdní drama",
-        "Deník"
-      ],
-      "correct": 1,
-      "expl": "Historie + vášeň + kontrast typické pro romantismus."
-    },
-    {
-      "prompt": "Jaký je Quasimodo vůči Esmeraldě?",
-      "options": [
-        "Lhostejný",
-        "Ochránce schopný oběti a něhy",
-        "Jen její soudce",
-        "Její bratr"
-      ],
-      "correct": 1,
-      "expl": "Ošklivost těla kontrastuje s vnitřní věrností."
-    },
-    {
-      "prompt": "Co Frollo způsobí?",
-      "options": [
-        "Mír v Paříži",
-        "Tragédii z posedlosti a žárlivosti",
-        "Opravu všech zvonů jen",
-        "Vydání Dekameronu"
-      ],
-      "correct": 1,
-      "expl": "Jeho touha vede k pronásledování a smrti."
-    },
-    {
-      "prompt": "Kdo je Gringoire?",
-      "options": [
-        "Kat",
-        "Básník zatažený do děje",
+        "Zvoník hrbáč",
+        "Kněz",
         "Král",
-        "Trifid"
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Komičtější postava propojující ulici a „oficiální“ svět."
+      "correct": 0,
+      "expl": "Hrdina."
     },
     {
-      "prompt": "Jak román typicky končí?",
+      "prompt": "Esmeralda?",
       "options": [
-        "Svatbou Frolla a Esmeraldy",
-        "Tragicky – smrt Esmeraldy i Quasimodův žal/zánik",
-        "Odchodem do Kapitolu",
-        "Vítězstvím Napoleona-prasete"
+        "Cikánská tanečnice",
+        "Kněžka",
+        "Ne",
+        "Ne"
       ],
-      "correct": 1,
-      "expl": "Romantická tragédie vyústí ve smrt a obraz věrnosti až za hrob."
+      "correct": 0,
+      "expl": "Oběť."
+    },
+    {
+      "prompt": "Frollo?",
+      "options": [
+        "Arciděkan posedlý Esmeraldou",
+        "Quasimodo",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Antagonista."
+    },
+    {
+      "prompt": "Phoebus?",
+      "options": [
+        "Kapitán, svůdník",
+        "Zvoník",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Gringoire?",
+      "options": [
+        "Básník, manžel Esmeraldy formálně",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Quasimodo chrání?",
+      "options": [
+        "Esmeraldu v katedrále",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Útočiště."
+    },
+    {
+      "prompt": "Konec Esmeralda?",
+      "options": [
+        "Poprava",
+        "Královna",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Tragédie."
+    },
+    {
+      "prompt": "Konec Quasimoda?",
+      "options": [
+        "Umírá u Esmeraldy",
+        "Král",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Láska."
+    },
+    {
+      "prompt": "Konec Frolla?",
+      "options": [
+        "Smrt",
+        "Svatba",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Pád."
+    },
+    {
+      "prompt": "Překlad?",
+      "options": [
+        "Tomášková",
+        "Pavlousková",
+        "Nezval",
+        "Nevrla"
+      ],
+      "correct": 0,
+      "expl": "Katalog."
+    },
+    {
+      "prompt": "Bídníci Hugo?",
+      "options": [
+        "Jiný román 1862",
+        "Totéž",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Různá díla."
+    },
+    {
+      "prompt": "Proč maturitní?",
+      "options": [
+        "Klasika romantismu",
+        "Nejkratší",
+        "Bez smyslu",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Kanón."
+    },
+    {
+      "prompt": "Co NENÍ?",
+      "options": [
+        "Quasimodo",
+        "Esmeralda",
+        "Hamlet",
+        "Frollo"
+      ],
+      "correct": 2,
+      "expl": "Shakespeare."
+    },
+    {
+      "prompt": "Gotika?",
+      "options": [
+        "Architektura i atmosféra",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Motiv."
+    },
+    {
+      "prompt": "Cikáni?",
+      "options": [
+        "Předsudky společnosti",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Téma."
+    },
+    {
+      "prompt": "Er-forma?",
+      "options": [
+        "Ano",
+        "Ich",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Paříž 15. st?",
+      "options": [
+        "Historické pozadí",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Setting."
+    },
+    {
+      "prompt": "Zvon?",
+      "options": [
+        "Quasimodo zvoní",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Symbol."
+    },
+    {
+      "prompt": "Soud Esmeralda?",
+      "options": [
+        "Křivé obvinění",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Nespravedlnost."
+    },
+    {
+      "prompt": "Phoebus žije?",
+      "options": [
+        "Přežije cynicky",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Kontrast."
+    },
+    {
+      "prompt": "Katalog?",
+      "options": [
+        "Próza",
+        "Drama",
+        "Poezie",
+        "Opera"
+      ],
+      "correct": 0,
+      "expl": "Próza."
+    },
+    {
+      "prompt": "Romantismus?",
+      "options": [
+        "Směr autora",
+        "Realismus",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "19. st."
+    },
+    {
+      "prompt": "Architektura?",
+      "options": [
+        "Hugo obdiv ke katedrále",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Téma."
+    },
+    {
+      "prompt": "Poselství?",
+      "options": [
+        "Předsudky ničí, krása duše counts",
+        "Vzhled vše",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Humanita."
+    },
+    {
+      "prompt": "Disney?",
+      "options": [
+        "Adaptace existuje",
+        "Ne",
+        "Zakázáno",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Kultura."
+    },
+    {
+      "prompt": "Jehan?",
+      "options": [
+        "Bratr Frolla, piják",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Postava."
+    },
+    {
+      "prompt": "Utok na katedrálu?",
+      "options": [
+        "Quasimodo brání",
+        "Ne",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Scéna."
+    },
+    {
+      "prompt": "Titul CZ?",
+      "options": [
+        "Chrám Matky Boží",
+        "Bídníci",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Notre-Dame."
+    },
+    {
+      "prompt": "Hugo národnost?",
+      "options": [
+        "Francouz",
+        "Čech",
+        "Ne",
+        "Ne"
+      ],
+      "correct": 0,
+      "expl": "Francie."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Paříž a katedrála uvedou středověký svět",
-        "Esmeralda okouzlí dav i Frolla",
-        "Quasimodo je potrestán a Esmeralda mu dá vodu",
-        "Frollova posedlost vede k úkladům",
-        "Obvinění a pronásledování Esmeraldy",
-        "Tragický konec lásky a věrnosti u katedrály"
+        "Gringoire a Esmeralda ve středověké Paříži",
+        "Frollo se zamiluje do Esmeraldy",
+        "Quasimodo ji zachrání do chrámu",
+        "Soud a odsouzení Esmeraldy",
+        "Poprava a Quasimodo brání marně",
+        "Smrt hlavních postav u katedrály"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: Paříž a chrám → Esmeralda → milosrdenství k Quasimodovi → Frollovy úklady → pronásledování → tragické finále."
+    "Pořadí: setkání → Frollo → útočiště → soud → poprava → smrt u chrámu."
   ]
 }

@@ -4,46 +4,47 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Zdeněk Jirotka",
-        "Žánr: humoristický román",
+        "Autor: Zdeněk Jirotka (1911–2003)",
+        "Žánr: humoristická novela",
         "Poprvé vydáno: 1942",
-        "Děj: domácnost pana Oulického a geniální komorník Saturnin",
-        "Vyprávění: ich-forma, elegantní humor a nadsázka"
+        "Děj: pražská rodina a sluha Saturnin",
+        "Vyprávění: ich-forma vypravěče (syn rodiny)"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Protektorátní doba vzniku, ale humor je nadčasový.",
-        "Saturnin organizuje „dobrodružství“ proti šedi života.",
-        "Satira na měšťácké zvyky a falešnou vážnost.",
-        "Doktor Vlach dodává sarkastický komentář.",
-        "Komika situací i jazyka."
+        "Meziválečná / válečná Praha v lehkém, absurdním světle.",
+        "Saturnin dělá „všechno jinak“ a rozpoutá chaos.",
+        "Sousedé, teta a učitel doplňují komické situace.",
+        "Humor z nedorozumění a vynalézavosti.",
+        "Rodina se Saturninem musí řešit nečekané problémy.",
+        "Kniha je cult classic české humoristické prózy."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Vypravěč (pan Oulický) – zaměstnavatel Saturnina.",
-        "Saturnin – komorník a režisér historek.",
-        "Doktor Vlach – ironický přítel.",
-        "Teta Kateřina – příbuzná s impulzy.",
-        "Slečna Barbora – milostná linie.",
-        "Majordomus / okolí – terč humoru."
+        "Saturnin – tajemný, vynalézavý sluha, původ nejasný.",
+        "Vypravěč – mladý člen rodiny, pozorovatel.",
+        "Teta – bystrá, často v konfliktu se Saturninem.",
+        "Pan učitel – pedantský, terč satiry.",
+        "Sousedé – další zdroj komických situací.",
+        "Milouš – postava spojená s dětmi / lumpárnami."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Komorník-režisér – Saturninova role.",
-        "Únik ze šedi – motiv dobrodružství.",
-        "Ironie a nadsázka – styl.",
-        "Měšťáctví – předmět satiry.",
-        "Přátelství a vyprávění – rámec.",
-        "Humor jako vzdor."
+        "Sluha jako motor děje – Saturnin řídí absurditu.",
+        "Humor nedorozumění – místo logiky kreativní výmluvy.",
+        "Pražské prostředí – byt, sousedé, škola.",
+        "Lumpárny – dětské/nezbedné akce.",
+        "Rodinná idyla narušená sluhou.",
+        "Jazyk – hovorové, živé dialogy."
       ]
     }
   ],
@@ -51,150 +52,348 @@
     {
       "prompt": "Kdo napsal Saturnina?",
       "options": [
+        "Čapek",
+        "Zdeněk Jirotka",
         "Hašek",
-        "Jirotka",
-        "Hrabal",
-        "Čapek"
+        "Němcová"
       ],
       "correct": 1,
-      "expl": "Autorem je Zdeněk Jirotka."
+      "expl": "Autorem je Jirotka, kniha 1942."
     },
     {
       "prompt": "Kdo je Saturnin?",
       "options": [
-        "Lékař",
-        "Komorník, který řídí komické dobrodružství",
-        "Detektiv",
-        "Farár"
-      ],
-      "correct": 1,
-      "expl": "Saturnin je geniální sluha."
-    },
-    {
-      "prompt": "Jaký je tón knihy?",
-      "options": [
-        "Tragický",
-        "Humoristický, ironický",
-        "Jen hororový",
-        "Jen náboženský"
-      ],
-      "correct": 1,
-      "expl": "Jde o humoristický román."
-    },
-    {
-      "prompt": "Kdo je doktor Vlach?",
-      "options": [
-        "Nepřítel",
-        "Ironický komentátor a přítel",
-        "Komorník",
+        "Pes",
+        "Sluha s neobvyklými nápady",
+        "Učitel",
         "Policista"
       ],
       "correct": 1,
-      "expl": "Vlach dodává sarkasmus."
+      "expl": "Saturnin je hlavní komická postava."
     },
     {
-      "prompt": "Proti čemu humor míří?",
+      "prompt": "Kdo vypráví?",
       "options": [
-        "Proti matematice",
-        "Proti šedi, konvencím a měšťáctví",
-        "Proti přírodě",
-        "Proti hudbě"
+        "Saturnin",
+        "Člen rodiny (syn)",
+        "Teta",
+        "Učitel"
       ],
       "correct": 1,
-      "expl": "Satira všednosti a přetvářky."
+      "expl": "Ich-forma mladého vypravěče."
+    },
+    {
+      "prompt": "Jaký je žánr?",
+      "options": [
+        "Tragedie",
+        "Humoristická novela",
+        "Sci-fi",
+        "Básnická skladba"
+      ],
+      "correct": 1,
+      "expl": "Dílo je komické od začátku do konce."
+    },
+    {
+      "prompt": "Kde se děj odehrává?",
+      "options": [
+        "Venkov",
+        "Praha – rodinný byt a okolí",
+        "Moře",
+        "Amerika"
+      ],
+      "correct": 1,
+      "expl": "Pražské prostředí je typické."
+    },
+    {
+      "prompt": "Jak Saturnin řeší problémy?",
+      "options": [
+        "Vždy logicky",
+        "Vynalézavě, často absurdně",
+        "Vůbec",
+        "Volá policii"
+      ],
+      "correct": 1,
+      "expl": "Jeho metody jsou zdrojem humoru."
+    },
+    {
+      "prompt": "Kdo je teta?",
+      "options": [
+        "Saturninova manželka",
+        "Příbuzná v domě, komické konflikty",
+        "Učitelka",
+        "Sousedka bez role"
+      ],
+      "correct": 1,
+      "expl": "Teta často stojí proti Saturninovi."
+    },
+    {
+      "prompt": "Co je pan učitel?",
+      "options": [
+        "Hrdina bez humoru",
+        "Pedantská postava, terč satiry",
+        "Saturninův bratr",
+        "Němec"
+      ],
+      "correct": 1,
+      "expl": "Učitel představuje malichernou autoritu."
+    },
+    {
+      "prompt": "Jaký humor převažuje?",
+      "options": [
+        "Černý bez radosti",
+        "Situační a slovní",
+        "Horor",
+        "Politická satira bez vtipu"
+      ],
+      "correct": 1,
+      "expl": "Nedorozumění a dialogy jsou klíč."
+    },
+    {
+      "prompt": "Proč je Saturnin tajemný?",
+      "options": [
+        "Je špion",
+        "Jeho minulost a motivy jsou nejasné",
+        "Je duch",
+        "Je robot"
+      ],
+      "correct": 1,
+      "expl": "Autor nechává prostor pro dohady."
+    },
+    {
+      "prompt": "Co jsou lumpárny?",
+      "options": [
+        "Vážné zločiny",
+        "Nezbednosti / žertíky",
+        "Vědecké experimenty",
+        "Válka"
+      ],
+      "correct": 1,
+      "expl": "Součást humoru a dětského světa."
     },
     {
       "prompt": "Kdy kniha vyšla?",
       "options": [
-        "1918",
         "1942",
-        "1968",
-        "1989"
+        "1890",
+        "2005",
+        "1968"
       ],
-      "correct": 1,
-      "expl": "Vydána 1942."
+      "correct": 0,
+      "expl": "Saturnin vyšel za války."
     },
     {
-      "prompt": "Jak vyprávění funguje?",
+      "prompt": "Má kniha pokračování?",
       "options": [
-        "Jen dialogy bez vypravěče",
-        "Ich-forma zaměstnavatele",
-        "Jen verše",
-        "Jen zápisník policie"
+        "Ne, nikdy",
+        "Ano, další díly o Saturninovi",
+        "Je to trilogie Tolkinova",
+        "Je to drama"
       ],
       "correct": 1,
-      "expl": "Vypráví pán domu."
+      "expl": "Jirotka Saturnina rozvinul v dalších knihách."
     },
     {
-      "prompt": "Co Saturnin typicky dělá?",
+      "prompt": "Jak reaguje rodina na Saturnina?",
       "options": [
-        "Nic",
-        "Vyvolává situace a „režíruje“ okolí",
-        "Emigruje hned",
-        "Zakládá továrnu"
+        "Okamžitě ho vyhodí",
+        "Kombinace obdivu, vzteku a závislosti",
+        "Neznají ho",
+        "Udají ho"
       ],
       "correct": 1,
-      "expl": "Je hybatelem zápletek."
+      "expl": "Saturnin je nepostradatelný i nebezpečný."
     },
     {
-      "prompt": "Jaká je milostná linie?",
+      "prompt": "Co NENÍ typické?",
+      "options": [
+        "Lehký tón",
+        "Absurdní situace",
+        "Stálá politická allegorie jako u 1984",
+        "Dialogy"
+      ],
+      "correct": 2,
+      "expl": "Saturnin je především humor, ne dystopie."
+    },
+    {
+      "prompt": "Jaká role mají sousedé?",
       "options": [
         "Žádná",
-        "Souvisí se slečnou Barborou",
-        "Jen válka",
-        "Jen obchod"
+        "Přidávají komické konflikty",
+        "Vedou válku",
+        "Jsou detektivové"
       ],
       "correct": 1,
-      "expl": "Barbora patří k ději."
+      "expl": "Sousedské vztahy rozproudí děj."
     },
     {
-      "prompt": "Proč je kniha oblíbená?",
+      "prompt": "Proč je dílo populární u maturit?",
       "options": [
-        "Je zákoník",
-        "Lehký inteligentní humor a postavy",
-        "Je učebnice fyziky",
-        "Je telefonní seznam"
+        "Krátké, čtivé, jasné postavy",
+        "Bez děje",
+        "Jen poezie",
+        "Cizí jazyk"
       ],
-      "correct": 1,
-      "expl": "Klasika české humoristické prózy."
+      "correct": 0,
+      "expl": "Snadno se shrnuje děj i humor."
     },
     {
-      "prompt": "Jaký je vztah pána a Saturnina?",
+      "prompt": "Jaký je vztah vypravěče a Saturnina?",
       "options": [
         "Nenávist",
-        "Pán je často vlečen Saturninovými nápady",
-        "Otroctví bez humoru",
-        "Jen obchodní smlouva bez děje"
+        "Fascinace a spolupráce v lumpárnách",
+        "Manželé",
+        "Učitel–žák"
       ],
       "correct": 1,
-      "expl": "Dynamika komiky."
+      "expl": "Vypravěč Saturnina často obdivuje."
     },
     {
-      "prompt": "Hlavní motiv?",
+      "prompt": "Co Saturnin „umí“ nejlépe?",
       "options": [
-        "Válka v zákopech",
-        "Únik z všednosti humorem",
-        "Tovární výroba robotů",
-        "Antická tragédie"
+        "Mlčet",
+        "Vymýšlet nečekaná řešení",
+        "Vařit jen polévku",
+        "Létat"
       ],
       "correct": 1,
-      "expl": "Humor jako životní strategie."
+      "expl": "Je mistr improvizace."
+    },
+    {
+      "prompt": "Jak končí většina epizod?",
+      "options": [
+        "Tragedií",
+        "Rozuzlením komického chaosu",
+        "Válka",
+        "Transport"
+      ],
+      "correct": 1,
+      "expl": "Formát je episodický humor."
+    },
+    {
+      "prompt": "Který autor je blízký žánrem?",
+      "options": [
+        "Jirotka – humor próza",
+        "Shakespeare – tragédie",
+        "Borovský – elegie",
+        "Vančura – groteska bez humoru"
+      ],
+      "correct": 0,
+      "expl": "Jirotka je klasik českého humoru."
+    },
+    {
+      "prompt": "Co znamená jméno Saturnin?",
+      "options": [
+        "Náhodné",
+        "Evokuje starověk / tajemno (ironicky)",
+        "Německý generál",
+        "Pes"
+      ],
+      "correct": 1,
+      "expl": "Jméno dodává postavě patos i komiku."
+    },
+    {
+      "prompt": "Jaký jazyk?",
+      "options": [
+        "Archaičtina",
+        "Spisovná čeština s hovorovými prvky",
+        "Angličtina",
+        "Latině"
+      ],
+      "correct": 1,
+      "expl": "Čtivé, přirozené dialogy."
+    },
+    {
+      "prompt": "Je Saturnin zlý?",
+      "options": [
+        "Ano, vrah",
+        "Ne – spíš rošťák a vynálezce chaosu",
+        "Anděl",
+        "Historická postava"
+      ],
+      "correct": 1,
+      "expl": "Je sympatický provokatér."
+    },
+    {
+      "prompt": "Co děti v knize?",
+      "options": [
+        "Neexistují",
+        "Účastní se lumpáren",
+        "Vedou válku",
+        "Jsou dospělí"
+      ],
+      "correct": 1,
+      "expl": "Dětský svět doplňuje humor."
+    },
+    {
+      "prompt": "Hlavní konflikt?",
+      "options": [
+        "Saturnin vs. pořádek domácnosti",
+        "Napoleon vs. Wellington",
+        "Věda vs. víra",
+        "Detektiv vs. vrah"
+      ],
+      "correct": 0,
+      "expl": "Sluha bourá klid rodiny."
+    },
+    {
+      "prompt": "Tón knihy?",
+      "options": [
+        "Depresivní",
+        "Optimistický humor",
+        "Naturalismus",
+        "Epický smutek"
+      ],
+      "correct": 1,
+      "expl": "Čtenář se má bavit."
+    },
+    {
+      "prompt": "Adaptace?",
+      "options": [
+        "Film/seriál v ČR známé",
+        "Nikdy",
+        "Opera Wagner",
+        "Balet"
+      ],
+      "correct": 0,
+      "expl": "Saturnin je známý i z obrazovky."
+    },
+    {
+      "prompt": "Co si odnést k maturitě?",
+      "options": [
+        "Postavy, humor, typ sluhy v literatuře",
+        "Jen rok vydání",
+        "Jen Praha mapa",
+        "Nic"
+      ],
+      "correct": 0,
+      "expl": "Dílo je o charakteru Saturnina a stylu."
+    },
+    {
+      "prompt": "Saturnin pracuje pro?",
+      "options": [
+        "Císaře",
+        "Pražskou rodinu",
+        "Školu",
+        "Cirkus"
+      ],
+      "correct": 1,
+      "expl": "Rodinný sluha je jádro děje."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Saturnin vstupuje do domácnosti",
-        "Začíná režírovat situace",
-        "Doktor Vlach ironizuje dění",
-        "Přicházejí příbuzní a komplikace",
-        "Milostná a komická dobrodružství",
-        "Domácnost je vzhůru nohama – pointa humoru"
+        "Rodina najme sluhu Saturnina",
+        "Saturnin rozpoutá lumpárny a chaos",
+        "Konflikty s tetou a učitelem",
+        "Sousedé řeší absurdní situace",
+        "Saturnin vše „vyřeší“ po svém",
+        "Klid je jen na chvíli – humor pokračuje"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: příchod → režie → Vlach → komplikace → dobrodružství → komický chaos."
+    "Správné pořadí: nástup Saturnina → lumpárny → konflikty → sousedé → improvizované řešení → pokračující chaos."
   ]
 }

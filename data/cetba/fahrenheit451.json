@@ -4,47 +4,47 @@
       "title": "O knize",
       "icon": "book",
       "lines": [
-        "Autor: Ray Bradbury; překlad: Nezval",
-        "Žánr: antiutopický sci-fi román",
+        "Autor: Ray Bradbury",
+        "Žánr: antiutopický (dystopický) sci-fi román",
         "Poprvé vydáno: 1953",
-        "Děj/prostředí: Americké město budoucnosti, kde hasiči pálí knihy",
-        "Vyprávění/forma: er-forma, lyricky obrazný styl; překlad V. Nezval"
+        "Děj/prostředí: anonymní americké město v blízké budoucnosti",
+        "Vyprávění/forma: er-forma, lyricky obrazný styl; český překlad Vítězslava Nezvala"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Společnost zakazuje knihy; zábava a televizní „stěny“ nahrazují čtení a myšlení.",
-        "Hasiči nehasí požáry, ale pálí knihy a domy, kde se našly.",
-        "Lidé jsou otupělí mediální zábavou a strachují se samostatného myšlení.",
-        "Válka a agresivita jsou na pozadí všudypřítomné.",
-        "Odpor tvoří „knihomolové“, kteří si pamatují texty nazpaměť.",
-        "Téma: cenzura, svoboda myšlení, nebezpečí masové kultury."
+        "Knihy jsou zakázané; hasiči pálí knihovny a domy, ne hasí požáry.",
+        "Lidé tráví čas u televizních „stěn“ a rychlých, prázdných pořadů.",
+        "Samostatné myšlení je podezřelé; společnost preferuje rychlou zábavu před hloubkou.",
+        "V pozadí hrozí válka; město působí sterilně a agresivně.",
+        "Odboj tvoří skrytí čtenáři a „pamatovači“, kteří uchovávají texty v paměti.",
+        "Román varuje před cenzurou, konformitou a odpoutáním od literatury."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Guy Montag – hasič, který začne pochybovat o pálení knih.",
-        "Clarisse McClellan – zvědavá dívka, otevře Montagovi oči.",
-        "Mildred Montagová – Guyova žena, závislá na televizních stěnách.",
-        "Kapitán Beatty – šéf hasičů, vzdělaný odpůrce knih.",
-        "Faber – bývalý profesor, Montagův rádce.",
-        "Granger – vůdce skupiny lidí, kteří uchovávají knihy v paměti."
+        "Guy Montag – hasič, který přestane věřit systému pálení knih.",
+        "Clarisse McClellan – zvědavá dívka, probudí v Montagovi otázky.",
+        "Mildred Montagová – Guyova žena, závislá na televizi a prášcích.",
+        "Kapitán Beatty – šéf hasičů, vzdělaný obhájce ničení knih.",
+        "Profesor Faber – bývalý učitel, Montagův tajný rádce.",
+        "Granger – vůdce komunity pamatovačů literatury."
       ]
     },
     {
-      "title": "Klíčové pojmy",
+      "title": "Klíčové pojmy a motivy",
       "icon": "bulb",
       "lines": [
-        "451 °F – teplota, při níž prý hoří knižní papír.",
-        "Hasiči – instituce pálení knih, ne hašení požárů.",
-        "Televizní stěny – obří obrazovky nahrazující skutečný život.",
-        "Mechanický pes – robotický lovec, který stíhá nepřátele režimu.",
-        "Pamatovači – lidé, kteří uchovávají literaturu v paměti.",
-        "Cenzura – likvidace myšlenek skrze ničení knih."
+        "451 °F – symbol teploty hoření papíru a ničení knih.",
+        "Televizní stěny – náhrada skutečného života a dialogu.",
+        "Mechanický pes – technologie sledování a likvidace nepohodlných.",
+        "Oheň – nejdřív ničení, později i obnova (fénix).",
+        "Paměť – literatura přežívá v lidech, když zmizí knihy.",
+        "Svoboda myšlení – hlavní téma odporu proti režimu."
       ]
     }
   ],
@@ -52,150 +52,370 @@
     {
       "prompt": "Kdo je hlavní hrdina a jaké má povolání?",
       "options": [
-        "Guy Montag – hasič, který pálí knihy",
+        "Guy Montag – hasič pálící knihy",
         "Beatty – spisovatel",
         "Faber – politik",
-        "Granger – televizní moderátor"
+        "Granger – televizní režisér"
       ],
       "correct": 0,
-      "expl": "Montag je hasič v systému, kde hasiči ničí knihy. Postupně se vzbouří proti své roli."
+      "expl": "Montag pracuje v hasičské jednotce, která místo hašení požárů ničí knihy."
     },
     {
-      "prompt": "Co podle názvu znamená 451 stupňů Fahrenheita?",
+      "prompt": "Co znamená titulní „451 stupňů Fahrenheita“ v kontextu románu?",
       "options": [
         "Teplota varu vody",
-        "Teplota, při níž hoří knižní papír",
-        "Rychlost auta",
-        "Kód hasičské jednotky"
+        "Údajná teplota hoření knižního papíru",
+        "Rychlost hasičského vozu",
+        "Kód tajné policie"
       ],
       "correct": 1,
-      "expl": "Bradbury použil údaj o teplotě hoření papíru jako symbol ničení literatury."
+      "expl": "Bradbury používá číslo jako symbol ničení literatury ohněm."
     },
     {
-      "prompt": "Kdo Montaga poprvé přiměje přemýšlet jinak?",
+      "prompt": "Kdo poprvé naruší Montagovu spokojenost s režimem?",
       "options": [
         "Mildred",
         "Clarisse McClellan",
         "Beatty",
-        "mechanický pes"
+        "Granger"
       ],
       "correct": 1,
-      "expl": "Clarisse klade „nebezpečné“ otázky o štěstí, přírodě a smyslu života."
+      "expl": "Clarisse klade otázky o štěstí, přírodě a smyslu života."
     },
     {
-      "prompt": "Jaká je Mildred Montagová?",
+      "prompt": "Jak žije Mildred Montagová?",
       "options": [
-        "Odbojářka",
-        "Žena závislá na televizních stěnách a prášcích",
-        "Učitelka literatury",
-        "Velitelka hasičů"
+        "Jako odbojářka se skrytými knihami",
+        "Pasivně u televizních stěn a prášků",
+        "Jako učitelka literatury",
+        "Jako velitelka hasičů"
       ],
       "correct": 1,
-      "expl": "Mildred žije v mediální iluzi; skutečný vztah s Guyem jí chybí."
+      "expl": "Mildred je otupělá masovou zábavou a nevnímá hlubší vztah k Guyovi."
     },
     {
-      "prompt": "Kdo je kapitán Beatty?",
+      "prompt": "Proč podle Beattyho společnost knihy zakázala?",
       "options": [
-        "Montagův přítel z odboje",
-        "Šéf hasičů, který knížky zná, ale podporuje jejich pálení",
-        "Spisovatel",
-        "Politik"
-      ],
-      "correct": 1,
-      "expl": "Beatty je vzdělaný cynik: knihy zná, ale hájí jejich ničení jako „ochranu společnosti“."
-    },
-    {
-      "prompt": "Proč společnost knihy zakazuje?",
-      "options": [
-        "Protože jsou drahé",
-        "Aby lidé nemysleli samostatně a zůstali pasivní",
         "Kvůli nedostatku papíru",
-        "Protože jsou všechny špatně napsané"
+        "Aby lidé nemysleli samostatně a byli spokojení",
+        "Protože knihy jsou drahé",
+        "Kvůli náboženským důvodům"
       ],
       "correct": 1,
-      "expl": "Knihy budí otázky a konflikty; režim chce spokojenou, otupělou masu."
+      "expl": "Beatty tvrdí, že knihy kazí „klid“ tím, že nutí přemýšlet a polemizovat."
     },
     {
       "prompt": "Kdo je profesor Faber?",
       "options": [
         "Velitel hasičů",
-        "Bývalý profesor, který Montagovi pomáhá",
-        "Mildredin bratr",
-        "Autor zakázaných románů"
+        "Bývalý učitel, který Montagovi pomáhá",
+        "Montagův švagr",
+        "Autor zakázaných románů v tisku"
       ],
       "correct": 1,
-      "expl": "Faber Montaga radí a přes sluchátko ho podporuje při konfliktu s Beattyim."
+      "expl": "Faber Montaga vede k čtení a přes sluchátko ho podporuje v krizi."
     },
     {
-      "prompt": "Co je mechanický pes?",
+      "prompt": "Co je mechanický pes v románu?",
       "options": [
-        "Mazlíček Mildred",
-        "Robotický lovec stíhající „zločince“",
+        "Mildredin domácí mazlíček",
+        "Robotický lovec stíhající režimem označené osoby",
         "Hasičské auto",
-        "Televizní postava"
+        "Postava dětského pořadu"
       ],
       "correct": 1,
-      "expl": "Mechanický pes je nástroj kontroly a strachu; nakonec stíhá i Montaga."
+      "expl": "Mechanický pes je nástroj strachu; později stíhá i Montaga."
     },
     {
-      "prompt": "Jak Montag nakonec naloží s Beattyim?",
+      "prompt": "Co Montag udělá s kapitánem Beattym při zatýkání?",
       "options": [
-        "Uteče s ním",
-        "Spálí ho proudem ohně",
-        "Udá ho policii",
-        "Přesvědčí ho ke čtení"
+        "Přesvědčí ho ke čtení",
+        "Spálí ho proudem plamenometu",
+        "Uteče s ním z města",
+        "Udá ho policii"
       ],
       "correct": 1,
-      "expl": "Po Beattyho šikaně a hrozbě Montag použije plamenomet proti vlastnímu nadřízenému."
+      "expl": "Po Beattyho provokacích Montag obrátí oheň proti svému nadřízenému."
     },
     {
-      "prompt": "Kdo jsou „pamatovači“ v závěru?",
+      "prompt": "Kdo jsou „pamatovači“ na konci románu?",
       "options": [
-        "Hasiči",
+        "Hasiči v důchodu",
         "Lidé, kteří si pamatují knihy nazpaměť",
-        "Herci z televize",
-        "Vojáci"
+        "Televizní herci",
+        "Vojáci v zákopu"
       ],
       "correct": 1,
-      "expl": "Skupina kolem Grangera uchovává literaturu v paměti, dokud nebude znovu možné psát."
+      "expl": "Skupina kolem Grangera uchovává literární texty v paměti jako most k budoucnosti."
     },
     {
-      "prompt": "Které téma NENÍ pro román klíčové?",
+      "prompt": "Jaký symbol nese oheň v průběhu příběhu?",
       "options": [
-        "Cenzura a svoboda myšlení",
-        "Nebezpečí masové zábavy",
-        "Idylický venkovský realismus 19. století",
+        "Pouze ničení",
+        "Nejdřív ničení, později i možnost obnovy (metafora fénixe)",
+        "Jen romantická láska",
+        "Výhradně válka"
+      ],
+      "correct": 1,
+      "expl": "Montag přechází od pálení knih k vnímání ohně jako zdroje tepla i nového začátku."
+    },
+    {
+      "prompt": "Jak Mildred reaguje na Montagovo skryté čtení?",
+      "options": [
+        "Podporuje ho",
+        "Je vyděšená a raději knihy nechce vidět",
+        "Okamžitě utíká k hasičům",
+        "Začne psát vlastní deník"
+      ],
+      "correct": 1,
+      "expl": "Mildred se bojí následků a zůstává věrná konzumnímu životnímu stylu."
+    },
+    {
+      "prompt": "Co se stane s Montagovou domácností?",
+      "options": [
+        "Stane se útočištěm odboje",
+        "Beatty nechá Montaga sám spálit jeho dům s knihami",
+        "Mildred ji prodá",
+        "Faber v ní otevře knihovnu"
+      ],
+      "correct": 1,
+      "expl": "Beatty nutí Montaga zničit vlastní domov jako veřejnou lekci poslušnosti."
+    },
+    {
+      "prompt": "Proč Montag utíká k řece?",
+      "options": [
+        "Chce najít Clarisse",
+        "Uteče před mechanickým psem a pronásledováním",
+        "Jde k Beattymu na večeři",
+        "Hledá televizní studio"
+      ],
+      "correct": 1,
+      "expl": "Po zabití Beattyho musí opustit město a skrýt se před technologií i lidmi."
+    },
+    {
+      "prompt": "Jakou roli hraje televize ve společnosti románu?",
+      "options": [
+        "Vzdělává občany",
+        "Nahrazuje knihy, dialog a kritické myšlení",
+        "Slouží jen hasičům",
+        "Vysílá výhradně zprávy o válce"
+      ],
+      "correct": 1,
+      "expl": "Interaktivní stěny a rychlé pořady udržují lidi pasivní a spokojené."
+    },
+    {
+      "prompt": "Které téma román NEZdůrazňuje?",
+      "options": [
+        "Cenzura",
+        "Nebezpečí konzumní zábavy",
+        "Idylický venkovský realism 19. století",
         "Odpor jednotlivce"
       ],
       "correct": 2,
-      "expl": "Jde o dystopii o cenzuře a médiích, ne o venkovský realismus."
+      "expl": "Jde o dystopii o knihách a médiích, ne o historický venkovský román."
     },
     {
       "prompt": "V jakém roce román poprvé vyšel?",
       "options": [
         "1949",
         "1953",
-        "1961",
-        "1975"
+        "1968",
+        "1984"
       ],
       "correct": 1,
-      "expl": "451 stupňů Fahrenheita vyšlo v roce 1953; patří k klasice antiutopie 20. století."
+      "expl": "451 stupňů Fahrenheita vyšlo v roce 1953 a patří k klasice antiutopie."
+    },
+    {
+      "prompt": "Jaký vztah měl Bradbury k televizi podle kontextu díla?",
+      "options": [
+        "Bezvýhradně ji oslavoval",
+        "Varoval před jejím návykovým vlivem na kulturu",
+        "Ignoroval ji",
+        "Považoval ji za náhradu školy"
+      ],
+      "correct": 1,
+      "expl": "Román kritizuje pasivní sledování obrazovek místo čtení a rozhovoru."
+    },
+    {
+      "prompt": "Co Montag ukradne u staré ženy s knihami?",
+      "options": [
+        "Televizní ovladač",
+        "Kniha (biblický text)",
+        "Plamenomet",
+        "Mechanický pes"
+      ],
+      "correct": 1,
+      "expl": "Montag si nechá knihu, i když vidí, jak žena raději zemře v plamenech než knihy vydá."
+    },
+    {
+      "prompt": "Proč je scéna se starou ženou důležitá?",
+      "options": [
+        "Ukazuje lehkost smrti",
+        "Montag chápe, že knihy mají pro lidi hodnotu života",
+        "Beatty se stane hrdinou",
+        "Mildred se obrátí"
+      ],
+      "correct": 1,
+      "expl": "Obětí ženy v plamenech Montag poprvé silně pocítí absurditu pálení knih."
+    },
+    {
+      "prompt": "Jak Faber pomáhá Montagovi během pronásledování?",
+      "options": [
+        "Letí s ním vrtulníkem",
+        "Komunikuje přes miniaturní sluchátko v uchu",
+        "Zastřelí mechanického psa",
+        "Spálí Beattyho knihovnu"
+      ],
+      "correct": 1,
+      "expl": "Faber ho radí na dálku, dokud Montag neunikne z města."
+    },
+    {
+      "prompt": "Co se stane s městem na konci?",
+      "options": [
+        "Slaví mír",
+        "Je zničeno leteckým útokem",
+        "Stane se knihovnou",
+        "Zmizí televize"
+      ],
+      "correct": 1,
+      "expl": "Válka na pozadí exploduje; město letecky zničí, zatímco Montag je mimo."
+    },
+    {
+      "prompt": "Jak Granger vnímá budoucnost po zkáze?",
+      "options": [
+        "Bez naděje",
+        "Jako šanci znovu budovat kulturu z paměti",
+        "Jako konec světa bez smyslu",
+        "Jako vítězství hasičů"
+      ],
+      "correct": 1,
+      "expl": "Pamatovači přirovnávají obnovu k fénixovi – z popela může vyrůst nové."
+    },
+    {
+      "prompt": "Která postava představuje konformitu nejvíc?",
+      "options": [
+        "Clarisse",
+        "Mildred",
+        "Granger",
+        "Faber"
+      ],
+      "correct": 1,
+      "expl": "Mildred je vzor občana spokojeného s prázdnou zábavou."
+    },
+    {
+      "prompt": "Která postava ztělesňuje vzdělaný cynismus moci?",
+      "options": [
+        "Faber",
+        "Beatty",
+        "Clarisse",
+        "Granger"
+      ],
+      "correct": 1,
+      "expl": "Beatty cituje literaturu, ale obhajuje její ničení."
+    },
+    {
+      "prompt": "Jaký žánr nejlépe vystihuje román?",
+      "options": [
+        "Antiutopický sci-fi román",
+        "Historický epos",
+        "Detektivka",
+        "Pastorální idyla"
+      ],
+      "correct": 0,
+      "expl": "Děj v budoucnosti kritizuje společnost a technologie – typická antiutopie."
+    },
+    {
+      "prompt": "Co Montag dělá na začátku knihy profesně?",
+      "options": [
+        "Učí na gymnáziu",
+        "Pálí knihy jako hasič",
+        "Píše pro televizi",
+        "Vyrábí mechanické psy"
+      ],
+      "correct": 1,
+      "expl": "Úvodní scény ukazují rutinní pálení knih."
+    },
+    {
+      "prompt": "Proč je Clarisse „nebezpečná“ pro systém?",
+      "options": [
+        "Je bohatá",
+        "Ptá se na zakázané otázky a myslí jinak",
+        "Je hasička",
+        "Píše knihy"
+      ],
+      "correct": 1,
+      "expl": "Její zvědavost a pomalost odporují konzumnímu tempu společnosti."
+    },
+    {
+      "prompt": "Jaký význam má řeka v závěru?",
+      "options": [
+        "Hranice státu",
+        "Cesta úniku a symbol očištění",
+        "Místo pálení knih",
+        "Beattyho hrob"
+      ],
+      "correct": 1,
+      "expl": "Montag se v řece skrývá před psem a přechází k novému životu."
+    },
+    {
+      "prompt": "Kdo v románu představuje most mezi starou kulturou a odbojem?",
+      "options": [
+        "Beatty",
+        "Faber",
+        "Mildred",
+        "Mechanický pes"
+      ],
+      "correct": 1,
+      "expl": "Faber zná knihy, ale dlouho se bál jednat – Montaga k akci povzbudí."
+    },
+    {
+      "prompt": "Jaké poselství je pro maturitu nejdůležitější?",
+      "options": [
+        "Knihy lze nahradit televizí",
+        "Svoboda myšlení a kultura se brání i za cenu rizika",
+        "Hasiči by měli pálit domy",
+        "Válka je lepší než čtení"
+      ],
+      "correct": 1,
+      "expl": "Román obhajuje literaturu a kritické myšlení proti cenzuře a pasivitě."
+    },
+    {
+      "prompt": "Jaký český překladatel je u díla tradičně uváděn v maturitních seznamech?",
+      "options": [
+        "Gössell",
+        "Nezval",
+        "Skoumal",
+        "Nevrla"
+      ],
+      "correct": 1,
+      "expl": "V katalogu maturitní četby je u díla uveden překlad Vítězslava Nezvala."
+    },
+    {
+      "prompt": "Co následuje po Montagově připojení k pamatovačům?",
+      "options": [
+        "Návrat k Mildred",
+        "Pohled na zkázu města a naděje v obnovu",
+        "Beattyho rehabilitace",
+        "Zákaz paměti"
+      ],
+      "correct": 1,
+      "expl": "Závěr spojuje zkázu s možností nového začátku skrze paměť a knihy."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Montag pálí knihy jako poslušný hasič",
-        "Setká se s Clarisse a začne pochybovat",
-        "Schovává knihy a hledá smysl čtení",
-        "Obráti se proti Beattymu a uteče",
-        "Je stíhán mechanickým psem",
-        "Připojí se k pamatovačům u řeky"
+        "Montag rutinně pálí knihy jako hasič",
+        "Clarisse ho přiměje pochybovat o systému",
+        "Montag schovává knihy a hledá radu u Fabera",
+        "Beatty nechá Montaga spálit vlastní dům",
+        "Montag zabije Beattyho a utíká z města",
+        "Připojí se k pamatovačům a vidí zkázu města"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: poslušný hasič → Clarisse a pochybnosti → schovávání knih → útěk po konfliktu s Beattyim → stíhání → pamatovači."
+    "Správné pořadí: rutinní pálení → Clarisse a pochybnosti → knihy a Faber → spálení domu → útěk a Beatty → pamatovači a zkáza města."
   ]
 }

@@ -5,196 +5,95 @@
       "icon": "book",
       "lines": [
         "Autor: Charles Dickens",
-        "Žánr: společenský román",
-        "Poprvé vydáno: 1837–1839 (česky Tilschovi)",
-        "Děj: Londýn – sirotek Oliver v chudobinci a zločineckém podsvětí",
-        "Vyprávění: er-forma, soucitný i satirický tón"
+        "Žánr: sociální román",
+        "Poprvé vydáno: 1837–1839 (seriálově)",
+        "Děj: Londýn 19. století, chudoba a kriminality",
+        "Vyprávění: er-forma; realistický, sentimentální styl"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Viktoriánská Anglie: chudoba, workhousy, kriminalita.",
-        "Dickens kritizuje sociální instituce.",
-        "Oliver si zachovává nevinnost.",
-        "Faginova banda vs. dobrodinci.",
-        "Odhalení původu vede k happy endu."
+        "Victoriánská Anglie – chudobinci, sirotčince.",
+        "Kriminalita, gangy, Faginova dílna.",
+        "Sociální kritika třídní nespravedlnosti.",
+        "Oliver jako symbol nevinnosti.",
+        "Od sirotčince k pravdě o původu.",
+        "Téma: chudoba, spravedlnost, identita."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Oliver Twist – sirotek.",
-        "Fagin – vůdce zlodějů.",
-        "Dodger – kapsař.",
-        "Bill Sikes – násilník.",
-        "Nancy – tragická žena ze dna.",
-        "Mr. Brownlow – dobrodinec."
+        "Oliver Twist – sirotek, dobré srdce.",
+        "Fagin – starý Žid, vede gang zlodějů.",
+        "Bill Sikes – brutální lupič.",
+        "Nancy – oběť, pomáhá Oliverovi.",
+        "Pan Brownlow – dobrodinec.",
+        "Monks – Oliverův nevlastní bratr."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Sirotectví – výchozí situace.",
-        "Sociální kritika – workhouse.",
-        "Nevinnost vs. zločin.",
-        "Město jako labyrint.",
-        "Soucit – Dickensova morálka.",
-        "Identita a původ – zápletka."
+        "Sirotčinec – krutost systému.",
+        "„Prosím, pane, chci ještě“ – slavná scéna.",
+        "Gang – Fagin, Sikes, Artful Dodger.",
+        "Dědictví – tajemství Oliverova původu.",
+        "Nancy – oběť i statečnost.",
+        "Happy-end – spravedlnost pro Olivera."
       ]
     }
   ],
   "quiz": [
-    {
-      "prompt": "Kdo napsal Olivera Twista?",
-      "options": [
-        "Hugo",
-        "Dickens",
-        "Balzac",
-        "Tolstoj"
-      ],
-      "correct": 1,
-      "expl": "Autorem je Charles Dickens."
-    },
-    {
-      "prompt": "Kde Oliver vyrůstá nejdřív?",
-      "options": [
-        "Na zámku",
-        "V chudobinci / workhousu",
-        "V klášteře luxusním",
-        "Na lodi"
-      ],
-      "correct": 1,
-      "expl": "Začíná v workhousu."
-    },
-    {
-      "prompt": "Kdo vede zlodějskou bandu?",
-      "options": [
-        "Brownlow",
-        "Fagin",
-        "Oliver",
-        "Sikesův pes jen"
-      ],
-      "correct": 1,
-      "expl": "Fagin cvičí chlapce ke krádežím."
-    },
-    {
-      "prompt": "Kdo je Nancy?",
-      "options": [
-        "Učitelka",
-        "Žena ze dna, která Oliverovi pomůže",
-        "Královna",
-        "Soudkyně"
-      ],
-      "correct": 1,
-      "expl": "Nancy je tragická postava."
-    },
-    {
-      "prompt": "Co Dickens kritizuje?",
-      "options": [
-        "Zahradnictví",
-        "Sociální instituce a chudobu",
-        "Mořeplavbu antickou",
-        "Robotiku"
-      ],
-      "correct": 1,
-      "expl": "Sociální román."
-    },
-    {
-      "prompt": "Kdo je Bill Sikes?",
-      "options": [
-        "Dobrodinec",
-        "Násilný zločinec",
-        "Farář",
-        "Učitel"
-      ],
-      "correct": 1,
-      "expl": "Sikes je brutalita podsvětí."
-    },
-    {
-      "prompt": "Jaký je Oliverův charakter?",
-      "options": [
-        "Zkažený od počátku",
-        "Nevinný a dobrý navzdory prostředí",
-        "Jen komický šašek",
-        "Generál"
-      ],
-      "correct": 1,
-      "expl": "Nevinnost jako kontrast."
-    },
-    {
-      "prompt": "Kdo Oliverovi pomůže z vyšší společnosti?",
-      "options": [
-        "Fagin",
-        "Mr. Brownlow",
-        "Sikes",
-        "Dodger jako právník"
-      ],
-      "correct": 1,
-      "expl": "Brownlow je ochránce."
-    },
-    {
-      "prompt": "Jak román končí typicky dickensovsky?",
-      "options": [
-        "Totální nihilismus",
-        "Odhalení původu a záchrana dítěte",
-        "Zničení Londýna",
-        "Emigrace na Mars"
-      ],
-      "correct": 1,
-      "expl": "Morální happy end."
-    },
-    {
-      "prompt": "Proč je Fagin nebezpečný?",
-      "options": [
-        "Vaří dobře",
-        "Manipuluje dětmi ke zločinu",
-        "Je soudce",
-        "Je kněz"
-      ],
-      "correct": 1,
-      "expl": "Korumpování dětí."
-    },
-    {
-      "prompt": "Jaké město je chronotopem?",
-      "options": [
-        "Praha",
-        "Londýn",
-        "Řím",
-        "New York"
-      ],
-      "correct": 1,
-      "expl": "Londýnské podsvětí a čtvrti."
-    },
-    {
-      "prompt": "Hlavní téma?",
-      "options": [
-        "Jazz",
-        "Chudoba, nevinnost a sociální spravedlnost",
-        "Robotí vzpoura",
-        "Zákopová válka"
-      ],
-      "correct": 1,
-      "expl": "Sociální kritika."
-    }
+    {"prompt": "Kdo napsal Oliver Twist?", "options": ["Austen", "Charles Dickens", "Wilde", "Brontë"], "correct": 1, "expl": "Dickens, 1837–1839 – sociální román."},
+    {"prompt": "Kdo je Oliver?", "options": ["Sirotek v Londýně", "Král", "Generál", "Robot"], "correct": 0, "expl": "Hrdina nevinnosti v chudobě."},
+    {"prompt": "Co Oliver řekne v sirotčinci?", "options": ["Prosím, pane, chci ještě (jídla)", "Chci válku", "Jsem král", "Nic"], "correct": 0, "expl": "Slavná scéna trestu za prosbu."},
+    {"prompt": "Kdo je Fagin?", "options": ["Vůdce gangu zlodějů", "Kněz", "Oliverův otec", "Lékař"], "correct": 0, "expl": "Vychovává děti ke krádežím."},
+    {"prompt": "Kdo je Bill Sikes?", "options": ["Brutální lupič", "Učitel", "Brownlow", "Dodger"], "correct": 0, "expl": "Násilník, partner Nancy."},
+    {"prompt": "Kdo je Nancy?", "options": ["Dívka z gangu, pomůže Oliverovi", "Královna", "Faginova sestra", "Učitelka"], "correct": 0, "expl": "Tragická postava – zradí gang, zaplatí životem."},
+    {"prompt": "Kdo je pan Brownlow?", "options": ["Dobrodinec, který Olivera zachrání", "Fagin", "Sikes", "Monks"], "correct": 0, "expl": "Symbol dobra střední třídy."},
+    {"prompt": "Kdo je Monks?", "options": ["Oliverův nevlastní bratr, chce ho zničit", "Kněz", "Dodger", "Brownlow"], "correct": 0, "expl": "Intriky kvůli dědictví."},
+    {"prompt": "Kdo je Artful Dodger?", "options": ["Šikovný mladý zloděj ve Faginově gangu", "Policista", "Král", "Lékař"], "correct": 0, "expl": "Vede Olivera do kriminality."},
+    {"prompt": "Jak končí Oliver?", "options": ["Šťastně u Brownlowa, pravda o původu", "Vězení", "Smrt", "Gang navždy"], "correct": 0, "expl": "Dickensovský happy-end spravedlnosti."},
+    {"prompt": "Jaký je hlavní konflikt?", "options": ["Nevinnost vs. chudoba a kriminalita", "Robotí válka", "Středověk", "Detektivka bez sociálního"], "correct": 0, "expl": "Sociální román 19. století."},
+    {"prompt": "Proč maturita?", "options": ["Dickens, sociální kritika, postavy", "Chemie", "Atlas", "Cookbook"], "correct": 0, "expl": "Klasická světová literatura."},
+    {"prompt": "Kde děj?", "options": ["Londýn", "Praha", "Verona", "Paříž"], "correct": 0, "expl": "Victoriánský Londýn."},
+    {"prompt": "Které téma NENÍ typické?", "options": ["Chudoba", "Gang", "Vzpoura robotů", "Identita"], "correct": 2, "expl": "Čapek roboti ne."},
+    {"prompt": "Co Dickens kritizuje?", "options": ["Sirotčince a chudobu", "Sport", "Hudbu", "Vědu"], "correct": 0, "expl": "Sociální nespravedlnost."},
+    {"prompt": "Co se stane Nancy?", "options": ["Sikes ji zabije", "Stane se královnou", "Emigruje", "Nic"], "correct": 0, "expl": "Tragédie za pomoc Oliverovi."},
+    {"prompt": "Která postava NENÍ v románu?", "options": ["Fagin", "Oliver", "Elizabeth Bennet", "Sikes"], "correct": 2, "expl": "Austenová."},
+    {"prompt": "Jaký styl Dickens?", "options": ["Realismus, sentiment, humor", "Sci-fi", "Epos", "Drama antické"], "correct": 0, "expl": "Typický Dickens."},
+    {"prompt": "Co je Oliverův původ?", "options": ["Tajemství bohaté rodiny – odhaleno", "Vždy chudý bez vysvětlení", "Robot", "Cizinec"], "correct": 0, "expl": "Intriky Monse."},
+    {"prompt": "Kdy vyšel román?", "options": ["1837–1839", "1929", "2000", "1595"], "correct": 0, "expl": "Seriálové vydávání."},
+    {"prompt": "Které dílo NENÍ Dickens?", "options": ["Oliver Twist", "David Copperfield", "Revizor", "Great Expectations"], "correct": 2, "expl": "Gogol."},
+    {"prompt": "Proč Oliver unikne Faginovi?", "options": ["Brownlow a Nancy pomáhají", "Sám je generál", "Kouzlo", "Nikdy neunikne"], "correct": 0, "expl": "Boj dobra a zla."},
+    {"prompt": "Co je victoriánská kritika?", "options": ["Odhalení chudoby pod průmyslem", "Oslava války", "Sci-fi", "Bez tématu"], "correct": 0, "expl": "Kontext 19. stol."},
+    {"prompt": "Jak Fagin končí?", "options": ["Poprava – trest za zločin", "Král", "Bohatý", "Emigrace"], "correct": 0, "expl": "Dickensův morální soud."},
+    {"prompt": "Co symbolizuje Oliver?", "options": ["Nevinnost v špinavém světě", "Válka", "Robot", "Nemoc"], "correct": 0, "expl": "Centrální metafora."},
+    {"prompt": "Jak vyprávění?", "options": ["Er-forma", "Ich Oliver", "Drama", "Lyrika"], "correct": 0, "expl": "Klasický roman."},
+    {"prompt": "Co je Dodger?", "options": ["Mladý zloděj", "Pes", "Král", "Učitel"], "correct": 0, "expl": "Artful = vychytralý."},
+    {"prompt": "Jaký tón?", "options": ["Sociální kritika + sentiment", "Pouze horor", "Beletrie bez emocí", "Učebnice"], "correct": 0, "expl": "Dickens mísí slzy a humor."},
+    {"prompt": "Proč sirotčinec?", "options": ["Ukazuje krutost vůči dětem", "Idyla", "Sport", "Věda"], "correct": 0, "expl": "Úvodní instituce zla."},
+    {"prompt": "Co čtenář po dočtení?", "options": ["Chápe Dickensovu sociální linii", "Chemii", "Nic", "Mapu"], "correct": 0, "expl": "Maturitní cíl."}
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Oliver v chudobinci",
-        "Utíká do Londýna",
-        "Padne k Faginovi",
-        "Nancy a Brownlow zasahují",
-        "Konflikt s Sikesem",
-        "Odhalení původu a záchrana"
+        "Oliver v sirotčinci a prosba o jídlo",
+        "Útěk do Londýna, Faginův gang",
+        "Brownlow Olivera zachrání",
+        "Nancy pomáhá, Sikes ji zabije",
+        "Odhalení Monsových intrik",
+        "Oliverův happy-end a identita"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: workhouse → Londýn → Fagin → pomoc → násilí → záchrana."
+    "Správné pořadí: sirotčinec → gang → Brownlow → Nancy → Monks → happy-end."
   ]
 }

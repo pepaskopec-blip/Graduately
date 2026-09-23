@@ -5,195 +5,395 @@
       "icon": "book",
       "lines": [
         "Autor: Eduard Petiška (1924–1987)",
-        "Žánr: próza pro mládež / převyprávění mýtů",
-        "Poprvé vydáno: 1958",
-        "Děj: starověké Řecko – bohové, hrdinové, báje",
-        "Vyprávění: srozumitelné převyprávění antických příběhů"
+        "Žánr: moderní zpracování mýtů",
+        "Poprvé vydáno: 1959 (sbírka)",
+        "Děj: antické řecké mýty a pověsti",
+        "Forma: prózaické převyprávění pro mládež"
       ]
     },
     {
       "title": "Doba a svět",
       "icon": "globe",
       "lines": [
-        "Mýtické starověké Řecko: Olymp, podsvětí, moře a města.",
-        "Bohové zasahují do lidských osudů libovolně i spravedlivě.",
-        "Hrdinové plní úkoly, bojují s nestvůrami a hledají slávu.",
-        "Báje vysvětlují svět, mravní hodnoty i přírodní jevy.",
-        "Petiška zpřístupňuje antiku modernímu čtenáři."
+        "Od stvoření světa po hrdinské mýty.",
+        "Olympští bohové – Zeus, Héra, Poseidon…",
+        "Hrdinové – Herakles, Odysseus, Perseus.",
+        "Vysvětlení přírodních jevů a morálních lekcí.",
+        "Petiška modernizuje jazyk, zachovává jádro.",
+        "Základ antické kultury pro maturitu."
       ]
     },
     {
       "title": "Postavy",
       "icon": "people",
       "lines": [
-        "Zeus a olympští bohové – vládci světa a lidských osudů.",
-        "Prométheus – dárce ohně lidem, potrestaný bohy.",
-        "Héraklés, Théseus, Perseus – hrdinové velkých činů.",
-        "Odysseus – důvtipný hrdina dlouhé cesty domů.",
-        "Lidští králové a hrdinky – oběti i aktéři mýtů (např. Éurope, Ariadna)."
+        "Zeus – vládce bohů.",
+        "Héra – manželka, žárlivost.",
+        "Prométheus – oheň pro lidi, trest.",
+        "Herakles – dvanáct úkolů.",
+        "Odysseus – cesta domů z Troje.",
+        "Perseus, Theseus, Orfeus aj."
       ]
     },
     {
       "title": "Klíčové pojmy",
       "icon": "bulb",
       "lines": [
-        "Mýtus – posvátný příběh o bozích a vzniku řádu světa.",
-        "Olymp – sídlo bohů.",
-        "Hrdinský mýtus – zkoušky, nestvůry, sláva.",
-        "Osud (moira) – hranice i bohů.",
-        "Hubris – zpupnost trestána bohy.",
-        "Převyprávění – Petiškův didaktický a čtivý styl."
+        "Mýtus – posvátný příběh vysvětlující svět.",
+        "Hubris – pýcha trestaná bohy.",
+        "Moira – osud.",
+        "Hrdinské cesty – zkoušky charakteru.",
+        "Bohové antropomorfní – lidské vášně.",
+        "Petiška – srozumitelné vyprávění."
       ]
     }
   ],
   "quiz": [
     {
-      "prompt": "Kdo napsal Staré řecké báje a pověsti?",
+      "prompt": "Kdo sestavil Staré řecké báje (české vydání)?",
       "options": [
         "Homér",
         "Eduard Petiška",
-        "Sofoklés",
-        "Karel Čapek"
+        "Neruda",
+        "Čapek"
       ],
       "correct": 1,
-      "expl": "Jde o Petiškovo převyprávění antických bájí."
+      "expl": "Petiška moderně převyprávěl mýty."
     },
     {
-      "prompt": "Co kniha především obsahuje?",
+      "prompt": "Jaká forma?",
       "options": [
-        "Moderní detektivky",
-        "Převyprávěné řecké mýty o bozích a hrdinech",
-        "Účetní tabulky",
-        "Válečné deníky pilota"
+        "Původní řecká tragédie",
+        "Prozaické převyprávění mýtů",
+        "Sci-fi",
+        "Opera"
       ],
       "correct": 1,
-      "expl": "Soubor zpřístupňuje antickou mytologii."
+      "expl": "Pro mládež a školy."
     },
     {
-      "prompt": "Kdo sídlí na Olympu?",
+      "prompt": "Kdo vládne bohům?",
       "options": [
-        "Mloci",
-        "Bohové",
-        "Jen Odysseus",
-        "Srnci"
+        "Poseidon",
+        "Zeus",
+        "Hádés",
+        "Apollo"
       ],
       "correct": 1,
-      "expl": "Olymp je sídlem řeckých bohů."
+      "expl": "Zeus je nejvyšší."
     },
     {
-      "prompt": "Za co je známý Prométheus?",
+      "prompt": "Co udělal Prométheus?",
       "options": [
-        "Že ukradl oheň bohům a dal ho lidem",
-        "Že založil Prahu",
-        "Že napsal Žert",
-        "Že sloužil dvěma pánům"
+        "Zničil svět",
+        "Daroval lidem oheň",
+        "Vybudoval Prahu",
+        "Napsal Bibli"
+      ],
+      "correct": 1,
+      "expl": "Za to byl potrestán."
+    },
+    {
+      "prompt": "Herakles je známý?",
+      "options": [
+        "Dvanácti úkoly",
+        "Jedinou písničkou",
+        "Bez činů",
+        "Jako král Čech"
       ],
       "correct": 0,
-      "expl": "Prométheus přinesl lidem oheň a byl potrestán."
+      "expl": "Labours of Heracles."
     },
     {
-      "prompt": "Kdo je Héraklés?",
+      "prompt": "Odysseus?",
       "options": [
-        "Římský císař",
-        "Hrdina známý dvanácti úkoly",
-        "Český rybář",
-        "Brooklynský spisovatel"
+        "Cesta z Troje domů na Ithaku",
+        "Byl v Praze",
+        "Nemý",
+        "Bůh"
+      ],
+      "correct": 0,
+      "expl": "Odysseia motiv."
+    },
+    {
+      "prompt": "Perseus?",
+      "options": [
+        "Zabil Medúzu",
+        "Vynalezl kolo",
+        "Byl sluha",
+        "Němec"
+      ],
+      "correct": 0,
+      "expl": "Hrdina s hlavou Medúzy."
+    },
+    {
+      "prompt": "Theseus?",
+      "options": [
+        "Minotaur v labyrintu",
+        "Americký sen",
+        "Box",
+        "Kněz"
+      ],
+      "correct": 0,
+      "expl": "Krétský mýtus."
+    },
+    {
+      "prompt": "Orfeus?",
+      "options": [
+        "Sestoupil do podsvětí za Eurydikou",
+        "Válka",
+        "Fotbal",
+        "Bez hudby"
+      ],
+      "correct": 0,
+      "expl": "Mýtus o lásce a hudbě."
+    },
+    {
+      "prompt": "Hádés?",
+      "options": [
+        "Podsvětí",
+        "Moře",
+        "Nebe",
+        "Škola"
+      ],
+      "correct": 0,
+      "expl": "Realm of dead."
+    },
+    {
+      "prompt": "Poseidon?",
+      "options": [
+        "Moře a zemětřesení",
+        "Oheň",
+        "Válka",
+        "Láska"
+      ],
+      "correct": 0,
+      "expl": "Bůh moře."
+    },
+    {
+      "prompt": "Hubris znamená?",
+      "options": [
+        "Pokoru",
+        "Pýchu trestanou bohy",
+        "Lásku",
+        "Mír"
       ],
       "correct": 1,
-      "expl": "Héraklés (Herkules) je archetyp hrdiny s úkoly."
+      "expl": "Časté téma mýtů."
     },
     {
-      "prompt": "Co je hubris v řeckých bájích?",
+      "prompt": "Proč mýty vznikaly?",
       "options": [
-        "Druh chleba",
-        "Zpupnost vůči bohům, která bývá potrestána",
-        "Loď Argonautů",
-        "Jméno pejska"
+        "Vysvětlení světa a morálky",
+        "Reklama",
+        "Sport",
+        "Bez důvodu"
       ],
-      "correct": 1,
-      "expl": "Hubris je nebezpečná pýcha."
+      "correct": 0,
+      "expl": "Funkce mýtu."
     },
     {
-      "prompt": "Kdo je Odysseus?",
+      "prompt": "Petiška styl?",
       "options": [
-        "Bůh války",
-        "Důvtipný hrdina dlouhé cesty z Tróje domů",
-        "Titán ohně",
-        "Sluha Truffaldino"
+        "Srozumitelný moderní jazyk",
+        "Archaičtina bez smyslu",
+        "Angličtina",
+        "Šifra"
       ],
-      "correct": 1,
-      "expl": "Odysseus je hrdina Odysseie – cesty na Ithaku."
+      "correct": 0,
+      "expl": "Přístupné mládeži."
     },
     {
-      "prompt": "Proč Petiška báje převyprávěl?",
+      "prompt": "Troja v mýtech?",
       "options": [
-        "Aby zrušil mytologii",
-        "Aby je srozumitelně přiblížil (zejména mladším) čtenářům",
-        "Aby napsal zákoník",
-        "Aby přeložil Newspeak"
+        "Válka o Helenu",
+        "Česká vesnice",
+        "Sci-fi",
+        "Neexistuje"
       ],
-      "correct": 1,
-      "expl": "Cílem je přístupný a ucelený výklad mýtů."
+      "correct": 0,
+      "expl": "Ilias souvislost."
     },
     {
-      "prompt": "Co báje často vysvětlují?",
+      "prompt": "Pandora?",
       "options": [
-        "Jen jízdní řády",
-        "Původ světa, zvyků a lidských vlastností",
-        "Burzovní kurzy",
-        "Stavbu mostů v Brooklynu"
+        "Otevřela skříňku zla",
+        "Královna Prahy",
+        "Sluha",
+        "Němka"
       ],
-      "correct": 1,
-      "expl": "Mýty dávají smysl řádu světa a morálce."
+      "correct": 0,
+      "expl": "Mýtus o zlu ve světě."
     },
     {
-      "prompt": "Která bytost patří k podsvětí?",
+      "prompt": "Narcis?",
       "options": [
-        "Zeus jako plavčík",
-        "Hádés / svět mrtvých",
-        "Arnoštek",
-        "Gatsby"
+        "Zamilovaný do vlastního odrazu",
+        "Generál",
+        "Rybář",
+        "Učitel"
       ],
-      "correct": 1,
-      "expl": "Podsvětí je říše Hádova."
+      "correct": 0,
+      "expl": "Slovo narcismus."
     },
     {
-      "prompt": "Ve kterém roce kniha vyšla?",
+      "prompt": "Sisyfos?",
       "options": [
-        "1746",
-        "1925",
-        "1958",
-        "1979"
+        "Trest – valit kámen",
+        "Král štěstí",
+        "Bůh",
+        "Dítě"
+      ],
+      "correct": 0,
+      "expl": "Absurdní trest."
+    },
+    {
+      "prompt": "Antické bohyně?",
+      "options": [
+        "Athéna – moudrost",
+        "Jen muži",
+        "Bez jmen",
+        "Pouze Héra"
+      ],
+      "correct": 0,
+      "expl": "Bohové i bohyně."
+    },
+    {
+      "prompt": "Co NENÍ v sbírce?",
+      "options": [
+        "Řecké mýty",
+        "Antická hrdinství",
+        "České pohádky Boženy Němcové jako jádro",
+        "Bohové"
       ],
       "correct": 2,
-      "expl": "Petiškovy báje vyšly roku 1958."
+      "expl": "Jde o řeckou mytologii."
     },
     {
-      "prompt": "Jaký žánr je pro maturitu nejpřesnější?",
+      "prompt": "Eurynomé / stvoření?",
       "options": [
-        "Převyprávění antických bájí / próza pro mládež",
-        "Dystopický román",
-        "Humoristický román o sluhovi",
-        "Válečná reportáž"
+        "Kosmogonické mýty na začátku",
+        "Chybí",
+        "Jen válka",
+        "Jen comedy"
       ],
       "correct": 0,
-      "expl": "Jde o adaptaci mýtů, ne o původní antický epos."
+      "expl": "Od chaosu k bohům."
+    },
+    {
+      "prompt": "Maturita – proč?",
+      "options": [
+        "Základ evropské kultury",
+        "Bez významu",
+        "Jen jména",
+        "Jen mapa"
+      ],
+      "correct": 0,
+      "expl": "Odkaz na antiku."
+    },
+    {
+      "prompt": "Ikaros?",
+      "options": [
+        "Let voskových křídel – pád",
+        "Vítězství",
+        "Mořeplavec bez pádu",
+        "Kněz"
+      ],
+      "correct": 0,
+      "expl": "Varování před pýchou."
+    },
+    {
+      "prompt": "Afrodita?",
+      "options": [
+        "Láska a krása",
+        "Válka",
+        "Moudrost",
+        "Lovec"
+      ],
+      "correct": 0,
+      "expl": "Bohyně."
+    },
+    {
+      "prompt": "Dionýsos?",
+      "options": [
+        "Víno, extáze",
+        "Moře",
+        "Podsvětí",
+        "Kování"
+      ],
+      "correct": 0,
+      "expl": "Bůh."
+    },
+    {
+      "prompt": "Téma osudu?",
+      "options": [
+        "Moira – nevyhnutelné",
+        "Neexistuje",
+        "Jen sci-fi",
+        "Jen humor"
+      ],
+      "correct": 0,
+      "expl": "Řekové věřili v osud."
+    },
+    {
+      "prompt": "Petiška profese?",
+      "options": [
+        "Spisovatel, dramatik",
+        "Německý voják",
+        "Sportovec",
+        "Malíř"
+      ],
+      "correct": 0,
+      "expl": "Český autor."
+    },
+    {
+      "prompt": "Medúza?",
+      "options": [
+        "Z oka petrifikace",
+        "Anděl",
+        "Učitelka",
+        "Rybářka"
+      ],
+      "correct": 0,
+      "expl": "Perseus ji porazil."
+    },
+    {
+      "prompt": "Pro mládež?",
+      "options": [
+        "Ano, čtivé převyprávění",
+        "Ne, jen pro vědce",
+        "Bez textu",
+        "Jen obrazky"
+      ],
+      "correct": 0,
+      "expl": "Školní klasika."
+    },
+    {
+      "prompt": "Hlavní hodnota?",
+      "options": [
+        "Poznání antické mytologie",
+        "Návod na vaření",
+        "Geografie USA",
+        "Programování"
+      ],
+      "correct": 0,
+      "expl": "Kulturní přehled."
     }
   ],
   "plot": [
     {
       "prompt": "Přetáhněte části příběhu do správného pořadí:",
       "words": [
-        "Vznik bohů a řád Olympu",
-        "Příběhy o zásazích bohů do světa lidí",
-        "Hrdinské činy (Perseus, Héraklés, Théseus…)",
-        "Velké cesty a války (např. Trója, Argonauti)",
-        "Odysseovy zkoušky na cestě domů",
-        "Mýty jako poučení o osudu, pýše a lidskosti"
+        "Mýty o vzniku světa a bohů",
+        "Příběhy Prométhea a pokušení lidí",
+        "Hrdinské úkoly (Herakles, Perseus)",
+        "Odysseova cesta a válka u Troje",
+        "Láska, hubris a tresty bohů",
+        "Soubor mýtů jako obraz řecké mysli"
       ]
     }
   ],
   "plotMeaning": [
-    "Správné pořadí: bohové → zásahy do světa → hrdinské činy → velké výpravy → Odysseus → poučení mýtů."
+    "Správné pořadí: kosmogonie → bohové → hrdinské mýty → Odysseus/Troja → morální lekce → kulturní celek."
   ]
 }
