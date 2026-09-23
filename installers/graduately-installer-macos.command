@@ -11,7 +11,7 @@ set -eu
 
 REPO="pepaskopec-blip/Graduately"
 BRANCH="builds"
-ASSET="maturita-macos-arm64.zip"
+ASSET="graduately-macos-arm64.zip"
 
 # An .app has no TTY; show dialogs so a regular user never needs Terminal.
 GUI=0
@@ -97,13 +97,27 @@ fi
 sha=$(builds_sha)
 [ ${#sha} -eq 40 ] || die "Nepodařilo se najít aktuální verzi na GitHubu."
 URL="https://raw.githubusercontent.com/$REPO/$sha/$ASSET"
+LEGACY_ASSET="maturita-macos-arm64.zip"
+LEGACY_URL="https://raw.githubusercontent.com/$REPO/$sha/$LEGACY_ASSET"
 
+download_ok=0
 if [ "$GUI" = 1 ]; then
-    curl -fsSL --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
+    if curl -fsSL --max-time 1800 -o "$tmp/$ASSET" "$URL"; then
+        download_ok=1
+    elif curl -fsSL --max-time 1800 -o "$tmp/$ASSET" "$LEGACY_URL"; then
+        download_ok=1
+    fi
+    [ "$download_ok" = 1 ] ||
         die "Stažení se nezdařilo. Zkontrolujte internet a zkuste to znovu."
 else
     say "Downloading build $(printf '%.7s' "$sha")..."
-    curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
+    if curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL"; then
+        download_ok=1
+    elif curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$LEGACY_URL"; then
+        say "(legacy package name)"
+        download_ok=1
+    fi
+    [ "$download_ok" = 1 ] ||
         die "Stažení se nezdařilo. Zkontrolujte internet a zkuste to znovu."
     say "Unpacking..."
 fi

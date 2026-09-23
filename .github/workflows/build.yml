@@ -43,8 +43,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maturita-linux
-          path: dist/maturita-linux-*.AppImage
+          name: graduately-linux
+          path: dist/graduately-linux-*.AppImage
 
   windows:
     name: Windows zip
@@ -73,16 +73,16 @@ jobs:
         run: |
           make bundle
           cd dist
-          zip -qry ../maturita-windows-x64.zip .
+          zip -qry ../graduately-windows-x64.zip .
           cd ..
           mkdir -p dist-out
-          mv maturita-windows-x64.zip dist-out/
+          mv graduately-windows-x64.zip dist-out/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maturita-windows
-          path: dist-out/maturita-windows-x64.zip
+          name: graduately-windows
+          path: dist-out/graduately-windows-x64.zip
 
   macos:
     name: macOS app
@@ -137,8 +137,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maturita-macos
-          path: dist/maturita-macos-*.zip
+          name: graduately-macos
+          path: dist/graduately-macos-*.zip
 
   android:
     name: Android APK
@@ -183,13 +183,13 @@ jobs:
           ./gradlew :app:assembleRelease --no-daemon
           mkdir -p ../dist-android
           cp app/build/outputs/apk/release/app-release.apk \
-            ../dist-android/maturita-android.apk
+            ../dist-android/graduately-android.apk
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maturita-android
-          path: dist-android/maturita-android.apk
+          name: graduately-android
+          path: dist-android/graduately-android.apk
 
   ios:
     name: iOS IPA
@@ -209,8 +209,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: maturita-ios
-          path: dist-ios/maturita-ios.ipa
+          name: graduately-ios
+          path: dist-ios/graduately-ios.ipa
 
   publish:
     name: Publish to builds branch
@@ -240,19 +240,26 @@ jobs:
         run: |
           set -euo pipefail
           cp -f fresh/* staged/ 2>/dev/null || true
-          rm -f staged/maturita-macos-swift-*.zip staged/VERSION-macos-swift
+          rm -f staged/graduately-macos-swift-*.zip staged/VERSION-macos-swift
           chmod +x installers/pack-installer-zips.sh
           ./installers/pack-installer-zips.sh
-          cp installers/maturita-installer-linux.sh staged/
-          cp installers/maturita-installer-windows.cmd staged/
-          cp installers/maturita-installer-*.zip staged/
+          cp installers/graduately-installer-linux.sh staged/
+          cp installers/graduately-installer-windows.cmd staged/
+          cp installers/graduately-installer-*.zip staged/
           # The updaters download this to see whether they are behind.
           echo "${{ github.sha }}" > staged/VERSION
           # Per-platform markers name the commit whose package is really
           # here, so a platform that failed this run is not offered as new.
-          [ -f fresh/maturita-android.apk ] && echo "${{ github.sha }}" > staged/VERSION-android
-          [ -f fresh/maturita-ios.ipa ] && echo "${{ github.sha }}" > staged/VERSION-ios
-          ls fresh/maturita-macos-*.zip >/dev/null 2>&1 && echo "${{ github.sha }}" > staged/VERSION-macos
+          [ -f fresh/graduately-android.apk ] && echo "${{ github.sha }}" > staged/VERSION-android
+          [ -f fresh/graduately-ios.ipa ] && echo "${{ github.sha }}" > staged/VERSION-ios
+          ls fresh/graduately-macos-*.zip >/dev/null 2>&1 && echo "${{ github.sha }}" > staged/VERSION-macos
+          # Compatibility aliases so older installers/updaters still find packages.
+          [ -f staged/graduately-macos-arm64.zip ] && cp -f staged/graduately-macos-arm64.zip staged/maturita-macos-arm64.zip
+          [ -f staged/graduately-macos-x86_64.zip ] && cp -f staged/graduately-macos-x86_64.zip staged/maturita-macos-x86_64.zip
+          [ -f staged/graduately-windows-x64.zip ] && cp -f staged/graduately-windows-x64.zip staged/maturita-windows-x64.zip
+          [ -f staged/graduately-linux-x86_64.AppImage ] && cp -f staged/graduately-linux-x86_64.AppImage staged/maturita-linux-x86_64.AppImage
+          [ -f staged/graduately-android.apk ] && cp -f staged/graduately-android.apk staged/maturita-android.apk
+          [ -f staged/graduately-ios.ipa ] && cp -f staged/graduately-ios.ipa staged/maturita-ios.ipa
           ls fresh staged
 
       # The branch is rewritten from scratch every time rather than added to,

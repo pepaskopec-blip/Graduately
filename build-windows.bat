@@ -74,7 +74,7 @@ if not exist "assets\app-icon.ico" (
 )
 
 REM --- 4. Compile resources + sources ---------------------------------------
-echo Building maturita.exe with MSVC...
+echo Building graduately.exe with MSVC...
 if not exist build mkdir build
 rc /nologo /fo build\maturita.res data\windows\maturita.rc
 if errorlevel 1 (
@@ -84,7 +84,7 @@ if errorlevel 1 (
 
 cl /nologo /O2 /MD /W3 /std:c11 /I src /D_CRT_SECURE_NO_WARNINGS ^
    %GTK_CFLAGS% src\*.c build\maturita.res ^
-   /Fe:maturita.exe /Fo:build\ ^
+   /Fe:graduately.exe /Fo:build\ ^
    /link /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup %GTK_LIBS%
 
 if errorlevel 1 (
@@ -96,6 +96,6 @@ if not exist icons\hicolor\512x512\apps mkdir icons\hicolor\512x512\apps
 copy /Y assets\app-icon.png icons\hicolor\512x512\apps\maturita.png >nul
 
 echo.
-echo Built maturita.exe ^(icon embedded from assets\app-icon.ico^)
-echo Run it from this terminal with:  maturita.exe
-echo Or use run-windows.bat / double-click maturita.exe.
+echo Built graduately.exe ^(icon embedded from assets\app-icon.ico^)
+echo Run it from this terminal with:  graduately.exe
+echo Or use run-windows.bat / double-click graduately.exe.

@@ -43,7 +43,7 @@
 
 #define UPDATE_ATOM_URL   "https://github.com/" UPDATE_REPO \
                           "/commits/" UPDATE_BRANCH ".atom"
-#define UPDATE_STAGING_DIR ".maturita-update"
+#define UPDATE_STAGING_DIR ".graduately-update"
 
 #ifdef _WIN32
 #define NULL_DEVICE "NUL"
@@ -215,15 +215,15 @@ static char *short_commit(const char *sha) {
  * none. Only arm64 macOS and x86_64 Linux / Windows are built. */
 static const char *asset_name(void) {
 #if defined(_WIN32)
-    return "maturita-windows-x64.zip";
+    return "graduately-windows-x64.zip";
 #elif defined(__APPLE__)
 #if defined(__aarch64__) || defined(__arm64__)
-    return "maturita-macos-arm64.zip";
+    return "graduately-macos-arm64.zip";
 #else
     return NULL;
 #endif
 #elif defined(__x86_64__)
-    return "maturita-linux-x86_64.AppImage";
+    return "graduately-linux-x86_64.AppImage";
 #else
     return NULL;
 #endif
@@ -250,7 +250,7 @@ static InstallKind install_target(char **target_out, char **parent_out) {
 #endif
 
 #ifdef __APPLE__
-    /* .../Graduately.app/Contents/MacOS/maturita -> .../Graduately.app */
+    /* .../Graduately.app/Contents/MacOS/Graduately -> .../Graduately.app */
     if (!target && exe) {
         char *macos_dir = g_path_get_dirname(exe);
         char *contents = g_path_get_dirname(macos_dir);
@@ -329,7 +329,7 @@ void update_clear_staging(void) {
     char *target = NULL;
     char *parent = NULL;
     char *cache = g_build_filename(g_get_user_cache_dir(),
-                                   "maturita-update", NULL);
+                                   "graduately-update", NULL);
 
     remove_tree(cache);
     g_free(cache);
@@ -571,7 +571,7 @@ static const char *swap_script_body(InstallKind kind) {
                    "  goto wait\r\n"
                    ")\r\n"
                    "xcopy \"%SOURCE%\\*\" \"%TARGET%\\\" /E /I /Y /Q >nul\r\n"
-                   "start \"\" \"%TARGET%\\maturita.exe\"\r\n"
+                   "start \"\" \"%TARGET%\\graduately.exe\"\r\n"
                    "rmdir /s /q \"%STAGING%\"\r\n"
                    "del \"%~f0\"\r\n";
         case INSTALL_UNSUPPORTED:
@@ -582,8 +582,8 @@ static const char *swap_script_body(InstallKind kind) {
 
 static gboolean write_swap_script(InstallKind kind) {
     const char *body = swap_script_body(kind);
-    const char *name = kind == INSTALL_WINDOWS_DIR ? "maturita-update.cmd"
-                                                   : "maturita-update.sh";
+    const char *name = kind == INSTALL_WINDOWS_DIR ? "graduately-update.cmd"
+                                                   : "graduately-update.sh";
 
     if (!body)
         return FALSE;
@@ -765,7 +765,7 @@ static void update_start_download(void) {
      * from a GUI app even when the installer could put a .app there. */
     g_free(up.staging);
     up.staging = g_build_filename(g_get_user_cache_dir(),
-                                  "maturita-update", NULL);
+                                  "graduately-update", NULL);
     remove_tree(up.staging);
     if (g_mkdir_with_parents(up.staging, 0755) != 0 && parent) {
         g_free(up.staging);

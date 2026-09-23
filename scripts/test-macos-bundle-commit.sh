@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TMP="$(mktemp -d "${TMPDIR:-/tmp}/maturita-bundle-commit.XXXXXX")"
+TMP="$(mktemp -d "${TMPDIR:-/tmp}/graduately-bundle-commit.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
 
 fail() {

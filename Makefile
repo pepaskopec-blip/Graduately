@@ -28,14 +28,14 @@ CFLAGS += -DAPP_COMMIT='"$(COMMIT)"'
 endif
 
 ifeq ($(OS),Windows_NT)
-TARGET = maturita.exe
+TARGET = graduately.exe
 LIBS += -mwindows
 WINDRES ?= windres
 RC_SRC = $(DATA_DIR)/windows/maturita.rc
 RC_OBJ = $(BUILD_DIR)/maturita_rc.o
 UNAME_S :=
 else
-TARGET = maturita
+TARGET = graduately
 RC_SRC =
 RC_OBJ =
 UNAME_S := $(shell uname -s 2>/dev/null)
@@ -71,7 +71,7 @@ $(TARGET): $(OBJ)
 endif
 
 clean:
-	rm -f $(TARGET) maturita.exe
+	rm -f $(TARGET) graduately.exe maturita.exe maturita
 	rm -rf $(BUILD_DIR)
 
 run: $(TARGET)

@@ -16,13 +16,13 @@ case "$ARCH" in
     ;;
 esac
 
-OUT_NAME="maturita-linux-${ARCH}.AppImage"
+OUT_NAME="graduately-linux-${ARCH}.AppImage"
 APPDIR="$ROOT/dist/AppDir"
 TOOLS="$ROOT/dist/tools"
 # Real 512×512 PNG (assets/app-icon.png is 1024×1024 and linuxdeploy rejects it).
 ICON_512="$ROOT/data/share/icons/hicolor/512x512/apps/maturita.png"
 
-echo "==> Building maturita"
+echo "==> Building graduately"
 make -C "$ROOT" clean
 make -C "$ROOT"
 
@@ -34,7 +34,7 @@ mkdir -p "$APPDIR/usr/bin" \
          "$APPDIR/icons/hicolor/512x512/apps" \
          "$APPDIR/share"
 
-cp -f "$ROOT/maturita" "$APPDIR/usr/bin/maturita"
+cp -f "$ROOT/graduately" "$APPDIR/usr/bin/graduately"
 cp -f "$ROOT/data/style.css" "$APPDIR/style.css"
 cp -f "$ROOT/data/changelog.txt" "$APPDIR/changelog.txt"
 cp -f "$ICON_512" "$APPDIR/icons/hicolor/512x512/apps/maturita.png"
@@ -48,7 +48,7 @@ cp -f "$ROOT/data/share/applications/org.maturita.Maturita.desktop" \
 cp -f "$ROOT/data/share/applications/org.maturita.Maturita.desktop" \
    "$APPDIR/org.maturita.Maturita.desktop"
 # linuxdeploy expects Icon= without path and a matching PNG at AppDir root.
-sed -i.bak 's|^Exec=.*|Exec=maturita|' "$APPDIR/org.maturita.Maturita.desktop"
+sed -i.bak 's|^Exec=.*|Exec=graduately|' "$APPDIR/org.maturita.Maturita.desktop"
 sed -i.bak 's|^Icon=.*|Icon=maturita|' "$APPDIR/org.maturita.Maturita.desktop"
 rm -f "$APPDIR/org.maturita.Maturita.desktop.bak"
 
@@ -92,7 +92,7 @@ export PATH="$TOOLS:$PATH"
 
 run_linuxdeploy \
   --appdir "$APPDIR" \
-  --executable "$APPDIR/usr/bin/maturita" \
+  --executable "$APPDIR/usr/bin/graduately" \
   --desktop-file "$APPDIR/org.maturita.Maturita.desktop" \
   --icon-file "$APPDIR/maturita.png" \
   --plugin gtk \

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Graduately pro iOS</title>
+  <title>Stáhnout Graduately</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
@@ -24,36 +24,21 @@
     }
     p { color: #444; line-height: 1.45; }
     code { font-size: 0.95em; }
-    ol { color: #444; line-height: 1.5; padding-left: 1.2rem; }
   </style>
 </head>
 <body>
-  <h1>Graduately pro iPhone (iOS 26)</h1>
-  <p>
-    Nativní aplikace pro iOS 26+ s Liquid Glass. Není 1:1 kopie desktopu.
-    Apple nepovolí instalaci jako Android APK. Nejjednodušší cesta je Mac
-    s Xcode a vlastní iPhone (bezplatný Apple účet stačí na 7 dní).
-  </p>
-  <ol>
-    <li>Naklonuj <a href="https://github.com/pepaskopec-blip/Graduately">Graduately</a></li>
-    <li>Otevři <code>Maturita.xcworkspace</code> v kořeni repozitáře</li>
-    <li>V Signing vyber svůj Team</li>
-    <li>Připoj iPhone a stiskni Run</li>
-  </ol>
-  <p>
-    IPA z větve <code>builds</code> jde nahrát i přes AltStore nebo Sideloadly
-    (unsigned balíček, potřebuješ nástroj na sideload).
-  </p>
+  <h1>Graduately pro Android</h1>
+  <p>Klepni na tlačítko. Až se APK stáhne, otevři ho a povol instalaci z neznámých zdrojů.</p>
   <p>
     <a class="btn" id="dl"
-       href="https://raw.githubusercontent.com/pepaskopec-blip/Graduately/refs/heads/builds/maturita-ios.ipa">
-      Stáhnout IPA
+       href="https://raw.githubusercontent.com/pepaskopec-blip/Graduately/refs/heads/builds/graduately-android.apk">
+      Stáhnout APK
     </a>
   </p>
   <p>
     Když odkaz hlásí 404, otevři
     <a href="https://github.com/pepaskopec-blip/Graduately/tree/builds">větev builds</a>
-    a stáhni <code>maturita-ios.ipa</code> odtud.
+    a stáhni <code>graduately-android.apk</code> odtud.
   </p>
   <script>
     (function () {
@@ -63,7 +48,7 @@
         .then(function (d) {
           if (d && d.sha) {
             document.getElementById("dl").href =
-              "https://raw.githubusercontent.com/" + repo + "/" + d.sha + "/maturita-ios.ipa";
+              "https://raw.githubusercontent.com/" + repo + "/" + d.sha + "/graduately-android.apk";
           }
         })
         .catch(function () {});

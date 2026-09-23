@@ -1,6 +1,8 @@
 # Binaries and build trees
 /maturita
 /maturita.exe
+/graduately
+/graduately.exe
 /build/
 /dist/
 /progress/

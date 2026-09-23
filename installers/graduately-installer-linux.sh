@@ -5,17 +5,17 @@
 # raw.githubusercontent.com, so this script looks up the tip of `builds`
 # and downloads that commit — not a stale AppImage from the last five minutes.
 #
-# Double-click the file (or run: sh maturita-installer-linux.sh).
+# Double-click the file (or run: sh graduately-installer-linux.sh).
 # The app updates itself from then on.
 
 set -eu
 
 REPO="pepaskopec-blip/Graduately"
 BRANCH="builds"
-ASSET="maturita-linux-x86_64.AppImage"
+ASSET="graduately-linux-x86_64.AppImage"
 
 DEST_DIR="$HOME/Applications"
-DEST="$DEST_DIR/maturita.AppImage"
+DEST="$DEST_DIR/graduately.AppImage"
 DESKTOP_DIR="$HOME/.local/share/applications"
 ICON_DIR="$HOME/.local/share/icons/hicolor/512x512/apps"
 
@@ -54,10 +54,13 @@ say "Looking up the latest build..."
 sha=$(builds_sha)
 [ ${#sha} -eq 40 ] || die "could not find the latest build on GitHub."
 URL="https://raw.githubusercontent.com/$REPO/$sha/$ASSET"
+LEGACY_URL="https://raw.githubusercontent.com/$REPO/$sha/maturita-linux-x86_64.AppImage"
 
 say "Downloading build $(printf '%.7s' "$sha")..."
-curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL" ||
-    die "the download failed. Check your internet connection."
+if ! curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$URL"; then
+    curl -fL --progress-bar --max-time 1800 -o "$tmp/$ASSET" "$LEGACY_URL" ||
+        die "the download failed. Check your internet connection."
+fi
 
 say "Installing to $DEST"
 chmod +x "$tmp/$ASSET"

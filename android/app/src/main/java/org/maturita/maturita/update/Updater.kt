@@ -91,9 +91,9 @@ class Updater(private val app: Application) {
                 val remote = remoteAndroidCommit(atom, head)
                 // Pin the download to the commit: the branch-named URL can be
                 // served from a stale CDN cache (even a cached 404).
-                val url = "https://raw.githubusercontent.com/$repo/$head/maturita-android.apk"
+                val url = "https://raw.githubusercontent.com/$repo/$head/graduately-android.apk"
                 val dir = File(app.cacheDir, "updates").apply { mkdirs() }
-                val apk = File(dir, "maturita.apk")
+                val apk = File(dir, "graduately.apk")
                 download(url, apk)
                 if (!isOurApk(apk)) {
                     apk.delete()

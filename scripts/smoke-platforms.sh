@@ -26,11 +26,11 @@ expect_zip() {
     bad "$zip missing $want (has: $(unzip -Z1 "$zip" | tr '\n' ' '))"
   fi
 }
-expect_zip installers/maturita-installer-macos.zip "Nainstalovat Graduately.app/Contents/MacOS/installer"
-expect_zip installers/maturita-installer-linux.zip "maturita-installer-linux.sh"
-expect_zip installers/maturita-installer-windows.zip "maturita-installer-windows.cmd"
-expect_zip installers/maturita-installer-android.zip "Stahnout Graduately.html"
-expect_zip installers/maturita-installer-ios.zip "Jak nainstalovat Graduately.html"
+expect_zip installers/graduately-installer-macos.zip "Nainstalovat Graduately.app/Contents/MacOS/installer"
+expect_zip installers/graduately-installer-linux.zip "graduately-installer-linux.sh"
+expect_zip installers/graduately-installer-windows.zip "graduately-installer-windows.cmd"
+expect_zip installers/graduately-installer-android.zip "Stahnout Graduately.html"
+expect_zip installers/graduately-installer-ios.zip "Jak nainstalovat Graduately.html"
 
 say "Extract content.json"
 tmp=$(mktemp)
@@ -55,14 +55,14 @@ ok "content packs"
 rm -f "$tmp"
 
 say "GTK binary"
-if [[ -x ./maturita ]]; then
-  ./maturita --help >/dev/null
-  ok "maturita --help"
+if [[ -x ./graduately ]]; then
+  ./graduately --help >/dev/null
+  ok "graduately --help"
 else
   say "Building GTK binary"
   make -j"$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 2)"
-  ./maturita --help >/dev/null
-  ok "maturita --help after make"
+  ./graduately --help >/dev/null
+  ok "graduately --help after make"
 fi
 
 say "Published builds tip"
@@ -73,20 +73,29 @@ sha=$(curl -fsSL --max-time 20 \
 if [[ ${#sha} -eq 40 ]]; then
   ok "builds tip ${sha:0:7}"
   for asset in \
-    maturita-macos-arm64.zip \
-    maturita-windows-x64.zip \
-    maturita-linux-x86_64.AppImage \
-    maturita-android.apk \
-    maturita-ios.ipa \
+    graduately-macos-arm64.zip \
+    graduately-windows-x64.zip \
+    graduately-linux-x86_64.AppImage \
+    graduately-android.apk \
+    graduately-ios.ipa \
     VERSION
   do
     code=$(curl -sI -o /dev/null -w '%{http_code}' --max-time 30 \
       "https://raw.githubusercontent.com/$REPO/$sha/$asset")
     if [[ "$code" == "200" ]]; then
       ok "$asset ($code)"
-    else
-      bad "$asset HTTP $code"
+      continue
     fi
+    legacy="${asset/graduately/maturita}"
+    if [[ "$legacy" != "$asset" ]]; then
+      code2=$(curl -sI -o /dev/null -w '%{http_code}' --max-time 30 \
+        "https://raw.githubusercontent.com/$REPO/$sha/$legacy")
+      if [[ "$code2" == "200" ]]; then
+        ok "$asset not yet; legacy $legacy still published ($code2)"
+        continue
+      fi
+    fi
+    bad "$asset HTTP $code"
   done
 else
   bad "could not resolve builds tip SHA"

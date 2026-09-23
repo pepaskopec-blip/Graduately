@@ -59,7 +59,7 @@ final class Updater {
                 let url = "https://raw.githubusercontent.com/\(self.repo)/\(tip)/\(zipName)"
                 let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
                     ?? URL(fileURLWithPath: NSTemporaryDirectory())
-                let staging = cache.appendingPathComponent("maturita-update-\(ProcessInfo.processInfo.processIdentifier)")
+                let staging = cache.appendingPathComponent("graduately-update-\(ProcessInfo.processInfo.processIdentifier)")
                 try? FileManager.default.removeItem(at: staging)
                 try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
                 let archive = staging.appendingPathComponent(zipName)
@@ -90,9 +90,9 @@ final class Updater {
 
     private static func assetName() -> String {
         #if arch(arm64)
-        return "maturita-macos-arm64.zip"
+        return "graduately-macos-arm64.zip"
         #else
-        return "maturita-macos-x86_64.zip"
+        return "graduately-macos-x86_64.zip"
         #endif
     }
 
@@ -111,7 +111,7 @@ final class Updater {
     }
 
     private func writeSwapScript() -> URL {
-        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("maturita-swift-update.sh")
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("graduately-swift-update.sh")
         let body = """
         #!/bin/sh
         if [ -z "$MATURITA_UPDATE_DETACHED" ]; then

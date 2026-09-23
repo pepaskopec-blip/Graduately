@@ -33,5 +33,5 @@ fi
 
 mkdir -p "$root/ios/Payload"
 cp -R "$app" "$root/ios/Payload/Graduately.app"
-(cd "$root/ios" && zip -r -q "$root/dist-ios/maturita-ios.ipa" Payload)
-echo "wrote $root/dist-ios/maturita-ios.ipa"
+(cd "$root/ios" && zip -r -q "$root/dist-ios/graduately-ios.ipa" Payload)
+echo "wrote $root/dist-ios/graduately-ios.ipa"
