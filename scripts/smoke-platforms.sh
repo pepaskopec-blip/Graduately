@@ -5,7 +5,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-REPO="${REPO:-pepaskopec-blip/maturita.c}"
+REPO="${REPO:-pepaskopec-blip/Graduately}"
 fail=0
 
 say() { printf '==> %s\n' "$*"; }

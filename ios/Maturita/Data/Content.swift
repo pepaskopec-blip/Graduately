@@ -13,7 +13,7 @@ enum AppConfig {
 
     static var updateRepo: String {
         (Bundle.main.object(forInfoDictionaryKey: "UPDATE_REPO") as? String)
-            ?? "pepaskopec-blip/maturita.c"
+            ?? "pepaskopec-blip/Graduately"
     }
 
     static var updateBranch: String {

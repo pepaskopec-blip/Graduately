@@ -29,7 +29,7 @@
 #ifndef APP_COMMIT
 #define APP_COMMIT    "dev"
 #endif
-#define UPDATE_REPO   "pepaskopec-blip/maturita.c"
+#define UPDATE_REPO   "pepaskopec-blip/Graduately"
 /* Packages live on their own branch rather than in releases, so the update
  * always matches whatever is on main. */
 #define UPDATE_BRANCH "builds"

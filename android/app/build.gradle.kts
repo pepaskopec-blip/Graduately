@@ -21,7 +21,7 @@ android {
         versionCode = appVersionCode
         versionName = "android-$appVersionCode"
         buildConfigField("String", "COMMIT", "\"$commit\"")
-        buildConfigField("String", "UPDATE_REPO", "\"pepaskopec-blip/maturita.c\"")
+        buildConfigField("String", "UPDATE_REPO", "\"pepaskopec-blip/Graduately\"")
         buildConfigField("String", "UPDATE_BRANCH", "\"builds\"")
     }
 

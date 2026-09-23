@@ -8,7 +8,7 @@ rem
 rem Double-click the file to run it. The app updates itself from then on.
 
 setlocal EnableDelayedExpansion
-set "REPO=pepaskopec-blip/maturita.c"
+set "REPO=pepaskopec-blip/Graduately"
 set "BRANCH=builds"
 set "ASSET=maturita-windows-x64.zip"
 set "DEST=%LOCALAPPDATA%\Programs\Graduately"

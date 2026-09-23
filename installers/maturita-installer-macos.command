@@ -9,7 +9,7 @@
 
 set -eu
 
-REPO="pepaskopec-blip/maturita.c"
+REPO="pepaskopec-blip/Graduately"
 BRANCH="builds"
 ASSET="maturita-macos-arm64.zip"
 

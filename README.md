@@ -1,6 +1,6 @@
 # Graduately
 
-Vzdělávací aplikace k přípravě na maturitu (repo `maturita.c`). / An educational app for the Czech maturita exam (repo `maturita.c`).
+Vzdělávací aplikace k přípravě na maturitu (repo `Graduately`). / An educational app for the Czech maturita exam (repo `Graduately`).
 
 **[Česky](#česky)** · **[English](#english)**
 
@@ -18,7 +18,7 @@ zatím zamčené placeholdery. Aplikace se po instalaci aktualizuje sama.
 ### Instalace
 
 Žádné releasy ani čísla verzí nejsou. CI po každém pushi na `main` uloží
-balíčky do větve [`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds).
+balíčky do větve [`builds`](https://github.com/pepaskopec-blip/Graduately/tree/builds).
 Instalátor samotnou aplikaci neobsahuje — při spuštění si dohledá aktuální
 commit větve `builds` a stáhne ten soubor, ne kešovanou kopii podle názvu
 větve.
@@ -27,11 +27,11 @@ větve.
 
 | Platforma | Soubor | Jak spustit |
 | --------- | ------ | ----------- |
-| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Rozbalit, pravý klik na **Nainstalovat Graduately** → **Otevřít** |
-| Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
-| Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
-| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout Graduately.html** a nainstalovat APK (neznámé zdroje) |
-| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat Graduately.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
+| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-macos.zip) | Rozbalit, pravý klik na **Nainstalovat Graduately** → **Otevřít** |
+| Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-windows.zip) | Rozbalit a dvojklik; u SmartScreenu **Další informace → Přesto spustit** |
+| Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-linux.zip) | Rozbalit a dvojklik na instalátor |
+| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-android.zip) | Rozbalit, otevřít **Stahnout Graduately.html** a nainstalovat APK (neznámé zdroje) |
+| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-ios.zip) | Rozbalit, otevřít **Jak nainstalovat Graduately.html**. Nejjednodušší: Xcode na Macu, nebo IPA přes AltStore |
 
 Kam se to nainstaluje: `/Applications` nebo `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Graduately` (Windows), `~/Applications` (Linux).
@@ -44,15 +44,15 @@ v **Nastavení → Aktualizace**.
 
 #### Bez instalátoru
 
-Na větvi [`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds)
+Na větvi [`builds`](https://github.com/pepaskopec-blip/Graduately/tree/builds)
 jsou i hotové balíčky. Odkazy podle názvu větve umí CDN kešovat, proto je
 spolehlivější instalátor výše, nebo stažení přímo z té stránky větve:
 
-- [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
-- [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
-- [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
-- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
-- [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
+- [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/Graduately/raw/builds/maturita-macos-arm64.zip)
+- [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/Graduately/raw/builds/maturita-windows-x64.zip)
+- [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/Graduately/raw/builds/maturita-linux-x86_64.AppImage)
+- [maturita-android.apk](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/maturita-android.apk)
+- [maturita-ios.ipa](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/maturita-ios.ipa)
 
 Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
 Na Androidu, iOS a macOS do úložiště aplikace (stejné statistiky, témata a jazyk).
@@ -98,8 +98,8 @@ sudo pacman -S base-devel pkgconf gtk4
 ```
 
 ```bash
-git clone https://github.com/pepaskopec-blip/maturita.c.git
-cd maturita.c
+git clone https://github.com/pepaskopec-blip/Graduately.git
+cd Graduately
 ```
 
 Na Macu:
@@ -144,7 +144,7 @@ C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-u
 V terminálu **MSYS2 UCRT64**:
 
 ```bash
-cd /c/Users/<jméno>/maturita.c  # C:\Users\<jméno>\maturita.c v MSYS2
+cd /c/Users/<jméno>/Graduately  # C:\Users\<jméno>\Graduately v MSYS2
 make
 ./maturita.exe
 make bundle                     # dist/maturita.exe jde spustit i z Průzkumníka
@@ -211,7 +211,7 @@ placeholders. After install the app updates itself.
 ### Install
 
 There are no releases and no version numbers. CI writes packages to the
-[`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds) branch
+[`builds`](https://github.com/pepaskopec-blip/Graduately/tree/builds) branch
 whenever `main` changes. The installer carries no app of its own — it fetches
 the current `builds` commit when you run it, not a CDN-cached copy of the
 branch-named file.
@@ -220,11 +220,11 @@ branch-named file.
 
 | Platform | File | How to run |
 | -------- | ---- | ---------- |
-| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-macos.zip) | Unzip, right-click **Nainstalovat Graduately** → **Open** |
-| Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
-| Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
-| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout Graduately.html**, then install the APK (unknown sources) |
-| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/maturita.c/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat Graduately.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
+| macOS (Apple Silicon) | [maturita-installer-macos.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-macos.zip) | Unzip, right-click **Nainstalovat Graduately** → **Open** |
+| Windows (x64) | [maturita-installer-windows.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-windows.zip) | Unzip and double-click; if SmartScreen appears, **More info → Run anyway** |
+| Linux (x86_64) | [maturita-installer-linux.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-linux.zip) | Unzip and double-click the installer |
+| Android (8+) | [maturita-installer-android.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-android.zip) | Unzip, open **Stahnout Graduately.html**, then install the APK (unknown sources) |
+| iOS (26+) | [maturita-installer-ios.zip](https://github.com/pepaskopec-blip/Graduately/raw/main/installers/maturita-installer-ios.zip) | Unzip, open **Jak nainstalovat Graduately.html**. Easiest: Xcode on a Mac, or the IPA via AltStore |
 
 Install locations: `/Applications` or `~/Applications` (macOS),
 `%LOCALAPPDATA%\Programs\Graduately` (Windows), `~/Applications` (Linux).
@@ -237,15 +237,15 @@ banner. Manual check: **Settings → Updates**.
 #### Packages without the installer
 
 The same files live on
-[`builds`](https://github.com/pepaskopec-blip/maturita.c/tree/builds).
+[`builds`](https://github.com/pepaskopec-blip/Graduately/tree/builds).
 Branch-named raw URLs can be cached by the CDN, so prefer the installer
 above, or download from that branch page:
 
-- [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-macos-arm64.zip)
-- [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-windows-x64.zip)
-- [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/maturita.c/raw/builds/maturita-linux-x86_64.AppImage)
-- [maturita-android.apk](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-android.apk)
-- [maturita-ios.ipa](https://github.com/pepaskopec-blip/maturita.c/raw/refs/heads/builds/maturita-ios.ipa)
+- [maturita-macos-arm64.zip](https://github.com/pepaskopec-blip/Graduately/raw/builds/maturita-macos-arm64.zip)
+- [maturita-windows-x64.zip](https://github.com/pepaskopec-blip/Graduately/raw/builds/maturita-windows-x64.zip)
+- [maturita-linux-x86_64.AppImage](https://github.com/pepaskopec-blip/Graduately/raw/builds/maturita-linux-x86_64.AppImage)
+- [maturita-android.apk](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/maturita-android.apk)
+- [maturita-ios.ipa](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/maturita-ios.ipa)
 
 Progress and settings live in `progress/` next to the `.app` / folder /
 AppImage. On Android, iOS and macOS they stay in app storage (same stats, themes, language).
@@ -292,8 +292,8 @@ sudo pacman -S base-devel pkgconf gtk4
 ```
 
 ```bash
-git clone https://github.com/pepaskopec-blip/maturita.c.git
-cd maturita.c
+git clone https://github.com/pepaskopec-blip/Graduately.git
+cd Graduately
 ```
 
 On a Mac:
@@ -338,7 +338,7 @@ C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-u
 In an **MSYS2 UCRT64** terminal:
 
 ```bash
-cd /c/Users/<name>/maturita.c   # C:\Users\<name>\maturita.c in MSYS2
+cd /c/Users/<name>/Graduately   # C:\Users\<name>\Graduately in MSYS2
 make
 ./maturita.exe
 make bundle                     # dist/maturita.exe can be double-clicked

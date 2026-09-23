@@ -289,7 +289,7 @@ jobs:
           user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
           user="${user:-oauth2}"
           basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
-          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/maturita.c.git}"
+          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/Graduately.git}"
           git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
             "$forgejo_url" \
             HEAD:refs/heads/builds
@@ -323,7 +323,7 @@ jobs:
           user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
           user="${user:-oauth2}"
           basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
-          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/maturita.c.git}"
+          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/Graduately.git}"
           git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
             "$forgejo_url" \
             HEAD:refs/heads/main

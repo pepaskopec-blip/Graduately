@@ -99,7 +99,7 @@ final class Updater {
     private func get(_ url: String) throws -> String {
         guard let u = URL(string: url) else { throw URLError(.badURL) }
         var req = URLRequest(url: u, timeoutInterval: 15)
-        req.setValue("maturita.c-ios", forHTTPHeaderField: "User-Agent")
+        req.setValue("Graduately-ios", forHTTPHeaderField: "User-Agent")
         req.setValue("*/*", forHTTPHeaderField: "Accept")
         let sem = DispatchSemaphore(value: 0)
         var result: Result<String, Error> = .failure(URLError(.unknown))
