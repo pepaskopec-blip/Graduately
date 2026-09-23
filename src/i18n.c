@@ -556,6 +556,7 @@ const TrEntry tr_ui[] = {
     {"book_practice", "Procvičení", "Practice"},
     {"book_done", "Hotovo", "Done"},
     {"book_open", "Otevřít", "Open"},
+    {"book_quiz_heading", "Kvíz", "Quiz"},
     {"book_1984_sub", "Antiutopický román • 1949", "Dystopian novel • 1949"},
     {"cetba1984_sub", "Přehled knihy, klíčové pojmy a cvičení.",
      "Book overview, key terms and exercises."},

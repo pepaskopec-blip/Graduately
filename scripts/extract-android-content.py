@@ -1241,7 +1241,7 @@ def main() -> int:
                 "subKey": "cetba1984_sub" if quiz else "cetba_entry_sub",
                 "page": page if not entry.get("full") else (entry.get("page") or page),
                 "genre": entry.get("genre", ""),
-                "quizTitle": f"Kvíz: {display}" if quiz else "",
+                "quizTitle": "book_quiz_heading" if quiz else "",
                 "quizSub": "lit_quiz_sub" if quiz else "",
                 "plotTitle": "lit_plot_title" if plot else "",
                 "plotSub": "lit_plot_sub" if plot else "",
@@ -1336,7 +1336,7 @@ def main() -> int:
         return s.replace("\\", "\\\\").replace('"', '\\"')
 
     notes_lines = [
-        "/* Generated from data/cetba/*.json – do not edit by hand. */",
+        "/* Generated from data/cetba JSON packs – do not edit by hand. */",
         "",
         "typedef struct {",
         "    const char *title;",
@@ -1385,6 +1385,96 @@ def main() -> int:
     notes_lines.append("};")
     notes_lines.append("")
     (SRC / "cetba_book_notes.inc").write_text("\n".join(notes_lines) + "\n", encoding="utf-8")
+
+    # Quiz + plot packs for the GTK stub pages (shared by every catalog book).
+    ex_lines = [
+        "/* Generated from data/cetba JSON packs – do not edit by hand. */",
+        "/* Requires LitQ (cetba.c) and AssemblyItem (maturita.h). */",
+        "",
+        "typedef struct {",
+        "    const LitQ *qs;",
+        "    int nq;",
+        "    const AssemblyItem *plot;",
+        "    const char **plot_meaning;",
+        "    int nplot;",
+        "} BookExPack;",
+        "",
+    ]
+    ex_pack_entries = []
+    for entry in catalog:
+        bid = entry["id"]
+        safe = re.sub(r"[^a-zA-Z0-9_]", "_", bid)
+        content_path = cetba_dir / f"{bid}.json"
+        disk = {}
+        if content_path.exists():
+            disk = json.loads(content_path.read_text(encoding="utf-8"))
+        quiz = disk.get("quiz") or []
+        plot = disk.get("plot") or []
+        plot_meaning = disk.get("plotMeaning") or []
+
+        qs_name = f"book_{safe}_qs"
+        if quiz:
+            ex_lines.append(f"static const LitQ {qs_name}[] = {{")
+            for q in quiz[:32]:
+                opts = (q.get("options") or []) + ["", "", "", ""]
+                ex_lines.append("    {")
+                ex_lines.append(f'        "{c_escape(q.get("prompt") or "")}",')
+                ex_lines.append("        {")
+                for o in opts[:4]:
+                    ex_lines.append(f'            "{c_escape(o)}",')
+                ex_lines.append("        },")
+                ex_lines.append(f'        {int(q.get("correct") or 0)},')
+                ex_lines.append(f'        "{c_escape(q.get("expl") or "")}",')
+                ex_lines.append("    },")
+            ex_lines.append("};")
+            ex_lines.append("")
+            nq = min(len(quiz), 32)
+            qs_ref = qs_name
+        else:
+            nq = 0
+            qs_ref = "NULL"
+
+        plot_name = f"book_{safe}_plot"
+        mean_name = f"book_{safe}_plot_meaning"
+        if plot and isinstance(plot[0], dict):
+            words = (plot[0].get("words") or [])[:6]
+            while len(words) < 6:
+                words.append("")
+            prompt = plot[0].get("prompt") or "Přetáhněte části příběhu do správného pořadí:"
+            nwords = sum(1 for w in words if w)
+            ex_lines.append(f"static const AssemblyItem {plot_name}[] = {{")
+            ex_lines.append("    {")
+            ex_lines.append(f'        "{c_escape(prompt)}",')
+            ex_lines.append("        {")
+            for w in words:
+                ex_lines.append(f'            "{c_escape(w)}",')
+            ex_lines.append("        },")
+            ex_lines.append(f"        {nwords},")
+            ex_lines.append("    },")
+            ex_lines.append("};")
+            ex_lines.append("")
+            meaning = plot_meaning[0] if plot_meaning else ""
+            ex_lines.append(f"static const char *{mean_name}[] = {{")
+            ex_lines.append(f'    "{c_escape(meaning)}",')
+            ex_lines.append("};")
+            ex_lines.append("")
+            plot_ref = plot_name
+            mean_ref = mean_name
+            nplot = 1
+        else:
+            plot_ref = "NULL"
+            mean_ref = "NULL"
+            nplot = 0
+
+        ex_pack_entries.append(
+            f"    {{{qs_ref}, {nq}, {plot_ref}, {mean_ref}, {nplot}}}"
+        )
+
+    ex_lines.append("static const BookExPack book_ex_packs[BOOK_NODES] = {")
+    ex_lines.append(",\n".join(ex_pack_entries))
+    ex_lines.append("};")
+    ex_lines.append("")
+    (SRC / "cetba_book_exercises.inc").write_text("\n".join(ex_lines) + "\n", encoding="utf-8")
 
     subjects = [
         {"key": "Deutsch", "open": True, "target": "roadmap", "icon": "de"},

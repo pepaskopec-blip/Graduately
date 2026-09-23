@@ -852,6 +852,8 @@ GtkWidget *build_cetba_fuks_page(void);
 GtkWidget *build_cetba_fuks_quiz_page(void);
 GtkWidget *build_cetba_fuks_plot_page(void);
 GtkWidget *build_cetba_stub_page(void);
+GtkWidget *build_cetba_stub_quiz_page(void);
+GtkWidget *build_cetba_stub_plot_page(void);
 void cetba_register_search(void);
 void cetba_open_stub(int idx);
 void search_catalog_add(const char *title, const char *subtitle,

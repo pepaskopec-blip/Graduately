@@ -876,7 +876,9 @@ static void lit_quiz_show(LitQuiz *z) {
     gtk_widget_set_visible(z->grid, TRUE);
     gtk_widget_set_visible(z->expl, FALSE);
     gtk_widget_set_visible(z->next, FALSE);
+    gtk_button_set_label(GTK_BUTTON(z->next), tr("lit_next"));
     z->answered = 0;
+    z->finished = 0;
 }
 
 static void lit_quiz_finish(LitQuiz *z) {
@@ -1049,6 +1051,7 @@ static GtkWidget *lit_quiz_page(const LitQ *qs, int n, const char *back,
 
     lit_quiz_show(z);
 
+    g_object_set_data(G_OBJECT(page), "lit-quiz", z);
     return page;
 }
 
@@ -1129,8 +1132,10 @@ GtkWidget *build_cetba_fuks_plot_page(void) {
 /* Reading list and 1984 overview                                     */
 /* ------------------------------------------------------------------ */
 
-static GtkWidget *lit_link_card(const char *target, const char *title,
-                                const char *sub, GtkDrawingAreaDrawFunc icon) {
+static GtkWidget *lit_link_card_ex(const char *target, const char *title,
+                                   const char *sub,
+                                   GtkDrawingAreaDrawFunc icon,
+                                   GCallback clicked) {
     GtkWidget *btn = gtk_button_new();
     GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 14);
     GtkWidget *ic;
@@ -1165,9 +1170,16 @@ static GtkWidget *lit_link_card(const char *target, const char *title,
 
     gtk_box_append(GTK_BOX(row), box);
     gtk_button_set_child(GTK_BUTTON(btn), row);
-    g_object_set_data_full(G_OBJECT(btn), "target", g_strdup(target), g_free);
-    g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+    if (target)
+        g_object_set_data_full(G_OBJECT(btn), "target", g_strdup(target), g_free);
+    g_signal_connect(btn, "clicked",
+                     clicked ? clicked : G_CALLBACK(on_nav_clicked), NULL);
     return btn;
+}
+
+static GtkWidget *lit_link_card(const char *target, const char *title,
+                                const char *sub, GtkDrawingAreaDrawFunc icon) {
+    return lit_link_card_ex(target, title, sub, icon, NULL);
 }
 
 static void lit_note_card(GtkWidget *parent, const char *title,
@@ -1213,10 +1225,73 @@ static void lit_note_card(GtkWidget *parent, const char *title,
 
 #include "cetba_catalog.inc"
 #include "cetba_book_notes.inc"
+#include "cetba_book_exercises.inc"
 
 static int stub_book_idx = -1;
 static GtkWidget *stub_title_lbl;
+static GtkWidget *stub_links_box;
 static GtkWidget *stub_notes_box;
+static LitQuiz *stub_quiz;
+static GtkWidget *stub_plot_host;
+static UnitCtx stub_plot_unit;
+
+static void cetba_prepare_stub_quiz(void) {
+    const BookExPack *p;
+
+    if (!stub_quiz || stub_book_idx < 0 || stub_book_idx >= BOOK_NODES)
+        return;
+    p = &book_ex_packs[stub_book_idx];
+    if (!p->qs || p->nq <= 0)
+        return;
+    stub_quiz->qs = p->qs;
+    stub_quiz->n = p->nq;
+    stub_quiz->idx = 0;
+    stub_quiz->score = 0;
+    stub_quiz->answered = 0;
+    stub_quiz->finished = 0;
+    lit_quiz_show(stub_quiz);
+}
+
+static void cetba_prepare_stub_plot(void) {
+    GtkWidget *child;
+    const BookExPack *p;
+    GtkWidget *inner;
+
+    if (!stub_plot_host || stub_book_idx < 0 || stub_book_idx >= BOOK_NODES)
+        return;
+
+    while ((child = gtk_widget_get_first_child(stub_plot_host)))
+        gtk_box_remove(GTK_BOX(stub_plot_host), child);
+
+    p = &book_ex_packs[stub_book_idx];
+    if (!p->plot || p->nplot <= 0)
+        return;
+
+    stub_plot_unit.page = "cetbastub";
+    stub_plot_unit.progress_file = app_progress_cetba;
+    inner = build_assembly(&stub_plot_unit, tr("lit_plot_title"),
+                           "lit_plot_sub", 1, p->plot, p->plot_meaning,
+                           p->nplot);
+    gtk_widget_set_hexpand(inner, TRUE);
+    gtk_widget_set_vexpand(inner, TRUE);
+    gtk_box_append(GTK_BOX(stub_plot_host), inner);
+}
+
+static void on_stub_quiz_clicked(GtkButton *button, gpointer user_data) {
+    (void)button;
+    (void)user_data;
+    cetba_prepare_stub_quiz();
+    if (main_stack)
+        gtk_stack_set_visible_child_name(main_stack, "cetbastubquiz");
+}
+
+static void on_stub_plot_clicked(GtkButton *button, gpointer user_data) {
+    (void)button;
+    (void)user_data;
+    cetba_prepare_stub_plot();
+    if (main_stack)
+        gtk_stack_set_visible_child_name(main_stack, "cetbastubdej");
+}
 
 static GtkWidget *book_rail;
 static GtkWidget *book_nodes[BOOK_NODES];
@@ -1338,11 +1413,33 @@ void book_rail_theme_reset(void) {
 static void rebuild_stub_about(int idx) {
     GtkWidget *child;
     const BookNotePack *pack;
+    const BookExPack *ex;
     GtkDrawingAreaDrawFunc icons[4] = {
         draw_book_icon, draw_globe_icon, draw_people_icon, draw_bulb_icon
     };
 
-    if (!stub_notes_box || idx < 0 || idx >= BOOK_NODES)
+    if (idx < 0 || idx >= BOOK_NODES)
+        return;
+
+    if (stub_links_box) {
+        while ((child = gtk_widget_get_first_child(stub_links_box)))
+            gtk_box_remove(GTK_BOX(stub_links_box), child);
+        ex = &book_ex_packs[idx];
+        if (ex->qs && ex->nq > 0)
+            gtk_box_append(GTK_BOX(stub_links_box),
+                           lit_link_card_ex(NULL, "book_quiz_heading",
+                                           "lit_quiz_sub", draw_quiz_icon,
+                                           G_CALLBACK(on_stub_quiz_clicked)));
+        if (ex->plot && ex->nplot > 0)
+            gtk_box_append(GTK_BOX(stub_links_box),
+                           lit_link_card_ex(NULL, "lit_plot_title",
+                                           "lit_plot_sub", draw_order_icon,
+                                           G_CALLBACK(on_stub_plot_clicked)));
+        gtk_widget_set_visible(stub_links_box,
+                               gtk_widget_get_first_child(stub_links_box) != NULL);
+    }
+
+    if (!stub_notes_box)
         return;
 
     while ((child = gtk_widget_get_first_child(stub_notes_box)))
@@ -1631,6 +1728,7 @@ GtkWidget *build_cetba_stub_page(void) {
     GtkWidget *top;
     GtkWidget *center;
     GtkWidget *scroll;
+    GtkWidget *body;
     GtkWidget *sub;
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -1673,10 +1771,35 @@ GtkWidget *build_cetba_stub_page(void) {
     gtk_widget_set_margin_bottom(scroll, 14);
     gtk_box_append(GTK_BOX(page), scroll);
 
+    body = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), body);
+
+    stub_links_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+    gtk_widget_set_margin_bottom(stub_links_box, 14);
+    gtk_box_append(GTK_BOX(body), stub_links_box);
+
     stub_notes_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), stub_notes_box);
+    gtk_box_append(GTK_BOX(body), stub_notes_box);
 
     return page;
+}
+
+GtkWidget *build_cetba_stub_quiz_page(void) {
+    const LitQ *qs = book_ex_packs[0].qs;
+    int n = book_ex_packs[0].nq > 0 ? book_ex_packs[0].nq : 1;
+    GtkWidget *page;
+
+    page = lit_quiz_page(qs, n, "cetbastub",
+                         "book_quiz_heading", "lit_quiz_sub");
+    stub_quiz = g_object_get_data(G_OBJECT(page), "lit-quiz");
+    return page;
+}
+
+GtkWidget *build_cetba_stub_plot_page(void) {
+    stub_plot_host = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_hexpand(stub_plot_host, TRUE);
+    gtk_widget_set_vexpand(stub_plot_host, TRUE);
+    return stub_plot_host;
 }
 
 void cetba_open_stub(int idx) {

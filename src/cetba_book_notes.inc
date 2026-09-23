@@ -1,4 +1,4 @@
-/* Generated from data/cetba/*.json – do not edit by hand. */
+/* Generated from data/cetba JSON packs – do not edit by hand. */
 
 typedef struct {
     const char *title;

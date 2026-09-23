@@ -1074,20 +1074,6 @@ struct BookScreen: View {
                         }
                     }
 
-                    if !notes.isEmpty {
-                        VStack(alignment: .leading, spacing: 14) {
-                            Text(vm.tr("book_notes"))
-                                #if os(macOS)
-                                .font(.title.weight(.semibold))
-                                #else
-                                .font(.title2.weight(.semibold))
-                                #endif
-                            ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
-                                BookNoteCard(note: note)
-                            }
-                        }
-                    }
-
                     if hasQuiz || hasPlot {
                         VStack(alignment: .leading, spacing: 14) {
                             Text(vm.tr("book_practice"))
@@ -1099,8 +1085,8 @@ struct BookScreen: View {
                             if hasQuiz {
                                 NavigationLink(value: Route.bookQuiz(id)) {
                                     BookActionCard(
-                                        title: vm.tr(b.str("quizTitle")),
-                                        subtitle: vm.tr(b.str("quizSub")),
+                                        title: vm.tr("book_quiz_heading"),
+                                        subtitle: vm.tr("lit_quiz_sub"),
                                         systemImage: "questionmark.circle.fill",
                                         done: quizDone,
                                         doneLabel: vm.tr("book_done")
@@ -1111,14 +1097,28 @@ struct BookScreen: View {
                             if hasPlot {
                                 NavigationLink(value: Route.bookPlot(id)) {
                                     BookActionCard(
-                                        title: vm.tr(b.str("plotTitle")),
-                                        subtitle: vm.tr(b.str("plotSub")),
+                                        title: vm.tr("lit_plot_title"),
+                                        subtitle: vm.tr("lit_plot_sub"),
                                         systemImage: "list.number",
                                         done: plotDone,
                                         doneLabel: vm.tr("book_done")
                                     )
                                 }
                                 .buttonStyle(.plain)
+                            }
+                        }
+                    }
+
+                    if !notes.isEmpty {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text(vm.tr("book_notes"))
+                                #if os(macOS)
+                                .font(.title.weight(.semibold))
+                                #else
+                                .font(.title2.weight(.semibold))
+                                #endif
+                            ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
+                                BookNoteCard(note: note)
                             }
                         }
                     }
