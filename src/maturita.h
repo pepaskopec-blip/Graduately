@@ -116,7 +116,7 @@ extern char *app_progress_cetba;
 #define HW_LESSONS       3
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
-#define HW3_SLIDES       2
+#define HW3_SLIDES       4
 
 typedef enum {
     THEME_CATPPUCCIN = 0,
