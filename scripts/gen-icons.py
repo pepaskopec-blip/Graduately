@@ -61,7 +61,7 @@ def main() -> int:
         print(f"missing {SRC}", file=sys.stderr)
         return 1
 
-    with tempfile.TemporaryDirectory(prefix="maturita-ico-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="graduately-ico-") as tmp:
         entries: list[tuple[int, bytes]] = []
         for size in ICO_SIZES:
             png = Path(tmp) / f"icon_{size}.png"
