@@ -113,10 +113,11 @@ extern char *app_progress_cetba;
 #define NET27_SLIDES    8
 #define NET_LESSONS     27
 #define HW_UNITS        10
-#define HW_LESSONS       3
+#define HW_LESSONS       4
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
-#define HW3_SLIDES       4
+#define HW3_SLIDES       2
+#define HW4_SLIDES       2
 
 typedef enum {
     THEME_CATPPUCCIN = 0,
@@ -866,6 +867,8 @@ GtkWidget *build_hw_unit2_page(void);
 GtkWidget *build_hw_unit2_exercise_page(void);
 GtkWidget *build_hw_unit3_page(void);
 GtkWidget *build_hw_unit3_exercise_page(void);
+GtkWidget *build_hw_unit4_page(void);
+GtkWidget *build_hw_unit4_exercise_page(void);
 void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data);
 void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,

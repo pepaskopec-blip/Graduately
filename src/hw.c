@@ -6,6 +6,7 @@ NetLesson hw_lessons[HW_LESSONS] = {
     { .n_slides = HW_SLIDES,  .unit_page = "hwunit1", .ex_page = "hwex1" },
     { .n_slides = HW2_SLIDES, .unit_page = "hwunit2", .ex_page = "hwex2" },
     { .n_slides = HW3_SLIDES, .unit_page = "hwunit3", .ex_page = "hwex3" },
+    { .n_slides = HW4_SLIDES, .unit_page = "hwunit4", .ex_page = "hwex4" },
 };
 
 void hw_rail_theme_reset(void);
@@ -252,7 +253,7 @@ void hw_add_node(GtkFixed *fixed, int index) {
     GtkWidget *name;
     char *text;
     static const char *unit_keys[HW_LESSONS] = {
-        "hw_unit1", "hw_unit2", "hw_unit3"
+        "hw_unit1", "hw_unit2", "hw_unit3", "hw_unit4"
     };
 
     card = gtk_button_new();
@@ -853,7 +854,7 @@ GtkWidget *build_hw_unit2_exercise_page(void) {
 GtkWidget *build_hw_unit3_page(void) {
     static const NetSlide slides[HW3_SLIDES] = {
         {
-            "1 / 4   •   Bit", "Bit – nejmenší jednotka informace",
+            "1 / 2   •   Bit", "Bit – nejmenší jednotka informace",
             "Bit = binary digit (dvojková číslice)",
             {
                 "Bit je dvojková číslice – nabývá hodnoty 0 nebo 1.",
@@ -863,44 +864,13 @@ GtkWidget *build_hw_unit3_page(void) {
             },
         },
         {
-            "2 / 4   •   Byte", "Byte – adresovatelná jednotka paměti",
+            "2 / 2   •   Byte", "Byte – adresovatelná jednotka paměti",
             "Tip: 1 B = 8 b",
             {
                 "Byte je nejmenší adresovatelná jednotka paměti.",
                 "Počítač tedy paměť adresuje po bytech, ne po jednotlivých "
                 "bitech.",
                 "Jeden byte obvykle obsahuje 8 bitů.",
-                NULL,
-            },
-        },
-        {
-            "3 / 4   •   Integer", "Proměnná typu integer (celá čísla)",
-            "Tip: n bitů → 2ⁿ různých hodnot (např. 0 až 2ⁿ − 1)",
-            {
-                "Celá čísla se ukládají binárně v pevné řádové čárce.",
-                "Mají pevný počet bitů – standardně 16 nebo 32 "
-                "(tedy 2 nebo 4 byty).",
-                "Při 16bitovém formátu je 2¹⁶ = 65 536 různých hodnot; "
-                "u nezáporných čísel interval 0 až 2¹⁶ − 1, tedy 0–65 535.",
-                "Obecně u n bitů je M = 2ⁿ různých hodnot "
-                "(u 16 bitů je nejvyšší nezáporné číslo 65 535).",
-                "Ostatní čísla se do tohoto intervalu převádějí transformací "
-                "(mapováním na přirozená čísla z daného rozsahu).",
-                NULL,
-            },
-        },
-        {
-            "4 / 4   •   Real", "Proměnná typu real (desetinná čísla)",
-            "Tip: tvar = mantisa × základ^exponent",
-            {
-                "Desetinná čísla se ukládají v pohyblivé řádové čárce "
-                "ve tvaru mantisa a exponent.",
-                "Mantisa je normalizovaná tak, že první platná číslice "
-                "je hned za desetinnou čárkou.",
-                "Posun řádové čárky vyrovná odpovídající změna exponentu.",
-                "Standardně zabírá 4 nebo 8 bytů v paměti.",
-                "Více bytů se používá jen tehdy, když potřebujeme vyšší "
-                "přesnost výpočtů.",
                 NULL,
             },
         },
@@ -925,6 +895,58 @@ GtkWidget *build_hw_unit3_exercise_page(void) {
          4, 0},
         {"Kolik bitů má obvykle jeden byte?",
          {"2", "4", "8", "16"}, 4, 2},
+    };
+    static const char *hints[] = {
+        "Bit = dvojková číslice, nejmenší jednotka informace",
+        "Bit nabývá hodnoty 0 nebo 1",
+        "Byte = nejmenší adresovatelná jednotka paměti",
+        "1 B = 8 b",
+    };
+    return build_hw_mcq_page(2, "hwunit3", "hw_ex3_title", "hw_quiz3_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit4_page(void) {
+    static const NetSlide slides[HW4_SLIDES] = {
+        {
+            "1 / 2   •   Integer", "Proměnná typu integer (celá čísla)",
+            "Tip: n bitů → 2ⁿ různých hodnot (např. 0 až 2ⁿ − 1)",
+            {
+                "Celá čísla se ukládají binárně v pevné řádové čárce.",
+                "Mají pevný počet bitů – standardně 16 nebo 32 "
+                "(tedy 2 nebo 4 byty).",
+                "Při 16bitovém formátu je 2¹⁶ = 65 536 různých hodnot; "
+                "u nezáporných čísel interval 0 až 2¹⁶ − 1, tedy 0–65 535.",
+                "Obecně u n bitů je M = 2ⁿ různých hodnot "
+                "(u 16 bitů je nejvyšší nezáporné číslo 65 535).",
+                "Ostatní čísla se do tohoto intervalu převádějí transformací "
+                "(mapováním na přirozená čísla z daného rozsahu).",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Real", "Proměnná typu real (desetinná čísla)",
+            "Tip: tvar = mantisa × základ^exponent",
+            {
+                "Desetinná čísla se ukládají v pohyblivé řádové čárce "
+                "ve tvaru mantisa a exponent.",
+                "Mantisa je normalizovaná tak, že první platná číslice "
+                "je hned za desetinnou čárkou.",
+                "Posun řádové čárky vyrovná odpovídající změna exponentu.",
+                "Standardně zabírá 4 nebo 8 bytů v paměti.",
+                "Více bytů se používá jen tehdy, když potřebujeme vyšší "
+                "přesnost výpočtů.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[3], "hw_unit4", "hw_unit4_sub",
+                               slides, HW4_SLIDES);
+}
+
+GtkWidget *build_hw_unit4_exercise_page(void) {
+    static const ChoiceQ qs[] = {
         {"Jak se ukládají celá čísla (integer)?",
          {"Jen jako text",
           "Binárně v pevné řádové čárce s pevným počtem bitů",
@@ -949,15 +971,11 @@ GtkWidget *build_hw_unit3_exercise_page(void) {
          4, 1},
     };
     static const char *hints[] = {
-        "Bit = dvojková číslice, nejmenší jednotka informace",
-        "Bit nabývá hodnoty 0 nebo 1",
-        "Byte = nejmenší adresovatelná jednotka paměti",
-        "1 B = 8 b",
         "Integer = pevná řádová čárka, pevný počet bitů (16/32…)",
         "16 bitů → 2¹⁶ = 65 536 hodnot (0–65 535 u nezáporných)",
         "Real = pohyblivá řádová čárka = mantisa + exponent",
         "Normalizace: 1. platná číslice hned za desetinnou čárkou",
     };
-    return build_hw_mcq_page(2, "hwunit3", "hw_ex3_title", "hw_quiz3_head",
-                             qs, hints, 8);
+    return build_hw_mcq_page(3, "hwunit4", "hw_ex4_title", "hw_quiz4_head",
+                             qs, hints, 4);
 }

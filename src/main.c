@@ -390,6 +390,7 @@ static gboolean run_smoke_test(gpointer data) {
         "cetba1984", "cetba1984quiz", "cetba1984dej",
         "cetbaFuks", "cetbaFuksQuiz", "cetbaFuksDej",
         "hwunit1", "hwex1", "hwunit2", "hwex2", "hwunit3", "hwex3",
+        "hwunit4", "hwex4",
         "unit1", "unit2", "unit3",
         "u1e1", "u1e13", "u2e1", "u2e19", "u3e1", "u3e15",
         "u1vocab", "u2vocab", "u3vocab",
@@ -530,6 +531,8 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_hw_unit2_exercise_page(), "hwex2");
     gtk_stack_add_named(main_stack, build_hw_unit3_page(), "hwunit3");
     gtk_stack_add_named(main_stack, build_hw_unit3_exercise_page(), "hwex3");
+    gtk_stack_add_named(main_stack, build_hw_unit4_page(), "hwunit4");
+    gtk_stack_add_named(main_stack, build_hw_unit4_exercise_page(), "hwex4");
     {
         typedef GtkWidget *(*NetBuilder)(void);
         static const struct {
