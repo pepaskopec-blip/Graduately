@@ -161,7 +161,7 @@ data/                style.css, changelog.txt, share/, cetba/*.json
 assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
 scripts/             balení AppImage, .app, IPA, extract a smoke test
-.github/workflows/   CI: push na main → větev builds (+ zrcadlo Forgejo)
+.github/workflows/   CI: push na main → větev builds
 progress/            vzniká za běhu (cvičení, nastavení)
 ```
 
@@ -355,7 +355,7 @@ data/                style.css, changelog.txt, share/, cetba/*.json
 assets/              source icon and screenshots
 installers/          fetch-the-latest installers
 scripts/             AppImage / .app / IPA bundlers, extract, smoke test
-.github/workflows/   CI: push to main → builds branch (+ Forgejo mirror)
+.github/workflows/   CI: push to main → builds branch
 progress/            created at runtime (exercises, settings)
 ```
 

@@ -7,7 +7,7 @@
 # en: bullet
 
 --- 2026-09-23
-cs: Repozitář se jmenuje Graduately (GitHub i Forgejo); instalátory a updater míří tam
+cs: Repozitář se jmenuje Graduately; instalátory a updater míří tam
 cs: Balíčky a instalátory se jmenují graduately-* (už ne maturita-*)
 cs: Aplikace se jmenuje Graduately; úvod stále říká „Maturita? To dáme.“
 cs: Kompletní maturitní četba (82 knih) se zápisky, kvízem a sestavením děje
@@ -15,8 +15,7 @@ cs: Studium knih: nejdřív procvičení (kvíz / sestavte děj), pak zápisky
 cs: Kvíz a sestavení děje u všech knih i na GTK (Linux / Windows)
 cs: Větší a čitelnější rozhraní na Macu
 cs: Opravy výběru slov v dialogu a otevření knihy z vyhledávání
-cs: Oprava zrcadlení na Forgejo (edu/Graduately, plná historie, force-push)
-en: Repository renamed to Graduately (GitHub and Forgejo); installers and updater follow
+en: Repository renamed to Graduately; installers and updater follow
 en: Packages and installers are now graduately-* (no more maturita-*)
 en: The app is now Graduately; the welcome line still says “Maturita? We've got this.”
 en: Full maturita reading list (82 books) with notes, quiz, and plot ordering
@@ -24,7 +23,6 @@ en: Book study flow: practice first (quiz / order the plot), then notes
 en: Quiz and plot assembly for every book on GTK too (Linux / Windows)
 en: Larger, more readable Mac interface
 en: Fixes for dialogue word picking and opening a book from search
-en: Forgejo mirror fix (edu/Graduately, full history, force-push)
 
 --- 2026-09-18
 cs: Po aktualizaci se na hlavní stránce ukáže, co je nového

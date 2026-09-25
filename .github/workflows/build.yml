@@ -264,13 +264,8 @@ jobs:
 
       # The branch is rewritten from scratch every time rather than added to,
       # so the repository keeps one copy of the packages instead of a new
-      # ~70 MB set per commit. The same commit is then mirrored to Forgejo
-      # when FORGEJO_TOKEN is set (git.dvorakmortonxd.dev).
+      # ~70 MB set per commit.
       - name: Push to builds branch
-        env:
-          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
-          FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
-          FORGEJO_URL: ${{ secrets.FORGEJO_URL }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -285,52 +280,3 @@ jobs:
           git add -A
           git commit -q -m "Build from ${{ github.sha }}"
           git push -f origin builds
-          if [ -z "${FORGEJO_TOKEN:-}" ]; then
-            echo "No FORGEJO_TOKEN; skipping Forgejo builds publish."
-            exit 0
-          fi
-          # Prefer Basic auth over URL userinfo so tokens with @/: never
-          # break the URL. Force-push: this is a one-way GitHub → Forgejo
-          # mirror (repo moved to edu/; non-ff rejects otherwise).
-          token="$(printf '%s' "$FORGEJO_TOKEN" | tr -d '\r\n')"
-          user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
-          user="${user:-oauth2}"
-          basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
-          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/Graduately.git}"
-          git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
-            "$forgejo_url" \
-            HEAD:refs/heads/builds
-
-  forgejo-main:
-    name: Mirror main to Forgejo
-    runs-on: ubuntu-latest
-    steps:
-      # Full history: Forgejo rejects "shallow update" when replacing main.
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      # Same rule as the macOS cert step: never put `secrets` in `if:`.
-      - name: Push main
-        env:
-          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
-          FORGEJO_USER: ${{ secrets.FORGEJO_USER }}
-          FORGEJO_URL: ${{ secrets.FORGEJO_URL }}
-        run: |
-          set -euo pipefail
-          token="$(printf '%s' "${FORGEJO_TOKEN:-}" | tr -d '\r\n')"
-          if [ -z "$token" ]; then
-            echo "No FORGEJO_TOKEN; skipping Forgejo main mirror."
-            exit 0
-          fi
-          # Belt-and-suspenders if a future checkout change re-shallows.
-          if git rev-parse --is-shallow-repository 2>/dev/null | grep -qx true; then
-            git fetch --unshallow origin
-          fi
-          user="$(printf '%s' "${FORGEJO_USER:-}" | tr -d '\r\n')"
-          user="${user:-oauth2}"
-          basic="$(printf '%s:%s' "$user" "$token" | base64 -w0)"
-          forgejo_url="${FORGEJO_URL:-https://git.dvorakmortonxd.dev/edu/Graduately.git}"
-          git -c "http.extraHeader=Authorization: Basic ${basic}" push -f \
-            "$forgejo_url" \
-            HEAD:refs/heads/main
