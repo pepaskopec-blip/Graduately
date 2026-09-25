@@ -843,6 +843,7 @@ void progress_for_hw(ProgressSum *out);
 void hw_rail_theme_reset(void);
 void czech_rail_theme_reset(void);
 void hw_lessons_apply_lang(void);
+GtkWidget *build_hwyears_page(void);
 GtkWidget *build_hwmap_page(void);
 GtkWidget *build_czechmap_page(void);
 void mluvnice_init(void);

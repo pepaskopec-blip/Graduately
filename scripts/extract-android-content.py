@@ -1479,7 +1479,7 @@ def main() -> int:
     subjects = [
         {"key": "Deutsch", "open": True, "target": "roadmap", "icon": "de"},
         {"key": "Správa počítačových sítí", "open": True, "target": "netyears", "icon": "wifi"},
-        {"key": "Technické vybavení", "open": True, "target": "hwmap", "icon": "chip"},
+        {"key": "Technické vybavení", "open": True, "target": "hwyears", "icon": "chip"},
         {"key": "Český jazyk a literatura", "open": True, "target": "czechmap", "icon": "cz"},
         {"key": "Občanská nauka", "open": False, "target": None, "icon": "lock"},
         {"key": "English", "open": False, "target": None, "icon": "lock"},

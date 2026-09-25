@@ -31,7 +31,7 @@ static const char *subject_page(int i) {
     if (i == NET_SUBJ)
         return "netyears";
     if (i == HW_SUBJ)
-        return "hwmap";
+        return "hwyears";
     if (i == CZ_SUBJ)
         return "czechmap";
     return "subjects";
@@ -187,6 +187,10 @@ static void catalog_rebuild(void) {
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
     }
 
+    catalog_add_key("hw_year1", "search_lesson", "hwmap", FALSE, 1, "rocnik");
+    catalog_add_key("hw_year2", "search_lesson", "hwyears", TRUE, 1, "rocnik");
+    catalog_add_key("hw_year3", "search_lesson", "hwyears", TRUE, 1, "rocnik");
+    catalog_add_key("hw_year4", "search_lesson", "hwyears", TRUE, 1, "rocnik");
     for (i = 1; i <= HW_LESSONS; i++) {
         g_snprintf(key, sizeof(key), "hw_unit%d", i);
         g_snprintf(page, sizeof(page), "hwunit%d", i);

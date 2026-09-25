@@ -184,7 +184,7 @@ static const char *subject_target(int i) {
     if (i == NET_SUBJ)
         return "netyears";
     if (i == HW_SUBJ)
-        return "hwmap";
+        return "hwyears";
     if (i == CZ_SUBJ)
         return "czechmap";
     return NULL;

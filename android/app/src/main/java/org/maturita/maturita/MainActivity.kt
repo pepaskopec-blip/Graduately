@@ -210,8 +210,9 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.NetEx -> NetQuizScreen(vm, r.id)
+            Route.HwYears -> HwYearsScreen(vm)
             Route.HwMap -> LessonListScreen(
-                vm, vm.tr("Technické vybavení"), vm.tr("hw_sub"),
+                vm, vm.tr("hw_year1"), vm.tr("hw_sub"),
                 vm.content.hw.map { l ->
                     val id = l.int("id")
                     LessonRow(vm.tr(l.str("titleKey")), vm.progress.hwDone(id), Route.HwLesson(id))

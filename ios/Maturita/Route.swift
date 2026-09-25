@@ -19,6 +19,7 @@ enum Route: Hashable {
     case netMap
     case netLesson(Int)
     case netEx(Int)
+    case hwYears
     case hwMap
     case hwLesson(Int)
     case hwEx(Int)
@@ -43,6 +44,7 @@ enum Route: Hashable {
         case .netMap: return "netmap"
         case .netLesson(let id): return "netunit\(id)"
         case .netEx(let id): return "netex\(id)"
+        case .hwYears: return "hwyears"
         case .hwMap: return "hwmap"
         case .hwLesson(let id): return "hwunit\(id)"
         case .hwEx(let id): return "hwex\(id)"
@@ -86,12 +88,14 @@ enum Route: Hashable {
             return [.netYears, .netMap, .netLesson(id)]
         case .netEx(let id):
             return [.netYears, .netMap, .netLesson(id), .netEx(id)]
+        case .hwYears:
+            return [.hwYears]
         case .hwMap:
-            return [.hwMap]
+            return [.hwYears, .hwMap]
         case .hwLesson(let id):
-            return [.hwMap, .hwLesson(id)]
+            return [.hwYears, .hwMap, .hwLesson(id)]
         case .hwEx(let id):
-            return [.hwMap, .hwLesson(id), .hwEx(id)]
+            return [.hwYears, .hwMap, .hwLesson(id), .hwEx(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -118,6 +122,7 @@ func routeFromPage(_ page: String) -> Route? {
     case "roadmap": return .roadmap
     case "netyears": return .netYears
     case "netmap": return .netMap
+    case "hwyears": return .hwYears
     case "hwmap": return .hwMap
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice

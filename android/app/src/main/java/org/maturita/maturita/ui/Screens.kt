@@ -294,7 +294,7 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
             sum.totalEx = vm.content.netLessons.size
             sum.doneEx = vm.content.netLessons.count { vm.progress.netDone(it.int("id")) }
         }
-        "hwmap" -> {
+        "hwyears", "hwmap" -> {
             sum.totalEx = vm.content.hw.size
             sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) }
         }
@@ -477,6 +477,10 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "netunit${l.int("id")}", extra = "site")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "netex${l.int("id")}")
     }
+    add(vm.tr("hw_year1"), vm.tr("search_lesson"), "hwmap", extra = "rocnik")
+    add(vm.tr("hw_year2"), vm.tr("search_lesson"), "hwyears", locked = true, extra = "rocnik")
+    add(vm.tr("hw_year3"), vm.tr("search_lesson"), "hwyears", locked = true, extra = "rocnik")
+    add(vm.tr("hw_year4"), vm.tr("search_lesson"), "hwyears", locked = true, extra = "rocnik")
     vm.content.hw.forEach { l ->
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "hwunit${l.int("id")}", extra = "hardware")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex${l.int("id")}")
@@ -560,6 +564,20 @@ fun NetYearsScreen(vm: AppViewModel) {
             }
             items(listOf("net_year2", "net_year3", "net_year4")) { key ->
                 NavRow(title = vm.tr(key), subtitle = vm.tr("net_year_locked_sub"), locked = true, onClick = null)
+            }
+        }
+    }
+}
+
+@Composable
+fun HwYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Technické vybavení"), vm.tr("hw_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("hw_year1"), subtitle = vm.tr("hw_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.HwMap) }
+            }
+            items(listOf("hw_year2", "hw_year3", "hw_year4")) { key ->
+                NavRow(title = vm.tr(key), subtitle = vm.tr("hw_year_locked_sub"), locked = true, onClick = null)
             }
         }
     }

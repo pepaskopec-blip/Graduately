@@ -385,7 +385,7 @@ static gboolean shot_later(gpointer data) {
 static gboolean run_smoke_test(gpointer data) {
     static const char *pages[] = {
         "welcome", "subjects", "roadmap", "stats",
-        "netyears", "netmap", "hwmap", "czechmap",
+        "netyears", "netmap", "hwyears", "hwmap", "czechmap",
         "mluvnice", "readinglist",
         "cetba1984", "cetba1984quiz", "cetba1984dej",
         "cetbaFuks", "cetbaFuksQuiz", "cetbaFuksDej",
@@ -504,6 +504,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_stats_page(), "stats");
     gtk_stack_add_named(main_stack, build_netyears_page(), "netyears");
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
+    gtk_stack_add_named(main_stack, build_hwyears_page(), "hwyears");
     gtk_stack_add_named(main_stack, build_hwmap_page(), "hwmap");
     gtk_stack_add_named(main_stack, build_czechmap_page(), "czechmap");
     gtk_stack_add_named(main_stack, build_mluvnice_page(), "mluvnice");

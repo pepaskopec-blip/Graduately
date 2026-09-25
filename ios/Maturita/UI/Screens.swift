@@ -420,7 +420,7 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
     case "netyears":
         sum.totalEx = vm.content.netLessons.count
         sum.doneEx = vm.content.netLessons.filter { vm.progress.netDone($0.int("id")) }.count
-    case "hwmap":
+    case "hwyears", "hwmap":
         sum.totalEx = vm.content.hw.count
         sum.doneEx = vm.content.hw.filter { vm.progress.hwDone($0.int("id")) }.count
     case "czechmap":
@@ -553,6 +553,10 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "netunit\(l.int("id"))", extra: "site")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "netex\(l.int("id"))")
     }
+    add(vm.tr("hw_year1"), vm.tr("search_lesson"), "hwmap", extra: "rocnik")
+    add(vm.tr("hw_year2"), vm.tr("search_lesson"), "hwyears", locked: true, extra: "rocnik")
+    add(vm.tr("hw_year3"), vm.tr("search_lesson"), "hwyears", locked: true, extra: "rocnik")
+    add(vm.tr("hw_year4"), vm.tr("search_lesson"), "hwyears", locked: true, extra: "rocnik")
     for l in vm.content.hw {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "hwunit\(l.int("id"))", extra: "hardware")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex\(l.int("id"))")
@@ -746,6 +750,29 @@ struct NetYearsScreen: View {
         }
         .navigationTitle(vm.tr("net_years_title"))
         .navigationSubtitle(vm.tr("net_years_sub"))
+        .appListStyle()
+    }
+}
+
+struct HwYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        List {
+            NavigationLink(value: Route.hwMap) {
+                ListRowLabel(title: vm.tr("hw_year1"), subtitle: vm.tr("hw_sub"))
+            }
+            ForEach(["hw_year2", "hw_year3", "hw_year4"], id: \.self) { key in
+                Label {
+                    ListRowLabel(title: vm.tr(key), subtitle: vm.tr("hw_year_locked_sub"))
+                } icon: {
+                    Image(systemName: "lock.fill")
+                }
+                .foregroundStyle(.secondary)
+            }
+        }
+        .navigationTitle(vm.tr("Technické vybavení"))
+        .navigationSubtitle(vm.tr("hw_years_sub"))
         .appListStyle()
     }
 }
@@ -1295,10 +1322,12 @@ struct RouteDestination: View {
             }
         case .netEx(let id):
             NetQuizScreen(vm: vm, id: id)
+        case .hwYears:
+            HwYearsScreen(vm: vm)
         case .hwMap:
             LessonListScreen(
                 vm: vm,
-                title: vm.tr("Technické vybavení"),
+                title: vm.tr("hw_year1"),
                 subtitle: vm.tr("hw_sub"),
                 rows: vm.content.hw.map { l in
                     let id = l.int("id")

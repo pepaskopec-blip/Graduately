@@ -9,8 +9,10 @@
 --- 2026-09-25
 cs: Technické vybavení: pět lekcí o digitalizaci zvuku (vzorkování, kvantování, PCM)
 cs: Technické vybavení: skříň, zdroj, deska, CPU, karty, disky a vstupní zařízení
+cs: Technické vybavení: dosavadní lekce jsou 1. ročník, další ročníky jsou zatím zamčené
 en: Hardware: five lessons on digitizing sound (sampling, quantization, PCM)
 en: Hardware: case, PSU, board, CPU, cards, drives and input devices
+en: Hardware: current lessons are year 1; later years are still locked
 
 --- 2026-09-23
 cs: Repozitář se jmenuje Graduately; instalátory a updater míří tam

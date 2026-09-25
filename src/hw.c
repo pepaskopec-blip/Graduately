@@ -324,6 +324,109 @@ void hw_add_node(GtkFixed *fixed, int index) {
     gtk_fixed_put(fixed, name, 0, 0);
 }
 
+static GtkWidget *hw_year_button(int year, gboolean locked) {
+    static const char *year_keys[] = {
+        "hw_year1", "hw_year2", "hw_year3", "hw_year4",
+    };
+    GtkWidget *btn;
+    GtkWidget *row;
+    GtkWidget *num;
+    GtkWidget *texts;
+    GtkWidget *title;
+    char *num_text;
+
+    btn = gtk_button_new();
+    gtk_widget_add_css_class(btn, "unit-node");
+    gtk_widget_set_can_focus(btn, FALSE);
+    gtk_widget_set_hexpand(btn, TRUE);
+    gtk_widget_set_size_request(btn, -1, 72);
+    gtk_widget_set_sensitive(btn, !locked);
+    if (locked)
+        gtk_widget_add_css_class(btn, "locked");
+    else
+        gtk_widget_add_css_class(btn, "current");
+
+    row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 14);
+    gtk_widget_set_halign(row, GTK_ALIGN_START);
+    gtk_widget_set_valign(row, GTK_ALIGN_CENTER);
+    gtk_widget_set_margin_start(row, 18);
+    gtk_widget_set_margin_end(row, 18);
+    gtk_button_set_child(GTK_BUTTON(btn), row);
+
+    num_text = g_strdup_printf("%d", year);
+    num = gtk_label_new(num_text);
+    g_free(num_text);
+    gtk_widget_add_css_class(num, "unit-number");
+    gtk_widget_set_valign(num, GTK_ALIGN_CENTER);
+    gtk_box_append(GTK_BOX(row), num);
+
+    texts = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+    gtk_widget_set_halign(texts, GTK_ALIGN_START);
+    gtk_widget_set_hexpand(texts, TRUE);
+    gtk_box_append(GTK_BOX(row), texts);
+
+    title = gtk_label_new(NULL);
+    i18n_bind(title, year_keys[year - 1], 0);
+    gtk_widget_set_halign(title, GTK_ALIGN_START);
+    gtk_widget_add_css_class(title, "unit-name");
+    gtk_box_append(GTK_BOX(texts), title);
+
+    if (locked) {
+        GtkWidget *sub = gtk_label_new(NULL);
+        GtkWidget *icon = icon_area_new(draw_lock_icon, 0.3451, 0.3569,
+                                        0.4392, 18);
+
+        i18n_bind(sub, "hw_year_locked_sub", 0);
+        gtk_widget_set_halign(sub, GTK_ALIGN_START);
+        gtk_widget_add_css_class(sub, "unit-name-locked");
+        gtk_box_append(GTK_BOX(texts), sub);
+        gtk_widget_set_valign(icon, GTK_ALIGN_CENTER);
+        gtk_box_append(GTK_BOX(row), icon);
+    } else {
+        g_object_set_data_full(G_OBJECT(btn), "target",
+                               g_strdup("hwmap"), g_free);
+        g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
+    }
+
+    return btn;
+}
+
+GtkWidget *build_hwyears_page(void) {
+    GtkWidget *page;
+    GtkWidget *scroll;
+    GtkWidget *list;
+    int y;
+
+    page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_hexpand(page, TRUE);
+    gtk_widget_set_vexpand(page, TRUE);
+    gtk_widget_set_margin_start(page, 32);
+    gtk_widget_set_margin_end(page, 32);
+    gtk_widget_set_margin_top(page, 24);
+    gtk_widget_set_margin_bottom(page, 24);
+
+    gtk_box_append(GTK_BOX(page),
+                   top_bar("subjects", "Technické vybavení", "hw_years_sub"));
+
+    scroll = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    gtk_widget_set_vexpand(scroll, TRUE);
+    gtk_widget_set_margin_top(scroll, 18);
+    gtk_box_append(GTK_BOX(page), scroll);
+
+    list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
+    gtk_widget_set_halign(list, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(list, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(list, 360, -1);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), list);
+
+    for (y = 1; y <= 4; y++)
+        gtk_box_append(GTK_BOX(list), hw_year_button(y, y > 1));
+
+    return page;
+}
+
 GtkWidget *build_hwmap_page(void) {
     GtkWidget *page;
     GtkWidget *scroll;
@@ -344,7 +447,7 @@ GtkWidget *build_hwmap_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("subjects", "Technické vybavení", "hw_sub"));
+                   top_bar("hwyears", "hw_year1", "hw_sub"));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),

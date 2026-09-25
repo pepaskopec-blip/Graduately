@@ -13,6 +13,7 @@ sealed class Route(val page: String) {
     data object NetMap : Route("netmap")
     data class NetLesson(val id: Int) : Route("netunit$id")
     data class NetEx(val id: Int) : Route("netex$id")
+    data object HwYears : Route("hwyears")
     data object HwMap : Route("hwmap")
     data class HwLesson(val id: Int) : Route("hwunit$id")
     data class HwEx(val id: Int) : Route("hwex$id")
@@ -45,9 +46,10 @@ sealed class Route(val page: String) {
         NetMap -> listOf(Subjects, NetYears, NetMap)
         is NetLesson -> listOf(Subjects, NetYears, NetMap, this)
         is NetEx -> listOf(Subjects, NetYears, NetMap, NetLesson(id), this)
-        HwMap -> listOf(Subjects, HwMap)
-        is HwLesson -> listOf(Subjects, HwMap, this)
-        is HwEx -> listOf(Subjects, HwMap, HwLesson(id), this)
+        HwYears -> listOf(Subjects, HwYears)
+        HwMap -> listOf(Subjects, HwYears, HwMap)
+        is HwLesson -> listOf(Subjects, HwYears, HwMap, this)
+        is HwEx -> listOf(Subjects, HwYears, HwMap, HwLesson(id), this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -66,6 +68,7 @@ fun routeFromPage(page: String): Route? = when (page) {
     "roadmap" -> Route.Roadmap
     "netyears" -> Route.NetYears
     "netmap" -> Route.NetMap
+    "hwyears" -> Route.HwYears
     "hwmap" -> Route.HwMap
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
