@@ -12,6 +12,12 @@ NetLesson hw_lessons[HW_LESSONS] = {
     { .n_slides = HW7_SLIDES, .unit_page = "hwunit7", .ex_page = "hwex7" },
     { .n_slides = HW8_SLIDES, .unit_page = "hwunit8", .ex_page = "hwex8" },
     { .n_slides = HW9_SLIDES, .unit_page = "hwunit9", .ex_page = "hwex9" },
+#define HW_ENTRY(n) { .n_slides = 2, .unit_page = "hwunit" #n, .ex_page = "hwex" #n }
+    HW_ENTRY(10), HW_ENTRY(11), HW_ENTRY(12), HW_ENTRY(13), HW_ENTRY(14),
+    HW_ENTRY(15), HW_ENTRY(16), HW_ENTRY(17), HW_ENTRY(18), HW_ENTRY(19),
+    HW_ENTRY(20), HW_ENTRY(21), HW_ENTRY(22), HW_ENTRY(23), HW_ENTRY(24),
+    HW_ENTRY(25), HW_ENTRY(26), HW_ENTRY(27), HW_ENTRY(28), HW_ENTRY(29),
+#undef HW_ENTRY
 };
 
 void hw_rail_theme_reset(void);
@@ -257,10 +263,14 @@ void hw_add_node(GtkFixed *fixed, int index) {
     GtkWidget *icon;
     GtkWidget *name;
     char *text;
-    static const char *unit_keys[HW_LESSONS] = {
-        "hw_unit1", "hw_unit2", "hw_unit3", "hw_unit4",
-        "hw_unit5", "hw_unit6", "hw_unit7", "hw_unit8", "hw_unit9"
-    };
+    static char unit_keys[HW_LESSONS][16];
+    static gboolean unit_keys_ready = FALSE;
+
+    if (!unit_keys_ready) {
+        for (int i = 0; i < HW_LESSONS; i++)
+            g_snprintf(unit_keys[i], sizeof unit_keys[i], "hw_unit%d", i + 1);
+        unit_keys_ready = TRUE;
+    }
 
     card = gtk_button_new();
     gtk_widget_add_css_class(card, "unit-node");
@@ -1326,5 +1336,1554 @@ GtkWidget *build_hw_unit9_exercise_page(void) {
         "Pásmo řeči je do asi 4 kHz, proto stačí fs = 8 kHz",
     };
     return build_hw_mcq_page(8, "hwunit9", "hw_ex9_title", "hw_quiz9_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit10_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Účel", "Počítačová skříň",
+            "Tip: skříň má být uzavřená, ale s větracími mřížkami.",
+            {
+                "Skříň zastřešuje a drží ostatní komponenty.",
+                "Součásti se propojují kabely nebo přímo do základní desky.",
+                "Při provozu vzniká teplo a skříň ho musí odvést.",
+                "Uzavřená skříň s mřížkami udržuje správné proudění vzduchu "
+                "(airflow).",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Stěny", "Přední a zadní stěna, desktop a tower",
+            "Tip: desktop leží, tower stojí.",
+            {
+                "Přední stěna: zapnutí, restart, zelená kontrolka chodu "
+                "a červená kontrolka disku.",
+                "Vpředu bývají i USB porty a audio vstupy a výstupy.",
+                "Zadní stěna zpřístupňuje porty desky a přídavných karet.",
+                "Volné otvory kryjí záslepky, aby se dovnitř neprášilo.",
+                "Desktop je skříň naležato, monitor se na ni pokládá.",
+                "Tower stojí nastojato vedle monitoru nebo pod stolem.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[9], "hw_unit10", "hw_unit10_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit10_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"K čemu slouží počítačová skříň?",
+         {"Jen jako ozdoba monitoru",
+          "Zastřešuje a uchycuje ostatní komponenty",
+          "Převádí 230 V na 12 V",
+          "Ukládá operační systém"},
+         4, 1},
+        {"Proč má být skříň uzavřená a mít větrací mřížky?",
+         {"Aby se dovnitř vešel jen jeden disk",
+          "Aby uvnitř správně proudil vzduch a odvádělo se teplo",
+          "Aby nešel zapnout restart",
+          "Aby odpadly kabely"},
+         4, 1},
+        {"Co typicky najdeme na přední stěně?",
+         {"Tlačítka, kontrolky, USB a audio",
+          "Jen patici procesoru",
+          "Jen sloty ISA",
+          "Jen plotny pevného disku"},
+         4, 0},
+        {"Jak se liší desktop a tower?",
+         {"Desktop je bez zdroje, tower bez desky",
+          "Desktop je jen pro notebooky",
+          "Desktop leží, tower stojí",
+          "Liší se jen barvou kontrolek"},
+         4, 2},
+    };
+    static const char *hints[] = {
+        "Skříň drží a chrání komponenty",
+        "Airflow odvádí teplo",
+        "Vpředu: power, reset, LED, USB, audio",
+        "Desktop naležato, tower nastojato",
+    };
+    return build_hw_mcq_page(9, "hwunit10", "hw_ex10_title", "hw_quiz10_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit11_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Převod", "Napájecí zdroj",
+            "Tip: ze sítě jde střídavých 230 V / 50 Hz.",
+            {
+                "Zdroj zásobuje všechny části počítače elektřinou.",
+                "Převádí střídavé napětí 230 V, 50 Hz na stejnosměrné "
+                "3,3 V, 5 V a 12 V.",
+                "Nejrozšířenější je standard ATX, včetně variant TFX a SFX.",
+                "ATX umí počítač vypnout softwarově přes základní desku.",
+                "Výkon se vyrábí v řadě hodnot, třeba od 350 W po 700 W "
+                "i víc.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Přívody", "Co se napájí přímo a kolik to bere",
+            "Tip: spotřeba není stálá.",
+            {
+                "Přímo ze zdroje: deska, pevné disky, mechaniky, aktivní "
+                "chladiče a grafické karty.",
+                "Přes desku: rozšiřující karty, některé ventilátory, "
+                "procesor, porty a LED kontrolky.",
+                "V klidu bere sestava zhruba 100 W.",
+                "V plné zátěži může spotřeba dosáhnout 500–600 W.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[10], "hw_unit11", "hw_unit11_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit11_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co zdroj udělá se síťovým napětím?",
+         {"Nechá 230 V střídavých všude v počítači",
+          "Převede 230 V střídavých na stejnosměrné 3,3 V, 5 V a 12 V",
+          "Převede všechno na 230 V stejnosměrných",
+          "Vyrábí jen 1,5 V pro USB"},
+         4, 1},
+        {"Co umožňuje standard ATX?",
+         {"Softwarové vypnutí počítače přes základní desku",
+          "Jen napájení disketové mechaniky",
+          "Zrušení větracích mřížek",
+          "Uložení BIOSu na pásku"},
+         4, 0},
+        {"Co se ze zdroje napájí přímo?",
+         {"Jen LED na klávesnici",
+          "Jen porty na zadní stěně",
+          "Deska, disky, mechaniky, aktivní chladiče a grafické karty",
+          "Jen operační paměť"},
+         4, 2},
+        {"Jak se mění spotřeba počítače?",
+         {"Je pořád přesně 350 W",
+          "V klidu asi 100 W, v plné zátěži 500–600 W",
+          "V klidu 500 W a v zátěži 100 W",
+          "Nezávisí na tom, co počítač dělá"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "230 V AC → 3,3 / 5 / 12 V DC",
+        "ATX umí softwarové vypnutí",
+        "Přímo: deska, disky, mechaniky, chladiče, GPU",
+        "Klid cca 100 W, zátěž 500–600 W",
+    };
+    return build_hw_mcq_page(10, "hwunit11", "hw_ex11_title", "hw_quiz11_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit12_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Páteř", "Základní deska",
+            "Tip: deska rozhoduje o kompatibilitě a o tom, co půjde upgradovat.",
+            {
+                "Je to vícevrstvý plošný spoj, fundament a páteř počítače.",
+                "Propojuje procesor se všemi ostatními částmi.",
+                "Čipset tvoří dva čipy: severní a jižní most.",
+                "Sběrnice jsou měděné cestičky pro data a signály.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Čipy", "Patice, mosty a BIOS",
+            "Tip: nastavení BIOSu drží čip CMOS na baterii.",
+            {
+                "Patice (socket) mechanicky drží procesor a elektricky "
+                "ho propojí.",
+                "Severní most je systémový řadič blízko CPU a řeší rychlé "
+                "přesuny: FSB, AGP a paměťovou sběrnici.",
+                "Jižní most připojuje pomalejší periferie, BIOS, disky, "
+                "USB a porty.",
+                "BIOS je mezistupeň mezi hardwarem a softwarem a nese "
+                "instrukce pro zavedení operačního systému.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[11], "hw_unit12", "hw_unit12_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit12_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je základní deska?",
+         {"Vícevrstvý plošný spoj, páteř počítače",
+          "Jen kovový kryt zdroje",
+          "Jen ventilátor na procesoru",
+          "Externí disk"},
+         4, 0},
+        {"Z čeho se skládá čipset?",
+         {"Ze tří grafických karet",
+          "Ze severního a jižního mostu",
+          "Jen z baterie CMOS",
+          "Jen ze slotu ISA"},
+         4, 1},
+        {"Co řeší severní most?",
+         {"Jen pomalé USB porty",
+          "Jen zvukový výstup",
+          "Rychlé přesuny dat: FSB, AGP a paměťovou sběrnici",
+          "Jen tlačítko reset"},
+         4, 2},
+        {"Kde je uložené nastavení BIOSu?",
+         {"V čipu CMOS napájeném baterií",
+          "Jen na papírovém štítku skříně",
+          "V mechanice CD",
+          "V červeném vodiči zdroje"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Deska je páteř a rozhoduje o kompatibilitě",
+        "Čipset = severní + jižní most",
+        "Severní most: FSB, AGP, paměť",
+        "BIOS zavádí OS, nastavení drží CMOS",
+    };
+    return build_hw_mcq_page(11, "hwunit12", "hw_ex12_title", "hw_quiz12_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit13_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Konektory", "Napájení a datové kabely",
+            "Tip: F_PANEL je svazek od předního panelu skříně.",
+            {
+                "Deska bere 24pinový napájecí konektor a procesor "
+                "zvlášť 4pinový nebo 8pinový.",
+                "Disky a mechaniky se připojují přes SATA.",
+                "Starší rozhraní jsou IDE a FDD.",
+                "F_PANEL připojuje Power, Reset, LED diody a PC speaker.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Sloty", "ISA, PCI, AGP a PCIe",
+            "Tip: dnešní rychlé rozhraní je PCI Express.",
+            {
+                "ISA je zastaralý 16bitový slot.",
+                "PCI je nezávislé na CPU, běží na 33 MHz a má propustnost "
+                "264 MB/s.",
+                "AGP vzniklo pro grafické karty a má přímé spojení s RAM.",
+                "PCI Express je sériové, vysokorychlostní a umí Hot Plug.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[12], "hw_unit13", "hw_unit13_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit13_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Jakými konektory se deska napájí?",
+         {"Jen jedním USB",
+          "24 piny pro desku a 4 nebo 8 piny pro CPU",
+          "Jen konektorem FDD",
+          "Jen slotem ISA"},
+         4, 1},
+        {"Co se připojuje na F_PANEL?",
+         {"Power, Reset, LED a PC speaker",
+          "Jen pevný disk",
+          "Jen monitor",
+          "Jen anténa Wi-Fi"},
+         4, 0},
+        {"Jaké má parametry sběrnice PCI?",
+         {"Sériová, jen pro tiskárny",
+          "16bitová a dnes jediná používaná",
+          "Nezávislá na CPU, 33 MHz, 264 MB/s",
+          "Jen pro procesor"},
+         4, 2},
+        {"K čemu vzniklo AGP?",
+         {"Pro disketové mechaniky",
+          "Speciálně pro grafické karty, s přímým spojením k RAM",
+          "Jako náhrada napájecího zdroje",
+          "Pro pomalé tiskárny"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "24 pinů deska, 4/8 pinů CPU",
+        "F_PANEL = tlačítka, LED, speaker",
+        "PCI: 33 MHz, 264 MB/s",
+        "AGP je pro grafiku a sahá přímo na RAM",
+    };
+    return build_hw_mcq_page(12, "hwunit13", "hw_ex13_title", "hw_quiz13_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit14_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Dělení", "Vnitřní a vnější paměť",
+            "Tip: RAM je rychlá, ale bez napájení data ztratí.",
+            {
+                "Vnitřní paměť je operační RAM: rychlá, pro rozpracovaná "
+                "data, bez napájení se smaže.",
+                "Vnější paměť jsou disky, USB a optická média.",
+                "Vnější paměť data udrží i bez napájení.",
+                "Je ale mnohem pomalejší než RAM.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Typy", "SRAM a DRAM",
+            "Tip: SRAM je cache v procesoru, DRAM se musí obnovovat.",
+            {
+                "SRAM (statická) je velmi rychlá a drahá.",
+                "Používá se jako cache v procesoru.",
+                "DRAM (dynamická) je levnější a data se musí neustále "
+                "obnovovat.",
+                "Patří sem SDR a řada DDR až po DDR3.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[13], "hw_unit14", "hw_unit14_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit14_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"K čemu slouží operační RAM?",
+         {"Pro rozpracovaná data; je rychlá a potřebuje napájení",
+          "Pro trvalé uložení filmů bez elektřiny",
+          "Jen jako náhrada zdroje",
+          "Jen pro větrání skříně"},
+         4, 0},
+        {"Čím se vnější paměť liší od RAM?",
+         {"Je rychlejší a maže se při vypnutí",
+          "Drží data i bez napájení, ale je pomalejší",
+          "Je vždy jen v procesoru",
+          "Nepotřebuje žádný řadič"},
+         4, 1},
+        {"Kde se používá SRAM?",
+         {"Jako jediný pevný disk",
+          "Jen v optické mechanice",
+          "Jako rychlá a drahá cache v procesoru",
+          "Jen na předním panelu"},
+         4, 2},
+        {"Co platí o DRAM?",
+         {"Je levnější a data se musí obnovovat (SDR, DDR až DDR3)",
+          "Nikdy se neobnovuje a je dražší než SRAM",
+          "Slouží jen jako baterie CMOS",
+          "Je to jiný název pro zdroj ATX"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "RAM = rychlá vnitřní paměť, chce napájení",
+        "Vnější paměť je stálá a pomalejší",
+        "SRAM = cache CPU",
+        "DRAM se obnovuje, SDR a DDR až DDR3",
+    };
+    return build_hw_mcq_page(13, "hwunit14", "hw_ex14_title", "hw_quiz14_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit15_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Mozek", "Procesor",
+            "Tip: takt = základní hodiny 100 MHz × násobič.",
+            {
+                "CPU je hlavní výpočetní jednotka a řídí ostatní části.",
+                "Je to křemíkový čip z miliard tranzistorů, které pracují "
+                "jako spínače.",
+                "Frekvence je počet cyklů za sekundu (Hz, v praxi GHz).",
+                "Takt vznikne jako součin base clock (100 MHz) a násobiče.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Jádra", "Více jader, vlákna a cache",
+            "Tip: cache L1, L2 a L3 zmenšují čekání na pomalejší paměť.",
+            {
+                "Více jader jsou samostatné jednotky pro souběžnou práci.",
+                "Hyper-Threading / SMT nechá jedno jádro zpracovat dvě "
+                "vlákna najednou.",
+                "Cache je vyrovnávací paměť mezi rychlým jádrem a pomalejšími "
+                "součástmi.",
+                "Bývá ve třech úrovních: L1, L2 a L3.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Teplo", "Chlazení procesoru",
+            "Tip: chlazení prodlužuje životnost a dovolí přetaktování.",
+            {
+                "Chladič odvádí teplo z čipu.",
+                "Vzduchové chlazení je pasivní blok a ventilátor.",
+                "Je levné a spolehlivé.",
+                "Vodní all-in-one vede teplo kapalinou do radiátoru.",
+                "U procesoru tak zabere méně místa.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[14], "hw_unit15", "hw_unit15_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit15_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Jak vzniká takt procesoru?",
+         {"Jen z napětí 12 V",
+          "Jako součin base clock 100 MHz a násobiče",
+          "Jen z počtu USB portů",
+          "Z rychlosti ventilátoru ve skříni"},
+         4, 1},
+        {"Co umí Hyper-Threading / SMT?",
+         {"Jedno jádro zpracuje dvě vlákna současně",
+          "Vypne chlazení",
+          "Zdvojnásobí napětí zdroje",
+          "Nahradí operační paměť diskem"},
+         4, 0},
+        {"K čemu je cache L1, L2 a L3?",
+         {"K napájení grafické karty",
+          "K uložení BIOSu na baterii",
+          "Vyrovnává rychlostní rozdíl mezi procesorem a ostatními částmi",
+          "K větrání zadní stěny"},
+         4, 2},
+        {"Čím se vyznačuje vzduchové chlazení CPU?",
+         {"Jen kapalinou bez ventilátoru",
+          "Pasivním blokem a ventilátorem; je levné a spolehlivé",
+          "Tím, že procesor nehřeje",
+          "Tím, že se montuje jen na disk"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "Takt = 100 MHz × násobič",
+        "SMT = dvě vlákna na jedno jádro",
+        "Cache vyrovnává rychlost",
+        "Vzduch: blok + ventilátor",
+    };
+    return build_hw_mcq_page(14, "hwunit15", "hw_ex15_title", "hw_quiz15_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit16_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Karty", "Přídavné karty",
+            "Tip: karta je plošný spoj, který počítači přidá schopnost.",
+            {
+                "Rozšiřující karta vylepší nebo rozšíří to, co počítač umí.",
+                "Typické jsou grafické, zvukové, síťové a televizní karty.",
+                "Sloty se vyvíjely, proto karta obvykle nejde zasunout "
+                "do libovolného slotu.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   PCIe", "Kam se karta dává",
+            "Tip: grafika chce nejširší slot.",
+            {
+                "Grafické karty patří do PCI Express ×16.",
+                "Ostatní karty se dnes dávají do PCI Express ×1 až ×4.",
+                "Číslo za × říká, kolik linek slot kartě dá.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[15], "hw_unit16", "hw_unit16_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit16_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"K čemu je přídavná karta?",
+         {"Rozšíří nebo vylepší schopnosti počítače",
+          "Nahradí napájecí zdroj",
+          "Jen uzavře skříň",
+          "Ukládá BIOS"},
+         4, 0},
+        {"Do jakého slotu patří grafická karta?",
+         {"Do ISA", "Do PCI Express ×16", "Do FDD", "Do F_PANEL"},
+         4, 1},
+        {"Kam se dnes dávají ostatní karty?",
+         {"Jen do AGP",
+          "Jen na přední stěnu skříně",
+          "Do PCI Express ×1 až ×4",
+          "Přímo do patice procesoru"},
+         4, 2},
+        {"Proč nejde karta zasunout do každého slotu?",
+         {"Sloty se liší a karta sedí jen do odpovídajícího",
+          "Protože všechny sloty jsou stejné",
+          "Protože karty nemají kontakty",
+          "Protože to zakazuje airflow"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Karta rozšiřuje schopnosti PC",
+        "GPU → PCIe ×16",
+        "Ostatní karty → PCIe ×1 až ×4",
+        "Slot a karta k sobě musí sedět",
+    };
+    return build_hw_mcq_page(15, "hwunit16", "hw_ex16_title", "hw_quiz16_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit17_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Obraz", "Z čeho se skládá obraz",
+            "Tip: hry skládají scénu hlavně z trojúhelníků.",
+            {
+                "Digitalizace obrazu je vzorkování, kvantování a kódování.",
+                "Jas může mít třeba 256 úrovní, nebo jen 2.",
+                "Pixel je bod v obraze.",
+                "Polygon je 2D mnohoúhelník; ve hrách často trojúhelník, "
+                "protože ho GPU zpracuje nejjednodušeji.",
+                "Vertex je vrchol, edge je hrana.",
+                "Textura je bitmapa namapovaná na 3D model.",
+                "Ray tracing je metoda sledování paprsku.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Typy", "Integrovaná a samostatná grafika",
+            "Tip: integrovaný čip šetří peníze, samostatná karta přidá výkon.",
+            {
+                "Integrovaná grafika je čip přímo na základní desce.",
+                "Bývá v levnějších a kancelářských sestavách i v noteboocích.",
+                "Má nižší výkon a nižší cenu a může brzdit zbytek systému.",
+                "Samostatná karta se dává do rozšiřujícího slotu.",
+                "Míří na hráče a náročnější uživatele.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Cesta", "Co je na kartě a kam jde obraz",
+            "Tip: obraz jde z CPU do grafické paměti, pak do GPU a dál na monitor.",
+            {
+                "Na kartě je GPU, RAMDAC, paměti, sběrnice, porty a často "
+                "konektor přídavného napájení (Molex).",
+                "GPU mívá aktivní chladič, okolo něj sedí paměťové čipy.",
+                "Datový tok začíná v procesoru počítače a jde do grafické "
+                "paměti.",
+                "GPU data zpracuje a pošle je do převodníku signálu.",
+                "Odtud obraz pokračuje do monitoru (framebuffer).",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[16], "hw_unit17", "hw_unit17_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit17_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je pixel?",
+         {"Bod v obraze", "Hrana polygonu", "Napájecí konektor",
+          "Typ pevného disku"},
+         4, 0},
+        {"Proč hry často používají trojúhelník?",
+         {"Protože má víc hran než čtverec",
+          "Pro grafickou kartu je nejjednodušší na zpracování",
+          "Protože nepotřebuje texturu",
+          "Protože nahradí monitor"},
+         4, 1},
+        {"Čím se vyznačuje integrovaná grafika?",
+         {"Je vždy rychlejší než samostatná karta",
+          "Sedí jen v mechanice DVD",
+          "Čip je na desce, bývá levnější a má nižší výkon",
+          "Nemá vliv na zbytek počítače"},
+         4, 2},
+        {"Jakou cestou jde obraz?",
+         {"CPU → grafická paměť → GPU → převodník → monitor",
+          "Monitor → disk → zdroj → skříň",
+          "Jen z BIOSu přímo do reproduktoru",
+          "Z F_PANEL rovnou na tiskárnu"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Pixel = bod obrazu",
+        "Trojúhelník je pro GPU nejjednodušší",
+        "Integrovaná grafika je na desce",
+        "CPU → VRAM → GPU → převodník → monitor",
+    };
+    return build_hw_mcq_page(16, "hwunit17", "hw_ex17_title", "hw_quiz17_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit18_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   GPU", "Grafický procesor",
+            "Tip: pro výkon počítače je GPU stejně důležité jako CPU.",
+            {
+                "GPU přijímá data od CPU a počítá obraz.",
+                "Je to složitý čip se stovkami milionů tranzistorů.",
+                "Sleduje se takt v MHz, kapacita paměti a počet shaderů.",
+                "Dřív se počítaly vertex a pixel shadery, dnes spíš "
+                "unifikované, částečně programovatelné jednotky.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Programy", "Shader a renderování",
+            "Tip: vertex shader posouvá vrcholy, ale nové nevytváří.",
+            {
+                "Shader je program, který řídí části grafického řetězce.",
+                "Renderování tvoří obraz podle počítačového modelu, "
+                "nejčastěji 3D.",
+                "Render je vizualizace: model se přenese do 2D bitmapy.",
+                "Softwarový render počítá procesor. Je přesnější, ale "
+                "mnohonásobně pomalejší.",
+                "Hardwarový render slouží pro náhledy a hry.",
+                "Vertex shader transformuje vrcholy a nové nevytváří.",
+                "Pixel shader potom mapuje texturu a přidává efekty, "
+                "třeba ray tracing nebo bump mapping.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Výpočty", "CUDA a architektura GPU",
+            "Tip: většinu čipu tvoří mnoho jednoduchých procesorů.",
+            {
+                "CUDA je paralelní platforma NVIDIA a nechá GPU počítat "
+                "i jiné úlohy než obraz.",
+                "Zrychluje třeba lineární algebru, obraz, video a "
+                "hluboké učení.",
+                "Obdoba u AMD se jmenuje FireStream.",
+                "GPU vzniklo pro hry: miliony polygonů a velké textury.",
+                "Je stavěné na tisíce vláken, hodně počítání a málo "
+                "podmínek a na sekvenční čtení paměti.",
+                "Jednoduché skalární procesory jsou sdružené do "
+                "streaming multiprocesorů.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[17], "hw_unit18", "hw_unit18_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit18_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je shader?",
+         {"Program řídící části grafického řetězce",
+          "Napájecí konektor Molex",
+          "Typ pevného disku",
+          "Větrací mřížka"},
+         4, 0},
+        {"Co vertex shader nedělá?",
+         {"Neposouvá vrcholy",
+          "Nevytváří nové vertexy",
+          "Nesahá na grafickou kartu",
+          "Nepoužívá se ve 3D"},
+         4, 1},
+        {"Čím se liší softwarový render?",
+         {"Je rychlejší, protože ho počítá jen GPU",
+          "Umí jen černobíle",
+          "Počítá ho CPU, je přesnější a mnohem pomalejší",
+          "Nevytvoří bitmapu"},
+         4, 2},
+        {"Co je CUDA?",
+         {"Platforma NVIDIA pro výpočty na GPU",
+          "Standard napájecího zdroje",
+          "Starý slot ISA",
+          "Formát diskety"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Shader řídí řetězec karty",
+        "Vertex shader nové vrcholy nezakládá",
+        "Softwarový render = CPU, přesný a pomalý",
+        "CUDA je od NVIDIA, u AMD je FireStream",
+    };
+    return build_hw_mcq_page(17, "hwunit18", "hw_ex18_title", "hw_quiz18_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit19_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Převod", "RAMDAC a grafická paměť",
+            "Tip: nižší CAS latency znamená kratší čekání.",
+            {
+                "RAMDAC převádí digitální data na analogová.",
+                "U dnešních karet je uvnitř GPU a má přednost při čtení "
+                "paměti.",
+                "Okolo GPU jsou grafické paměti, často DDR nebo GDDR5.",
+                "Hlavní parametry jsou kapacita a frekvence.",
+                "CAS latency je čekání, než se po zadání adresy sloupce "
+                "data objeví na pinech.",
+                "Čím nižší latence, tím lépe. Časy paměti se udávají "
+                "v nanosekundách.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Spojení", "Sběrnice grafické karty",
+            "Tip: PCIe 4.0 má na jedné lince 2 GB/s.",
+            {
+                "Typická sběrnice karty je PCI Express ×16, dřív to bylo AGP.",
+                "PCIe 4.0 zdvojnásobí propustnost proti předchozí verzi "
+                "při stejném počtu linek.",
+                "Rychlost jedné linky stoupla z 1 GB/s na 2 GB/s.",
+                "Slot ×16 tak teoreticky dává 32 GB/s.",
+                "M.2 se čtyřmi linkami dává 8 GB/s.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Výstupy", "Porty na kartě",
+            "Tip: stejný obraz může odejít analogově i digitálně.",
+            {
+                "Běžné výstupy jsou D-Sub, DVI, HDMI a DisplayPort.",
+                "Starší karty mají i TV výstup, S-Video nebo cinch.",
+                "Výrobci parametry přikrášlují, proto se karty srovnávají "
+                "benchmarkem.",
+                "Známý test je 3DMark. Podíl má i procesor, rozhoduje ale "
+                "grafická karta.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[18], "hw_unit19", "hw_unit19_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit19_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co dělá RAMDAC?",
+         {"Převádí analogový signál na digitální",
+          "Převádí digitální data na analogová a dnes je v GPU",
+          "Počítá jen cache procesoru",
+          "Formátuje pevný disk"},
+         4, 1},
+        {"Co znamená nižší CAS latency?",
+         {"Data se objeví dřív, takže je to lepší",
+          "Karta má míň portů",
+          "Sběrnice je pomalejší",
+          "Monitor má nižší rozlišení"},
+         4, 0},
+        {"Jakou teoretickou propustnost má PCIe 4.0 ×16?",
+         {"2 GB/s", "8 GB/s", "32 GB/s", "264 MB/s"},
+         4, 2},
+        {"Co se stalo s rychlostí jedné linky u PCIe 4.0?",
+         {"Klesla z 2 GB/s na 1 GB/s",
+          "Stoupla z 1 GB/s na 2 GB/s",
+          "Zůstala 133 MB/s",
+          "Záleží jen na barvě slotu"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "RAMDAC = digital → analog, dnes v GPU",
+        "Nižší CAS = kratší čekání",
+        "PCIe 4.0 ×16 = 32 GB/s",
+        "Jedna linka: 1 GB/s → 2 GB/s",
+    };
+    return build_hw_mcq_page(18, "hwunit19", "hw_ex19_title", "hw_quiz19_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit20_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Více karet", "SLI, CrossFire a režimy",
+            "Tip: první režim IBM PC byl v roce 1982 MDA.",
+            {
+                "SLI od NVIDIA spojí dvě grafické karty do jednoho celku.",
+                "Vychází levněji než jedna špičková karta.",
+                "Obdoba u ATI se jmenuje CrossFire.",
+                "Režim určuje rozlišení a barevnou hloubku.",
+                "Dnešní karty zvládnou i 3200×2400 (QUXGA) při 32 bitech.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Názvy", "720p, 1080p, 4K a 8K",
+            "Tip: 4K má čtyřikrát víc pixelů než 1080p, 8K šestnáctkrát.",
+            {
+                "720p je 1280×720, tedy HD nebo HD Ready.",
+                "1080p je 1920×1080, tedy Full HD.",
+                "1440p je 2560×1440, tedy QHD, čtyřnásobek 720p.",
+                "4K (2160p) je 3840×2160, čtyřnásobek Full HD.",
+                "8K (4320p) je 7680×4320, šestnáctinásobek Full HD.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[19], "hw_unit20", "hw_unit20_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit20_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je 1080p?",
+         {"1920×1080, Full HD",
+          "1280×720, HD Ready",
+          "7680×4320, 8K",
+          "3200×2400, QUXGA"},
+         4, 0},
+        {"Co je 4K?",
+         {"1280×720",
+          "3840×2160, čtyřnásobek pixelů Full HD",
+          "2560×1440",
+          "640×480"},
+         4, 1},
+        {"Kolikrát víc pixelů má 8K proti 1080p?",
+         {"Dvakrát", "Čtyřikrát", "Šestnáctkrát", "Stejně"},
+         4, 2},
+        {"Co je SLI a co je CrossFire?",
+         {"SLI spojuje karty NVIDIA, CrossFire je obdoba ATI",
+          "Obojí je typ paměti DDR",
+          "SLI je port HDMI, CrossFire je D-Sub",
+          "Jsou to dva názvy stejné firmy"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "1080p = 1920×1080",
+        "4K = 3840×2160",
+        "8K má 16× víc pixelů než 1080p",
+        "SLI = NVIDIA, CrossFire = ATI",
+    };
+    return build_hw_mcq_page(19, "hwunit20", "hw_ex20_title", "hw_quiz20_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit21_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Výstup", "Zvuková karta",
+            "Tip: digitalizace zvuku je vzorkování, kvantování a kódování.",
+            {
+                "Karta zajistí zvukový výstup.",
+                "Převede digitální signál na analogový, který zahraje "
+                "reproduktor.",
+                "Rozlišujeme integrované, interní a externí karty.",
+                "CD má 44,1 kHz a bitovou hloubku 16 až 24 bitů.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Provedení", "Integrovaná, interní, externí a herní",
+            "Tip: externí karta se připojuje přes USB a sedí mimo skříň.",
+            {
+                "Integrovaný zvuk je na téměř každé desce a na multimédia "
+                "stačí.",
+                "Má slabší zesílení a méně konektorů.",
+                "Interní karta jde do PCIe a nabízí prostorový zvuk "
+                "a software pro nastavení.",
+                "Externí karta se hodí, když integrovaná nestačí, i do "
+                "notebooku.",
+                "Herní karta, interní nebo externí, drží prostorový zvuk, "
+                "malou odezvu a přesnou reprodukci.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Čip", "DSP a nahrávání",
+            "Tip: kondenzátorový mikrofon chce fantomové napájení 48 V.",
+            {
+                "Zvukový čip má jádra, D/A a A/D převodníky, sluchátkový "
+                "zesilovač a vstupy i výstupy.",
+                "DSP stojí na harvardské architektuře: paměť programu je "
+                "oddělená od paměti dat, na rozdíl od von Neumannova modelu.",
+                "Počet vstupů má odpovídat počtu nástrojů nahrávaných najednou.",
+                "Na zpěv stačí jeden analogový vstup.",
+                "Některé nástroje, třeba keyboard, chtějí vysokoimpedanční "
+                "vstup Hi-Z.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[20], "hw_unit21", "hw_unit21_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit21_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co zvuková karta dělá se signálem?",
+         {"Převede digitální signál na analogový pro reproduktor",
+          "Převede jen obraz na texturu",
+          "Nahradí procesor",
+          "Ukládá data na pásku"},
+         4, 0},
+        {"Jak se připojuje interní zvuková karta?",
+         {"Jen přes VGA", "Přes slot PCIe", "Jen přes FDD", "Přes baterii CMOS"},
+         4, 1},
+        {"Jak se připojuje externí zvuková karta?",
+         {"Do patice procesoru", "Do slotu AGP", "Přes USB, mimo skříň",
+          "Jen na přední LED"},
+         4, 2},
+        {"K čemu je fantomové napájení 48 V?",
+         {"Pro kondenzátorové mikrofony",
+          "Pro vypnutí zdroje ATX",
+          "Pro chlazení procesoru",
+          "Pro slot ISA"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Digitál → analog pro reproduktor",
+        "Interní karta sedí v PCIe",
+        "Externí karta jde přes USB",
+        "48 V je fantom pro kondenzátorový mikrofon",
+    };
+    return build_hw_mcq_page(20, "hwunit21", "hw_ex21_title", "hw_quiz21_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit22_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Síť", "Síťová karta",
+            "Tip: dnes nemusí jít jen o kabel, umí i Wi-Fi.",
+            {
+                "Integrovaná karta má ethernetový konektor přímo na desce.",
+                "Interní karta kombinuje kabel a Wi-Fi a jde do PCIe.",
+                "Externí karta se strčí do USB.",
+                "Wake on LAN umí počítač zapnout po datové síti.",
+                "Externí anténa zvětší dosah.",
+                "MIMO použije víc antén a zvedne propustnost.",
+                "WPS zjednoduší nastavení bezdrátového spojení.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Televize", "Televizní karta",
+            "Tip: tuner na základní desce integrovaný nebývá.",
+            {
+                "Televizní tuner na desce integrovaný není nikdy.",
+                "Přidá počítači příjem televizního signálu.",
+                "Umí signál i zaznamenat.",
+                "Je to další rozšiřující karta, ne součást čipsetu.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[21], "hw_unit22", "hw_unit22_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit22_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Kde je integrovaná síťová karta?",
+         {"Ethernetový konektor přímo na desce",
+          "Jen v optické mechanice",
+          "Jen jako externí disk",
+          "V patici procesoru"},
+         4, 0},
+        {"Co je Wake on LAN?",
+         {"Vypnutí monitoru při nečinnosti",
+          "Zapnutí počítače přes datovou síť",
+          "Zrychlení pevného disku",
+          "Jiný název pro BIOS"},
+         4, 1},
+        {"Co přináší MIMO?",
+         {"Jednu anténu a nižší dosah",
+          "Jen kabelový konektor",
+          "Více antén a vyšší propustnost",
+          "Zrušení Wi-Fi"},
+         4, 2},
+        {"Jak je to s televizní kartou na desce?",
+         {"Není integrovaná nikdy",
+          "Je na každé desce ATX",
+          "Nahrazuje zvukovou kartu",
+          "Je součást severního mostu"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Integrovaná síťovka = LAN na desce",
+        "Wake on LAN zapne počítač po síti",
+        "MIMO = víc antén, vyšší propustnost",
+        "TV tuner na desce integrovaný nebývá",
+    };
+    return build_hw_mcq_page(21, "hwunit22", "hw_ex22_title", "hw_quiz22_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit23_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Trvalá data", "Vnější paměti a HDD",
+            "Tip: HDD je mechanický, otřes ho může poškodit.",
+            {
+                "Vnější paměť drží data dlouhodobě, má kapacitu v terabajtech "
+                "a je energeticky nezávislá.",
+                "Patří sem HDD, SSD a USB flash disky.",
+                "Pevný disk zaznamenává data magneticky.",
+                "Notebookové disky mají 2,5 palce, stolní 3,5 palce.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Čísla", "Parametry pevného disku",
+            "Tip: běžné otáčky jsou 5400 a 7200 za minutu.",
+            {
+                "Kapacita se udává v terabajtech.",
+                "Přístupová doba je v milisekundách.",
+                "Přenosová rychlost je ve stovkách MB/s.",
+                "Cache bývá třeba 256 MB.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Stopy", "Zápis, čtení a struktura",
+            "Tip: hlavy se ploten nedotýkají, vznášejí se na vzduchu.",
+            {
+                "Zápis dělá cívka magnetickým polem.",
+                "Čtení používá elektromagnetickou indukci.",
+                "Disk je hermeticky uzavřený.",
+                "Formátování vytvoří stopy a sektory.",
+                "Cylindr jsou stejné stopy na všech plotnách.",
+                "Defragmentace složí rozházená data k sobě, aby se četla "
+                "rychleji.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[22], "hw_unit23", "hw_unit23_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit23_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Na jakém principu pracuje HDD?",
+         {"Na magnetickém záznamu a je mechanický",
+          "Jen na optickém laseru",
+          "Nemá pohyblivé části",
+          "Drží data jen při zapnutém napájení"},
+         4, 0},
+        {"Jaké rozměry mají pevné disky?",
+         {"Jen 8 palců",
+          "2,5\" do notebooku a 3,5\" do stolního počítače",
+          "12 cm jako CD",
+          "Jen formát microSD"},
+         4, 1},
+        {"Jaké otáčky se u HDD běžně uvádějí?",
+         {"100 a 200 ot/min", "1000 ot/min", "5400 a 7200 ot/min",
+          "48 000 ot/min"},
+         4, 2},
+        {"Jak disk zapisuje a čte?",
+         {"Zápis cívkou, čtení elektromagnetickou indukcí",
+          "Zápis laserem, čtení ventilátorem",
+          "Obojí jen přes BIOS",
+          "Zápis do CMOS, čtení z baterie"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "HDD = magnetický a mechanický",
+        "2,5\" notebook, 3,5\" desktop",
+        "5400 a 7200 ot/min",
+        "Zápis = magnetické pole, čtení = indukce",
+    };
+    return build_hw_mcq_page(22, "hwunit23", "hw_ex23_title", "hw_quiz23_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit24_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Bez pohybu", "SSD",
+            "Tip: fragmentace u SSD problém není.",
+            {
+                "SSD je polovodičový disk bez pohyblivých částí.",
+                "Je odolnější, tiché, úspornější a rychlejší než HDD.",
+                "Buňky se opotřebovávají, počet zápisů je omezený.",
+                "Bývá dražší než plotnový disk stejné kapacity.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Buňky", "FTL, TRIM a záchrana",
+            "Tip: smazání smaže metadata. U SSD TRIM záchranu ztěžuje.",
+            {
+                "FTL rovnoměrně rozkládá zápisy, aby se buňky sjížděly stejně.",
+                "TRIM řekne disku, které bloky už nikdo nepoužívá, a zápis "
+                "se tím zrychlí.",
+                "Poškození může být hardwarové (mechanika, elektronika, "
+                "oheň, voda) nebo softwarové (smazání, formát, virus).",
+                "Smazání maže metadata, obsah na HDD často zůstane a dá "
+                "se obnovit.",
+                "U SSD je obnova kvůli TRIM obtížnější.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Přenos", "SSHD a USB flash",
+            "Tip: konektor USB flash disku je počítaný asi na 1500 cyklů.",
+            {
+                "SSHD je pevný disk s malou SSD částí, zhruba 8 GB.",
+                "Často používané soubory si přesune na rychlou část.",
+                "Dává smysl, když chcete kapacitu i rychlost za rozumnou cenu.",
+                "USB flash je malé médium na přenos dat po sběrnici USB.",
+                "Životnost buněk záleží na typu SLC, MLC nebo TLC a na "
+                "kvalitě hardwaru.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[23], "hw_unit24", "hw_unit24_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit24_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je hlavní výhoda SSD proti HDD?",
+         {"Má plotny a je hlučnější",
+          "Nemá pohyblivé části, je tiché a rychlejší",
+          "Data ztratí při vypnutí",
+          "Nejde ho použít jako systémový disk"},
+         4, 1},
+        {"Jaká je nevýhoda SSD?",
+         {"Buňky se opotřebovávají a disk bývá dražší",
+          "Musí se defragmentovat každý den",
+          "Nepřežije přesun po stole",
+          "Nemá TRIM ani FTL"},
+         4, 0},
+        {"Co dělá příkaz TRIM?",
+         {"Zvýší otáčky ploten",
+          "Smaže BIOS",
+          "Oznámí SSD, které bloky už nejsou použité",
+          "Zapne fantomové napájení"},
+         4, 2},
+        {"Co je SSHD?",
+         {"Jen jiný název pro disketu",
+          "HDD doplněné o malou SSD část, asi 8 GB",
+          "Optický disk s modrým laserem",
+          "Paměťová karta SD"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "SSD = bez pohyblivých částí",
+        "Buňky se sjíždějí a cena je vyšší",
+        "TRIM hlásí volné bloky",
+        "SSHD = HDD + asi 8 GB SSD",
+    };
+    return build_hw_mcq_page(23, "hwunit24", "hw_ex24_title", "hw_quiz24_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit25_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Přehled", "Výměnná média",
+            "Tip: páska se musí převinout, proto se hodí na archiv, ne na denní práci.",
+            {
+                "Mechanická média: děrné štítky a děrné pásky.",
+                "Magnetická: pásky a diskety.",
+                "Optická: CD, DVD a Blu-ray.",
+                "Elektrická: paměťové karty a USB flash.",
+                "K souboru na pásce nejde skočit, páska se na místo přetočí.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Pásky", "Magnetická páska",
+            "Tip: páska pořád slouží velkým firmám na dlouhodobou zálohu.",
+            {
+                "Jedna raná páska unesla data asi deseti tisíc děrných štítků.",
+                "Kapacita začínala u stovek kilobajtů, třeba 850 kB.",
+                "Dlouho měla vyšší kapacitu než pevné disky; zlom přišel "
+                "kolem roku 2010 s terabajtovými disky.",
+                "Podle IBM ji v USA používá přímo nebo nepřímo až 82 % "
+                "velkých firem.",
+                "Odhad je stovky miliard gigabajtů dat na páskách po světě.",
+                "Sklad CSCS v Curychu má 27 PB na 17 000 páskách LTO-5 "
+                "po 1500 GB.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Diskety", "Z pásky na kotouč",
+            "Tip: ikona ukládání je 3,5\" disketa.",
+            {
+                "Stopa se přesunula na otáčející se mylarový kotouč.",
+                "Soustředné stopy umožní náhodný přístup, ne jen převíjení.",
+                "8\" disketa (1971) měla 100 kB a zápis z jedné strany.",
+                "5,25\" (1976) se dala poslat poštou; kapacita 80 až 1200 kB.",
+                "3,5\" zavedla Sony v roce 1981.",
+                "Standard 1990–1995 je 1,44 MB, pevný obal a dvířka, "
+                "vloží se jen správně.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[24], "hw_unit25", "hw_unit25_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit25_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Proč se páska hodí na archiv a ne na běžnou práci?",
+         {"K souboru se musí převinout, přístup není náhodný",
+          "Nemá žádnou kapacitu",
+          "Nejde ji vyjmout z mechaniky",
+          "Maže se při každém čtení"},
+         4, 0},
+        {"Jaká byla raná 8\" disketa?",
+         {"Z roku 1981 a měla 1,44 MB",
+          "Z roku 1971 a měla 100 kB",
+          "Z roku 2010 a měla 1 TB",
+          "Byla optická"},
+         4, 1},
+        {"Co platí o 3,5\" disketě?",
+         {"Zavedla ji IBM v roce 1960 a měla 850 kB",
+          "Neměla pevný obal",
+          "Sony, 1981, standardně 1,44 MB",
+          "Šla vložit oběma směry"},
+         4, 2},
+        {"Čím disketa zrychlila přístup proti pásce?",
+         {"Soustředné stopy dovolí náhodný přístup",
+          "Má modrý laser",
+          "Nemá magnetickou vrstvu",
+          "Čte se jen od konce"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Páska je sekvenční",
+        "8\" = 1971, 100 kB",
+        "3,5\" = Sony 1981, 1,44 MB",
+        "Stopy na kotouči = náhodný přístup",
+    };
+    return build_hw_mcq_page(24, "hwunit25", "hw_ex25_title", "hw_quiz25_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit26_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Laser", "Jak se čte optický disk",
+            "Tip: land odrazí paprsek (1), pit ho rozptýlí (0).",
+            {
+                "Kotouč má průměr 12 cm a tloušťku 1,2 mm.",
+                "Data leží ve spirále od středu ke kraji.",
+                "U 700MB CD je stopa dlouhá 6,244 km.",
+                "Spirála střídá pity (prohlubně) a landy (plochy).",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Generace", "CD, DVD a Blu-ray",
+            "Tip: Blu-ray používá modrý laser 405 nm, DVD červený 650 nm.",
+            {
+                "CD má 650–870 MB. CD-R vypálí organické barvivo asi při "
+                "290 °C a zápis je nevratný.",
+                "CD-RW jde přepsat tisíckrát až stotisíckrát. Slitina "
+                "AgInSbTe mění krystaly zahřátím a chlazením.",
+                "DVD má 1,4 až 15,82 GB, stopu 11,84 km a umí dvě vrstvy "
+                "i obě strany.",
+                "Blu-ray má 25–128 GB. Kratší vlnová délka znamená hustší "
+                "záznam.",
+                "Optika ustoupila kvůli kapacitě, pomalému zápisu, "
+                "spolehlivosti a tomu, že obsah je online.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Karty", "Flash karty",
+            "Tip: NAND paměť vytlačila optické mechaniky.",
+            {
+                "Flash je statická vnější paměť: malá, s velkou kapacitou, "
+                "odolná vůči vibracím a magnetickému poli.",
+                "Buňky mají plovoucí hradlo: SLC, MLC, TLC nebo QLC.",
+                "Karty: SD (i mini a micro), MMC, Memory Stick a "
+                "CompactFlash.",
+                "Čtečka na USB mívá víc slotů, aby vzala víc formátů.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[25], "hw_unit26", "hw_unit26_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit26_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co se stane, když laser trefí land a když trefí pit?",
+         {"Obojí je signál 0",
+          "Land se odrazí jako 1, pit se rozptýlí jako 0",
+          "Land je 0 a pit je 1",
+          "Laser se na disku nepoužívá"},
+         4, 1},
+        {"Jak se zapisuje CD-R?",
+         {"Vypálením barviva, zápis je nevratný",
+          "Magnetickou cívkou jako HDD",
+          "Libovolně mnohokrát jako RAM",
+          "Jen změnou názvu souboru"},
+         4, 0},
+        {"Čím se laser Blu-ray liší od DVD?",
+         {"Má červený laser 650 nm a menší kapacitu",
+          "Nemá spirálu",
+          "Má modrý laser 405 nm a kapacitu 25–128 GB",
+          "Má stejný laser jako CD"},
+         4, 2},
+        {"Které karty patří mezi flash média?",
+         {"Jen děrné štítky",
+          "SD, MMC, Memory Stick a CompactFlash",
+          "Jen 8\" diskety",
+          "Jen pásky LTO"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "Land = odraz = 1, pit = rozptyl = 0",
+        "CD-R pálí barvivo a nejde vrátit",
+        "Blu-ray: 405 nm, 25–128 GB",
+        "SD, MMC, MS, CF",
+    };
+    return build_hw_mcq_page(25, "hwunit26", "hw_ex26_title", "hw_quiz26_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit27_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 2   •   Vstup", "Polohovací zařízení a klávesnice",
+            "Tip: klávesnice má šest částí.",
+            {
+                "Polohovací zařízení hýbe kurzorem a bývá drátové i bezdrátové.",
+                "Hlavní písmenková část.",
+                "Speciální a české znaky.",
+                "Ovládací tlačítka a posunovací tlačítka.",
+                "Numerická klávesnice a funkční klávesy.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Typy", "Membrána, guma, nůžky a laser",
+            "Tip: scissor-switch je notebookový, mělký a tichý.",
+            {
+                "Membránová je nejčastější u stolních počítačů. Stisk "
+                "propojí membránu a je velmi tichá.",
+                "U vodivé gumy se guma prohne ke kontaktu a sepne obvod. "
+                "Pod ní je izolační destička a pozlacený kontakt.",
+                "Scissor-switch nemá gumovou membránu. Klávesa se propadne "
+                "po nůžkovém mechanismu.",
+                "Laserová klávesnice promítá rozložení na podložku a senzor "
+                "snímá stisk. Hodí se k mobilu.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[26], "hw_unit27", "hw_unit27_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit27_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Z kolika částí se skládá běžná klávesnice?",
+         {"Ze šesti", "Ze dvou", "Z dvanácti", "Jen z numerického bloku"},
+         4, 0},
+        {"Jaká je membránová klávesnice?",
+         {"Nejhlučnější a jen pro notebooky",
+          "Nejpoužívanější u stolních počítačů a velmi tichá",
+          "Promítá se laserem",
+          "Nemá žádný kontakt"},
+         4, 1},
+        {"Co je scissor-switch?",
+         {"Gumová membrána ve stolním PC",
+          "Laser na podložce",
+          "Notebookový nůžkový mechanismus, mělký a tichý stisk",
+          "Jen funkční klávesy"},
+         4, 2},
+        {"Jak pracuje laserová klávesnice?",
+         {"Promítne rozložení a senzor snímá virtuální stisk",
+          "Používá vodivou gumu",
+          "Je jen mechanická s nejhlubším stiskem",
+          "Čte jen numerický blok"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Šest částí: písmena, znaky, ovládání, posun, numerická, funkce",
+        "Membrána = nejčastější stolní, tichá",
+        "Scissor = nůžky, notebook",
+        "Laser promítá klávesy na podložku",
+    };
+    return build_hw_mcq_page(26, "hwunit27", "hw_ex27_title", "hw_quiz27_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit28_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Kulička", "Kuličková myš",
+            "Tip: pohyb se měří prosvícením otvorů v kotoučcích.",
+            {
+                "Posuv otáčí kuličkou.",
+                "Kulička točí válečky pro osy x a y.",
+                "Kotoučky na válečcích mají otvory.",
+                "Infračervené diody otvory prosvěcují.",
+                "Senzory záblesky převedou na polohu.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Prostor", "Spaceball, trackball, tablet a digitizér",
+            "Tip: tablet pozná tlak, až ve stovkách až 1024 úrovních.",
+            {
+                "Spaceball má pohyb a rotaci po třech osách. V CAD a "
+                "grafice zvedá efektivitu zhruba o 30–50 %.",
+                "Trackball je jako obrácená kuličková myš. Na rychlý "
+                "a přesný pohyb se nehodí.",
+                "Tablet má síť vodičů, která reaguje na pero. Hodí se "
+                "do CAD a grafiky, kreslit jde i na LCD.",
+                "Digitizér je speciální myš na přesnou polohu a chce "
+                "speciální podložku. Měří odpor mezi ukazovátkem a podložkou.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Notebook", "Trackpoint a touchpad",
+            "Tip: trackpoint sedí mezi klávesami G, H a B.",
+            {
+                "Trackpoint je malý joystick a šetří místo.",
+                "Touchpad je nejčastější polohovací zařízení notebooku.",
+                "Snímá elektrickou kapacitu prstu.",
+                "Hotspoty na ploše mají zvláštní účel, třeba posuvník.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[27], "hw_unit28", "hw_unit28_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit28_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Jak kuličková myš pozná pohyb?",
+         {"Laserem na podložce bez kuličky",
+          "Kulička točí válečky a infračervené diody prosvěcují otvory",
+          "Jen kapacitou prstu",
+          "Měřením 48 V"},
+         4, 1},
+        {"Kde je trackpoint?",
+         {"Mezi klávesami G, H a B",
+          "Na zadní stěně skříně",
+          "V optické mechanice",
+          "Jen u stolní myši"},
+         4, 0},
+        {"Jak touchpad snímá prst?",
+         {"Kuličkou a válečky",
+          "Magnetickou páskou",
+          "Elektrickou kapacitou prstu",
+          "Fantomovým napájením"},
+         4, 2},
+        {"Co umí grafický tablet?",
+         {"Jen zapnout počítač",
+          "Reaguje na pero a tlak, až 1024 úrovní",
+          "Nahradí napájecí zdroj",
+          "Čte jen děrné štítky"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "Kulička, válečky, IR diody",
+        "Trackpoint je mezi G, H a B",
+        "Touchpad měří kapacitu",
+        "Tablet: pero a tlak až 1024 úrovní",
+    };
+    return build_hw_mcq_page(27, "hwunit28", "hw_ex28_title", "hw_quiz28_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit29_page(void) {
+    static const NetSlide slides[] = {
+        {
+            "1 / 3   •   Hry", "Gamepad, joystick a volant",
+            "Tip: force feedback přidá vibrace a nárazy.",
+            {
+                "Gamepad ovládá hry a mívá programovatelná tlačítka.",
+                "DualShock přidává vibrace.",
+                "Joystick je páka na základně. Dřív byl analogový, "
+                "dnes digitální.",
+                "Používá se i v letadlech nebo bagrech.",
+                "Volant napodobuje řízení: pedály, řadící páka a "
+                "programovatelná tlačítka.",
+                NULL,
+            },
+        },
+        {
+            "2 / 3   •   Tělo", "Kinect",
+            "Tip: sleduje celé tělo ve 3D, ne jen ovladač v ruce.",
+            {
+                "Kombinuje RGB kameru, hloubkové čidlo, mikrofony a "
+                "vlastní procesor.",
+                "Sleduje pohyb celého těla v prostoru.",
+                "Reaguje na pokyny a pozná i změnu zabarvení hlasu a emoce.",
+                NULL,
+            },
+        },
+        {
+            "3 / 3   •   Displej", "Odporová a kapacitní vrstva",
+            "Tip: kapacitního displeje se musíte dotknout vodivě, třeba prstem.",
+            {
+                "Odporová vrstva má tvrzenou a vodivou vrstvu, odporové "
+                "vrstvy, vymezovací bodovou síť a sklo.",
+                "Dotyk vrstvy přitlačí k sobě a obvod se sepne.",
+                "Kapacitní displej má dvě vodivé vrstvy pod napětím, "
+                "oddělené mezerou.",
+                "Chovají se jako kondenzátor a kolem sebe mají slabé pole.",
+                "Změna kapacity prozradí místo dotyku.",
+                "Funguje to s vodivým předmětem, ne s libovolným plastem.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[28], "hw_unit29", "hw_unit29_sub",
+                               slides, G_N_ELEMENTS(slides));
+}
+
+GtkWidget *build_hw_unit29_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co přidává DualShock?",
+         {"Vibrace gamepadu",
+          "Optickou mechaniku",
+          "Slot PCIe",
+          "Magnetickou pásku"},
+         4, 0},
+        {"Co je force feedback?",
+         {"Jen jiné rozlišení monitoru",
+          "Vibrace a nárazy u joysticku a volantu",
+          "Typ paměti DDR3",
+          "Způsob formátování disku"},
+         4, 1},
+        {"Co Kinect sleduje?",
+         {"Jen stisk jedné klávesy",
+          "Jen otáčky pevného disku",
+          "Pohyb celého těla ve 3D, pomocí kamery, hloubky a mikrofonů",
+          "Jen napětí zdroje"},
+         4, 2},
+        {"Čím se musíte dotknout kapacitního displeje?",
+         {"Vodivým předmětem, například prstem",
+          "Jen nevodivým plastem",
+          "Jen speciálním perem bez elektřiny",
+          "Děrnou páskou"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "DualShock = vibrace",
+        "Force feedback = vibrace a nárazy",
+        "Kinect: RGB, hloubka, mikrofony, tělo ve 3D",
+        "Kapacitní vrstva chce vodivý dotyk",
+    };
+    return build_hw_mcq_page(28, "hwunit29", "hw_ex29_title", "hw_quiz29_head",
                              qs, hints, 4);
 }

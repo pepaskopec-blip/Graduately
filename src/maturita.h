@@ -112,8 +112,8 @@ extern char *app_progress_cetba;
 #define NET26_SLIDES    7
 #define NET27_SLIDES    8
 #define NET_LESSONS     27
-#define HW_UNITS        10
-#define HW_LESSONS       9
+#define HW_UNITS        29
+#define HW_LESSONS       29
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
 #define HW3_SLIDES       2
@@ -884,6 +884,46 @@ GtkWidget *build_hw_unit8_page(void);
 GtkWidget *build_hw_unit8_exercise_page(void);
 GtkWidget *build_hw_unit9_page(void);
 GtkWidget *build_hw_unit9_exercise_page(void);
+GtkWidget *build_hw_unit10_page(void);
+GtkWidget *build_hw_unit10_exercise_page(void);
+GtkWidget *build_hw_unit11_page(void);
+GtkWidget *build_hw_unit11_exercise_page(void);
+GtkWidget *build_hw_unit12_page(void);
+GtkWidget *build_hw_unit12_exercise_page(void);
+GtkWidget *build_hw_unit13_page(void);
+GtkWidget *build_hw_unit13_exercise_page(void);
+GtkWidget *build_hw_unit14_page(void);
+GtkWidget *build_hw_unit14_exercise_page(void);
+GtkWidget *build_hw_unit15_page(void);
+GtkWidget *build_hw_unit15_exercise_page(void);
+GtkWidget *build_hw_unit16_page(void);
+GtkWidget *build_hw_unit16_exercise_page(void);
+GtkWidget *build_hw_unit17_page(void);
+GtkWidget *build_hw_unit17_exercise_page(void);
+GtkWidget *build_hw_unit18_page(void);
+GtkWidget *build_hw_unit18_exercise_page(void);
+GtkWidget *build_hw_unit19_page(void);
+GtkWidget *build_hw_unit19_exercise_page(void);
+GtkWidget *build_hw_unit20_page(void);
+GtkWidget *build_hw_unit20_exercise_page(void);
+GtkWidget *build_hw_unit21_page(void);
+GtkWidget *build_hw_unit21_exercise_page(void);
+GtkWidget *build_hw_unit22_page(void);
+GtkWidget *build_hw_unit22_exercise_page(void);
+GtkWidget *build_hw_unit23_page(void);
+GtkWidget *build_hw_unit23_exercise_page(void);
+GtkWidget *build_hw_unit24_page(void);
+GtkWidget *build_hw_unit24_exercise_page(void);
+GtkWidget *build_hw_unit25_page(void);
+GtkWidget *build_hw_unit25_exercise_page(void);
+GtkWidget *build_hw_unit26_page(void);
+GtkWidget *build_hw_unit26_exercise_page(void);
+GtkWidget *build_hw_unit27_page(void);
+GtkWidget *build_hw_unit27_exercise_page(void);
+GtkWidget *build_hw_unit28_page(void);
+GtkWidget *build_hw_unit28_exercise_page(void);
+GtkWidget *build_hw_unit29_page(void);
+GtkWidget *build_hw_unit29_exercise_page(void);
 void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data);
 void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,

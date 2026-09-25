@@ -393,6 +393,9 @@ static gboolean run_smoke_test(gpointer data) {
         "hwunit4", "hwex4",
         "hwunit5", "hwex5", "hwunit6", "hwex6", "hwunit7", "hwex7",
         "hwunit8", "hwex8", "hwunit9", "hwex9",
+        "hwunit10", "hwex10", "hwunit15", "hwex15",
+        "hwunit20", "hwex20", "hwunit25", "hwex25",
+        "hwunit29", "hwex29",
         "unit1", "unit2", "unit3",
         "u1e1", "u1e13", "u2e1", "u2e19", "u3e1", "u3e15",
         "u1vocab", "u2vocab", "u3vocab",
@@ -545,6 +548,46 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_hw_unit8_exercise_page(), "hwex8");
     gtk_stack_add_named(main_stack, build_hw_unit9_page(), "hwunit9");
     gtk_stack_add_named(main_stack, build_hw_unit9_exercise_page(), "hwex9");
+    gtk_stack_add_named(main_stack, build_hw_unit10_page(), "hwunit10");
+    gtk_stack_add_named(main_stack, build_hw_unit10_exercise_page(), "hwex10");
+    gtk_stack_add_named(main_stack, build_hw_unit11_page(), "hwunit11");
+    gtk_stack_add_named(main_stack, build_hw_unit11_exercise_page(), "hwex11");
+    gtk_stack_add_named(main_stack, build_hw_unit12_page(), "hwunit12");
+    gtk_stack_add_named(main_stack, build_hw_unit12_exercise_page(), "hwex12");
+    gtk_stack_add_named(main_stack, build_hw_unit13_page(), "hwunit13");
+    gtk_stack_add_named(main_stack, build_hw_unit13_exercise_page(), "hwex13");
+    gtk_stack_add_named(main_stack, build_hw_unit14_page(), "hwunit14");
+    gtk_stack_add_named(main_stack, build_hw_unit14_exercise_page(), "hwex14");
+    gtk_stack_add_named(main_stack, build_hw_unit15_page(), "hwunit15");
+    gtk_stack_add_named(main_stack, build_hw_unit15_exercise_page(), "hwex15");
+    gtk_stack_add_named(main_stack, build_hw_unit16_page(), "hwunit16");
+    gtk_stack_add_named(main_stack, build_hw_unit16_exercise_page(), "hwex16");
+    gtk_stack_add_named(main_stack, build_hw_unit17_page(), "hwunit17");
+    gtk_stack_add_named(main_stack, build_hw_unit17_exercise_page(), "hwex17");
+    gtk_stack_add_named(main_stack, build_hw_unit18_page(), "hwunit18");
+    gtk_stack_add_named(main_stack, build_hw_unit18_exercise_page(), "hwex18");
+    gtk_stack_add_named(main_stack, build_hw_unit19_page(), "hwunit19");
+    gtk_stack_add_named(main_stack, build_hw_unit19_exercise_page(), "hwex19");
+    gtk_stack_add_named(main_stack, build_hw_unit20_page(), "hwunit20");
+    gtk_stack_add_named(main_stack, build_hw_unit20_exercise_page(), "hwex20");
+    gtk_stack_add_named(main_stack, build_hw_unit21_page(), "hwunit21");
+    gtk_stack_add_named(main_stack, build_hw_unit21_exercise_page(), "hwex21");
+    gtk_stack_add_named(main_stack, build_hw_unit22_page(), "hwunit22");
+    gtk_stack_add_named(main_stack, build_hw_unit22_exercise_page(), "hwex22");
+    gtk_stack_add_named(main_stack, build_hw_unit23_page(), "hwunit23");
+    gtk_stack_add_named(main_stack, build_hw_unit23_exercise_page(), "hwex23");
+    gtk_stack_add_named(main_stack, build_hw_unit24_page(), "hwunit24");
+    gtk_stack_add_named(main_stack, build_hw_unit24_exercise_page(), "hwex24");
+    gtk_stack_add_named(main_stack, build_hw_unit25_page(), "hwunit25");
+    gtk_stack_add_named(main_stack, build_hw_unit25_exercise_page(), "hwex25");
+    gtk_stack_add_named(main_stack, build_hw_unit26_page(), "hwunit26");
+    gtk_stack_add_named(main_stack, build_hw_unit26_exercise_page(), "hwex26");
+    gtk_stack_add_named(main_stack, build_hw_unit27_page(), "hwunit27");
+    gtk_stack_add_named(main_stack, build_hw_unit27_exercise_page(), "hwex27");
+    gtk_stack_add_named(main_stack, build_hw_unit28_page(), "hwunit28");
+    gtk_stack_add_named(main_stack, build_hw_unit28_exercise_page(), "hwex28");
+    gtk_stack_add_named(main_stack, build_hw_unit29_page(), "hwunit29");
+    gtk_stack_add_named(main_stack, build_hw_unit29_exercise_page(), "hwex29");
     {
         typedef GtkWidget *(*NetBuilder)(void);
         static const struct {
