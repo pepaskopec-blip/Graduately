@@ -391,6 +391,8 @@ static gboolean run_smoke_test(gpointer data) {
         "cetbaFuks", "cetbaFuksQuiz", "cetbaFuksDej",
         "hwunit1", "hwex1", "hwunit2", "hwex2", "hwunit3", "hwex3",
         "hwunit4", "hwex4",
+        "hwunit5", "hwex5", "hwunit6", "hwex6", "hwunit7", "hwex7",
+        "hwunit8", "hwex8", "hwunit9", "hwex9",
         "unit1", "unit2", "unit3",
         "u1e1", "u1e13", "u2e1", "u2e19", "u3e1", "u3e15",
         "u1vocab", "u2vocab", "u3vocab",
@@ -533,6 +535,16 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_hw_unit3_exercise_page(), "hwex3");
     gtk_stack_add_named(main_stack, build_hw_unit4_page(), "hwunit4");
     gtk_stack_add_named(main_stack, build_hw_unit4_exercise_page(), "hwex4");
+    gtk_stack_add_named(main_stack, build_hw_unit5_page(), "hwunit5");
+    gtk_stack_add_named(main_stack, build_hw_unit5_exercise_page(), "hwex5");
+    gtk_stack_add_named(main_stack, build_hw_unit6_page(), "hwunit6");
+    gtk_stack_add_named(main_stack, build_hw_unit6_exercise_page(), "hwex6");
+    gtk_stack_add_named(main_stack, build_hw_unit7_page(), "hwunit7");
+    gtk_stack_add_named(main_stack, build_hw_unit7_exercise_page(), "hwex7");
+    gtk_stack_add_named(main_stack, build_hw_unit8_page(), "hwunit8");
+    gtk_stack_add_named(main_stack, build_hw_unit8_exercise_page(), "hwex8");
+    gtk_stack_add_named(main_stack, build_hw_unit9_page(), "hwunit9");
+    gtk_stack_add_named(main_stack, build_hw_unit9_exercise_page(), "hwex9");
     {
         typedef GtkWidget *(*NetBuilder)(void);
         static const struct {

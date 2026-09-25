@@ -65,7 +65,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
   Hause): cvičení, nápovědy, vokabeltraining
 - **Správa počítačových sítí** — 1. ročník, 27 lekcí (VLSM + teorie a kvízy);
   ročníky 2–4 jsou zamčené
-- **Technické vybavení** — 3 lekce (architektura, historie, bit/byte)
+- **Technické vybavení** — 9 lekcí (architektura, historie, data v počítači, digitalizace zvuku)
 - **Český jazyk a literatura** — mluvnice (20 cvičení) a maturitní četba
   (82 knih: zápisky, kvíz, sestavení děje); literární teorie je zatím zamčená
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
@@ -259,7 +259,7 @@ Intel Mac, another architecture, or hacking on the code →
   exercises, hints, vocabulary training
 - **Computer networks** — year 1, 27 lessons (VLSM + theory/quizzes);
   years 2–4 are locked
-- **Computer hardware** — 3 lessons (architecture, history, bit/byte)
+- **Computer hardware** — 9 lessons (architecture, history, data representation, digitizing sound)
 - **Czech language** — grammar (20 exercises) and required reading
   (82 books: notes, quiz, plot ordering); literature theory is still locked
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English

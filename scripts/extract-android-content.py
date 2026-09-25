@@ -1085,7 +1085,7 @@ def main() -> int:
         })
 
     hw_lessons = []
-    for i in range(1, 5):
+    for i in range(1, 10):
         hw_lessons.append({
             "id": i,
             "titleKey": f"hw_unit{i}",

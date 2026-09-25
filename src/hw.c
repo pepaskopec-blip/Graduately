@@ -7,6 +7,11 @@ NetLesson hw_lessons[HW_LESSONS] = {
     { .n_slides = HW2_SLIDES, .unit_page = "hwunit2", .ex_page = "hwex2" },
     { .n_slides = HW3_SLIDES, .unit_page = "hwunit3", .ex_page = "hwex3" },
     { .n_slides = HW4_SLIDES, .unit_page = "hwunit4", .ex_page = "hwex4" },
+    { .n_slides = HW5_SLIDES, .unit_page = "hwunit5", .ex_page = "hwex5" },
+    { .n_slides = HW6_SLIDES, .unit_page = "hwunit6", .ex_page = "hwex6" },
+    { .n_slides = HW7_SLIDES, .unit_page = "hwunit7", .ex_page = "hwex7" },
+    { .n_slides = HW8_SLIDES, .unit_page = "hwunit8", .ex_page = "hwex8" },
+    { .n_slides = HW9_SLIDES, .unit_page = "hwunit9", .ex_page = "hwex9" },
 };
 
 void hw_rail_theme_reset(void);
@@ -253,7 +258,8 @@ void hw_add_node(GtkFixed *fixed, int index) {
     GtkWidget *name;
     char *text;
     static const char *unit_keys[HW_LESSONS] = {
-        "hw_unit1", "hw_unit2", "hw_unit3", "hw_unit4"
+        "hw_unit1", "hw_unit2", "hw_unit3", "hw_unit4",
+        "hw_unit5", "hw_unit6", "hw_unit7", "hw_unit8", "hw_unit9"
     };
 
     card = gtk_button_new();
@@ -977,5 +983,348 @@ GtkWidget *build_hw_unit4_exercise_page(void) {
         "Normalizace: 1. platná číslice hned za desetinnou čárkou",
     };
     return build_hw_mcq_page(3, "hwunit4", "hw_ex4_title", "hw_quiz4_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit5_page(void) {
+    static const NetSlide slides[HW5_SLIDES] = {
+        {
+            "1 / 2   •   Signál", "Analogový a digitální zvuk",
+            "Tip: analog je spojitý, digitál je posloupnost čísel.",
+            {
+                "Analogový zvuk je spojitý signál – v každém okamžiku "
+                "má nějakou hodnotu.",
+                "Digitální zvuk je posloupnost čísel, která ten signál "
+                "popisují.",
+                "Z mikrofonu vychází analogové napětí, do reproduktoru "
+                "musí zase jít spojitý signál.",
+                "Počítač umí uložit jen čísla, proto se zvuk digitalizuje.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Převod", "A/D a D/A převodník",
+            "Tip: ADC dovnitř, DAC ven. Digitalizace = vzorkování + kvantování.",
+            {
+                "A/D převodník (ADC) převede analogový signál na čísla.",
+                "D/A převodník (DAC) z čísel znovu složí spojitý signál.",
+                "Digitalizace má dva kroky: vzorkování a kvantování.",
+                "Vzorkování určí, kdy se hodnota změří.",
+                "Kvantování určí, na kolik hladin se amplituda zaokrouhlí.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[4], "hw_unit5", "hw_unit5_sub",
+                               slides, HW5_SLIDES);
+}
+
+GtkWidget *build_hw_unit5_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je analogový zvuk?",
+         {"Posloupnost celých čísel",
+          "Spojitý signál s hodnotou v každém okamžiku",
+          "Jen název souboru WAV",
+          "Jen bit v paměti"},
+         4, 1},
+        {"Co dělá A/D převodník (ADC)?",
+         {"Převádí analogový signál na čísla",
+          "Zesiluje jen reproduktor",
+          "Maže vysoké tóny po uložení",
+          "Počítá jen velikost souboru"},
+         4, 0},
+        {"Jaké jsou dva hlavní kroky digitalizace zvuku?",
+         {"Komprese a tisk",
+          "Vzorkování a kvantování",
+          "Šifrování a záloha",
+          "Násobení a dělení"},
+         4, 1},
+        {"Co dělá D/A převodník (DAC)?",
+         {"Z čísel znovu skládá spojitý signál",
+          "Měří jen vzorkovací frekvenci",
+          "Ukládá zvuk jako text",
+          "Zvyšuje počet bitů v souboru"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Analog = spojitý signál",
+        "ADC převádí analog na čísla",
+        "Digitalizace = vzorkování + kvantování",
+        "DAC skládá z čísel spojitý signál",
+    };
+    return build_hw_mcq_page(4, "hwunit5", "hw_ex5_title", "hw_quiz5_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit6_page(void) {
+    static const NetSlide slides[HW6_SLIDES] = {
+        {
+            "1 / 2   •   Vzorky", "Vzorkování",
+            "Tip: vzorkovací frekvence fs = počet vzorků za sekundu (Hz).",
+            {
+                "Vzorkování měří velikost signálu v pravidelných "
+                "okamžicích.",
+                "Mezi vzorky se hodnota neukládá.",
+                "Vzorkovací frekvence fs je počet vzorků za sekundu.",
+                "Jednotka je hertz (Hz). 1 kHz = 1000 vzorků za sekundu.",
+                "Vyšší fs zachytí rychlejší změny, tedy vyšší tóny.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Nyquist", "Nyquistův–Shannonův teorém",
+            "Tip: fs musí být vyšší než 2 × fmax. Nyquistova frekvence je fs / 2.",
+            {
+                "Pro věrnou rekonstrukci musí být fs vyšší než dvojnásobek "
+                "nejvyšší frekvence ve signálu.",
+                "Nyquistova frekvence je fs / 2 – vyšší tón už záznam neunese.",
+                "Člověk slyší zhruba do 20 kHz, dvojnásobek je 40 kHz.",
+                "CD proto používá 44,1 kHz: o něco víc než 40 kHz, "
+                "aby zbyl prostor pro filtr.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[5], "hw_unit6", "hw_unit6_sub",
+                               slides, HW6_SLIDES);
+}
+
+GtkWidget *build_hw_unit6_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je vzorkovací frekvence?",
+         {"Počet bitů v jednom vzorku",
+          "Počet vzorků za sekundu",
+          "Délka skladby v minutách",
+          "Počet kanálů (mono nebo stereo)"},
+         4, 1},
+        {"V jakých jednotkách se udává vzorkovací frekvence?",
+         {"V bytech", "V hertzech", "Ve voltech", "V pixelech"},
+         4, 1},
+        {"Co říká Nyquistův–Shannonův teorém?",
+         {"fs musí být vyšší než dvojnásobek nejvyšší frekvence",
+          "fs musí být vždy 8 kHz",
+          "Stačí jeden vzorek na celou skladbu",
+          "Bitová hloubka musí být 1"},
+         4, 0},
+        {"Proč má audio CD vzorkovací frekvenci 44,1 kHz?",
+         {"Protože byte má 8 bitů",
+          "Sluch sahá asi do 20 kHz a fs musí být vyšší než dvojnásobek",
+          "Protože stereo má dva kanály",
+          "Protože minutu tvoří 60 sekund"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "fs = počet vzorků za sekundu",
+        "Jednotka vzorkovací frekvence je hertz",
+        "fs > 2 × fmax",
+        "20 kHz × 2 = 40 kHz, CD má 44,1 kHz",
+    };
+    return build_hw_mcq_page(5, "hwunit6", "hw_ex6_title", "hw_quiz6_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit7_page(void) {
+    static const NetSlide slides[HW7_SLIDES] = {
+        {
+            "1 / 2   •   Hladiny", "Kvantování",
+            "Tip: n bitů → 2ⁿ hladin. 8 bitů = 256, 16 bitů = 65 536.",
+            {
+                "Kvantování zaokrouhlí amplitudu každého vzorku "
+                "na nejbližší z konečného počtu hladin.",
+                "Počet hladin je 2ⁿ, kde n je bitová hloubka "
+                "(počet bitů na vzorek).",
+                "8 bitů dává 256 hladin, 16 bitů dává 65 536 hladin.",
+                "Vzorkování říká jak často, kvantování jak přesně.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Chyba", "Kvantizační chyba",
+            "Tip: víc bitů = jemnější hladiny, menší šum a větší soubor.",
+            {
+                "Kvantizační chyba je rozdíl mezi skutečnou hodnotou "
+                "a zvolenou hladinou.",
+                "V záznamu se projeví jako kvantizační šum.",
+                "Větší bitová hloubka hladiny zjemní a šum zmenší.",
+                "Audio CD používá 16 bitů na vzorek, studio často 24 bitů.",
+                "Vyšší hloubka také zvětší datový tok.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[6], "hw_unit7", "hw_unit7_sub",
+                               slides, HW7_SLIDES);
+}
+
+GtkWidget *build_hw_unit7_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je kvantování?",
+         {"Měření signálu v pravidelných okamžicích",
+          "Zaokrouhlení amplitudy na konečný počet hladin",
+          "Převod čísel zpět na analog",
+          "Komprese souboru MP3"},
+         4, 1},
+        {"Kolik hladin má 8bitové kvantování?",
+         {"8", "16", "256", "65 536"},
+         4, 2},
+        {"Kolik hladin má 16bitové kvantování?",
+         {"16", "256", "1 024", "65 536"},
+         4, 3},
+        {"Co je kvantizační chyba?",
+         {"Rozdíl mezi skutečnou hodnotou a zvolenou hladinou",
+          "Příliš nízká vzorkovací frekvence",
+          "Počet kanálů ve stereu",
+          "Délka skladby v sekundách"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Kvantování zaokrouhluje amplitudu na hladiny",
+        "8 bitů → 2⁸ = 256 hladin",
+        "16 bitů → 2¹⁶ = 65 536 hladin",
+        "Kvantizační chyba = rozdíl proti skutečné hodnotě",
+    };
+    return build_hw_mcq_page(6, "hwunit7", "hw_ex7_title", "hw_quiz7_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit8_page(void) {
+    static const NetSlide slides[HW8_SLIDES] = {
+        {
+            "1 / 2   •   PCM", "Pulzně kódová modulace",
+            "Tip: tok = fs × bity na vzorek × počet kanálů.",
+            {
+                "PCM uloží každý vzorek jako binární číslo.",
+                "Je to základní nekomprimovaný záznam (WAV, audio CD).",
+                "Datový tok = vzorkovací frekvence × bitová hloubka "
+                "× počet kanálů.",
+                "Mono má jeden kanál, stereo dva (levý a pravý).",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Velikost", "Kolik dat zabere CD",
+            "Tip: komprese (MP3, AAC) soubor zmenší, ale část informace zahodí.",
+            {
+                "CD stereo: 44 100 Hz × 16 bit × 2 = 1 411 200 bit/s.",
+                "To je 176 400 B/s.",
+                "Za minutu je to 10 584 000 B, tedy přes 10 MB.",
+                "Delší záznam, vyšší fs, více bitů nebo více kanálů "
+                "soubor zvětší.",
+                "MP3 a AAC soubor zmenší za cenu ztráty části informace.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[7], "hw_unit8", "hw_unit8_sub",
+                               slides, HW8_SLIDES);
+}
+
+GtkWidget *build_hw_unit8_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Co je PCM?",
+         {"Každý vzorek uložený jako binární číslo",
+          "Jen komprimovaný formát MP3",
+          "Filtr před mikrofonem",
+          "Jednotka hlasitosti"},
+         4, 0},
+        {"Jak se spočítá datový tok nekomprimovaného zvuku?",
+         {"fs + bity + kanály",
+          "fs × bitová hloubka × počet kanálů",
+          "jen délka skladby v minutách",
+          "počet hladin děleno dvěma"},
+         4, 1},
+        {"Jaký je datový tok audio CD ve stereu?",
+         {"44 100 bit/s", "256 bit/s", "1 411 200 bit/s", "8 bit/s"},
+         4, 2},
+        {"Co udělá komprese MP3 se záznamem?",
+         {"Zvětší soubor a přidá vzorky",
+          "Zmenší soubor a část informace zahodí",
+          "Změní jen název souboru",
+          "Převede digitál zpět na analog"},
+         4, 1},
+    };
+    static const char *hints[] = {
+        "PCM = vzorek jako binární číslo",
+        "tok = fs × bity × kanály",
+        "44 100 × 16 × 2 = 1 411 200 bit/s",
+        "MP3 soubor zmenší a část informace zahodí",
+    };
+    return build_hw_mcq_page(7, "hwunit8", "hw_ex8_title", "hw_quiz8_head",
+                             qs, hints, 4);
+}
+
+GtkWidget *build_hw_unit9_page(void) {
+    static const NetSlide slides[HW9_SLIDES] = {
+        {
+            "1 / 2   •   Aliasing", "Když je vzorkování moc řídké",
+            "Tip: aliasing vznikne před uložením a z hotových vzorků "
+            "už nejde spolehlivě odstranit.",
+            {
+                "Aliasing vznikne, když je fs příliš nízká a poruší se "
+                "Nyquistovo pravidlo.",
+                "Vysoká frekvence se v záznamu jeví jako nižší tón.",
+                "Příklad: tón 6 kHz vzorkovaný 8 kHz se jeví jako 2 kHz.",
+                "Antialiasingový filtr před převodníkem vysoké frekvence "
+                "ořízne.",
+                NULL,
+            },
+        },
+        {
+            "2 / 2   •   Formáty", "Běžné parametry záznamu",
+            "Tip: vyšší fs a víc bitů znamená věrnější záznam a větší tok.",
+            {
+                "Audio CD: 44,1 kHz, 16 bitů, stereo.",
+                "Klasický telefonní hovor: 8 kHz a 8 bitů – řeč se vejde "
+                "do pásma do 4 kHz.",
+                "Studio často používá 48 nebo 96 kHz a 24 bitů.",
+                "Parametry se volí podle toho, co má záznam unést "
+                "a jak velký smí být.",
+                NULL,
+            },
+        },
+    };
+
+    return build_hw_unit_page(&hw_lessons[8], "hw_unit9", "hw_unit9_sub",
+                               slides, HW9_SLIDES);
+}
+
+GtkWidget *build_hw_unit9_exercise_page(void) {
+    static const ChoiceQ qs[] = {
+        {"Kdy vzniká aliasing?",
+         {"Když je vzorkovací frekvence příliš nízká",
+          "Když má záznam 24 bitů",
+          "Když je soubor ve stereu",
+          "Když se použije D/A převodník"},
+         4, 0},
+        {"K čemu je antialiasingový filtr?",
+         {"Zvětší bitovou hloubku po uložení",
+          "Před vzorkováním ořízne frekvence nad Nyquistovu",
+          "Spočítá datový tok",
+          "Převede mono na stereo"},
+         4, 1},
+        {"Jaké parametry má audio CD?",
+         {"8 kHz, 8 bitů, mono",
+          "44,1 kHz, 16 bitů, stereo",
+          "96 kHz, 8 bitů, mono",
+          "1 kHz, 1 bit, stereo"},
+         4, 1},
+        {"Proč telefonnímu hovoru stačí vzorkování 8 kHz?",
+         {"Řeč se vejde do pásma zhruba do 4 kHz",
+          "Telefon nahrává na audio CD",
+          "8 kHz je totéž co 44,1 kHz",
+          "Řeč nemá žádnou frekvenci"},
+         4, 0},
+    };
+    static const char *hints[] = {
+        "Aliasing = příliš nízká fs",
+        "Filtr ořízne frekvence nad fs / 2 ještě před vzorkováním",
+        "CD = 44,1 kHz, 16 bit, stereo",
+        "Pásmo řeči je do asi 4 kHz, proto stačí fs = 8 kHz",
+    };
+    return build_hw_mcq_page(8, "hwunit9", "hw_ex9_title", "hw_quiz9_head",
                              qs, hints, 4);
 }
