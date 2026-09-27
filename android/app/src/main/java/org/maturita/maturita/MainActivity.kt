@@ -30,6 +30,7 @@ import org.maturita.maturita.ui.CzechMapScreen
 import org.maturita.maturita.ui.GermanExercise
 import org.maturita.maturita.ui.HomeScreen
 import org.maturita.maturita.ui.HwQuizScreen
+import org.maturita.maturita.ui.HwYearsScreen
 import org.maturita.maturita.ui.LessonListScreen
 import org.maturita.maturita.ui.LessonRow
 import org.maturita.maturita.ui.LitQuizScreen
