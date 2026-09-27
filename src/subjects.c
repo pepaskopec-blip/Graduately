@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* ------------------------------------------------------------------ */
 /* Subjects page — icon grid, one tile per subject                    */

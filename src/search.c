@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 #include <stdlib.h>
 #include <string.h>

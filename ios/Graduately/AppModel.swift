@@ -22,7 +22,7 @@ final class AppModel: ObservableObject {
         lang = progress.lang
         showChangelog = !content.changelog.isEmpty && !sameBuild(AppConfig.commit, progress.seenCommit)
         #if DEBUG
-        // `xcrun simctl launch <udid> org.maturita.maturita -route u1e3` opens a page for screenshots.
+        // `xcrun simctl launch <udid> com.bukovinafilip.maturita -route u1e3` opens a page for screenshots.
         if let page = UserDefaults.standard.string(forKey: "route"), let r = routeFromPage(page) {
             openFromSearch(r.page)
         }

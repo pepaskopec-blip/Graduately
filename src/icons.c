@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* Vector icons drawn with cairo so they never depend on the system
  * icon theme (which is missing on some installs). */

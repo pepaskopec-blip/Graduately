@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -123,7 +123,7 @@ static char *macos_resources_dir(const char *exe) {
     return resources;
 }
 
-/* Directory next to Foo.app when exe is .../Foo.app/Contents/MacOS/maturita. */
+/* Directory next to Foo.app when exe is .../Foo.app/Contents/MacOS/Graduately. */
 static char *macos_app_parent_dir(const char *exe) {
     char *macos_dir;
     char *contents;

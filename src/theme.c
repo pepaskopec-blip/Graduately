@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 Rgb color_from_hex(unsigned int hex) {
     Rgb c;

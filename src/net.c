@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* ---- Computer networks: subject path, lesson & exercise ------------ */
 

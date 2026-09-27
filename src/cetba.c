@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* ------------------------------------------------------------------ */
 /* Maturitní četba: George Orwell – 1984                              */

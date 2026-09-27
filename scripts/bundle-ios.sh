@@ -15,8 +15,8 @@ rm -rf "$root/ios/Payload"
 mkdir -p "$dd" "$root/dist-ios"
 
 xcodebuild \
-  -project ios/Maturita.xcodeproj \
-  -scheme Maturita \
+  -project ios/Graduately.xcodeproj \
+  -scheme Graduately \
   -configuration Release \
   -sdk iphoneos \
   -destination 'generic/platform=iOS' \

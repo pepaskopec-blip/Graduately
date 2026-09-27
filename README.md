@@ -105,7 +105,7 @@ cd Graduately
 Na Macu:
 
 ```bash
-open Maturita.xcworkspace          # scheme Maturita z macos/Maturita.xcodeproj
+open Graduately.xcworkspace        # scheme Graduately z macos/Graduately.xcodeproj
 # nebo: make bundle                # zip v dist/graduately-macos-arm64.zip
 ```
 
@@ -185,15 +185,14 @@ jednou odinstalujte a nainstalujte znovu.
 iOS ze zdroje (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
-open Maturita.xcworkspace          # v kořeni repozitáře
+open Graduately.xcworkspace        # v kořeni repozitáře
 # Simulátor: vyber iPhone a Run, nic dalšího není potřeba (obsah se
 # vytáhne z C zdrojů při buildu). Na iPhone: v Signing vyber svůj Team.
 # nebo: make ios   # unsigned IPA v dist-ios/graduately-ios.ipa
 ```
 
-Workspace odkazuje na `ios/Maturita.xcodeproj` a `macos/Maturita.xcodeproj`.
-Projekty nepřesouvejte – build čte `../src` a `../scripts` a v kořeni by
-`Maturita/` kolidovalo se zkompilovaným binárem `graduately`.
+Workspace odkazuje na `ios/Graduately.xcodeproj` a `macos/Graduately.xcodeproj`.
+Projekty nepřesouvejte – build čte `../src` a `../scripts`.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -299,7 +298,7 @@ cd Graduately
 On a Mac:
 
 ```bash
-open Maturita.xcworkspace          # scheme Maturita from macos/Maturita.xcodeproj
+open Graduately.xcworkspace        # scheme Graduately from macos/Graduately.xcodeproj
 # or: make bundle                  # zip at dist/graduately-macos-arm64.zip
 ```
 
@@ -379,14 +378,13 @@ signature – uninstall once and install again.
 iOS from source (Xcode 26, iOS 26+ / Liquid Glass):
 
 ```bash
-open Maturita.xcworkspace          # at the repo root
+open Graduately.xcworkspace        # at the repo root
 # Simulator: pick an iPhone and Run, nothing else needed (content is
 # extracted from the C sources during the build). Device: pick your Team.
 # or: make ios   # unsigned IPA at dist-ios/graduately-ios.ipa
 ```
 
-The workspace points at `ios/Maturita.xcodeproj` and `macos/Maturita.xcodeproj`.
-Do not move the projects – the build reads `../src` and `../scripts`, and at
-the root `Maturita/` would collide with the compiled `maturita` binary.
+The workspace points at `ios/Graduately.xcodeproj` and `macos/Graduately.xcodeproj`.
+Do not move the projects – the build reads `../src` and `../scripts`.
 
 License: [GPL-3.0](LICENSE).

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B101000000000000000001 /* MaturitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000001 /* MaturitaApp.swift */; };
+		B101000000000000000001 /* GraduatelyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000001 /* GraduatelyApp.swift */; };
 		B101000000000000000002 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000002 /* Platform.swift */; };
 		B101000000000000000003 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000003 /* Updater.swift */; };
 		B101000000000000000004 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000004 /* AppModel.swift */; };
@@ -27,25 +27,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B201000000000000000001 /* MaturitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaturitaApp.swift; sourceTree = "<group>"; };
+		B201000000000000000001 /* GraduatelyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduatelyApp.swift; sourceTree = "<group>"; };
 		B201000000000000000002 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		B201000000000000000003 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
-		B201000000000000000004 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../ios/Maturita/AppModel.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000005 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Route.swift; path = ../ios/Maturita/Route.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000006 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = ../ios/Maturita/Data/JSON.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000007 /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Content.swift; path = ../ios/Maturita/Data/Content.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000008 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = ../ios/Maturita/Data/Theme.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000009 /* Answers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Answers.swift; path = ../ios/Maturita/Data/Answers.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000010 /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressStore.swift; path = ../ios/Maturita/Data/ProgressStore.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000011 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Components.swift; path = ../ios/Maturita/UI/Components.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000012 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icons.swift; path = ../ios/Maturita/UI/Icons.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000013 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Screens.swift; path = ../ios/Maturita/UI/Screens.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000014 /* Exercises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Exercises.swift; path = ../ios/Maturita/UI/Exercises.swift; sourceTree = SOURCE_ROOT; };
-		B201000000000000000015 /* ExercisesMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExercisesMore.swift; path = ../ios/Maturita/UI/ExercisesMore.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000004 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppModel.swift; path = ../ios/Graduately/AppModel.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000005 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Route.swift; path = ../ios/Graduately/Route.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000006 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = ../ios/Graduately/Data/JSON.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000007 /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Content.swift; path = ../ios/Graduately/Data/Content.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000008 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = ../ios/Graduately/Data/Theme.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000009 /* Answers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Answers.swift; path = ../ios/Graduately/Data/Answers.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000010 /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressStore.swift; path = ../ios/Graduately/Data/ProgressStore.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000011 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Components.swift; path = ../ios/Graduately/UI/Components.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000012 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icons.swift; path = ../ios/Graduately/UI/Icons.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000013 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Screens.swift; path = ../ios/Graduately/UI/Screens.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000014 /* Exercises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Exercises.swift; path = ../ios/Graduately/UI/Exercises.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000015 /* ExercisesMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExercisesMore.swift; path = ../ios/Graduately/UI/ExercisesMore.swift; sourceTree = SOURCE_ROOT; };
 		B201000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B201000000000000000017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B201000000000000000018 /* Maturita.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Maturita.entitlements; sourceTree = "<group>"; };
-		B201000000000000000019 /* PathMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathMap.swift; path = ../ios/Maturita/UI/PathMap.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000018 /* Graduately.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Graduately.entitlements; sourceTree = "<group>"; };
+		B201000000000000000019 /* PathMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathMap.swift; path = ../ios/Graduately/UI/PathMap.swift; sourceTree = SOURCE_ROOT; };
 		B301000000000000000001 /* Graduately.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graduately.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -63,15 +63,15 @@
 		B501000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				B501000000000000000002 /* Maturita */,
+				B501000000000000000002 /* Graduately */,
 				B501000000000000000006 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		B501000000000000000002 /* Maturita */ = {
+		B501000000000000000002 /* Graduately */ = {
 			isa = PBXGroup;
 			children = (
-				B201000000000000000001 /* MaturitaApp.swift */,
+				B201000000000000000001 /* GraduatelyApp.swift */,
 				B201000000000000000002 /* Platform.swift */,
 				B201000000000000000004 /* AppModel.swift */,
 				B201000000000000000005 /* Route.swift */,
@@ -80,9 +80,9 @@
 				B501000000000000000005 /* UI */,
 				B201000000000000000016 /* Assets.xcassets */,
 				B201000000000000000017 /* Info.plist */,
-				B201000000000000000018 /* Maturita.entitlements */,
+				B201000000000000000018 /* Graduately.entitlements */,
 			);
-			path = Maturita;
+			path = Graduately;
 			sourceTree = "<group>";
 		};
 		B501000000000000000003 /* Data */ = {
@@ -129,9 +129,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B601000000000000000001 /* Maturita */ = {
+		B601000000000000000001 /* Graduately */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B801000000000000000002 /* Build configuration list for PBXNativeTarget "Maturita" */;
+			buildConfigurationList = B801000000000000000002 /* Build configuration list for PBXNativeTarget "Graduately" */;
 			buildPhases = (
 				B701000000000000000001 /* Sources */,
 				B401000000000000000001 /* Frameworks */,
@@ -142,7 +142,7 @@
 			);
 			dependencies = (
 			);
-			name = Maturita;
+			name = Graduately;
 			productName = Graduately;
 			productReference = B301000000000000000001 /* Graduately.app */;
 			productType = "com.apple.product-type.application";
@@ -162,7 +162,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B801000000000000000001 /* Build configuration list for PBXProject "Maturita" */;
+			buildConfigurationList = B801000000000000000001 /* Build configuration list for PBXProject "Graduately" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = cs;
 			hasScannedForEncodings = 0;
@@ -176,7 +176,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B601000000000000000001 /* Maturita */,
+				B601000000000000000001 /* Graduately */,
 			);
 		};
 /* End PBXProject section */
@@ -221,7 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B101000000000000000001 /* MaturitaApp.swift in Sources */,
+				B101000000000000000001 /* GraduatelyApp.swift in Sources */,
 				B101000000000000000002 /* Platform.swift in Sources */,
 				B101000000000000000003 /* Updater.swift in Sources */,
 				B101000000000000000004 /* AppModel.swift in Sources */,
@@ -343,7 +343,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Maturita/Maturita.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Graduately/Graduately.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMMIT = dev;
@@ -352,7 +352,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Maturita/Info.plist;
+				INFOPLIST_FILE = Graduately/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Graduately;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSHighResolutionCapable = YES;
@@ -362,7 +362,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita.macos;
 				PRODUCT_NAME = Graduately;
 				SDKROOT = macosx;
@@ -377,7 +377,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Maturita/Maturita.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Graduately/Graduately.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMMIT = dev;
@@ -386,7 +386,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Maturita/Info.plist;
+				INFOPLIST_FILE = Graduately/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Graduately;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSHighResolutionCapable = YES;
@@ -396,7 +396,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bukovinafilip.maturita.macos;
 				PRODUCT_NAME = Graduately;
 				SDKROOT = macosx;
@@ -409,7 +409,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B801000000000000000001 /* Build configuration list for PBXProject "Maturita" */ = {
+		B801000000000000000001 /* Build configuration list for PBXProject "Graduately" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B901000000000000000001 /* Debug */,
@@ -418,7 +418,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B801000000000000000002 /* Build configuration list for PBXNativeTarget "Maturita" */ = {
+		B801000000000000000002 /* Build configuration list for PBXNativeTarget "Graduately" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B901000000000000000003 /* Debug */,

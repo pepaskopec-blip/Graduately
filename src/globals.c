@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 GtkStack *main_stack;
 

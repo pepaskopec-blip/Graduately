@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* ---- Czech language and literature (Český jazyk a literatura) ----- */
 

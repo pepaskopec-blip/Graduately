@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 #ifdef __APPLE__
 #include <objc/message.h>

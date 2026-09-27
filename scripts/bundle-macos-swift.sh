@@ -31,8 +31,8 @@ out_zip="graduately-macos-${arch_tag}.zip"
 mkdir -p "$dd" "$root/dist"
 
 xcodebuild \
-  -project macos/Maturita.xcodeproj \
-  -scheme Maturita \
+  -project macos/Graduately.xcodeproj \
+  -scheme Graduately \
   -configuration Release \
   -destination "generic/platform=macOS" \
   -derivedDataPath "$dd" \
@@ -50,7 +50,7 @@ dest="$root/dist/Graduately.app"
 rm -rf "$dest"
 cp -R "$app" "$dest"
 
-ENTITLEMENTS="$root/macos/Maturita/Maturita.entitlements"
+ENTITLEMENTS="$root/macos/Graduately/Graduately.entitlements"
 
 pick_sign_identity() {
   if [ -n "${MACOS_SIGN_IDENTITY:-}" ]; then

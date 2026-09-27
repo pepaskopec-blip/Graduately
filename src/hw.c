@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* ---- Technical equipment (Technické vybavení) --------------------- */
 

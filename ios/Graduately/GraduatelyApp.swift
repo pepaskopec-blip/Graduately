@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct MaturitaApp: App {
+struct GraduatelyApp: App {
     @StateObject private var vm = AppModel()
 
     var body: some Scene {

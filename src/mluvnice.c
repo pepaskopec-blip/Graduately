@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 #define MLUV_N_EX 20
 #define MLUV_MAX_BLANK 5

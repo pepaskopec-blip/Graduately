@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ios/Maturita.xcodeproj">
+      location = "group:ios/Graduately.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:macos/Maturita.xcodeproj">
+      location = "group:macos/Graduately.xcodeproj">
    </FileRef>
 </Workspace>

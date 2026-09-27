@@ -1,5 +1,5 @@
-#ifndef MATURITA_H
-#define MATURITA_H
+#ifndef GRADUATELY_H
+#define GRADUATELY_H
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -1314,4 +1314,4 @@ void macos_set_dock_icon(const char *path);
 void activate(GtkApplication *app, gpointer user_data);
 int main(int argc, char **argv);
 
-#endif /* MATURITA_H */
+#endif /* GRADUATELY_H */

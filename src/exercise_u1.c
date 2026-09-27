@@ -1,4 +1,4 @@
-#include "maturita.h"
+#include "graduately.h"
 
 /* ------------------------------------------------------------------ */
 /* Choice exercises (3 + 9)                                           */

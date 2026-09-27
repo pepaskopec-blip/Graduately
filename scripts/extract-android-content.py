@@ -1389,7 +1389,7 @@ def main() -> int:
     # Quiz + plot packs for the GTK stub pages (shared by every catalog book).
     ex_lines = [
         "/* Generated from data/cetba JSON packs – do not edit by hand. */",
-        "/* Requires LitQ (cetba.c) and AssemblyItem (maturita.h). */",
+        "/* Requires LitQ (cetba.c) and AssemblyItem (graduately.h). */",
         "",
         "typedef struct {",
         "    const LitQ *qs;",
