@@ -625,6 +625,25 @@ struct NetQuizScreen: View {
     }
 }
 
+struct OnQuizScreen: View {
+    @ObservedObject var vm: AppModel
+    let id: Int
+
+    var body: some View {
+        if let lesson = vm.content.onLesson(id) {
+            let spec = J([
+                "type": "choice",
+                "title": vm.tr(lesson.str("exTitleKey")),
+                "sub": lesson.str("quizHeadKey"),
+                "questions": lesson.rawArray("quiz"),
+            ])
+            DispatchExercise(vm: vm, spec: spec, titleFallback: vm.tr(lesson.str("exTitleKey"))) {
+                vm.markOn(id)
+            }
+        }
+    }
+}
+
 struct HwQuizScreen: View {
     @ObservedObject var vm: AppModel
     let id: Int

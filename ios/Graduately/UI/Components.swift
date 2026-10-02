@@ -465,6 +465,7 @@ func subjectSymbol(_ icon: String) -> String {
     case "wifi": return "wifi"
     case "chip": return "cpu"
     case "cz": return "text.book.closed.fill"
+    case "people": return "person.2.fill"
     default: return "lock.fill"
     }
 }

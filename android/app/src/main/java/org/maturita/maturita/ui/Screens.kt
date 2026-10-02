@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.Search
@@ -217,6 +218,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "de" -> GermanFlag(28.dp)
             "wifi" -> WifiIcon(tint, 26.dp)
             "chip" -> ChipIcon(tint, 26.dp)
+            "people" -> Icon(Icons.Filled.Groups, null, tint = tint, modifier = Modifier.size(26.dp))
             "cz" -> CzechFlag(28.dp)
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
@@ -297,6 +299,10 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
         "hwyears", "hwmap" -> {
             sum.totalEx = vm.content.hw.size
             sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) }
+        }
+        "onyears", "onmap" -> {
+            sum.totalEx = vm.content.on.size
+            sum.doneEx = vm.content.on.count { vm.progress.onDone(it.int("id")) }
         }
         "czechmap" -> {
             sum.totalEx = vm.content.mluvnice.size
@@ -485,6 +491,14 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "hwunit${l.int("id")}", extra = "hardware")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex${l.int("id")}")
     }
+    add(vm.tr("on_year1"), vm.tr("search_lesson"), "onmap", extra = "rocnik")
+    add(vm.tr("on_year2"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
+    add(vm.tr("on_year3"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
+    add(vm.tr("on_year4"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
+    vm.content.on.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "onunit${l.int("id")}", extra = "obcanka")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "onex${l.int("id")}")
+    }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     vm.content.mluvnice.forEach { m -> add(m.str("name"), vm.tr("Mluvnice"), "mluve${m.int("id")}") }
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -578,6 +592,20 @@ fun HwYearsScreen(vm: AppViewModel) {
             }
             items(listOf("hw_year2", "hw_year3", "hw_year4")) { key ->
                 NavRow(title = vm.tr(key), subtitle = vm.tr("hw_year_locked_sub"), locked = true, onClick = null)
+            }
+        }
+    }
+}
+
+@Composable
+fun OnYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Občanská nauka"), vm.tr("on_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("on_year1"), subtitle = vm.tr("on_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.OnMap) }
+            }
+            items(listOf("on_year2", "on_year3", "on_year4")) { key ->
+                NavRow(title = vm.tr(key), subtitle = vm.tr("on_year_locked_sub"), locked = true, onClick = null)
             }
         }
     }

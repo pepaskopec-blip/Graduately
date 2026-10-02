@@ -8,7 +8,7 @@ Vzdělávací aplikace k přípravě na maturitu (repo `Graduately`). / An educa
 
 ## Česky
 
-Rozhraní je v češtině a angličtině. Hotové jsou čtyři předměty; ostatní jsou
+Rozhraní je v češtině a angličtině. Hotových je pět předmětů; ostatní jsou
 zatím zamčené placeholdery. Aplikace se po instalaci aktualizuje sama.
 
 | Úvod | Předměty | Německá cesta |
@@ -68,13 +68,15 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Technické vybavení** — 1. ročník, 29 lekcí (architektura, data, skříň a deska, karty, disky, vstupní zařízení); ročníky 2–4 jsou zamčené
 - **Český jazyk a literatura** — mluvnice (20 cvičení) a maturitní četba
   (82 knih: zápisky, kvíz, sestavení děje); literární teorie je zatím zamčená
+- **Občanská nauka** — 1. ročník, 17 lekcí (člověk v lidském společenství);
+  ročníky 2–4 jsou zamčené
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
 - ukončení: `Cmd/Super+Q` nebo `Alt+F4`
 
 ### Použití
 
 1. **Pokračuj** otevře mapu předmětů.
-2. Otevřený předmět (vlajka, Wi‑Fi, čip, česká vlajka) vede na učební cestu.
+2. Otevřený předmět (vlajka, Wi‑Fi, čip, česká vlajka, váhy) vede na učební cestu.
 3. Uzly cvičení / lekcí otevřou obsah; zamčené nic nedělají.
 4. **Hledat** (lupa), **Statistiky** (graf) a **Nastavení** (ozubené kolo) jsou vpravo nahoře.
 
@@ -200,7 +202,7 @@ Licence: [GPL-3.0](LICENSE).
 
 ## English
 
-The UI is Czech and English. Four subjects are playable; the rest are locked
+The UI is Czech and English. Five subjects are playable; the rest are locked
 placeholders. After install the app updates itself.
 
 | Welcome | Subjects | German path |
@@ -261,13 +263,15 @@ Intel Mac, another architecture, or hacking on the code →
 - **Computer hardware** — year 1, 29 lessons (architecture, data, case and board, cards, drives, input devices); years 2–4 are locked
 - **Czech language** — grammar (20 exercises) and required reading
   (82 books: notes, quiz, plot ordering); literature theory is still locked
+- **Civics** — year 1, 17 lessons (the individual and society);
+  years 2–4 are locked
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
 - quit with `Cmd/Super+Q` or `Alt+F4`
 
 ### Usage
 
 1. **Continue** opens the subject map.
-2. An open subject (flag, Wi‑Fi, chip, Czech flag) opens its path.
+2. An open subject (flag, Wi‑Fi, chip, Czech flag, scales) opens its path.
 3. Exercise / lesson nodes open content; locked nodes do nothing.
 4. **Search** (magnifier), **Statistics** (chart) and **Settings** (gear) sit in the top-right.
 

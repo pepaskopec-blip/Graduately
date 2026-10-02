@@ -1084,6 +1084,18 @@ def main() -> int:
             "quiz": qs,
         })
 
+    on_lessons = []
+    for i in range(1, 18):
+        on_lessons.append({
+            "id": i,
+            "titleKey": f"on_unit{i}",
+            "subKey": f"on_unit{i}_sub",
+            "exTitleKey": f"on_ex{i}_title",
+            "quizHeadKey": f"on_quiz{i}_head",
+            "slides": slides_items(A(f"build_on_unit{i}_page.slides")),
+            "quiz": choice_items(A(f"build_on_unit{i}_exercise_page.qs")),
+        })
+
     hw_lessons = []
     for i in range(1, 30):
         hw_lessons.append({
@@ -1481,7 +1493,7 @@ def main() -> int:
         {"key": "Správa počítačových sítí", "open": True, "target": "netyears", "icon": "wifi"},
         {"key": "Technické vybavení", "open": True, "target": "hwyears", "icon": "chip"},
         {"key": "Český jazyk a literatura", "open": True, "target": "czechmap", "icon": "cz"},
-        {"key": "Občanská nauka", "open": False, "target": None, "icon": "lock"},
+        {"key": "Občanská nauka", "open": True, "target": "onyears", "icon": "people"},
         {"key": "English", "open": False, "target": None, "icon": "lock"},
         {"key": "Matematika", "open": False, "target": None, "icon": "lock"},
         {"key": "Fyzika", "open": False, "target": None, "icon": "lock"},
@@ -1502,6 +1514,7 @@ def main() -> int:
             "answers": net_ans(A("net_ans")),
         },
         "hw": hw_lessons,
+        "on": on_lessons,
         "mluvnice": mluvnice,
         "books": books,
         "changelog": parse_changelog(ROOT / "data" / "changelog.txt"),
@@ -1536,6 +1549,7 @@ def main() -> int:
     print(f"  net lessons with slides: {sum(1 for L in net_lessons if L['slides'])}")
     print(f"  net quizzes: {sum(1 for L in net_lessons if L['quiz'])}")
     print(f"  hw lessons: {sum(1 for L in hw_lessons if L['slides'])}")
+    print(f"  on lessons: {sum(1 for L in on_lessons if L['slides'])}")
     print(f"  mluvnice: {len(mluvnice)}")
     print(f"  books quiz items: {[len(b['quiz']) for b in books]}")
     print(f"  changelog entries: {len(payload.get('changelog', []))}")
@@ -1569,6 +1583,11 @@ def main() -> int:
             missing.append(f"hw{L['id']} slides")
         if not L["quiz"]:
             missing.append(f"hw{L['id']} quiz")
+    for L in on_lessons:
+        if not L["slides"]:
+            missing.append(f"on{L['id']} slides")
+        if not L["quiz"]:
+            missing.append(f"on{L['id']} quiz")
     for m in mluvnice:
         if m["type"] in ("typed", "reveal") and not m.get("items"):
             missing.append(f"mluv{m['id']}")

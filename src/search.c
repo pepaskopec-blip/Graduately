@@ -22,7 +22,8 @@ static GtkWidget *search_empty;
 static GPtrArray *search_items;
 
 static gboolean subject_open(int i) {
-    return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ;
+    return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
+        || i == ON_SUBJ;
 }
 
 static const char *subject_page(int i) {
@@ -34,6 +35,8 @@ static const char *subject_page(int i) {
         return "hwyears";
     if (i == CZ_SUBJ)
         return "czechmap";
+    if (i == ON_SUBJ)
+        return "onyears";
     return "subjects";
 }
 
@@ -196,6 +199,18 @@ static void catalog_rebuild(void) {
         g_snprintf(page, sizeof(page), "hwunit%d", i);
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "hardware hw");
         g_snprintf(page, sizeof(page), "hwex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+
+    catalog_add_key("on_year1", "search_lesson", "onmap", FALSE, 1, "rocnik");
+    catalog_add_key("on_year2", "search_lesson", "onyears", TRUE, 1, "rocnik");
+    catalog_add_key("on_year3", "search_lesson", "onyears", TRUE, 1, "rocnik");
+    catalog_add_key("on_year4", "search_lesson", "onyears", TRUE, 1, "rocnik");
+    for (i = 1; i <= ON_LESSONS; i++) {
+        g_snprintf(key, sizeof(key), "on_unit%d", i);
+        g_snprintf(page, sizeof(page), "onunit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "obcanka");
+        g_snprintf(page, sizeof(page), "onex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
     }
 

@@ -37,6 +37,8 @@ import org.maturita.maturita.ui.LitQuizScreen
 import org.maturita.maturita.ui.MluvExercise
 import org.maturita.maturita.ui.NetQuizScreen
 import org.maturita.maturita.ui.NetYearsScreen
+import org.maturita.maturita.ui.OnQuizScreen
+import org.maturita.maturita.ui.OnYearsScreen
 import org.maturita.maturita.ui.PlotScreen
 import org.maturita.maturita.ui.RoadmapScreen
 import org.maturita.maturita.ui.SearchScreen
@@ -226,6 +228,21 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.HwEx -> HwQuizScreen(vm, r.id)
+            Route.OnYears -> OnYearsScreen(vm)
+            Route.OnMap -> LessonListScreen(
+                vm, vm.tr("on_year1"), vm.tr("on_sub"),
+                vm.content.on.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.onDone(id), Route.OnLesson(id))
+                },
+            )
+            is Route.OnLesson -> {
+                val l = vm.content.onLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.OnEx(r.id))
+                }
+            }
+            is Route.OnEx -> OnQuizScreen(vm, r.id)
             Route.CzechMap -> CzechMapScreen(vm)
             Route.Mluvnice -> LessonListScreen(
                 vm, vm.tr("Mluvnice"), vm.tr("mluv_sub"),

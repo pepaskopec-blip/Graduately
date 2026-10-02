@@ -142,6 +142,52 @@ void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
     }
 }
 
+/* Balance scale for Občanská nauka. */
+void draw_civics_icon(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer data) {
+    const double s = MIN(width, height);
+    const double cx = width / 2.0;
+    const double top = height / 2.0 - s * 0.34;
+    const double beam_y = top + s * 0.22;
+    const double half = s * 0.28;
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_width(cr, MAX(1.6, s * 0.07));
+
+    cairo_move_to(cr, cx, top);
+    cairo_line_to(cr, cx, top + s * 0.62);
+    cairo_stroke(cr);
+
+    cairo_move_to(cr, cx - half, beam_y);
+    cairo_line_to(cr, cx + half, beam_y);
+    cairo_stroke(cr);
+
+    cairo_set_line_width(cr, MAX(1.4, s * 0.05));
+    cairo_move_to(cr, cx - half, beam_y);
+    cairo_line_to(cr, cx - half, beam_y + s * 0.16);
+    cairo_move_to(cr, cx + half, beam_y);
+    cairo_line_to(cr, cx + half, beam_y + s * 0.16);
+    cairo_stroke(cr);
+
+    cairo_new_path(cr);
+    cairo_arc(cr, cx - half, beam_y + s * 0.24, s * 0.11, 0.15 * G_PI, 0.85 * G_PI);
+    cairo_stroke(cr);
+    cairo_new_path(cr);
+    cairo_arc(cr, cx + half, beam_y + s * 0.24, s * 0.11, 0.15 * G_PI, 0.85 * G_PI);
+    cairo_stroke(cr);
+
+    cairo_set_line_width(cr, MAX(1.8, s * 0.08));
+    cairo_move_to(cr, cx - s * 0.16, top + s * 0.66);
+    cairo_line_to(cr, cx + s * 0.16, top + s * 0.66);
+    cairo_stroke(cr);
+}
+
 /* Open book glyph, painted in the given colour. */
 static void book_paint(cairo_t *cr, int width, int height, Rgb c) {
     const double w = width;

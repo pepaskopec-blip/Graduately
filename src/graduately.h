@@ -19,6 +19,7 @@
 #define NET_SUBJ       1    /* index of "Správa počítačových sítí"     */
 #define HW_SUBJ        2    /* index of "Technické vybavení"          */
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
+#define ON_SUBJ        4    /* index of "Občanská nauka"              */
 #define CSS_FILE      "style.css"
 #define CHANGELOG_FILE "changelog.txt"
 #define APP_ID        "org.maturita.Maturita"
@@ -48,6 +49,7 @@ extern char *app_progress_u3;
 extern char *app_settings_file;
 extern char *app_progress_net;
 extern char *app_progress_hw;
+extern char *app_progress_on;
 extern char *app_progress_mluvnice;
 extern char *app_progress_cetba;
 #define PROGRESS_DIR  app_progress_dir
@@ -57,6 +59,7 @@ extern char *app_progress_cetba;
 #define SETTINGS_FILE app_settings_file
 #define PROGRESS_NET  app_progress_net
 #define PROGRESS_HW   app_progress_hw
+#define PROGRESS_ON   app_progress_on
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -114,6 +117,8 @@ extern char *app_progress_cetba;
 #define NET_LESSONS     27
 #define HW_UNITS        29
 #define HW_LESSONS       29
+#define ON_UNITS         17
+#define ON_LESSONS       17
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
 #define HW3_SLIDES       2
@@ -754,6 +759,8 @@ extern NetLesson net_lessons[NET_LESSONS];
 extern NetLesson *net_notes_target;
 extern NetLesson hw_lessons[HW_LESSONS];
 extern GtkWidget *hw_nodes[HW_UNITS];
+extern NetLesson on_lessons[ON_LESSONS];
+extern GtkWidget *on_nodes[ON_UNITS];
 extern GtkWidget *net_note_host;
 extern int net_note_last_w;
 extern GtkWidget *net_scroll;
@@ -841,6 +848,16 @@ void mark_hw_done(int lesson_id);
 void refresh_hw_completion_ui(void);
 void progress_for_hw(ProgressSum *out);
 void hw_rail_theme_reset(void);
+void on_load_progress(void);
+void on_save_progress(void);
+void mark_on_done(int lesson_id);
+void refresh_on_completion_ui(void);
+void progress_for_on(ProgressSum *out);
+void on_rail_theme_reset(void);
+void on_lessons_apply_lang(void);
+GtkWidget *build_onyears_page(void);
+GtkWidget *build_onmap_page(void);
+void add_on_pages(GtkStack *stack);
 void czech_rail_theme_reset(void);
 void hw_lessons_apply_lang(void);
 GtkWidget *build_hwyears_page(void);
@@ -927,6 +944,8 @@ GtkWidget *build_hw_unit29_page(void);
 GtkWidget *build_hw_unit29_exercise_page(void);
 void draw_chip_icon(GtkDrawingArea *area, cairo_t *cr,
                            int width, int height, gpointer data);
+void draw_civics_icon(GtkDrawingArea *area, cairo_t *cr,
+                      int width, int height, gpointer data);
 void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data);
 void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,

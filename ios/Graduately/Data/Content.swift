@@ -31,6 +31,7 @@ final class Content {
     let netTasks: [J]
     let netAnswers: [[J]]
     let hw: [J]
+    let on: [J]
     let mluvnice: [J]
     let books: [J]
     let changelog: [J]
@@ -62,6 +63,7 @@ final class Content {
             netAnswers = []
         }
         hw = raw.arr("hw")
+        on = raw.arr("on")
         mluvnice = raw.arr("mluvnice")
         books = raw.arr("books")
         changelog = raw.arr("changelog")
@@ -70,6 +72,7 @@ final class Content {
     func germanUnit(_ id: Int) -> J? { german.first { $0.int("id") == id } }
     func netLesson(_ id: Int) -> J? { netLessons.first { $0.int("id") == id } }
     func hwLesson(_ id: Int) -> J? { hw.first { $0.int("id") == id } }
+    func onLesson(_ id: Int) -> J? { on.first { $0.int("id") == id } }
     func mluv(_ n: Int) -> J? { mluvnice.first { $0.int("id") == n } }
     func book(_ id: String) -> J? { books.first { $0.str("id") == id } }
 

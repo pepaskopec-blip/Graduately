@@ -6,6 +6,12 @@
 # cs: bullet
 # en: bullet
 
+--- 2026-10-02
+cs: Občanská nauka: 1. ročník, 17 lekcí (člověk v lidském společenství)
+cs: Občanská nauka: další ročníky jsou zatím zamčené
+en: Civics: year 1, 17 lessons (the individual and society)
+en: Civics: later years are still locked
+
 --- 2026-09-25
 cs: Technické vybavení: pět lekcí o digitalizaci zvuku (vzorkování, kvantování, PCM)
 cs: Technické vybavení: skříň, zdroj, deska, CPU, karty, disky a vstupní zařízení

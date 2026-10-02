@@ -23,6 +23,10 @@ enum Route: Hashable {
     case hwMap
     case hwLesson(Int)
     case hwEx(Int)
+    case onYears
+    case onMap
+    case onLesson(Int)
+    case onEx(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -48,6 +52,10 @@ enum Route: Hashable {
         case .hwMap: return "hwmap"
         case .hwLesson(let id): return "hwunit\(id)"
         case .hwEx(let id): return "hwex\(id)"
+        case .onYears: return "onyears"
+        case .onMap: return "onmap"
+        case .onLesson(let id): return "onunit\(id)"
+        case .onEx(let id): return "onex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -96,6 +104,14 @@ enum Route: Hashable {
             return [.hwYears, .hwMap, .hwLesson(id)]
         case .hwEx(let id):
             return [.hwYears, .hwMap, .hwLesson(id), .hwEx(id)]
+        case .onYears:
+            return [.onYears]
+        case .onMap:
+            return [.onYears, .onMap]
+        case .onLesson(let id):
+            return [.onYears, .onMap, .onLesson(id)]
+        case .onEx(let id):
+            return [.onYears, .onMap, .onLesson(id), .onEx(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -124,6 +140,8 @@ func routeFromPage(_ page: String) -> Route? {
     case "netmap": return .netMap
     case "hwyears": return .hwYears
     case "hwmap": return .hwMap
+    case "onyears": return .onYears
+    case "onmap": return .onMap
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -166,6 +184,12 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /hwex(\d+)/), let n = Int(m.1) {
             return .hwEx(n)
+        }
+        if let m = page.wholeMatch(of: /onunit(\d+)/), let n = Int(m.1) {
+            return .onLesson(n)
+        }
+        if let m = page.wholeMatch(of: /onex(\d+)/), let n = Int(m.1) {
+            return .onEx(n)
         }
         if let m = page.wholeMatch(of: /mluve(\d+)/), let n = Int(m.1) {
             return .mluvEx(n)

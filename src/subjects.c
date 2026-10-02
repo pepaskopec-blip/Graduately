@@ -4,8 +4,8 @@
 /* Subjects page — icon grid, one tile per subject                    */
 /* ------------------------------------------------------------------ */
 
-/* Index 0 (Deutsch), NET_SUBJ (networks), HW_SUBJ (hardware) and CZ_SUBJ
- * (Czech) are unlocked. */
+/* Index 0 (Deutsch), NET_SUBJ (networks), HW_SUBJ (hardware), CZ_SUBJ
+ * (Czech) and ON_SUBJ (civics) are unlocked. */
 const char *sub_keys[NUM_SUBJECTS] = {
     "Deutsch",
     "Správa počítačových sítí",
@@ -153,7 +153,8 @@ void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
 }
 
 static gboolean subject_is_open(int i) {
-    return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ;
+    return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
+        || i == ON_SUBJ;
 }
 
 static GtkWidget *subject_icon(int i) {
@@ -173,6 +174,9 @@ static GtkWidget *subject_icon(int i) {
     else if (i == CZ_SUBJ)
         gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(area),
                                        draw_czech_flag, NULL, NULL);
+    else if (i == ON_SUBJ)
+        gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(area),
+                                       draw_civics_icon, NULL, NULL);
     else
         return icon_area_new(draw_lock_icon, 0.3451, 0.3569, 0.4392, 22);
     return area;
@@ -187,6 +191,8 @@ static const char *subject_target(int i) {
         return "hwyears";
     if (i == CZ_SUBJ)
         return "czechmap";
+    if (i == ON_SUBJ)
+        return "onyears";
     return NULL;
 }
 

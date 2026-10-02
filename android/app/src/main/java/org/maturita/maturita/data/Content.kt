@@ -29,6 +29,7 @@ class Content(root: JSONObject) {
         }
     }
     val hw = raw.arr("hw")
+    val on = raw.arr("on")
     val mluvnice = raw.arr("mluvnice")
     val books = raw.arr("books")
     val changelog = raw.arr("changelog")
@@ -36,6 +37,7 @@ class Content(root: JSONObject) {
     fun germanUnit(id: Int) = german.firstOrNull { it.int("id") == id }
     fun netLesson(id: Int) = netLessons.firstOrNull { it.int("id") == id }
     fun hwLesson(id: Int) = hw.firstOrNull { it.int("id") == id }
+    fun onLesson(id: Int) = on.firstOrNull { it.int("id") == id }
     fun mluv(n: Int) = mluvnice.firstOrNull { it.int("id") == n }
     fun book(id: String) = books.firstOrNull { it.str("id") == id }
 

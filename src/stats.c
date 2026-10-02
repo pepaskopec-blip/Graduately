@@ -69,6 +69,8 @@ void refresh_stats_ui(void) {
             progress_for_net(&all);
         else if (s == HW_SUBJ)
             progress_for_hw(&all);
+        else if (s == ON_SUBJ)
+            progress_for_on(&all);
         else if (s == CZ_SUBJ)
             progress_for_mluvnice(&all);
         else
@@ -100,7 +102,8 @@ void refresh_stats_ui(void) {
         GtkWidget *bar = stats_ui.subj[s].bar;
         ProgressSum sp = {0};
         gboolean has_content = (s == NET_SUBJ) || (s == HW_SUBJ)
-                               || (s == CZ_SUBJ) || sub_unit_count[s] > 0;
+                               || (s == ON_SUBJ) || (s == CZ_SUBJ)
+                               || sub_unit_count[s] > 0;
 
         if (!count || !bar)
             continue;
@@ -108,6 +111,8 @@ void refresh_stats_ui(void) {
             progress_for_net(&sp);
         else if (s == HW_SUBJ)
             progress_for_hw(&sp);
+        else if (s == ON_SUBJ)
+            progress_for_on(&sp);
         else if (s == CZ_SUBJ)
             progress_for_mluvnice(&sp);
         else
