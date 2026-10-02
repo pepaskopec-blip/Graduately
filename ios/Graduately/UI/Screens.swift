@@ -423,9 +423,10 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
     case "hwyears", "hwmap":
         sum.totalEx = vm.content.hw.count
         sum.doneEx = vm.content.hw.filter { vm.progress.hwDone($0.int("id")) }.count
-    case "onyears", "onmap":
-        sum.totalEx = vm.content.on.count
+    case "onyears", "onmap", "on2map":
+        sum.totalEx = vm.content.on.count + vm.content.on2.count
         sum.doneEx = vm.content.on.filter { vm.progress.onDone($0.int("id")) }.count
+            + vm.content.on2.filter { vm.progress.on2Done($0.int("id")) }.count
     case "czechmap":
         sum.totalEx = vm.content.mluvnice.count
         sum.doneEx = vm.content.mluvnice.filter { vm.progress.mluvDone($0.int("id")) }.count
@@ -565,12 +566,16 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex\(l.int("id"))")
     }
     add(vm.tr("on_year1"), vm.tr("search_lesson"), "onmap", extra: "rocnik")
-    add(vm.tr("on_year2"), vm.tr("search_lesson"), "onyears", locked: true, extra: "rocnik")
+    add(vm.tr("on_year2"), vm.tr("search_lesson"), "on2map", extra: "rocnik")
     add(vm.tr("on_year3"), vm.tr("search_lesson"), "onyears", locked: true, extra: "rocnik")
     add(vm.tr("on_year4"), vm.tr("search_lesson"), "onyears", locked: true, extra: "rocnik")
     for l in vm.content.on {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "onunit\(l.int("id"))", extra: "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "onex\(l.int("id"))")
+    }
+    for l in vm.content.on2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on2unit\(l.int("id"))", extra: "obcanka")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on2ex\(l.int("id"))")
     }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -796,7 +801,10 @@ struct OnYearsScreen: View {
             NavigationLink(value: Route.onMap) {
                 ListRowLabel(title: vm.tr("on_year1"), subtitle: vm.tr("on_sub"))
             }
-            ForEach(["on_year2", "on_year3", "on_year4"], id: \.self) { key in
+            NavigationLink(value: Route.on2Map) {
+                ListRowLabel(title: vm.tr("on_year2"), subtitle: vm.tr("on2_sub"))
+            }
+            ForEach(["on_year3", "on_year4"], id: \.self) { key in
                 Label {
                     ListRowLabel(title: vm.tr(key), subtitle: vm.tr("on_year_locked_sub"))
                 } icon: {
@@ -1402,6 +1410,27 @@ struct RouteDestination: View {
             }
         case .onEx(let id):
             OnQuizScreen(vm: vm, id: id)
+        case .on2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("on_year2"),
+                subtitle: vm.tr("on2_sub"),
+                rows: vm.content.on2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "o2\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.on2Done(id),
+                        destination: .on2Lesson(id)
+                    )
+                }
+            )
+        case .on2Lesson(let id):
+            if let l = vm.content.on2Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .on2Ex(id))
+            }
+        case .on2Ex(let id):
+            On2QuizScreen(vm: vm, id: id)
         case .czechMap:
             CzechMapScreen(vm: vm)
         case .mluvnice:

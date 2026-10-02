@@ -37,6 +37,9 @@ final class ProgressStore {
     func onDone(_ id: Int) -> Bool { defaults.bool(forKey: "on.\(id)") }
     func markOn(_ id: Int) { defaults.set(true, forKey: "on.\(id)") }
 
+    func on2Done(_ id: Int) -> Bool { defaults.bool(forKey: "on2.\(id)") }
+    func markOn2(_ id: Int) { defaults.set(true, forKey: "on2.\(id)") }
+
     func mluvDone(_ n: Int) -> Bool { defaults.bool(forKey: "mluv.\(n)") }
     func markMluv(_ n: Int) { defaults.set(true, forKey: "mluv.\(n)") }
 
@@ -84,6 +87,14 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if p.onDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.on2 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.on2Done(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

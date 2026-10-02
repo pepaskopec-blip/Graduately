@@ -203,7 +203,7 @@ static void catalog_rebuild(void) {
     }
 
     catalog_add_key("on_year1", "search_lesson", "onmap", FALSE, 1, "rocnik");
-    catalog_add_key("on_year2", "search_lesson", "onyears", TRUE, 1, "rocnik");
+    catalog_add_key("on_year2", "search_lesson", "on2map", FALSE, 1, "rocnik");
     catalog_add_key("on_year3", "search_lesson", "onyears", TRUE, 1, "rocnik");
     catalog_add_key("on_year4", "search_lesson", "onyears", TRUE, 1, "rocnik");
     for (i = 1; i <= ON_LESSONS; i++) {
@@ -211,6 +211,13 @@ static void catalog_rebuild(void) {
         g_snprintf(page, sizeof(page), "onunit%d", i);
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "obcanka");
         g_snprintf(page, sizeof(page), "onex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= ON2_LESSONS; i++) {
+        g_snprintf(key, sizeof(key), "on2_unit%d", i);
+        g_snprintf(page, sizeof(page), "on2unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "obcanka");
+        g_snprintf(page, sizeof(page), "on2ex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
     }
 

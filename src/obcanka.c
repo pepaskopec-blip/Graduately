@@ -3,7 +3,8 @@
 /* Year 1 of Občanská nauka.
  * Thematic unit "Člověk v lidském společenství" from the SOV framework
  * (společenskovědní vzdělávání) and the MŠMT model syllabus, which schools
- * place in the first year. Later years stay locked. */
+ * place in the first year. Year 2 is the citizen and the state; years 3 and 4
+ * stay locked. */
 
 #define ON_ENTRY(n) \
     { .n_slides = 2, .unit_page = "onunit" #n, .ex_page = "onex" #n }
@@ -339,10 +340,11 @@ static void on_add_node(GtkFixed *fixed, int index) {
     gtk_fixed_put(fixed, name, 0, 0);
 }
 
-static GtkWidget *on_year_button(int year, gboolean locked) {
+static GtkWidget *on_year_button(int year, const char *target) {
     static const char *year_keys[] = {
         "on_year1", "on_year2", "on_year3", "on_year4",
     };
+    gboolean locked = target == NULL;
     GtkWidget *btn;
     GtkWidget *row;
     GtkWidget *num;
@@ -399,7 +401,7 @@ static GtkWidget *on_year_button(int year, gboolean locked) {
         gtk_box_append(GTK_BOX(row), icon);
     } else {
         g_object_set_data_full(G_OBJECT(btn), "target",
-                               g_strdup("onmap"), g_free);
+                               g_strdup(target), g_free);
         g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
     }
 
@@ -411,6 +413,7 @@ GtkWidget *build_onyears_page(void) {
     GtkWidget *scroll;
     GtkWidget *list;
     int y;
+    static const char *targets[] = {"onmap", "on2map", NULL, NULL};
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_hexpand(page, TRUE);
@@ -437,7 +440,7 @@ GtkWidget *build_onyears_page(void) {
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), list);
 
     for (y = 1; y <= 4; y++)
-        gtk_box_append(GTK_BOX(list), on_year_button(y, y > 1));
+        gtk_box_append(GTK_BOX(list), on_year_button(y, targets[y - 1]));
 
     return page;
 }

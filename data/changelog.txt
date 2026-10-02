@@ -8,9 +8,11 @@
 
 --- 2026-10-02
 cs: Občanská nauka: 1. ročník, 17 lekcí (člověk v lidském společenství)
-cs: Občanská nauka: další ročníky jsou zatím zamčené
+cs: Občanská nauka: 2. ročník, 16 lekcí (člověk jako občan)
+cs: Občanská nauka: 3. a 4. ročník jsou zatím zamčené
 en: Civics: year 1, 17 lessons (the individual and society)
-en: Civics: later years are still locked
+en: Civics: year 2, 16 lessons (the citizen in a democratic state)
+en: Civics: years 3 and 4 are still locked
 
 --- 2026-09-25
 cs: Technické vybavení: pět lekcí o digitalizaci zvuku (vzorkování, kvantování, PCM)

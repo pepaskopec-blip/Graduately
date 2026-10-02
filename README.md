@@ -69,7 +69,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Český jazyk a literatura** — mluvnice (20 cvičení) a maturitní četba
   (82 knih: zápisky, kvíz, sestavení děje); literární teorie je zatím zamčená
 - **Občanská nauka** — 1. ročník, 17 lekcí (člověk v lidském společenství);
-  ročníky 2–4 jsou zamčené
+  2. ročník, 16 lekcí (člověk jako občan); ročníky 3–4 jsou zamčené
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
 - ukončení: `Cmd/Super+Q` nebo `Alt+F4`
 
@@ -264,7 +264,7 @@ Intel Mac, another architecture, or hacking on the code →
 - **Czech language** — grammar (20 exercises) and required reading
   (82 books: notes, quiz, plot ordering); literature theory is still locked
 - **Civics** — year 1, 17 lessons (the individual and society);
-  years 2–4 are locked
+  year 2, 16 lessons (the citizen in a democratic state); years 3–4 are locked
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
 - quit with `Cmd/Super+Q` or `Alt+F4`
 

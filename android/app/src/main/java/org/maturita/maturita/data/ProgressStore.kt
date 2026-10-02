@@ -35,6 +35,9 @@ class ProgressStore(context: Context) {
     fun onDone(id: Int) = prefs.getBoolean("on.$id", false)
     fun markOn(id: Int) { prefs.edit().putBoolean("on.$id", true).apply() }
 
+    fun on2Done(id: Int) = prefs.getBoolean("on2.$id", false)
+    fun markOn2(id: Int) { prefs.edit().putBoolean("on2.$id", true).apply() }
+
     fun mluvDone(n: Int) = prefs.getBoolean("mluv.$n", false)
     fun markMluv(n: Int) { prefs.edit().putBoolean("mluv.$n", true).apply() }
 
@@ -77,6 +80,14 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if (p.onDone(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.on2.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.on2Done(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

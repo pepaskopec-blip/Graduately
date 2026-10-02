@@ -27,6 +27,9 @@ enum Route: Hashable {
     case onMap
     case onLesson(Int)
     case onEx(Int)
+    case on2Map
+    case on2Lesson(Int)
+    case on2Ex(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -56,6 +59,9 @@ enum Route: Hashable {
         case .onMap: return "onmap"
         case .onLesson(let id): return "onunit\(id)"
         case .onEx(let id): return "onex\(id)"
+        case .on2Map: return "on2map"
+        case .on2Lesson(let id): return "on2unit\(id)"
+        case .on2Ex(let id): return "on2ex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -112,6 +118,12 @@ enum Route: Hashable {
             return [.onYears, .onMap, .onLesson(id)]
         case .onEx(let id):
             return [.onYears, .onMap, .onLesson(id), .onEx(id)]
+        case .on2Map:
+            return [.onYears, .on2Map]
+        case .on2Lesson(let id):
+            return [.onYears, .on2Map, .on2Lesson(id)]
+        case .on2Ex(let id):
+            return [.onYears, .on2Map, .on2Lesson(id), .on2Ex(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -142,6 +154,7 @@ func routeFromPage(_ page: String) -> Route? {
     case "hwmap": return .hwMap
     case "onyears": return .onYears
     case "onmap": return .onMap
+    case "on2map": return .on2Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -184,6 +197,12 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /hwex(\d+)/), let n = Int(m.1) {
             return .hwEx(n)
+        }
+        if let m = page.wholeMatch(of: /on2unit(\d+)/), let n = Int(m.1) {
+            return .on2Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /on2ex(\d+)/), let n = Int(m.1) {
+            return .on2Ex(n)
         }
         if let m = page.wholeMatch(of: /onunit(\d+)/), let n = Int(m.1) {
             return .onLesson(n)

@@ -300,9 +300,10 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
             sum.totalEx = vm.content.hw.size
             sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) }
         }
-        "onyears", "onmap" -> {
-            sum.totalEx = vm.content.on.size
-            sum.doneEx = vm.content.on.count { vm.progress.onDone(it.int("id")) }
+        "onyears", "onmap", "on2map" -> {
+            sum.totalEx = vm.content.on.size + vm.content.on2.size
+            sum.doneEx = vm.content.on.count { vm.progress.onDone(it.int("id")) } +
+                vm.content.on2.count { vm.progress.on2Done(it.int("id")) }
         }
         "czechmap" -> {
             sum.totalEx = vm.content.mluvnice.size
@@ -492,12 +493,16 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex${l.int("id")}")
     }
     add(vm.tr("on_year1"), vm.tr("search_lesson"), "onmap", extra = "rocnik")
-    add(vm.tr("on_year2"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
+    add(vm.tr("on_year2"), vm.tr("search_lesson"), "on2map", extra = "rocnik")
     add(vm.tr("on_year3"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
     add(vm.tr("on_year4"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
     vm.content.on.forEach { l ->
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "onunit${l.int("id")}", extra = "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "onex${l.int("id")}")
+    }
+    vm.content.on2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on2unit${l.int("id")}", extra = "obcanka")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on2ex${l.int("id")}")
     }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     vm.content.mluvnice.forEach { m -> add(m.str("name"), vm.tr("Mluvnice"), "mluve${m.int("id")}") }
@@ -603,8 +608,9 @@ fun OnYearsScreen(vm: AppViewModel) {
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
                 NavRow(title = vm.tr("on_year1"), subtitle = vm.tr("on_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.OnMap) }
+                NavRow(title = vm.tr("on_year2"), subtitle = vm.tr("on2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On2Map) }
             }
-            items(listOf("on_year2", "on_year3", "on_year4")) { key ->
+            items(listOf("on_year3", "on_year4")) { key ->
                 NavRow(title = vm.tr(key), subtitle = vm.tr("on_year_locked_sub"), locked = true, onClick = null)
             }
         }
