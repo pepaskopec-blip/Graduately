@@ -3,8 +3,7 @@
 /* Year 1 of Občanská nauka.
  * Thematic unit "Člověk v lidském společenství" from the SOV framework
  * (společenskovědní vzdělávání) and the MŠMT model syllabus, which schools
- * place in the first year. Year 2 is the citizen and the state; years 3 and 4
- * stay locked. */
+ * place in the first year. Years 2 and 3 are open; year 4 stays locked. */
 
 #define ON_ENTRY(n) \
     { .n_slides = 2, .unit_page = "onunit" #n, .ex_page = "onex" #n }
@@ -413,7 +412,7 @@ GtkWidget *build_onyears_page(void) {
     GtkWidget *scroll;
     GtkWidget *list;
     int y;
-    static const char *targets[] = {"onmap", "on2map", NULL, NULL};
+    static const char *targets[] = {"onmap", "on2map", "on3map", NULL};
 
     page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_hexpand(page, TRUE);

@@ -33,6 +33,7 @@ final class Content {
     let hw: [J]
     let on: [J]
     let on2: [J]
+    let on3: [J]
     let mluvnice: [J]
     let books: [J]
     let changelog: [J]
@@ -66,6 +67,7 @@ final class Content {
         hw = raw.arr("hw")
         on = raw.arr("on")
         on2 = raw.arr("on2")
+        on3 = raw.arr("on3")
         mluvnice = raw.arr("mluvnice")
         books = raw.arr("books")
         changelog = raw.arr("changelog")
@@ -76,6 +78,7 @@ final class Content {
     func hwLesson(_ id: Int) -> J? { hw.first { $0.int("id") == id } }
     func onLesson(_ id: Int) -> J? { on.first { $0.int("id") == id } }
     func on2Lesson(_ id: Int) -> J? { on2.first { $0.int("id") == id } }
+    func on3Lesson(_ id: Int) -> J? { on3.first { $0.int("id") == id } }
     func mluv(_ n: Int) -> J? { mluvnice.first { $0.int("id") == n } }
     func book(_ id: String) -> J? { books.first { $0.str("id") == id } }
 

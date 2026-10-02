@@ -3,8 +3,8 @@
 /* Year 2 of Občanská nauka.
  * Thematic unit "Člověk jako občan v demokratickém státě" from the MŠMT
  * model syllabus (č.j. 18 396/2002-23) and the SOV civic framework, which
- * schools place in the second year. Law, the economy and philosophy stay
- * in later years. */
+ * schools place in the second year. Law is year 3; the economy and
+ * philosophy stay in the fourth year. */
 
 #define ON2_ENTRY(n) \
     { .n_slides = 2, .unit_page = "on2unit" #n, .ex_page = "on2ex" #n }

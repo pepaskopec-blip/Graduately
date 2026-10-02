@@ -386,6 +386,7 @@ static gboolean run_smoke_test(gpointer data) {
     static const char *pages[] = {
         "welcome", "subjects", "roadmap", "stats",
         "netyears", "netmap", "hwyears", "hwmap", "onyears", "onmap", "on2map",
+        "on3map",
         "czechmap",
         "mluvnice", "readinglist",
         "cetba1984", "cetba1984quiz", "cetba1984dej",
@@ -399,6 +400,7 @@ static gboolean run_smoke_test(gpointer data) {
         "hwunit29", "hwex29",
         "onunit1", "onex1", "onunit17", "onex17",
         "on2unit1", "on2ex1", "on2unit16", "on2ex16",
+        "on3unit1", "on3ex1", "on3unit16", "on3ex16",
         "unit1", "unit2", "unit3",
         "u1e1", "u1e13", "u2e1", "u2e19", "u3e1", "u3e15",
         "u1vocab", "u2vocab", "u3vocab",
@@ -514,6 +516,8 @@ void activate(GtkApplication *app, gpointer user_data) {
     add_on_pages(main_stack);
     gtk_stack_add_named(main_stack, build_on2map_page(), "on2map");
     add_on2_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_on3map_page(), "on3map");
+    add_on3_pages(main_stack);
     gtk_stack_add_named(main_stack, build_czechmap_page(), "czechmap");
     gtk_stack_add_named(main_stack, build_mluvnice_page(), "mluvnice");
     for (int n = 1; n <= 20; n++) {

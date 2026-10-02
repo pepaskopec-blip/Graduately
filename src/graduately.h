@@ -51,6 +51,7 @@ extern char *app_progress_net;
 extern char *app_progress_hw;
 extern char *app_progress_on;
 extern char *app_progress_on2;
+extern char *app_progress_on3;
 extern char *app_progress_mluvnice;
 extern char *app_progress_cetba;
 #define PROGRESS_DIR  app_progress_dir
@@ -62,6 +63,7 @@ extern char *app_progress_cetba;
 #define PROGRESS_HW   app_progress_hw
 #define PROGRESS_ON   app_progress_on
 #define PROGRESS_ON2  app_progress_on2
+#define PROGRESS_ON3  app_progress_on3
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -123,6 +125,8 @@ extern char *app_progress_cetba;
 #define ON_LESSONS       17
 #define ON2_UNITS        16
 #define ON2_LESSONS      16
+#define ON3_UNITS        16
+#define ON3_LESSONS      16
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
 #define HW3_SLIDES       2
@@ -767,6 +771,8 @@ extern NetLesson on_lessons[ON_LESSONS];
 extern GtkWidget *on_nodes[ON_UNITS];
 extern NetLesson on2_lessons[ON2_LESSONS];
 extern GtkWidget *on2_nodes[ON2_UNITS];
+extern NetLesson on3_lessons[ON3_LESSONS];
+extern GtkWidget *on3_nodes[ON3_UNITS];
 extern GtkWidget *net_note_host;
 extern int net_note_last_w;
 extern GtkWidget *net_scroll;
@@ -872,6 +878,14 @@ void on2_rail_theme_reset(void);
 void on2_lessons_apply_lang(void);
 GtkWidget *build_on2map_page(void);
 void add_on2_pages(GtkStack *stack);
+void on3_load_progress(void);
+void on3_save_progress(void);
+void mark_on3_done(int lesson_id);
+void refresh_on3_completion_ui(void);
+void on3_rail_theme_reset(void);
+void on3_lessons_apply_lang(void);
+GtkWidget *build_on3map_page(void);
+void add_on3_pages(GtkStack *stack);
 void czech_rail_theme_reset(void);
 void hw_lessons_apply_lang(void);
 GtkWidget *build_hwyears_page(void);

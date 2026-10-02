@@ -30,6 +30,9 @@ enum Route: Hashable {
     case on2Map
     case on2Lesson(Int)
     case on2Ex(Int)
+    case on3Map
+    case on3Lesson(Int)
+    case on3Ex(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -62,6 +65,9 @@ enum Route: Hashable {
         case .on2Map: return "on2map"
         case .on2Lesson(let id): return "on2unit\(id)"
         case .on2Ex(let id): return "on2ex\(id)"
+        case .on3Map: return "on3map"
+        case .on3Lesson(let id): return "on3unit\(id)"
+        case .on3Ex(let id): return "on3ex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -124,6 +130,12 @@ enum Route: Hashable {
             return [.onYears, .on2Map, .on2Lesson(id)]
         case .on2Ex(let id):
             return [.onYears, .on2Map, .on2Lesson(id), .on2Ex(id)]
+        case .on3Map:
+            return [.onYears, .on3Map]
+        case .on3Lesson(let id):
+            return [.onYears, .on3Map, .on3Lesson(id)]
+        case .on3Ex(let id):
+            return [.onYears, .on3Map, .on3Lesson(id), .on3Ex(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -155,6 +167,7 @@ func routeFromPage(_ page: String) -> Route? {
     case "onyears": return .onYears
     case "onmap": return .onMap
     case "on2map": return .on2Map
+    case "on3map": return .on3Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -197,6 +210,12 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /hwex(\d+)/), let n = Int(m.1) {
             return .hwEx(n)
+        }
+        if let m = page.wholeMatch(of: /on3unit(\d+)/), let n = Int(m.1) {
+            return .on3Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /on3ex(\d+)/), let n = Int(m.1) {
+            return .on3Ex(n)
         }
         if let m = page.wholeMatch(of: /on2unit(\d+)/), let n = Int(m.1) {
             return .on2Lesson(n)
