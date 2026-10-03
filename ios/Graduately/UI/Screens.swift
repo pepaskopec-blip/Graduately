@@ -468,9 +468,6 @@ struct SettingsScreen: View {
 
 struct StatsScreen: View {
     @ObservedObject var vm: AppModel
-    #if os(macOS)
-    @State private var statsHeader: CGFloat = 160
-    #endif
 
     var body: some View {
         #if os(macOS)
@@ -547,70 +544,112 @@ struct StatsScreen: View {
     private var macStats: some View {
         let sum = summarize(vm.content, vm.progress)
         let pct = sum.totalEx == 0 ? 0.0 : Double(sum.doneEx) / Double(sum.totalEx)
-        let subjects = vm.content.subjects
-        return GeometryReader { geo in
-            let width = max(geo.size.width - MacChrome.pageInset * 2, 240)
-            let offered = max(geo.size.height - statsHeader - 20 - MacChrome.pageInset * 2, 150)
-            let minGrid = MacGrid.contentHeight(width: width, height: offered, count: subjects.count, minWidth: 240, minHeight: 150, spacing: 16)
-            let gridH = max(minGrid, geo.size.height - statsHeader - 20 - MacChrome.pageInset * 2)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 16) {
-                        GlassCard {
-                            VStack(alignment: .leading, spacing: 14) {
-                                HStack(alignment: .top) {
-                                    stat(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                                    stat(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
-                                    stat(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
-                                }
-                                ProgressView(value: pct)
-                            }
-                        }
-                        Text(vm.tr("stats_section"))
-                            .font(.title2.weight(.semibold))
-                    }
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear.preference(key: MacHeaderHeight.self, value: proxy.size.height)
-                        }
-                    }
-                    MacFillGrid(count: subjects.count, minWidth: 240, minHeight: 150, spacing: 16, inset: 0) { index in
-                        statSubject(subjects[index])
-                    }
-                    .frame(height: gridH)
-                }
-                .padding(MacChrome.pageInset)
-                .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .topLeading)
+        let ranked = rankedSubjects()
+        return VStack(alignment: .leading, spacing: 22) {
+            HStack(spacing: 16) {
+                statMetric(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                statMetric(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
+                statMetric(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
             }
-            .onPreferenceChange(MacHeaderHeight.self) { statsHeader = $0 }
+            Text(vm.tr("stats_section"))
+                .font(.title2.weight(.semibold))
+            GeometryReader { geo in
+                let count = max(ranked.count, 1)
+                let minRow: CGFloat = 54
+                let floorH = minRow * CGFloat(ranked.count)
+                let rowH = min(76, max(minRow, geo.size.height / CGFloat(count)))
+                let table = VStack(spacing: 0) {
+                    ForEach(Array(ranked.enumerated()), id: \.offset) { index, item in
+                        statRow(item.subject, part: item.part)
+                            .frame(height: floorH > geo.size.height + 1 ? minRow : rowH)
+                        if index < ranked.count - 1 {
+                            Divider().padding(.leading, 68)
+                        }
+                    }
+                }
+                .softSurface(cornerRadius: 18)
+                if floorH > geo.size.height + 1 {
+                    ScrollView { table }
+                } else {
+                    table.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                }
+            }
         }
+        .padding(MacChrome.pageInset)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .navigationTitle(vm.tr("stats_title"))
     }
 
-    private func statSubject(_ s: J) -> some View {
+    private func rankedSubjects() -> [(subject: J, part: ProgressSum)] {
+        let rows = vm.content.subjects.map { subject in
+            (subject: subject, part: subjectSum(vm, subject))
+        }
+        let open = rows.filter { $0.subject.bool("open") }.sorted { lhs, rhs in
+            share(lhs.part) > share(rhs.part)
+        }
+        let locked = rows.filter { !$0.subject.bool("open") }
+        return open + locked
+    }
+
+    private func share(_ part: ProgressSum) -> Double {
+        part.totalEx == 0 ? 0 : Double(part.doneEx) / Double(part.totalEx)
+    }
+
+    private func statMetric(_ label: String, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(value)
+                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .monospacedDigit()
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+            Text(label)
+                .font(.headline)
+                .foregroundStyle(.secondary)
+        }
+        .padding(22)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .softSurface(cornerRadius: 18)
+    }
+
+    private func statRow(_ s: J, part: ProgressSum) -> some View {
         let open = s.bool("open")
-        let part = subjectSum(vm, s)
-        return VStack(alignment: .leading, spacing: 12) {
-            SubjectIcon(icon: s.str("icon"), open: open, size: 36)
+        let progress = share(part)
+        return HStack(spacing: 16) {
+            SubjectIcon(icon: s.str("icon"), open: open, size: 28)
+                .frame(width: 36)
             Text(vm.tr(s.str("key")))
                 .font(.title3.weight(.semibold))
                 .foregroundStyle(open ? .primary : .secondary)
-            Spacer(minLength: 0)
+                .lineLimit(1)
+                .frame(width: 240, alignment: .leading)
             if open && part.totalEx > 0 {
-                ProgressView(value: Double(part.doneEx) / Double(part.totalEx))
+                statTrack(progress)
                 Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
-                    .font(.subheadline)
+                    .font(.title3.monospacedDigit())
                     .foregroundStyle(.secondary)
-                    .monospacedDigit()
+                    .frame(width: 88, alignment: .trailing)
             } else {
+                statTrack(0)
                 Text(vm.tr("stats_locked"))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .font(.body)
+                    .foregroundStyle(.tertiary)
+                    .frame(width: 88, alignment: .trailing)
             }
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .softSurface(cornerRadius: 22)
+        .padding(.horizontal, 18)
+    }
+
+    private func statTrack(_ progress: Double) -> some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule().fill(Color.primary.opacity(0.08))
+                Capsule()
+                    .fill(Color.accentColor)
+                    .frame(width: max(0, geo.size.width * progress))
+            }
+        }
+        .frame(height: 12)
+        .frame(maxWidth: .infinity)
     }
     #endif
 
