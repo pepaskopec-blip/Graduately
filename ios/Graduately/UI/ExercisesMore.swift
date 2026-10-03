@@ -927,20 +927,19 @@ struct LitQuizScreen: View {
                             .font(.title3.weight(.semibold))
                             #endif
                             .padding(.vertical, 12)
-                        ForEach(Array(q.strs("options").enumerated()), id: \.offset) { i, opt in
-                            let correct = i == q.int("correct")
-                            let chosen = answered && picked == i
-                            OptionChip(
-                                text: opt,
-                                selected: chosen,
-                                mark: answered ? (correct ? true : (chosen ? false : nil)) : nil
-                            ) {
-                                guard !answered else { return }
-                                picked = i
-                                answered = true
-                                if correct { score += 1 }
-                            }
+                        #if os(macOS)
+                        LazyVGrid(
+                            columns: [
+                                GridItem(.flexible(), spacing: 12, alignment: .top),
+                                GridItem(.flexible(), spacing: 12, alignment: .top),
+                            ],
+                            spacing: 8
+                        ) {
+                            bookQuizOptions(q)
                         }
+                        #else
+                        bookQuizOptions(q)
+                        #endif
                         if answered {
                             Meaning(text: q.str("expl"), palette: p, visible: true)
                         }
@@ -968,6 +967,24 @@ struct LitQuizScreen: View {
                 }
             }
             .animation(.default, value: answered)
+        }
+    }
+
+    @ViewBuilder
+    private func bookQuizOptions(_ q: J) -> some View {
+        ForEach(Array(q.strs("options").enumerated()), id: \.offset) { i, opt in
+            let correct = i == q.int("correct")
+            let chosen = answered && picked == i
+            OptionChip(
+                text: opt,
+                selected: chosen,
+                mark: answered ? (correct ? true : (chosen ? false : nil)) : nil
+            ) {
+                guard !answered else { return }
+                picked = i
+                answered = true
+                if correct { score += 1 }
+            }
         }
     }
 }

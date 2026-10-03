@@ -199,12 +199,15 @@ struct PathMap: View {
                             .position(x: tip.x, y: tip.y - nodeSize / 2 - labelBand / 2 - 6)
                     }
                 }
+                .frame(width: layout.width + 24, height: canvasH, alignment: .topLeading)
                 .frame(
-                    width: max(layout.width + 24, geo.size.width),
-                    height: canvasH,
-                    alignment: .topLeading
+                    minWidth: geo.size.width,
+                    minHeight: max(canvasH, geo.size.height),
+                    alignment: Alignment(
+                        horizontal: layout.width + 24 < geo.size.width ? .center : .leading,
+                        vertical: canvasH < geo.size.height ? .center : .top
+                    )
                 )
-                .padding(.horizontal, 12)
             }
         }
         #if os(macOS)

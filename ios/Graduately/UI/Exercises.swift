@@ -12,9 +12,21 @@ struct ExerciseScaffold<Content: View>: View {
 
     var body: some View {
         let p = vm.palette
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) { content() }
-                .exerciseContent()
+        Group {
+            #if os(macOS)
+            GeometryReader { geo in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) { content() }
+                        .exerciseContent()
+                        .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .center)
+                }
+            }
+            #else
+            ScrollView {
+                VStack(alignment: .leading, spacing: 8) { content() }
+                    .exerciseContent()
+            }
+            #endif
         }
         .scrollDismissesKeyboard(.interactively)
         .detailScreen(title, subtitle: sub)
@@ -133,17 +145,40 @@ private struct ChoiceEx: View {
                 Text("\(i + 1). \(qs[i].str("prompt"))")
                     .font(.body.weight(.semibold))
                     .padding(.bottom, 6)
-                ForEach(Array(qs[i].strs("options").enumerated()), id: \.offset) { o, opt in
-                    let sel = picks[i] == o
-                    let mark: Bool? = revealed && sel ? picks[i] == qs[i].int("correct") : nil
-                    OptionChip(text: opt, selected: sel, mark: mark) { picks[i] = o }
-                }
+                choiceOptions(qs[i], index: i)
                 if revealed {
                     if i < meanings.count { Meaning(text: vm.tr(meanings[i]), palette: p, visible: true) }
                     if i < expls.count { Meaning(text: expls[i], palette: p, visible: true) }
                 }
                 Spacer().frame(height: 10)
             }
+        }
+    }
+
+    @ViewBuilder
+    private func choiceOptions(_ question: J, index: Int) -> some View {
+        let options = question.strs("options")
+        #if os(macOS)
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: 12, alignment: .top),
+                GridItem(.flexible(), spacing: 12, alignment: .top),
+            ],
+            spacing: 8
+        ) {
+            optionChips(options, index: index, correct: question.int("correct"))
+        }
+        #else
+        optionChips(options, index: index, correct: question.int("correct"))
+        #endif
+    }
+
+    @ViewBuilder
+    private func optionChips(_ options: [String], index: Int, correct: Int) -> some View {
+        ForEach(Array(options.enumerated()), id: \.offset) { o, opt in
+            let sel = picks[index] == o
+            let mark: Bool? = revealed && sel ? picks[index] == correct : nil
+            OptionChip(text: opt, selected: sel, mark: mark) { picks[index] = o }
         }
     }
 }

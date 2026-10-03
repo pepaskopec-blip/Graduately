@@ -2,13 +2,150 @@ import SwiftUI
 
 #if os(macOS)
 enum MacChrome {
-    static let contentMaxWidth: CGFloat = 1080
-    static let exerciseMaxWidth: CGFloat = 900
-    static let cardPadding: CGFloat = 24
+    static let pageInset: CGFloat = 28
+    static let cardPadding: CGFloat = 22
     static let listRowMinHeight: CGFloat = 52
-    static let homeTileMin: CGFloat = 260
-    static let homeTileHeight: CGFloat = 176
+    static let homeTileMin: CGFloat = 240
+    static let homeTileHeight: CGFloat = 168
     static let pathNode: CGFloat = 84
+}
+
+enum MacGrid {
+    /// Picks a column count that fills the width and keeps tiles wider than they are tall.
+    static func columns(width: CGFloat, height: CGFloat, count: Int, minWidth: CGFloat, minHeight: CGFloat, spacing: CGFloat) -> Int {
+        guard count > 0, width > 0 else { return 1 }
+        let maxCols = max(1, min(count, Int((width + spacing) / (minWidth + spacing))))
+        var best = maxCols
+        var bestScore = CGFloat.greatestFiniteMagnitude
+        let offeredH = height > 1 ? height : minHeight * CGFloat(count)
+        for cols in 1...maxCols {
+            let rows = Int(ceil(Double(count) / Double(cols)))
+            let tileW = (width - spacing * CGFloat(cols - 1)) / CGFloat(cols)
+            if tileW + 0.5 < minWidth { continue }
+            let needed = CGFloat(rows) * minHeight + spacing * CGFloat(max(rows - 1, 0))
+            let tileH = max(minHeight, (offeredH - spacing * CGFloat(max(rows - 1, 0))) / CGFloat(rows))
+            let aspect = tileH / max(tileW, 1)
+            let rem = count % cols
+            let ragged = rem == 0 ? 0 : CGFloat(1.5)
+            let lonely = rem == 1 ? CGFloat(1.4) : 0
+            let tooTall = max(0, aspect - 1.05) * 3
+            let overflow = max(0, needed - offeredH)
+            let score = abs(aspect - 0.78) * 2 + ragged + lonely + tooTall + overflow / 180
+            if score < bestScore {
+                bestScore = score
+                best = cols
+            }
+        }
+        return best
+    }
+
+    static func contentHeight(width: CGFloat, height: CGFloat, count: Int, minWidth: CGFloat, minHeight: CGFloat, spacing: CGFloat) -> CGFloat {
+        let cols = columns(width: width, height: height, count: count, minWidth: minWidth, minHeight: minHeight, spacing: spacing)
+        let rows = max(1, Int(ceil(Double(max(count, 1)) / Double(cols))))
+        return CGFloat(rows) * minHeight + spacing * CGFloat(max(rows - 1, 0))
+    }
+}
+
+struct MacHeaderHeight: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
+/// Card grid that grows into the space it is given and scrolls only when the
+/// minimum tile size no longer fits.
+struct MacFillGrid<Content: View>: View {
+    var count: Int
+    var minWidth: CGFloat = 240
+    var minHeight: CGFloat = 148
+    var spacing: CGFloat = 16
+    var inset: CGFloat = 28
+    @ViewBuilder var content: (Int) -> Content
+
+    var body: some View {
+        GeometryReader { geo in
+            let innerW = max(geo.size.width - inset * 2, minWidth)
+            let available = max(geo.size.height - inset * 2, minHeight)
+            let cols = MacGrid.columns(width: innerW, height: available, count: count, minWidth: minWidth, minHeight: minHeight, spacing: spacing)
+            let rows = max(1, Int(ceil(Double(max(count, 1)) / Double(cols))))
+            let floorH = CGFloat(rows) * minHeight + spacing * CGFloat(max(rows - 1, 0))
+            let gridH = max(available, floorH)
+            let tileH = max(minHeight, (gridH - spacing * CGFloat(max(rows - 1, 0))) / CGFloat(rows))
+            let tileW = (innerW - spacing * CGFloat(max(cols - 1, 0))) / CGFloat(max(cols, 1))
+            let lastCount = count - (rows - 1) * cols
+            ScrollView {
+                VStack(spacing: spacing) {
+                    ForEach(0..<rows, id: \.self) { row in
+                        let stretch = row < rows - 1 || lastCount > 1
+                        HStack(spacing: spacing) {
+                            ForEach(0..<cols, id: \.self) { col in
+                                let index = row * cols + col
+                                if index < count {
+                                    content(index)
+                                        .frame(
+                                            maxWidth: stretch ? .infinity : tileW,
+                                            minHeight: tileH,
+                                            maxHeight: tileH,
+                                            alignment: .topLeading
+                                        )
+                                }
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .frame(height: gridH, alignment: .top)
+                .padding(inset)
+                .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .top)
+            }
+            .scrollDisabled(floorH + inset * 2 <= geo.size.height + 1)
+        }
+    }
+}
+
+struct MacLinkCard: View {
+    let title: String
+    var subtitle: String? = nil
+    var badge: String? = nil
+    var systemImage: String? = nil
+    var locked = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center) {
+                if let badge {
+                    Text(badge)
+                        .font(.title.weight(.bold))
+                        .foregroundStyle(locked ? Color.secondary : Color.accentColor)
+                }
+                if let systemImage {
+                    Image(systemName: systemImage)
+                        .font(.title2.weight(.semibold))
+                        .foregroundStyle(locked ? Color.secondary : Color.accentColor)
+                }
+                Spacer(minLength: 0)
+                if locked {
+                    Image(systemName: "lock.fill")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Text(title)
+                .font(.title2.weight(.semibold))
+                .foregroundStyle(locked ? .secondary : .primary)
+                .fixedSize(horizontal: false, vertical: true)
+            if let subtitle, !subtitle.isEmpty {
+                Text(subtitle)
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(22)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .softSurface(cornerRadius: 22)
+    }
 }
 #endif
 
@@ -370,14 +507,13 @@ extension View {
 
     /// Full-width, leading-aligned content for exercise screens.
     func exerciseContent() -> some View {
-        #if os(macOS)
-        frame(maxWidth: MacChrome.exerciseMaxWidth, alignment: .leading)
-            .padding(28)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        #else
         frame(maxWidth: .infinity, alignment: .leading)
+            #if os(macOS)
+            .padding(.horizontal, MacChrome.pageInset)
+            .padding(.vertical, 20)
+            #else
             .padding()
-        #endif
+            #endif
     }
 
     /// macOS content lists use the inset style so they sit under the floating
@@ -422,11 +558,16 @@ struct BottomAction<Extra: View>: View {
             extra()
             PrimaryButton(label: label, action: action)
         }
-        .padding(.horizontal)
+        .padding(.horizontal, {
+            #if os(macOS)
+            MacChrome.pageInset
+            #else
+            16
+            #endif
+        }())
         #if os(macOS)
         .padding(.top, 12)
         .padding(.bottom, 10)
-        .frame(maxWidth: MacChrome.exerciseMaxWidth)
         .frame(maxWidth: .infinity)
         #else
         .padding(.top, 8)
