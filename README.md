@@ -70,7 +70,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
   (82 knih: zápisky, kvíz, sestavení děje); literární teorie je zatím zamčená
 - **Občanská nauka** — 1. ročník, 17 lekcí (člověk v lidském společenství);
   2. ročník, 16 lekcí (člověk jako občan); 3. ročník, 16 lekcí (člověk a právo);
-  4. ročník je zamčený
+  4. ročník, 16 lekcí (hospodářství, svět a filozofie)
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
 - ukončení: `Cmd/Super+Q` nebo `Alt+F4`
 
@@ -266,7 +266,8 @@ Intel Mac, another architecture, or hacking on the code →
   (82 books: notes, quiz, plot ordering); literature theory is still locked
 - **Civics** — year 1, 17 lessons (the individual and society);
   year 2, 16 lessons (the citizen in a democratic state);
-  year 3, 16 lessons (the individual and the law); year 4 is locked
+  year 3, 16 lessons (the individual and the law);
+  year 4, 16 lessons (the economy, the world and philosophy)
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
 - quit with `Cmd/Super+Q` or `Alt+F4`
 

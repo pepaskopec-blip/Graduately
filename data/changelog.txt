@@ -6,15 +6,17 @@
 # cs: bullet
 # en: bullet
 
+--- 2026-10-03
+cs: Občanská nauka: 4. ročník, 16 lekcí (hospodářství, svět a filozofie)
+en: Civics: year 4, 16 lessons (the economy, the world and philosophy)
+
 --- 2026-10-02
 cs: Občanská nauka: 1. ročník, 17 lekcí (člověk v lidském společenství)
 cs: Občanská nauka: 2. ročník, 16 lekcí (člověk jako občan)
 cs: Občanská nauka: 3. ročník, 16 lekcí (člověk a právo)
-cs: Občanská nauka: 4. ročník je zatím zamčený
 en: Civics: year 1, 17 lessons (the individual and society)
 en: Civics: year 2, 16 lessons (the citizen in a democratic state)
 en: Civics: year 3, 16 lessons (the individual and the law)
-en: Civics: year 4 is still locked
 
 --- 2026-09-25
 cs: Technické vybavení: pět lekcí o digitalizaci zvuku (vzorkování, kvantování, PCM)

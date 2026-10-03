@@ -3,7 +3,7 @@
 /* Year 3 of Občanská nauka.
  * Thematic unit "Člověk a právo" from the MŠMT model syllabus
  * (č.j. 18 396/2002-23) and the SOV civic framework, which schools place
- * in the third year. The economy and philosophy stay in the fourth year. */
+ * in the third year. The economy, the world and philosophy are year 4. */
 
 #define ON3_ENTRY(n) \
     { .n_slides = 2, .unit_page = "on3unit" #n, .ex_page = "on3ex" #n }

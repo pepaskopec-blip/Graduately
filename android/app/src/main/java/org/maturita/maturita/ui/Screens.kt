@@ -300,11 +300,12 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
             sum.totalEx = vm.content.hw.size
             sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) }
         }
-        "onyears", "onmap", "on2map", "on3map" -> {
-            sum.totalEx = vm.content.on.size + vm.content.on2.size + vm.content.on3.size
+        "onyears", "onmap", "on2map", "on3map", "on4map" -> {
+            sum.totalEx = vm.content.on.size + vm.content.on2.size + vm.content.on3.size + vm.content.on4.size
             sum.doneEx = vm.content.on.count { vm.progress.onDone(it.int("id")) } +
                 vm.content.on2.count { vm.progress.on2Done(it.int("id")) } +
-                vm.content.on3.count { vm.progress.on3Done(it.int("id")) }
+                vm.content.on3.count { vm.progress.on3Done(it.int("id")) } +
+                vm.content.on4.count { vm.progress.on4Done(it.int("id")) }
         }
         "czechmap" -> {
             sum.totalEx = vm.content.mluvnice.size
@@ -496,7 +497,7 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
     add(vm.tr("on_year1"), vm.tr("search_lesson"), "onmap", extra = "rocnik")
     add(vm.tr("on_year2"), vm.tr("search_lesson"), "on2map", extra = "rocnik")
     add(vm.tr("on_year3"), vm.tr("search_lesson"), "on3map", extra = "rocnik")
-    add(vm.tr("on_year4"), vm.tr("search_lesson"), "onyears", locked = true, extra = "rocnik")
+    add(vm.tr("on_year4"), vm.tr("search_lesson"), "on4map", extra = "rocnik")
     vm.content.on.forEach { l ->
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "onunit${l.int("id")}", extra = "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "onex${l.int("id")}")
@@ -508,6 +509,10 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
     vm.content.on3.forEach { l ->
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on3unit${l.int("id")}", extra = "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on3ex${l.int("id")}")
+    }
+    vm.content.on4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on4unit${l.int("id")}", extra = "obcanka")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on4ex${l.int("id")}")
     }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     vm.content.mluvnice.forEach { m -> add(m.str("name"), vm.tr("Mluvnice"), "mluve${m.int("id")}") }
@@ -615,9 +620,7 @@ fun OnYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("on_year1"), subtitle = vm.tr("on_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.OnMap) }
                 NavRow(title = vm.tr("on_year2"), subtitle = vm.tr("on2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On2Map) }
                 NavRow(title = vm.tr("on_year3"), subtitle = vm.tr("on3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On3Map) }
-            }
-            items(listOf("on_year4")) { key ->
-                NavRow(title = vm.tr(key), subtitle = vm.tr("on_year_locked_sub"), locked = true, onClick = null)
+                NavRow(title = vm.tr("on_year4"), subtitle = vm.tr("on4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On4Map) }
             }
         }
     }

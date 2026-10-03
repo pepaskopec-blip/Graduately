@@ -27,6 +27,9 @@ sealed class Route(val page: String) {
     data object On3Map : Route("on3map")
     data class On3Lesson(val id: Int) : Route("on3unit$id")
     data class On3Ex(val id: Int) : Route("on3ex$id")
+    data object On4Map : Route("on4map")
+    data class On4Lesson(val id: Int) : Route("on4unit$id")
+    data class On4Ex(val id: Int) : Route("on4ex$id")
     data object CzechMap : Route("czechmap")
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
@@ -41,8 +44,8 @@ sealed class Route(val page: String) {
     /** Screens with their own bottom action bar; the navigation bar stays hidden there. */
     val isExercise: Boolean
         get() = this is GermanEx || this is Vocab || this is NetEx || this is HwEx ||
-            this is OnEx || this is On2Ex || this is On3Ex || this is MluvEx || this is BookQuiz || this is BookPlot ||
-            this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson
+            this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is MluvEx || this is BookQuiz || this is BookPlot ||
+            this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson
 
     /** Full stack from the practice root to this screen, so back always goes up one level. */
     fun stack(): List<Route> = when (this) {
@@ -71,6 +74,9 @@ sealed class Route(val page: String) {
         On3Map -> listOf(Subjects, OnYears, On3Map)
         is On3Lesson -> listOf(Subjects, OnYears, On3Map, this)
         is On3Ex -> listOf(Subjects, OnYears, On3Map, On3Lesson(id), this)
+        On4Map -> listOf(Subjects, OnYears, On4Map)
+        is On4Lesson -> listOf(Subjects, OnYears, On4Map, this)
+        is On4Ex -> listOf(Subjects, OnYears, On4Map, On4Lesson(id), this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -95,6 +101,7 @@ fun routeFromPage(page: String): Route? = when (page) {
     "onmap" -> Route.OnMap
     "on2map" -> Route.On2Map
     "on3map" -> Route.On3Map
+    "on4map" -> Route.On4Map
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
     "readinglist" -> Route.ReadingList
@@ -125,6 +132,12 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""hwex(\d+)""").matchEntire(page)?.let {
             return Route.HwEx(it.groupValues[1].toInt())
+        }
+        Regex("""on4unit(\d+)""").matchEntire(page)?.let {
+            return Route.On4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""on4ex(\d+)""").matchEntire(page)?.let {
+            return Route.On4Ex(it.groupValues[1].toInt())
         }
         Regex("""on3unit(\d+)""").matchEntire(page)?.let {
             return Route.On3Lesson(it.groupValues[1].toInt())

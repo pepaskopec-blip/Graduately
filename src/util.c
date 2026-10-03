@@ -23,6 +23,7 @@ char *app_progress_hw;
 char *app_progress_on;
 char *app_progress_on2;
 char *app_progress_on3;
+char *app_progress_on4;
 char *app_progress_mluvnice;
 char *app_progress_cetba;
 
@@ -164,6 +165,7 @@ static void set_progress_paths(const char *write_root) {
     g_free(app_progress_on);
     g_free(app_progress_on2);
     g_free(app_progress_on3);
+    g_free(app_progress_on4);
     g_free(app_progress_mluvnice);
     g_free(app_progress_cetba);
 
@@ -177,6 +179,7 @@ static void set_progress_paths(const char *write_root) {
     app_progress_on = g_build_filename(app_progress_dir, "on.conf", NULL);
     app_progress_on2 = g_build_filename(app_progress_dir, "on2.conf", NULL);
     app_progress_on3 = g_build_filename(app_progress_dir, "on3.conf", NULL);
+    app_progress_on4 = g_build_filename(app_progress_dir, "on4.conf", NULL);
     app_progress_mluvnice = g_build_filename(app_progress_dir, "mluvnice.conf", NULL);
     app_progress_cetba = g_build_filename(app_progress_dir, "cetba.conf", NULL);
 }

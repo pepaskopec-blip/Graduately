@@ -1120,6 +1120,18 @@ def main() -> int:
             "quiz": choice_items(A(f"build_on3_unit{i}_exercise_page.qs")),
         })
 
+    on4_lessons = []
+    for i in range(1, 17):
+        on4_lessons.append({
+            "id": i,
+            "titleKey": f"on4_unit{i}",
+            "subKey": f"on4_unit{i}_sub",
+            "exTitleKey": f"on4_ex{i}_title",
+            "quizHeadKey": f"on4_quiz{i}_head",
+            "slides": slides_items(A(f"build_on4_unit{i}_page.slides")),
+            "quiz": choice_items(A(f"build_on4_unit{i}_exercise_page.qs")),
+        })
+
     hw_lessons = []
     for i in range(1, 30):
         hw_lessons.append({
@@ -1541,6 +1553,7 @@ def main() -> int:
         "on": on_lessons,
         "on2": on2_lessons,
         "on3": on3_lessons,
+        "on4": on4_lessons,
         "mluvnice": mluvnice,
         "books": books,
         "changelog": parse_changelog(ROOT / "data" / "changelog.txt"),
@@ -1578,6 +1591,7 @@ def main() -> int:
     print(f"  on lessons: {sum(1 for L in on_lessons if L['slides'])}")
     print(f"  on2 lessons: {sum(1 for L in on2_lessons if L['slides'])}")
     print(f"  on3 lessons: {sum(1 for L in on3_lessons if L['slides'])}")
+    print(f"  on4 lessons: {sum(1 for L in on4_lessons if L['slides'])}")
     print(f"  mluvnice: {len(mluvnice)}")
     print(f"  books quiz items: {[len(b['quiz']) for b in books]}")
     print(f"  changelog entries: {len(payload.get('changelog', []))}")
@@ -1626,6 +1640,11 @@ def main() -> int:
             missing.append(f"on3{L['id']} slides")
         if not L["quiz"]:
             missing.append(f"on3{L['id']} quiz")
+    for L in on4_lessons:
+        if not L["slides"]:
+            missing.append(f"on4{L['id']} slides")
+        if not L["quiz"]:
+            missing.append(f"on4{L['id']} quiz")
     for m in mluvnice:
         if m["type"] in ("typed", "reveal") and not m.get("items"):
             missing.append(f"mluv{m['id']}")

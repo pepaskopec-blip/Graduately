@@ -423,11 +423,12 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
     case "hwyears", "hwmap":
         sum.totalEx = vm.content.hw.count
         sum.doneEx = vm.content.hw.filter { vm.progress.hwDone($0.int("id")) }.count
-    case "onyears", "onmap", "on2map", "on3map":
-        sum.totalEx = vm.content.on.count + vm.content.on2.count + vm.content.on3.count
+    case "onyears", "onmap", "on2map", "on3map", "on4map":
+        sum.totalEx = vm.content.on.count + vm.content.on2.count + vm.content.on3.count + vm.content.on4.count
         sum.doneEx = vm.content.on.filter { vm.progress.onDone($0.int("id")) }.count
             + vm.content.on2.filter { vm.progress.on2Done($0.int("id")) }.count
             + vm.content.on3.filter { vm.progress.on3Done($0.int("id")) }.count
+            + vm.content.on4.filter { vm.progress.on4Done($0.int("id")) }.count
     case "czechmap":
         sum.totalEx = vm.content.mluvnice.count
         sum.doneEx = vm.content.mluvnice.filter { vm.progress.mluvDone($0.int("id")) }.count
@@ -569,7 +570,7 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     add(vm.tr("on_year1"), vm.tr("search_lesson"), "onmap", extra: "rocnik")
     add(vm.tr("on_year2"), vm.tr("search_lesson"), "on2map", extra: "rocnik")
     add(vm.tr("on_year3"), vm.tr("search_lesson"), "on3map", extra: "rocnik")
-    add(vm.tr("on_year4"), vm.tr("search_lesson"), "onyears", locked: true, extra: "rocnik")
+    add(vm.tr("on_year4"), vm.tr("search_lesson"), "on4map", extra: "rocnik")
     for l in vm.content.on {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "onunit\(l.int("id"))", extra: "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "onex\(l.int("id"))")
@@ -581,6 +582,10 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.on3 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on3unit\(l.int("id"))", extra: "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on3ex\(l.int("id"))")
+    }
+    for l in vm.content.on4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on4unit\(l.int("id"))", extra: "obcanka")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on4ex\(l.int("id"))")
     }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -812,13 +817,8 @@ struct OnYearsScreen: View {
             NavigationLink(value: Route.on3Map) {
                 ListRowLabel(title: vm.tr("on_year3"), subtitle: vm.tr("on3_sub"))
             }
-            ForEach(["on_year4"], id: \.self) { key in
-                Label {
-                    ListRowLabel(title: vm.tr(key), subtitle: vm.tr("on_year_locked_sub"))
-                } icon: {
-                    Image(systemName: "lock.fill")
-                }
-                .foregroundStyle(.secondary)
+            NavigationLink(value: Route.on4Map) {
+                ListRowLabel(title: vm.tr("on_year4"), subtitle: vm.tr("on4_sub"))
             }
         }
         .navigationTitle(vm.tr("Občanská nauka"))
@@ -1460,6 +1460,27 @@ struct RouteDestination: View {
             }
         case .on3Ex(let id):
             On3QuizScreen(vm: vm, id: id)
+        case .on4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("on_year4"),
+                subtitle: vm.tr("on4_sub"),
+                rows: vm.content.on4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "o4\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.on4Done(id),
+                        destination: .on4Lesson(id)
+                    )
+                }
+            )
+        case .on4Lesson(let id):
+            if let l = vm.content.on4Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .on4Ex(id))
+            }
+        case .on4Ex(let id):
+            On4QuizScreen(vm: vm, id: id)
         case .czechMap:
             CzechMapScreen(vm: vm)
         case .mluvnice:

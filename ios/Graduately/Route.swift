@@ -33,6 +33,9 @@ enum Route: Hashable {
     case on3Map
     case on3Lesson(Int)
     case on3Ex(Int)
+    case on4Map
+    case on4Lesson(Int)
+    case on4Ex(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -68,6 +71,9 @@ enum Route: Hashable {
         case .on3Map: return "on3map"
         case .on3Lesson(let id): return "on3unit\(id)"
         case .on3Ex(let id): return "on3ex\(id)"
+        case .on4Map: return "on4map"
+        case .on4Lesson(let id): return "on4unit\(id)"
+        case .on4Ex(let id): return "on4ex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -136,6 +142,12 @@ enum Route: Hashable {
             return [.onYears, .on3Map, .on3Lesson(id)]
         case .on3Ex(let id):
             return [.onYears, .on3Map, .on3Lesson(id), .on3Ex(id)]
+        case .on4Map:
+            return [.onYears, .on4Map]
+        case .on4Lesson(let id):
+            return [.onYears, .on4Map, .on4Lesson(id)]
+        case .on4Ex(let id):
+            return [.onYears, .on4Map, .on4Lesson(id), .on4Ex(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -168,6 +180,7 @@ func routeFromPage(_ page: String) -> Route? {
     case "onmap": return .onMap
     case "on2map": return .on2Map
     case "on3map": return .on3Map
+    case "on4map": return .on4Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -210,6 +223,12 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /hwex(\d+)/), let n = Int(m.1) {
             return .hwEx(n)
+        }
+        if let m = page.wholeMatch(of: /on4unit(\d+)/), let n = Int(m.1) {
+            return .on4Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /on4ex(\d+)/), let n = Int(m.1) {
+            return .on4Ex(n)
         }
         if let m = page.wholeMatch(of: /on3unit(\d+)/), let n = Int(m.1) {
             return .on3Lesson(n)

@@ -57,6 +57,7 @@ void load_progress(void) {
     on_load_progress();
     on2_load_progress();
     on3_load_progress();
+    on4_load_progress();
 }
 
 /* Redraw the exercise rails of every unit that already has a page. */
@@ -426,8 +427,8 @@ void mark_on_done(int lesson_id) {
 }
 
 void progress_for_on(ProgressSum *out) {
-    out->total_ex += ON_LESSONS + ON2_LESSONS + ON3_LESSONS;
-    out->open_units += ON_LESSONS + ON2_LESSONS + ON3_LESSONS;
+    out->total_ex += ON_LESSONS + ON2_LESSONS + ON3_LESSONS + ON4_LESSONS;
+    out->open_units += ON_LESSONS + ON2_LESSONS + ON3_LESSONS + ON4_LESSONS;
     for (int i = 0; i < ON_LESSONS; i++) {
         if (on_lessons[i].done) {
             out->done_ex++;
@@ -442,6 +443,12 @@ void progress_for_on(ProgressSum *out) {
     }
     for (int i = 0; i < ON3_LESSONS; i++) {
         if (on3_lessons[i].done) {
+            out->done_ex++;
+            out->done_units++;
+        }
+    }
+    for (int i = 0; i < ON4_LESSONS; i++) {
+        if (on4_lessons[i].done) {
             out->done_ex++;
             out->done_units++;
         }
@@ -605,5 +612,85 @@ void mark_on3_done(int lesson_id) {
     on3_lessons[lesson_id].done = TRUE;
     on3_save_progress();
     refresh_on3_completion_ui();
+    refresh_stats_ui();
+}
+
+void on4_load_progress(void) {
+    GKeyFile *kf = g_key_file_new();
+    GError *err = NULL;
+
+    if (!g_key_file_load_from_file(kf, PROGRESS_ON4, G_KEY_FILE_NONE, &err)) {
+        if (err)
+            g_error_free(err);
+        g_key_file_free(kf);
+        return;
+    }
+
+    for (int i = 0; i < ON4_LESSONS; i++) {
+        gchar key[8];
+
+        g_snprintf(key, sizeof(key), "%d", i + 1);
+        on4_lessons[i].done = g_key_file_get_boolean(kf, "done", key, NULL);
+    }
+
+    g_key_file_free(kf);
+}
+
+void on4_save_progress(void) {
+    GKeyFile *kf = g_key_file_new();
+
+    for (int i = 0; i < ON4_LESSONS; i++) {
+        gchar key[8];
+
+        g_snprintf(key, sizeof(key), "%d", i + 1);
+        g_key_file_set_boolean(kf, "done", key, on4_lessons[i].done);
+    }
+
+    if (g_mkdir_with_parents(PROGRESS_DIR, 0755) != 0) {
+        g_key_file_free(kf);
+        return;
+    }
+
+    gchar *data = g_key_file_to_data(kf, NULL, NULL);
+    g_key_file_free(kf);
+
+    if (data) {
+        GError *err = NULL;
+        g_file_set_contents(PROGRESS_ON4, data, -1, &err);
+        if (err)
+            g_error_free(err);
+        g_free(data);
+    }
+}
+
+void refresh_on4_completion_ui(void) {
+    for (int i = 0; i < ON4_LESSONS; i++) {
+        GtkWidget *node = on4_nodes[i];
+        GtkWidget *icon = on4_lessons[i].done_icon;
+
+        if (!node)
+            continue;
+        if (on4_lessons[i].done) {
+            gtk_widget_remove_css_class(node, "current");
+            gtk_widget_add_css_class(node, "done");
+            if (icon)
+                gtk_widget_set_visible(icon, TRUE);
+        } else {
+            gtk_widget_remove_css_class(node, "done");
+            gtk_widget_add_css_class(node, "current");
+            if (icon)
+                gtk_widget_set_visible(icon, FALSE);
+        }
+    }
+}
+
+void mark_on4_done(int lesson_id) {
+    if (lesson_id < 0 || lesson_id >= ON4_LESSONS)
+        return;
+    if (on4_lessons[lesson_id].done)
+        return;
+    on4_lessons[lesson_id].done = TRUE;
+    on4_save_progress();
+    refresh_on4_completion_ui();
     refresh_stats_ui();
 }
