@@ -228,6 +228,39 @@ void draw_science_icon(GtkDrawingArea *area, cairo_t *cr,
     cairo_stroke(cr);
 }
 
+/* Atom glyph for Fyzika: nucleus and two orbits. */
+void draw_physics_icon(GtkDrawingArea *area, cairo_t *cr,
+                       int width, int height, gpointer data) {
+    const double s = MIN(width, height);
+    const double cx = width / 2.0;
+    const double cy = height / 2.0;
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_width(cr, MAX(1.6, s * 0.06));
+    cairo_arc(cr, cx, cy, s * 0.10, 0, 2 * G_PI);
+    cairo_fill(cr);
+
+    cairo_save(cr);
+    cairo_translate(cr, cx, cy);
+    cairo_scale(cr, 1.0, 0.38);
+    cairo_arc(cr, 0, 0, s * 0.34, 0, 2 * G_PI);
+    cairo_restore(cr);
+    cairo_stroke(cr);
+
+    cairo_save(cr);
+    cairo_translate(cr, cx, cy);
+    cairo_rotate(cr, 1.05);
+    cairo_scale(cr, 1.0, 0.38);
+    cairo_arc(cr, 0, 0, s * 0.34, 0, 2 * G_PI);
+    cairo_restore(cr);
+    cairo_stroke(cr);
+}
+
 /* Open book glyph, painted in the given colour. */
 static void book_paint(cairo_t *cr, int width, int height, Rgb c) {
     const double w = width;

@@ -50,6 +50,19 @@ sealed class Route(val page: String) {
     data object BioMap : Route("biomap")
     data class BioLesson(val id: Int) : Route("biounit$id")
     data class BioEx(val id: Int) : Route("bioex$id")
+    data object FyzYears : Route("fyzyears")
+    data object FyzMap : Route("fyzmap")
+    data class FyzLesson(val id: Int) : Route("fyzunit$id")
+    data class FyzEx(val id: Int) : Route("fyzex$id")
+    data object Fyz2Map : Route("fyz2map")
+    data class Fyz2Lesson(val id: Int) : Route("fyz2unit$id")
+    data class Fyz2Ex(val id: Int) : Route("fyz2ex$id")
+    data object Fyz3Map : Route("fyz3map")
+    data class Fyz3Lesson(val id: Int) : Route("fyz3unit$id")
+    data class Fyz3Ex(val id: Int) : Route("fyz3ex$id")
+    data object Fyz4Map : Route("fyz4map")
+    data class Fyz4Lesson(val id: Int) : Route("fyz4unit$id")
+    data class Fyz4Ex(val id: Int) : Route("fyz4ex$id")
     data object CzechMap : Route("czechmap")
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
@@ -68,7 +81,9 @@ sealed class Route(val page: String) {
             this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson ||
             this is LitLesson || this is LitEx || this is Lit2Lesson || this is Lit2Ex ||
             this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex ||
-            this is ChemLesson || this is ChemEx || this is BioLesson || this is BioEx
+            this is ChemLesson || this is ChemEx || this is BioLesson || this is BioEx ||
+            this is FyzLesson || this is FyzEx || this is Fyz2Lesson || this is Fyz2Ex ||
+            this is Fyz3Lesson || this is Fyz3Ex || this is Fyz4Lesson || this is Fyz4Ex
 
     /** Full stack from the practice root to this screen, so back always goes up one level. */
     fun stack(): List<Route> = when (this) {
@@ -120,6 +135,19 @@ sealed class Route(val page: String) {
         BioMap -> listOf(Subjects, SciMap, BioMap)
         is BioLesson -> listOf(Subjects, SciMap, BioMap, this)
         is BioEx -> listOf(Subjects, SciMap, BioMap, BioLesson(id), this)
+        FyzYears -> listOf(Subjects, FyzYears)
+        FyzMap -> listOf(Subjects, FyzYears, FyzMap)
+        is FyzLesson -> listOf(Subjects, FyzYears, FyzMap, this)
+        is FyzEx -> listOf(Subjects, FyzYears, FyzMap, FyzLesson(id), this)
+        Fyz2Map -> listOf(Subjects, FyzYears, Fyz2Map)
+        is Fyz2Lesson -> listOf(Subjects, FyzYears, Fyz2Map, this)
+        is Fyz2Ex -> listOf(Subjects, FyzYears, Fyz2Map, Fyz2Lesson(id), this)
+        Fyz3Map -> listOf(Subjects, FyzYears, Fyz3Map)
+        is Fyz3Lesson -> listOf(Subjects, FyzYears, Fyz3Map, this)
+        is Fyz3Ex -> listOf(Subjects, FyzYears, Fyz3Map, Fyz3Lesson(id), this)
+        Fyz4Map -> listOf(Subjects, FyzYears, Fyz4Map)
+        is Fyz4Lesson -> listOf(Subjects, FyzYears, Fyz4Map, this)
+        is Fyz4Ex -> listOf(Subjects, FyzYears, Fyz4Map, Fyz4Lesson(id), this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -153,6 +181,11 @@ fun routeFromPage(page: String): Route? = when (page) {
     "scimap" -> Route.SciMap
     "chemmap" -> Route.ChemMap
     "biomap" -> Route.BioMap
+    "fyzyears" -> Route.FyzYears
+    "fyzmap" -> Route.FyzMap
+    "fyz2map" -> Route.Fyz2Map
+    "fyz3map" -> Route.Fyz3Map
+    "fyz4map" -> Route.Fyz4Map
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
     "readinglist" -> Route.ReadingList
@@ -195,6 +228,30 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""bioex(\d+)""").matchEntire(page)?.let {
             return Route.BioEx(it.groupValues[1].toInt())
+        }
+        Regex("""fyz4unit(\d+)""").matchEntire(page)?.let {
+            return Route.Fyz4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""fyz4ex(\d+)""").matchEntire(page)?.let {
+            return Route.Fyz4Ex(it.groupValues[1].toInt())
+        }
+        Regex("""fyz3unit(\d+)""").matchEntire(page)?.let {
+            return Route.Fyz3Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""fyz3ex(\d+)""").matchEntire(page)?.let {
+            return Route.Fyz3Ex(it.groupValues[1].toInt())
+        }
+        Regex("""fyz2unit(\d+)""").matchEntire(page)?.let {
+            return Route.Fyz2Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""fyz2ex(\d+)""").matchEntire(page)?.let {
+            return Route.Fyz2Ex(it.groupValues[1].toInt())
+        }
+        Regex("""fyzunit(\d+)""").matchEntire(page)?.let {
+            return Route.FyzLesson(it.groupValues[1].toInt())
+        }
+        Regex("""fyzex(\d+)""").matchEntire(page)?.let {
+            return Route.FyzEx(it.groupValues[1].toInt())
         }
         Regex("""lit4unit(\d+)""").matchEntire(page)?.let {
             return Route.Lit4Lesson(it.groupValues[1].toInt())

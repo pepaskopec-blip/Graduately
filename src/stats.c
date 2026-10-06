@@ -77,6 +77,8 @@ void refresh_stats_ui(void) {
         }
         else if (s == SCI_SUBJ)
             progress_for_sci(&all);
+        else if (s == PHY_SUBJ)
+            progress_for_fyz(&all);
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
     }
@@ -107,7 +109,8 @@ void refresh_stats_ui(void) {
         ProgressSum sp = {0};
         gboolean has_content = (s == NET_SUBJ) || (s == HW_SUBJ)
                                || (s == ON_SUBJ) || (s == CZ_SUBJ)
-                               || (s == SCI_SUBJ) || sub_unit_count[s] > 0;
+                               || (s == SCI_SUBJ) || (s == PHY_SUBJ)
+                               || sub_unit_count[s] > 0;
 
         if (!count || !bar)
             continue;
@@ -123,6 +126,8 @@ void refresh_stats_ui(void) {
         }
         else if (s == SCI_SUBJ)
             progress_for_sci(&sp);
+        else if (s == PHY_SUBJ)
+            progress_for_fyz(&sp);
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
         if (has_content) {
@@ -393,7 +398,8 @@ GtkWidget *build_stats_page(void) {
         GtkWidget *bar;
         gboolean has_units = (s == NET_SUBJ) || (s == HW_SUBJ)
                              || (s == CZ_SUBJ) || (s == ON_SUBJ)
-                             || (s == SCI_SUBJ) || sub_unit_count[s] > 0;
+                             || (s == SCI_SUBJ) || (s == PHY_SUBJ)
+                             || sub_unit_count[s] > 0;
         gboolean has_deutsch_units = sub_unit_count[s] > 0;
 
         subject = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

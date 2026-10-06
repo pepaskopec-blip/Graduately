@@ -59,6 +59,14 @@ final class ProgressStore {
     func markChem(_ id: Int) { defaults.set(true, forKey: "chem.\(id)") }
     func bioDone(_ id: Int) -> Bool { defaults.bool(forKey: "bio.\(id)") }
     func markBio(_ id: Int) { defaults.set(true, forKey: "bio.\(id)") }
+    func fyzDone(_ id: Int) -> Bool { defaults.bool(forKey: "fyz.\(id)") }
+    func markFyz(_ id: Int) { defaults.set(true, forKey: "fyz.\(id)") }
+    func fyz2Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz2.\(id)") }
+    func markFyz2(_ id: Int) { defaults.set(true, forKey: "fyz2.\(id)") }
+    func fyz3Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz3.\(id)") }
+    func markFyz3(_ id: Int) { defaults.set(true, forKey: "fyz3.\(id)") }
+    func fyz4Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz4.\(id)") }
+    func markFyz4(_ id: Int) { defaults.set(true, forKey: "fyz4.\(id)") }
 
     func mluvDone(_ n: Int) -> Bool { defaults.bool(forKey: "mluv.\(n)") }
     func markMluv(_ n: Int) { defaults.set(true, forKey: "mluv.\(n)") }
@@ -179,6 +187,38 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if p.bioDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.fyz {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.fyzDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.fyz2 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.fyz2Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.fyz3 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.fyz3Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.fyz4 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.fyz4Done(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

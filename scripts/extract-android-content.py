@@ -1111,6 +1111,10 @@ def main() -> int:
     lit4_lessons = lit_pack("lit4")
     chem_lessons = lit_pack("chem")
     bio_lessons = lit_pack("bio")
+    fyz_lessons = lit_pack("fyz")
+    fyz2_lessons = lit_pack("fyz2")
+    fyz3_lessons = lit_pack("fyz3")
+    fyz4_lessons = lit_pack("fyz4")
 
     on_lessons = []
     for i in range(1, 18):
@@ -1560,7 +1564,7 @@ def main() -> int:
         {"key": "Občanská nauka", "open": True, "target": "onyears", "icon": "people"},
         {"key": "English", "open": False, "target": None, "icon": "lock"},
         {"key": "Matematika", "open": False, "target": None, "icon": "lock"},
-        {"key": "Fyzika", "open": False, "target": None, "icon": "lock"},
+        {"key": "Fyzika", "open": True, "target": "fyzyears", "icon": "bolt"},
         {"key": "Základy Přírodopisných věd", "open": True, "target": "scimap", "icon": "flask"},
         {"key": "Technická grafika", "open": False, "target": None, "icon": "lock"},
         {"key": "Prezentační grafika", "open": False, "target": None, "icon": "lock"},
@@ -1585,6 +1589,10 @@ def main() -> int:
         "lit4": lit4_lessons,
         "chem": chem_lessons,
         "bio": bio_lessons,
+        "fyz": fyz_lessons,
+        "fyz2": fyz2_lessons,
+        "fyz3": fyz3_lessons,
+        "fyz4": fyz4_lessons,
         "on2": on2_lessons,
         "on3": on3_lessons,
         "on4": on4_lessons,
@@ -1626,6 +1634,7 @@ def main() -> int:
     print(f"  lit lessons: {sum(1 for L in lit_lessons + lit2_lessons + lit3_lessons + lit4_lessons if L['slides'])}")
     print(f"  chem lessons: {sum(1 for L in chem_lessons if L['slides'])}")
     print(f"  bio lessons: {sum(1 for L in bio_lessons if L['slides'])}")
+    print(f"  fyz lessons: {sum(1 for L in fyz_lessons + fyz2_lessons + fyz3_lessons + fyz4_lessons if L['slides'])}")
     print(f"  on2 lessons: {sum(1 for L in on2_lessons if L['slides'])}")
     print(f"  on3 lessons: {sum(1 for L in on3_lessons if L['slides'])}")
     print(f"  on4 lessons: {sum(1 for L in on4_lessons if L['slides'])}")
@@ -1686,6 +1695,8 @@ def main() -> int:
         ("lit", lit_lessons), ("lit2", lit2_lessons),
         ("lit3", lit3_lessons), ("lit4", lit4_lessons),
         ("chem", chem_lessons), ("bio", bio_lessons),
+        ("fyz", fyz_lessons), ("fyz2", fyz2_lessons),
+        ("fyz3", fyz3_lessons), ("fyz4", fyz4_lessons),
     ):
         for L in block:
             if not L["slides"]:

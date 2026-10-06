@@ -176,6 +176,26 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         refresh()
     }
 
+    fun markFyz(id: Int) {
+        progress.markFyz(id)
+        refresh()
+    }
+
+    fun markFyz2(id: Int) {
+        progress.markFyz2(id)
+        refresh()
+    }
+
+    fun markFyz3(id: Int) {
+        progress.markFyz3(id)
+        refresh()
+    }
+
+    fun markFyz4(id: Int) {
+        progress.markFyz4(id)
+        refresh()
+    }
+
     fun markMluv(n: Int) {
         progress.markMluv(n)
         refresh()

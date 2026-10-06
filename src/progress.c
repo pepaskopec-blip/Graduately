@@ -60,6 +60,7 @@ void load_progress(void) {
     on4_load_progress();
     lit_load_progress();
     sci_load_progress();
+    fyz_load_progress();
 }
 
 /* Redraw the exercise rails of every unit that already has a page. */

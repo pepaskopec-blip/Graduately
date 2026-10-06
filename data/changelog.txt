@@ -7,6 +7,12 @@
 # en: bullet
 
 --- 2026-10-06
+cs: Fyzika: čtyři ročníky, 32 lekcí podle osnov středních škol
+cs: Od mechaniky přes teplo a elektřinu až po optiku, jádro a astrofyziku
+en: Physics: four years, 32 lessons from the secondary-school syllabus
+en: From mechanics through heat and electricity to optics, the nucleus and astrophysics
+
+--- 2026-10-06
 cs: Základy přírodopisných věd: chemie a biologie, v každé 8 lekcí podle osnov
 cs: Každá lekce má výklad a kvíz se čtyřmi otázkami
 en: Natural sciences: chemistry and biology, eight lessons each, from the syllabus

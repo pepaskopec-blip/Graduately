@@ -699,6 +699,12 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
         sum.totalEx = vm.content.chem.count + vm.content.bio.count
         sum.doneEx = vm.content.chem.filter { vm.progress.chemDone($0.int("id")) }.count
             + vm.content.bio.filter { vm.progress.bioDone($0.int("id")) }.count
+    case "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map":
+        sum.totalEx = vm.content.fyz.count + vm.content.fyz2.count + vm.content.fyz3.count + vm.content.fyz4.count
+        sum.doneEx = vm.content.fyz.filter { vm.progress.fyzDone($0.int("id")) }.count
+            + vm.content.fyz2.filter { vm.progress.fyz2Done($0.int("id")) }.count
+            + vm.content.fyz3.filter { vm.progress.fyz3Done($0.int("id")) }.count
+            + vm.content.fyz4.filter { vm.progress.fyz4Done($0.int("id")) }.count
     case "czechmap":
         let litCount = vm.content.lit.count + vm.content.lit2.count + vm.content.lit3.count + vm.content.lit4.count
         let litDone = vm.content.lit.filter { vm.progress.litDone($0.int("id")) }.count
@@ -928,6 +934,27 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.lit4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit\(l.int("id"))", extra: "literatura")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex\(l.int("id"))")
+    }
+    add(vm.tr("Fyzika"), vm.tr("search_lesson"), "fyzyears", extra: "fyzika")
+    add(vm.tr("fyz_year1"), vm.tr("search_lesson"), "fyzmap", extra: "rocnik")
+    add(vm.tr("fyz_year2"), vm.tr("search_lesson"), "fyz2map", extra: "rocnik")
+    add(vm.tr("fyz_year3"), vm.tr("search_lesson"), "fyz3map", extra: "rocnik")
+    add(vm.tr("fyz_year4"), vm.tr("search_lesson"), "fyz4map", extra: "rocnik")
+    for l in vm.content.fyz {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyzunit\(l.int("id"))", extra: "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyzex\(l.int("id"))")
+    }
+    for l in vm.content.fyz2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz2unit\(l.int("id"))", extra: "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz2ex\(l.int("id"))")
+    }
+    for l in vm.content.fyz3 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz3unit\(l.int("id"))", extra: "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz3ex\(l.int("id"))")
+    }
+    for l in vm.content.fyz4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit\(l.int("id"))", extra: "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex\(l.int("id"))")
     }
     add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra: "chemie")
     add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra: "biologie")
@@ -1480,6 +1507,47 @@ struct LitYearsScreen: View {
         }
         .navigationTitle(vm.tr("Literatura"))
         .navigationSubtitle(vm.tr("lit_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct FyzYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route)] = [
+            ("fyz_year1", "fyz_sub", .fyzMap),
+            ("fyz_year2", "fyz2_sub", .fyz2Map),
+            ("fyz_year3", "fyz3_sub", .fyz3Map),
+            ("fyz_year4", "fyz4_sub", .fyz4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+            }
+            .buttonStyle(.plain)
+        }
+        .navigationTitle(vm.tr("Fyzika"))
+        .navigationSubtitle(vm.tr("fyz_years_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.fyzMap) {
+                ListRowLabel(title: vm.tr("fyz_year1"), subtitle: vm.tr("fyz_sub"))
+            }
+            NavigationLink(value: Route.fyz2Map) {
+                ListRowLabel(title: vm.tr("fyz_year2"), subtitle: vm.tr("fyz2_sub"))
+            }
+            NavigationLink(value: Route.fyz3Map) {
+                ListRowLabel(title: vm.tr("fyz_year3"), subtitle: vm.tr("fyz3_sub"))
+            }
+            NavigationLink(value: Route.fyz4Map) {
+                ListRowLabel(title: vm.tr("fyz_year4"), subtitle: vm.tr("fyz4_sub"))
+            }
+        }
+        .navigationTitle(vm.tr("Fyzika"))
+        .navigationSubtitle(vm.tr("fyz_years_sub"))
         .appListStyle()
         #endif
     }
@@ -2253,6 +2321,92 @@ struct RouteDestination: View {
             }
         case .bioEx(let id):
             SciQuizScreen(vm: vm, area: "bio", id: id)
+        case .fyzYears:
+            FyzYearsScreen(vm: vm)
+        case .fyzMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("fyz_year1"),
+                subtitle: vm.tr("fyz_sub"),
+                rows: vm.content.fyz.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "f\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.fyzDone(id),
+                        destination: .fyzLesson(id)
+                    )
+                }
+            )
+        case .fyzLesson(let id):
+            if let l = vm.content.fyzLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .fyzEx(id))
+            }
+        case .fyzEx(let id):
+            FyzQuizScreen(vm: vm, year: 1, id: id)
+        case .fyz2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("fyz_year2"),
+                subtitle: vm.tr("fyz2_sub"),
+                rows: vm.content.fyz2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "f2\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.fyz2Done(id),
+                        destination: .fyz2Lesson(id)
+                    )
+                }
+            )
+        case .fyz2Lesson(let id):
+            if let l = vm.content.fyz2Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .fyz2Ex(id))
+            }
+        case .fyz2Ex(let id):
+            FyzQuizScreen(vm: vm, year: 2, id: id)
+        case .fyz3Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("fyz_year3"),
+                subtitle: vm.tr("fyz3_sub"),
+                rows: vm.content.fyz3.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "f3\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.fyz3Done(id),
+                        destination: .fyz3Lesson(id)
+                    )
+                }
+            )
+        case .fyz3Lesson(let id):
+            if let l = vm.content.fyz3Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .fyz3Ex(id))
+            }
+        case .fyz3Ex(let id):
+            FyzQuizScreen(vm: vm, year: 3, id: id)
+        case .fyz4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("fyz_year4"),
+                subtitle: vm.tr("fyz4_sub"),
+                rows: vm.content.fyz4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "f4\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.fyz4Done(id),
+                        destination: .fyz4Lesson(id)
+                    )
+                }
+            )
+        case .fyz4Lesson(let id):
+            if let l = vm.content.fyz4Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .fyz4Ex(id))
+            }
+        case .fyz4Ex(let id):
+            FyzQuizScreen(vm: vm, year: 4, id: id)
         case .mluvnice:
             LessonListScreen(
                 vm: vm,

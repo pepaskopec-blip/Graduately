@@ -390,6 +390,10 @@ static gboolean run_smoke_test(gpointer data) {
         "czechmap",
         "lityears", "litmap", "lit2map", "lit3map", "lit4map",
         "scimap", "chemmap", "biomap",
+        "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map",
+        "fyzunit1", "fyzex1", "fyzunit8", "fyzex8",
+        "fyz2unit1", "fyz2ex1", "fyz3unit1", "fyz4unit1",
+        "fyz4unit8", "fyz4ex8",
         "chemunit1", "chemex1", "chemunit8", "chemex8",
         "biounit1", "bioex1", "biounit8", "bioex8",
         "litunit1", "litex1", "litunit8", "litex8",
@@ -528,6 +532,15 @@ void activate(GtkApplication *app, gpointer user_data) {
     add_on3_pages(main_stack);
     gtk_stack_add_named(main_stack, build_on4map_page(), "on4map");
     add_on4_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_fyzyears_page(), "fyzyears");
+    gtk_stack_add_named(main_stack, build_fyzmap_page(), "fyzmap");
+    add_fyz_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_fyz2map_page(), "fyz2map");
+    add_fyz2_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_fyz3map_page(), "fyz3map");
+    add_fyz3_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_fyz4map_page(), "fyz4map");
+    add_fyz4_pages(main_stack);
     gtk_stack_add_named(main_stack, build_scimap_page(), "scimap");
     gtk_stack_add_named(main_stack, build_chemmap_page(), "chemmap");
     add_chem_pages(main_stack);

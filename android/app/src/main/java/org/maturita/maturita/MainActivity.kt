@@ -32,6 +32,8 @@ import org.maturita.maturita.ui.HomeScreen
 import org.maturita.maturita.ui.HwQuizScreen
 import org.maturita.maturita.ui.HwYearsScreen
 import org.maturita.maturita.ui.LessonListScreen
+import org.maturita.maturita.ui.FyzQuizScreen
+import org.maturita.maturita.ui.FyzYearsScreen
 import org.maturita.maturita.ui.LitYearsScreen
 import org.maturita.maturita.ui.LessonRow
 import org.maturita.maturita.ui.LitQuizScreen
@@ -348,6 +350,63 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Lit4Ex -> LitQuizScreen(vm, 4, r.id)
+            Route.FyzYears -> FyzYearsScreen(vm)
+            Route.FyzMap -> LessonListScreen(
+                vm, vm.tr("fyz_year1"), vm.tr("fyz_sub"),
+                vm.content.fyz.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.fyzDone(id), Route.FyzLesson(id))
+                },
+            )
+            is Route.FyzLesson -> {
+                val l = vm.content.fyzLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.FyzEx(r.id))
+                }
+            }
+            is Route.FyzEx -> FyzQuizScreen(vm, 1, r.id)
+            Route.Fyz2Map -> LessonListScreen(
+                vm, vm.tr("fyz_year2"), vm.tr("fyz2_sub"),
+                vm.content.fyz2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.fyz2Done(id), Route.Fyz2Lesson(id))
+                },
+            )
+            is Route.Fyz2Lesson -> {
+                val l = vm.content.fyz2Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Fyz2Ex(r.id))
+                }
+            }
+            is Route.Fyz2Ex -> FyzQuizScreen(vm, 2, r.id)
+            Route.Fyz3Map -> LessonListScreen(
+                vm, vm.tr("fyz_year3"), vm.tr("fyz3_sub"),
+                vm.content.fyz3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.fyz3Done(id), Route.Fyz3Lesson(id))
+                },
+            )
+            is Route.Fyz3Lesson -> {
+                val l = vm.content.fyz3Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Fyz3Ex(r.id))
+                }
+            }
+            is Route.Fyz3Ex -> FyzQuizScreen(vm, 3, r.id)
+            Route.Fyz4Map -> LessonListScreen(
+                vm, vm.tr("fyz_year4"), vm.tr("fyz4_sub"),
+                vm.content.fyz4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.fyz4Done(id), Route.Fyz4Lesson(id))
+                },
+            )
+            is Route.Fyz4Lesson -> {
+                val l = vm.content.fyz4Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Fyz4Ex(r.id))
+                }
+            }
+            is Route.Fyz4Ex -> FyzQuizScreen(vm, 4, r.id)
             Route.SciMap -> SciMapScreen(vm)
             Route.ChemMap -> LessonListScreen(
                 vm, vm.tr("Chemie"), vm.tr("chem_sub"),

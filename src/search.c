@@ -23,7 +23,7 @@ static GPtrArray *search_items;
 
 static gboolean subject_open(int i) {
     return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
-        || i == ON_SUBJ || i == SCI_SUBJ;
+        || i == ON_SUBJ || i == PHY_SUBJ || i == SCI_SUBJ;
 }
 
 static const char *subject_page(int i) {
@@ -37,6 +37,8 @@ static const char *subject_page(int i) {
         return "czechmap";
     if (i == ON_SUBJ)
         return "onyears";
+    if (i == PHY_SUBJ)
+        return "fyzyears";
     if (i == SCI_SUBJ)
         return "scimap";
     return "subjects";
@@ -271,6 +273,38 @@ static void catalog_rebuild(void) {
         g_snprintf(page, sizeof(page), "lit4unit%d", i);
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
         g_snprintf(page, sizeof(page), "lit4ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    catalog_add_key("fyz_year1", "search_lesson", "fyzmap", FALSE, 1, "fyzika rocnik");
+    catalog_add_key("fyz_year2", "search_lesson", "fyz2map", FALSE, 1, "fyzika rocnik");
+    catalog_add_key("fyz_year3", "search_lesson", "fyz3map", FALSE, 1, "fyzika rocnik");
+    catalog_add_key("fyz_year4", "search_lesson", "fyz4map", FALSE, 1, "fyzika rocnik");
+    for (i = 1; i <= FYZ_N; i++) {
+        g_snprintf(key, sizeof(key), "fyz_unit%d", i);
+        g_snprintf(page, sizeof(page), "fyzunit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "fyzika");
+        g_snprintf(page, sizeof(page), "fyzex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= FYZ_N; i++) {
+        g_snprintf(key, sizeof(key), "fyz2_unit%d", i);
+        g_snprintf(page, sizeof(page), "fyz2unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "fyzika");
+        g_snprintf(page, sizeof(page), "fyz2ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= FYZ_N; i++) {
+        g_snprintf(key, sizeof(key), "fyz3_unit%d", i);
+        g_snprintf(page, sizeof(page), "fyz3unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "fyzika");
+        g_snprintf(page, sizeof(page), "fyz3ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= FYZ_N; i++) {
+        g_snprintf(key, sizeof(key), "fyz4_unit%d", i);
+        g_snprintf(page, sizeof(page), "fyz4unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "fyzika");
+        g_snprintf(page, sizeof(page), "fyz4ex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
     }
     catalog_add_key("Chemie", "search_lesson", "chemmap", FALSE, 1, "chemie");

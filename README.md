@@ -69,6 +69,8 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Český jazyk a literatura** — literatura (4 ročníky, 32 lekcí podle osnov
   středních škol), mluvnice (20 cvičení) a maturitní četba
   (82 knih: zápisky, kvíz, sestavení děje)
+- **Fyzika** — 4 ročníky, 32 lekcí podle osnov středních škol
+  (mechanika, teplo a vlny, elektřina a magnetismus, optika až astrofyzika)
 - **Základy přírodopisných věd** — chemie a biologie, v každé 8 lekcí
   (od atomu a buňky po biochemii a ekologii) s výkladem a kvízem
 - **Občanská nauka** — 1. ročník, 17 lekcí (člověk v lidském společenství);
@@ -80,7 +82,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 ### Použití
 
 1. **Pokračuj** otevře mapu předmětů.
-2. Otevřený předmět (vlajka, Wi‑Fi, čip, česká vlajka, váhy, baňka) vede na učební cestu.
+2. Otevřený předmět (vlajka, Wi‑Fi, čip, česká vlajka, váhy, atom, baňka) vede na učební cestu.
 3. Uzly cvičení / lekcí otevřou obsah; zamčené nic nedělají.
 4. **Hledat** (lupa), **Statistiky** (graf) a **Nastavení** (ozubené kolo) jsou vpravo nahoře.
 
@@ -268,6 +270,8 @@ Intel Mac, another architecture, or hacking on the code →
 - **Czech language** — literature (4 years, 32 lessons from the secondary-school
   syllabus), grammar (20 exercises) and required reading
   (82 books: notes, quiz, plot ordering)
+- **Physics** — 4 years, 32 lessons from the secondary-school syllabus
+  (mechanics, heat and waves, electricity and magnetism, optics through astrophysics)
 - **Natural sciences** — chemistry and biology, eight lessons each
   (from the atom and the cell to biochemistry and ecology), with an overview and a quiz
 - **Civics** — year 1, 17 lessons (the individual and society);
@@ -280,7 +284,7 @@ Intel Mac, another architecture, or hacking on the code →
 ### Usage
 
 1. **Continue** opens the subject map.
-2. An open subject (flag, Wi‑Fi, chip, Czech flag, scales, flask) opens its path.
+2. An open subject (flag, Wi‑Fi, chip, Czech flag, scales, atom, flask) opens its path.
 3. Exercise / lesson nodes open content; locked nodes do nothing.
 4. **Search** (magnifier), **Statistics** (chart) and **Settings** (gear) sit in the top-right.
 

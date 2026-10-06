@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FormatListNumbered
@@ -222,6 +223,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "people" -> Icon(Icons.Filled.Groups, null, tint = tint, modifier = Modifier.size(26.dp))
             "cz" -> CzechFlag(28.dp)
             "flask" -> Icon(Icons.Filled.Science, null, tint = tint, modifier = Modifier.size(26.dp))
+            "bolt" -> Icon(Icons.Filled.Bolt, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -313,6 +315,13 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
             sum.totalEx = vm.content.chem.size + vm.content.bio.size
             sum.doneEx = vm.content.chem.count { vm.progress.chemDone(it.int("id")) } +
                 vm.content.bio.count { vm.progress.bioDone(it.int("id")) }
+        }
+        "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map" -> {
+            sum.totalEx = vm.content.fyz.size + vm.content.fyz2.size + vm.content.fyz3.size + vm.content.fyz4.size
+            sum.doneEx = vm.content.fyz.count { vm.progress.fyzDone(it.int("id")) } +
+                vm.content.fyz2.count { vm.progress.fyz2Done(it.int("id")) } +
+                vm.content.fyz3.count { vm.progress.fyz3Done(it.int("id")) } +
+                vm.content.fyz4.count { vm.progress.fyz4Done(it.int("id")) }
         }
         "czechmap" -> {
             val litDone = vm.content.lit.count { vm.progress.litDone(it.int("id")) } +
@@ -547,6 +556,27 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit${l.int("id")}", extra = "literatura")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex${l.int("id")}")
     }
+    add(vm.tr("Fyzika"), vm.tr("search_lesson"), "fyzyears", extra = "fyzika")
+    add(vm.tr("fyz_year1"), vm.tr("search_lesson"), "fyzmap", extra = "rocnik")
+    add(vm.tr("fyz_year2"), vm.tr("search_lesson"), "fyz2map", extra = "rocnik")
+    add(vm.tr("fyz_year3"), vm.tr("search_lesson"), "fyz3map", extra = "rocnik")
+    add(vm.tr("fyz_year4"), vm.tr("search_lesson"), "fyz4map", extra = "rocnik")
+    vm.content.fyz.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyzunit${l.int("id")}", extra = "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyzex${l.int("id")}")
+    }
+    vm.content.fyz2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz2unit${l.int("id")}", extra = "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz2ex${l.int("id")}")
+    }
+    vm.content.fyz3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz3unit${l.int("id")}", extra = "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz3ex${l.int("id")}")
+    }
+    vm.content.fyz4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit${l.int("id")}", extra = "fyzika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex${l.int("id")}")
+    }
     add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra = "chemie")
     add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra = "biologie")
     vm.content.chem.forEach { l ->
@@ -678,6 +708,20 @@ fun LitYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("lit_year2"), subtitle = vm.tr("lit2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit2Map) }
                 NavRow(title = vm.tr("lit_year3"), subtitle = vm.tr("lit3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit3Map) }
                 NavRow(title = vm.tr("lit_year4"), subtitle = vm.tr("lit4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun FyzYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Fyzika"), vm.tr("fyz_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("fyz_year1"), subtitle = vm.tr("fyz_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.FyzMap) }
+                NavRow(title = vm.tr("fyz_year2"), subtitle = vm.tr("fyz2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Fyz2Map) }
+                NavRow(title = vm.tr("fyz_year3"), subtitle = vm.tr("fyz3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Fyz3Map) }
+                NavRow(title = vm.tr("fyz_year4"), subtitle = vm.tr("fyz4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Fyz4Map) }
             }
         }
     }

@@ -56,6 +56,19 @@ enum Route: Hashable {
     case bioMap
     case bioLesson(Int)
     case bioEx(Int)
+    case fyzYears
+    case fyzMap
+    case fyzLesson(Int)
+    case fyzEx(Int)
+    case fyz2Map
+    case fyz2Lesson(Int)
+    case fyz2Ex(Int)
+    case fyz3Map
+    case fyz3Lesson(Int)
+    case fyz3Ex(Int)
+    case fyz4Map
+    case fyz4Lesson(Int)
+    case fyz4Ex(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -114,6 +127,19 @@ enum Route: Hashable {
         case .bioMap: return "biomap"
         case .bioLesson(let id): return "biounit\(id)"
         case .bioEx(let id): return "bioex\(id)"
+        case .fyzYears: return "fyzyears"
+        case .fyzMap: return "fyzmap"
+        case .fyzLesson(let id): return "fyzunit\(id)"
+        case .fyzEx(let id): return "fyzex\(id)"
+        case .fyz2Map: return "fyz2map"
+        case .fyz2Lesson(let id): return "fyz2unit\(id)"
+        case .fyz2Ex(let id): return "fyz2ex\(id)"
+        case .fyz3Map: return "fyz3map"
+        case .fyz3Lesson(let id): return "fyz3unit\(id)"
+        case .fyz3Ex(let id): return "fyz3ex\(id)"
+        case .fyz4Map: return "fyz4map"
+        case .fyz4Lesson(let id): return "fyz4unit\(id)"
+        case .fyz4Ex(let id): return "fyz4ex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -228,6 +254,32 @@ enum Route: Hashable {
             return [.sciMap, .bioMap, .bioLesson(id)]
         case .bioEx(let id):
             return [.sciMap, .bioMap, .bioLesson(id), .bioEx(id)]
+        case .fyzYears:
+            return [.fyzYears]
+        case .fyzMap:
+            return [.fyzYears, .fyzMap]
+        case .fyzLesson(let id):
+            return [.fyzYears, .fyzMap, .fyzLesson(id)]
+        case .fyzEx(let id):
+            return [.fyzYears, .fyzMap, .fyzLesson(id), .fyzEx(id)]
+        case .fyz2Map:
+            return [.fyzYears, .fyz2Map]
+        case .fyz2Lesson(let id):
+            return [.fyzYears, .fyz2Map, .fyz2Lesson(id)]
+        case .fyz2Ex(let id):
+            return [.fyzYears, .fyz2Map, .fyz2Lesson(id), .fyz2Ex(id)]
+        case .fyz3Map:
+            return [.fyzYears, .fyz3Map]
+        case .fyz3Lesson(let id):
+            return [.fyzYears, .fyz3Map, .fyz3Lesson(id)]
+        case .fyz3Ex(let id):
+            return [.fyzYears, .fyz3Map, .fyz3Lesson(id), .fyz3Ex(id)]
+        case .fyz4Map:
+            return [.fyzYears, .fyz4Map]
+        case .fyz4Lesson(let id):
+            return [.fyzYears, .fyz4Map, .fyz4Lesson(id)]
+        case .fyz4Ex(let id):
+            return [.fyzYears, .fyz4Map, .fyz4Lesson(id), .fyz4Ex(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -269,6 +321,11 @@ func routeFromPage(_ page: String) -> Route? {
     case "scimap": return .sciMap
     case "chemmap": return .chemMap
     case "biomap": return .bioMap
+    case "fyzyears": return .fyzYears
+    case "fyzmap": return .fyzMap
+    case "fyz2map": return .fyz2Map
+    case "fyz3map": return .fyz3Map
+    case "fyz4map": return .fyz4Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -323,6 +380,30 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /bioex(\d+)/), let n = Int(m.1) {
             return .bioEx(n)
+        }
+        if let m = page.wholeMatch(of: /fyz4unit(\d+)/), let n = Int(m.1) {
+            return .fyz4Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /fyz4ex(\d+)/), let n = Int(m.1) {
+            return .fyz4Ex(n)
+        }
+        if let m = page.wholeMatch(of: /fyz3unit(\d+)/), let n = Int(m.1) {
+            return .fyz3Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /fyz3ex(\d+)/), let n = Int(m.1) {
+            return .fyz3Ex(n)
+        }
+        if let m = page.wholeMatch(of: /fyz2unit(\d+)/), let n = Int(m.1) {
+            return .fyz2Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /fyz2ex(\d+)/), let n = Int(m.1) {
+            return .fyz2Ex(n)
+        }
+        if let m = page.wholeMatch(of: /fyzunit(\d+)/), let n = Int(m.1) {
+            return .fyzLesson(n)
+        }
+        if let m = page.wholeMatch(of: /fyzex(\d+)/), let n = Int(m.1) {
+            return .fyzEx(n)
         }
         if let m = page.wholeMatch(of: /lit4unit(\d+)/), let n = Int(m.1) {
             return .lit4Lesson(n)
