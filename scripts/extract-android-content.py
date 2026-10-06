@@ -727,6 +727,20 @@ def parse_changelog(path: Path) -> list[dict]:
     return [e for e in entries if e["cs"] or e["en"]]
 
 
+def expand_local_includes(src: str, directory: Path, seen: set[Path] | None = None) -> str:
+    """Inline #include "file" so keys that live in a fragment are extracted."""
+    seen = set() if seen is None else seen
+
+    def repl(match: re.Match) -> str:
+        path = (directory / match.group(1)).resolve()
+        if not path.is_file() or path in seen:
+            return match.group(0)
+        seen.add(path)
+        return expand_local_includes(path.read_text(encoding="utf-8"), path.parent, seen)
+
+    return re.sub(r'^\s*#include\s+"([^"]+)"', repl, src, flags=re.M)
+
+
 def parse_i18n(src: str) -> dict:
     arrays = find_arrays(src)
     out = {}
@@ -765,7 +779,7 @@ def main() -> int:
         text = strip_comments(path.read_text(encoding="utf-8"))
         arrays.update(find_arrays(text))
         if path.name == "i18n.c":
-            i18n = parse_i18n(text)
+            i18n = parse_i18n(strip_comments(expand_local_includes(text, path.parent)))
 
     def A(name):
         if name not in arrays:
