@@ -32,6 +32,7 @@ import org.maturita.maturita.ui.HomeScreen
 import org.maturita.maturita.ui.HwQuizScreen
 import org.maturita.maturita.ui.HwYearsScreen
 import org.maturita.maturita.ui.LessonListScreen
+import org.maturita.maturita.ui.LitYearsScreen
 import org.maturita.maturita.ui.LessonRow
 import org.maturita.maturita.ui.LitQuizScreen
 import org.maturita.maturita.ui.MluvExercise
@@ -288,6 +289,63 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.On4Ex -> On4QuizScreen(vm, r.id)
+            Route.LitYears -> LitYearsScreen(vm)
+            Route.LitMap -> LessonListScreen(
+                vm, vm.tr("lit_year1"), vm.tr("lit_sub"),
+                vm.content.lit.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.litDone(id), Route.LitLesson(id))
+                },
+            )
+            is Route.LitLesson -> {
+                val l = vm.content.litLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.LitEx(r.id))
+                }
+            }
+            is Route.LitEx -> LitQuizScreen(vm, 1, r.id)
+            Route.Lit2Map -> LessonListScreen(
+                vm, vm.tr("lit_year2"), vm.tr("lit2_sub"),
+                vm.content.lit2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.lit2Done(id), Route.Lit2Lesson(id))
+                },
+            )
+            is Route.Lit2Lesson -> {
+                val l = vm.content.lit2Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Lit2Ex(r.id))
+                }
+            }
+            is Route.Lit2Ex -> LitQuizScreen(vm, 2, r.id)
+            Route.Lit3Map -> LessonListScreen(
+                vm, vm.tr("lit_year3"), vm.tr("lit3_sub"),
+                vm.content.lit3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.lit3Done(id), Route.Lit3Lesson(id))
+                },
+            )
+            is Route.Lit3Lesson -> {
+                val l = vm.content.lit3Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Lit3Ex(r.id))
+                }
+            }
+            is Route.Lit3Ex -> LitQuizScreen(vm, 3, r.id)
+            Route.Lit4Map -> LessonListScreen(
+                vm, vm.tr("lit_year4"), vm.tr("lit4_sub"),
+                vm.content.lit4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.lit4Done(id), Route.Lit4Lesson(id))
+                },
+            )
+            is Route.Lit4Lesson -> {
+                val l = vm.content.lit4Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Lit4Ex(r.id))
+                }
+            }
+            is Route.Lit4Ex -> LitQuizScreen(vm, 4, r.id)
             Route.CzechMap -> CzechMapScreen(vm)
             Route.Mluvnice -> LessonListScreen(
                 vm, vm.tr("Mluvnice"), vm.tr("mluv_sub"),

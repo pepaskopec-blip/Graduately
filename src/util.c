@@ -26,6 +26,10 @@ char *app_progress_on3;
 char *app_progress_on4;
 char *app_progress_mluvnice;
 char *app_progress_cetba;
+char *app_progress_lit;
+char *app_progress_lit2;
+char *app_progress_lit3;
+char *app_progress_lit4;
 
 static char *dup_dirname(const char *path) {
     char *tmp = g_strdup(path);
@@ -168,6 +172,10 @@ static void set_progress_paths(const char *write_root) {
     g_free(app_progress_on4);
     g_free(app_progress_mluvnice);
     g_free(app_progress_cetba);
+    g_free(app_progress_lit);
+    g_free(app_progress_lit2);
+    g_free(app_progress_lit3);
+    g_free(app_progress_lit4);
 
     app_progress_dir = g_build_filename(write_root, PROGRESS_DIR_NAME, NULL);
     app_progress_u1 = g_build_filename(app_progress_dir, "unit1.conf", NULL);
@@ -182,6 +190,10 @@ static void set_progress_paths(const char *write_root) {
     app_progress_on4 = g_build_filename(app_progress_dir, "on4.conf", NULL);
     app_progress_mluvnice = g_build_filename(app_progress_dir, "mluvnice.conf", NULL);
     app_progress_cetba = g_build_filename(app_progress_dir, "cetba.conf", NULL);
+    app_progress_lit = g_build_filename(app_progress_dir, "lit.conf", NULL);
+    app_progress_lit2 = g_build_filename(app_progress_dir, "lit2.conf", NULL);
+    app_progress_lit3 = g_build_filename(app_progress_dir, "lit3.conf", NULL);
+    app_progress_lit4 = g_build_filename(app_progress_dir, "lit4.conf", NULL);
 }
 
 /* Resolve read-only asset root, chdir there, and point progress at a writable

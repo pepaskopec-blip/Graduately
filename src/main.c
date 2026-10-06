@@ -388,6 +388,10 @@ static gboolean run_smoke_test(gpointer data) {
         "netyears", "netmap", "hwyears", "hwmap", "onyears", "onmap", "on2map",
         "on3map", "on4map",
         "czechmap",
+        "lityears", "litmap", "lit2map", "lit3map", "lit4map",
+        "litunit1", "litex1", "litunit8", "litex8",
+        "lit2unit1", "lit2ex1", "lit3unit1", "lit3ex1",
+        "lit4unit1", "lit4ex1", "lit4unit8", "lit4ex8",
         "mluvnice", "readinglist",
         "cetba1984", "cetba1984quiz", "cetba1984dej",
         "cetbaFuks", "cetbaFuksQuiz", "cetbaFuksDej",
@@ -522,6 +526,15 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_on4map_page(), "on4map");
     add_on4_pages(main_stack);
     gtk_stack_add_named(main_stack, build_czechmap_page(), "czechmap");
+    gtk_stack_add_named(main_stack, build_lityears_page(), "lityears");
+    gtk_stack_add_named(main_stack, build_litmap_page(), "litmap");
+    add_lit_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_lit2map_page(), "lit2map");
+    add_lit2_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_lit3map_page(), "lit3map");
+    add_lit3_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_lit4map_page(), "lit4map");
+    add_lit4_pages(main_stack);
     gtk_stack_add_named(main_stack, build_mluvnice_page(), "mluvnice");
     for (int n = 1; n <= 20; n++) {
         char name[16];

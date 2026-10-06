@@ -55,6 +55,10 @@ extern char *app_progress_on3;
 extern char *app_progress_on4;
 extern char *app_progress_mluvnice;
 extern char *app_progress_cetba;
+extern char *app_progress_lit;
+extern char *app_progress_lit2;
+extern char *app_progress_lit3;
+extern char *app_progress_lit4;
 #define PROGRESS_DIR  app_progress_dir
 #define PROGRESS_U1   app_progress_u1
 #define PROGRESS_U2   app_progress_u2
@@ -131,6 +135,7 @@ extern char *app_progress_cetba;
 #define ON3_LESSONS      16
 #define ON4_UNITS        16
 #define ON4_LESSONS      16
+#define LIT_N            8
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
 #define HW3_SLIDES       2
@@ -901,6 +906,29 @@ void on4_lessons_apply_lang(void);
 GtkWidget *build_on4map_page(void);
 void add_on4_pages(GtkStack *stack);
 void czech_rail_theme_reset(void);
+void lit_load_progress(void);
+void lit_rail_theme_reset(void);
+void lit_lessons_apply_lang(void);
+void progress_for_lit(ProgressSum *out);
+GtkWidget *lit_unit_page(int year, NetLesson *L, const char *title_key,
+                         const char *sub_key, const NetSlide *slides,
+                         guint n_slides);
+GtkWidget *lit_mcq_page(int year, int lesson_id, const char *back_page,
+                        const char *title_key, const char *heading_key,
+                        const ChoiceQ *qs, const char **hints, int n);
+GtkWidget *build_lityears_page(void);
+GtkWidget *build_litmap_page(void);
+GtkWidget *build_lit2map_page(void);
+GtkWidget *build_lit3map_page(void);
+GtkWidget *build_lit4map_page(void);
+void add_lit_pages(GtkStack *stack);
+void add_lit2_pages(GtkStack *stack);
+void add_lit3_pages(GtkStack *stack);
+void add_lit4_pages(GtkStack *stack);
+extern NetLesson lit_lessons[LIT_N];
+extern NetLesson lit2_lessons[LIT_N];
+extern NetLesson lit3_lessons[LIT_N];
+extern NetLesson lit4_lessons[LIT_N];
 void hw_lessons_apply_lang(void);
 GtkWidget *build_hwyears_page(void);
 GtkWidget *build_hwmap_page(void);

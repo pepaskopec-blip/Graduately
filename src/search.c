@@ -237,7 +237,40 @@ static void catalog_rebuild(void) {
 
     catalog_add_key("Český jazyk a literatura", "search_subject",
                     "czechmap", FALSE, 0, "cestina czech");
-    catalog_add_key("Literatura", "search_lesson", "czechmap", TRUE, 1, NULL);
+    catalog_add_key("Literatura", "search_lesson", "lityears", FALSE, 1,
+                    "literatura");
+    catalog_add_key("lit_year1", "search_lesson", "litmap", FALSE, 1, "rocnik");
+    catalog_add_key("lit_year2", "search_lesson", "lit2map", FALSE, 1, "rocnik");
+    catalog_add_key("lit_year3", "search_lesson", "lit3map", FALSE, 1, "rocnik");
+    catalog_add_key("lit_year4", "search_lesson", "lit4map", FALSE, 1, "rocnik");
+    for (i = 1; i <= LIT_N; i++) {
+        g_snprintf(key, sizeof(key), "lit_unit%d", i);
+        g_snprintf(page, sizeof(page), "litunit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
+        g_snprintf(page, sizeof(page), "litex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= LIT_N; i++) {
+        g_snprintf(key, sizeof(key), "lit2_unit%d", i);
+        g_snprintf(page, sizeof(page), "lit2unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
+        g_snprintf(page, sizeof(page), "lit2ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= LIT_N; i++) {
+        g_snprintf(key, sizeof(key), "lit3_unit%d", i);
+        g_snprintf(page, sizeof(page), "lit3unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
+        g_snprintf(page, sizeof(page), "lit3ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= LIT_N; i++) {
+        g_snprintf(key, sizeof(key), "lit4_unit%d", i);
+        g_snprintf(page, sizeof(page), "lit4unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
+        g_snprintf(page, sizeof(page), "lit4ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
     catalog_add_key("Mluvnice", "search_lesson", "mluvnice", FALSE, 1,
                     "gramatika grammar");
     catalog_add_key("Maturitní četba", "search_book", "readinglist", FALSE, 1,

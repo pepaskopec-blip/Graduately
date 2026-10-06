@@ -134,20 +134,15 @@ GtkWidget *build_czechmap_page(void) {
     cz_rail = rail;
 
     for (int i = 0; i < CZ_NODES; i++) {
-        /* Literatura has no lessons yet; keep the node visible but locked. */
-        gboolean locked = (i == 0);
-        GtkWidget *btn = cz_make_node(i, locked);
+        GtkWidget *btn = cz_make_node(i, FALSE);
         GtkWidget *name = gtk_label_new(NULL);
+        const char *target = (i == 0) ? "lityears"
+                            : (i == 1) ? "mluvnice"
+                                       : "readinglist";
 
-        if (i == 2) {
-            g_object_set_data_full(G_OBJECT(btn), "target",
-                                   g_strdup("readinglist"), g_free);
-            g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
-        } else if (i == 1) {
-            g_object_set_data_full(G_OBJECT(btn), "target",
-                                   g_strdup("mluvnice"), g_free);
-            g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
-        }
+        g_object_set_data_full(G_OBJECT(btn), "target",
+                               g_strdup(target), g_free);
+        g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
 
         i18n_bind(name, cz_keys[i], 0);
         gtk_widget_set_size_request(name, (int)CZ_LABEL_W, -1);
@@ -156,8 +151,6 @@ GtkWidget *build_czechmap_page(void) {
         gtk_label_set_wrap(GTK_LABEL(name), TRUE);
         gtk_widget_add_css_class(name, "unit-name");
         gtk_widget_add_css_class(name, "cz-label");
-        if (locked)
-            gtk_widget_add_css_class(name, "unit-name-locked");
 
         gtk_fixed_put(GTK_FIXED(fixed), btn, 0, 0);
         gtk_fixed_put(GTK_FIXED(fixed), name, 0, 0);

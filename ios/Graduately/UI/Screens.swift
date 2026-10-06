@@ -696,8 +696,13 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
             + vm.content.on3.filter { vm.progress.on3Done($0.int("id")) }.count
             + vm.content.on4.filter { vm.progress.on4Done($0.int("id")) }.count
     case "czechmap":
-        sum.totalEx = vm.content.mluvnice.count
-        sum.doneEx = vm.content.mluvnice.filter { vm.progress.mluvDone($0.int("id")) }.count
+        let litCount = vm.content.lit.count + vm.content.lit2.count + vm.content.lit3.count + vm.content.lit4.count
+        let litDone = vm.content.lit.filter { vm.progress.litDone($0.int("id")) }.count
+            + vm.content.lit2.filter { vm.progress.lit2Done($0.int("id")) }.count
+            + vm.content.lit3.filter { vm.progress.lit3Done($0.int("id")) }.count
+            + vm.content.lit4.filter { vm.progress.lit4Done($0.int("id")) }.count
+        sum.totalEx = vm.content.mluvnice.count + litCount
+        sum.doneEx = vm.content.mluvnice.filter { vm.progress.mluvDone($0.int("id")) }.count + litDone
     default:
         break
     }
@@ -898,6 +903,27 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.on4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on4unit\(l.int("id"))", extra: "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on4ex\(l.int("id"))")
+    }
+    add(vm.tr("Literatura"), vm.tr("search_lesson"), "lityears", extra: "literatura")
+    add(vm.tr("lit_year1"), vm.tr("search_lesson"), "litmap", extra: "rocnik")
+    add(vm.tr("lit_year2"), vm.tr("search_lesson"), "lit2map", extra: "rocnik")
+    add(vm.tr("lit_year3"), vm.tr("search_lesson"), "lit3map", extra: "rocnik")
+    add(vm.tr("lit_year4"), vm.tr("search_lesson"), "lit4map", extra: "rocnik")
+    for l in vm.content.lit {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "litunit\(l.int("id"))", extra: "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "litex\(l.int("id"))")
+    }
+    for l in vm.content.lit2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit2unit\(l.int("id"))", extra: "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit2ex\(l.int("id"))")
+    }
+    for l in vm.content.lit3 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit3unit\(l.int("id"))", extra: "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit3ex\(l.int("id"))")
+    }
+    for l in vm.content.lit4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit\(l.int("id"))", extra: "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex\(l.int("id"))")
     }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -1404,6 +1430,47 @@ struct SlidesScreen: View {
     }
 }
 
+struct LitYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route)] = [
+            ("lit_year1", "lit_sub", .litMap),
+            ("lit_year2", "lit2_sub", .lit2Map),
+            ("lit_year3", "lit3_sub", .lit3Map),
+            ("lit_year4", "lit4_sub", .lit4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+            }
+            .buttonStyle(.plain)
+        }
+        .navigationTitle(vm.tr("Literatura"))
+        .navigationSubtitle(vm.tr("lit_years_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.litMap) {
+                ListRowLabel(title: vm.tr("lit_year1"), subtitle: vm.tr("lit_sub"))
+            }
+            NavigationLink(value: Route.lit2Map) {
+                ListRowLabel(title: vm.tr("lit_year2"), subtitle: vm.tr("lit2_sub"))
+            }
+            NavigationLink(value: Route.lit3Map) {
+                ListRowLabel(title: vm.tr("lit_year3"), subtitle: vm.tr("lit3_sub"))
+            }
+            NavigationLink(value: Route.lit4Map) {
+                ListRowLabel(title: vm.tr("lit_year4"), subtitle: vm.tr("lit4_sub"))
+            }
+        }
+        .navigationTitle(vm.tr("Literatura"))
+        .navigationSubtitle(vm.tr("lit_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
 struct CzechMapScreen: View {
     @ObservedObject var vm: AppModel
 
@@ -1422,19 +1489,23 @@ struct CzechMapScreen: View {
                 }
                 .buttonStyle(.plain)
             default:
-                MacLinkCard(title: vm.tr("Literatura"), systemImage: "book.closed", locked: true)
+                NavigationLink(value: Route.litYears) {
+                    MacLinkCard(title: vm.tr("Literatura"), systemImage: "book.closed")
+                }
+                .buttonStyle(.plain)
             }
         }
         .navigationTitle(vm.tr("Český jazyk a literatura"))
         .navigationSubtitle(vm.tr("czech_sub"))
         #else
         List {
-            Label {
-                Text(vm.tr("Literatura"))
-            } icon: {
-                Image(systemName: "lock.fill")
+            NavigationLink(value: Route.litYears) {
+                Label {
+                    Text(vm.tr("Literatura"))
+                } icon: {
+                    Image(systemName: "book.closed")
+                }
             }
-            .foregroundStyle(.secondary)
             NavigationLink(value: Route.mluvnice) {
                 Label {
                     Text(vm.tr("Mluvnice"))
@@ -1994,6 +2065,92 @@ struct RouteDestination: View {
             On4QuizScreen(vm: vm, id: id)
         case .czechMap:
             CzechMapScreen(vm: vm)
+        case .litYears:
+            LitYearsScreen(vm: vm)
+        case .litMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("lit_year1"),
+                subtitle: vm.tr("lit_sub"),
+                rows: vm.content.lit.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "l\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.litDone(id),
+                        destination: .litLesson(id)
+                    )
+                }
+            )
+        case .litLesson(let id):
+            if let l = vm.content.litLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .litEx(id))
+            }
+        case .litEx(let id):
+            LitYearQuizScreen(vm: vm, year: 1, id: id)
+        case .lit2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("lit_year2"),
+                subtitle: vm.tr("lit2_sub"),
+                rows: vm.content.lit2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "l2\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.lit2Done(id),
+                        destination: .lit2Lesson(id)
+                    )
+                }
+            )
+        case .lit2Lesson(let id):
+            if let l = vm.content.lit2Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .lit2Ex(id))
+            }
+        case .lit2Ex(let id):
+            LitYearQuizScreen(vm: vm, year: 2, id: id)
+        case .lit3Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("lit_year3"),
+                subtitle: vm.tr("lit3_sub"),
+                rows: vm.content.lit3.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "l3\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.lit3Done(id),
+                        destination: .lit3Lesson(id)
+                    )
+                }
+            )
+        case .lit3Lesson(let id):
+            if let l = vm.content.lit3Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .lit3Ex(id))
+            }
+        case .lit3Ex(let id):
+            LitYearQuizScreen(vm: vm, year: 3, id: id)
+        case .lit4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("lit_year4"),
+                subtitle: vm.tr("lit4_sub"),
+                rows: vm.content.lit4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "l4\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.lit4Done(id),
+                        destination: .lit4Lesson(id)
+                    )
+                }
+            )
+        case .lit4Lesson(let id):
+            if let l = vm.content.lit4Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .lit4Ex(id))
+            }
+        case .lit4Ex(let id):
+            LitYearQuizScreen(vm: vm, year: 4, id: id)
         case .mluvnice:
             LessonListScreen(
                 vm: vm,

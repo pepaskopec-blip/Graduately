@@ -46,6 +46,15 @@ final class ProgressStore {
     func on4Done(_ id: Int) -> Bool { defaults.bool(forKey: "on4.\(id)") }
     func markOn4(_ id: Int) { defaults.set(true, forKey: "on4.\(id)") }
 
+    func litDone(_ id: Int) -> Bool { defaults.bool(forKey: "lit.\(id)") }
+    func markLit(_ id: Int) { defaults.set(true, forKey: "lit.\(id)") }
+    func lit2Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit2.\(id)") }
+    func markLit2(_ id: Int) { defaults.set(true, forKey: "lit2.\(id)") }
+    func lit3Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit3.\(id)") }
+    func markLit3(_ id: Int) { defaults.set(true, forKey: "lit3.\(id)") }
+    func lit4Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit4.\(id)") }
+    func markLit4(_ id: Int) { defaults.set(true, forKey: "lit4.\(id)") }
+
     func mluvDone(_ n: Int) -> Bool { defaults.bool(forKey: "mluv.\(n)") }
     func markMluv(_ n: Int) { defaults.set(true, forKey: "mluv.\(n)") }
 
@@ -117,6 +126,38 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if p.on4Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.lit {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.litDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.lit2 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.lit2Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.lit3 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.lit3Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.lit4 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.lit4Done(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

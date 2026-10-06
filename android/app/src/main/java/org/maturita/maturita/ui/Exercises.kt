@@ -146,6 +146,7 @@ private fun ChoiceEx(vm: AppViewModel, title: String, sub: String?, spec: J, onD
             if (revealed) {
                 meanings.getOrNull(i)?.let { Meaning(vm.tr(it), true) }
                 expls.getOrNull(i)?.let { Meaning(it, true) }
+                q.strOrNull("expl")?.let { Meaning(it, true) }
             }
             Spacer(Modifier.height(12.dp))
         }
@@ -846,6 +847,30 @@ fun NetQuizScreen(vm: AppViewModel, id: Int) {
         put("questions", lesson.o.optJSONArray("quiz"))
     })
     DispatchExercise(vm, spec, vm.tr(lesson.str("exTitleKey"))) { vm.markNet(id) }
+}
+
+@Composable
+fun LitQuizScreen(vm: AppViewModel, year: Int, id: Int) {
+    val lesson = when (year) {
+        2 -> vm.content.lit2Lesson(id)
+        3 -> vm.content.lit3Lesson(id)
+        4 -> vm.content.lit4Lesson(id)
+        else -> vm.content.litLesson(id)
+    } ?: return
+    val spec = J(org.json.JSONObject().apply {
+        put("type", "choice")
+        put("title", vm.tr(lesson.str("exTitleKey")))
+        put("sub", lesson.str("quizHeadKey"))
+        put("questions", lesson.o.optJSONArray("quiz"))
+    })
+    DispatchExercise(vm, spec, vm.tr(lesson.str("exTitleKey"))) {
+        when (year) {
+            2 -> vm.markLit2(id)
+            3 -> vm.markLit3(id)
+            4 -> vm.markLit4(id)
+            else -> vm.markLit(id)
+        }
+    }
 }
 
 @Composable

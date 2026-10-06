@@ -308,8 +308,13 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
                 vm.content.on4.count { vm.progress.on4Done(it.int("id")) }
         }
         "czechmap" -> {
-            sum.totalEx = vm.content.mluvnice.size
-            sum.doneEx = vm.content.mluvnice.count { vm.progress.mluvDone(it.int("id")) }
+            val litDone = vm.content.lit.count { vm.progress.litDone(it.int("id")) } +
+                vm.content.lit2.count { vm.progress.lit2Done(it.int("id")) } +
+                vm.content.lit3.count { vm.progress.lit3Done(it.int("id")) } +
+                vm.content.lit4.count { vm.progress.lit4Done(it.int("id")) }
+            sum.totalEx = vm.content.mluvnice.size + vm.content.lit.size + vm.content.lit2.size +
+                vm.content.lit3.size + vm.content.lit4.size
+            sum.doneEx = vm.content.mluvnice.count { vm.progress.mluvDone(it.int("id")) } + litDone
         }
     }
     return sum
@@ -514,6 +519,27 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on4unit${l.int("id")}", extra = "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on4ex${l.int("id")}")
     }
+    add(vm.tr("Literatura"), vm.tr("search_lesson"), "lityears", extra = "literatura")
+    add(vm.tr("lit_year1"), vm.tr("search_lesson"), "litmap", extra = "rocnik")
+    add(vm.tr("lit_year2"), vm.tr("search_lesson"), "lit2map", extra = "rocnik")
+    add(vm.tr("lit_year3"), vm.tr("search_lesson"), "lit3map", extra = "rocnik")
+    add(vm.tr("lit_year4"), vm.tr("search_lesson"), "lit4map", extra = "rocnik")
+    vm.content.lit.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "litunit${l.int("id")}", extra = "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "litex${l.int("id")}")
+    }
+    vm.content.lit2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit2unit${l.int("id")}", extra = "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit2ex${l.int("id")}")
+    }
+    vm.content.lit3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit3unit${l.int("id")}", extra = "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit3ex${l.int("id")}")
+    }
+    vm.content.lit4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit${l.int("id")}", extra = "literatura")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex${l.int("id")}")
+    }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     vm.content.mluvnice.forEach { m -> add(m.str("name"), vm.tr("Mluvnice"), "mluve${m.int("id")}") }
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -627,10 +653,26 @@ fun OnYearsScreen(vm: AppViewModel) {
 }
 
 @Composable
+fun LitYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Literatura"), vm.tr("lit_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("lit_year1"), subtitle = vm.tr("lit_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.LitMap) }
+                NavRow(title = vm.tr("lit_year2"), subtitle = vm.tr("lit2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit2Map) }
+                NavRow(title = vm.tr("lit_year3"), subtitle = vm.tr("lit3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit3Map) }
+                NavRow(title = vm.tr("lit_year4"), subtitle = vm.tr("lit4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit4Map) }
+            }
+        }
+    }
+}
+
+@Composable
 fun CzechMapScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Český jazyk a literatura"), vm.tr("czech_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
-            item { NavRow(title = vm.tr("Literatura"), locked = true, onClick = null) }
+            item {
+                NavRow(title = vm.tr("Literatura"), subtitle = vm.tr("lit_years_sub")) { vm.go(Route.LitYears) }
+            }
             item {
                 NavRow(
                     title = vm.tr("Mluvnice"),

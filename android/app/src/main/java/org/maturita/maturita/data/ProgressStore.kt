@@ -44,6 +44,15 @@ class ProgressStore(context: Context) {
     fun on4Done(id: Int) = prefs.getBoolean("on4.$id", false)
     fun markOn4(id: Int) { prefs.edit().putBoolean("on4.$id", true).apply() }
 
+    fun litDone(id: Int) = prefs.getBoolean("lit.$id", false)
+    fun markLit(id: Int) { prefs.edit().putBoolean("lit.$id", true).apply() }
+    fun lit2Done(id: Int) = prefs.getBoolean("lit2.$id", false)
+    fun markLit2(id: Int) { prefs.edit().putBoolean("lit2.$id", true).apply() }
+    fun lit3Done(id: Int) = prefs.getBoolean("lit3.$id", false)
+    fun markLit3(id: Int) { prefs.edit().putBoolean("lit3.$id", true).apply() }
+    fun lit4Done(id: Int) = prefs.getBoolean("lit4.$id", false)
+    fun markLit4(id: Int) { prefs.edit().putBoolean("lit4.$id", true).apply() }
+
     fun mluvDone(n: Int) = prefs.getBoolean("mluv.$n", false)
     fun markMluv(n: Int) { prefs.edit().putBoolean("mluv.$n", true).apply() }
 
@@ -110,6 +119,38 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if (p.on4Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.lit.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.litDone(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.lit2.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.lit2Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.lit3.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.lit3Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.lit4.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.lit4Done(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

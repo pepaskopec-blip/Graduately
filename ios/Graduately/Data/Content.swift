@@ -35,6 +35,10 @@ final class Content {
     let on2: [J]
     let on3: [J]
     let on4: [J]
+    let lit: [J]
+    let lit2: [J]
+    let lit3: [J]
+    let lit4: [J]
     let mluvnice: [J]
     let books: [J]
     let changelog: [J]
@@ -70,6 +74,10 @@ final class Content {
         on2 = raw.arr("on2")
         on3 = raw.arr("on3")
         on4 = raw.arr("on4")
+        lit = raw.arr("lit")
+        lit2 = raw.arr("lit2")
+        lit3 = raw.arr("lit3")
+        lit4 = raw.arr("lit4")
         mluvnice = raw.arr("mluvnice")
         books = raw.arr("books")
         changelog = raw.arr("changelog")
@@ -82,6 +90,10 @@ final class Content {
     func on2Lesson(_ id: Int) -> J? { on2.first { $0.int("id") == id } }
     func on3Lesson(_ id: Int) -> J? { on3.first { $0.int("id") == id } }
     func on4Lesson(_ id: Int) -> J? { on4.first { $0.int("id") == id } }
+    func litLesson(_ id: Int) -> J? { lit.first { $0.int("id") == id } }
+    func lit2Lesson(_ id: Int) -> J? { lit2.first { $0.int("id") == id } }
+    func lit3Lesson(_ id: Int) -> J? { lit3.first { $0.int("id") == id } }
+    func lit4Lesson(_ id: Int) -> J? { lit4.first { $0.int("id") == id } }
     func mluv(_ n: Int) -> J? { mluvnice.first { $0.int("id") == n } }
     func book(_ id: String) -> J? { books.first { $0.str("id") == id } }
 

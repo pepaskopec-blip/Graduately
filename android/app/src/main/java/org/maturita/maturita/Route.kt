@@ -30,6 +30,19 @@ sealed class Route(val page: String) {
     data object On4Map : Route("on4map")
     data class On4Lesson(val id: Int) : Route("on4unit$id")
     data class On4Ex(val id: Int) : Route("on4ex$id")
+    data object LitYears : Route("lityears")
+    data object LitMap : Route("litmap")
+    data class LitLesson(val id: Int) : Route("litunit$id")
+    data class LitEx(val id: Int) : Route("litex$id")
+    data object Lit2Map : Route("lit2map")
+    data class Lit2Lesson(val id: Int) : Route("lit2unit$id")
+    data class Lit2Ex(val id: Int) : Route("lit2ex$id")
+    data object Lit3Map : Route("lit3map")
+    data class Lit3Lesson(val id: Int) : Route("lit3unit$id")
+    data class Lit3Ex(val id: Int) : Route("lit3ex$id")
+    data object Lit4Map : Route("lit4map")
+    data class Lit4Lesson(val id: Int) : Route("lit4unit$id")
+    data class Lit4Ex(val id: Int) : Route("lit4ex$id")
     data object CzechMap : Route("czechmap")
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
@@ -45,7 +58,9 @@ sealed class Route(val page: String) {
     val isExercise: Boolean
         get() = this is GermanEx || this is Vocab || this is NetEx || this is HwEx ||
             this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is MluvEx || this is BookQuiz || this is BookPlot ||
-            this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson
+            this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson ||
+            this is LitLesson || this is LitEx || this is Lit2Lesson || this is Lit2Ex ||
+            this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex
 
     /** Full stack from the practice root to this screen, so back always goes up one level. */
     fun stack(): List<Route> = when (this) {
@@ -77,6 +92,19 @@ sealed class Route(val page: String) {
         On4Map -> listOf(Subjects, OnYears, On4Map)
         is On4Lesson -> listOf(Subjects, OnYears, On4Map, this)
         is On4Ex -> listOf(Subjects, OnYears, On4Map, On4Lesson(id), this)
+        LitYears -> listOf(Subjects, CzechMap, LitYears)
+        LitMap -> listOf(Subjects, CzechMap, LitYears, LitMap)
+        is LitLesson -> listOf(Subjects, CzechMap, LitYears, LitMap, this)
+        is LitEx -> listOf(Subjects, CzechMap, LitYears, LitMap, LitLesson(id), this)
+        Lit2Map -> listOf(Subjects, CzechMap, LitYears, Lit2Map)
+        is Lit2Lesson -> listOf(Subjects, CzechMap, LitYears, Lit2Map, this)
+        is Lit2Ex -> listOf(Subjects, CzechMap, LitYears, Lit2Map, Lit2Lesson(id), this)
+        Lit3Map -> listOf(Subjects, CzechMap, LitYears, Lit3Map)
+        is Lit3Lesson -> listOf(Subjects, CzechMap, LitYears, Lit3Map, this)
+        is Lit3Ex -> listOf(Subjects, CzechMap, LitYears, Lit3Map, Lit3Lesson(id), this)
+        Lit4Map -> listOf(Subjects, CzechMap, LitYears, Lit4Map)
+        is Lit4Lesson -> listOf(Subjects, CzechMap, LitYears, Lit4Map, this)
+        is Lit4Ex -> listOf(Subjects, CzechMap, LitYears, Lit4Map, Lit4Lesson(id), this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -102,6 +130,11 @@ fun routeFromPage(page: String): Route? = when (page) {
     "on2map" -> Route.On2Map
     "on3map" -> Route.On3Map
     "on4map" -> Route.On4Map
+    "lityears" -> Route.LitYears
+    "litmap" -> Route.LitMap
+    "lit2map" -> Route.Lit2Map
+    "lit3map" -> Route.Lit3Map
+    "lit4map" -> Route.Lit4Map
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
     "readinglist" -> Route.ReadingList
@@ -132,6 +165,30 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""hwex(\d+)""").matchEntire(page)?.let {
             return Route.HwEx(it.groupValues[1].toInt())
+        }
+        Regex("""lit4unit(\d+)""").matchEntire(page)?.let {
+            return Route.Lit4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""lit4ex(\d+)""").matchEntire(page)?.let {
+            return Route.Lit4Ex(it.groupValues[1].toInt())
+        }
+        Regex("""lit3unit(\d+)""").matchEntire(page)?.let {
+            return Route.Lit3Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""lit3ex(\d+)""").matchEntire(page)?.let {
+            return Route.Lit3Ex(it.groupValues[1].toInt())
+        }
+        Regex("""lit2unit(\d+)""").matchEntire(page)?.let {
+            return Route.Lit2Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""lit2ex(\d+)""").matchEntire(page)?.let {
+            return Route.Lit2Ex(it.groupValues[1].toInt())
+        }
+        Regex("""litunit(\d+)""").matchEntire(page)?.let {
+            return Route.LitLesson(it.groupValues[1].toInt())
+        }
+        Regex("""litex(\d+)""").matchEntire(page)?.let {
+            return Route.LitEx(it.groupValues[1].toInt())
         }
         Regex("""on4unit(\d+)""").matchEntire(page)?.let {
             return Route.On4Lesson(it.groupValues[1].toInt())

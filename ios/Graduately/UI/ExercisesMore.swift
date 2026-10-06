@@ -625,6 +625,39 @@ struct NetQuizScreen: View {
     }
 }
 
+struct LitYearQuizScreen: View {
+    @ObservedObject var vm: AppModel
+    let year: Int
+    let id: Int
+
+    var body: some View {
+        let lesson: J? = {
+            switch year {
+            case 2: return vm.content.lit2Lesson(id)
+            case 3: return vm.content.lit3Lesson(id)
+            case 4: return vm.content.lit4Lesson(id)
+            default: return vm.content.litLesson(id)
+            }
+        }()
+        if let lesson {
+            let spec = J([
+                "type": "choice",
+                "title": vm.tr(lesson.str("exTitleKey")),
+                "sub": lesson.str("quizHeadKey"),
+                "questions": lesson.rawArray("quiz"),
+            ])
+            DispatchExercise(vm: vm, spec: spec, titleFallback: vm.tr(lesson.str("exTitleKey"))) {
+                switch year {
+                case 2: vm.markLit2(id)
+                case 3: vm.markLit3(id)
+                case 4: vm.markLit4(id)
+                default: vm.markLit(id)
+                }
+            }
+        }
+    }
+}
+
 struct OnQuizScreen: View {
     @ObservedObject var vm: AppModel
     let id: Int

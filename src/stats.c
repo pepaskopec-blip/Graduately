@@ -71,8 +71,10 @@ void refresh_stats_ui(void) {
             progress_for_hw(&all);
         else if (s == ON_SUBJ)
             progress_for_on(&all);
-        else if (s == CZ_SUBJ)
+        else if (s == CZ_SUBJ) {
             progress_for_mluvnice(&all);
+            progress_for_lit(&all);
+        }
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
     }
@@ -113,8 +115,10 @@ void refresh_stats_ui(void) {
             progress_for_hw(&sp);
         else if (s == ON_SUBJ)
             progress_for_on(&sp);
-        else if (s == CZ_SUBJ)
+        else if (s == CZ_SUBJ) {
             progress_for_mluvnice(&sp);
+            progress_for_lit(&sp);
+        }
         else
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
         if (has_content) {

@@ -149,6 +149,9 @@ private struct ChoiceEx: View {
                 if revealed {
                     if i < meanings.count { Meaning(text: vm.tr(meanings[i]), palette: p, visible: true) }
                     if i < expls.count { Meaning(text: expls[i], palette: p, visible: true) }
+                    if let expl = qs[i].strOrNull("expl") {
+                        Meaning(text: expl, palette: p, visible: true)
+                    }
                 }
                 Spacer().frame(height: 10)
             }

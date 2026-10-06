@@ -291,8 +291,8 @@ def find_arrays(src: str) -> dict[str, tuple[str, list]]:
         val, _ = parse_list(toks, 0)
         fn = func_at(pos_brace)
         key = f"{fn}.{name}" if fn and name in {
-            "slides", "qs", "about", "world", "people", "terms", "persons",
-            "nouns", "ans",
+            "slides", "qs", "hints", "about", "world", "people", "terms",
+            "persons", "nouns", "ans",
         } else name
         # Prefer the first global, overwrite locals with prefixed names.
         if key in found and not key.startswith(fn or "\0"):
@@ -1084,6 +1084,32 @@ def main() -> int:
             "quiz": qs,
         })
 
+    def lit_pack(prefix):
+        lessons = []
+        for i in range(1, 9):
+            fn_u = f"build_{prefix}_unit{i}_page"
+            fn_e = f"build_{prefix}_unit{i}_exercise_page"
+            quiz = choice_items(A(f"{fn_e}.qs"))
+            hints = str_list(A(f"{fn_e}.hints")) if f"{fn_e}.hints" in arrays else []
+            for qi, q in enumerate(quiz):
+                if qi < len(hints) and hints[qi]:
+                    q["expl"] = hints[qi]
+            lessons.append({
+                "id": i,
+                "titleKey": f"{prefix}_unit{i}",
+                "subKey": f"{prefix}_unit{i}_sub",
+                "exTitleKey": f"{prefix}_ex{i}_title",
+                "quizHeadKey": f"{prefix}_quiz{i}_head",
+                "slides": slides_items(A(f"{fn_u}.slides")),
+                "quiz": quiz,
+            })
+        return lessons
+
+    lit_lessons = lit_pack("lit")
+    lit2_lessons = lit_pack("lit2")
+    lit3_lessons = lit_pack("lit3")
+    lit4_lessons = lit_pack("lit4")
+
     on_lessons = []
     for i in range(1, 18):
         on_lessons.append({
@@ -1551,6 +1577,10 @@ def main() -> int:
         },
         "hw": hw_lessons,
         "on": on_lessons,
+        "lit": lit_lessons,
+        "lit2": lit2_lessons,
+        "lit3": lit3_lessons,
+        "lit4": lit4_lessons,
         "on2": on2_lessons,
         "on3": on3_lessons,
         "on4": on4_lessons,
@@ -1589,6 +1619,7 @@ def main() -> int:
     print(f"  net quizzes: {sum(1 for L in net_lessons if L['quiz'])}")
     print(f"  hw lessons: {sum(1 for L in hw_lessons if L['slides'])}")
     print(f"  on lessons: {sum(1 for L in on_lessons if L['slides'])}")
+    print(f"  lit lessons: {sum(1 for L in lit_lessons + lit2_lessons + lit3_lessons + lit4_lessons if L['slides'])}")
     print(f"  on2 lessons: {sum(1 for L in on2_lessons if L['slides'])}")
     print(f"  on3 lessons: {sum(1 for L in on3_lessons if L['slides'])}")
     print(f"  on4 lessons: {sum(1 for L in on4_lessons if L['slides'])}")
@@ -1645,6 +1676,17 @@ def main() -> int:
             missing.append(f"on4{L['id']} slides")
         if not L["quiz"]:
             missing.append(f"on4{L['id']} quiz")
+    for label, block in (
+        ("lit", lit_lessons), ("lit2", lit2_lessons),
+        ("lit3", lit3_lessons), ("lit4", lit4_lessons),
+    ):
+        for L in block:
+            if not L["slides"]:
+                missing.append(f"{label}{L['id']} slides")
+            if len(L["quiz"]) < 4:
+                missing.append(f"{label}{L['id']} quiz")
+            if not all(q.get("expl") for q in L["quiz"]):
+                missing.append(f"{label}{L['id']} expl")
     for m in mluvnice:
         if m["type"] in ("typed", "reveal") and not m.get("items"):
             missing.append(f"mluv{m['id']}")

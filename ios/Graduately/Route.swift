@@ -36,6 +36,19 @@ enum Route: Hashable {
     case on4Map
     case on4Lesson(Int)
     case on4Ex(Int)
+    case litYears
+    case litMap
+    case litLesson(Int)
+    case litEx(Int)
+    case lit2Map
+    case lit2Lesson(Int)
+    case lit2Ex(Int)
+    case lit3Map
+    case lit3Lesson(Int)
+    case lit3Ex(Int)
+    case lit4Map
+    case lit4Lesson(Int)
+    case lit4Ex(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -74,6 +87,19 @@ enum Route: Hashable {
         case .on4Map: return "on4map"
         case .on4Lesson(let id): return "on4unit\(id)"
         case .on4Ex(let id): return "on4ex\(id)"
+        case .litYears: return "lityears"
+        case .litMap: return "litmap"
+        case .litLesson(let id): return "litunit\(id)"
+        case .litEx(let id): return "litex\(id)"
+        case .lit2Map: return "lit2map"
+        case .lit2Lesson(let id): return "lit2unit\(id)"
+        case .lit2Ex(let id): return "lit2ex\(id)"
+        case .lit3Map: return "lit3map"
+        case .lit3Lesson(let id): return "lit3unit\(id)"
+        case .lit3Ex(let id): return "lit3ex\(id)"
+        case .lit4Map: return "lit4map"
+        case .lit4Lesson(let id): return "lit4unit\(id)"
+        case .lit4Ex(let id): return "lit4ex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -148,6 +174,32 @@ enum Route: Hashable {
             return [.onYears, .on4Map, .on4Lesson(id)]
         case .on4Ex(let id):
             return [.onYears, .on4Map, .on4Lesson(id), .on4Ex(id)]
+        case .litYears:
+            return [.czechMap, .litYears]
+        case .litMap:
+            return [.czechMap, .litYears, .litMap]
+        case .litLesson(let id):
+            return [.czechMap, .litYears, .litMap, .litLesson(id)]
+        case .litEx(let id):
+            return [.czechMap, .litYears, .litMap, .litLesson(id), .litEx(id)]
+        case .lit2Map:
+            return [.czechMap, .litYears, .lit2Map]
+        case .lit2Lesson(let id):
+            return [.czechMap, .litYears, .lit2Map, .lit2Lesson(id)]
+        case .lit2Ex(let id):
+            return [.czechMap, .litYears, .lit2Map, .lit2Lesson(id), .lit2Ex(id)]
+        case .lit3Map:
+            return [.czechMap, .litYears, .lit3Map]
+        case .lit3Lesson(let id):
+            return [.czechMap, .litYears, .lit3Map, .lit3Lesson(id)]
+        case .lit3Ex(let id):
+            return [.czechMap, .litYears, .lit3Map, .lit3Lesson(id), .lit3Ex(id)]
+        case .lit4Map:
+            return [.czechMap, .litYears, .lit4Map]
+        case .lit4Lesson(let id):
+            return [.czechMap, .litYears, .lit4Map, .lit4Lesson(id)]
+        case .lit4Ex(let id):
+            return [.czechMap, .litYears, .lit4Map, .lit4Lesson(id), .lit4Ex(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -181,6 +233,11 @@ func routeFromPage(_ page: String) -> Route? {
     case "on2map": return .on2Map
     case "on3map": return .on3Map
     case "on4map": return .on4Map
+    case "lityears": return .litYears
+    case "litmap": return .litMap
+    case "lit2map": return .lit2Map
+    case "lit3map": return .lit3Map
+    case "lit4map": return .lit4Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -223,6 +280,30 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /hwex(\d+)/), let n = Int(m.1) {
             return .hwEx(n)
+        }
+        if let m = page.wholeMatch(of: /lit4unit(\d+)/), let n = Int(m.1) {
+            return .lit4Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /lit4ex(\d+)/), let n = Int(m.1) {
+            return .lit4Ex(n)
+        }
+        if let m = page.wholeMatch(of: /lit3unit(\d+)/), let n = Int(m.1) {
+            return .lit3Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /lit3ex(\d+)/), let n = Int(m.1) {
+            return .lit3Ex(n)
+        }
+        if let m = page.wholeMatch(of: /lit2unit(\d+)/), let n = Int(m.1) {
+            return .lit2Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /lit2ex(\d+)/), let n = Int(m.1) {
+            return .lit2Ex(n)
+        }
+        if let m = page.wholeMatch(of: /litunit(\d+)/), let n = Int(m.1) {
+            return .litLesson(n)
+        }
+        if let m = page.wholeMatch(of: /litex(\d+)/), let n = Int(m.1) {
+            return .litEx(n)
         }
         if let m = page.wholeMatch(of: /on4unit(\d+)/), let n = Int(m.1) {
             return .on4Lesson(n)
