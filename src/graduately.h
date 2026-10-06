@@ -20,6 +20,7 @@
 #define HW_SUBJ        2    /* index of "Technické vybavení"          */
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define ON_SUBJ        4    /* index of "Občanská nauka"              */
+#define MATH_SUBJ      6    /* index of "Matematika"                  */
 #define PHY_SUBJ       7    /* index of "Fyzika"                      */
 #define SCI_SUBJ       8    /* index of "Základy Přírodopisných věd"  */
 #define CSS_FILE      "style.css"
@@ -67,6 +68,11 @@ extern char *app_progress_fyz;
 extern char *app_progress_fyz2;
 extern char *app_progress_fyz3;
 extern char *app_progress_fyz4;
+extern char *app_progress_mat0;
+extern char *app_progress_mat;
+extern char *app_progress_mat2;
+extern char *app_progress_mat3;
+extern char *app_progress_mat4;
 #define PROGRESS_DIR  app_progress_dir
 #define PROGRESS_U1   app_progress_u1
 #define PROGRESS_U2   app_progress_u2
@@ -146,6 +152,7 @@ extern char *app_progress_fyz4;
 #define LIT_N            8
 #define SCI_N            8
 #define FYZ_N            8
+#define MATH_N           8
 #define HW_SLIDES        3
 #define HW2_SLIDES       6
 #define HW3_SLIDES       2
@@ -345,6 +352,11 @@ typedef struct {
     int n_options;
     int correct;
 } ChoiceQ;
+typedef struct {
+    const char *prompt;
+    const char *answer;
+    const char *hint;
+} MathItem;
 typedef struct {
     const ChoiceQ *qs;
     int n;
@@ -979,6 +991,37 @@ extern NetLesson fyz_lessons[FYZ_N];
 extern NetLesson fyz2_lessons[FYZ_N];
 extern NetLesson fyz3_lessons[FYZ_N];
 extern NetLesson fyz4_lessons[FYZ_N];
+gboolean math_answer_ok(const char *spec, const char *user);
+gboolean math_is_draw(const char *spec);
+int math_draw_need(const char *spec);
+int math_draw_fixed(const char *spec, int *xs, int *ys, int cap);
+gboolean math_draw_ok(const char *spec, const int *xs, const int *ys, int n);
+void math_load_progress(void);
+void math_rail_theme_reset(void);
+void math_lessons_apply_lang(void);
+void progress_for_math(ProgressSum *out);
+GtkWidget *math_unit_page(int year, NetLesson *L, const char *title_key,
+                          const char *sub_key, const NetSlide *slides,
+                          guint n_slides);
+GtkWidget *math_practice_page(int year, int lesson_id, const char *back_page,
+                              const char *title_key, const char *heading_key,
+                              const MathItem *items, int n);
+GtkWidget *build_matyears_page(void);
+GtkWidget *build_mat0map_page(void);
+GtkWidget *build_matmap_page(void);
+GtkWidget *build_mat2map_page(void);
+GtkWidget *build_mat3map_page(void);
+GtkWidget *build_mat4map_page(void);
+void add_mat0_pages(GtkStack *stack);
+void add_mat_pages(GtkStack *stack);
+void add_mat2_pages(GtkStack *stack);
+void add_mat3_pages(GtkStack *stack);
+void add_mat4_pages(GtkStack *stack);
+extern NetLesson mat0_lessons[MATH_N];
+extern NetLesson mat_lessons[MATH_N];
+extern NetLesson mat2_lessons[MATH_N];
+extern NetLesson mat3_lessons[MATH_N];
+extern NetLesson mat4_lessons[MATH_N];
 void hw_lessons_apply_lang(void);
 GtkWidget *build_hwyears_page(void);
 GtkWidget *build_hwmap_page(void);
@@ -1068,6 +1111,8 @@ void draw_civics_icon(GtkDrawingArea *area, cairo_t *cr,
                       int width, int height, gpointer data);
 void draw_science_icon(GtkDrawingArea *area, cairo_t *cr,
                        int width, int height, gpointer data);
+void draw_math_icon(GtkDrawingArea *area, cairo_t *cr,
+                     int width, int height, gpointer data);
 void draw_physics_icon(GtkDrawingArea *area, cairo_t *cr,
                        int width, int height, gpointer data);
 void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,

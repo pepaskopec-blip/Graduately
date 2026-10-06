@@ -90,12 +90,12 @@ const TrEntry tr_ui[] = {
      "Cvičení, nápovědy a vokabeltraining. Aplikace si pamatuje, kde jste skončili.",
      "Exercises, hints and vocabulary drills. The app remembers where you left off."},
     {"welcome_feat1_link", "Začít procvičovat", "Start practicing"},
-    {"welcome_feat2_title", "Sedm otevřených předmětů", "Seven open subjects"},
+    {"welcome_feat2_title", "Osm otevřených předmětů", "Eight open subjects"},
     {"welcome_feat2_body",
-     "Deutsch, sítě, hardware, čeština, občanská nauka, fyzika a přírodní vědy. Ostatní předměty čekají na svůj obsah.",
-     "German, networks, hardware, Czech, civics, physics and natural sciences. The other subjects are still locked."},
+     "Deutsch, sítě, hardware, čeština, občanská nauka, matematika, fyzika a přírodní vědy. Ostatní předměty čekají na svůj obsah.",
+     "German, networks, hardware, Czech, civics, mathematics, physics and natural sciences. The other subjects are still locked."},
     {"welcome_feat2_link", "Jaké předměty jsou otevřené?", "Which subjects are open?"},
-    {"welcome_stat_value", "7", "7"},
+    {"welcome_stat_value", "8", "8"},
     {"welcome_stat_label", "otevřené\npředměty", "open\nsubjects"},
     {"continue", "Pokračuj", "Continue"},
     {"roadmap_title", "Učební plán", "Learning path"},
@@ -1619,6 +1619,7 @@ const TrEntry tr_ui[] = {
     {"lit_fuks_plot_title", "Sestavte děj", "Order the plot"},
     {"lit_fuks_plot_sub", "Přetáhněte části příběhu do správného pořadí.",
      "Drag the story parts into the correct order."},
+#include "math_i18n.inc"
     {NULL, NULL, NULL}
 };
 
@@ -2603,6 +2604,7 @@ void on4_lessons_apply_lang(void);
 void lit_lessons_apply_lang(void);
 void sci_lessons_apply_lang(void);
 void fyz_lessons_apply_lang(void);
+void math_lessons_apply_lang(void);
 void net_rail_theme_reset(void);
 
 void apply_language(void) {
@@ -2624,5 +2626,6 @@ void apply_language(void) {
     lit_lessons_apply_lang();
     sci_lessons_apply_lang();
     fyz_lessons_apply_lang();
+    math_lessons_apply_lang();
     search_apply_lang();
 }

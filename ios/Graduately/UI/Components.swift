@@ -609,6 +609,7 @@ func subjectSymbol(_ icon: String) -> String {
     case "people": return "person.2.fill"
     case "flask": return "flask.fill"
     case "bolt": return "bolt.fill"
+    case "function": return "function"
     default: return "lock.fill"
     }
 }

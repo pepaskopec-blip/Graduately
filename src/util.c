@@ -36,6 +36,11 @@ char *app_progress_fyz;
 char *app_progress_fyz2;
 char *app_progress_fyz3;
 char *app_progress_fyz4;
+char *app_progress_mat0;
+char *app_progress_mat;
+char *app_progress_mat2;
+char *app_progress_mat3;
+char *app_progress_mat4;
 
 static char *dup_dirname(const char *path) {
     char *tmp = g_strdup(path);
@@ -188,6 +193,11 @@ static void set_progress_paths(const char *write_root) {
     g_free(app_progress_fyz2);
     g_free(app_progress_fyz3);
     g_free(app_progress_fyz4);
+    g_free(app_progress_mat0);
+    g_free(app_progress_mat);
+    g_free(app_progress_mat2);
+    g_free(app_progress_mat3);
+    g_free(app_progress_mat4);
 
     app_progress_dir = g_build_filename(write_root, PROGRESS_DIR_NAME, NULL);
     app_progress_u1 = g_build_filename(app_progress_dir, "unit1.conf", NULL);
@@ -212,6 +222,11 @@ static void set_progress_paths(const char *write_root) {
     app_progress_fyz2 = g_build_filename(app_progress_dir, "fyz2.conf", NULL);
     app_progress_fyz3 = g_build_filename(app_progress_dir, "fyz3.conf", NULL);
     app_progress_fyz4 = g_build_filename(app_progress_dir, "fyz4.conf", NULL);
+    app_progress_mat0 = g_build_filename(app_progress_dir, "mat0.conf", NULL);
+    app_progress_mat = g_build_filename(app_progress_dir, "mat.conf", NULL);
+    app_progress_mat2 = g_build_filename(app_progress_dir, "mat2.conf", NULL);
+    app_progress_mat3 = g_build_filename(app_progress_dir, "mat3.conf", NULL);
+    app_progress_mat4 = g_build_filename(app_progress_dir, "mat4.conf", NULL);
 }
 
 /* Resolve read-only asset root, chdir there, and point progress at a writable

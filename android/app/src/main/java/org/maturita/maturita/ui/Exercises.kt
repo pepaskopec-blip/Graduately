@@ -1,6 +1,8 @@
 package org.maturita.maturita.ui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -45,18 +48,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.maturita.maturita.AppViewModel
 import org.maturita.maturita.data.J
 import org.maturita.maturita.data.answerAccepts
+import org.maturita.maturita.data.mathAnswerOk
+import org.maturita.maturita.data.mathDrawGiven
+import org.maturita.maturita.data.mathDrawNeed
+import org.maturita.maturita.data.mathDrawOk
+import org.maturita.maturita.data.mathIsDraw
 import org.maturita.maturita.data.answerIncomplete
 import org.maturita.maturita.data.hasUmlaut
 import org.maturita.maturita.data.netTxtEq
@@ -860,6 +873,198 @@ fun SciQuizScreen(vm: AppViewModel, area: String, id: Int) {
     })
     DispatchExercise(vm, spec, vm.tr(lesson.str("exTitleKey"))) {
         if (area == "bio") vm.markBio(id) else vm.markChem(id)
+    }
+}
+
+@Composable
+fun MathPracticeScreen(vm: AppViewModel, year: Int, id: Int) {
+    val lesson = when (year) {
+        0 -> vm.content.mat0Lesson(id)
+        2 -> vm.content.mat2Lesson(id)
+        3 -> vm.content.mat3Lesson(id)
+        4 -> vm.content.mat4Lesson(id)
+        else -> vm.content.matLesson(id)
+    } ?: return
+    val problems = lesson.arr("problems")
+    var texts by remember(year, id) { mutableStateOf(List(problems.size) { "" }) }
+    var placed by remember(year, id) { mutableStateOf(List(problems.size) { emptyList<Pair<Int, Int>>() }) }
+    var marks by remember(year, id) { mutableStateOf(List<Boolean?>(problems.size) { null }) }
+    var revealed by remember(year, id) { mutableStateOf(false) }
+    var feedback by remember(year, id) { mutableStateOf("") }
+    var kind by remember(year, id) { mutableStateOf("") }
+    ExerciseScaffold(
+        vm,
+        vm.tr(lesson.str("exTitleKey")),
+        vm.tr(lesson.str("quizHeadKey")),
+        vm.tr("check"),
+        {
+            var all = problems.isNotEmpty()
+            val next = MutableList<Boolean?>(problems.size) { null }
+            problems.forEachIndexed { i, problem ->
+                val spec = problem.str("answer")
+                val good = if (mathIsDraw(spec)) mathDrawOk(spec, placed[i]) else mathAnswerOk(spec, texts[i])
+                next[i] = good
+                if (!good) all = false
+            }
+            marks = next
+            revealed = true
+            if (all) {
+                feedback = vm.tr("feedback_ok")
+                kind = "ok"
+                when (year) {
+                    0 -> vm.markMat0(id)
+                    2 -> vm.markMat2(id)
+                    3 -> vm.markMat3(id)
+                    4 -> vm.markMat4(id)
+                    else -> vm.markMat(id)
+                }
+            } else {
+                feedback = vm.tr("feedback_retry_short")
+                kind = "bad"
+            }
+        },
+        feedback,
+        kind,
+    ) {
+        Text(
+            vm.tr("math_quiz_intro"),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(8.dp))
+        problems.forEachIndexed { i, problem ->
+            val spec = problem.str("answer")
+            val border = when (marks.getOrNull(i)) {
+                true -> Color(0xFF2E7D32)
+                false -> MaterialTheme.colorScheme.error
+                else -> MaterialTheme.colorScheme.outlineVariant
+            }
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp)
+                    .border(1.5.dp, border, MaterialTheme.shapes.medium)
+                    .padding(12.dp),
+            ) {
+                Text(problem.str("prompt"), style = MaterialTheme.typography.bodyLarge)
+                Spacer(Modifier.height(8.dp))
+                if (mathIsDraw(spec)) {
+                    Text(
+                        vm.tr("math_draw_hint"),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    MathBoard(mathDrawGiven(spec), placed[i], mathDrawNeed(spec), marks.getOrNull(i)) { next ->
+                        placed = placed.toMutableList().also { it[i] = next }
+                    }
+                    Row {
+                        OutlinedButton(onClick = {
+                            val next = placed[i].dropLast(1)
+                            placed = placed.toMutableList().also { it[i] = next }
+                        }) { Text(vm.tr("math_undo")) }
+                        Spacer(Modifier.width(8.dp))
+                        OutlinedButton(onClick = {
+                            placed = placed.toMutableList().also { it[i] = emptyList() }
+                        }) { Text(vm.tr("math_clear")) }
+                    }
+                } else {
+                    OutlinedTextField(
+                        value = texts[i],
+                        onValueChange = { value -> texts = texts.toMutableList().also { it[i] = value } },
+                        modifier = Modifier.fillMaxWidth(),
+                        placeholder = { Text(vm.tr("math_answer_ph")) },
+                        singleLine = true,
+                    )
+                }
+                if (revealed) {
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        problem.str("hint"),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MathBoard(
+    given: List<Pair<Int, Int>>,
+    user: List<Pair<Int, Int>>,
+    need: Int,
+    mark: Boolean?,
+    onChange: (List<Pair<Int, Int>>) -> Unit,
+) {
+    val measurer = rememberTextMeasurer()
+    val accent = MaterialTheme.colorScheme.primary
+    val ink = MaterialTheme.colorScheme.onSurface
+    val grid = MaterialTheme.colorScheme.onSurfaceVariant
+    val paper = MaterialTheme.colorScheme.surfaceVariant
+    val ok = Color(0xFF2E7D32)
+    val bad = MaterialTheme.colorScheme.error
+    Canvas(
+        Modifier
+            .size(316.dp, 260.dp)
+            .pointerInput(given, user, need) {
+                detectTapGestures { pos ->
+                    val cell = size.width.toFloat() / (10f + 36f / 28f)
+                    val pad = cell * 18f / 28f
+                    val cx = (pos.x - pad) / cell
+                    val cy = (size.height.toFloat() - pad - pos.y) / cell
+                    val ix = kotlin.math.round(cx)
+                    val iy = kotlin.math.round(cy)
+                    if (kotlin.math.abs(cx - ix) > 0.45f || kotlin.math.abs(cy - iy) > 0.45f) return@detectTapGestures
+                    val x = ix.toInt()
+                    val y = iy.toInt()
+                    if (x !in 0..10 || y !in 0..8) return@detectTapGestures
+                    val hit = x to y
+                    if (given.any { it == hit }) return@detectTapGestures
+                    val next = user.toMutableList()
+                    val idx = next.indexOf(hit)
+                    if (idx >= 0) next.removeAt(idx)
+                    else if (next.size < need) next.add(hit)
+                    else return@detectTapGestures
+                    onChange(next)
+                }
+            },
+    ) {
+        val cell = size.width / (10f + 36f / 28f)
+        val pad = cell * 18f / 28f
+        fun at(x: Int, y: Int) = Offset(pad + x * cell, size.height - pad - y * cell)
+        drawRect(paper)
+        for (i in 0..10) {
+            val x = pad + i * cell
+            drawLine(grid.copy(alpha = 0.55f), Offset(x, pad), Offset(x, size.height - pad), strokeWidth = 1f)
+        }
+        for (i in 0..8) {
+            val y = pad + i * cell
+            drawLine(grid.copy(alpha = 0.55f), Offset(pad, y), Offset(size.width - pad, y), strokeWidth = 1f)
+        }
+        drawLine(ink, Offset(pad, size.height - pad), Offset(size.width - pad, size.height - pad), strokeWidth = 2.4f)
+        drawLine(ink, Offset(pad, size.height - pad), Offset(pad, pad), strokeWidth = 2.4f)
+        if (given.size >= 2) {
+            drawLine(accent, at(given[0].first, given[0].second), at(given[1].first, given[1].second), strokeWidth = 3.5f)
+            if (given.size >= 3) {
+                drawLine(accent, at(given[0].first, given[0].second), at(given[2].first, given[2].second), strokeWidth = 3.5f)
+            }
+        }
+        val names = listOf("A", "B", "C", "D")
+        val label = TextStyle(color = ink, fontSize = 13.sp)
+        given.forEachIndexed { i, g ->
+            if (i >= names.size) return@forEachIndexed
+            val pt = at(g.first, g.second)
+            drawCircle(accent, radius = 7f, center = pt)
+            drawText(measurer, names[i], topLeft = Offset(pt.x + 8f, pt.y - 22f), style = label)
+        }
+        val dot = if (mark == false) bad else ok
+        user.forEachIndexed { i, u ->
+            val pt = at(u.first, u.second)
+            drawCircle(dot, radius = 7f, center = pt)
+            drawText(measurer, "${i + 1}", topLeft = Offset(pt.x + 8f, pt.y - 22f), style = label)
+        }
     }
 }
 

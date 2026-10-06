@@ -50,6 +50,22 @@ sealed class Route(val page: String) {
     data object BioMap : Route("biomap")
     data class BioLesson(val id: Int) : Route("biounit$id")
     data class BioEx(val id: Int) : Route("bioex$id")
+    data object MatYears : Route("matyears")
+    data object Mat0Map : Route("mat0map")
+    data class Mat0Lesson(val id: Int) : Route("mat0unit$id")
+    data class Mat0Ex(val id: Int) : Route("mat0ex$id")
+    data object MatMap : Route("matmap")
+    data class MatLesson(val id: Int) : Route("matunit$id")
+    data class MatEx(val id: Int) : Route("matex$id")
+    data object Mat2Map : Route("mat2map")
+    data class Mat2Lesson(val id: Int) : Route("mat2unit$id")
+    data class Mat2Ex(val id: Int) : Route("mat2ex$id")
+    data object Mat3Map : Route("mat3map")
+    data class Mat3Lesson(val id: Int) : Route("mat3unit$id")
+    data class Mat3Ex(val id: Int) : Route("mat3ex$id")
+    data object Mat4Map : Route("mat4map")
+    data class Mat4Lesson(val id: Int) : Route("mat4unit$id")
+    data class Mat4Ex(val id: Int) : Route("mat4ex$id")
     data object FyzYears : Route("fyzyears")
     data object FyzMap : Route("fyzmap")
     data class FyzLesson(val id: Int) : Route("fyzunit$id")
@@ -83,7 +99,10 @@ sealed class Route(val page: String) {
             this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex ||
             this is ChemLesson || this is ChemEx || this is BioLesson || this is BioEx ||
             this is FyzLesson || this is FyzEx || this is Fyz2Lesson || this is Fyz2Ex ||
-            this is Fyz3Lesson || this is Fyz3Ex || this is Fyz4Lesson || this is Fyz4Ex
+            this is Fyz3Lesson || this is Fyz3Ex || this is Fyz4Lesson || this is Fyz4Ex ||
+            this is Mat0Lesson || this is Mat0Ex || this is MatLesson || this is MatEx ||
+            this is Mat2Lesson || this is Mat2Ex || this is Mat3Lesson || this is Mat3Ex ||
+            this is Mat4Lesson || this is Mat4Ex
 
     /** Full stack from the practice root to this screen, so back always goes up one level. */
     fun stack(): List<Route> = when (this) {
@@ -135,6 +154,22 @@ sealed class Route(val page: String) {
         BioMap -> listOf(Subjects, SciMap, BioMap)
         is BioLesson -> listOf(Subjects, SciMap, BioMap, this)
         is BioEx -> listOf(Subjects, SciMap, BioMap, BioLesson(id), this)
+        MatYears -> listOf(Subjects, MatYears)
+        Mat0Map -> listOf(Subjects, MatYears, Mat0Map)
+        is Mat0Lesson -> listOf(Subjects, MatYears, Mat0Map, this)
+        is Mat0Ex -> listOf(Subjects, MatYears, Mat0Map, Mat0Lesson(id), this)
+        MatMap -> listOf(Subjects, MatYears, MatMap)
+        is MatLesson -> listOf(Subjects, MatYears, MatMap, this)
+        is MatEx -> listOf(Subjects, MatYears, MatMap, MatLesson(id), this)
+        Mat2Map -> listOf(Subjects, MatYears, Mat2Map)
+        is Mat2Lesson -> listOf(Subjects, MatYears, Mat2Map, this)
+        is Mat2Ex -> listOf(Subjects, MatYears, Mat2Map, Mat2Lesson(id), this)
+        Mat3Map -> listOf(Subjects, MatYears, Mat3Map)
+        is Mat3Lesson -> listOf(Subjects, MatYears, Mat3Map, this)
+        is Mat3Ex -> listOf(Subjects, MatYears, Mat3Map, Mat3Lesson(id), this)
+        Mat4Map -> listOf(Subjects, MatYears, Mat4Map)
+        is Mat4Lesson -> listOf(Subjects, MatYears, Mat4Map, this)
+        is Mat4Ex -> listOf(Subjects, MatYears, Mat4Map, Mat4Lesson(id), this)
         FyzYears -> listOf(Subjects, FyzYears)
         FyzMap -> listOf(Subjects, FyzYears, FyzMap)
         is FyzLesson -> listOf(Subjects, FyzYears, FyzMap, this)
@@ -181,6 +216,12 @@ fun routeFromPage(page: String): Route? = when (page) {
     "scimap" -> Route.SciMap
     "chemmap" -> Route.ChemMap
     "biomap" -> Route.BioMap
+    "matyears" -> Route.MatYears
+    "mat0map" -> Route.Mat0Map
+    "matmap" -> Route.MatMap
+    "mat2map" -> Route.Mat2Map
+    "mat3map" -> Route.Mat3Map
+    "mat4map" -> Route.Mat4Map
     "fyzyears" -> Route.FyzYears
     "fyzmap" -> Route.FyzMap
     "fyz2map" -> Route.Fyz2Map
@@ -228,6 +269,36 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""bioex(\d+)""").matchEntire(page)?.let {
             return Route.BioEx(it.groupValues[1].toInt())
+        }
+        Regex("""mat0unit(\d+)""").matchEntire(page)?.let {
+            return Route.Mat0Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""mat0ex(\d+)""").matchEntire(page)?.let {
+            return Route.Mat0Ex(it.groupValues[1].toInt())
+        }
+        Regex("""mat4unit(\d+)""").matchEntire(page)?.let {
+            return Route.Mat4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""mat4ex(\d+)""").matchEntire(page)?.let {
+            return Route.Mat4Ex(it.groupValues[1].toInt())
+        }
+        Regex("""mat3unit(\d+)""").matchEntire(page)?.let {
+            return Route.Mat3Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""mat3ex(\d+)""").matchEntire(page)?.let {
+            return Route.Mat3Ex(it.groupValues[1].toInt())
+        }
+        Regex("""mat2unit(\d+)""").matchEntire(page)?.let {
+            return Route.Mat2Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""mat2ex(\d+)""").matchEntire(page)?.let {
+            return Route.Mat2Ex(it.groupValues[1].toInt())
+        }
+        Regex("""matunit(\d+)""").matchEntire(page)?.let {
+            return Route.MatLesson(it.groupValues[1].toInt())
+        }
+        Regex("""matex(\d+)""").matchEntire(page)?.let {
+            return Route.MatEx(it.groupValues[1].toInt())
         }
         Regex("""fyz4unit(\d+)""").matchEntire(page)?.let {
             return Route.Fyz4Lesson(it.groupValues[1].toInt())

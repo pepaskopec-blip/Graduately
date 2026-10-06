@@ -26,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.Functions
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FormatListNumbered
@@ -224,6 +225,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "cz" -> CzechFlag(28.dp)
             "flask" -> Icon(Icons.Filled.Science, null, tint = tint, modifier = Modifier.size(26.dp))
             "bolt" -> Icon(Icons.Filled.Bolt, null, tint = tint, modifier = Modifier.size(26.dp))
+            "function" -> Icon(Icons.Filled.Functions, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -315,6 +317,14 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
             sum.totalEx = vm.content.chem.size + vm.content.bio.size
             sum.doneEx = vm.content.chem.count { vm.progress.chemDone(it.int("id")) } +
                 vm.content.bio.count { vm.progress.bioDone(it.int("id")) }
+        }
+        "matyears", "mat0map", "matmap", "mat2map", "mat3map", "mat4map" -> {
+            sum.totalEx = vm.content.mat0.size + vm.content.mat.size + vm.content.mat2.size + vm.content.mat3.size + vm.content.mat4.size
+            sum.doneEx = vm.content.mat0.count { vm.progress.mat0Done(it.int("id")) } +
+                vm.content.mat.count { vm.progress.matDone(it.int("id")) } +
+                vm.content.mat2.count { vm.progress.mat2Done(it.int("id")) } +
+                vm.content.mat3.count { vm.progress.mat3Done(it.int("id")) } +
+                vm.content.mat4.count { vm.progress.mat4Done(it.int("id")) }
         }
         "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map" -> {
             sum.totalEx = vm.content.fyz.size + vm.content.fyz2.size + vm.content.fyz3.size + vm.content.fyz4.size
@@ -556,6 +566,32 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit${l.int("id")}", extra = "literatura")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex${l.int("id")}")
     }
+    add(vm.tr("Matematika"), vm.tr("search_lesson"), "matyears", extra = "matematika")
+    add(vm.tr("mat0_year"), vm.tr("search_lesson"), "mat0map", extra = "zakladka")
+    add(vm.tr("mat_year1"), vm.tr("search_lesson"), "matmap", extra = "rocnik")
+    add(vm.tr("mat_year2"), vm.tr("search_lesson"), "mat2map", extra = "rocnik")
+    add(vm.tr("mat_year3"), vm.tr("search_lesson"), "mat3map", extra = "rocnik")
+    add(vm.tr("mat_year4"), vm.tr("search_lesson"), "mat4map", extra = "rocnik")
+    vm.content.mat0.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat0unit${l.int("id")}", extra = "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat0ex${l.int("id")}")
+    }
+    vm.content.mat.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "matunit${l.int("id")}", extra = "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "matex${l.int("id")}")
+    }
+    vm.content.mat2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat2unit${l.int("id")}", extra = "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat2ex${l.int("id")}")
+    }
+    vm.content.mat3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat3unit${l.int("id")}", extra = "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat3ex${l.int("id")}")
+    }
+    vm.content.mat4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat4unit${l.int("id")}", extra = "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat4ex${l.int("id")}")
+    }
     add(vm.tr("Fyzika"), vm.tr("search_lesson"), "fyzyears", extra = "fyzika")
     add(vm.tr("fyz_year1"), vm.tr("search_lesson"), "fyzmap", extra = "rocnik")
     add(vm.tr("fyz_year2"), vm.tr("search_lesson"), "fyz2map", extra = "rocnik")
@@ -708,6 +744,21 @@ fun LitYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("lit_year2"), subtitle = vm.tr("lit2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit2Map) }
                 NavRow(title = vm.tr("lit_year3"), subtitle = vm.tr("lit3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit3Map) }
                 NavRow(title = vm.tr("lit_year4"), subtitle = vm.tr("lit4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun MatYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Matematika"), vm.tr("mat_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("mat0_year"), subtitle = vm.tr("mat0_sub"), leading = { Text("ZŠ", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat0Map) }
+                NavRow(title = vm.tr("mat_year1"), subtitle = vm.tr("mat_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.MatMap) }
+                NavRow(title = vm.tr("mat_year2"), subtitle = vm.tr("mat2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat2Map) }
+                NavRow(title = vm.tr("mat_year3"), subtitle = vm.tr("mat3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat3Map) }
+                NavRow(title = vm.tr("mat_year4"), subtitle = vm.tr("mat4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat4Map) }
             }
         }
     }

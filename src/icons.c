@@ -261,6 +261,34 @@ void draw_physics_icon(GtkDrawingArea *area, cairo_t *cr,
     cairo_stroke(cr);
 }
 
+/* Axes and a rising curve for Matematika. */
+void draw_math_icon(GtkDrawingArea *area, cairo_t *cr,
+                    int width, int height, gpointer data) {
+    const double s = MIN(width, height);
+    const double left = width * 0.22;
+    const double right = width * 0.82;
+    const double bottom = height * 0.78;
+    const double top = height * 0.22;
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
+
+    (void)area;
+    (void)data;
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_width(cr, MAX(1.6, s * 0.07));
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_move_to(cr, left, top);
+    cairo_line_to(cr, left, bottom);
+    cairo_line_to(cr, right, bottom);
+    cairo_stroke(cr);
+
+    cairo_move_to(cr, left + s * 0.06, bottom - s * 0.08);
+    cairo_curve_to(cr, left + s * 0.28, bottom - s * 0.02,
+                   width * 0.48, height * 0.62,
+                   right - s * 0.04, top + s * 0.06);
+    cairo_stroke(cr);
+}
+
 /* Open book glyph, painted in the given colour. */
 static void book_paint(cairo_t *cr, int width, int height, Rgb c) {
     const double w = width;

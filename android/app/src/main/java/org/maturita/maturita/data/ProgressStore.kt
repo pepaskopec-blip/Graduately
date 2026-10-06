@@ -65,6 +65,16 @@ class ProgressStore(context: Context) {
     fun markFyz3(id: Int) { prefs.edit().putBoolean("fyz3.$id", true).apply() }
     fun fyz4Done(id: Int) = prefs.getBoolean("fyz4.$id", false)
     fun markFyz4(id: Int) { prefs.edit().putBoolean("fyz4.$id", true).apply() }
+    fun mat0Done(id: Int) = prefs.getBoolean("mat0.$id", false)
+    fun markMat0(id: Int) { prefs.edit().putBoolean("mat0.$id", true).apply() }
+    fun matDone(id: Int) = prefs.getBoolean("mat.$id", false)
+    fun markMat(id: Int) { prefs.edit().putBoolean("mat.$id", true).apply() }
+    fun mat2Done(id: Int) = prefs.getBoolean("mat2.$id", false)
+    fun markMat2(id: Int) { prefs.edit().putBoolean("mat2.$id", true).apply() }
+    fun mat3Done(id: Int) = prefs.getBoolean("mat3.$id", false)
+    fun markMat3(id: Int) { prefs.edit().putBoolean("mat3.$id", true).apply() }
+    fun mat4Done(id: Int) = prefs.getBoolean("mat4.$id", false)
+    fun markMat4(id: Int) { prefs.edit().putBoolean("mat4.$id", true).apply() }
 
     fun mluvDone(n: Int) = prefs.getBoolean("mluv.$n", false)
     fun markMluv(n: Int) { prefs.edit().putBoolean("mluv.$n", true).apply() }
@@ -212,6 +222,46 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if (p.fyz4Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.mat0.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.mat0Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.mat.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.matDone(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.mat2.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.mat2Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.mat3.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.mat3Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.mat4.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.mat4Done(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

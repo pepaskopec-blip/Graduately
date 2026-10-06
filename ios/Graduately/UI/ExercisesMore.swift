@@ -646,6 +646,255 @@ struct SciQuizScreen: View {
     }
 }
 
+private func mathLesson(_ vm: AppModel, year: Int, id: Int) -> J? {
+    switch year {
+    case 0: return vm.content.mat0Lesson(id)
+    case 2: return vm.content.mat2Lesson(id)
+    case 3: return vm.content.mat3Lesson(id)
+    case 4: return vm.content.mat4Lesson(id)
+    default: return vm.content.matLesson(id)
+    }
+}
+
+private func markMathLesson(_ vm: AppModel, year: Int, id: Int) {
+    switch year {
+    case 0: vm.markMat0(id)
+    case 2: vm.markMat2(id)
+    case 3: vm.markMat3(id)
+    case 4: vm.markMat4(id)
+    default: vm.markMat(id)
+    }
+}
+
+struct MathPracticeScreen: View {
+    @ObservedObject var vm: AppModel
+    let year: Int
+    let id: Int
+    @State private var text: [Int: String] = [:]
+    @State private var points: [Int: [(Int, Int)]] = [:]
+    @State private var marks: [Int: Bool] = [:]
+    @State private var revealed = false
+    @State private var feedback = ""
+    @State private var kind = ""
+
+    var body: some View {
+        if let lesson = mathLesson(vm, year: year, id: id) {
+            let problems = lesson.arr("problems")
+            ExerciseScaffold(
+                vm: vm,
+                title: vm.tr(lesson.str("exTitleKey")),
+                sub: vm.tr(lesson.str("quizHeadKey")),
+                action: vm.tr("check"),
+                onAction: { check(problems) },
+                feedback: feedback,
+                kind: kind
+            ) {
+                Text(vm.tr("math_quiz_intro"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom, 4)
+                ForEach(problems.indices, id: \.self) { i in
+                    mathCard(problems[i], index: i)
+                }
+            }
+            .onChange(of: year) { _, _ in reset() }
+            .onChange(of: id) { _, _ in reset() }
+        }
+    }
+
+    private func reset() {
+        text = [:]
+        points = [:]
+        marks = [:]
+        revealed = false
+        feedback = ""
+        kind = ""
+    }
+
+    private func check(_ problems: [J]) {
+        var all = !problems.isEmpty
+        var next: [Int: Bool] = [:]
+        for i in problems.indices {
+            let spec = problems[i].str("answer")
+            let good = mathIsDraw(spec)
+                ? mathDrawOk(spec, points[i] ?? [])
+                : mathAnswerOk(spec, text[i] ?? "")
+            next[i] = good
+            if !good { all = false }
+        }
+        marks = next
+        revealed = true
+        if all {
+            feedback = vm.tr("feedback_ok")
+            kind = "ok"
+            markMathLesson(vm, year: year, id: id)
+        } else {
+            feedback = vm.tr("feedback_retry_short")
+            kind = "bad"
+        }
+    }
+
+    @ViewBuilder
+    private func mathCard(_ problem: J, index i: Int) -> some View {
+        let spec = problem.str("answer")
+        let p = vm.palette
+        let border: Color = {
+            guard let mark = marks[i] else { return p.surface2 }
+            return mark ? p.success : p.error
+        }()
+        VStack(alignment: .leading, spacing: 8) {
+            Text(problem.str("prompt"))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            if mathIsDraw(spec) {
+                Text(vm.tr("math_draw_hint"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                MathGrid(
+                    given: mathDrawGiven(spec),
+                    user: points[i] ?? [],
+                    need: mathDrawNeed(spec),
+                    mark: marks[i],
+                    palette: p
+                ) { next in
+                    points[i] = next
+                }
+                HStack {
+                    Button(vm.tr("math_undo")) {
+                        var pts = points[i] ?? []
+                        if !pts.isEmpty {
+                            pts.removeLast()
+                            points[i] = pts
+                        }
+                    }
+                    Button(vm.tr("math_clear")) { points[i] = [] }
+                }
+                .buttonStyle(.bordered)
+            } else {
+                TextField(vm.tr("math_answer_ph"), text: Binding(
+                    get: { text[i] ?? "" },
+                    set: { text[i] = $0 }
+                ))
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.numbersAndPunctuation)
+                #endif
+                .autocorrectionDisabled()
+            }
+            if revealed {
+                Text(problem.str("hint"))
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(12)
+        .background(p.surface0, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(border, lineWidth: 1.5))
+    }
+}
+
+private struct MathGrid: View {
+    let given: [(Int, Int)]
+    let user: [(Int, Int)]
+    let need: Int
+    let mark: Bool?
+    let palette: Palette
+    var onChange: ([(Int, Int)]) -> Void
+
+    private let cell: CGFloat = 28
+    private let pad: CGFloat = 18
+    private let gx = 10
+    private let gy = 8
+    private var width: CGFloat { pad * 2 + CGFloat(gx) * cell }
+    private var height: CGFloat { pad * 2 + CGFloat(gy) * cell }
+
+    private func screen(_ x: Int, _ y: Int) -> CGPoint {
+        CGPoint(x: pad + CGFloat(x) * cell, y: height - pad - CGFloat(y) * cell)
+    }
+
+    private func snap(_ loc: CGPoint) -> (Int, Int)? {
+        let cx = (loc.x - pad) / cell
+        let cy = (height - pad - loc.y) / cell
+        let ix = Int(cx.rounded())
+        let iy = Int(cy.rounded())
+        if ix < 0 || ix > gx || iy < 0 || iy > gy { return nil }
+        if abs(cx - CGFloat(ix)) > 0.45 || abs(cy - CGFloat(iy)) > 0.45 { return nil }
+        return (ix, iy)
+    }
+
+    var body: some View {
+        Canvas { ctx, _ in
+            let rect = CGRect(x: 0, y: 0, width: width, height: height)
+            ctx.fill(Path(rect), with: .color(palette.surface1))
+            var grid = Path()
+            for i in 0...gx {
+                let x = pad + CGFloat(i) * cell
+                grid.move(to: CGPoint(x: x, y: pad))
+                grid.addLine(to: CGPoint(x: x, y: height - pad))
+            }
+            for i in 0...gy {
+                let y = pad + CGFloat(i) * cell
+                grid.move(to: CGPoint(x: pad, y: y))
+                grid.addLine(to: CGPoint(x: width - pad, y: y))
+            }
+            ctx.stroke(grid, with: .color(palette.subtext.opacity(0.55)), lineWidth: 1)
+            var axes = Path()
+            axes.move(to: CGPoint(x: pad, y: height - pad))
+            axes.addLine(to: CGPoint(x: width - pad, y: height - pad))
+            axes.move(to: CGPoint(x: pad, y: height - pad))
+            axes.addLine(to: CGPoint(x: pad, y: pad))
+            ctx.stroke(axes, with: .color(palette.text), lineWidth: 1.6)
+            if given.count >= 2 {
+                var seg = Path()
+                seg.move(to: screen(given[0].0, given[0].1))
+                seg.addLine(to: screen(given[1].0, given[1].1))
+                if given.count >= 3 {
+                    seg.move(to: screen(given[0].0, given[0].1))
+                    seg.addLine(to: screen(given[2].0, given[2].1))
+                }
+                ctx.stroke(seg, with: .color(palette.accent), lineWidth: 2)
+            }
+            let names = ["A", "B", "C", "D"]
+            for (i, g) in given.enumerated() where i < names.count {
+                let pt = screen(g.0, g.1)
+                ctx.fill(Path(ellipseIn: CGRect(x: pt.x - 5.5, y: pt.y - 5.5, width: 11, height: 11)), with: .color(palette.accent))
+                ctx.draw(
+                    Text(names[i]).font(.system(size: 13, weight: .semibold)).foregroundStyle(palette.text),
+                    at: CGPoint(x: pt.x + 8, y: pt.y - 8),
+                    anchor: .bottomLeading
+                )
+            }
+            let dot = mark == false ? palette.error : palette.success
+            for (i, u) in user.enumerated() {
+                let pt = screen(u.0, u.1)
+                ctx.fill(Path(ellipseIn: CGRect(x: pt.x - 5.5, y: pt.y - 5.5, width: 11, height: 11)), with: .color(dot))
+                ctx.draw(
+                    Text("\(i + 1)").font(.system(size: 12, weight: .bold)).foregroundStyle(palette.text),
+                    at: CGPoint(x: pt.x + 8, y: pt.y - 8),
+                    anchor: .bottomLeading
+                )
+            }
+        }
+        .frame(width: width, height: height)
+        .contentShape(Rectangle())
+        .gesture(
+            DragGesture(minimumDistance: 0).onEnded { value in
+                guard let hit = snap(value.location) else { return }
+                if given.contains(where: { $0.0 == hit.0 && $0.1 == hit.1 }) { return }
+                var next = user
+                if let idx = next.firstIndex(where: { $0.0 == hit.0 && $0.1 == hit.1 }) {
+                    next.remove(at: idx)
+                } else if next.count < need {
+                    next.append(hit)
+                } else {
+                    return
+                }
+                onChange(next)
+            }
+        )
+    }
+}
+
 struct FyzQuizScreen: View {
     @ObservedObject var vm: AppModel
     let year: Int

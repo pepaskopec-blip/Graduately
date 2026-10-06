@@ -67,6 +67,16 @@ final class ProgressStore {
     func markFyz3(_ id: Int) { defaults.set(true, forKey: "fyz3.\(id)") }
     func fyz4Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz4.\(id)") }
     func markFyz4(_ id: Int) { defaults.set(true, forKey: "fyz4.\(id)") }
+    func mat0Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat0.\(id)") }
+    func markMat0(_ id: Int) { defaults.set(true, forKey: "mat0.\(id)") }
+    func matDone(_ id: Int) -> Bool { defaults.bool(forKey: "mat.\(id)") }
+    func markMat(_ id: Int) { defaults.set(true, forKey: "mat.\(id)") }
+    func mat2Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat2.\(id)") }
+    func markMat2(_ id: Int) { defaults.set(true, forKey: "mat2.\(id)") }
+    func mat3Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat3.\(id)") }
+    func markMat3(_ id: Int) { defaults.set(true, forKey: "mat3.\(id)") }
+    func mat4Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat4.\(id)") }
+    func markMat4(_ id: Int) { defaults.set(true, forKey: "mat4.\(id)") }
 
     func mluvDone(_ n: Int) -> Bool { defaults.bool(forKey: "mluv.\(n)") }
     func markMluv(_ n: Int) { defaults.set(true, forKey: "mluv.\(n)") }
@@ -219,6 +229,46 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if p.fyz4Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.mat0 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.mat0Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.mat {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.matDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.mat2 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.mat2Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.mat3 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.mat3Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.mat4 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.mat4Done(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

@@ -191,6 +191,31 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         refresh()
     }
 
+    fun markMat0(id: Int) {
+        progress.markMat0(id)
+        refresh()
+    }
+
+    fun markMat(id: Int) {
+        progress.markMat(id)
+        refresh()
+    }
+
+    fun markMat2(id: Int) {
+        progress.markMat2(id)
+        refresh()
+    }
+
+    fun markMat3(id: Int) {
+        progress.markMat3(id)
+        refresh()
+    }
+
+    fun markMat4(id: Int) {
+        progress.markMat4(id)
+        refresh()
+    }
+
     fun markFyz4(id: Int) {
         progress.markFyz4(id)
         refresh()

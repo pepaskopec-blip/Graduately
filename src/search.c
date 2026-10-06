@@ -23,7 +23,7 @@ static GPtrArray *search_items;
 
 static gboolean subject_open(int i) {
     return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
-        || i == ON_SUBJ || i == PHY_SUBJ || i == SCI_SUBJ;
+        || i == ON_SUBJ || i == MATH_SUBJ || i == PHY_SUBJ || i == SCI_SUBJ;
 }
 
 static const char *subject_page(int i) {
@@ -37,6 +37,8 @@ static const char *subject_page(int i) {
         return "czechmap";
     if (i == ON_SUBJ)
         return "onyears";
+    if (i == MATH_SUBJ)
+        return "matyears";
     if (i == PHY_SUBJ)
         return "fyzyears";
     if (i == SCI_SUBJ)
@@ -274,6 +276,47 @@ static void catalog_rebuild(void) {
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
         g_snprintf(page, sizeof(page), "lit4ex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    catalog_add_key("Matematika", "search_lesson", "matyears", FALSE, 1, "matematika");
+    catalog_add_key("mat0_year", "search_lesson", "mat0map", FALSE, 1, "matematika zakladka");
+    catalog_add_key("mat_year1", "search_lesson", "matmap", FALSE, 1, "matematika rocnik");
+    catalog_add_key("mat_year2", "search_lesson", "mat2map", FALSE, 1, "matematika rocnik");
+    catalog_add_key("mat_year3", "search_lesson", "mat3map", FALSE, 1, "matematika rocnik");
+    catalog_add_key("mat_year4", "search_lesson", "mat4map", FALSE, 1, "matematika rocnik");
+    for (i = 1; i <= MATH_N; i++) {
+        g_snprintf(key, sizeof(key), "mat0_unit%d", i);
+        g_snprintf(page, sizeof(page), "mat0unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "matematika");
+        g_snprintf(page, sizeof(page), "mat0ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "priklady");
+    }
+    for (i = 1; i <= MATH_N; i++) {
+        g_snprintf(key, sizeof(key), "mat_unit%d", i);
+        g_snprintf(page, sizeof(page), "matunit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "matematika");
+        g_snprintf(page, sizeof(page), "matex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "priklady");
+    }
+    for (i = 1; i <= MATH_N; i++) {
+        g_snprintf(key, sizeof(key), "mat2_unit%d", i);
+        g_snprintf(page, sizeof(page), "mat2unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "matematika");
+        g_snprintf(page, sizeof(page), "mat2ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "priklady");
+    }
+    for (i = 1; i <= MATH_N; i++) {
+        g_snprintf(key, sizeof(key), "mat3_unit%d", i);
+        g_snprintf(page, sizeof(page), "mat3unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "matematika");
+        g_snprintf(page, sizeof(page), "mat3ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "priklady");
+    }
+    for (i = 1; i <= MATH_N; i++) {
+        g_snprintf(key, sizeof(key), "mat4_unit%d", i);
+        g_snprintf(page, sizeof(page), "mat4unit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "matematika");
+        g_snprintf(page, sizeof(page), "mat4ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "priklady");
     }
     catalog_add_key("fyz_year1", "search_lesson", "fyzmap", FALSE, 1, "fyzika rocnik");
     catalog_add_key("fyz_year2", "search_lesson", "fyz2map", FALSE, 1, "fyzika rocnik");

@@ -7,6 +7,12 @@
 # en: bullet
 
 --- 2026-10-06
+cs: Matematika: opakování základní školy a čtyři ročníky, 40 lekcí
+cs: Příklady se píšou a kontrolují, u geometrie se rýsuje na mřížku
+en: Mathematics: elementary review and four years, 40 lessons
+en: Examples are typed and checked, and some geometry is drawn on a grid
+
+--- 2026-10-06
 cs: Fyzika: čtyři ročníky, 32 lekcí podle osnov středních škol
 cs: Od mechaniky přes teplo a elektřinu až po optiku, jádro a astrofyziku
 en: Physics: four years, 32 lessons from the secondary-school syllabus

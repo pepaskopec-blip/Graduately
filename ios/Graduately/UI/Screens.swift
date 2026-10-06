@@ -699,6 +699,13 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
         sum.totalEx = vm.content.chem.count + vm.content.bio.count
         sum.doneEx = vm.content.chem.filter { vm.progress.chemDone($0.int("id")) }.count
             + vm.content.bio.filter { vm.progress.bioDone($0.int("id")) }.count
+    case "matyears", "mat0map", "matmap", "mat2map", "mat3map", "mat4map":
+        sum.totalEx = vm.content.mat0.count + vm.content.mat.count + vm.content.mat2.count + vm.content.mat3.count + vm.content.mat4.count
+        sum.doneEx = vm.content.mat0.filter { vm.progress.mat0Done($0.int("id")) }.count
+            + vm.content.mat.filter { vm.progress.matDone($0.int("id")) }.count
+            + vm.content.mat2.filter { vm.progress.mat2Done($0.int("id")) }.count
+            + vm.content.mat3.filter { vm.progress.mat3Done($0.int("id")) }.count
+            + vm.content.mat4.filter { vm.progress.mat4Done($0.int("id")) }.count
     case "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map":
         sum.totalEx = vm.content.fyz.count + vm.content.fyz2.count + vm.content.fyz3.count + vm.content.fyz4.count
         sum.doneEx = vm.content.fyz.filter { vm.progress.fyzDone($0.int("id")) }.count
@@ -934,6 +941,32 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.lit4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit\(l.int("id"))", extra: "literatura")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex\(l.int("id"))")
+    }
+    add(vm.tr("Matematika"), vm.tr("search_lesson"), "matyears", extra: "matematika")
+    add(vm.tr("mat0_year"), vm.tr("search_lesson"), "mat0map", extra: "zakladka")
+    add(vm.tr("mat_year1"), vm.tr("search_lesson"), "matmap", extra: "rocnik")
+    add(vm.tr("mat_year2"), vm.tr("search_lesson"), "mat2map", extra: "rocnik")
+    add(vm.tr("mat_year3"), vm.tr("search_lesson"), "mat3map", extra: "rocnik")
+    add(vm.tr("mat_year4"), vm.tr("search_lesson"), "mat4map", extra: "rocnik")
+    for l in vm.content.mat0 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat0unit\(l.int("id"))", extra: "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat0ex\(l.int("id"))")
+    }
+    for l in vm.content.mat {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "matunit\(l.int("id"))", extra: "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "matex\(l.int("id"))")
+    }
+    for l in vm.content.mat2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat2unit\(l.int("id"))", extra: "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat2ex\(l.int("id"))")
+    }
+    for l in vm.content.mat3 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat3unit\(l.int("id"))", extra: "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat3ex\(l.int("id"))")
+    }
+    for l in vm.content.mat4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "mat4unit\(l.int("id"))", extra: "matematika")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "mat4ex\(l.int("id"))")
     }
     add(vm.tr("Fyzika"), vm.tr("search_lesson"), "fyzyears", extra: "fyzika")
     add(vm.tr("fyz_year1"), vm.tr("search_lesson"), "fyzmap", extra: "rocnik")
@@ -1507,6 +1540,51 @@ struct LitYearsScreen: View {
         }
         .navigationTitle(vm.tr("Literatura"))
         .navigationSubtitle(vm.tr("lit_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct MatYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route, String)] = [
+            ("mat0_year", "mat0_sub", .mat0Map, "ZŠ"),
+            ("mat_year1", "mat_sub", .matMap, "1."),
+            ("mat_year2", "mat2_sub", .mat2Map, "2."),
+            ("mat_year3", "mat3_sub", .mat3Map, "3."),
+            ("mat_year4", "mat4_sub", .mat4Map, "4."),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: years[i].3)
+            }
+            .buttonStyle(.plain)
+        }
+        .navigationTitle(vm.tr("Matematika"))
+        .navigationSubtitle(vm.tr("mat_years_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.mat0Map) {
+                ListRowLabel(title: vm.tr("mat0_year"), subtitle: vm.tr("mat0_sub"))
+            }
+            NavigationLink(value: Route.matMap) {
+                ListRowLabel(title: vm.tr("mat_year1"), subtitle: vm.tr("mat_sub"))
+            }
+            NavigationLink(value: Route.mat2Map) {
+                ListRowLabel(title: vm.tr("mat_year2"), subtitle: vm.tr("mat2_sub"))
+            }
+            NavigationLink(value: Route.mat3Map) {
+                ListRowLabel(title: vm.tr("mat_year3"), subtitle: vm.tr("mat3_sub"))
+            }
+            NavigationLink(value: Route.mat4Map) {
+                ListRowLabel(title: vm.tr("mat_year4"), subtitle: vm.tr("mat4_sub"))
+            }
+        }
+        .navigationTitle(vm.tr("Matematika"))
+        .navigationSubtitle(vm.tr("mat_years_sub"))
         .appListStyle()
         #endif
     }
@@ -2321,6 +2399,88 @@ struct RouteDestination: View {
             }
         case .bioEx(let id):
             SciQuizScreen(vm: vm, area: "bio", id: id)
+        case .matYears:
+            MatYearsScreen(vm: vm)
+        case .mat0Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("mat0_year"),
+                subtitle: vm.tr("mat0_sub"),
+                rows: vm.content.mat0.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "m0\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.mat0Done(id), destination: .mat0Lesson(id))
+                }
+            )
+        case .mat0Lesson(let id):
+            if let l = vm.content.mat0Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .mat0Ex(id))
+            }
+        case .mat0Ex(let id):
+            MathPracticeScreen(vm: vm, year: 0, id: id)
+        case .matMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("mat_year1"),
+                subtitle: vm.tr("mat_sub"),
+                rows: vm.content.mat.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "m1\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.matDone(id), destination: .matLesson(id))
+                }
+            )
+        case .matLesson(let id):
+            if let l = vm.content.matLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .matEx(id))
+            }
+        case .matEx(let id):
+            MathPracticeScreen(vm: vm, year: 1, id: id)
+        case .mat2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("mat_year2"),
+                subtitle: vm.tr("mat2_sub"),
+                rows: vm.content.mat2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "m2\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.mat2Done(id), destination: .mat2Lesson(id))
+                }
+            )
+        case .mat2Lesson(let id):
+            if let l = vm.content.mat2Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .mat2Ex(id))
+            }
+        case .mat2Ex(let id):
+            MathPracticeScreen(vm: vm, year: 2, id: id)
+        case .mat3Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("mat_year3"),
+                subtitle: vm.tr("mat3_sub"),
+                rows: vm.content.mat3.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "m3\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.mat3Done(id), destination: .mat3Lesson(id))
+                }
+            )
+        case .mat3Lesson(let id):
+            if let l = vm.content.mat3Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .mat3Ex(id))
+            }
+        case .mat3Ex(let id):
+            MathPracticeScreen(vm: vm, year: 3, id: id)
+        case .mat4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("mat_year4"),
+                subtitle: vm.tr("mat4_sub"),
+                rows: vm.content.mat4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "m4\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.mat4Done(id), destination: .mat4Lesson(id))
+                }
+            )
+        case .mat4Lesson(let id):
+            if let l = vm.content.mat4Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .mat4Ex(id))
+            }
+        case .mat4Ex(let id):
+            MathPracticeScreen(vm: vm, year: 4, id: id)
         case .fyzYears:
             FyzYearsScreen(vm: vm)
         case .fyzMap:

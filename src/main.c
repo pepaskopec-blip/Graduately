@@ -390,6 +390,9 @@ static gboolean run_smoke_test(gpointer data) {
         "czechmap",
         "lityears", "litmap", "lit2map", "lit3map", "lit4map",
         "scimap", "chemmap", "biomap",
+        "matyears", "mat0map", "matmap", "mat2map", "mat3map", "mat4map",
+        "mat0unit1", "mat0ex1", "matunit1", "matex1",
+        "mat4unit8", "mat4ex8",
         "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map",
         "fyzunit1", "fyzex1", "fyzunit8", "fyzex8",
         "fyz2unit1", "fyz2ex1", "fyz3unit1", "fyz4unit1",
@@ -532,6 +535,17 @@ void activate(GtkApplication *app, gpointer user_data) {
     add_on3_pages(main_stack);
     gtk_stack_add_named(main_stack, build_on4map_page(), "on4map");
     add_on4_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_matyears_page(), "matyears");
+    gtk_stack_add_named(main_stack, build_mat0map_page(), "mat0map");
+    add_mat0_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_matmap_page(), "matmap");
+    add_mat_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_mat2map_page(), "mat2map");
+    add_mat2_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_mat3map_page(), "mat3map");
+    add_mat3_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_mat4map_page(), "mat4map");
+    add_mat4_pages(main_stack);
     gtk_stack_add_named(main_stack, build_fyzyears_page(), "fyzyears");
     gtk_stack_add_named(main_stack, build_fyzmap_page(), "fyzmap");
     add_fyz_pages(main_stack);

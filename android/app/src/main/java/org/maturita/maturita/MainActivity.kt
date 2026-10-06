@@ -33,6 +33,8 @@ import org.maturita.maturita.ui.HwQuizScreen
 import org.maturita.maturita.ui.HwYearsScreen
 import org.maturita.maturita.ui.LessonListScreen
 import org.maturita.maturita.ui.FyzQuizScreen
+import org.maturita.maturita.ui.MathPracticeScreen
+import org.maturita.maturita.ui.MatYearsScreen
 import org.maturita.maturita.ui.FyzYearsScreen
 import org.maturita.maturita.ui.LitYearsScreen
 import org.maturita.maturita.ui.LessonRow
@@ -350,6 +352,77 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Lit4Ex -> LitQuizScreen(vm, 4, r.id)
+            Route.MatYears -> MatYearsScreen(vm)
+            Route.Mat0Map -> LessonListScreen(
+                vm, vm.tr("mat0_year"), vm.tr("mat0_sub"),
+                vm.content.mat0.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.mat0Done(id), Route.Mat0Lesson(id))
+                },
+            )
+            is Route.Mat0Lesson -> {
+                val l = vm.content.mat0Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Mat0Ex(r.id))
+                }
+            }
+            is Route.Mat0Ex -> MathPracticeScreen(vm, 0, r.id)
+            Route.MatMap -> LessonListScreen(
+                vm, vm.tr("mat_year1"), vm.tr("mat_sub"),
+                vm.content.mat.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.matDone(id), Route.MatLesson(id))
+                },
+            )
+            is Route.MatLesson -> {
+                val l = vm.content.matLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.MatEx(r.id))
+                }
+            }
+            is Route.MatEx -> MathPracticeScreen(vm, 1, r.id)
+            Route.Mat2Map -> LessonListScreen(
+                vm, vm.tr("mat_year2"), vm.tr("mat2_sub"),
+                vm.content.mat2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.mat2Done(id), Route.Mat2Lesson(id))
+                },
+            )
+            is Route.Mat2Lesson -> {
+                val l = vm.content.mat2Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Mat2Ex(r.id))
+                }
+            }
+            is Route.Mat2Ex -> MathPracticeScreen(vm, 2, r.id)
+            Route.Mat3Map -> LessonListScreen(
+                vm, vm.tr("mat_year3"), vm.tr("mat3_sub"),
+                vm.content.mat3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.mat3Done(id), Route.Mat3Lesson(id))
+                },
+            )
+            is Route.Mat3Lesson -> {
+                val l = vm.content.mat3Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Mat3Ex(r.id))
+                }
+            }
+            is Route.Mat3Ex -> MathPracticeScreen(vm, 3, r.id)
+            Route.Mat4Map -> LessonListScreen(
+                vm, vm.tr("mat_year4"), vm.tr("mat4_sub"),
+                vm.content.mat4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.mat4Done(id), Route.Mat4Lesson(id))
+                },
+            )
+            is Route.Mat4Lesson -> {
+                val l = vm.content.mat4Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Mat4Ex(r.id))
+                }
+            }
+            is Route.Mat4Ex -> MathPracticeScreen(vm, 4, r.id)
             Route.FyzYears -> FyzYearsScreen(vm)
             Route.FyzMap -> LessonListScreen(
                 vm, vm.tr("fyz_year1"), vm.tr("fyz_sub"),

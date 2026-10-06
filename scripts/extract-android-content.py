@@ -455,6 +455,20 @@ def profile_items(rows) -> list[dict]:
     return out
 
 
+def math_items(rows) -> list[dict]:
+    out = []
+    for row in as_list(rows):
+        row = as_list(row)
+        if len(row) < 3:
+            continue
+        out.append({
+            "prompt": as_str(row[0]) or "",
+            "answer": as_str(row[1]) or "",
+            "hint": as_str(row[2]) or "",
+        })
+    return out
+
+
 def slides_items(rows) -> list[dict]:
     out = []
     for row in as_list(rows):
@@ -1116,6 +1130,28 @@ def main() -> int:
     fyz3_lessons = lit_pack("fyz3")
     fyz4_lessons = lit_pack("fyz4")
 
+    def math_pack(prefix):
+        lessons = []
+        for i in range(1, 9):
+            fn_u = f"build_{prefix}_unit{i}_page"
+            fn_e = f"build_{prefix}_unit{i}_exercise_page"
+            lessons.append({
+                "id": i,
+                "titleKey": f"{prefix}_unit{i}",
+                "subKey": f"{prefix}_unit{i}_sub",
+                "exTitleKey": f"{prefix}_ex{i}_title",
+                "quizHeadKey": f"{prefix}_quiz{i}_head",
+                "slides": slides_items(A(f"{fn_u}.slides")),
+                "problems": math_items(A(f"{fn_e}.qs")),
+            })
+        return lessons
+
+    mat0_lessons = math_pack("mat0")
+    mat_lessons = math_pack("mat")
+    mat2_lessons = math_pack("mat2")
+    mat3_lessons = math_pack("mat3")
+    mat4_lessons = math_pack("mat4")
+
     on_lessons = []
     for i in range(1, 18):
         on_lessons.append({
@@ -1563,7 +1599,7 @@ def main() -> int:
         {"key": "Český jazyk a literatura", "open": True, "target": "czechmap", "icon": "cz"},
         {"key": "Občanská nauka", "open": True, "target": "onyears", "icon": "people"},
         {"key": "English", "open": False, "target": None, "icon": "lock"},
-        {"key": "Matematika", "open": False, "target": None, "icon": "lock"},
+        {"key": "Matematika", "open": True, "target": "matyears", "icon": "function"},
         {"key": "Fyzika", "open": True, "target": "fyzyears", "icon": "bolt"},
         {"key": "Základy Přírodopisných věd", "open": True, "target": "scimap", "icon": "flask"},
         {"key": "Technická grafika", "open": False, "target": None, "icon": "lock"},
@@ -1593,6 +1629,11 @@ def main() -> int:
         "fyz2": fyz2_lessons,
         "fyz3": fyz3_lessons,
         "fyz4": fyz4_lessons,
+        "mat0": mat0_lessons,
+        "mat": mat_lessons,
+        "mat2": mat2_lessons,
+        "mat3": mat3_lessons,
+        "mat4": mat4_lessons,
         "on2": on2_lessons,
         "on3": on3_lessons,
         "on4": on4_lessons,
@@ -1635,6 +1676,7 @@ def main() -> int:
     print(f"  chem lessons: {sum(1 for L in chem_lessons if L['slides'])}")
     print(f"  bio lessons: {sum(1 for L in bio_lessons if L['slides'])}")
     print(f"  fyz lessons: {sum(1 for L in fyz_lessons + fyz2_lessons + fyz3_lessons + fyz4_lessons if L['slides'])}")
+    print(f"  math lessons: {sum(1 for L in mat0_lessons + mat_lessons + mat2_lessons + mat3_lessons + mat4_lessons if L['slides'])}")
     print(f"  on2 lessons: {sum(1 for L in on2_lessons if L['slides'])}")
     print(f"  on3 lessons: {sum(1 for L in on3_lessons if L['slides'])}")
     print(f"  on4 lessons: {sum(1 for L in on4_lessons if L['slides'])}")
@@ -1705,6 +1747,17 @@ def main() -> int:
                 missing.append(f"{label}{L['id']} quiz")
             if not all(q.get("expl") for q in L["quiz"]):
                 missing.append(f"{label}{L['id']} expl")
+    for label, block in (
+        ("mat0", mat0_lessons), ("mat", mat_lessons),
+        ("mat2", mat2_lessons), ("mat3", mat3_lessons), ("mat4", mat4_lessons),
+    ):
+        for L in block:
+            if len(L["slides"]) != 3:
+                missing.append(f"{label}{L['id']} slides")
+            if not L["problems"]:
+                missing.append(f"{label}{L['id']} problems")
+            if not all(p.get("prompt") and p.get("answer") and p.get("hint") for p in L["problems"]):
+                missing.append(f"{label}{L['id']} answer")
     for m in mluvnice:
         if m["type"] in ("typed", "reveal") and not m.get("items"):
             missing.append(f"mluv{m['id']}")

@@ -198,6 +198,31 @@ final class AppModel: ObservableObject {
         refresh()
     }
 
+    func markMat0(_ id: Int) {
+        progress.markMat0(id)
+        refresh()
+    }
+
+    func markMat(_ id: Int) {
+        progress.markMat(id)
+        refresh()
+    }
+
+    func markMat2(_ id: Int) {
+        progress.markMat2(id)
+        refresh()
+    }
+
+    func markMat3(_ id: Int) {
+        progress.markMat3(id)
+        refresh()
+    }
+
+    func markMat4(_ id: Int) {
+        progress.markMat4(id)
+        refresh()
+    }
+
     func markMluv(_ n: Int) {
         progress.markMluv(n)
         refresh()

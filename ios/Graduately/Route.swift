@@ -56,6 +56,22 @@ enum Route: Hashable {
     case bioMap
     case bioLesson(Int)
     case bioEx(Int)
+    case matYears
+    case mat0Map
+    case mat0Lesson(Int)
+    case mat0Ex(Int)
+    case matMap
+    case matLesson(Int)
+    case matEx(Int)
+    case mat2Map
+    case mat2Lesson(Int)
+    case mat2Ex(Int)
+    case mat3Map
+    case mat3Lesson(Int)
+    case mat3Ex(Int)
+    case mat4Map
+    case mat4Lesson(Int)
+    case mat4Ex(Int)
     case fyzYears
     case fyzMap
     case fyzLesson(Int)
@@ -127,6 +143,22 @@ enum Route: Hashable {
         case .bioMap: return "biomap"
         case .bioLesson(let id): return "biounit\(id)"
         case .bioEx(let id): return "bioex\(id)"
+        case .matYears: return "matyears"
+        case .mat0Map: return "mat0map"
+        case .mat0Lesson(let id): return "mat0unit\(id)"
+        case .mat0Ex(let id): return "mat0ex\(id)"
+        case .matMap: return "matmap"
+        case .matLesson(let id): return "matunit\(id)"
+        case .matEx(let id): return "matex\(id)"
+        case .mat2Map: return "mat2map"
+        case .mat2Lesson(let id): return "mat2unit\(id)"
+        case .mat2Ex(let id): return "mat2ex\(id)"
+        case .mat3Map: return "mat3map"
+        case .mat3Lesson(let id): return "mat3unit\(id)"
+        case .mat3Ex(let id): return "mat3ex\(id)"
+        case .mat4Map: return "mat4map"
+        case .mat4Lesson(let id): return "mat4unit\(id)"
+        case .mat4Ex(let id): return "mat4ex\(id)"
         case .fyzYears: return "fyzyears"
         case .fyzMap: return "fyzmap"
         case .fyzLesson(let id): return "fyzunit\(id)"
@@ -254,6 +286,38 @@ enum Route: Hashable {
             return [.sciMap, .bioMap, .bioLesson(id)]
         case .bioEx(let id):
             return [.sciMap, .bioMap, .bioLesson(id), .bioEx(id)]
+        case .matYears:
+            return [.matYears]
+        case .mat0Map:
+            return [.matYears, .mat0Map]
+        case .mat0Lesson(let id):
+            return [.matYears, .mat0Map, .mat0Lesson(id)]
+        case .mat0Ex(let id):
+            return [.matYears, .mat0Map, .mat0Lesson(id), .mat0Ex(id)]
+        case .matMap:
+            return [.matYears, .matMap]
+        case .matLesson(let id):
+            return [.matYears, .matMap, .matLesson(id)]
+        case .matEx(let id):
+            return [.matYears, .matMap, .matLesson(id), .matEx(id)]
+        case .mat2Map:
+            return [.matYears, .mat2Map]
+        case .mat2Lesson(let id):
+            return [.matYears, .mat2Map, .mat2Lesson(id)]
+        case .mat2Ex(let id):
+            return [.matYears, .mat2Map, .mat2Lesson(id), .mat2Ex(id)]
+        case .mat3Map:
+            return [.matYears, .mat3Map]
+        case .mat3Lesson(let id):
+            return [.matYears, .mat3Map, .mat3Lesson(id)]
+        case .mat3Ex(let id):
+            return [.matYears, .mat3Map, .mat3Lesson(id), .mat3Ex(id)]
+        case .mat4Map:
+            return [.matYears, .mat4Map]
+        case .mat4Lesson(let id):
+            return [.matYears, .mat4Map, .mat4Lesson(id)]
+        case .mat4Ex(let id):
+            return [.matYears, .mat4Map, .mat4Lesson(id), .mat4Ex(id)]
         case .fyzYears:
             return [.fyzYears]
         case .fyzMap:
@@ -321,6 +385,12 @@ func routeFromPage(_ page: String) -> Route? {
     case "scimap": return .sciMap
     case "chemmap": return .chemMap
     case "biomap": return .bioMap
+    case "matyears": return .matYears
+    case "mat0map": return .mat0Map
+    case "matmap": return .matMap
+    case "mat2map": return .mat2Map
+    case "mat3map": return .mat3Map
+    case "mat4map": return .mat4Map
     case "fyzyears": return .fyzYears
     case "fyzmap": return .fyzMap
     case "fyz2map": return .fyz2Map
@@ -380,6 +450,36 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /bioex(\d+)/), let n = Int(m.1) {
             return .bioEx(n)
+        }
+        if let m = page.wholeMatch(of: /mat0unit(\d+)/), let n = Int(m.1) {
+            return .mat0Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /mat0ex(\d+)/), let n = Int(m.1) {
+            return .mat0Ex(n)
+        }
+        if let m = page.wholeMatch(of: /mat4unit(\d+)/), let n = Int(m.1) {
+            return .mat4Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /mat4ex(\d+)/), let n = Int(m.1) {
+            return .mat4Ex(n)
+        }
+        if let m = page.wholeMatch(of: /mat3unit(\d+)/), let n = Int(m.1) {
+            return .mat3Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /mat3ex(\d+)/), let n = Int(m.1) {
+            return .mat3Ex(n)
+        }
+        if let m = page.wholeMatch(of: /mat2unit(\d+)/), let n = Int(m.1) {
+            return .mat2Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /mat2ex(\d+)/), let n = Int(m.1) {
+            return .mat2Ex(n)
+        }
+        if let m = page.wholeMatch(of: /matunit(\d+)/), let n = Int(m.1) {
+            return .matLesson(n)
+        }
+        if let m = page.wholeMatch(of: /matex(\d+)/), let n = Int(m.1) {
+            return .matEx(n)
         }
         if let m = page.wholeMatch(of: /fyz4unit(\d+)/), let n = Int(m.1) {
             return .fyz4Lesson(n)
