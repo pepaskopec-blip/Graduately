@@ -17,6 +17,9 @@ struct GraduatelyApp: App {
 
 struct NativeRoot: View {
     @ObservedObject var vm: AppModel
+    @State private var progressPath = NavigationPath()
+    @State private var settingsPath = NavigationPath()
+    @State private var searchPath = NavigationPath()
 
     var body: some View {
         Group {
@@ -49,17 +52,17 @@ struct NativeRoot: View {
                 }
             }
             Tab(vm.tr("stats"), systemImage: "chart.bar.fill", value: .progress) {
-                NavigationStack {
+                NavigationStack(path: $progressPath) {
                     StatsScreen(vm: vm)
                 }
             }
             Tab(vm.tr("settings"), systemImage: "gearshape.fill", value: .settings) {
-                NavigationStack {
+                NavigationStack(path: $settingsPath) {
                     SettingsScreen(vm: vm)
                 }
             }
             Tab(vm.tr("search"), systemImage: "magnifyingglass", value: .search) {
-                NavigationStack {
+                NavigationStack(path: $searchPath) {
                     SearchScreen(vm: vm)
                 }
             }

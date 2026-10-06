@@ -16,8 +16,7 @@ struct GraduatelyApp: App {
             CommandGroup(replacing: .newItem) {}
             CommandGroup(after: .sidebar) {
                 Button(vm.tr("search_home")) {
-                    vm.tab = .practice
-                    vm.practicePath = []
+                    vm.showPracticeRoot()
                 }
                 .keyboardShortcut("1", modifiers: [.command])
                 Button(vm.tr("stats")) {
@@ -47,6 +46,9 @@ struct GraduatelyApp: App {
 
 struct MacRoot: View {
     @ObservedObject var vm: AppModel
+    @State private var progressPath = NavigationPath()
+    @State private var settingsPath = NavigationPath()
+    @State private var searchPath = NavigationPath()
 
     var body: some View {
         tabs
@@ -77,17 +79,17 @@ struct MacRoot: View {
                 }
             }
             Tab(vm.tr("stats"), systemImage: "chart.bar.fill", value: AppTab.progress) {
-                NavigationStack {
+                NavigationStack(path: $progressPath) {
                     StatsScreen(vm: vm)
                 }
             }
             Tab(vm.tr("settings"), systemImage: "gearshape.fill", value: AppTab.settings) {
-                NavigationStack {
+                NavigationStack(path: $settingsPath) {
                     SettingsScreen(vm: vm)
                 }
             }
             Tab(vm.tr("search"), systemImage: "magnifyingglass", value: AppTab.search, role: .search) {
-                NavigationStack {
+                NavigationStack(path: $searchPath) {
                     SearchScreen(vm: vm)
                 }
             }

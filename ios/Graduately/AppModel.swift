@@ -10,7 +10,9 @@ final class AppModel: ObservableObject {
     @Published var mode: ColorMode
     @Published var lang: UiLang
     @Published var tab: AppTab = .practice
-    @Published var practicePath: [Route] = []
+    @Published var practicePath = NavigationPath()
+    /// Bumps whenever a full path replace is scheduled, so a queued push cannot land afterwards.
+    private var pathGeneration = 0
     @Published var searchQuery = ""
     @Published var tick = 0
     @Published var update = UpdateState()
@@ -48,11 +50,15 @@ final class AppModel: ObservableObject {
         case .stats:
             tab = .progress
         case .welcome, .subjects:
-            tab = .practice
-            practicePath = []
+            showPracticeRoot()
         default:
             applyPracticeRoute(r, replace: practicePath.isEmpty)
         }
+    }
+
+    func showPracticeRoot() {
+        tab = .practice
+        schedulePracticePath(NavigationPath())
     }
 
     func goPage(_ page: String?) {
@@ -66,8 +72,7 @@ final class AppModel: ObservableObject {
         case .stats:
             tab = .progress
         case .welcome, .subjects:
-            tab = .practice
-            practicePath = []
+            showPracticeRoot()
         default:
             // Switching tabs and assigning a deep NavigationStack path in the
             // same turn crashes SwiftUI on macOS (boundPathChange / unexpectedError).
@@ -76,18 +81,31 @@ final class AppModel: ObservableObject {
     }
 
     /// Sets the practice tab path safely, especially when jumping from Search.
+    ///
+    /// The sidebar-style tab view keeps one navigation column for every tab.
+    /// A typed `[Route]` path does not match the other tabs, so the column
+    /// traps in `boundPathChange` while an exercise is being opened. The path
+    /// is therefore type-erased, and a push is applied on the next turn instead
+    /// of replacing the whole stack during the click.
     private func applyPracticeRoute(_ r: Route, replace: Bool) {
-        let stack = replace ? r.stack : (practicePath + [r])
-        if !replace, practicePath.last == r { return }
         let switching = tab != .practice
         tab = .practice
         if switching || replace {
-            practicePath = []
-            DispatchQueue.main.async { [weak self] in
-                self?.practicePath = stack
-            }
+            schedulePracticePath(NavigationPath(r.stack))
         } else {
-            practicePath = stack
+            let generation = pathGeneration
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.pathGeneration == generation else { return }
+                self.practicePath.append(r)
+            }
+        }
+    }
+
+    private func schedulePracticePath(_ path: NavigationPath) {
+        pathGeneration += 1
+        practicePath = NavigationPath()
+        DispatchQueue.main.async { [weak self] in
+            self?.practicePath = path
         }
     }
 
