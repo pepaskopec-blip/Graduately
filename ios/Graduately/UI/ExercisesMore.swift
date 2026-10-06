@@ -625,6 +625,27 @@ struct NetQuizScreen: View {
     }
 }
 
+struct SciQuizScreen: View {
+    @ObservedObject var vm: AppModel
+    let area: String
+    let id: Int
+
+    var body: some View {
+        let lesson = area == "bio" ? vm.content.bioLesson(id) : vm.content.chemLesson(id)
+        if let lesson {
+            let spec = J([
+                "type": "choice",
+                "title": vm.tr(lesson.str("exTitleKey")),
+                "sub": lesson.str("quizHeadKey"),
+                "questions": lesson.rawArray("quiz"),
+            ])
+            DispatchExercise(vm: vm, spec: spec, titleFallback: vm.tr(lesson.str("exTitleKey"))) {
+                if area == "bio" { vm.markBio(id) } else { vm.markChem(id) }
+            }
+        }
+    }
+}
+
 struct LitYearQuizScreen: View {
     @ObservedObject var vm: AppModel
     let year: Int

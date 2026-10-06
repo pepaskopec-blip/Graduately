@@ -695,6 +695,10 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
             + vm.content.on2.filter { vm.progress.on2Done($0.int("id")) }.count
             + vm.content.on3.filter { vm.progress.on3Done($0.int("id")) }.count
             + vm.content.on4.filter { vm.progress.on4Done($0.int("id")) }.count
+    case "scimap":
+        sum.totalEx = vm.content.chem.count + vm.content.bio.count
+        sum.doneEx = vm.content.chem.filter { vm.progress.chemDone($0.int("id")) }.count
+            + vm.content.bio.filter { vm.progress.bioDone($0.int("id")) }.count
     case "czechmap":
         let litCount = vm.content.lit.count + vm.content.lit2.count + vm.content.lit3.count + vm.content.lit4.count
         let litDone = vm.content.lit.filter { vm.progress.litDone($0.int("id")) }.count
@@ -924,6 +928,16 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.lit4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit\(l.int("id"))", extra: "literatura")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex\(l.int("id"))")
+    }
+    add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra: "chemie")
+    add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra: "biologie")
+    for l in vm.content.chem {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "chemunit\(l.int("id"))", extra: "chemie")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "chemex\(l.int("id"))")
+    }
+    for l in vm.content.bio {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "biounit\(l.int("id"))", extra: "biologie")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "bioex\(l.int("id"))")
     }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -1466,6 +1480,50 @@ struct LitYearsScreen: View {
         }
         .navigationTitle(vm.tr("Literatura"))
         .navigationSubtitle(vm.tr("lit_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct SciMapScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        MacFillGrid(count: 2, minWidth: 260, minHeight: 180) { i in
+            if i == 0 {
+                NavigationLink(value: Route.chemMap) {
+                    MacLinkCard(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), systemImage: "flask.fill")
+                }
+                .buttonStyle(.plain)
+            } else {
+                NavigationLink(value: Route.bioMap) {
+                    MacLinkCard(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), systemImage: "leaf.fill")
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .navigationTitle(vm.tr("Základy Přírodopisných věd"))
+        .navigationSubtitle(vm.tr("sci_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.chemMap) {
+                Label {
+                    ListRowLabel(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"))
+                } icon: {
+                    Image(systemName: "flask.fill")
+                }
+            }
+            NavigationLink(value: Route.bioMap) {
+                Label {
+                    ListRowLabel(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"))
+                } icon: {
+                    Image(systemName: "leaf.fill")
+                }
+            }
+        }
+        .navigationTitle(vm.tr("Základy Přírodopisných věd"))
+        .navigationSubtitle(vm.tr("sci_sub"))
         .appListStyle()
         #endif
     }
@@ -2151,6 +2209,50 @@ struct RouteDestination: View {
             }
         case .lit4Ex(let id):
             LitYearQuizScreen(vm: vm, year: 4, id: id)
+        case .sciMap:
+            SciMapScreen(vm: vm)
+        case .chemMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("Chemie"),
+                subtitle: vm.tr("chem_sub"),
+                rows: vm.content.chem.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "c\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.chemDone(id),
+                        destination: .chemLesson(id)
+                    )
+                }
+            )
+        case .chemLesson(let id):
+            if let l = vm.content.chemLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .chemEx(id))
+            }
+        case .chemEx(let id):
+            SciQuizScreen(vm: vm, area: "chem", id: id)
+        case .bioMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("Biologie"),
+                subtitle: vm.tr("bio_sub"),
+                rows: vm.content.bio.map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "b\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.bioDone(id),
+                        destination: .bioLesson(id)
+                    )
+                }
+            )
+        case .bioLesson(let id):
+            if let l = vm.content.bioLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .bioEx(id))
+            }
+        case .bioEx(let id):
+            SciQuizScreen(vm: vm, area: "bio", id: id)
         case .mluvnice:
             LessonListScreen(
                 vm: vm,

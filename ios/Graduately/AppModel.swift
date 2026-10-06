@@ -168,6 +168,16 @@ final class AppModel: ObservableObject {
         refresh()
     }
 
+    func markChem(_ id: Int) {
+        progress.markChem(id)
+        refresh()
+    }
+
+    func markBio(_ id: Int) {
+        progress.markBio(id)
+        refresh()
+    }
+
     func markMluv(_ n: Int) {
         progress.markMluv(n)
         refresh()

@@ -30,6 +30,8 @@ char *app_progress_lit;
 char *app_progress_lit2;
 char *app_progress_lit3;
 char *app_progress_lit4;
+char *app_progress_chem;
+char *app_progress_bio;
 
 static char *dup_dirname(const char *path) {
     char *tmp = g_strdup(path);
@@ -176,6 +178,8 @@ static void set_progress_paths(const char *write_root) {
     g_free(app_progress_lit2);
     g_free(app_progress_lit3);
     g_free(app_progress_lit4);
+    g_free(app_progress_chem);
+    g_free(app_progress_bio);
 
     app_progress_dir = g_build_filename(write_root, PROGRESS_DIR_NAME, NULL);
     app_progress_u1 = g_build_filename(app_progress_dir, "unit1.conf", NULL);
@@ -194,6 +198,8 @@ static void set_progress_paths(const char *write_root) {
     app_progress_lit2 = g_build_filename(app_progress_dir, "lit2.conf", NULL);
     app_progress_lit3 = g_build_filename(app_progress_dir, "lit3.conf", NULL);
     app_progress_lit4 = g_build_filename(app_progress_dir, "lit4.conf", NULL);
+    app_progress_chem = g_build_filename(app_progress_dir, "chem.conf", NULL);
+    app_progress_bio = g_build_filename(app_progress_dir, "bio.conf", NULL);
 }
 
 /* Resolve read-only asset root, chdir there, and point progress at a writable

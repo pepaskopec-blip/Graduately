@@ -7,6 +7,10 @@
 # en: bullet
 
 --- 2026-10-06
+cs: Základy přírodopisných věd: chemie a biologie, v každé 8 lekcí podle osnov
+cs: Každá lekce má výklad a kvíz se čtyřmi otázkami
+en: Natural sciences: chemistry and biology, eight lessons each, from the syllabus
+en: Every lesson has an overview and a four-question quiz
 cs: Český jazyk: literatura ve čtyřech ročnících podle osnov středních škol
 cs: 32 lekcí od starověku po současnost, každá s výkladem a kvízem
 en: Czech: literature across four years, following the secondary-school syllabus

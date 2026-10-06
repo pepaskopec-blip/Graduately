@@ -35,6 +35,8 @@ import org.maturita.maturita.ui.LessonListScreen
 import org.maturita.maturita.ui.LitYearsScreen
 import org.maturita.maturita.ui.LessonRow
 import org.maturita.maturita.ui.LitQuizScreen
+import org.maturita.maturita.ui.SciMapScreen
+import org.maturita.maturita.ui.SciQuizScreen
 import org.maturita.maturita.ui.MluvExercise
 import org.maturita.maturita.ui.NetQuizScreen
 import org.maturita.maturita.ui.NetYearsScreen
@@ -346,6 +348,35 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Lit4Ex -> LitQuizScreen(vm, 4, r.id)
+            Route.SciMap -> SciMapScreen(vm)
+            Route.ChemMap -> LessonListScreen(
+                vm, vm.tr("Chemie"), vm.tr("chem_sub"),
+                vm.content.chem.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.chemDone(id), Route.ChemLesson(id))
+                },
+            )
+            is Route.ChemLesson -> {
+                val l = vm.content.chemLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.ChemEx(r.id))
+                }
+            }
+            is Route.ChemEx -> SciQuizScreen(vm, "chem", r.id)
+            Route.BioMap -> LessonListScreen(
+                vm, vm.tr("Biologie"), vm.tr("bio_sub"),
+                vm.content.bio.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.bioDone(id), Route.BioLesson(id))
+                },
+            )
+            is Route.BioLesson -> {
+                val l = vm.content.bioLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.BioEx(r.id))
+                }
+            }
+            is Route.BioEx -> SciQuizScreen(vm, "bio", r.id)
             Route.CzechMap -> CzechMapScreen(vm)
             Route.Mluvnice -> LessonListScreen(
                 vm, vm.tr("Mluvnice"), vm.tr("mluv_sub"),

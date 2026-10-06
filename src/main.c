@@ -389,6 +389,9 @@ static gboolean run_smoke_test(gpointer data) {
         "on3map", "on4map",
         "czechmap",
         "lityears", "litmap", "lit2map", "lit3map", "lit4map",
+        "scimap", "chemmap", "biomap",
+        "chemunit1", "chemex1", "chemunit8", "chemex8",
+        "biounit1", "bioex1", "biounit8", "bioex8",
         "litunit1", "litex1", "litunit8", "litex8",
         "lit2unit1", "lit2ex1", "lit3unit1", "lit3ex1",
         "lit4unit1", "lit4ex1", "lit4unit8", "lit4ex8",
@@ -525,6 +528,11 @@ void activate(GtkApplication *app, gpointer user_data) {
     add_on3_pages(main_stack);
     gtk_stack_add_named(main_stack, build_on4map_page(), "on4map");
     add_on4_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_scimap_page(), "scimap");
+    gtk_stack_add_named(main_stack, build_chemmap_page(), "chemmap");
+    add_chem_pages(main_stack);
+    gtk_stack_add_named(main_stack, build_biomap_page(), "biomap");
+    add_bio_pages(main_stack);
     gtk_stack_add_named(main_stack, build_czechmap_page(), "czechmap");
     gtk_stack_add_named(main_stack, build_lityears_page(), "lityears");
     gtk_stack_add_named(main_stack, build_litmap_page(), "litmap");

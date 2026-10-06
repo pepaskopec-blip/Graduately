@@ -43,6 +43,13 @@ sealed class Route(val page: String) {
     data object Lit4Map : Route("lit4map")
     data class Lit4Lesson(val id: Int) : Route("lit4unit$id")
     data class Lit4Ex(val id: Int) : Route("lit4ex$id")
+    data object SciMap : Route("scimap")
+    data object ChemMap : Route("chemmap")
+    data class ChemLesson(val id: Int) : Route("chemunit$id")
+    data class ChemEx(val id: Int) : Route("chemex$id")
+    data object BioMap : Route("biomap")
+    data class BioLesson(val id: Int) : Route("biounit$id")
+    data class BioEx(val id: Int) : Route("bioex$id")
     data object CzechMap : Route("czechmap")
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
@@ -60,7 +67,8 @@ sealed class Route(val page: String) {
             this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is MluvEx || this is BookQuiz || this is BookPlot ||
             this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson ||
             this is LitLesson || this is LitEx || this is Lit2Lesson || this is Lit2Ex ||
-            this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex
+            this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex ||
+            this is ChemLesson || this is ChemEx || this is BioLesson || this is BioEx
 
     /** Full stack from the practice root to this screen, so back always goes up one level. */
     fun stack(): List<Route> = when (this) {
@@ -105,6 +113,13 @@ sealed class Route(val page: String) {
         Lit4Map -> listOf(Subjects, CzechMap, LitYears, Lit4Map)
         is Lit4Lesson -> listOf(Subjects, CzechMap, LitYears, Lit4Map, this)
         is Lit4Ex -> listOf(Subjects, CzechMap, LitYears, Lit4Map, Lit4Lesson(id), this)
+        SciMap -> listOf(Subjects, SciMap)
+        ChemMap -> listOf(Subjects, SciMap, ChemMap)
+        is ChemLesson -> listOf(Subjects, SciMap, ChemMap, this)
+        is ChemEx -> listOf(Subjects, SciMap, ChemMap, ChemLesson(id), this)
+        BioMap -> listOf(Subjects, SciMap, BioMap)
+        is BioLesson -> listOf(Subjects, SciMap, BioMap, this)
+        is BioEx -> listOf(Subjects, SciMap, BioMap, BioLesson(id), this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -135,6 +150,9 @@ fun routeFromPage(page: String): Route? = when (page) {
     "lit2map" -> Route.Lit2Map
     "lit3map" -> Route.Lit3Map
     "lit4map" -> Route.Lit4Map
+    "scimap" -> Route.SciMap
+    "chemmap" -> Route.ChemMap
+    "biomap" -> Route.BioMap
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
     "readinglist" -> Route.ReadingList
@@ -165,6 +183,18 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""hwex(\d+)""").matchEntire(page)?.let {
             return Route.HwEx(it.groupValues[1].toInt())
+        }
+        Regex("""chemunit(\d+)""").matchEntire(page)?.let {
+            return Route.ChemLesson(it.groupValues[1].toInt())
+        }
+        Regex("""chemex(\d+)""").matchEntire(page)?.let {
+            return Route.ChemEx(it.groupValues[1].toInt())
+        }
+        Regex("""biounit(\d+)""").matchEntire(page)?.let {
+            return Route.BioLesson(it.groupValues[1].toInt())
+        }
+        Regex("""bioex(\d+)""").matchEntire(page)?.let {
+            return Route.BioEx(it.groupValues[1].toInt())
         }
         Regex("""lit4unit(\d+)""").matchEntire(page)?.let {
             return Route.Lit4Lesson(it.groupValues[1].toInt())

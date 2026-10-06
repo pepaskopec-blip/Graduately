@@ -23,7 +23,7 @@ static GPtrArray *search_items;
 
 static gboolean subject_open(int i) {
     return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
-        || i == ON_SUBJ;
+        || i == ON_SUBJ || i == SCI_SUBJ;
 }
 
 static const char *subject_page(int i) {
@@ -37,6 +37,8 @@ static const char *subject_page(int i) {
         return "czechmap";
     if (i == ON_SUBJ)
         return "onyears";
+    if (i == SCI_SUBJ)
+        return "scimap";
     return "subjects";
 }
 
@@ -269,6 +271,22 @@ static void catalog_rebuild(void) {
         g_snprintf(page, sizeof(page), "lit4unit%d", i);
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "literatura");
         g_snprintf(page, sizeof(page), "lit4ex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    catalog_add_key("Chemie", "search_lesson", "chemmap", FALSE, 1, "chemie");
+    catalog_add_key("Biologie", "search_lesson", "biomap", FALSE, 1, "biologie");
+    for (i = 1; i <= SCI_N; i++) {
+        g_snprintf(key, sizeof(key), "chem_unit%d", i);
+        g_snprintf(page, sizeof(page), "chemunit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "chemie");
+        g_snprintf(page, sizeof(page), "chemex%d", i);
+        catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 1; i <= SCI_N; i++) {
+        g_snprintf(key, sizeof(key), "bio_unit%d", i);
+        g_snprintf(page, sizeof(page), "biounit%d", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 2, "biologie");
+        g_snprintf(page, sizeof(page), "bioex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
     }
     catalog_add_key("Mluvnice", "search_lesson", "mluvnice", FALSE, 1,

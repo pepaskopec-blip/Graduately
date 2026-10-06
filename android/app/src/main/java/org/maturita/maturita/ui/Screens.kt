@@ -32,6 +32,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Quiz
+import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material3.Card
@@ -220,6 +221,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "chip" -> ChipIcon(tint, 26.dp)
             "people" -> Icon(Icons.Filled.Groups, null, tint = tint, modifier = Modifier.size(26.dp))
             "cz" -> CzechFlag(28.dp)
+            "flask" -> Icon(Icons.Filled.Science, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -306,6 +308,11 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
                 vm.content.on2.count { vm.progress.on2Done(it.int("id")) } +
                 vm.content.on3.count { vm.progress.on3Done(it.int("id")) } +
                 vm.content.on4.count { vm.progress.on4Done(it.int("id")) }
+        }
+        "scimap" -> {
+            sum.totalEx = vm.content.chem.size + vm.content.bio.size
+            sum.doneEx = vm.content.chem.count { vm.progress.chemDone(it.int("id")) } +
+                vm.content.bio.count { vm.progress.bioDone(it.int("id")) }
         }
         "czechmap" -> {
             val litDone = vm.content.lit.count { vm.progress.litDone(it.int("id")) } +
@@ -540,6 +547,16 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "lit4unit${l.int("id")}", extra = "literatura")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "lit4ex${l.int("id")}")
     }
+    add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra = "chemie")
+    add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra = "biologie")
+    vm.content.chem.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "chemunit${l.int("id")}", extra = "chemie")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "chemex${l.int("id")}")
+    }
+    vm.content.bio.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "biounit${l.int("id")}", extra = "biologie")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "bioex${l.int("id")}")
+    }
     add(vm.tr("Mluvnice"), vm.tr("search_lesson"), "mluvnice")
     vm.content.mluvnice.forEach { m -> add(m.str("name"), vm.tr("Mluvnice"), "mluve${m.int("id")}") }
     add(vm.tr("Maturitní četba"), vm.tr("search_book"), "readinglist")
@@ -661,6 +678,24 @@ fun LitYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("lit_year2"), subtitle = vm.tr("lit2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit2Map) }
                 NavRow(title = vm.tr("lit_year3"), subtitle = vm.tr("lit3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit3Map) }
                 NavRow(title = vm.tr("lit_year4"), subtitle = vm.tr("lit4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun SciMapScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Základy Přírodopisných věd"), vm.tr("sci_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(
+                    title = vm.tr("Chemie"),
+                    subtitle = vm.tr("chem_sub"),
+                    leading = { Icon(Icons.Filled.Science, null, tint = MaterialTheme.colorScheme.primary) },
+                ) { vm.go(Route.ChemMap) }
+            }
+            item {
+                NavRow(title = vm.tr("Biologie"), subtitle = vm.tr("bio_sub")) { vm.go(Route.BioMap) }
             }
         }
     }

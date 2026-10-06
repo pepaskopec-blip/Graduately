@@ -55,6 +55,11 @@ final class ProgressStore {
     func lit4Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit4.\(id)") }
     func markLit4(_ id: Int) { defaults.set(true, forKey: "lit4.\(id)") }
 
+    func chemDone(_ id: Int) -> Bool { defaults.bool(forKey: "chem.\(id)") }
+    func markChem(_ id: Int) { defaults.set(true, forKey: "chem.\(id)") }
+    func bioDone(_ id: Int) -> Bool { defaults.bool(forKey: "bio.\(id)") }
+    func markBio(_ id: Int) { defaults.set(true, forKey: "bio.\(id)") }
+
     func mluvDone(_ n: Int) -> Bool { defaults.bool(forKey: "mluv.\(n)") }
     func markMluv(_ n: Int) { defaults.set(true, forKey: "mluv.\(n)") }
 
@@ -158,6 +163,22 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if p.lit4Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.chem {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.chemDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.bio {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.bioDone(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

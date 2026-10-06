@@ -49,6 +49,13 @@ enum Route: Hashable {
     case lit4Map
     case lit4Lesson(Int)
     case lit4Ex(Int)
+    case sciMap
+    case chemMap
+    case chemLesson(Int)
+    case chemEx(Int)
+    case bioMap
+    case bioLesson(Int)
+    case bioEx(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -100,6 +107,13 @@ enum Route: Hashable {
         case .lit4Map: return "lit4map"
         case .lit4Lesson(let id): return "lit4unit\(id)"
         case .lit4Ex(let id): return "lit4ex\(id)"
+        case .sciMap: return "scimap"
+        case .chemMap: return "chemmap"
+        case .chemLesson(let id): return "chemunit\(id)"
+        case .chemEx(let id): return "chemex\(id)"
+        case .bioMap: return "biomap"
+        case .bioLesson(let id): return "biounit\(id)"
+        case .bioEx(let id): return "bioex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -200,6 +214,20 @@ enum Route: Hashable {
             return [.czechMap, .litYears, .lit4Map, .lit4Lesson(id)]
         case .lit4Ex(let id):
             return [.czechMap, .litYears, .lit4Map, .lit4Lesson(id), .lit4Ex(id)]
+        case .sciMap:
+            return [.sciMap]
+        case .chemMap:
+            return [.sciMap, .chemMap]
+        case .chemLesson(let id):
+            return [.sciMap, .chemMap, .chemLesson(id)]
+        case .chemEx(let id):
+            return [.sciMap, .chemMap, .chemLesson(id), .chemEx(id)]
+        case .bioMap:
+            return [.sciMap, .bioMap]
+        case .bioLesson(let id):
+            return [.sciMap, .bioMap, .bioLesson(id)]
+        case .bioEx(let id):
+            return [.sciMap, .bioMap, .bioLesson(id), .bioEx(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -238,6 +266,9 @@ func routeFromPage(_ page: String) -> Route? {
     case "lit2map": return .lit2Map
     case "lit3map": return .lit3Map
     case "lit4map": return .lit4Map
+    case "scimap": return .sciMap
+    case "chemmap": return .chemMap
+    case "biomap": return .bioMap
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -280,6 +311,18 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /hwex(\d+)/), let n = Int(m.1) {
             return .hwEx(n)
+        }
+        if let m = page.wholeMatch(of: /chemunit(\d+)/), let n = Int(m.1) {
+            return .chemLesson(n)
+        }
+        if let m = page.wholeMatch(of: /chemex(\d+)/), let n = Int(m.1) {
+            return .chemEx(n)
+        }
+        if let m = page.wholeMatch(of: /biounit(\d+)/), let n = Int(m.1) {
+            return .bioLesson(n)
+        }
+        if let m = page.wholeMatch(of: /bioex(\d+)/), let n = Int(m.1) {
+            return .bioEx(n)
         }
         if let m = page.wholeMatch(of: /lit4unit(\d+)/), let n = Int(m.1) {
             return .lit4Lesson(n)

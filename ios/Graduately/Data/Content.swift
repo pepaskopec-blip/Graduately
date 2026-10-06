@@ -39,6 +39,8 @@ final class Content {
     let lit2: [J]
     let lit3: [J]
     let lit4: [J]
+    let chem: [J]
+    let bio: [J]
     let mluvnice: [J]
     let books: [J]
     let changelog: [J]
@@ -78,6 +80,8 @@ final class Content {
         lit2 = raw.arr("lit2")
         lit3 = raw.arr("lit3")
         lit4 = raw.arr("lit4")
+        chem = raw.arr("chem")
+        bio = raw.arr("bio")
         mluvnice = raw.arr("mluvnice")
         books = raw.arr("books")
         changelog = raw.arr("changelog")
@@ -94,6 +98,8 @@ final class Content {
     func lit2Lesson(_ id: Int) -> J? { lit2.first { $0.int("id") == id } }
     func lit3Lesson(_ id: Int) -> J? { lit3.first { $0.int("id") == id } }
     func lit4Lesson(_ id: Int) -> J? { lit4.first { $0.int("id") == id } }
+    func chemLesson(_ id: Int) -> J? { chem.first { $0.int("id") == id } }
+    func bioLesson(_ id: Int) -> J? { bio.first { $0.int("id") == id } }
     func mluv(_ n: Int) -> J? { mluvnice.first { $0.int("id") == n } }
     func book(_ id: String) -> J? { books.first { $0.str("id") == id } }
 

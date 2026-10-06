@@ -188,6 +188,46 @@ void draw_civics_icon(GtkDrawingArea *area, cairo_t *cr,
     cairo_stroke(cr);
 }
 
+/* Round flask for Základy přírodopisných věd. */
+void draw_science_icon(GtkDrawingArea *area, cairo_t *cr,
+                       int width, int height, gpointer data) {
+    const double s = MIN(width, height);
+    const double cx = width / 2.0;
+    const double top = height / 2.0 - s * 0.38;
+    const Rgb c = mix_rgb(color_from_hex(app_theme.on_accent),
+                          color_from_hex(app_theme.accent2), 0.22);
+
+    (void)area;
+    (void)data;
+
+    cairo_set_source_rgb(cr, c.r, c.g, c.b);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
+    cairo_set_line_width(cr, MAX(1.6, s * 0.07));
+
+    cairo_move_to(cr, cx - s * 0.08, top);
+    cairo_line_to(cr, cx - s * 0.08, top + s * 0.22);
+    cairo_line_to(cr, cx - s * 0.28, top + s * 0.58);
+    cairo_curve_to(cr, cx - s * 0.34, top + s * 0.78,
+                   cx - s * 0.16, top + s * 0.82,
+                   cx, top + s * 0.82);
+    cairo_curve_to(cr, cx + s * 0.16, top + s * 0.82,
+                   cx + s * 0.34, top + s * 0.78,
+                   cx + s * 0.28, top + s * 0.58);
+    cairo_line_to(cr, cx + s * 0.08, top + s * 0.22);
+    cairo_line_to(cr, cx + s * 0.08, top);
+    cairo_stroke(cr);
+
+    cairo_move_to(cr, cx - s * 0.14, top);
+    cairo_line_to(cr, cx + s * 0.14, top);
+    cairo_stroke(cr);
+
+    cairo_set_line_width(cr, MAX(1.4, s * 0.055));
+    cairo_move_to(cr, cx - s * 0.16, top + s * 0.62);
+    cairo_line_to(cr, cx + s * 0.16, top + s * 0.62);
+    cairo_stroke(cr);
+}
+
 /* Open book glyph, painted in the given colour. */
 static void book_paint(cairo_t *cr, int width, int height, Rgb c) {
     const double w = width;

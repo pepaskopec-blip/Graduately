@@ -432,5 +432,6 @@ void apply_theme(void) {
     on4_rail_theme_reset();
     czech_rail_theme_reset();
     lit_rail_theme_reset();
+    sci_rail_theme_reset();
     book_rail_theme_reset();
 }

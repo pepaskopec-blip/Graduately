@@ -166,6 +166,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         refresh()
     }
 
+    fun markChem(id: Int) {
+        progress.markChem(id)
+        refresh()
+    }
+
+    fun markBio(id: Int) {
+        progress.markBio(id)
+        refresh()
+    }
+
     fun markMluv(n: Int) {
         progress.markMluv(n)
         refresh()

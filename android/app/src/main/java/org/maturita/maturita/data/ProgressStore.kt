@@ -53,6 +53,11 @@ class ProgressStore(context: Context) {
     fun lit4Done(id: Int) = prefs.getBoolean("lit4.$id", false)
     fun markLit4(id: Int) { prefs.edit().putBoolean("lit4.$id", true).apply() }
 
+    fun chemDone(id: Int) = prefs.getBoolean("chem.$id", false)
+    fun markChem(id: Int) { prefs.edit().putBoolean("chem.$id", true).apply() }
+    fun bioDone(id: Int) = prefs.getBoolean("bio.$id", false)
+    fun markBio(id: Int) { prefs.edit().putBoolean("bio.$id", true).apply() }
+
     fun mluvDone(n: Int) = prefs.getBoolean("mluv.$n", false)
     fun markMluv(n: Int) { prefs.edit().putBoolean("mluv.$n", true).apply() }
 
@@ -151,6 +156,22 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if (p.lit4Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.chem.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.chemDone(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.bio.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.bioDone(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

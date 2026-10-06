@@ -850,6 +850,20 @@ fun NetQuizScreen(vm: AppViewModel, id: Int) {
 }
 
 @Composable
+fun SciQuizScreen(vm: AppViewModel, area: String, id: Int) {
+    val lesson = (if (area == "bio") vm.content.bioLesson(id) else vm.content.chemLesson(id)) ?: return
+    val spec = J(org.json.JSONObject().apply {
+        put("type", "choice")
+        put("title", vm.tr(lesson.str("exTitleKey")))
+        put("sub", lesson.str("quizHeadKey"))
+        put("questions", lesson.o.optJSONArray("quiz"))
+    })
+    DispatchExercise(vm, spec, vm.tr(lesson.str("exTitleKey"))) {
+        if (area == "bio") vm.markBio(id) else vm.markChem(id)
+    }
+}
+
+@Composable
 fun LitQuizScreen(vm: AppViewModel, year: Int, id: Int) {
     val lesson = when (year) {
         2 -> vm.content.lit2Lesson(id)

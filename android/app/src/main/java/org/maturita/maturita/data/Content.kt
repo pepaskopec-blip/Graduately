@@ -37,6 +37,8 @@ class Content(root: JSONObject) {
     val lit2 = raw.arr("lit2")
     val lit3 = raw.arr("lit3")
     val lit4 = raw.arr("lit4")
+    val chem = raw.arr("chem")
+    val bio = raw.arr("bio")
     val mluvnice = raw.arr("mluvnice")
     val books = raw.arr("books")
     val changelog = raw.arr("changelog")
@@ -52,6 +54,8 @@ class Content(root: JSONObject) {
     fun lit2Lesson(id: Int) = lit2.firstOrNull { it.int("id") == id }
     fun lit3Lesson(id: Int) = lit3.firstOrNull { it.int("id") == id }
     fun lit4Lesson(id: Int) = lit4.firstOrNull { it.int("id") == id }
+    fun chemLesson(id: Int) = chem.firstOrNull { it.int("id") == id }
+    fun bioLesson(id: Int) = bio.firstOrNull { it.int("id") == id }
     fun mluv(n: Int) = mluvnice.firstOrNull { it.int("id") == n }
     fun book(id: String) = books.firstOrNull { it.str("id") == id }
 
