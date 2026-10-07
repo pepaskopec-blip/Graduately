@@ -1346,16 +1346,96 @@ struct PlotScreen: View {
     }
 }
 
-private final class EnSpeaker: ObservableObject {
-    private let synth = AVSpeechSynthesizer()
+private final class EnSpeaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
+    enum Phase { case idle, playing, paused }
 
-    func speak(_ text: String) {
-        if synth.isSpeaking { synth.stopSpeaking(at: .immediate) }
-        let utterance = AVSpeechUtterance(string: text)
+    private let synth = AVSpeechSynthesizer()
+    private var text = ""
+    private var base = 0
+    private var cursor = 0
+    private var restarting = false
+    private var settingsDirty = false
+
+    @Published var rate: Float = 0.9
+    @Published var volume: Float = 1
+    @Published var phase: Phase = .idle
+    var onFinish: (() -> Void)?
+
+    override init() {
+        super.init()
+        synth.delegate = self
+    }
+
+    func toggle(_ full: String) {
+        if text != full {
+            text = full
+            cursor = 0
+            base = 0
+            synth.stopSpeaking(at: .immediate)
+            phase = .idle
+        }
+        switch phase {
+        case .idle:
+            cursor = 0
+            start(from: 0)
+        case .playing:
+            synth.pauseSpeaking(at: .immediate)
+            phase = .paused
+        case .paused:
+            if settingsDirty || !synth.isPaused {
+                start(from: cursor)
+            } else {
+                synth.continueSpeaking()
+                phase = .playing
+            }
+            settingsDirty = false
+        }
+    }
+
+    func applySettings() {
+        settingsDirty = true
+        guard phase == .playing else { return }
+        restarting = true
+        synth.stopSpeaking(at: .immediate)
+        start(from: cursor)
+        settingsDirty = false
+    }
+
+    private func start(from index: Int) {
+        let ns = text as NSString
+        let start = min(max(0, index), ns.length)
+        base = start
+        let rest = ns.substring(from: start)
+        let utterance = AVSpeechUtterance(string: rest.isEmpty ? text : rest)
+        if rest.isEmpty { base = 0 }
         utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
             ?? AVSpeechSynthesisVoice(language: "en-US")
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * rate
+        utterance.volume = volume
         synth.speak(utterance)
+        phase = .playing
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+        cursor = base + characterRange.location
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        DispatchQueue.main.async {
+            self.phase = .idle
+            self.cursor = 0
+            self.onFinish?()
+        }
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        if restarting {
+            restarting = false
+            return
+        }
+        DispatchQueue.main.async {
+            if self.phase == .playing { self.phase = .idle }
+        }
     }
 }
 
@@ -1403,15 +1483,7 @@ struct EngExScreen: View {
                     Text(vm.tr("en_listen_note"))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    PillButton(label: vm.tr("en_play")) {
-                        played = true
-                        showScript = false
-                        speaker.speak(listening)
-                        let wait = max(2.5, Double(listening.split(separator: " ").count) * 0.42)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
-                            showScript = true
-                        }
-                    }
+                    listenControls(listening)
                     if showScript {
                         Text(listening).textSelection(.enabled)
                     }
@@ -1460,6 +1532,46 @@ struct EngExScreen: View {
         Text(vm.tr(key))
             .font(.title3.weight(.bold))
             .padding(.top, 8)
+    }
+
+    private func listenControls(_ text: String) -> some View {
+        let label: String = switch speaker.phase {
+        case .playing: vm.tr("en_pause")
+        case .paused: vm.tr("en_resume")
+        case .idle: vm.tr("en_play")
+        }
+        return VStack(alignment: .leading, spacing: 8) {
+            PillButton(label: label) {
+                played = true
+                speaker.onFinish = { showScript = true }
+                speaker.toggle(text)
+            }
+            listenSlider(vm.tr("en_speed"), value: Double(speaker.rate), range: 0.6...1.5, caption: String(format: "%.1f×", speaker.rate)) { next in
+                speaker.rate = Float(next)
+            }
+            listenSlider(vm.tr("en_volume"), value: Double(speaker.volume), range: 0...1, caption: "\(Int(speaker.volume * 100)) %") { next in
+                speaker.volume = Float(next)
+            }
+        }
+    }
+
+    private func listenSlider(_ title: String, value: Double, range: ClosedRange<Double>, caption: String, set: @escaping (Double) -> Void) -> some View {
+        HStack(spacing: 10) {
+            Text(title)
+                .frame(width: 88, alignment: .leading)
+                .foregroundStyle(.secondary)
+            Slider(
+                value: Binding(get: { value }, set: set),
+                in: range,
+                onEditingChanged: { editing in
+                    if !editing { speaker.applySettings() }
+                }
+            )
+            Text(caption)
+                .monospacedDigit()
+                .frame(width: 52, alignment: .trailing)
+                .foregroundStyle(.secondary)
+        }
     }
 
     private func choiceBlock(_ questions: [J], picks: Binding<[Int]>) -> some View {

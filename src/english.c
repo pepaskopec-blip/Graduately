@@ -2,7 +2,12 @@
 
 #include <string.h>
 
+#ifdef __APPLE__
+#include <objc/message.h>
+#include <objc/runtime.h>
+#endif
 #ifdef G_OS_UNIX
+#include <signal.h>
 #include <sys/wait.h>
 #endif
 
@@ -54,13 +59,26 @@ typedef struct {
     GtkWidget *essay;
     GtkWidget *script;
     GtkWidget *play_note;
+    GtkWidget *play_btn;
     gboolean played;
     gboolean busy;
+    gboolean paused;
     gboolean fallback;
+    gboolean restarting;
+    gboolean voice_dirty;
+    gboolean heard;
+    double speed;
+    double gain;
     GPid pid;
     guint timer;
+    guint tick_ms;
+    guint apply_src;
+    guint poll;
     int tick;
     gchar **sentences;
+#ifdef __APPLE__
+    id synth;
+#endif
 } EnEx;
 
 typedef struct {
@@ -890,16 +908,40 @@ static void en_split_script(EnEx *ctx) {
     ctx->tick = 0;
 }
 
+static void en_sync_play(EnEx *ctx) {
+    const char *key = "en_play";
+
+    if (!ctx->play_btn)
+        return;
+    if (ctx->paused)
+        key = "en_resume";
+    else if (ctx->busy)
+        key = "en_pause";
+    gtk_button_set_label(GTK_BUTTON(ctx->play_btn), tr(key));
+}
+
+static void en_show_script(EnEx *ctx) {
+    if (ctx->script && ctx->lesson->listening) {
+        gtk_label_set_text(GTK_LABEL(ctx->script), ctx->lesson->listening);
+        gtk_widget_set_visible(ctx->script, TRUE);
+    }
+}
+
+static void en_schedule_tick(EnEx *ctx);
+
 static gboolean en_tick(gpointer data) {
     EnEx *ctx = data;
     GString *shown;
     int i;
 
+    if (ctx->paused)
+        return G_SOURCE_CONTINUE;
     if (!ctx->sentences || !ctx->sentences[ctx->tick]) {
         ctx->timer = 0;
         ctx->busy = FALSE;
-        if (ctx->script && ctx->lesson->listening)
-            gtk_label_set_text(GTK_LABEL(ctx->script), ctx->lesson->listening);
+        ctx->paused = FALSE;
+        en_sync_play(ctx);
+        en_show_script(ctx);
         return G_SOURCE_REMOVE;
     }
     shown = g_string_new(NULL);
@@ -915,9 +957,22 @@ static gboolean en_tick(gpointer data) {
     if (!ctx->sentences[ctx->tick]) {
         ctx->timer = 0;
         ctx->busy = FALSE;
+        ctx->paused = FALSE;
+        en_sync_play(ctx);
+        en_show_script(ctx);
         return G_SOURCE_REMOVE;
     }
     return G_SOURCE_CONTINUE;
+}
+
+static void en_schedule_tick(EnEx *ctx) {
+    guint ms = ctx->tick_ms;
+
+    if (ctx->timer)
+        g_source_remove(ctx->timer);
+    if (ms < 400)
+        ms = 400;
+    ctx->timer = g_timeout_add(ms, en_tick, ctx);
 }
 
 static void en_start_fallback(EnEx *ctx) {
@@ -933,34 +988,40 @@ static void en_start_fallback(EnEx *ctx) {
     if (!ctx->sentences)
         en_split_script(ctx);
     ctx->tick = 0;
-    if (ctx->timer)
-        g_source_remove(ctx->timer);
-    ctx->timer = g_timeout_add(2200, en_tick, ctx);
+    ctx->tick_ms = (guint)(2200.0 / (ctx->speed > 0.2 ? ctx->speed : 0.9));
+    en_schedule_tick(ctx);
+    en_sync_play(ctx);
     en_tick(ctx);
 }
+
+static gboolean en_launch(EnEx *ctx);
 
 static void en_voice_done(GPid pid, gint status, gpointer data) {
     EnEx *ctx = data;
     gboolean ok = FALSE;
+    gboolean restart = ctx->restarting;
 
     g_spawn_close_pid(pid);
     if (ctx->pid == pid)
         ctx->pid = 0;
+    if (restart) {
+        ctx->restarting = FALSE;
+        en_launch(ctx);
+        return;
+    }
 #ifdef G_OS_UNIX
     ok = WIFEXITED(status) && WEXITSTATUS(status) == 0;
 #else
     ok = status == 0;
 #endif
+    ctx->busy = FALSE;
+    ctx->paused = FALSE;
+    en_sync_play(ctx);
     if (!ok) {
-        ctx->busy = FALSE;
         en_start_fallback(ctx);
         return;
     }
-    ctx->busy = FALSE;
-    if (ctx->script && ctx->lesson->listening) {
-        gtk_label_set_text(GTK_LABEL(ctx->script), ctx->lesson->listening);
-        gtk_widget_set_visible(ctx->script, TRUE);
-    }
+    en_show_script(ctx);
 }
 
 static gboolean en_spawn(char **argv, GPid *pid) {
@@ -977,47 +1038,297 @@ static gboolean en_spawn(char **argv, GPid *pid) {
     return TRUE;
 }
 
-static void en_play_clicked(GtkButton *button, gpointer data) {
-    EnEx *ctx = data;
-    char *text;
+#ifdef __APPLE__
+static id en_ns(const char *s) {
+    return ((id (*)(Class, SEL, const char *))objc_msgSend)(
+        objc_getClass("NSString"), sel_registerName("stringWithUTF8String:"), s);
+}
 
-    (void)button;
-    if (!ctx->lesson->listening || ctx->busy)
+static void en_mac_levels(EnEx *ctx) {
+    float rate = (float)(180.0 * (ctx->speed > 0.2 ? ctx->speed : 0.9));
+    float vol = (float)(ctx->gain < 0 ? 0 : (ctx->gain > 1 ? 1 : ctx->gain));
+
+    ((void (*)(id, SEL, float))objc_msgSend)(
+        ctx->synth, sel_registerName("setRate:"), rate);
+    ((void (*)(id, SEL, float))objc_msgSend)(
+        ctx->synth, sel_registerName("setVolume:"), vol);
+}
+
+static gboolean en_mac_ensure(EnEx *ctx) {
+    static const char *voices[] = {
+        "com.apple.voice.compact.en-GB.Daniel",
+        "com.apple.speech.synthesis.voice.daniel",
+        "com.apple.voice.compact.en-US.Samantha",
+        "com.apple.speech.synthesis.voice.samantha",
+        NULL
+    };
+    Class cls;
+    id obj;
+
+    if (ctx->synth)
+        return TRUE;
+    cls = objc_getClass("NSSpeechSynthesizer");
+    if (!cls)
+        return FALSE;
+    obj = ((id (*)(Class, SEL))objc_msgSend)(cls, sel_registerName("alloc"));
+    obj = ((id (*)(id, SEL))objc_msgSend)(obj, sel_registerName("init"));
+    if (!obj)
+        return FALSE;
+    ctx->synth = obj;
+    for (int i = 0; voices[i]; i++) {
+        if (((BOOL (*)(id, SEL, id))objc_msgSend)(
+                obj, sel_registerName("setVoice:"), en_ns(voices[i])))
+            break;
+    }
+    return TRUE;
+}
+
+static gboolean en_mac_speaking(EnEx *ctx) {
+    if (!ctx->synth)
+        return FALSE;
+    return ((BOOL (*)(id, SEL))objc_msgSend)(
+        ctx->synth, sel_registerName("isSpeaking"));
+}
+
+static void en_mac_stop(EnEx *ctx) {
+    if (ctx->synth)
+        ((void (*)(id, SEL))objc_msgSend)(
+            ctx->synth, sel_registerName("stopSpeaking"));
+}
+
+static gboolean en_mac_start(EnEx *ctx) {
+    if (!en_mac_ensure(ctx))
+        return FALSE;
+    en_mac_levels(ctx);
+    ctx->heard = FALSE;
+    return ((BOOL (*)(id, SEL, id))objc_msgSend)(
+        ctx->synth, sel_registerName("startSpeakingString:"),
+        en_ns(ctx->lesson->listening));
+}
+
+static void en_mac_pause(EnEx *ctx) {
+    ((BOOL (*)(id, SEL, long))objc_msgSend)(
+        ctx->synth, sel_registerName("pauseSpeakingAtBoundary:"), 1L);
+}
+
+static void en_mac_resume(EnEx *ctx) {
+    if (ctx->voice_dirty) {
+        ctx->voice_dirty = FALSE;
+        en_mac_stop(ctx);
+        en_mac_start(ctx);
         return;
+    }
+    ((BOOL (*)(id, SEL))objc_msgSend)(
+        ctx->synth, sel_registerName("continueSpeaking"));
+}
+
+static gboolean en_poll_speech(gpointer data) {
+    EnEx *ctx = data;
+
+    if (ctx->paused || ctx->restarting)
+        return G_SOURCE_CONTINUE;
+    if (en_mac_speaking(ctx)) {
+        ctx->heard = TRUE;
+        return G_SOURCE_CONTINUE;
+    }
+    if (!ctx->heard)
+        return G_SOURCE_CONTINUE;
+    ctx->poll = 0;
+    ctx->busy = FALSE;
+    ctx->paused = FALSE;
+    en_sync_play(ctx);
+    en_show_script(ctx);
+    return G_SOURCE_REMOVE;
+}
+#endif
+
+static gboolean en_launch(EnEx *ctx) {
+    char *text = (char *)ctx->lesson->listening;
+    double speed = ctx->speed > 0.2 ? ctx->speed : 0.9;
+    char rate[16];
+    char amp[16];
+
     ctx->played = TRUE;
     ctx->busy = TRUE;
-    text = (char *)ctx->lesson->listening;
+    ctx->paused = FALSE;
+    ctx->voice_dirty = FALSE;
 #ifdef __APPLE__
-    {
-        char *tries[][8] = {
-            {"say", "-v", "Samantha", "-r", "150", text, NULL},
-            {"say", "-v", "Daniel", "-r", "150", text, NULL},
-            {"say", "-r", "150", text, NULL},
-        };
-        for (int i = 0; i < 3; i++) {
-            if (en_spawn(tries[i], &ctx->pid)) {
-                g_child_watch_add(ctx->pid, en_voice_done, ctx);
-                return;
-            }
-        }
-    }
-#else
-    {
-        char *a[] = {"espeak-ng", "-v", "en", "-s", "140", text, NULL};
-        char *b[] = {"espeak", "-v", "en", "-s", "140", text, NULL};
-        char *c[] = {"spd-say", "-l", "en", text, NULL};
-        char **tries[] = {a, b, c};
-
-        for (int i = 0; i < 3; i++) {
-            if (en_spawn(tries[i], &ctx->pid)) {
-                g_child_watch_add(ctx->pid, en_voice_done, ctx);
-                return;
-            }
-        }
+    if (en_mac_start(ctx)) {
+        if (!ctx->poll)
+            ctx->poll = g_timeout_add(200, en_poll_speech, ctx);
+        en_sync_play(ctx);
+        return TRUE;
     }
 #endif
+    g_snprintf(rate, sizeof rate, "%d", (int)(160.0 * speed));
+    g_snprintf(amp, sizeof amp, "%d", (int)(ctx->gain * 200.0));
+    {
+        char *a[] = {"espeak-ng", "-v", "en", "-s", rate, "-a", amp, text, NULL};
+        char *b[] = {"espeak", "-v", "en", "-s", rate, "-a", amp, text, NULL};
+#ifdef __APPLE__
+        char *c[] = {"say", "-r", rate, text, NULL};
+        char **tries[] = {c};
+        int n = 1;
+#else
+        char *c[] = {"spd-say", "-l", "en", "-r", rate, text, NULL};
+        char **tries[] = {a, b, c};
+        int n = 3;
+#endif
+        (void)a;
+        (void)b;
+        for (int i = 0; i < n; i++) {
+            if (en_spawn(tries[i], &ctx->pid)) {
+                g_child_watch_add(ctx->pid, en_voice_done, ctx);
+                en_sync_play(ctx);
+                return TRUE;
+            }
+        }
+    }
     ctx->busy = FALSE;
     en_start_fallback(ctx);
+    return FALSE;
+}
+
+static void en_pause_voice(EnEx *ctx) {
+    ctx->paused = TRUE;
+#ifdef __APPLE__
+    if (ctx->synth && en_mac_speaking(ctx)) {
+        en_mac_pause(ctx);
+        en_sync_play(ctx);
+        return;
+    }
+#endif
+#ifdef G_OS_UNIX
+    if (ctx->pid) {
+        kill((pid_t)ctx->pid, SIGSTOP);
+        en_sync_play(ctx);
+        return;
+    }
+#endif
+    en_sync_play(ctx);
+}
+
+static void en_resume_voice(EnEx *ctx) {
+    ctx->paused = FALSE;
+#ifdef __APPLE__
+    if (ctx->synth) {
+        en_mac_resume(ctx);
+        if (!ctx->poll)
+            ctx->poll = g_timeout_add(200, en_poll_speech, ctx);
+        en_sync_play(ctx);
+        return;
+    }
+#endif
+    if (ctx->voice_dirty) {
+        ctx->voice_dirty = FALSE;
+        if (ctx->fallback) {
+            ctx->tick_ms = (guint)(2200.0 / (ctx->speed > 0.2 ? ctx->speed : 0.9));
+            en_schedule_tick(ctx);
+        } else if (ctx->pid) {
+            ctx->restarting = TRUE;
+#ifdef G_OS_UNIX
+            kill((pid_t)ctx->pid, SIGKILL);
+#endif
+        }
+        en_sync_play(ctx);
+        return;
+    }
+#ifdef G_OS_UNIX
+    if (ctx->pid) {
+        kill((pid_t)ctx->pid, SIGCONT);
+        en_sync_play(ctx);
+        return;
+    }
+#endif
+    en_sync_play(ctx);
+}
+
+static void en_restart_voice(EnEx *ctx) {
+    ctx->voice_dirty = FALSE;
+    ctx->paused = FALSE;
+#ifdef __APPLE__
+    if (ctx->synth) {
+        ctx->restarting = TRUE;
+        en_mac_stop(ctx);
+        ctx->restarting = FALSE;
+        en_mac_start(ctx);
+        if (!ctx->poll)
+            ctx->poll = g_timeout_add(200, en_poll_speech, ctx);
+        en_sync_play(ctx);
+        return;
+    }
+#endif
+    if (ctx->fallback) {
+        ctx->tick_ms = (guint)(2200.0 / (ctx->speed > 0.2 ? ctx->speed : 0.9));
+        en_schedule_tick(ctx);
+        return;
+    }
+    if (ctx->pid) {
+        ctx->restarting = TRUE;
+#ifdef G_OS_UNIX
+        kill((pid_t)ctx->pid, SIGKILL);
+#endif
+    }
+}
+
+static gboolean en_apply_voice(gpointer data) {
+    EnEx *ctx = data;
+
+    ctx->apply_src = 0;
+    if (ctx->busy && !ctx->paused)
+        en_restart_voice(ctx);
+    return G_SOURCE_REMOVE;
+}
+
+static void en_level_changed(GtkRange *range, gpointer data) {
+    EnEx *ctx = data;
+    const char *which = g_object_get_data(G_OBJECT(range), "en-level");
+
+    if (g_strcmp0(which, "speed") == 0)
+        ctx->speed = gtk_range_get_value(range);
+    else
+        ctx->gain = gtk_range_get_value(range) / 100.0;
+    ctx->voice_dirty = TRUE;
+    if (ctx->apply_src)
+        g_source_remove(ctx->apply_src);
+    ctx->apply_src = g_timeout_add(180, en_apply_voice, ctx);
+}
+
+static void en_play_clicked(GtkButton *button, gpointer data) {
+    EnEx *ctx = data;
+
+    (void)button;
+    if (!ctx->lesson->listening)
+        return;
+    ctx->played = TRUE;
+    if (!ctx->busy) {
+        en_launch(ctx);
+        return;
+    }
+    if (ctx->paused)
+        en_resume_voice(ctx);
+    else
+        en_pause_voice(ctx);
+}
+
+static GtkWidget *en_labeled_scale(EnEx *ctx, const char *key, const char *which,
+                                   double min, double max, double value, int digits) {
+    GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    GtkWidget *lab = gtk_label_new(NULL);
+    GtkWidget *scale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
+                                                min, max, max > 10 ? 1 : 0.05);
+
+    i18n_bind(lab, key, 0);
+    gtk_widget_set_size_request(lab, 96, -1);
+    gtk_label_set_xalign(GTK_LABEL(lab), 0);
+    gtk_range_set_value(GTK_RANGE(scale), value);
+    gtk_scale_set_digits(GTK_SCALE(scale), digits);
+    gtk_widget_set_hexpand(scale, TRUE);
+    g_object_set_data(G_OBJECT(scale), "en-level", (gpointer)which);
+    g_signal_connect(scale, "value-changed", G_CALLBACK(en_level_changed), ctx);
+    gtk_box_append(GTK_BOX(row), lab);
+    gtk_box_append(GTK_BOX(row), scale);
+    return row;
 }
 
 static void en_check(GtkButton *button, gpointer data) {
@@ -1171,12 +1482,20 @@ static GtkWidget *build_en_ex_page(int year, int index) {
         gtk_widget_add_css_class(note, "quiz-intro");
         gtk_box_append(GTK_BOX(body), note);
 
-        play = gtk_button_new();
-        i18n_bind(play, "en_play", 1);
+        ctx->speed = 0.9;
+        ctx->gain = 1.0;
+        play = gtk_button_new_with_label(tr("en_play"));
         gtk_widget_add_css_class(play, "btn-primary");
         gtk_widget_set_halign(play, GTK_ALIGN_START);
         gtk_box_append(GTK_BOX(body), play);
+        ctx->play_btn = play;
         g_signal_connect(play, "clicked", G_CALLBACK(en_play_clicked), ctx);
+        gtk_box_append(GTK_BOX(body),
+                       en_labeled_scale(ctx, "en_speed", "speed",
+                                        0.6, 1.5, ctx->speed, 1));
+        gtk_box_append(GTK_BOX(body),
+                       en_labeled_scale(ctx, "en_volume", "volume",
+                                        0, 100, ctx->gain * 100.0, 0));
 
         ctx->play_note = gtk_label_new("");
         gtk_label_set_wrap(GTK_LABEL(ctx->play_note), TRUE);

@@ -38,10 +38,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
@@ -1395,6 +1397,11 @@ fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
     var essay by remember(year, id) { mutableStateOf("") }
     var played by remember(year, id) { mutableStateOf(false) }
     var showScript by remember(year, id) { mutableStateOf(false) }
+    var phase by remember(year, id) { mutableIntStateOf(0) }
+    var speed by remember(year, id) { mutableStateOf(0.9f) }
+    var volume by remember(year, id) { mutableStateOf(1f) }
+    var cursor by remember(year, id) { mutableIntStateOf(0) }
+    var utterance by remember(year, id) { mutableStateOf("") }
     var revealed by remember(year, id) { mutableStateOf(false) }
     var showModel by remember(year, id) { mutableStateOf(false) }
     var fb by remember(year, id) { mutableStateOf("" to "") }
@@ -1455,31 +1462,89 @@ fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
             EngChoices(readQ, readPicks, revealed) { index, option -> readPicks[index] = option }
         }
         if (listening != null) {
+            fun speakFrom(index: Int) {
+                val engine = tts
+                if (engine == null) {
+                    showScript = true
+                    phase = 0
+                    return
+                }
+                val start = index.coerceIn(0, listening.length)
+                val id = "en-${System.nanoTime()}"
+                utterance = id
+                engine.language = Locale.UK
+                engine.setSpeechRate(speed)
+                engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {}
+                    override fun onRangeStart(utteranceId: String?, rangeStart: Int, rangeEnd: Int, frame: Int) {
+                        if (utteranceId == id) cursor = start + rangeStart
+                    }
+                    override fun onDone(utteranceId: String?) {
+                        if (utteranceId != utterance) return
+                        Handler(Looper.getMainLooper()).post {
+                            phase = 0
+                            cursor = 0
+                            showScript = true
+                        }
+                    }
+                    @Deprecated("Deprecated in Java")
+                    override fun onError(utteranceId: String?) {
+                        if (utteranceId != utterance) return
+                        Handler(Looper.getMainLooper()).post { showScript = true; phase = 0 }
+                    }
+                })
+                val params = Bundle().apply {
+                    putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.coerceIn(0f, 1f))
+                }
+                val rest = listening.substring(start).ifEmpty { listening }
+                engine.speak(rest, TextToSpeech.QUEUE_FLUSH, params, id)
+                phase = 1
+            }
             Text(vm.tr("en_sec_listen"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
             Text(vm.tr("en_listen_note"), color = MaterialTheme.colorScheme.onSurfaceVariant)
             OutlinedButton(onClick = {
                 played = true
-                showScript = false
-                val engine = tts
-                if (engine == null) {
-                    showScript = true
-                } else {
-                    engine.language = Locale.UK
-                    engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-                        override fun onStart(utteranceId: String?) {}
-                        override fun onDone(utteranceId: String?) {
-                            Handler(Looper.getMainLooper()).post { showScript = true }
-                        }
-                        @Deprecated("Deprecated in Java")
-                        override fun onError(utteranceId: String?) {
-                            Handler(Looper.getMainLooper()).post { showScript = true }
-                        }
-                    })
-                    engine.speak(listening, TextToSpeech.QUEUE_FLUSH, null, "en-lesson")
-                    val wait = (listening.split(" ").size * 420L).coerceAtLeast(2500L)
-                    Handler(Looper.getMainLooper()).postDelayed({ showScript = true }, wait)
+                when (phase) {
+                    1 -> {
+                        utterance = ""
+                        tts?.stop()
+                        phase = 2
+                    }
+                    2 -> speakFrom(cursor)
+                    else -> {
+                        cursor = 0
+                        speakFrom(0)
+                    }
                 }
-            }) { Text(vm.tr("en_play")) }
+            }) {
+                Text(when (phase) {
+                    1 -> vm.tr("en_pause")
+                    2 -> vm.tr("en_resume")
+                    else -> vm.tr("en_play")
+                })
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(vm.tr("en_speed"), modifier = Modifier.width(96.dp))
+                Slider(
+                    value = speed,
+                    onValueChange = { speed = it },
+                    valueRange = 0.6f..1.5f,
+                    onValueChangeFinished = { if (phase == 1) speakFrom(cursor) },
+                    modifier = Modifier.weight(1f),
+                )
+                Text("%.1f×".format(speed), modifier = Modifier.width(48.dp))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(vm.tr("en_volume"), modifier = Modifier.width(96.dp))
+                Slider(
+                    value = volume,
+                    onValueChange = { volume = it },
+                    valueRange = 0f..1f,
+                    onValueChangeFinished = { if (phase == 1) speakFrom(cursor) },
+                    modifier = Modifier.weight(1f),
+                )
+                Text("${(volume * 100).toInt()} %", modifier = Modifier.width(48.dp))
+            }
             if (showScript) Text(listening)
             EngChoices(listenQ, listenPicks, revealed) { index, option -> listenPicks[index] = option }
         }
