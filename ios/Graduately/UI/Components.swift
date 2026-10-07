@@ -61,6 +61,9 @@ struct MacFillGrid<Content: View>: View {
     var minHeight: CGFloat = 148
     var spacing: CGFloat = 16
     var inset: CGFloat = 28
+    /// Home embeds the grid in its own scroll view. A second scroller here
+    /// swallows the wheel once a banner (the changelog) makes the page taller.
+    var scrolls = true
     @ViewBuilder var content: (Int) -> Content
 
     var body: some View {
@@ -74,32 +77,36 @@ struct MacFillGrid<Content: View>: View {
             let tileH = max(minHeight, (gridH - spacing * CGFloat(max(rows - 1, 0))) / CGFloat(rows))
             let tileW = (innerW - spacing * CGFloat(max(cols - 1, 0))) / CGFloat(max(cols, 1))
             let lastCount = count - (rows - 1) * cols
-            ScrollView {
-                VStack(spacing: spacing) {
-                    ForEach(0..<rows, id: \.self) { row in
-                        let stretch = row < rows - 1 || lastCount > 1
-                        HStack(spacing: spacing) {
-                            ForEach(0..<cols, id: \.self) { col in
-                                let index = row * cols + col
-                                if index < count {
-                                    content(index)
-                                        .frame(
-                                            maxWidth: stretch ? .infinity : tileW,
-                                            minHeight: tileH,
-                                            maxHeight: tileH,
-                                            alignment: .topLeading
-                                        )
-                                }
+            let tiles = VStack(spacing: spacing) {
+                ForEach(0..<rows, id: \.self) { row in
+                    let stretch = row < rows - 1 || lastCount > 1
+                    HStack(spacing: spacing) {
+                        ForEach(0..<cols, id: \.self) { col in
+                            let index = row * cols + col
+                            if index < count {
+                                content(index)
+                                    .frame(
+                                        maxWidth: stretch ? .infinity : tileW,
+                                        minHeight: tileH,
+                                        maxHeight: tileH,
+                                        alignment: .topLeading
+                                    )
                             }
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(height: gridH, alignment: .top)
-                .padding(inset)
-                .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .top)
             }
-            .scrollDisabled(floorH + inset * 2 <= geo.size.height + 1)
+            .frame(height: gridH, alignment: .top)
+            .padding(inset)
+            .frame(maxWidth: .infinity, minHeight: scrolls ? geo.size.height : nil, alignment: .top)
+
+            if scrolls {
+                ScrollView { tiles }
+                    .scrollDisabled(floorH + inset * 2 <= geo.size.height + 1)
+            } else {
+                tiles
+            }
         }
     }
 }

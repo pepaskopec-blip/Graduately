@@ -54,6 +54,7 @@ struct PracticeHome: View {
                         Text(vm.tr("subjects_title"))
                             .font(.title2.weight(.semibold))
                     }
+                    .fixedSize(horizontal: false, vertical: true)
                     .background {
                         GeometryReader { proxy in
                             Color.clear.preference(key: MacHeaderHeight.self, value: proxy.size.height)
@@ -64,7 +65,8 @@ struct PracticeHome: View {
                         minWidth: MacChrome.homeTileMin,
                         minHeight: MacChrome.homeTileHeight,
                         spacing: 16,
-                        inset: 0
+                        inset: 0,
+                        scrolls: false
                     ) { index in
                         subjectTile(subjects[index])
                     }
@@ -242,24 +244,7 @@ private struct ChangelogLines: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             if index > 0 { Spacer().frame(height: 4) }
-            #if os(macOS)
-            if lines.count >= 4 {
-                LazyVGrid(
-                    columns: [
-                        GridItem(.flexible(minimum: 240), spacing: 22, alignment: .topLeading),
-                        GridItem(.flexible(minimum: 240), spacing: 22, alignment: .topLeading),
-                    ],
-                    alignment: .leading,
-                    spacing: 6
-                ) {
-                    lineList
-                }
-            } else {
-                VStack(alignment: .leading, spacing: 4) { lineList }
-            }
-            #else
             VStack(alignment: .leading, spacing: 4) { lineList }
-            #endif
         }
     }
 
