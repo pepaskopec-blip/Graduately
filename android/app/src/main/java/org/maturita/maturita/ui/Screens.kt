@@ -306,12 +306,16 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
             }
         }
         "netyears" -> {
-            sum.totalEx = vm.content.netLessons.size
-            sum.doneEx = vm.content.netLessons.count { vm.progress.netDone(it.int("id")) }
+            val extra = listOf("net2", "net3", "net4")
+            sum.totalEx = vm.content.netLessons.size + extra.sumOf { vm.content.itLessons(it).size }
+            sum.doneEx = vm.content.netLessons.count { vm.progress.netDone(it.int("id")) } +
+                extra.sumOf { course -> vm.content.itLessons(course).count { vm.progress.courseDone(course, it.int("id")) } }
         }
         "hwyears", "hwmap" -> {
-            sum.totalEx = vm.content.hw.size
-            sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) }
+            val extra = listOf("hw2", "hw3", "hw4")
+            sum.totalEx = vm.content.hw.size + extra.sumOf { vm.content.itLessons(it).size }
+            sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) } +
+                extra.sumOf { course -> vm.content.itLessons(course).count { vm.progress.courseDone(course, it.int("id")) } }
         }
         "enyears", "en1map", "en2map", "en3map", "en4map" -> {
             sum.totalEx = (1..4).sumOf { vm.content.enYear(it).size }
@@ -530,10 +534,19 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "netunit${l.int("id")}", extra = "site")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "netex${l.int("id")}")
     }
+    listOf("net2", "net3", "net4").forEach { course ->
+        add(vm.tr("net_year${course.drop(3)}"), vm.tr("search_lesson"), "${course}map", extra = "rocnik site")
+        vm.content.itLessons(course).forEach { l ->
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "${course}unit${l.int("id")}", extra = "site")
+        }
+    }
     add(vm.tr("hw_year1"), vm.tr("search_lesson"), "hwmap", extra = "rocnik")
-    add(vm.tr("hw_year2"), vm.tr("search_lesson"), "hwyears", locked = true, extra = "rocnik")
-    add(vm.tr("hw_year3"), vm.tr("search_lesson"), "hwyears", locked = true, extra = "rocnik")
-    add(vm.tr("hw_year4"), vm.tr("search_lesson"), "hwyears", locked = true, extra = "rocnik")
+    listOf("hw2", "hw3", "hw4").forEach { course ->
+        add(vm.tr("hw_year${course.drop(2)}"), vm.tr("search_lesson"), "${course}map", extra = "rocnik hardware")
+        vm.content.itLessons(course).forEach { l ->
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "${course}unit${l.int("id")}", extra = "hardware")
+        }
+    }
     vm.content.hw.forEach { l ->
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "hwunit${l.int("id")}", extra = "hardware")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex${l.int("id")}")
@@ -719,14 +732,25 @@ fun UnitMapScreen(vm: AppViewModel, unitId: Int) {
 }
 
 @Composable
+fun ItYearScreen(vm: AppViewModel, course: String, titleKey: String, subKey: String, lesson: (Int) -> Route) {
+    LessonListScreen(
+        vm, vm.tr(titleKey), vm.tr(subKey),
+        vm.content.itLessons(course).map { l ->
+            val id = l.int("id")
+            LessonRow(vm.tr(l.str("titleKey")), vm.progress.courseDone(course, id), lesson(id))
+        },
+    )
+}
+
+@Composable
 fun NetYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("net_years_title"), vm.tr("net_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
                 NavRow(title = vm.tr("net_year1"), subtitle = vm.tr("net_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.NetMap) }
-            }
-            items(listOf("net_year2", "net_year3", "net_year4")) { key ->
-                NavRow(title = vm.tr(key), subtitle = vm.tr("net_year_locked_sub"), locked = true, onClick = null)
+                NavRow(title = vm.tr("net_year2"), subtitle = vm.tr("net2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Net2Map) }
+                NavRow(title = vm.tr("net_year3"), subtitle = vm.tr("net3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Net3Map) }
+                NavRow(title = vm.tr("net_year4"), subtitle = vm.tr("net4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Net4Map) }
             }
         }
     }
@@ -738,9 +762,9 @@ fun HwYearsScreen(vm: AppViewModel) {
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
                 NavRow(title = vm.tr("hw_year1"), subtitle = vm.tr("hw_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.HwMap) }
-            }
-            items(listOf("hw_year2", "hw_year3", "hw_year4")) { key ->
-                NavRow(title = vm.tr(key), subtitle = vm.tr("hw_year_locked_sub"), locked = true, onClick = null)
+                NavRow(title = vm.tr("hw_year2"), subtitle = vm.tr("hw2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Hw2Map) }
+                NavRow(title = vm.tr("hw_year3"), subtitle = vm.tr("hw3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Hw3Map) }
+                NavRow(title = vm.tr("hw_year4"), subtitle = vm.tr("hw4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Hw4Map) }
             }
         }
     }

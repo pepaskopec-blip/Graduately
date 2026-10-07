@@ -896,6 +896,62 @@ private struct MathGrid: View {
     }
 }
 
+struct ItYearList: View {
+    @ObservedObject var vm: AppModel
+    let course: String
+    let titleKey: String
+    let subKey: String
+    let lesson: (Int) -> Route
+
+    var body: some View {
+        LessonListScreen(
+            vm: vm,
+            title: vm.tr(titleKey),
+            subtitle: vm.tr(subKey),
+            rows: vm.content.itLessons(course).map { l in
+                let id = l.int("id")
+                return LessonRow(
+                    id: "\(course)\(id)",
+                    title: vm.tr(l.str("titleKey")),
+                    done: vm.progress.courseDone(course, id),
+                    destination: lesson(id)
+                )
+            }
+        )
+    }
+}
+
+struct ItSlides: View {
+    @ObservedObject var vm: AppModel
+    let course: String
+    let id: Int
+    let next: Route
+
+    var body: some View {
+        if let l = vm.content.itLesson(course, id) {
+            SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: next)
+        }
+    }
+}
+
+struct ChoiceLessonScreen: View {
+    @ObservedObject var vm: AppModel
+    let lesson: J?
+    let onDone: () -> Void
+
+    var body: some View {
+        if let lesson {
+            let spec = J([
+                "type": "choice",
+                "title": vm.tr(lesson.str("exTitleKey")),
+                "sub": lesson.str("quizHeadKey"),
+                "questions": lesson.rawArray("quiz"),
+            ])
+            DispatchExercise(vm: vm, spec: spec, titleFallback: vm.tr(lesson.str("exTitleKey")), onDone: onDone)
+        }
+    }
+}
+
 struct FyzQuizScreen: View {
     @ObservedObject var vm: AppModel
     let year: Int

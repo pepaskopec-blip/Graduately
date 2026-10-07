@@ -1078,6 +1078,18 @@ private fun MathBoard(
 }
 
 @Composable
+fun ChoiceLessonScreen(vm: AppViewModel, lesson: J?, onDone: () -> Unit) {
+    if (lesson == null) return
+    val spec = J(org.json.JSONObject().apply {
+        put("type", "choice")
+        put("title", vm.tr(lesson.str("exTitleKey")))
+        put("sub", lesson.str("quizHeadKey"))
+        put("questions", lesson.o.optJSONArray("quiz"))
+    })
+    DispatchExercise(vm, spec, vm.tr(lesson.str("exTitleKey")), onDone)
+}
+
+@Composable
 fun FyzQuizScreen(vm: AppViewModel, year: Int, id: Int) {
     val lesson = when (year) {
         2 -> vm.content.fyz2Lesson(id)

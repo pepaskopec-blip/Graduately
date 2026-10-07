@@ -60,6 +60,7 @@ void load_progress(void) {
     on4_load_progress();
     en_load_progress();
     de_load_progress();
+    quizyear_load_all();
     lit_load_progress();
     sci_load_progress();
     fyz_load_progress();
@@ -259,6 +260,7 @@ void progress_for_net(ProgressSum *out) {
             out->done_units++;
         }
     }
+    progress_for_net_years(out);
 }
 
 void hw_load_progress(void) {
@@ -350,6 +352,7 @@ void progress_for_hw(ProgressSum *out) {
             out->done_units++;
         }
     }
+    progress_for_hw_years(out);
 }
 
 void on_load_progress(void) {

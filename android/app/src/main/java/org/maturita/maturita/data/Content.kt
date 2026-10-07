@@ -29,6 +29,12 @@ class Content(root: JSONObject) {
         }
     }
     val hw = raw.arr("hw")
+    val net2 = raw.arr("net2")
+    val net3 = raw.arr("net3")
+    val net4 = raw.arr("net4")
+    val hw2 = raw.arr("hw2")
+    val hw3 = raw.arr("hw3")
+    val hw4 = raw.arr("hw4")
     val on = raw.arr("on")
     val on2 = raw.arr("on2")
     val on3 = raw.arr("on3")
@@ -63,6 +69,16 @@ class Content(root: JSONObject) {
     fun germanUnit(id: Int) = german.firstOrNull { it.int("id") == id }
     fun netLesson(id: Int) = netLessons.firstOrNull { it.int("id") == id }
     fun hwLesson(id: Int) = hw.firstOrNull { it.int("id") == id }
+    fun itLessons(course: String) = when (course) {
+        "net2" -> net2
+        "net3" -> net3
+        "net4" -> net4
+        "hw2" -> hw2
+        "hw3" -> hw3
+        "hw4" -> hw4
+        else -> emptyList()
+    }
+    fun itLesson(course: String, id: Int) = itLessons(course).firstOrNull { it.int("id") == id }
     fun onLesson(id: Int) = on.firstOrNull { it.int("id") == id }
     fun on2Lesson(id: Int) = on2.firstOrNull { it.int("id") == id }
     fun on3Lesson(id: Int) = on3.firstOrNull { it.int("id") == id }

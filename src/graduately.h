@@ -946,6 +946,26 @@ GtkWidget *build_dehome_page(void);
 void add_de_pages(GtkStack *stack);
 void de_load_progress(void);
 void progress_for_de(ProgressSum *out);
+typedef struct QuizYear QuizYear;
+extern QuizYear *qy_net2;
+extern QuizYear *qy_net3;
+extern QuizYear *qy_net4;
+extern QuizYear *qy_hw2;
+extern QuizYear *qy_hw3;
+extern QuizYear *qy_hw4;
+void quizyear_boot(void);
+void quizyear_load_all(void);
+void quizyear_apply_lang(void);
+void progress_for_net_years(ProgressSum *out);
+void progress_for_hw_years(ProgressSum *out);
+GtkWidget *quizyear_map(QuizYear *Y);
+GtkWidget *quizyear_unit(QuizYear *Y, int index, const char *title_key,
+                         const char *sub_key, const NetSlide *slides,
+                         int n_slides);
+GtkWidget *quizyear_quiz(QuizYear *Y, int index, const char *title_key,
+                         const char *head_key, const ChoiceQ *qs,
+                         const char **hints, int n);
+void add_it_year_pages(GtkStack *stack);
 void on2_load_progress(void);
 void on2_save_progress(void);
 void mark_on2_done(int lesson_id);

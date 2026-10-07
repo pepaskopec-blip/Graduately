@@ -17,10 +17,28 @@ sealed class Route(val page: String) {
     data object NetMap : Route("netmap")
     data class NetLesson(val id: Int) : Route("netunit$id")
     data class NetEx(val id: Int) : Route("netex$id")
+    data object Net2Map : Route("net2map")
+    data class Net2Lesson(val id: Int) : Route("net2unit$id")
+    data class Net2Ex(val id: Int) : Route("net2ex$id")
+    data object Net3Map : Route("net3map")
+    data class Net3Lesson(val id: Int) : Route("net3unit$id")
+    data class Net3Ex(val id: Int) : Route("net3ex$id")
+    data object Net4Map : Route("net4map")
+    data class Net4Lesson(val id: Int) : Route("net4unit$id")
+    data class Net4Ex(val id: Int) : Route("net4ex$id")
     data object HwYears : Route("hwyears")
     data object HwMap : Route("hwmap")
     data class HwLesson(val id: Int) : Route("hwunit$id")
     data class HwEx(val id: Int) : Route("hwex$id")
+    data object Hw2Map : Route("hw2map")
+    data class Hw2Lesson(val id: Int) : Route("hw2unit$id")
+    data class Hw2Ex(val id: Int) : Route("hw2ex$id")
+    data object Hw3Map : Route("hw3map")
+    data class Hw3Lesson(val id: Int) : Route("hw3unit$id")
+    data class Hw3Ex(val id: Int) : Route("hw3ex$id")
+    data object Hw4Map : Route("hw4map")
+    data class Hw4Lesson(val id: Int) : Route("hw4unit$id")
+    data class Hw4Ex(val id: Int) : Route("hw4ex$id")
     data object OnYears : Route("onyears")
     data object OnMap : Route("onmap")
     data class OnLesson(val id: Int) : Route("onunit$id")
@@ -102,6 +120,8 @@ sealed class Route(val page: String) {
     val isExercise: Boolean
         get() = this is GermanEx || this is Vocab || this is NetEx || this is HwEx ||
             this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is EnLesson || this is EnEx || this is DeLesson || this is DeEx || this is MluvEx || this is BookQuiz || this is BookPlot ||
+            this is Net2Lesson || this is Net2Ex || this is Net3Lesson || this is Net3Ex || this is Net4Lesson || this is Net4Ex ||
+            this is Hw2Lesson || this is Hw2Ex || this is Hw3Lesson || this is Hw3Ex || this is Hw4Lesson || this is Hw4Ex ||
             this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson ||
             this is LitLesson || this is LitEx || this is Lit2Lesson || this is Lit2Ex ||
             this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex ||
@@ -129,10 +149,28 @@ sealed class Route(val page: String) {
         NetMap -> listOf(Subjects, NetYears, NetMap)
         is NetLesson -> listOf(Subjects, NetYears, NetMap, this)
         is NetEx -> listOf(Subjects, NetYears, NetMap, NetLesson(id), this)
+        Net2Map -> listOf(Subjects, NetYears, Net2Map)
+        is Net2Lesson -> listOf(Subjects, NetYears, Net2Map, this)
+        is Net2Ex -> listOf(Subjects, NetYears, Net2Map, Net2Lesson(id), this)
+        Net3Map -> listOf(Subjects, NetYears, Net3Map)
+        is Net3Lesson -> listOf(Subjects, NetYears, Net3Map, this)
+        is Net3Ex -> listOf(Subjects, NetYears, Net3Map, Net3Lesson(id), this)
+        Net4Map -> listOf(Subjects, NetYears, Net4Map)
+        is Net4Lesson -> listOf(Subjects, NetYears, Net4Map, this)
+        is Net4Ex -> listOf(Subjects, NetYears, Net4Map, Net4Lesson(id), this)
         HwYears -> listOf(Subjects, HwYears)
         HwMap -> listOf(Subjects, HwYears, HwMap)
         is HwLesson -> listOf(Subjects, HwYears, HwMap, this)
         is HwEx -> listOf(Subjects, HwYears, HwMap, HwLesson(id), this)
+        Hw2Map -> listOf(Subjects, HwYears, Hw2Map)
+        is Hw2Lesson -> listOf(Subjects, HwYears, Hw2Map, this)
+        is Hw2Ex -> listOf(Subjects, HwYears, Hw2Map, Hw2Lesson(id), this)
+        Hw3Map -> listOf(Subjects, HwYears, Hw3Map)
+        is Hw3Lesson -> listOf(Subjects, HwYears, Hw3Map, this)
+        is Hw3Ex -> listOf(Subjects, HwYears, Hw3Map, Hw3Lesson(id), this)
+        Hw4Map -> listOf(Subjects, HwYears, Hw4Map)
+        is Hw4Lesson -> listOf(Subjects, HwYears, Hw4Map, this)
+        is Hw4Ex -> listOf(Subjects, HwYears, Hw4Map, Hw4Lesson(id), this)
         OnYears -> listOf(Subjects, OnYears)
         OnMap -> listOf(Subjects, OnYears, OnMap)
         is OnLesson -> listOf(Subjects, OnYears, OnMap, this)
@@ -218,6 +256,12 @@ fun routeFromPage(page: String): Route? = when (page) {
     "dehome" -> Route.DeHome
     "netyears" -> Route.NetYears
     "netmap" -> Route.NetMap
+    "net2map" -> Route.Net2Map
+    "net3map" -> Route.Net3Map
+    "net4map" -> Route.Net4Map
+    "hw2map" -> Route.Hw2Map
+    "hw3map" -> Route.Hw3Map
+    "hw4map" -> Route.Hw4Map
     "hwyears" -> Route.HwYears
     "hwmap" -> Route.HwMap
     "onyears" -> Route.OnYears
@@ -374,6 +418,42 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""de(\d)ex(\d+)""").matchEntire(page)?.let {
             return Route.DeEx(it.groupValues[1].toInt(), it.groupValues[2].toInt())
+        }
+        Regex("""net([234])unit(\d+)""").matchEntire(page)?.let {
+            val year = it.groupValues[1].toInt()
+            val id = it.groupValues[2].toInt()
+            return when (year) {
+                3 -> Route.Net3Lesson(id)
+                4 -> Route.Net4Lesson(id)
+                else -> Route.Net2Lesson(id)
+            }
+        }
+        Regex("""net([234])ex(\d+)""").matchEntire(page)?.let {
+            val year = it.groupValues[1].toInt()
+            val id = it.groupValues[2].toInt()
+            return when (year) {
+                3 -> Route.Net3Ex(id)
+                4 -> Route.Net4Ex(id)
+                else -> Route.Net2Ex(id)
+            }
+        }
+        Regex("""hw([234])unit(\d+)""").matchEntire(page)?.let {
+            val year = it.groupValues[1].toInt()
+            val id = it.groupValues[2].toInt()
+            return when (year) {
+                3 -> Route.Hw3Lesson(id)
+                4 -> Route.Hw4Lesson(id)
+                else -> Route.Hw2Lesson(id)
+            }
+        }
+        Regex("""hw([234])ex(\d+)""").matchEntire(page)?.let {
+            val year = it.groupValues[1].toInt()
+            val id = it.groupValues[2].toInt()
+            return when (year) {
+                3 -> Route.Hw3Ex(id)
+                4 -> Route.Hw4Ex(id)
+                else -> Route.Hw2Ex(id)
+            }
         }
         Regex("""en(\d)map""").matchEntire(page)?.let {
             return Route.EnMap(it.groupValues[1].toInt())

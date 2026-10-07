@@ -426,6 +426,8 @@ static gboolean run_smoke_test(gpointer data) {
         "mluve1", "mluve20",
         "netunit1", "netex1", "netunit10", "netex10",
         "netunit27", "netex27",
+        "net2map", "net2unit1", "net2ex1", "net4unit8", "net4ex8",
+        "hw2map", "hw2unit1", "hw2ex1", "hw4unit8", "hw4ex8",
         NULL
     };
     const char *report = g_getenv("MATURITA_SMOKE");
@@ -532,6 +534,7 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_netmap_page(), "netmap");
     gtk_stack_add_named(main_stack, build_hwyears_page(), "hwyears");
     gtk_stack_add_named(main_stack, build_hwmap_page(), "hwmap");
+    add_it_year_pages(main_stack);
     gtk_stack_add_named(main_stack, build_onyears_page(), "onyears");
     gtk_stack_add_named(main_stack, build_onmap_page(), "onmap");
     add_on_pages(main_stack);

@@ -7,6 +7,12 @@
 # en: bullet
 
 --- 2026-10-07
+cs: Sítě a technické vybavení: doplněné 2. až 4. ročníky, v každém 8 lekcí
+cs: Výklad a kvíz od VLAN a sestavení počítače po maturitu
+en: Networks and hardware: years 2 to 4 are filled in, eight lessons each
+en: Slides and a quiz, from VLANs and PC assembly through to the exam
+
+--- 2026-10-07
 cs: Němčina: čtyři ročníky, 24 lekcí s poslechem, čtením a psaním
 cs: Učebnice Neue Freunde zůstává, k ní přibyl kurz od A1 k B1
 en: German: four years, 24 lessons with listening, reading and writing

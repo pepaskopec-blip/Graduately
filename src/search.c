@@ -188,9 +188,9 @@ static void catalog_rebuild(void) {
     catalog_add_key("net_years_title", "search_subject", "netyears", FALSE, 0,
                     "site network ip");
     catalog_add_key("net_year1", "search_lesson", "netmap", FALSE, 1, "rocnik");
-    catalog_add_key("net_year2", "search_lesson", "netyears", TRUE, 1, "rocnik");
-    catalog_add_key("net_year3", "search_lesson", "netyears", TRUE, 1, "rocnik");
-    catalog_add_key("net_year4", "search_lesson", "netyears", TRUE, 1, "rocnik");
+    catalog_add_key("net_year2", "search_lesson", "net2map", FALSE, 1, "rocnik");
+    catalog_add_key("net_year3", "search_lesson", "net3map", FALSE, 1, "rocnik");
+    catalog_add_key("net_year4", "search_lesson", "net4map", FALSE, 1, "rocnik");
     for (i = 1; i <= NET_LESSONS; i++) {
         g_snprintf(key, sizeof(key), "net_unit%d", i);
         g_snprintf(page, sizeof(page), "netunit%d", i);
@@ -198,17 +198,31 @@ static void catalog_rebuild(void) {
         g_snprintf(page, sizeof(page), "netex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
     }
+    for (i = 2; i <= 4; i++) {
+        for (n = 1; n <= 8; n++) {
+            g_snprintf(key, sizeof key, "net%d_unit%d", i, n);
+            g_snprintf(page, sizeof page, "net%dunit%d", i, n);
+            catalog_add_key(key, "search_lesson", page, FALSE, 2, "site sit");
+        }
+    }
 
     catalog_add_key("hw_year1", "search_lesson", "hwmap", FALSE, 1, "rocnik");
-    catalog_add_key("hw_year2", "search_lesson", "hwyears", TRUE, 1, "rocnik");
-    catalog_add_key("hw_year3", "search_lesson", "hwyears", TRUE, 1, "rocnik");
-    catalog_add_key("hw_year4", "search_lesson", "hwyears", TRUE, 1, "rocnik");
+    catalog_add_key("hw_year2", "search_lesson", "hw2map", FALSE, 1, "rocnik");
+    catalog_add_key("hw_year3", "search_lesson", "hw3map", FALSE, 1, "rocnik");
+    catalog_add_key("hw_year4", "search_lesson", "hw4map", FALSE, 1, "rocnik");
     for (i = 1; i <= HW_LESSONS; i++) {
         g_snprintf(key, sizeof(key), "hw_unit%d", i);
         g_snprintf(page, sizeof(page), "hwunit%d", i);
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "hardware hw");
         g_snprintf(page, sizeof(page), "hwex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+    for (i = 2; i <= 4; i++) {
+        for (n = 1; n <= 8; n++) {
+            g_snprintf(key, sizeof key, "hw%d_unit%d", i, n);
+            g_snprintf(page, sizeof page, "hw%dunit%d", i, n);
+            catalog_add_key(key, "search_lesson", page, FALSE, 2, "hardware hw");
+        }
     }
 
     catalog_add_key("on_year1", "search_lesson", "onmap", FALSE, 1, "rocnik");

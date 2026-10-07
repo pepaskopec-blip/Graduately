@@ -584,8 +584,21 @@ static GtkWidget *net_year_button(int year, gboolean locked) {
         gtk_widget_set_valign(icon, GTK_ALIGN_CENTER);
         gtk_box_append(GTK_BOX(row), icon);
     } else {
+        static const char *pages[] = {
+            "netmap", "net2map", "net3map", "net4map",
+        };
+        static const char *subs[] = {
+            "net_sub", "net2_sub", "net3_sub", "net4_sub",
+        };
+        GtkWidget *sub = gtk_label_new(NULL);
+
+        i18n_bind(sub, subs[year - 1], 0);
+        gtk_widget_set_halign(sub, GTK_ALIGN_START);
+        gtk_label_set_wrap(GTK_LABEL(sub), TRUE);
+        gtk_widget_add_css_class(sub, "quiz-intro");
+        gtk_box_append(GTK_BOX(texts), sub);
         g_object_set_data_full(G_OBJECT(btn), "target",
-                               g_strdup("netmap"), g_free);
+                               g_strdup(pages[year - 1]), g_free);
         g_signal_connect(btn, "clicked", G_CALLBACK(on_nav_clicked), NULL);
     }
 
@@ -623,7 +636,7 @@ GtkWidget *build_netyears_page(void) {
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), list);
 
     for (y = 1; y <= 4; y++)
-        gtk_box_append(GTK_BOX(list), net_year_button(y, y > 1));
+        gtk_box_append(GTK_BOX(list), net_year_button(y, FALSE));
 
     return page;
 }

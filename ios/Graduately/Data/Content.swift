@@ -31,6 +31,12 @@ final class Content {
     let netTasks: [J]
     let netAnswers: [[J]]
     let hw: [J]
+    let net2: [J]
+    let net3: [J]
+    let net4: [J]
+    let hw2: [J]
+    let hw3: [J]
+    let hw4: [J]
     let on: [J]
     let on2: [J]
     let on3: [J]
@@ -89,6 +95,12 @@ final class Content {
             netAnswers = []
         }
         hw = raw.arr("hw")
+        net2 = raw.arr("net2")
+        net3 = raw.arr("net3")
+        net4 = raw.arr("net4")
+        hw2 = raw.arr("hw2")
+        hw3 = raw.arr("hw3")
+        hw4 = raw.arr("hw4")
         on = raw.arr("on")
         on2 = raw.arr("on2")
         on3 = raw.arr("on3")
@@ -124,6 +136,20 @@ final class Content {
     func germanUnit(_ id: Int) -> J? { german.first { $0.int("id") == id } }
     func netLesson(_ id: Int) -> J? { netLessons.first { $0.int("id") == id } }
     func hwLesson(_ id: Int) -> J? { hw.first { $0.int("id") == id } }
+    func itLessons(_ course: String) -> [J] {
+        switch course {
+        case "net2": return net2
+        case "net3": return net3
+        case "net4": return net4
+        case "hw2": return hw2
+        case "hw3": return hw3
+        case "hw4": return hw4
+        default: return []
+        }
+    }
+    func itLesson(_ course: String, _ id: Int) -> J? {
+        itLessons(course).first { $0.int("id") == id }
+    }
     func onLesson(_ id: Int) -> J? { on.first { $0.int("id") == id } }
     func on2Lesson(_ id: Int) -> J? { on2.first { $0.int("id") == id } }
     func on3Lesson(_ id: Int) -> J? { on3.first { $0.int("id") == id } }

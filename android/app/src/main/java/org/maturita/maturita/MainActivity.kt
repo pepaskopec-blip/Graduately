@@ -51,7 +51,9 @@ import org.maturita.maturita.ui.On4QuizScreen
 import org.maturita.maturita.ui.OnQuizScreen
 import org.maturita.maturita.ui.OnYearsScreen
 import org.maturita.maturita.ui.EnYearsScreen
+import org.maturita.maturita.ui.ChoiceLessonScreen
 import org.maturita.maturita.ui.DeHomeScreen
+import org.maturita.maturita.ui.ItYearScreen
 import org.maturita.maturita.ui.EngExScreen
 import org.maturita.maturita.ui.PlotScreen
 import org.maturita.maturita.ui.RoadmapScreen
@@ -244,6 +246,30 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.NetEx -> NetQuizScreen(vm, r.id)
+            Route.Net2Map -> ItYearScreen(vm, "net2", "net_year2", "net2_sub") { Route.Net2Lesson(it) }
+            is Route.Net2Lesson -> {
+                val l = vm.content.itLesson("net2", r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Net2Ex(r.id))
+                }
+            }
+            is Route.Net2Ex -> ChoiceLessonScreen(vm, vm.content.itLesson("net2", r.id)) { vm.markCourse("net2", r.id) }
+            Route.Net3Map -> ItYearScreen(vm, "net3", "net_year3", "net3_sub") { Route.Net3Lesson(it) }
+            is Route.Net3Lesson -> {
+                val l = vm.content.itLesson("net3", r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Net3Ex(r.id))
+                }
+            }
+            is Route.Net3Ex -> ChoiceLessonScreen(vm, vm.content.itLesson("net3", r.id)) { vm.markCourse("net3", r.id) }
+            Route.Net4Map -> ItYearScreen(vm, "net4", "net_year4", "net4_sub") { Route.Net4Lesson(it) }
+            is Route.Net4Lesson -> {
+                val l = vm.content.itLesson("net4", r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Net4Ex(r.id))
+                }
+            }
+            is Route.Net4Ex -> ChoiceLessonScreen(vm, vm.content.itLesson("net4", r.id)) { vm.markCourse("net4", r.id) }
             Route.HwYears -> HwYearsScreen(vm)
             Route.HwMap -> LessonListScreen(
                 vm, vm.tr("hw_year1"), vm.tr("hw_sub"),
@@ -259,6 +285,30 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.HwEx -> HwQuizScreen(vm, r.id)
+            Route.Hw2Map -> ItYearScreen(vm, "hw2", "hw_year2", "hw2_sub") { Route.Hw2Lesson(it) }
+            is Route.Hw2Lesson -> {
+                val l = vm.content.itLesson("hw2", r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Hw2Ex(r.id))
+                }
+            }
+            is Route.Hw2Ex -> ChoiceLessonScreen(vm, vm.content.itLesson("hw2", r.id)) { vm.markCourse("hw2", r.id) }
+            Route.Hw3Map -> ItYearScreen(vm, "hw3", "hw_year3", "hw3_sub") { Route.Hw3Lesson(it) }
+            is Route.Hw3Lesson -> {
+                val l = vm.content.itLesson("hw3", r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Hw3Ex(r.id))
+                }
+            }
+            is Route.Hw3Ex -> ChoiceLessonScreen(vm, vm.content.itLesson("hw3", r.id)) { vm.markCourse("hw3", r.id) }
+            Route.Hw4Map -> ItYearScreen(vm, "hw4", "hw_year4", "hw4_sub") { Route.Hw4Lesson(it) }
+            is Route.Hw4Lesson -> {
+                val l = vm.content.itLesson("hw4", r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Hw4Ex(r.id))
+                }
+            }
+            is Route.Hw4Ex -> ChoiceLessonScreen(vm, vm.content.itLesson("hw4", r.id)) { vm.markCourse("hw4", r.id) }
             Route.EnYears -> EnYearsScreen(vm)
             is Route.EnMap -> LessonListScreen(
                 vm, vm.tr("en_year${r.year}"), vm.tr("en_y${r.year}_sub"),

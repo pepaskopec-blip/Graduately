@@ -63,9 +63,12 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 - **Deutsch** — učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause)
   a 4 ročníky, 24 lekcí od A1 k B1: poslech, čtení, psaní, doplňování a kvízy
-- **Správa počítačových sítí** — 1. ročník, 27 lekcí (VLSM + teorie a kvízy);
-  ročníky 2–4 jsou zamčené
-- **Technické vybavení** — 1. ročník, 29 lekcí (architektura, data, skříň a deska, karty, disky, vstupní zařízení); ročníky 2–4 jsou zamčené
+- **Správa počítačových sítí** — 4 ročníky: 1. ročník má 27 lekcí
+  (adresy, modely, přepínače a bezdrát), ročníky 2–4 po 8 lekcích
+  (VLAN, směrování, firewall, návrh a maturita)
+- **Technické vybavení** — 4 ročníky: 1. ročník má 29 lekcí
+  (architektura, data, skříň, deska, karty, disky a vstup),
+  ročníky 2–4 po 8 lekcích (monitory, sestavení, RAID, servery, údržba)
 - **Český jazyk a literatura** — literatura (4 ročníky, 32 lekcí podle osnov
   středních škol), mluvnice (20 cvičení) a maturitní četba
   (82 knih: zápisky, kvíz, sestavení děje)
@@ -268,9 +271,12 @@ Intel Mac, another architecture, or hacking on the code →
 
 - **Deutsch** — the textbook (Neue Freunde, Aus aller Welt, Bei uns zu Hause)
   plus 4 years, 24 lessons from A1 to B1: listening, reading, writing, gap-fill and quizzes
-- **Computer networks** — year 1, 27 lessons (VLSM + theory/quizzes);
-  years 2–4 are locked
-- **Computer hardware** — year 1, 29 lessons (architecture, data, case and board, cards, drives, input devices); years 2–4 are locked
+- **Computer networks** — 4 years: year 1 has 27 lessons
+  (addresses, models, switches and wireless), years 2–4 have 8 lessons each
+  (VLANs, routing, firewalls, design and the exam)
+- **Computer hardware** — 4 years: year 1 has 29 lessons
+  (architecture, data, case, board, cards, drives and input),
+  years 2–4 have 8 lessons each (displays, assembly, RAID, servers, maintenance)
 - **Czech language** — literature (4 years, 32 lessons from the secondary-school
   syllabus), grammar (20 exercises) and required reading
   (82 books: notes, quiz, plot ordering)

@@ -50,6 +50,8 @@ final class ProgressStore {
     func markEn(_ year: Int, _ id: Int) { defaults.set(true, forKey: "en.\(year).\(id)") }
     func deDone(_ year: Int, _ id: Int) -> Bool { defaults.bool(forKey: "de.\(year).\(id)") }
     func markDe(_ year: Int, _ id: Int) { defaults.set(true, forKey: "de.\(year).\(id)") }
+    func courseDone(_ course: String, _ id: Int) -> Bool { defaults.bool(forKey: "\(course).\(id)") }
+    func markCourse(_ course: String, _ id: Int) { defaults.set(true, forKey: "\(course).\(id)") }
 
     func litDone(_ id: Int) -> Bool { defaults.bool(forKey: "lit.\(id)") }
     func markLit(_ id: Int) { defaults.set(true, forKey: "lit.\(id)") }
@@ -124,6 +126,16 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         if p.hwDone(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
+        }
+    }
+    for course in ["net2", "net3", "net4", "hw2", "hw3", "hw4"] {
+        for l in content.itLessons(course) {
+            sum.totalEx += 1
+            sum.openUnits += 1
+            if p.courseDone(course, l.int("id")) {
+                sum.doneEx += 1
+                sum.doneUnits += 1
+            }
         }
     }
     for l in content.on {

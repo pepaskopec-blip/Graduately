@@ -48,6 +48,8 @@ class ProgressStore(context: Context) {
     fun markEn(year: Int, id: Int) { prefs.edit().putBoolean("en.$year.$id", true).apply() }
     fun deDone(year: Int, id: Int) = prefs.getBoolean("de.$year.$id", false)
     fun markDe(year: Int, id: Int) { prefs.edit().putBoolean("de.$year.$id", true).apply() }
+    fun courseDone(course: String, id: Int) = prefs.getBoolean("$course.$id", false)
+    fun markCourse(course: String, id: Int) { prefs.edit().putBoolean("$course.$id", true).apply() }
 
     fun litDone(id: Int) = prefs.getBoolean("lit.$id", false)
     fun markLit(id: Int) { prefs.edit().putBoolean("lit.$id", true).apply() }
@@ -117,6 +119,16 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         if (p.hwDone(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
+        }
+    }
+    listOf("net2", "net3", "net4", "hw2", "hw3", "hw4").forEach { course ->
+        content.itLessons(course).forEach { l ->
+            sum.totalEx += 1
+            sum.openUnits += 1
+            if (p.courseDone(course, l.int("id"))) {
+                sum.doneEx += 1
+                sum.doneUnits += 1
+            }
         }
     }
     content.on.forEach { l ->

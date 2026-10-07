@@ -1142,6 +1142,12 @@ def main() -> int:
     lit4_lessons = lit_pack("lit4")
     chem_lessons = lit_pack("chem")
     bio_lessons = lit_pack("bio")
+    net2_lessons = lit_pack("net2")
+    net3_lessons = lit_pack("net3")
+    net4_lessons = lit_pack("net4")
+    hw2_lessons = lit_pack("hw2")
+    hw3_lessons = lit_pack("hw3")
+    hw4_lessons = lit_pack("hw4")
     fyz_lessons = lit_pack("fyz")
     fyz2_lessons = lit_pack("fyz2")
     fyz3_lessons = lit_pack("fyz3")
@@ -1692,6 +1698,12 @@ def main() -> int:
             "answers": net_ans(A("net_ans")),
         },
         "hw": hw_lessons,
+        "net2": net2_lessons,
+        "net3": net3_lessons,
+        "net4": net4_lessons,
+        "hw2": hw2_lessons,
+        "hw3": hw3_lessons,
+        "hw4": hw4_lessons,
         "on": on_lessons,
         "lit": lit_lessons,
         "lit2": lit2_lessons,

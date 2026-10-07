@@ -23,10 +23,28 @@ enum Route: Hashable {
     case netMap
     case netLesson(Int)
     case netEx(Int)
+    case net2Map
+    case net2Lesson(Int)
+    case net2Ex(Int)
+    case net3Map
+    case net3Lesson(Int)
+    case net3Ex(Int)
+    case net4Map
+    case net4Lesson(Int)
+    case net4Ex(Int)
     case hwYears
     case hwMap
     case hwLesson(Int)
     case hwEx(Int)
+    case hw2Map
+    case hw2Lesson(Int)
+    case hw2Ex(Int)
+    case hw3Map
+    case hw3Lesson(Int)
+    case hw3Ex(Int)
+    case hw4Map
+    case hw4Lesson(Int)
+    case hw4Ex(Int)
     case onYears
     case onMap
     case onLesson(Int)
@@ -118,10 +136,28 @@ enum Route: Hashable {
         case .netMap: return "netmap"
         case .netLesson(let id): return "netunit\(id)"
         case .netEx(let id): return "netex\(id)"
+        case .net2Map: return "net2map"
+        case .net2Lesson(let id): return "net2unit\(id)"
+        case .net2Ex(let id): return "net2ex\(id)"
+        case .net3Map: return "net3map"
+        case .net3Lesson(let id): return "net3unit\(id)"
+        case .net3Ex(let id): return "net3ex\(id)"
+        case .net4Map: return "net4map"
+        case .net4Lesson(let id): return "net4unit\(id)"
+        case .net4Ex(let id): return "net4ex\(id)"
         case .hwYears: return "hwyears"
         case .hwMap: return "hwmap"
         case .hwLesson(let id): return "hwunit\(id)"
         case .hwEx(let id): return "hwex\(id)"
+        case .hw2Map: return "hw2map"
+        case .hw2Lesson(let id): return "hw2unit\(id)"
+        case .hw2Ex(let id): return "hw2ex\(id)"
+        case .hw3Map: return "hw3map"
+        case .hw3Lesson(let id): return "hw3unit\(id)"
+        case .hw3Ex(let id): return "hw3ex\(id)"
+        case .hw4Map: return "hw4map"
+        case .hw4Lesson(let id): return "hw4unit\(id)"
+        case .hw4Ex(let id): return "hw4ex\(id)"
         case .onYears: return "onyears"
         case .onMap: return "onmap"
         case .onLesson(let id): return "onunit\(id)"
@@ -236,6 +272,24 @@ enum Route: Hashable {
             return [.netYears, .netMap, .netLesson(id)]
         case .netEx(let id):
             return [.netYears, .netMap, .netLesson(id), .netEx(id)]
+        case .net2Map:
+            return [.netYears, .net2Map]
+        case .net2Lesson(let id):
+            return [.netYears, .net2Map, .net2Lesson(id)]
+        case .net2Ex(let id):
+            return [.netYears, .net2Map, .net2Lesson(id), .net2Ex(id)]
+        case .net3Map:
+            return [.netYears, .net3Map]
+        case .net3Lesson(let id):
+            return [.netYears, .net3Map, .net3Lesson(id)]
+        case .net3Ex(let id):
+            return [.netYears, .net3Map, .net3Lesson(id), .net3Ex(id)]
+        case .net4Map:
+            return [.netYears, .net4Map]
+        case .net4Lesson(let id):
+            return [.netYears, .net4Map, .net4Lesson(id)]
+        case .net4Ex(let id):
+            return [.netYears, .net4Map, .net4Lesson(id), .net4Ex(id)]
         case .hwYears:
             return [.hwYears]
         case .hwMap:
@@ -244,6 +298,24 @@ enum Route: Hashable {
             return [.hwYears, .hwMap, .hwLesson(id)]
         case .hwEx(let id):
             return [.hwYears, .hwMap, .hwLesson(id), .hwEx(id)]
+        case .hw2Map:
+            return [.hwYears, .hw2Map]
+        case .hw2Lesson(let id):
+            return [.hwYears, .hw2Map, .hw2Lesson(id)]
+        case .hw2Ex(let id):
+            return [.hwYears, .hw2Map, .hw2Lesson(id), .hw2Ex(id)]
+        case .hw3Map:
+            return [.hwYears, .hw3Map]
+        case .hw3Lesson(let id):
+            return [.hwYears, .hw3Map, .hw3Lesson(id)]
+        case .hw3Ex(let id):
+            return [.hwYears, .hw3Map, .hw3Lesson(id), .hw3Ex(id)]
+        case .hw4Map:
+            return [.hwYears, .hw4Map]
+        case .hw4Lesson(let id):
+            return [.hwYears, .hw4Map, .hw4Lesson(id)]
+        case .hw4Ex(let id):
+            return [.hwYears, .hw4Map, .hw4Lesson(id), .hw4Ex(id)]
         case .onYears:
             return [.onYears]
         case .onMap:
@@ -403,6 +475,12 @@ func routeFromPage(_ page: String) -> Route? {
     case "dehome": return .deHome
     case "netyears": return .netYears
     case "netmap": return .netMap
+    case "net2map": return .net2Map
+    case "net3map": return .net3Map
+    case "net4map": return .net4Map
+    case "hw2map": return .hw2Map
+    case "hw3map": return .hw3Map
+    case "hw4map": return .hw4Map
     case "hwyears": return .hwYears
     case "hwmap": return .hwMap
     case "onyears": return .onYears
@@ -571,6 +649,34 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /de(\d)ex(\d+)/), let y = Int(m.1), let n = Int(m.2) {
             return .deEx(y, n)
+        }
+        if let m = page.wholeMatch(of: /net([234])unit(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            switch y {
+            case 3: return .net3Lesson(n)
+            case 4: return .net4Lesson(n)
+            default: return .net2Lesson(n)
+            }
+        }
+        if let m = page.wholeMatch(of: /net([234])ex(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            switch y {
+            case 3: return .net3Ex(n)
+            case 4: return .net4Ex(n)
+            default: return .net2Ex(n)
+            }
+        }
+        if let m = page.wholeMatch(of: /hw([234])unit(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            switch y {
+            case 3: return .hw3Lesson(n)
+            case 4: return .hw4Lesson(n)
+            default: return .hw2Lesson(n)
+            }
+        }
+        if let m = page.wholeMatch(of: /hw([234])ex(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            switch y {
+            case 3: return .hw3Ex(n)
+            case 4: return .hw4Ex(n)
+            default: return .hw2Ex(n)
+            }
         }
         if let m = page.wholeMatch(of: /en(\d)map/), let y = Int(m.1) {
             return .enMap(y)

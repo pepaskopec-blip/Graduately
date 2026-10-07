@@ -674,10 +674,18 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
         }
     case "netyears":
         sum.totalEx = vm.content.netLessons.count
+            + vm.content.net2.count + vm.content.net3.count + vm.content.net4.count
         sum.doneEx = vm.content.netLessons.filter { vm.progress.netDone($0.int("id")) }.count
+            + ["net2", "net3", "net4"].reduce(0) { acc, course in
+                acc + vm.content.itLessons(course).filter { vm.progress.courseDone(course, $0.int("id")) }.count
+            }
     case "hwyears", "hwmap":
         sum.totalEx = vm.content.hw.count
+            + vm.content.hw2.count + vm.content.hw3.count + vm.content.hw4.count
         sum.doneEx = vm.content.hw.filter { vm.progress.hwDone($0.int("id")) }.count
+            + ["hw2", "hw3", "hw4"].reduce(0) { acc, course in
+                acc + vm.content.itLessons(course).filter { vm.progress.courseDone(course, $0.int("id")) }.count
+            }
     case "enyears", "en1map", "en2map", "en3map", "en4map":
         sum.totalEx = (1...4).reduce(0) { $0 + vm.content.enYear($1).count }
         sum.doneEx = (1...4).reduce(0) { acc, year in
@@ -887,13 +895,22 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "netunit\(l.int("id"))", extra: "site")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "netex\(l.int("id"))")
     }
+    for course in ["net2", "net3", "net4"] {
+        add(vm.tr("net_year\(course.dropFirst(3))"), vm.tr("search_lesson"), "\(course)map", extra: "rocnik site")
+        for l in vm.content.itLessons(course) {
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "\(course)unit\(l.int("id"))", extra: "site")
+        }
+    }
     add(vm.tr("hw_year1"), vm.tr("search_lesson"), "hwmap", extra: "rocnik")
-    add(vm.tr("hw_year2"), vm.tr("search_lesson"), "hwyears", locked: true, extra: "rocnik")
-    add(vm.tr("hw_year3"), vm.tr("search_lesson"), "hwyears", locked: true, extra: "rocnik")
-    add(vm.tr("hw_year4"), vm.tr("search_lesson"), "hwyears", locked: true, extra: "rocnik")
     for l in vm.content.hw {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "hwunit\(l.int("id"))", extra: "hardware")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "hwex\(l.int("id"))")
+    }
+    for course in ["hw2", "hw3", "hw4"] {
+        add(vm.tr("hw_year\(course.dropFirst(2))"), vm.tr("search_lesson"), "\(course)map", extra: "rocnik hardware")
+        for l in vm.content.itLessons(course) {
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "\(course)unit\(l.int("id"))", extra: "hardware")
+        }
     }
     add(vm.tr("on_year1"), vm.tr("search_lesson"), "onmap", extra: "rocnik")
     add(vm.tr("on_year2"), vm.tr("search_lesson"), "on2map", extra: "rocnik")
@@ -1178,16 +1195,17 @@ struct NetYearsScreen: View {
 
     var body: some View {
         #if os(macOS)
-        let keys = ["net_year1", "net_year2", "net_year3", "net_year4"]
-        MacFillGrid(count: keys.count, minWidth: 260, minHeight: 180) { i in
-            if i == 0 {
-                NavigationLink(value: Route.netMap) {
-                    MacLinkCard(title: vm.tr(keys[i]), subtitle: vm.tr("net_sub"), badge: "\(i + 1).")
-                }
-                .buttonStyle(.plain)
-            } else {
-                MacLinkCard(title: vm.tr(keys[i]), subtitle: vm.tr("net_year_locked_sub"), badge: "\(i + 1).", locked: true)
+        let years: [(String, String, Route)] = [
+            ("net_year1", "net_sub", .netMap),
+            ("net_year2", "net2_sub", .net2Map),
+            ("net_year3", "net3_sub", .net3Map),
+            ("net_year4", "net4_sub", .net4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
+            .buttonStyle(.plain)
         }
         .navigationTitle(vm.tr("net_years_title"))
         .navigationSubtitle(vm.tr("net_years_sub"))
@@ -1196,13 +1214,14 @@ struct NetYearsScreen: View {
             NavigationLink(value: Route.netMap) {
                 ListRowLabel(title: vm.tr("net_year1"), subtitle: vm.tr("net_sub"))
             }
-            ForEach(["net_year2", "net_year3", "net_year4"], id: \.self) { key in
-                Label {
-                    ListRowLabel(title: vm.tr(key), subtitle: vm.tr("net_year_locked_sub"))
-                } icon: {
-                    Image(systemName: "lock.fill")
-                }
-                .foregroundStyle(.secondary)
+            NavigationLink(value: Route.net2Map) {
+                ListRowLabel(title: vm.tr("net_year2"), subtitle: vm.tr("net2_sub"))
+            }
+            NavigationLink(value: Route.net3Map) {
+                ListRowLabel(title: vm.tr("net_year3"), subtitle: vm.tr("net3_sub"))
+            }
+            NavigationLink(value: Route.net4Map) {
+                ListRowLabel(title: vm.tr("net_year4"), subtitle: vm.tr("net4_sub"))
             }
         }
         .navigationTitle(vm.tr("net_years_title"))
@@ -1217,16 +1236,17 @@ struct HwYearsScreen: View {
 
     var body: some View {
         #if os(macOS)
-        let keys = ["hw_year1", "hw_year2", "hw_year3", "hw_year4"]
-        MacFillGrid(count: keys.count, minWidth: 260, minHeight: 180) { i in
-            if i == 0 {
-                NavigationLink(value: Route.hwMap) {
-                    MacLinkCard(title: vm.tr(keys[i]), subtitle: vm.tr("hw_sub"), badge: "\(i + 1).")
-                }
-                .buttonStyle(.plain)
-            } else {
-                MacLinkCard(title: vm.tr(keys[i]), subtitle: vm.tr("hw_year_locked_sub"), badge: "\(i + 1).", locked: true)
+        let years: [(String, String, Route)] = [
+            ("hw_year1", "hw_sub", .hwMap),
+            ("hw_year2", "hw2_sub", .hw2Map),
+            ("hw_year3", "hw3_sub", .hw3Map),
+            ("hw_year4", "hw4_sub", .hw4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
+            .buttonStyle(.plain)
         }
         .navigationTitle(vm.tr("Technické vybavení"))
         .navigationSubtitle(vm.tr("hw_years_sub"))
@@ -1235,13 +1255,14 @@ struct HwYearsScreen: View {
             NavigationLink(value: Route.hwMap) {
                 ListRowLabel(title: vm.tr("hw_year1"), subtitle: vm.tr("hw_sub"))
             }
-            ForEach(["hw_year2", "hw_year3", "hw_year4"], id: \.self) { key in
-                Label {
-                    ListRowLabel(title: vm.tr(key), subtitle: vm.tr("hw_year_locked_sub"))
-                } icon: {
-                    Image(systemName: "lock.fill")
-                }
-                .foregroundStyle(.secondary)
+            NavigationLink(value: Route.hw2Map) {
+                ListRowLabel(title: vm.tr("hw_year2"), subtitle: vm.tr("hw2_sub"))
+            }
+            NavigationLink(value: Route.hw3Map) {
+                ListRowLabel(title: vm.tr("hw_year3"), subtitle: vm.tr("hw3_sub"))
+            }
+            NavigationLink(value: Route.hw4Map) {
+                ListRowLabel(title: vm.tr("hw_year4"), subtitle: vm.tr("hw4_sub"))
             }
         }
         .navigationTitle(vm.tr("Technické vybavení"))
@@ -2256,6 +2277,24 @@ struct RouteDestination: View {
             }
         case .netEx(let id):
             NetQuizScreen(vm: vm, id: id)
+        case .net2Map:
+            ItYearList(vm: vm, course: "net2", titleKey: "net_year2", subKey: "net2_sub") { .net2Lesson($0) }
+        case .net2Lesson(let id):
+            ItSlides(vm: vm, course: "net2", id: id, next: .net2Ex(id))
+        case .net2Ex(let id):
+            ChoiceLessonScreen(vm: vm, lesson: vm.content.itLesson("net2", id)) { vm.markCourse("net2", id) }
+        case .net3Map:
+            ItYearList(vm: vm, course: "net3", titleKey: "net_year3", subKey: "net3_sub") { .net3Lesson($0) }
+        case .net3Lesson(let id):
+            ItSlides(vm: vm, course: "net3", id: id, next: .net3Ex(id))
+        case .net3Ex(let id):
+            ChoiceLessonScreen(vm: vm, lesson: vm.content.itLesson("net3", id)) { vm.markCourse("net3", id) }
+        case .net4Map:
+            ItYearList(vm: vm, course: "net4", titleKey: "net_year4", subKey: "net4_sub") { .net4Lesson($0) }
+        case .net4Lesson(let id):
+            ItSlides(vm: vm, course: "net4", id: id, next: .net4Ex(id))
+        case .net4Ex(let id):
+            ChoiceLessonScreen(vm: vm, lesson: vm.content.itLesson("net4", id)) { vm.markCourse("net4", id) }
         case .hwYears:
             HwYearsScreen(vm: vm)
         case .hwMap:
@@ -2279,6 +2318,24 @@ struct RouteDestination: View {
             }
         case .hwEx(let id):
             HwQuizScreen(vm: vm, id: id)
+        case .hw2Map:
+            ItYearList(vm: vm, course: "hw2", titleKey: "hw_year2", subKey: "hw2_sub") { .hw2Lesson($0) }
+        case .hw2Lesson(let id):
+            ItSlides(vm: vm, course: "hw2", id: id, next: .hw2Ex(id))
+        case .hw2Ex(let id):
+            ChoiceLessonScreen(vm: vm, lesson: vm.content.itLesson("hw2", id)) { vm.markCourse("hw2", id) }
+        case .hw3Map:
+            ItYearList(vm: vm, course: "hw3", titleKey: "hw_year3", subKey: "hw3_sub") { .hw3Lesson($0) }
+        case .hw3Lesson(let id):
+            ItSlides(vm: vm, course: "hw3", id: id, next: .hw3Ex(id))
+        case .hw3Ex(let id):
+            ChoiceLessonScreen(vm: vm, lesson: vm.content.itLesson("hw3", id)) { vm.markCourse("hw3", id) }
+        case .hw4Map:
+            ItYearList(vm: vm, course: "hw4", titleKey: "hw_year4", subKey: "hw4_sub") { .hw4Lesson($0) }
+        case .hw4Lesson(let id):
+            ItSlides(vm: vm, course: "hw4", id: id, next: .hw4Ex(id))
+        case .hw4Ex(let id):
+            ChoiceLessonScreen(vm: vm, lesson: vm.content.itLesson("hw4", id)) { vm.markCourse("hw4", id) }
         case .onYears:
             OnYearsScreen(vm: vm)
         case .enYears:
