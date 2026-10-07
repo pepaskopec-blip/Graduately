@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 
 struct DialogEx: View {
@@ -1342,6 +1343,191 @@ struct PlotScreen: View {
                 vm.markBookPlot(id)
             }
         }
+    }
+}
+
+private final class EnSpeaker: ObservableObject {
+    private let synth = AVSpeechSynthesizer()
+
+    func speak(_ text: String) {
+        if synth.isSpeaking { synth.stopSpeaking(at: .immediate) }
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+            ?? AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
+        synth.speak(utterance)
+    }
+}
+
+struct EngExScreen: View {
+    @ObservedObject var vm: AppModel
+    let year: Int
+    let id: Int
+    @StateObject private var speaker: EnSpeaker
+    @State private var readPicks: [Int]
+    @State private var listenPicks: [Int]
+    @State private var quizPicks: [Int]
+    @State private var gaps: [String]
+    @State private var essay = ""
+    @State private var played = false
+    @State private var showScript = false
+    @State private var revealed = false
+    @State private var showModel = false
+    @State private var fb = ("", "")
+
+    init(vm: AppModel, year: Int, id: Int) {
+        self.vm = vm
+        self.year = year
+        self.id = id
+        let lesson = vm.content.enLesson(year, id)
+        _readPicks = State(initialValue: Array(repeating: -1, count: lesson?.arr("readQuiz").count ?? 0))
+        _listenPicks = State(initialValue: Array(repeating: -1, count: lesson?.arr("listenQuiz").count ?? 0))
+        _quizPicks = State(initialValue: Array(repeating: -1, count: lesson?.arr("quiz").count ?? 0))
+        _gaps = State(initialValue: Array(repeating: "", count: lesson?.arr("gaps").count ?? 0))
+        _speaker = StateObject(wrappedValue: EnSpeaker())
+    }
+
+    var body: some View {
+        if let lesson = vm.content.enLesson(year, id) {
+            let p = vm.palette
+            ExerciseScaffold(vm: vm, title: vm.tr(lesson.str("titleKey")), sub: nil, action: vm.tr("check"), onAction: {
+                check(lesson)
+            }, feedback: fb.0, kind: fb.1) {
+                if let reading = lesson.strOrNull("reading") {
+                    section("en_sec_read")
+                    Text(reading).textSelection(.enabled)
+                    choiceBlock(lesson.arr("readQuiz"), picks: $readPicks)
+                }
+                if let listening = lesson.strOrNull("listening") {
+                    section("en_sec_listen")
+                    Text(vm.tr("en_listen_note"))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    PillButton(label: vm.tr("en_play")) {
+                        played = true
+                        showScript = false
+                        speaker.speak(listening)
+                        let wait = max(2.5, Double(listening.split(separator: " ").count) * 0.42)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
+                            showScript = true
+                        }
+                    }
+                    if showScript {
+                        Text(listening).textSelection(.enabled)
+                    }
+                    choiceBlock(lesson.arr("listenQuiz"), picks: $listenPicks)
+                }
+                let gapRows = lesson.arr("gaps")
+                if !gapRows.isEmpty {
+                    section("en_sec_gap")
+                    ForEach(gapRows.indices, id: \.self) { i in
+                        Text("\(i + 1). \(gapRows[i].str("prompt"))")
+                            .font(.body.weight(.semibold))
+                        WordField(
+                            value: Binding(get: { gaps[i] }, set: { gaps[i] = $0 }),
+                            placeholder: "",
+                            mark: revealed ? answerAccepts(normalizeAnswer(gaps[i]), gapRows[i].str("answers")) : nil,
+                            palette: p
+                        )
+                        if revealed, let hint = gapRows[i].strOrNull("meaning") {
+                            Meaning(text: hint, palette: p, visible: true)
+                        }
+                    }
+                }
+                if let writing = lesson.obj("writing") {
+                    section("en_sec_write")
+                    Text(writing.str("prompt"))
+                    TextEditor(text: $essay)
+                        .frame(minHeight: 140)
+                        .padding(8)
+                        .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12))
+                    if showModel {
+                        Text(vm.tr("en_model"))
+                            .font(.subheadline.weight(.semibold))
+                        Text(writing.str("model")).textSelection(.enabled)
+                    }
+                }
+                let quiz = lesson.arr("quiz")
+                if !quiz.isEmpty {
+                    section("en_sec_quiz")
+                    choiceBlock(quiz, picks: $quizPicks)
+                }
+            }
+        }
+    }
+
+    private func section(_ key: String) -> some View {
+        Text(vm.tr(key))
+            .font(.title3.weight(.bold))
+            .padding(.top, 8)
+    }
+
+    private func choiceBlock(_ questions: [J], picks: Binding<[Int]>) -> some View {
+        let p = vm.palette
+        return ForEach(questions.indices, id: \.self) { i in
+            let q = questions[i]
+            VStack(alignment: .leading, spacing: 6) {
+                Text("\(i + 1). \(q.str("prompt"))")
+                    .font(.body.weight(.semibold))
+                ForEach(Array(q.strs("options").enumerated()), id: \.offset) { o, opt in
+                    let selected = picks.wrappedValue[i] == o
+                    let mark: Bool? = revealed && selected ? picks.wrappedValue[i] == q.int("correct") : nil
+                    OptionChip(text: opt, selected: selected, mark: mark) {
+                        picks.wrappedValue[i] = o
+                    }
+                }
+                if revealed, let expl = q.strOrNull("expl") {
+                    Meaning(text: expl, palette: p, visible: true)
+                }
+            }
+            .padding(.bottom, 8)
+        }
+    }
+
+    private func check(_ lesson: J) {
+        if lesson.strOrNull("listening") != nil && !played {
+            fb = (vm.tr("en_listen_first"), "err")
+            return
+        }
+        let readOk = score(lesson.arr("readQuiz"), readPicks)
+        let listenOk = score(lesson.arr("listenQuiz"), listenPicks)
+        let quizOk = score(lesson.arr("quiz"), quizPicks)
+        let gapRows = lesson.arr("gaps")
+        let gapOk = gapRows.indices.filter {
+            answerAccepts(normalizeAnswer(gaps[$0]), gapRows[$0].str("answers"))
+        }.count
+        var writeOk = true
+        if let writing = lesson.obj("writing") {
+            let keys = writing.str("keys").split(separator: "|").map(String.init)
+            let enough = wordCount(essay) >= writing.int("minWords", 20)
+            writeOk = enough && keys.allSatisfy { hasWord(essay, $0) }
+        }
+        revealed = true
+        let all = readOk && listenOk && quizOk && gapOk == gapRows.count && writeOk
+        if all {
+            fb = (vm.tr("feedback_ok"), "ok")
+            showModel = true
+            vm.markEn(year, id)
+        } else if lesson.obj("writing") != nil && !writeOk && readOk && listenOk && quizOk && gapOk == gapRows.count {
+            fb = (vm.tr("en_write_short"), "err")
+        } else {
+            fb = (vm.tr("feedback_retry_short"), "err")
+        }
+    }
+
+    private func score(_ questions: [J], _ picks: [Int]) -> Bool {
+        questions.indices.allSatisfy { picks[$0] == questions[$0].int("correct") }
+    }
+
+    private func wordCount(_ text: String) -> Int {
+        let n = normalizeAnswer(text)
+        return n.isEmpty ? 0 : n.split(separator: " ").count
+    }
+
+    private func hasWord(_ text: String, _ word: String) -> Bool {
+        let n = " \(normalizeAnswer(text)) "
+        let w = normalizeAnswer(word)
+        return !w.isEmpty && n.contains(" \(w) ")
     }
 }
 

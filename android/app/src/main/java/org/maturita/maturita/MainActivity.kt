@@ -49,6 +49,8 @@ import org.maturita.maturita.ui.On3QuizScreen
 import org.maturita.maturita.ui.On4QuizScreen
 import org.maturita.maturita.ui.OnQuizScreen
 import org.maturita.maturita.ui.OnYearsScreen
+import org.maturita.maturita.ui.EnYearsScreen
+import org.maturita.maturita.ui.EngExScreen
 import org.maturita.maturita.ui.PlotScreen
 import org.maturita.maturita.ui.RoadmapScreen
 import org.maturita.maturita.ui.SearchScreen
@@ -238,6 +240,21 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.HwEx -> HwQuizScreen(vm, r.id)
+            Route.EnYears -> EnYearsScreen(vm)
+            is Route.EnMap -> LessonListScreen(
+                vm, vm.tr("en_year${r.year}"), vm.tr("en_y${r.year}_sub"),
+                vm.content.enYear(r.year).map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.enDone(r.year, id), Route.EnLesson(r.year, id))
+                },
+            )
+            is Route.EnLesson -> {
+                val l = vm.content.enLesson(r.year, r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.EnEx(r.year, r.id))
+                }
+            }
+            is Route.EnEx -> EngExScreen(vm, r.year, r.id)
             Route.OnYears -> OnYearsScreen(vm)
             Route.OnMap -> LessonListScreen(
                 vm, vm.tr("on_year1"), vm.tr("on_sub"),

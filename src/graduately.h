@@ -20,6 +20,7 @@
 #define HW_SUBJ        2    /* index of "Technické vybavení"          */
 #define CZ_SUBJ        3    /* index of "Český jazyk a literatura"    */
 #define ON_SUBJ        4    /* index of "Občanská nauka"              */
+#define EN_SUBJ        5    /* index of "English"                     */
 #define MATH_SUBJ      6    /* index of "Matematika"                  */
 #define PHY_SUBJ       7    /* index of "Fyzika"                      */
 #define SCI_SUBJ       8    /* index of "Základy Přírodopisných věd"  */
@@ -56,6 +57,7 @@ extern char *app_progress_on;
 extern char *app_progress_on2;
 extern char *app_progress_on3;
 extern char *app_progress_on4;
+extern char *app_progress_en;
 extern char *app_progress_mluvnice;
 extern char *app_progress_cetba;
 extern char *app_progress_lit;
@@ -84,6 +86,7 @@ extern char *app_progress_mat4;
 #define PROGRESS_ON2  app_progress_on2
 #define PROGRESS_ON3  app_progress_on3
 #define PROGRESS_ON4  app_progress_on4
+#define PROGRESS_EN   app_progress_en
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -903,6 +906,11 @@ void on_lessons_apply_lang(void);
 GtkWidget *build_onyears_page(void);
 GtkWidget *build_onmap_page(void);
 void add_on_pages(GtkStack *stack);
+void en_load_progress(void);
+void progress_for_en(ProgressSum *out);
+void en_rail_theme_reset(void);
+GtkWidget *build_enyears_page(void);
+void add_en_pages(GtkStack *stack);
 void on2_load_progress(void);
 void on2_save_progress(void);
 void mark_on2_done(int lesson_id);
@@ -1117,6 +1125,8 @@ void draw_physics_icon(GtkDrawingArea *area, cairo_t *cr,
                        int width, int height, gpointer data);
 void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
                             int width, int height, gpointer data);
+void draw_uk_flag(GtkDrawingArea *area, cairo_t *cr,
+                  int width, int height, gpointer data);
 void draw_book_icon(GtkDrawingArea *area, cairo_t *cr,
                     int width, int height, gpointer data);
 void draw_book_badge_icon(GtkDrawingArea *area, cairo_t *cr,

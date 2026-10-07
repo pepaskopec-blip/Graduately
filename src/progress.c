@@ -58,6 +58,7 @@ void load_progress(void) {
     on2_load_progress();
     on3_load_progress();
     on4_load_progress();
+    en_load_progress();
     lit_load_progress();
     sci_load_progress();
     fyz_load_progress();

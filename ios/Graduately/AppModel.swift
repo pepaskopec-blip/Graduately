@@ -166,6 +166,11 @@ final class AppModel: ObservableObject {
         refresh()
     }
 
+    func markEn(_ year: Int, _ id: Int) {
+        progress.markEn(year, id)
+        refresh()
+    }
+
     func markLit(_ id: Int) {
         progress.markLit(id)
         refresh()

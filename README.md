@@ -8,8 +8,8 @@ Vzdělávací aplikace k přípravě na maturitu (repo `Graduately`). / An educa
 
 ## Česky
 
-Rozhraní je v češtině a angličtině. Hotových je pět předmětů; ostatní jsou
-zatím zamčené placeholdery. Aplikace se po instalaci aktualizuje sama.
+Rozhraní je v češtině a angličtině. Otevřené předměty jsou v seznamu níže;
+ostatní jsou zatím zamčené. Aplikace se po instalaci aktualizuje sama.
 
 | Úvod | Předměty | Německá cesta |
 | ---- | -------- | ------------- |
@@ -78,6 +78,8 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Občanská nauka** — 1. ročník, 17 lekcí (člověk v lidském společenství);
   2. ročník, 16 lekcí (člověk jako občan); 3. ročník, 16 lekcí (člověk a právo);
   4. ročník, 16 lekcí (hospodářství, svět a filozofie)
+- **Angličtina** — 4 ročníky, 32 lekcí podle osnov gymnázia (A2 až maturita):
+  poslech, čtení, psaní, doplňování, kvízy a ročníkové testy
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
 - ukončení: `Cmd/Super+Q` nebo `Alt+F4`
 
@@ -210,8 +212,8 @@ Licence: [GPL-3.0](LICENSE).
 
 ## English
 
-The UI is Czech and English. Five subjects are playable; the rest are locked
-placeholders. After install the app updates itself.
+The UI is Czech and English. Open subjects are listed below; the rest are
+still locked. After install the app updates itself.
 
 | Welcome | Subjects | German path |
 | ------- | -------- | ----------- |
@@ -282,6 +284,8 @@ Intel Mac, another architecture, or hacking on the code →
   year 2, 16 lessons (the citizen in a democratic state);
   year 3, 16 lessons (the individual and the law);
   year 4, 16 lessons (the economy, the world and philosophy)
+- **English** — 4 years, 32 lessons from the gymnasium syllabus (A2 through
+  the maturita): listening, reading, writing, gap-fill, quizzes and year tests
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
 - quit with `Cmd/Super+Q` or `Alt+F4`
 

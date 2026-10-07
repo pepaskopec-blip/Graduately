@@ -30,6 +30,10 @@ sealed class Route(val page: String) {
     data object On4Map : Route("on4map")
     data class On4Lesson(val id: Int) : Route("on4unit$id")
     data class On4Ex(val id: Int) : Route("on4ex$id")
+    data object EnYears : Route("enyears")
+    data class EnMap(val year: Int) : Route("en${year}map")
+    data class EnLesson(val year: Int, val id: Int) : Route("en${year}unit$id")
+    data class EnEx(val year: Int, val id: Int) : Route("en${year}ex$id")
     data object LitYears : Route("lityears")
     data object LitMap : Route("litmap")
     data class LitLesson(val id: Int) : Route("litunit$id")
@@ -93,7 +97,7 @@ sealed class Route(val page: String) {
     /** Screens with their own bottom action bar; the navigation bar stays hidden there. */
     val isExercise: Boolean
         get() = this is GermanEx || this is Vocab || this is NetEx || this is HwEx ||
-            this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is MluvEx || this is BookQuiz || this is BookPlot ||
+            this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is EnLesson || this is EnEx || this is MluvEx || this is BookQuiz || this is BookPlot ||
             this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson ||
             this is LitLesson || this is LitEx || this is Lit2Lesson || this is Lit2Ex ||
             this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex ||
@@ -134,6 +138,10 @@ sealed class Route(val page: String) {
         On4Map -> listOf(Subjects, OnYears, On4Map)
         is On4Lesson -> listOf(Subjects, OnYears, On4Map, this)
         is On4Ex -> listOf(Subjects, OnYears, On4Map, On4Lesson(id), this)
+        EnYears -> listOf(Subjects, EnYears)
+        is EnMap -> listOf(Subjects, EnYears, this)
+        is EnLesson -> listOf(Subjects, EnYears, EnMap(year), this)
+        is EnEx -> listOf(Subjects, EnYears, EnMap(year), EnLesson(year, id), this)
         LitYears -> listOf(Subjects, CzechMap, LitYears)
         LitMap -> listOf(Subjects, CzechMap, LitYears, LitMap)
         is LitLesson -> listOf(Subjects, CzechMap, LitYears, LitMap, this)
@@ -208,6 +216,7 @@ fun routeFromPage(page: String): Route? = when (page) {
     "on2map" -> Route.On2Map
     "on3map" -> Route.On3Map
     "on4map" -> Route.On4Map
+    "enyears" -> Route.EnYears
     "lityears" -> Route.LitYears
     "litmap" -> Route.LitMap
     "lit2map" -> Route.Lit2Map
@@ -347,6 +356,15 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""litex(\d+)""").matchEntire(page)?.let {
             return Route.LitEx(it.groupValues[1].toInt())
+        }
+        Regex("""en(\d)map""").matchEntire(page)?.let {
+            return Route.EnMap(it.groupValues[1].toInt())
+        }
+        Regex("""en(\d)unit(\d+)""").matchEntire(page)?.let {
+            return Route.EnLesson(it.groupValues[1].toInt(), it.groupValues[2].toInt())
+        }
+        Regex("""en(\d)ex(\d+)""").matchEntire(page)?.let {
+            return Route.EnEx(it.groupValues[1].toInt(), it.groupValues[2].toInt())
         }
         Regex("""on4unit(\d+)""").matchEntire(page)?.let {
             return Route.On4Lesson(it.groupValues[1].toInt())

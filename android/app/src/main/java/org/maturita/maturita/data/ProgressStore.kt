@@ -44,6 +44,9 @@ class ProgressStore(context: Context) {
     fun on4Done(id: Int) = prefs.getBoolean("on4.$id", false)
     fun markOn4(id: Int) { prefs.edit().putBoolean("on4.$id", true).apply() }
 
+    fun enDone(year: Int, id: Int) = prefs.getBoolean("en.$year.$id", false)
+    fun markEn(year: Int, id: Int) { prefs.edit().putBoolean("en.$year.$id", true).apply() }
+
     fun litDone(id: Int) = prefs.getBoolean("lit.$id", false)
     fun markLit(id: Int) { prefs.edit().putBoolean("lit.$id", true).apply() }
     fun lit2Done(id: Int) = prefs.getBoolean("lit2.$id", false)
@@ -144,6 +147,16 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         if (p.on4Done(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
+        }
+    }
+    for (year in 1..4) {
+        content.enYear(year).forEach { l ->
+            sum.totalEx += 1
+            sum.openUnits += 1
+            if (p.enDone(year, l.int("id"))) {
+                sum.doneEx += 1
+                sum.doneUnits += 1
+            }
         }
     }
     content.lit.forEach { l ->

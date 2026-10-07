@@ -35,6 +35,10 @@ final class Content {
     let on2: [J]
     let on3: [J]
     let on4: [J]
+    let en: [J]
+    let en2: [J]
+    let en3: [J]
+    let en4: [J]
     let lit: [J]
     let lit2: [J]
     let lit3: [J]
@@ -85,6 +89,10 @@ final class Content {
         on2 = raw.arr("on2")
         on3 = raw.arr("on3")
         on4 = raw.arr("on4")
+        en = raw.arr("en")
+        en2 = raw.arr("en2")
+        en3 = raw.arr("en3")
+        en4 = raw.arr("en4")
         lit = raw.arr("lit")
         lit2 = raw.arr("lit2")
         lit3 = raw.arr("lit3")
@@ -112,6 +120,15 @@ final class Content {
     func on2Lesson(_ id: Int) -> J? { on2.first { $0.int("id") == id } }
     func on3Lesson(_ id: Int) -> J? { on3.first { $0.int("id") == id } }
     func on4Lesson(_ id: Int) -> J? { on4.first { $0.int("id") == id } }
+    func enYear(_ year: Int) -> [J] {
+        switch year {
+        case 2: return en2
+        case 3: return en3
+        case 4: return en4
+        default: return en
+        }
+    }
+    func enLesson(_ year: Int, _ id: Int) -> J? { enYear(year).first { $0.int("id") == id } }
     func litLesson(_ id: Int) -> J? { lit.first { $0.int("id") == id } }
     func lit2Lesson(_ id: Int) -> J? { lit2.first { $0.int("id") == id } }
     func lit3Lesson(_ id: Int) -> J? { lit3.first { $0.int("id") == id } }

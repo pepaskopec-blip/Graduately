@@ -196,6 +196,26 @@ fun CzechFlag(iconSize: Dp = 48.dp) {
 }
 
 @Composable
+fun UkFlag(iconSize: Dp = 48.dp) {
+    DrawnIcon(iconSize) {
+        val w = this.size.width
+        val h = this.size.height
+        val clip = Path().apply { addOval(androidx.compose.ui.geometry.Rect(0f, 0f, w, h)) }
+        clipPath(clip) {
+            drawRect(Color(0xFF012466), size = Size(w, h))
+            drawLine(Color.White, Offset(0f, 0f), Offset(w, h), strokeWidth = w * 0.16f)
+            drawLine(Color.White, Offset(w, 0f), Offset(0f, h), strokeWidth = w * 0.16f)
+            drawLine(Color(0xFFCC0D26), Offset(0f, 0f), Offset(w, h), strokeWidth = w * 0.055f)
+            drawLine(Color(0xFFCC0D26), Offset(w, 0f), Offset(0f, h), strokeWidth = w * 0.055f)
+            drawRect(Color.White, topLeft = Offset(0f, h * 0.38f), size = Size(w, h * 0.24f))
+            drawRect(Color.White, topLeft = Offset(w * 0.38f, 0f), size = Size(w * 0.24f, h))
+            drawRect(Color(0xFFCC0D26), topLeft = Offset(0f, h * 0.43f), size = Size(w, h * 0.14f))
+            drawRect(Color(0xFFCC0D26), topLeft = Offset(w * 0.43f, 0f), size = Size(w * 0.14f, h))
+        }
+    }
+}
+
+@Composable
 fun BookIcon(color: Color, iconSize: Dp = 22.dp) {
     DrawnIcon(iconSize) {
         drawRoundRect(color, Offset(size.width * 0.22f, size.height * 0.18f), Size(size.width * 0.56f, size.height * 0.64f), androidx.compose.ui.geometry.CornerRadius(4f), style = Stroke(size.minDimension * 0.08f))

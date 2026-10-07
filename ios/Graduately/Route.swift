@@ -36,6 +36,10 @@ enum Route: Hashable {
     case on4Map
     case on4Lesson(Int)
     case on4Ex(Int)
+    case enYears
+    case enMap(Int)
+    case enLesson(Int, Int)
+    case enEx(Int, Int)
     case litYears
     case litMap
     case litLesson(Int)
@@ -123,6 +127,10 @@ enum Route: Hashable {
         case .on4Map: return "on4map"
         case .on4Lesson(let id): return "on4unit\(id)"
         case .on4Ex(let id): return "on4ex\(id)"
+        case .enYears: return "enyears"
+        case .enMap(let year): return "en\(year)map"
+        case .enLesson(let year, let id): return "en\(year)unit\(id)"
+        case .enEx(let year, let id): return "en\(year)ex\(id)"
         case .litYears: return "lityears"
         case .litMap: return "litmap"
         case .litLesson(let id): return "litunit\(id)"
@@ -246,6 +254,14 @@ enum Route: Hashable {
             return [.onYears, .on4Map, .on4Lesson(id)]
         case .on4Ex(let id):
             return [.onYears, .on4Map, .on4Lesson(id), .on4Ex(id)]
+        case .enYears:
+            return [.enYears]
+        case .enMap(let year):
+            return [.enYears, .enMap(year)]
+        case .enLesson(let year, let id):
+            return [.enYears, .enMap(year), .enLesson(year, id)]
+        case .enEx(let year, let id):
+            return [.enYears, .enMap(year), .enLesson(year, id), .enEx(year, id)]
         case .litYears:
             return [.czechMap, .litYears]
         case .litMap:
@@ -377,6 +393,7 @@ func routeFromPage(_ page: String) -> Route? {
     case "on2map": return .on2Map
     case "on3map": return .on3Map
     case "on4map": return .on4Map
+    case "enyears": return .enYears
     case "lityears": return .litYears
     case "litmap": return .litMap
     case "lit2map": return .lit2Map
@@ -528,6 +545,15 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /litex(\d+)/), let n = Int(m.1) {
             return .litEx(n)
+        }
+        if let m = page.wholeMatch(of: /en(\d)map/), let y = Int(m.1) {
+            return .enMap(y)
+        }
+        if let m = page.wholeMatch(of: /en(\d)unit(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            return .enLesson(y, n)
+        }
+        if let m = page.wholeMatch(of: /en(\d)ex(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            return .enEx(y, n)
         }
         if let m = page.wholeMatch(of: /on4unit(\d+)/), let n = Int(m.1) {
             return .on4Lesson(n)

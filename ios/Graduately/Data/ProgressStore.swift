@@ -46,6 +46,9 @@ final class ProgressStore {
     func on4Done(_ id: Int) -> Bool { defaults.bool(forKey: "on4.\(id)") }
     func markOn4(_ id: Int) { defaults.set(true, forKey: "on4.\(id)") }
 
+    func enDone(_ year: Int, _ id: Int) -> Bool { defaults.bool(forKey: "en.\(year).\(id)") }
+    func markEn(_ year: Int, _ id: Int) { defaults.set(true, forKey: "en.\(year).\(id)") }
+
     func litDone(_ id: Int) -> Bool { defaults.bool(forKey: "lit.\(id)") }
     func markLit(_ id: Int) { defaults.set(true, forKey: "lit.\(id)") }
     func lit2Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit2.\(id)") }
@@ -151,6 +154,16 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         if p.on4Done(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
+        }
+    }
+    for year in 1...4 {
+        for l in content.enYear(year) {
+            sum.totalEx += 1
+            sum.openUnits += 1
+            if p.enDone(year, l.int("id")) {
+                sum.doneEx += 1
+                sum.doneUnits += 1
+            }
         }
     }
     for l in content.lit {

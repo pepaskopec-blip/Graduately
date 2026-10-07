@@ -33,3 +33,27 @@ struct CzechFlag: View {
         .frame(width: size, height: size)
     }
 }
+
+struct UkFlag: View {
+    var size: CGFloat = 48
+    var body: some View {
+        Canvas { ctx, sz in
+            let w = sz.width
+            let h = sz.height
+            ctx.clip(to: Path(ellipseIn: CGRect(origin: .zero, size: sz)))
+            ctx.fill(Path(CGRect(origin: .zero, size: sz)), with: .color(Color(red: 0.01, green: 0.14, blue: 0.40)))
+            var saltire = Path()
+            saltire.move(to: .zero)
+            saltire.addLine(to: CGPoint(x: w, y: h))
+            saltire.move(to: CGPoint(x: w, y: 0))
+            saltire.addLine(to: CGPoint(x: 0, y: h))
+            ctx.stroke(saltire, with: .color(.white), lineWidth: w * 0.16)
+            ctx.stroke(saltire, with: .color(Color(red: 0.80, green: 0.05, blue: 0.15)), lineWidth: w * 0.055)
+            ctx.fill(Path(CGRect(x: 0, y: h * 0.38, width: w, height: h * 0.24)), with: .color(.white))
+            ctx.fill(Path(CGRect(x: w * 0.38, y: 0, width: w * 0.24, height: h)), with: .color(.white))
+            ctx.fill(Path(CGRect(x: 0, y: h * 0.43, width: w, height: h * 0.14)), with: .color(Color(red: 0.80, green: 0.05, blue: 0.15)))
+            ctx.fill(Path(CGRect(x: w * 0.43, y: 0, width: w * 0.14, height: h)), with: .color(Color(red: 0.80, green: 0.05, blue: 0.15)))
+        }
+        .frame(width: size, height: size)
+    }
+}

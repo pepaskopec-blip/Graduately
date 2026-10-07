@@ -38,8 +38,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import android.os.Handler
+import android.os.Looper
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.platform.LocalContext
+import java.util.Locale
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -1370,4 +1377,156 @@ fun PlotScreen(vm: AppViewModel, id: String) {
         put("meanings", book.o.optJSONArray("plotMeaning"))
     })
     DispatchExercise(vm, spec, vm.tr(book.str("plotTitle"))) { vm.markBookPlot(id) }
+}
+
+@Composable
+fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
+    val lesson = vm.content.enLesson(year, id) ?: return
+    val readQ = lesson.arr("readQuiz")
+    val listenQ = lesson.arr("listenQuiz")
+    val quiz = lesson.arr("quiz")
+    val gapRows = lesson.arr("gaps")
+    val writing = lesson.obj("writing")
+    val listening = lesson.strOrNull("listening")
+    val readPicks = remember(year, id) { mutableStateListOf(*Array(readQ.size) { -1 }) }
+    val listenPicks = remember(year, id) { mutableStateListOf(*Array(listenQ.size) { -1 }) }
+    val quizPicks = remember(year, id) { mutableStateListOf(*Array(quiz.size) { -1 }) }
+    val gapText = remember(year, id) { mutableStateListOf(*Array(gapRows.size) { "" }) }
+    var essay by remember(year, id) { mutableStateOf("") }
+    var played by remember(year, id) { mutableStateOf(false) }
+    var showScript by remember(year, id) { mutableStateOf(false) }
+    var revealed by remember(year, id) { mutableStateOf(false) }
+    var showModel by remember(year, id) { mutableStateOf(false) }
+    var fb by remember(year, id) { mutableStateOf("" to "") }
+    val context = LocalContext.current
+    var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+    DisposableEffect(context) {
+        var engine: TextToSpeech? = null
+        engine = TextToSpeech(context) { status ->
+            if (status == TextToSpeech.SUCCESS) engine?.language = Locale.UK
+        }
+        tts = engine
+        onDispose {
+            engine?.stop()
+            engine?.shutdown()
+        }
+    }
+
+    fun picksOk(questions: List<J>, picks: List<Int>) =
+        questions.indices.all { picks[it] == questions[it].int("correct") }
+
+    ExerciseScaffold(vm, vm.tr(lesson.str("titleKey")), null, vm.tr("check"), {
+        if (listening != null && !played) {
+            fb = vm.tr("en_listen_first") to "err"
+        } else {
+            val readOk = picksOk(readQ, readPicks)
+            val listenOk = picksOk(listenQ, listenPicks)
+            val quizOk = picksOk(quiz, quizPicks)
+            val gapOk = gapRows.indices.count {
+                answerAccepts(normalizeAnswer(gapText[it]), gapRows[it].str("answers"))
+            }
+            val writeOk = if (writing == null) {
+                true
+            } else {
+                val norm = " ${normalizeAnswer(essay)} "
+                val keysOk = writing.str("keys").split("|").all { key ->
+                    val w = normalizeAnswer(key)
+                    w.isEmpty() || norm.contains(" $w ")
+                }
+                keysOk && normalizeAnswer(essay).split(" ").count { it.isNotEmpty() } >= writing.int("minWords", 20)
+            }
+            revealed = true
+            val all = readOk && listenOk && quizOk && gapOk == gapRows.size && writeOk
+            fb = when {
+                all -> {
+                    showModel = true
+                    vm.markEn(year, id)
+                    vm.tr("feedback_ok") to "ok"
+                }
+                writing != null && !writeOk && readOk && listenOk && quizOk && gapOk == gapRows.size ->
+                    vm.tr("en_write_short") to "err"
+                else -> vm.tr("feedback_retry_short") to "err"
+            }
+        }
+    }, fb.first, fb.second) {
+        lesson.strOrNull("reading")?.let { reading ->
+            Text(vm.tr("en_sec_read"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(reading)
+            EngChoices(readQ, readPicks, revealed) { index, option -> readPicks[index] = option }
+        }
+        if (listening != null) {
+            Text(vm.tr("en_sec_listen"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(vm.tr("en_listen_note"), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            OutlinedButton(onClick = {
+                played = true
+                showScript = false
+                val engine = tts
+                if (engine == null) {
+                    showScript = true
+                } else {
+                    engine.language = Locale.UK
+                    engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                        override fun onStart(utteranceId: String?) {}
+                        override fun onDone(utteranceId: String?) {
+                            Handler(Looper.getMainLooper()).post { showScript = true }
+                        }
+                        @Deprecated("Deprecated in Java")
+                        override fun onError(utteranceId: String?) {
+                            Handler(Looper.getMainLooper()).post { showScript = true }
+                        }
+                    })
+                    engine.speak(listening, TextToSpeech.QUEUE_FLUSH, null, "en-lesson")
+                    val wait = (listening.split(" ").size * 420L).coerceAtLeast(2500L)
+                    Handler(Looper.getMainLooper()).postDelayed({ showScript = true }, wait)
+                }
+            }) { Text(vm.tr("en_play")) }
+            if (showScript) Text(listening)
+            EngChoices(listenQ, listenPicks, revealed) { index, option -> listenPicks[index] = option }
+        }
+        if (gapRows.isNotEmpty()) {
+            Text(vm.tr("en_sec_gap"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            gapRows.forEachIndexed { i, row ->
+                Text("${i + 1}. ${row.str("prompt")}", style = MaterialTheme.typography.titleSmall)
+                val mark = if (!revealed) null else answerAccepts(normalizeAnswer(gapText[i]), row.str("answers"))
+                WordField(gapText[i], { gapText[i] = it }, "", mark)
+                if (revealed) row.strOrNull("meaning")?.let { Meaning(it, true) }
+            }
+        }
+        if (writing != null) {
+            Text(vm.tr("en_sec_write"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(writing.str("prompt"))
+            OutlinedTextField(
+                value = essay,
+                onValueChange = { essay = it },
+                modifier = Modifier.fillMaxWidth().height(160.dp),
+                minLines = 5,
+            )
+            if (showModel) {
+                Text(vm.tr("en_model"), style = MaterialTheme.typography.titleSmall)
+                Text(writing.str("model"))
+            }
+        }
+        if (quiz.isNotEmpty()) {
+            Text(vm.tr("en_sec_quiz"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            EngChoices(quiz, quizPicks, revealed) { index, option -> quizPicks[index] = option }
+        }
+    }
+}
+
+@Composable
+private fun EngChoices(
+    questions: List<J>,
+    picks: List<Int>,
+    revealed: Boolean,
+    onPick: (Int, Int) -> Unit,
+) {
+    questions.forEachIndexed { i, q ->
+        Text("${i + 1}. ${q.str("prompt")}", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+        q.strs("options").forEachIndexed { o, opt ->
+            val selected = picks.getOrElse(i) { -1 } == o
+            val mark = if (revealed && selected) picks[i] == q.int("correct") else null
+            OptionRow(opt, selected, mark) { onPick(i, o) }
+        }
+        if (revealed) q.strOrNull("expl")?.let { Meaning(it, true) }
+    }
 }

@@ -271,7 +271,7 @@ const TrEntry tr_ui[] = {
     {"Český jazyk a literatura", "Český jazyk a literatura",
      "Czech Language and Literature"},
     {"Občanská nauka", "Občanská nauka", "Civics"},
-    {"English", "English", "English"},
+    {"English", "Angličtina", "English"},
     {"Deutsch", "Deutsch", "Deutsch"},
     {"Matematika", "Matematika", "Mathematics"},
     {"Fyzika", "Fyzika", "Physics"},
@@ -1619,6 +1619,7 @@ const TrEntry tr_ui[] = {
     {"lit_fuks_plot_title", "Sestavte děj", "Order the plot"},
     {"lit_fuks_plot_sub", "Přetáhněte části příběhu do správného pořadí.",
      "Drag the story parts into the correct order."},
+#include "english_i18n.inc"
 #include "math_i18n.inc"
     {NULL, NULL, NULL}
 };
@@ -2601,6 +2602,7 @@ void on_lessons_apply_lang(void);
 void on2_lessons_apply_lang(void);
 void on3_lessons_apply_lang(void);
 void on4_lessons_apply_lang(void);
+void en_lessons_apply_lang(void);
 void lit_lessons_apply_lang(void);
 void sci_lessons_apply_lang(void);
 void fyz_lessons_apply_lang(void);
@@ -2623,6 +2625,7 @@ void apply_language(void) {
     on2_lessons_apply_lang();
     on3_lessons_apply_lang();
     on4_lessons_apply_lang();
+    en_lessons_apply_lang();
     lit_lessons_apply_lang();
     sci_lessons_apply_lang();
     fyz_lessons_apply_lang();

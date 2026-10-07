@@ -416,6 +416,8 @@ static gboolean run_smoke_test(gpointer data) {
         "on2unit1", "on2ex1", "on2unit16", "on2ex16",
         "on3unit1", "on3ex1", "on3unit16", "on3ex16",
         "on4unit1", "on4ex1", "on4unit16", "on4ex16",
+        "enyears", "en1map", "en4map",
+        "en1unit1", "en1ex1", "en4unit8", "en4ex8",
         "unit1", "unit2", "unit3",
         "u1e1", "u1e13", "u2e1", "u2e19", "u3e1", "u3e15",
         "u1vocab", "u2vocab", "u3vocab",
@@ -534,6 +536,8 @@ void activate(GtkApplication *app, gpointer user_data) {
     gtk_stack_add_named(main_stack, build_on3map_page(), "on3map");
     add_on3_pages(main_stack);
     gtk_stack_add_named(main_stack, build_on4map_page(), "on4map");
+    gtk_stack_add_named(main_stack, build_enyears_page(), "enyears");
+    add_en_pages(main_stack);
     add_on4_pages(main_stack);
     gtk_stack_add_named(main_stack, build_matyears_page(), "matyears");
     gtk_stack_add_named(main_stack, build_mat0map_page(), "mat0map");

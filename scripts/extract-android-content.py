@@ -776,7 +776,10 @@ def main() -> int:
     arrays: dict[str, tuple[str, list]] = {}
     i18n = {}
     for path in sorted(SRC.glob("*.c")):
-        text = strip_comments(path.read_text(encoding="utf-8"))
+        raw = path.read_text(encoding="utf-8")
+        if path.name == "english.c":
+            raw = expand_local_includes(raw, path.parent)
+        text = strip_comments(raw)
         arrays.update(find_arrays(text))
         if path.name == "i18n.c":
             i18n = parse_i18n(strip_comments(expand_local_includes(text, path.parent)))
@@ -1606,13 +1609,66 @@ def main() -> int:
     ex_lines.append("")
     (SRC / "cetba_book_exercises.inc").write_text("\n".join(ex_lines) + "\n", encoding="utf-8")
 
+    def en_text(name):
+        if name not in arrays:
+            return None
+        raw = A(name)
+        if isinstance(raw, list):
+            parts = [x for x in raw if isinstance(x, str)]
+            return parts[0] if len(parts) == 1 else ("\n".join(parts) if parts else None)
+        return raw if isinstance(raw, str) else None
+
+    def en_choice(name):
+        if name not in arrays:
+            return []
+        quiz = choice_items(A(name))
+        hint_name = name + "_hints"
+        hints = str_list(A(hint_name)) if hint_name in arrays else []
+        for qi, q in enumerate(quiz):
+            if qi < len(hints) and hints[qi]:
+                q["expl"] = hints[qi]
+        return quiz
+
+    def en_year(year):
+        lessons = []
+        for i in range(1, 9):
+            prefix = f"en_y{year}_l{i}"
+            write = str_list(A(f"{prefix}_write")) if f"{prefix}_write" in arrays else []
+            writing = None
+            if len(write) >= 3:
+                writing = {
+                    "prompt": write[0],
+                    "model": write[1],
+                    "keys": write[2],
+                    "minWords": int(write[3]) if len(write) > 3 and str(write[3]).isdigit() else 20,
+                }
+            lessons.append({
+                "id": i,
+                "titleKey": f"en_y{year}_u{i}",
+                "subKey": f"en_y{year}_u{i}_sub",
+                "slides": slides_items(A(f"{prefix}_slides")),
+                "reading": en_text(f"{prefix}_read"),
+                "readQuiz": en_choice(f"{prefix}_readq"),
+                "listening": en_text(f"{prefix}_listen"),
+                "listenQuiz": en_choice(f"{prefix}_listenq"),
+                "gaps": typed_items(A(f"{prefix}_gaps")) if f"{prefix}_gaps" in arrays else [],
+                "writing": writing,
+                "quiz": en_choice(f"{prefix}_quiz"),
+            })
+        return lessons
+
+    en_lessons = en_year(1)
+    en2_lessons = en_year(2)
+    en3_lessons = en_year(3)
+    en4_lessons = en_year(4)
+
     subjects = [
         {"key": "Deutsch", "open": True, "target": "roadmap", "icon": "de"},
         {"key": "Správa počítačových sítí", "open": True, "target": "netyears", "icon": "wifi"},
         {"key": "Technické vybavení", "open": True, "target": "hwyears", "icon": "chip"},
         {"key": "Český jazyk a literatura", "open": True, "target": "czechmap", "icon": "cz"},
         {"key": "Občanská nauka", "open": True, "target": "onyears", "icon": "people"},
-        {"key": "English", "open": False, "target": None, "icon": "lock"},
+        {"key": "English", "open": True, "target": "enyears", "icon": "uk"},
         {"key": "Matematika", "open": True, "target": "matyears", "icon": "function"},
         {"key": "Fyzika", "open": True, "target": "fyzyears", "icon": "bolt"},
         {"key": "Základy Přírodopisných věd", "open": True, "target": "scimap", "icon": "flask"},
@@ -1651,6 +1707,10 @@ def main() -> int:
         "on2": on2_lessons,
         "on3": on3_lessons,
         "on4": on4_lessons,
+        "en": en_lessons,
+        "en2": en2_lessons,
+        "en3": en3_lessons,
+        "en4": en4_lessons,
         "mluvnice": mluvnice,
         "books": books,
         "changelog": parse_changelog(ROOT / "data" / "changelog.txt"),

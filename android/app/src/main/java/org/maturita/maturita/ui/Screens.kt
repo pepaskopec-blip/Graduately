@@ -223,6 +223,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "chip" -> ChipIcon(tint, 26.dp)
             "people" -> Icon(Icons.Filled.Groups, null, tint = tint, modifier = Modifier.size(26.dp))
             "cz" -> CzechFlag(28.dp)
+            "uk" -> UkFlag(28.dp)
             "flask" -> Icon(Icons.Filled.Science, null, tint = tint, modifier = Modifier.size(26.dp))
             "bolt" -> Icon(Icons.Filled.Bolt, null, tint = tint, modifier = Modifier.size(26.dp))
             "function" -> Icon(Icons.Filled.Functions, null, tint = tint, modifier = Modifier.size(26.dp))
@@ -305,6 +306,12 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
         "hwyears", "hwmap" -> {
             sum.totalEx = vm.content.hw.size
             sum.doneEx = vm.content.hw.count { vm.progress.hwDone(it.int("id")) }
+        }
+        "enyears", "en1map", "en2map", "en3map", "en4map" -> {
+            sum.totalEx = (1..4).sumOf { vm.content.enYear(it).size }
+            sum.doneEx = (1..4).sumOf { year ->
+                vm.content.enYear(year).count { vm.progress.enDone(year, it.int("id")) }
+            }
         }
         "onyears", "onmap", "on2map", "on3map", "on4map" -> {
             sum.totalEx = vm.content.on.size + vm.content.on2.size + vm.content.on3.size + vm.content.on4.size
@@ -545,6 +552,13 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "on4unit${l.int("id")}", extra = "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "on4ex${l.int("id")}")
     }
+    for (year in 1..4) {
+        add(vm.tr("en_year$year"), vm.tr("search_lesson"), "en${year}map", extra = "anglictina english rocnik")
+        vm.content.enYear(year).forEach { l ->
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "en${year}unit${l.int("id")}", extra = "anglictina english")
+            add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "en${year}ex${l.int("id")}")
+        }
+    }
     add(vm.tr("Literatura"), vm.tr("search_lesson"), "lityears", extra = "literatura")
     add(vm.tr("lit_year1"), vm.tr("search_lesson"), "litmap", extra = "rocnik")
     add(vm.tr("lit_year2"), vm.tr("search_lesson"), "lit2map", extra = "rocnik")
@@ -722,6 +736,21 @@ fun HwYearsScreen(vm: AppViewModel) {
 }
 
 @Composable
+fun EnYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("English"), vm.tr("en_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            items(4) { index ->
+                val year = index + 1
+                NavRow(
+                    title = vm.tr("en_year$year"),
+                    subtitle = vm.tr("en_y${year}_sub"),
+                    leading = { Text("$year.", style = MaterialTheme.typography.titleMedium) },
+                ) { vm.go(Route.EnMap(year)) }
+            }
+        }
+    }
+}
+
 fun OnYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Občanská nauka"), vm.tr("on_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {

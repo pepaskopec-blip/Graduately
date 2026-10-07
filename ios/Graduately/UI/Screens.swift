@@ -689,6 +689,11 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
     case "hwyears", "hwmap":
         sum.totalEx = vm.content.hw.count
         sum.doneEx = vm.content.hw.filter { vm.progress.hwDone($0.int("id")) }.count
+    case "enyears", "en1map", "en2map", "en3map", "en4map":
+        sum.totalEx = (1...4).reduce(0) { $0 + vm.content.enYear($1).count }
+        sum.doneEx = (1...4).reduce(0) { acc, year in
+            acc + vm.content.enYear(year).filter { vm.progress.enDone(year, $0.int("id")) }.count
+        }
     case "onyears", "onmap", "on2map", "on3map", "on4map":
         sum.totalEx = vm.content.on.count + vm.content.on2.count + vm.content.on3.count + vm.content.on4.count
         sum.doneEx = vm.content.on.filter { vm.progress.onDone($0.int("id")) }.count
@@ -905,6 +910,12 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     add(vm.tr("on_year2"), vm.tr("search_lesson"), "on2map", extra: "rocnik")
     add(vm.tr("on_year3"), vm.tr("search_lesson"), "on3map", extra: "rocnik")
     add(vm.tr("on_year4"), vm.tr("search_lesson"), "on4map", extra: "rocnik")
+    for year in 1...4 {
+        add(vm.tr("en_year\(year)"), vm.tr("search_lesson"), "en\(year)map", extra: "anglictina english rocnik")
+        for l in vm.content.enYear(year) {
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "en\(year)unit\(l.int("id"))", extra: "anglictina english")
+        }
+    }
     for l in vm.content.on {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "onunit\(l.int("id"))", extra: "obcanka")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "onex\(l.int("id"))")
@@ -1242,6 +1253,40 @@ struct HwYearsScreen: View {
         }
         .navigationTitle(vm.tr("Technické vybavení"))
         .navigationSubtitle(vm.tr("hw_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct EnYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route)] = [
+            ("en_year1", "en_y1_sub", .enMap(1)),
+            ("en_year2", "en_y2_sub", .enMap(2)),
+            ("en_year3", "en_y3_sub", .enMap(3)),
+            ("en_year4", "en_y4_sub", .enMap(4)),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+            }
+            .buttonStyle(.plain)
+        }
+        .navigationTitle(vm.tr("English"))
+        .navigationSubtitle(vm.tr("en_years_sub"))
+        #else
+        List {
+            ForEach(1...4, id: \.self) { year in
+                NavigationLink(value: Route.enMap(year)) {
+                    ListRowLabel(title: vm.tr("en_year\(year)"), subtitle: vm.tr("en_y\(year)_sub"))
+                }
+            }
+        }
+        .navigationTitle(vm.tr("English"))
+        .navigationSubtitle(vm.tr("en_years_sub"))
         .appListStyle()
         #endif
     }
@@ -2183,6 +2228,29 @@ struct RouteDestination: View {
             HwQuizScreen(vm: vm, id: id)
         case .onYears:
             OnYearsScreen(vm: vm)
+        case .enYears:
+            EnYearsScreen(vm: vm)
+        case .enMap(let year):
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("en_year\(year)"),
+                subtitle: vm.tr("en_y\(year)_sub"),
+                rows: vm.content.enYear(year).map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "e\(year)\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.enDone(year, id),
+                        destination: .enLesson(year, id)
+                    )
+                }
+            )
+        case .enLesson(let year, let id):
+            if let l = vm.content.enLesson(year, id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .enEx(year, id))
+            }
+        case .enEx(let year, let id):
+            EngExScreen(vm: vm, year: year, id: id)
         case .onMap:
             LessonListScreen(
                 vm: vm,

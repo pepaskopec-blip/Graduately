@@ -430,6 +430,7 @@ void apply_theme(void) {
     on2_rail_theme_reset();
     on3_rail_theme_reset();
     on4_rail_theme_reset();
+    en_rail_theme_reset();
     czech_rail_theme_reset();
     lit_rail_theme_reset();
     sci_rail_theme_reset();

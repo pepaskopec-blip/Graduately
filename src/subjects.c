@@ -5,9 +5,8 @@
 /* ------------------------------------------------------------------ */
 
 /* Index 0 (Deutsch), NET_SUBJ (networks), HW_SUBJ (hardware), CZ_SUBJ
- * (Czech), ON_SUBJ (civics), MATH_SUBJ (mathematics), PHY_SUBJ
- * (physics) and SCI_SUBJ
- * (natural sciences) are unlocked. */
+ * (Czech), ON_SUBJ (civics), EN_SUBJ (English), MATH_SUBJ (mathematics),
+ * PHY_SUBJ (physics) and SCI_SUBJ (natural sciences) are unlocked. */
 const char *sub_keys[NUM_SUBJECTS] = {
     "Deutsch",
     "Správa počítačových sítí",
@@ -156,7 +155,8 @@ void draw_czech_flag(GtkDrawingArea *area, cairo_t *cr,
 
 static gboolean subject_is_open(int i) {
     return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
-        || i == ON_SUBJ || i == MATH_SUBJ || i == PHY_SUBJ || i == SCI_SUBJ;
+        || i == ON_SUBJ || i == EN_SUBJ || i == MATH_SUBJ || i == PHY_SUBJ
+        || i == SCI_SUBJ;
 }
 
 static GtkWidget *subject_icon(int i) {
@@ -179,6 +179,9 @@ static GtkWidget *subject_icon(int i) {
     else if (i == ON_SUBJ)
         gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(area),
                                        draw_civics_icon, NULL, NULL);
+    else if (i == EN_SUBJ)
+        gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(area),
+                                       draw_uk_flag, NULL, NULL);
     else if (i == MATH_SUBJ)
         gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(area),
                                        draw_math_icon, NULL, NULL);
@@ -204,6 +207,8 @@ static const char *subject_target(int i) {
         return "czechmap";
     if (i == ON_SUBJ)
         return "onyears";
+    if (i == EN_SUBJ)
+        return "enyears";
     if (i == MATH_SUBJ)
         return "matyears";
     if (i == PHY_SUBJ)

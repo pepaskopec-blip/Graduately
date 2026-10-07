@@ -625,6 +625,7 @@ struct SubjectIcon: View {
             switch icon {
             case "de": GermanFlag(size: size)
             case "cz": CzechFlag(size: size)
+            case "uk": UkFlag(size: size)
             default:
                 Image(systemName: subjectSymbol(icon))
                     .font(.system(size: size * 0.72, weight: .semibold))

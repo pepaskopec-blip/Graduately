@@ -23,7 +23,8 @@ static GPtrArray *search_items;
 
 static gboolean subject_open(int i) {
     return i == 0 || i == NET_SUBJ || i == HW_SUBJ || i == CZ_SUBJ
-        || i == ON_SUBJ || i == MATH_SUBJ || i == PHY_SUBJ || i == SCI_SUBJ;
+        || i == ON_SUBJ || i == EN_SUBJ || i == MATH_SUBJ || i == PHY_SUBJ
+        || i == SCI_SUBJ;
 }
 
 static const char *subject_page(int i) {
@@ -37,6 +38,8 @@ static const char *subject_page(int i) {
         return "czechmap";
     if (i == ON_SUBJ)
         return "onyears";
+    if (i == EN_SUBJ)
+        return "enyears";
     if (i == MATH_SUBJ)
         return "matyears";
     if (i == PHY_SUBJ)
@@ -239,6 +242,21 @@ static void catalog_rebuild(void) {
         catalog_add_key(key, "search_lesson", page, FALSE, 2, "obcanka");
         g_snprintf(page, sizeof(page), "on4ex%d", i);
         catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3, "kviz quiz");
+    }
+
+    catalog_add_key("en_year1", "search_lesson", "en1map", FALSE, 1, "anglictina english");
+    catalog_add_key("en_year2", "search_lesson", "en2map", FALSE, 1, "anglictina english");
+    catalog_add_key("en_year3", "search_lesson", "en3map", FALSE, 1, "anglictina english");
+    catalog_add_key("en_year4", "search_lesson", "en4map", FALSE, 1, "anglictina english");
+    for (int y = 1; y <= 4; y++) {
+        for (i = 1; i <= 8; i++) {
+            g_snprintf(key, sizeof(key), "en_y%d_u%d", y, i);
+            g_snprintf(page, sizeof(page), "en%dunit%d", y, i);
+            catalog_add_key(key, "search_lesson", page, FALSE, 2, "anglictina english");
+            g_snprintf(page, sizeof(page), "en%dex%d", y, i);
+            catalog_add(tr(key), tr("search_exercise"), page, FALSE, 3,
+                        "poslech cteni psani kviz");
+        }
     }
 
     catalog_add_key("Český jazyk a literatura", "search_subject",
