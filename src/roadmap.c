@@ -363,7 +363,7 @@ GtkWidget *build_roadmap_page(void) {
     gtk_widget_set_margin_bottom(page, 24);
 
     gtk_box_append(GTK_BOX(page),
-                   top_bar("subjects", "roadmap_title", "roadmap_sub"));
+                   top_bar("dehome", "roadmap_title", "roadmap_sub"));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),

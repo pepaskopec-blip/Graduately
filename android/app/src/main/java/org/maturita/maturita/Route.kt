@@ -6,6 +6,10 @@ sealed class Route(val page: String) {
     data object Stats : Route("stats")
     data object Settings : Route("settings")
     data object Roadmap : Route("roadmap")
+    data object DeHome : Route("dehome")
+    data class DeMap(val year: Int) : Route("de${year}map")
+    data class DeLesson(val year: Int, val id: Int) : Route("de${year}unit$id")
+    data class DeEx(val year: Int, val id: Int) : Route("de${year}ex$id")
     data class UnitMap(val unitId: Int) : Route("unit${unitId + 1}")
     data class GermanEx(val unitId: Int, val ex: Int) : Route("u${unitId + 1}e$ex")
     data class Vocab(val unitId: Int) : Route("u${unitId + 1}vocab")
@@ -97,7 +101,7 @@ sealed class Route(val page: String) {
     /** Screens with their own bottom action bar; the navigation bar stays hidden there. */
     val isExercise: Boolean
         get() = this is GermanEx || this is Vocab || this is NetEx || this is HwEx ||
-            this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is EnLesson || this is EnEx || this is MluvEx || this is BookQuiz || this is BookPlot ||
+            this is OnEx || this is On2Ex || this is On3Ex || this is On4Ex || this is EnLesson || this is EnEx || this is DeLesson || this is DeEx || this is MluvEx || this is BookQuiz || this is BookPlot ||
             this is NetLesson || this is HwLesson || this is OnLesson || this is On2Lesson || this is On3Lesson || this is On4Lesson ||
             this is LitLesson || this is LitEx || this is Lit2Lesson || this is Lit2Ex ||
             this is Lit3Lesson || this is Lit3Ex || this is Lit4Lesson || this is Lit4Ex ||
@@ -113,10 +117,14 @@ sealed class Route(val page: String) {
         Welcome, Subjects -> listOf(Subjects)
         Stats -> listOf(Stats)
         Settings -> listOf(Settings)
-        Roadmap -> listOf(Subjects, Roadmap)
-        is UnitMap -> listOf(Subjects, Roadmap, this)
-        is GermanEx -> listOf(Subjects, Roadmap, UnitMap(unitId), this)
-        is Vocab -> listOf(Subjects, Roadmap, UnitMap(unitId), this)
+        DeHome -> listOf(Subjects, DeHome)
+        is DeMap -> listOf(Subjects, DeHome, this)
+        is DeLesson -> listOf(Subjects, DeHome, DeMap(year), this)
+        is DeEx -> listOf(Subjects, DeHome, DeMap(year), DeLesson(year, id), this)
+        Roadmap -> listOf(Subjects, DeHome, Roadmap)
+        is UnitMap -> listOf(Subjects, DeHome, Roadmap, this)
+        is GermanEx -> listOf(Subjects, DeHome, Roadmap, UnitMap(unitId), this)
+        is Vocab -> listOf(Subjects, DeHome, Roadmap, UnitMap(unitId), this)
         NetYears -> listOf(Subjects, NetYears)
         NetMap -> listOf(Subjects, NetYears, NetMap)
         is NetLesson -> listOf(Subjects, NetYears, NetMap, this)
@@ -207,6 +215,7 @@ fun routeFromPage(page: String): Route? = when (page) {
     "stats" -> Route.Stats
     "settings" -> Route.Settings
     "roadmap" -> Route.Roadmap
+    "dehome" -> Route.DeHome
     "netyears" -> Route.NetYears
     "netmap" -> Route.NetMap
     "hwyears" -> Route.HwYears
@@ -356,6 +365,15 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""litex(\d+)""").matchEntire(page)?.let {
             return Route.LitEx(it.groupValues[1].toInt())
+        }
+        Regex("""de(\d)map""").matchEntire(page)?.let {
+            return Route.DeMap(it.groupValues[1].toInt())
+        }
+        Regex("""de(\d)unit(\d+)""").matchEntire(page)?.let {
+            return Route.DeLesson(it.groupValues[1].toInt(), it.groupValues[2].toInt())
+        }
+        Regex("""de(\d)ex(\d+)""").matchEntire(page)?.let {
+            return Route.DeEx(it.groupValues[1].toInt(), it.groupValues[2].toInt())
         }
         Regex("""en(\d)map""").matchEntire(page)?.let {
             return Route.EnMap(it.groupValues[1].toInt())

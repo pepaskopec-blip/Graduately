@@ -29,7 +29,7 @@ static gboolean subject_open(int i) {
 
 static const char *subject_page(int i) {
     if (i == 0)
-        return "roadmap";
+        return "dehome";
     if (i == NET_SUBJ)
         return "netyears";
     if (i == HW_SUBJ)
@@ -248,6 +248,17 @@ static void catalog_rebuild(void) {
     catalog_add_key("en_year2", "search_lesson", "en2map", FALSE, 1, "anglictina english");
     catalog_add_key("en_year3", "search_lesson", "en3map", FALSE, 1, "anglictina english");
     catalog_add_key("en_year4", "search_lesson", "en4map", FALSE, 1, "anglictina english");
+    catalog_add_key("de_book_title", "search_unit", "roadmap", FALSE, 1, "nemcina deutsch ucebnice");
+    for (i = 1; i <= 4; i++) {
+        g_snprintf(key, sizeof key, "de_year%d", i);
+        g_snprintf(page, sizeof page, "de%dmap", i);
+        catalog_add_key(key, "search_lesson", page, FALSE, 1, "nemcina deutsch rocnik");
+        for (n = 1; n <= 6; n++) {
+            g_snprintf(key, sizeof key, "de_y%d_u%d", i, n);
+            g_snprintf(page, sizeof page, "de%dunit%d", i, n);
+            catalog_add_key(key, "search_lesson", page, FALSE, 2, "nemcina deutsch");
+        }
+    }
     for (int y = 1; y <= 4; y++) {
         for (i = 1; i <= 8; i++) {
             g_snprintf(key, sizeof(key), "en_y%d_u%d", y, i);

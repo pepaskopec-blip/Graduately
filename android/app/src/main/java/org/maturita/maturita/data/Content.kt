@@ -37,6 +37,10 @@ class Content(root: JSONObject) {
     val en2 = raw.arr("en2")
     val en3 = raw.arr("en3")
     val en4 = raw.arr("en4")
+    val de = raw.arr("de")
+    val de2 = raw.arr("de2")
+    val de3 = raw.arr("de3")
+    val de4 = raw.arr("de4")
     val lit = raw.arr("lit")
     val lit2 = raw.arr("lit2")
     val lit3 = raw.arr("lit3")
@@ -70,6 +74,13 @@ class Content(root: JSONObject) {
         else -> en
     }
     fun enLesson(year: Int, id: Int) = enYear(year).firstOrNull { it.int("id") == id }
+    fun deYear(year: Int) = when (year) {
+        2 -> de2
+        3 -> de3
+        4 -> de4
+        else -> de
+    }
+    fun deLesson(year: Int, id: Int) = deYear(year).firstOrNull { it.int("id") == id }
     fun litLesson(id: Int) = lit.firstOrNull { it.int("id") == id }
     fun lit2Lesson(id: Int) = lit2.firstOrNull { it.int("id") == id }
     fun lit3Lesson(id: Int) = lit3.firstOrNull { it.int("id") == id }

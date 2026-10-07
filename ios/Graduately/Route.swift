@@ -12,6 +12,10 @@ enum Route: Hashable {
     case subjects
     case stats
     case roadmap
+    case deHome
+    case deMap(Int)
+    case deLesson(Int, Int)
+    case deEx(Int, Int)
     case unitMap(Int)
     case germanEx(Int, Int)
     case vocab(Int)
@@ -103,6 +107,10 @@ enum Route: Hashable {
         case .subjects: return "subjects"
         case .stats: return "stats"
         case .roadmap: return "roadmap"
+        case .deHome: return "dehome"
+        case .deMap(let year): return "de\(year)map"
+        case .deLesson(let year, let id): return "de\(year)unit\(id)"
+        case .deEx(let year, let id): return "de\(year)ex\(id)"
         case .unitMap(let unitId): return "unit\(unitId + 1)"
         case .germanEx(let unitId, let ex): return "u\(unitId + 1)e\(ex)"
         case .vocab(let unitId): return "u\(unitId + 1)vocab"
@@ -204,14 +212,22 @@ enum Route: Hashable {
         switch self {
         case .welcome, .subjects, .stats:
             return []
+        case .deHome:
+            return [.deHome]
+        case .deMap(let year):
+            return [.deHome, .deMap(year)]
+        case .deLesson(let year, let id):
+            return [.deHome, .deMap(year), .deLesson(year, id)]
+        case .deEx(let year, let id):
+            return [.deHome, .deMap(year), .deLesson(year, id), .deEx(year, id)]
         case .roadmap:
-            return [.roadmap]
+            return [.deHome, .roadmap]
         case .unitMap(let id):
-            return [.roadmap, .unitMap(id)]
+            return [.deHome, .roadmap, .unitMap(id)]
         case .germanEx(let unit, let ex):
-            return [.roadmap, .unitMap(unit), .germanEx(unit, ex)]
+            return [.deHome, .roadmap, .unitMap(unit), .germanEx(unit, ex)]
         case .vocab(let unit):
-            return [.roadmap, .unitMap(unit), .vocab(unit)]
+            return [.deHome, .roadmap, .unitMap(unit), .vocab(unit)]
         case .netYears:
             return [.netYears]
         case .netMap:
@@ -384,6 +400,7 @@ func routeFromPage(_ page: String) -> Route? {
     case "subjects": return .subjects
     case "stats": return .stats
     case "roadmap": return .roadmap
+    case "dehome": return .deHome
     case "netyears": return .netYears
     case "netmap": return .netMap
     case "hwyears": return .hwYears
@@ -545,6 +562,15 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /litex(\d+)/), let n = Int(m.1) {
             return .litEx(n)
+        }
+        if let m = page.wholeMatch(of: /de(\d)map/), let y = Int(m.1) {
+            return .deMap(y)
+        }
+        if let m = page.wholeMatch(of: /de(\d)unit(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            return .deLesson(y, n)
+        }
+        if let m = page.wholeMatch(of: /de(\d)ex(\d+)/), let y = Int(m.1), let n = Int(m.2) {
+            return .deEx(y, n)
         }
         if let m = page.wholeMatch(of: /en(\d)map/), let y = Int(m.1) {
             return .enMap(y)

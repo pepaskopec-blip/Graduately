@@ -7,6 +7,12 @@
 # en: bullet
 
 --- 2026-10-07
+cs: Němčina: čtyři ročníky, 24 lekcí s poslechem, čtením a psaním
+cs: Učebnice Neue Freunde zůstává, k ní přibyl kurz od A1 k B1
+en: German: four years, 24 lessons with listening, reading and writing
+en: The Neue Freunde textbook stays, and a course from A1 to B1 sits beside it
+
+--- 2026-10-07
 cs: Angličtina: čtyři ročníky, 32 lekcí podle osnov gymnázia
 cs: Poslech, čtení, psaní, doplňování, kvízy a testy od A2 k maturitě
 en: English: four years, 32 lessons from the gymnasium syllabus

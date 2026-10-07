@@ -777,7 +777,7 @@ def main() -> int:
     i18n = {}
     for path in sorted(SRC.glob("*.c")):
         raw = path.read_text(encoding="utf-8")
-        if path.name == "english.c":
+        if path.name in ("english.c", "german_course.c"):
             raw = expand_local_includes(raw, path.parent)
         text = strip_comments(raw)
         arrays.update(find_arrays(text))
@@ -1629,10 +1629,10 @@ def main() -> int:
                 q["expl"] = hints[qi]
         return quiz
 
-    def en_year(year):
+    def skill_year(tag, year, count):
         lessons = []
-        for i in range(1, 9):
-            prefix = f"en_y{year}_l{i}"
+        for i in range(1, count + 1):
+            prefix = f"{tag}_y{year}_l{i}"
             write = str_list(A(f"{prefix}_write")) if f"{prefix}_write" in arrays else []
             writing = None
             if len(write) >= 3:
@@ -1644,8 +1644,8 @@ def main() -> int:
                 }
             lessons.append({
                 "id": i,
-                "titleKey": f"en_y{year}_u{i}",
-                "subKey": f"en_y{year}_u{i}_sub",
+                "titleKey": f"{tag}_y{year}_u{i}",
+                "subKey": f"{tag}_y{year}_u{i}_sub",
                 "slides": slides_items(A(f"{prefix}_slides")),
                 "reading": en_text(f"{prefix}_read"),
                 "readQuiz": en_choice(f"{prefix}_readq"),
@@ -1657,13 +1657,17 @@ def main() -> int:
             })
         return lessons
 
-    en_lessons = en_year(1)
-    en2_lessons = en_year(2)
-    en3_lessons = en_year(3)
-    en4_lessons = en_year(4)
+    en_lessons = skill_year("en", 1, 8)
+    en2_lessons = skill_year("en", 2, 8)
+    en3_lessons = skill_year("en", 3, 8)
+    en4_lessons = skill_year("en", 4, 8)
+    de_lessons = skill_year("de", 1, 6)
+    de2_lessons = skill_year("de", 2, 6)
+    de3_lessons = skill_year("de", 3, 6)
+    de4_lessons = skill_year("de", 4, 6)
 
     subjects = [
-        {"key": "Deutsch", "open": True, "target": "roadmap", "icon": "de"},
+        {"key": "Deutsch", "open": True, "target": "dehome", "icon": "de"},
         {"key": "Správa počítačových sítí", "open": True, "target": "netyears", "icon": "wifi"},
         {"key": "Technické vybavení", "open": True, "target": "hwyears", "icon": "chip"},
         {"key": "Český jazyk a literatura", "open": True, "target": "czechmap", "icon": "cz"},
@@ -1711,6 +1715,10 @@ def main() -> int:
         "en2": en2_lessons,
         "en3": en3_lessons,
         "en4": en4_lessons,
+        "de": de_lessons,
+        "de2": de2_lessons,
+        "de3": de3_lessons,
+        "de4": de4_lessons,
         "mluvnice": mluvnice,
         "books": books,
         "changelog": parse_changelog(ROOT / "data" / "changelog.txt"),

@@ -2401,8 +2401,8 @@ def emit_questions(name, items, lines):
     lines.append("")
 
 
-def emit_lesson(year, index, lesson, lines, inits):
-    p = f"en_y{year}_l{index}"
+def emit_lesson(year, index, lesson, lines, inits, prefix="en"):
+    p = f"{prefix}_y{year}_l{index}"
     lines.append(f"static const NetSlide {p}_slides[] = {{")
     for kicker, title, tip, bullets in lesson["slides"]:
         lines.append("    {")

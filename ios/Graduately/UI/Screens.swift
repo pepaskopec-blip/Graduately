@@ -662,11 +662,15 @@ struct StatsScreen: View {
 private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
     var sum = ProgressSum()
     switch s.str("target") {
-    case "roadmap":
+    case "dehome":
         for u in vm.content.german where u.bool("unlocked") {
             let n = u.strs("names").count
             sum.totalEx += n
             sum.doneEx += (1...n).filter { vm.progress.germanDone(u.int("id"), $0) }.count
+        }
+        sum.totalEx += (1...4).reduce(0) { $0 + vm.content.deYear($1).count }
+        sum.doneEx += (1...4).reduce(0) { acc, year in
+            acc + vm.content.deYear(year).filter { vm.progress.deDone(year, $0.int("id")) }.count
         }
     case "netyears":
         sum.totalEx = vm.content.netLessons.count
@@ -899,6 +903,10 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
         add(vm.tr("en_year\(year)"), vm.tr("search_lesson"), "en\(year)map", extra: "anglictina english rocnik")
         for l in vm.content.enYear(year) {
             add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "en\(year)unit\(l.int("id"))", extra: "anglictina english")
+        }
+        add(vm.tr("de_year\(year)"), vm.tr("search_lesson"), "de\(year)map", extra: "nemcina deutsch rocnik")
+        for l in vm.content.deYear(year) {
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "de\(year)unit\(l.int("id"))", extra: "nemcina deutsch")
         }
     }
     for l in vm.content.on {
@@ -1239,6 +1247,43 @@ struct HwYearsScreen: View {
         .navigationTitle(vm.tr("Technické vybavení"))
         .navigationSubtitle(vm.tr("hw_years_sub"))
         .appListStyle()
+        #endif
+    }
+}
+
+struct DeHomeScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let rows: [(String, String, String, Route)] = [
+            ("U", "de_book_title", "de_book_sub", .roadmap),
+            ("1", "de_year1", "de_y1_sub", .deMap(1)),
+            ("2", "de_year2", "de_y2_sub", .deMap(2)),
+            ("3", "de_year3", "de_y3_sub", .deMap(3)),
+            ("4", "de_year4", "de_y4_sub", .deMap(4)),
+        ]
+        MacFillGrid(count: rows.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: rows[i].3) {
+                MacLinkCard(title: vm.tr(rows[i].1), subtitle: vm.tr(rows[i].2), badge: rows[i].0)
+            }
+            .buttonStyle(.plain)
+        }
+        .navigationTitle(vm.tr("Deutsch"))
+        .navigationSubtitle(vm.tr("de_home_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.roadmap) {
+                ListRowLabel(title: vm.tr("de_book_title"), subtitle: vm.tr("de_book_sub"))
+            }
+            ForEach(1...4, id: \.self) { year in
+                NavigationLink(value: Route.deMap(year)) {
+                    ListRowLabel(title: vm.tr("de_year\(year)"), subtitle: vm.tr("de_y\(year)_sub"))
+                }
+            }
+        }
+        .navigationTitle(vm.tr("Deutsch"))
+        .navigationSubtitle(vm.tr("de_home_sub"))
         #endif
     }
 }
@@ -2157,6 +2202,29 @@ struct RouteDestination: View {
             PracticeHome(vm: vm)
         case .stats:
             StatsScreen(vm: vm)
+        case .deHome:
+            DeHomeScreen(vm: vm)
+        case .deMap(let year):
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("de_year\(year)"),
+                subtitle: vm.tr("de_y\(year)_sub"),
+                rows: vm.content.deYear(year).map { l in
+                    let id = l.int("id")
+                    return LessonRow(
+                        id: "d\(year)\(id)",
+                        title: vm.tr(l.str("titleKey")),
+                        done: vm.progress.deDone(year, id),
+                        destination: .deLesson(year, id)
+                    )
+                }
+            )
+        case .deLesson(let year, let id):
+            if let l = vm.content.deLesson(year, id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .deEx(year, id))
+            }
+        case .deEx(let year, let id):
+            EngExScreen(vm: vm, year: year, id: id, voice: "de-DE", lesson: { $0.content.deLesson($1, $2) }, mark: { $0.markDe($1, $2) })
         case .roadmap:
             RoadmapScreen(vm: vm)
         case .unitMap(let id):

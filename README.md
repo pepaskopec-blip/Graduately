@@ -61,8 +61,8 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 ### Co v aplikaci je
 
-- **Deutsch** — 3 otevřené jednotky (Neue Freunde, Aus aller Welt, Bei uns zu
-  Hause): cvičení, nápovědy, vokabeltraining
+- **Deutsch** — učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause)
+  a 4 ročníky, 24 lekcí od A1 k B1: poslech, čtení, psaní, doplňování a kvízy
 - **Správa počítačových sítí** — 1. ročník, 27 lekcí (VLSM + teorie a kvízy);
   ročníky 2–4 jsou zamčené
 - **Technické vybavení** — 1. ročník, 29 lekcí (architektura, data, skříň a deska, karty, disky, vstupní zařízení); ročníky 2–4 jsou zamčené
@@ -266,8 +266,8 @@ Intel Mac, another architecture, or hacking on the code →
 
 ### What’s inside
 
-- **Deutsch** — 3 open units (Neue Freunde, Aus aller Welt, Bei uns zu Hause):
-  exercises, hints, vocabulary training
+- **Deutsch** — the textbook (Neue Freunde, Aus aller Welt, Bei uns zu Hause)
+  plus 4 years, 24 lessons from A1 to B1: listening, reading, writing, gap-fill and quizzes
 - **Computer networks** — year 1, 27 lessons (VLSM + theory/quizzes);
   years 2–4 are locked
 - **Computer hardware** — year 1, 29 lessons (architecture, data, case and board, cards, drives, input devices); years 2–4 are locked

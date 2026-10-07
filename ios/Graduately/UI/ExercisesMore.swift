@@ -1359,6 +1359,7 @@ private final class EnSpeaker: NSObject, ObservableObject, AVSpeechSynthesizerDe
     @Published var rate: Float = 0.9
     @Published var volume: Float = 1
     @Published var phase: Phase = .idle
+    var language = "en-GB"
     var onFinish: (() -> Void)?
 
     override init() {
@@ -1408,8 +1409,8 @@ private final class EnSpeaker: NSObject, ObservableObject, AVSpeechSynthesizerDe
         let rest = ns.substring(from: start)
         let utterance = AVSpeechUtterance(string: rest.isEmpty ? text : rest)
         if rest.isEmpty { base = 0 }
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-            ?? AVSpeechSynthesisVoice(language: "en-US")
+        utterance.voice = AVSpeechSynthesisVoice(language: language)
+            ?? AVSpeechSynthesisVoice(language: language.hasPrefix("de") ? "de-DE" : "en-US")
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate * rate
         utterance.volume = volume
         synth.speak(utterance)
@@ -1443,6 +1444,9 @@ struct EngExScreen: View {
     @ObservedObject var vm: AppModel
     let year: Int
     let id: Int
+    let voice: String
+    let lessonOf: (AppModel, Int, Int) -> J?
+    let mark: (AppModel, Int, Int) -> Void
     @StateObject private var speaker: EnSpeaker
     @State private var readPicks: [Int]
     @State private var listenPicks: [Int]
@@ -1455,20 +1459,27 @@ struct EngExScreen: View {
     @State private var showModel = false
     @State private var fb = ("", "")
 
-    init(vm: AppModel, year: Int, id: Int) {
+    init(vm: AppModel, year: Int, id: Int, voice: String = "en-GB",
+         lesson: @escaping (AppModel, Int, Int) -> J? = { $0.content.enLesson($1, $2) },
+         mark: @escaping (AppModel, Int, Int) -> Void = { $0.markEn($1, $2) }) {
         self.vm = vm
         self.year = year
         self.id = id
-        let lesson = vm.content.enLesson(year, id)
-        _readPicks = State(initialValue: Array(repeating: -1, count: lesson?.arr("readQuiz").count ?? 0))
-        _listenPicks = State(initialValue: Array(repeating: -1, count: lesson?.arr("listenQuiz").count ?? 0))
-        _quizPicks = State(initialValue: Array(repeating: -1, count: lesson?.arr("quiz").count ?? 0))
-        _gaps = State(initialValue: Array(repeating: "", count: lesson?.arr("gaps").count ?? 0))
-        _speaker = StateObject(wrappedValue: EnSpeaker())
+        self.voice = voice
+        self.lessonOf = lesson
+        self.mark = mark
+        let row = lesson(vm, year, id)
+        _readPicks = State(initialValue: Array(repeating: -1, count: row?.arr("readQuiz").count ?? 0))
+        _listenPicks = State(initialValue: Array(repeating: -1, count: row?.arr("listenQuiz").count ?? 0))
+        _quizPicks = State(initialValue: Array(repeating: -1, count: row?.arr("quiz").count ?? 0))
+        _gaps = State(initialValue: Array(repeating: "", count: row?.arr("gaps").count ?? 0))
+        let speaker = EnSpeaker()
+        speaker.language = voice
+        _speaker = StateObject(wrappedValue: speaker)
     }
 
     var body: some View {
-        if let lesson = vm.content.enLesson(year, id) {
+        if let lesson = lessonOf(vm, year, id) {
             let p = vm.palette
             ExerciseScaffold(vm: vm, title: vm.tr(lesson.str("titleKey")), sub: nil, action: vm.tr("check"), onAction: {
                 check(lesson)
@@ -1619,7 +1630,7 @@ struct EngExScreen: View {
         if all {
             fb = (vm.tr("feedback_ok"), "ok")
             showModel = true
-            vm.markEn(year, id)
+            mark(vm, year, id)
         } else if lesson.obj("writing") != nil && !writeOk && readOk && listenOk && quizOk && gapOk == gapRows.count {
             fb = (vm.tr("en_write_short"), "err")
         } else {

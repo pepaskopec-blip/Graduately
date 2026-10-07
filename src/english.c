@@ -17,28 +17,6 @@
 #define EN_YEARS 4
 #define EN_N     8
 
-typedef struct {
-    const NetSlide *slides;
-    int n_slides;
-    const char *reading;
-    const ChoiceQ *readq;
-    const char **read_hints;
-    int n_read;
-    const char *listening;
-    const ChoiceQ *listenq;
-    const char **listen_hints;
-    int n_listen;
-    const TypedQ *gaps;
-    int n_gaps;
-    const char *write_prompt;
-    const char *write_model;
-    const char *write_keys;
-    int write_min;
-    const ChoiceQ *quiz;
-    const char **quiz_hints;
-    int n_quiz;
-} EnLesson;
-
 #include "english_lessons.inc"
 
 typedef struct {
@@ -51,6 +29,7 @@ typedef struct {
     int year;
     int index;
     const EnLesson *lesson;
+    void (*on_done)(int year, int index);
     GtkWidget *feedback;
     GtkWidget *model;
     GArray *picks;
@@ -69,6 +48,7 @@ typedef struct {
     gboolean heard;
     double speed;
     double gain;
+    const char *voice;
     GPid pid;
     guint timer;
     guint tick_ms;
@@ -646,7 +626,7 @@ GtkWidget *build_enmap_page(int year) {
 /* Slides                                                              */
 /* ------------------------------------------------------------------ */
 
-static void en_slide_apply(NetLesson *L) {
+void skill_slide_apply(NetLesson *L) {
     char name[16];
 
     if (!L || !L->stack)
@@ -705,7 +685,7 @@ static void en_slide_prev(GtkButton *button, gpointer data) {
     (void)button;
     if (L && L->idx > 0) {
         L->idx--;
-        en_slide_apply(L);
+        skill_slide_apply(L);
     }
 }
 
@@ -717,7 +697,7 @@ static void en_slide_next(GtkButton *button, gpointer data) {
         return;
     if (L->idx + 1 < L->n_slides) {
         L->idx++;
-        en_slide_apply(L);
+        skill_slide_apply(L);
     } else {
         gtk_stack_set_visible_child_name(main_stack, L->ex_page);
     }
@@ -726,12 +706,12 @@ static void en_slide_next(GtkButton *button, gpointer data) {
 void en_lessons_apply_lang(void) {
     for (int y = 0; y < EN_YEARS; y++)
         for (int i = 0; i < EN_N; i++)
-            en_slide_apply(&en_rt[y][i]);
+            skill_slide_apply(&en_rt[y][i]);
 }
 
-static GtkWidget *build_en_unit_page(int year, int index) {
-    NetLesson *L = &en_rt[year][index];
-    const EnLesson *lesson = &en_lessons[year][index];
+GtkWidget *skill_unit_page(NetLesson *L, const EnLesson *lesson,
+                            const char *back, const char *title_key,
+                            const char *sub_key) {
     GtkWidget *page;
     GtkWidget *scroll;
     GtkWidget *nav;
@@ -746,8 +726,7 @@ static GtkWidget *build_en_unit_page(int year, int index) {
     gtk_widget_set_margin_top(page, 20);
     gtk_widget_set_margin_bottom(page, 20);
     gtk_box_append(GTK_BOX(page),
-                   top_bar(en_map_page[year], en_title_key[year][index],
-                           en_sub_key[year][index]));
+                   top_bar(back, title_key, sub_key));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -795,7 +774,7 @@ static GtkWidget *build_en_unit_page(int year, int index) {
     }
     en_rescale_notes(0);
     net_notes_target = NULL;
-    en_slide_apply(L);
+    skill_slide_apply(L);
     return page;
 }
 
@@ -1054,14 +1033,58 @@ static void en_mac_levels(EnEx *ctx) {
         ctx->synth, sel_registerName("setVolume:"), vol);
 }
 
-static gboolean en_mac_ensure(EnEx *ctx) {
-    static const char *voices[] = {
+static gboolean en_mac_try_voice(id synth, const char *name) {
+    return ((BOOL (*)(id, SEL, id))objc_msgSend)(
+        synth, sel_registerName("setVoice:"), en_ns(name));
+}
+
+static void en_mac_choose(id synth, const char *lang) {
+    static const char *en_voices[] = {
         "com.apple.voice.compact.en-GB.Daniel",
         "com.apple.speech.synthesis.voice.daniel",
         "com.apple.voice.compact.en-US.Samantha",
         "com.apple.speech.synthesis.voice.samantha",
         NULL
     };
+    static const char *de_voices[] = {
+        "com.apple.voice.compact.de-DE.Anna",
+        "com.apple.speech.synthesis.voice.anna",
+        "com.apple.voice.compact.de-DE.Helena",
+        "com.apple.speech.synthesis.voice.petra",
+        NULL
+    };
+    gboolean german = lang && g_str_has_prefix(lang, "de");
+    const char **list = german ? de_voices : en_voices;
+    const char *needle = german ? "de-DE" : "en-GB";
+    Class cls;
+    id voices;
+    unsigned long n;
+
+    for (int i = 0; list[i]; i++) {
+        if (en_mac_try_voice(synth, list[i]))
+            return;
+    }
+    cls = objc_getClass("NSSpeechSynthesizer");
+    if (!cls)
+        return;
+    voices = ((id (*)(Class, SEL))objc_msgSend)(
+        cls, sel_registerName("availableVoices"));
+    if (!voices)
+        return;
+    n = ((unsigned long (*)(id, SEL))objc_msgSend)(
+        voices, sel_registerName("count"));
+    for (unsigned long i = 0; i < n; i++) {
+        id name = ((id (*)(id, SEL, unsigned long))objc_msgSend)(
+            voices, sel_registerName("objectAtIndex:"), i);
+        const char *utf = ((const char *(*)(id, SEL))objc_msgSend)(
+            name, sel_registerName("UTF8String"));
+
+        if (utf && strstr(utf, needle) && en_mac_try_voice(synth, utf))
+            return;
+    }
+}
+
+static gboolean en_mac_ensure(EnEx *ctx) {
     Class cls;
     id obj;
 
@@ -1075,11 +1098,7 @@ static gboolean en_mac_ensure(EnEx *ctx) {
     if (!obj)
         return FALSE;
     ctx->synth = obj;
-    for (int i = 0; voices[i]; i++) {
-        if (((BOOL (*)(id, SEL, id))objc_msgSend)(
-                obj, sel_registerName("setVoice:"), en_ns(voices[i])))
-            break;
-    }
+    en_mac_choose(obj, ctx->voice);
     return TRUE;
 }
 
@@ -1163,14 +1182,16 @@ static gboolean en_launch(EnEx *ctx) {
     g_snprintf(rate, sizeof rate, "%d", (int)(160.0 * speed));
     g_snprintf(amp, sizeof amp, "%d", (int)(ctx->gain * 200.0));
     {
-        char *a[] = {"espeak-ng", "-v", "en", "-s", rate, "-a", amp, text, NULL};
-        char *b[] = {"espeak", "-v", "en", "-s", rate, "-a", amp, text, NULL};
+        const char *voice = ctx->voice && ctx->voice[0] ? ctx->voice : "en";
+        char *a[] = {"espeak-ng", "-v", (char *)voice, "-s", rate, "-a", amp, text, NULL};
+        char *b[] = {"espeak", "-v", (char *)voice, "-s", rate, "-a", amp, text, NULL};
 #ifdef __APPLE__
-        char *c[] = {"say", "-r", rate, text, NULL};
-        char **tries[] = {c};
+        char *c_en[] = {"say", "-r", rate, text, NULL};
+        char *c_de[] = {"say", "-v", "Anna", "-r", rate, text, NULL};
+        char **tries[] = {g_str_has_prefix(voice, "de") ? c_de : c_en};
         int n = 1;
 #else
-        char *c[] = {"spd-say", "-l", "en", "-r", rate, text, NULL};
+        char *c[] = {"spd-say", "-l", (char *)voice, "-r", rate, text, NULL};
         char **tries[] = {a, b, c};
         int n = 3;
 #endif
@@ -1416,7 +1437,8 @@ static void en_check(GtkButton *button, gpointer data) {
         set_feedback(ctx->feedback, TRUE, tr("feedback_ok"));
         if (ctx->model)
             gtk_widget_set_visible(ctx->model, TRUE);
-        mark_en_done(ctx->year, ctx->index);
+        if (ctx->on_done)
+            ctx->on_done(ctx->year, ctx->index);
     } else if (ctx->essay && !write_ok &&
                mcq_ok == (int)ctx->picks->len &&
                gap_ok == ctx->lesson->n_gaps) {
@@ -1426,8 +1448,10 @@ static void en_check(GtkButton *button, gpointer data) {
     }
 }
 
-static GtkWidget *build_en_ex_page(int year, int index) {
-    const EnLesson *lesson = &en_lessons[year][index];
+GtkWidget *skill_ex_page(const EnLesson *lesson, int year, int index,
+                          void (*on_done)(int, int),
+                          const char *back, const char *title_key,
+                          const char *voice) {
     EnEx *ctx = g_new0(EnEx, 1);
     GtkWidget *page;
     GtkWidget *scroll;
@@ -1437,6 +1461,8 @@ static GtkWidget *build_en_ex_page(int year, int index) {
     ctx->year = year;
     ctx->index = index;
     ctx->lesson = lesson;
+    ctx->on_done = on_done;
+    ctx->voice = voice && voice[0] ? voice : "en";
     ctx->picks = g_array_new(FALSE, FALSE, sizeof(EnPick));
     ctx->entries = g_array_new(FALSE, FALSE, sizeof(GtkWidget *));
     ctx->gap_hints = g_array_new(FALSE, TRUE, sizeof(GtkWidget *));
@@ -1446,9 +1472,7 @@ static GtkWidget *build_en_ex_page(int year, int index) {
     gtk_widget_set_margin_end(page, 32);
     gtk_widget_set_margin_top(page, 24);
     gtk_widget_set_margin_bottom(page, 24);
-    gtk_box_append(GTK_BOX(page),
-                   top_bar(en_unit_page[year][index],
-                           en_title_key[year][index], NULL));
+    gtk_box_append(GTK_BOX(page), top_bar(back, title_key, NULL));
 
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
@@ -1584,6 +1608,18 @@ static GtkWidget *build_en_ex_page(int year, int index) {
     gtk_label_set_wrap(GTK_LABEL(ctx->feedback), TRUE);
     gtk_box_append(GTK_BOX(body), ctx->feedback);
     return page;
+}
+
+static GtkWidget *build_en_unit_page(int year, int index) {
+    return skill_unit_page(&en_rt[year][index], &en_lessons[year][index],
+                           en_map_page[year], en_title_key[year][index],
+                           en_sub_key[year][index]);
+}
+
+static GtkWidget *build_en_ex_page(int year, int index) {
+    return skill_ex_page(&en_lessons[year][index], year, index, mark_en_done,
+                         en_unit_page[year][index], en_title_key[year][index],
+                         "en");
 }
 
 void add_en_pages(GtkStack *stack) {

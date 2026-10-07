@@ -198,7 +198,7 @@ static GtkWidget *subject_icon(int i) {
 
 static const char *subject_target(int i) {
     if (i == 0)
-        return "roadmap";
+        return "dehome";
     if (i == NET_SUBJ)
         return "netyears";
     if (i == HW_SUBJ)

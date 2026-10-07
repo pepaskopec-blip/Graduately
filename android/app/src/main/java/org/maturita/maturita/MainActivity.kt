@@ -1,6 +1,7 @@
 package org.maturita.maturita
 
 import android.os.Bundle
+import java.util.Locale
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.Button
@@ -50,6 +51,7 @@ import org.maturita.maturita.ui.On4QuizScreen
 import org.maturita.maturita.ui.OnQuizScreen
 import org.maturita.maturita.ui.OnYearsScreen
 import org.maturita.maturita.ui.EnYearsScreen
+import org.maturita.maturita.ui.DeHomeScreen
 import org.maturita.maturita.ui.EngExScreen
 import org.maturita.maturita.ui.PlotScreen
 import org.maturita.maturita.ui.RoadmapScreen
@@ -206,6 +208,23 @@ private fun MaturitaAppBody(vm: AppViewModel) {
             Route.Welcome, Route.Subjects -> HomeScreen(vm)
             Route.Stats -> StatsScreen(vm)
             Route.Settings -> SettingsScreen(vm)
+            Route.DeHome -> DeHomeScreen(vm)
+            is Route.DeMap -> LessonListScreen(
+                vm, vm.tr("de_year${r.year}"), vm.tr("de_y${r.year}_sub"),
+                vm.content.deYear(r.year).map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.deDone(r.year, id), Route.DeLesson(r.year, id))
+                },
+            )
+            is Route.DeLesson -> {
+                val l = vm.content.deLesson(r.year, r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.DeEx(r.year, r.id))
+                }
+            }
+            is Route.DeEx -> EngExScreen(
+                vm, r.year, r.id, Locale.GERMANY, vm.content.deLesson(r.year, r.id),
+            ) { vm.markDe(r.year, r.id) }
             Route.Roadmap -> RoadmapScreen(vm)
             is Route.UnitMap -> UnitMapScreen(vm, r.unitId)
             is Route.GermanEx -> GermanExercise(vm, r.unitId, r.ex)

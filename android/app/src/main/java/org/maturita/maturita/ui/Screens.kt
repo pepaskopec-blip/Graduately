@@ -294,10 +294,16 @@ private fun Metric(label: String, value: String, modifier: Modifier) {
 private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
     val sum = ProgressSum()
     when (s.str("target")) {
-        "roadmap" -> vm.content.german.filter { it.bool("unlocked") }.forEach { u ->
-            val n = u.strs("names").size
-            sum.totalEx += n
-            sum.doneEx += (1..n).count { vm.progress.germanDone(u.int("id"), it) }
+        "dehome" -> {
+            vm.content.german.filter { it.bool("unlocked") }.forEach { u ->
+                val n = u.strs("names").size
+                sum.totalEx += n
+                sum.doneEx += (1..n).count { vm.progress.germanDone(u.int("id"), it) }
+            }
+            sum.totalEx += (1..4).sumOf { vm.content.deYear(it).size }
+            sum.doneEx += (1..4).sumOf { year ->
+                vm.content.deYear(year).count { vm.progress.deDone(year, it.int("id")) }
+            }
         }
         "netyears" -> {
             sum.totalEx = vm.content.netLessons.size
@@ -558,6 +564,11 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
             add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "en${year}unit${l.int("id")}", extra = "anglictina english")
             add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "en${year}ex${l.int("id")}")
         }
+        add(vm.tr("de_year$year"), vm.tr("search_lesson"), "de${year}map", extra = "nemcina deutsch rocnik")
+        vm.content.deYear(year).forEach { l ->
+            add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "de${year}unit${l.int("id")}", extra = "nemcina deutsch")
+            add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "de${year}ex${l.int("id")}")
+        }
     }
     add(vm.tr("Literatura"), vm.tr("search_lesson"), "lityears", extra = "literatura")
     add(vm.tr("lit_year1"), vm.tr("search_lesson"), "litmap", extra = "rocnik")
@@ -730,6 +741,28 @@ fun HwYearsScreen(vm: AppViewModel) {
             }
             items(listOf("hw_year2", "hw_year3", "hw_year4")) { key ->
                 NavRow(title = vm.tr(key), subtitle = vm.tr("hw_year_locked_sub"), locked = true, onClick = null)
+            }
+        }
+    }
+}
+
+@Composable
+@Composable
+fun DeHomeScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Deutsch"), vm.tr("de_home_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("de_book_title"), subtitle = vm.tr("de_book_sub"), leading = { Text("U", style = MaterialTheme.typography.titleMedium) }) {
+                    vm.go(Route.Roadmap)
+                }
+            }
+            items(4) { index ->
+                val year = index + 1
+                NavRow(
+                    title = vm.tr("de_year$year"),
+                    subtitle = vm.tr("de_y${year}_sub"),
+                    leading = { Text("$year.", style = MaterialTheme.typography.titleMedium) },
+                ) { vm.go(Route.DeMap(year)) }
             }
         }
     }

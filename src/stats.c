@@ -83,8 +83,11 @@ void refresh_stats_ui(void) {
             progress_for_fyz(&all);
         else if (s == MATH_SUBJ)
             progress_for_math(&all);
-        else
+        else {
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &all);
+            if (s == 0)
+                progress_for_de(&all);
+        }
     }
 
     pct = all.total_ex > 0 ? (all.done_ex * 100) / all.total_ex : 0;
@@ -138,8 +141,11 @@ void refresh_stats_ui(void) {
             progress_for_fyz(&sp);
         else if (s == MATH_SUBJ)
             progress_for_math(&sp);
-        else
+        else {
             progress_for_units(sub_unit_start[s], sub_unit_count[s], &sp);
+            if (s == 0)
+                progress_for_de(&sp);
+        }
         if (has_content) {
             tmp = g_strdup_printf(tr("stats_ex_fmt"), sp.done_ex, sp.total_ex);
             gtk_label_set_text(GTK_LABEL(count), tmp);

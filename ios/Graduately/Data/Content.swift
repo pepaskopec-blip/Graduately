@@ -39,6 +39,10 @@ final class Content {
     let en2: [J]
     let en3: [J]
     let en4: [J]
+    let de: [J]
+    let de2: [J]
+    let de3: [J]
+    let de4: [J]
     let lit: [J]
     let lit2: [J]
     let lit3: [J]
@@ -93,6 +97,10 @@ final class Content {
         en2 = raw.arr("en2")
         en3 = raw.arr("en3")
         en4 = raw.arr("en4")
+        de = raw.arr("de")
+        de2 = raw.arr("de2")
+        de3 = raw.arr("de3")
+        de4 = raw.arr("de4")
         lit = raw.arr("lit")
         lit2 = raw.arr("lit2")
         lit3 = raw.arr("lit3")
@@ -129,6 +137,15 @@ final class Content {
         }
     }
     func enLesson(_ year: Int, _ id: Int) -> J? { enYear(year).first { $0.int("id") == id } }
+    func deYear(_ year: Int) -> [J] {
+        switch year {
+        case 2: return de2
+        case 3: return de3
+        case 4: return de4
+        default: return de
+        }
+    }
+    func deLesson(_ year: Int, _ id: Int) -> J? { deYear(year).first { $0.int("id") == id } }
     func litLesson(_ id: Int) -> J? { lit.first { $0.int("id") == id } }
     func lit2Lesson(_ id: Int) -> J? { lit2.first { $0.int("id") == id } }
     func lit3Lesson(_ id: Int) -> J? { lit3.first { $0.int("id") == id } }

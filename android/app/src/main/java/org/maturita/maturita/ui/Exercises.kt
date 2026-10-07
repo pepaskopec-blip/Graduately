@@ -1382,8 +1382,15 @@ fun PlotScreen(vm: AppViewModel, id: String) {
 }
 
 @Composable
-fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
-    val lesson = vm.content.enLesson(year, id) ?: return
+fun EngExScreen(
+    vm: AppViewModel,
+    year: Int,
+    id: Int,
+    locale: Locale = Locale.UK,
+    spec: J? = vm.content.enLesson(year, id),
+    onDone: () -> Unit = { vm.markEn(year, id) },
+) {
+    val lesson = spec ?: return
     val readQ = lesson.arr("readQuiz")
     val listenQ = lesson.arr("listenQuiz")
     val quiz = lesson.arr("quiz")
@@ -1410,7 +1417,7 @@ fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
     DisposableEffect(context) {
         var engine: TextToSpeech? = null
         engine = TextToSpeech(context) { status ->
-            if (status == TextToSpeech.SUCCESS) engine?.language = Locale.UK
+            if (status == TextToSpeech.SUCCESS) engine?.language = locale
         }
         tts = engine
         onDispose {
@@ -1447,7 +1454,7 @@ fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
             fb = when {
                 all -> {
                     showModel = true
-                    vm.markEn(year, id)
+                    onDone()
                     vm.tr("feedback_ok") to "ok"
                 }
                 writing != null && !writeOk && readOk && listenOk && quizOk && gapOk == gapRows.size ->
@@ -1472,7 +1479,7 @@ fun EngExScreen(vm: AppViewModel, year: Int, id: Int) {
                 val start = index.coerceIn(0, listening.length)
                 val id = "en-${System.nanoTime()}"
                 utterance = id
-                engine.language = Locale.UK
+                engine.language = locale
                 engine.setSpeechRate(speed)
                 engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) {}

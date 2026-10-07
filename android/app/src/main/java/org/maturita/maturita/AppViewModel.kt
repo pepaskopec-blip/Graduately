@@ -151,6 +151,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         refresh()
     }
 
+    fun markDe(year: Int, id: Int) {
+        progress.markDe(year, id)
+        refresh()
+    }
+
     fun markLit(id: Int) {
         progress.markLit(id)
         refresh()

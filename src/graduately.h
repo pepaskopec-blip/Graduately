@@ -58,6 +58,7 @@ extern char *app_progress_on2;
 extern char *app_progress_on3;
 extern char *app_progress_on4;
 extern char *app_progress_en;
+extern char *app_progress_de;
 extern char *app_progress_mluvnice;
 extern char *app_progress_cetba;
 extern char *app_progress_lit;
@@ -87,6 +88,7 @@ extern char *app_progress_mat4;
 #define PROGRESS_ON3  app_progress_on3
 #define PROGRESS_ON4  app_progress_on4
 #define PROGRESS_EN   app_progress_en
+#define PROGRESS_DE   app_progress_de
 #define NODE_SIZE    88.0
 #define PATH_SPAC    240.0
 #define ROAD_MX    150.0   /* horizontal canvas margin                 */
@@ -623,6 +625,27 @@ typedef struct {
     const char *line[8];
 } NetSlide;
 typedef struct {
+    const NetSlide *slides;
+    int n_slides;
+    const char *reading;
+    const ChoiceQ *readq;
+    const char **read_hints;
+    int n_read;
+    const char *listening;
+    const ChoiceQ *listenq;
+    const char **listen_hints;
+    int n_listen;
+    const TypedQ *gaps;
+    int n_gaps;
+    const char *write_prompt;
+    const char *write_model;
+    const char *write_keys;
+    int write_min;
+    const ChoiceQ *quiz;
+    const char **quiz_hints;
+    int n_quiz;
+} EnLesson;
+typedef struct {
     const ChoiceQ *qs;
     int n;
     int n_opts;
@@ -911,6 +934,18 @@ void progress_for_en(ProgressSum *out);
 void en_rail_theme_reset(void);
 GtkWidget *build_enyears_page(void);
 void add_en_pages(GtkStack *stack);
+GtkWidget *skill_unit_page(NetLesson *L, const EnLesson *lesson,
+                           const char *back, const char *title_key,
+                           const char *sub_key);
+GtkWidget *skill_ex_page(const EnLesson *lesson, int year, int index,
+                         void (*on_done)(int, int),
+                         const char *back, const char *title_key,
+                         const char *voice);
+void skill_slide_apply(NetLesson *L);
+GtkWidget *build_dehome_page(void);
+void add_de_pages(GtkStack *stack);
+void de_load_progress(void);
+void progress_for_de(ProgressSum *out);
 void on2_load_progress(void);
 void on2_save_progress(void);
 void mark_on2_done(int lesson_id);
