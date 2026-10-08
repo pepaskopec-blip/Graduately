@@ -1034,8 +1034,30 @@ fun SlidesScreen(
                         }
                     }
                 }
-                slide.strs("lines").forEach { line ->
-                    Text(line, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(vertical = 6.dp))
+                slide.strs("lines").forEachIndexed { index, line ->
+                    val numbered = Regex("""^(\d+)\.\s+(.*)$""").find(line)
+                    val badge = numbered?.groupValues?.get(1) ?: "${index + 1}"
+                    val text = numbered?.groupValues?.get(2) ?: line
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 5.dp)
+                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f), androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
+                            .padding(horizontal = 14.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.Top,
+                    ) {
+                        Box(
+                            Modifier
+                                .padding(top = 2.dp)
+                                .size(28.dp)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f), CircleShape),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(badge, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        }
+                        Spacer(Modifier.width(12.dp))
+                        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                    }
                 }
                 Spacer(Modifier.height(24.dp))
             }

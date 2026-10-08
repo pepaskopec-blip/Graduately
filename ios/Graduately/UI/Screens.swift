@@ -1519,84 +1519,129 @@ struct SlidesScreen: View {
     }
 
     private func slidePage(_ slide: J) -> some View {
-        #if os(macOS)
-        GeometryReader { geo in
-            ScrollView {
-                slideStack(slide)
-                    .padding(.horizontal, MacChrome.pageInset)
-                    .padding(.vertical, 28)
-                    .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .center)
-            }
-        }
-        #else
         ScrollView {
             slideStack(slide)
-                .padding()
-                .padding(.bottom, 24)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, MacChrome.pageInset)
+                .padding(.top, 22)
+                .padding(.bottom, 28)
+                .frame(maxWidth: 860)
+                .frame(maxWidth: .infinity, alignment: .top)
         }
-        #endif
     }
 
     private func slideStack(_ slide: J) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 18) {
             Text(slide.str("kicker"))
                 #if os(macOS)
                 .font(.subheadline.weight(.semibold))
                 #else
                 .font(.caption.weight(.semibold))
                 #endif
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.accentColor)
             Text(slide.str("title"))
                 #if os(macOS)
                 .font(.title.bold())
                 #else
                 .font(.title2.bold())
                 #endif
+                .fixedSize(horizontal: false, vertical: true)
             if let tip = slide.strOrNull("tip") {
-                GlassCard {
-                    Label(tip, systemImage: "lightbulb.fill")
+                HStack(alignment: .top, spacing: 12) {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundStyle(Color.accentColor)
+                        .padding(.top, 2)
+                    Text(tip)
+                        #if os(macOS)
+                        .font(.body)
+                        #else
+                        .font(.subheadline)
+                        #endif
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
             slideLines(slide.strs("lines"))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    @ViewBuilder
     private func slideLines(_ lines: [String]) -> some View {
-        #if os(macOS)
-        if lines.count >= 3 {
-            LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 28, alignment: .topLeading),
-                    GridItem(.flexible(), spacing: 28, alignment: .topLeading),
-                ],
-                alignment: .leading,
-                spacing: 12
-            ) {
-                ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-                    Text(line)
+        let points = studyPoints(lines)
+        return VStack(alignment: .leading, spacing: 10) {
+            ForEach(Array(points.enumerated()), id: \.offset) { _, point in
+                HStack(alignment: .top, spacing: 14) {
+                    Text(point.0)
+                        .font(.callout.weight(.bold))
+                        .foregroundStyle(Color.accentColor)
+                        .frame(minWidth: 28, minHeight: 28)
+                        .background(Color.accentColor.opacity(0.14), in: Circle())
+                    Text(point.1)
+                        #if os(macOS)
                         .font(.title3)
+                        #else
+                        .font(.body)
+                        #endif
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 3)
                 }
-            }
-        } else {
-            VStack(alignment: .leading, spacing: 12) {
-                ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-                    Text(line)
-                        .font(.title3)
-                        .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background {
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(Color.primary.opacity(0.045))
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
                 }
             }
         }
-        #else
-        ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-            Text(line)
-                .padding(.vertical, 4)
+    }
+
+    /// Lines that end in the middle of a sentence stay one point. A leading
+    /// "1. " is the point number, not part of the sentence.
+    private func studyPoints(_ lines: [String]) -> [(String, String)] {
+        var chunks: [String] = []
+        var buffer = ""
+        func flush() {
+            let text = buffer.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !text.isEmpty { chunks.append(text) }
+            buffer = ""
         }
-        #endif
+        for line in lines {
+            let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmed.isEmpty { continue }
+            if buffer.isEmpty {
+                buffer = trimmed
+            } else if continuesStudyPoint(buffer) {
+                buffer += " " + trimmed
+            } else {
+                flush()
+                buffer = trimmed
+            }
+        }
+        flush()
+        return chunks.enumerated().map { index, chunk in
+            let pattern = #"^(\d+)\.\s+(.*)$"#
+            if let regex = try? NSRegularExpression(pattern: pattern),
+               let match = regex.firstMatch(in: chunk, range: NSRange(chunk.startIndex..., in: chunk)),
+               let number = Range(match.range(at: 1), in: chunk),
+               let rest = Range(match.range(at: 2), in: chunk),
+               !continuesStudyPoint(String(chunk[rest])) {
+                return (String(chunk[number]), String(chunk[rest]))
+            }
+            return (String(index + 1), chunk)
+        }
+    }
+
+    private func continuesStudyPoint(_ text: String) -> Bool {
+        guard let last = text.last else { return false }
+        return last == "," || last == ":" || last == ";" || last == "–" || last == "-" || last == "("
     }
 }
 
