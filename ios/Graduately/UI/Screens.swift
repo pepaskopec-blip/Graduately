@@ -8,9 +8,9 @@ struct PracticeHome: View {
 
     var body: some View {
         #if os(macOS)
-        macHome
+        macHome.softAppear()
         #else
-        iosHome
+        iosHome.softAppear()
         #endif
     }
 
@@ -46,6 +46,7 @@ struct PracticeHome: View {
                                     .foregroundStyle(.secondary)
                                     .fixedSize(horizontal: false, vertical: true)
                                 ProgressView(value: pct)
+                                    .animation(Motion.settle, value: pct)
                                 Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
@@ -91,7 +92,7 @@ struct PracticeHome: View {
                 NavigationLink(value: dest) {
                     subjectTileBody(s, open: true, progress: progress, part: part)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
             } else {
                 subjectTileBody(s, open: false, progress: 0, part: part)
             }
@@ -108,6 +109,7 @@ struct PracticeHome: View {
             Spacer(minLength: 0)
             if open && part.totalEx > 0 {
                 ProgressView(value: progress)
+                    .animation(Motion.settle, value: progress)
                 Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -146,6 +148,7 @@ struct PracticeHome: View {
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                         ProgressView(value: pct)
+                            .animation(Motion.settle, value: pct)
                         Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
                             .font(.footnote)
                             .foregroundStyle(.secondary)
@@ -415,7 +418,7 @@ struct SettingsScreen: View {
                         .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
                         .softSurface(cornerRadius: 16)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(PressScaleStyle())
                 }
             }
         }
@@ -476,6 +479,7 @@ struct StatsScreen: View {
                             stat(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
                         }
                         ProgressView(value: pct)
+                            .animation(Motion.settle, value: pct)
                     }
                 }
                 .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
@@ -505,6 +509,7 @@ struct StatsScreen: View {
                             }
                             if open && part.totalEx > 0 {
                                 ProgressView(value: Double(part.doneEx) / Double(part.totalEx))
+                                    .animation(Motion.settle, value: part.doneEx)
                             }
                         }
                     } icon: {
@@ -773,7 +778,7 @@ struct SearchScreen: View {
                             .frame(maxWidth: .infinity, minHeight: 84, alignment: .leading)
                             .softSurface(cornerRadius: 16)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(PressScaleStyle())
                         .disabled(hit.locked)
                     }
                 }
@@ -848,7 +853,7 @@ struct SearchScreen: View {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.tertiary)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
                 .accessibilityLabel("Clear")
             }
         }
@@ -1205,7 +1210,7 @@ struct NetYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("net_years_title"))
         .navigationSubtitle(vm.tr("net_years_sub"))
@@ -1246,7 +1251,7 @@ struct HwYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("Technické vybavení"))
         .navigationSubtitle(vm.tr("hw_years_sub"))
@@ -1288,7 +1293,7 @@ struct DeHomeScreen: View {
             NavigationLink(value: rows[i].3) {
                 MacLinkCard(title: vm.tr(rows[i].1), subtitle: vm.tr(rows[i].2), badge: rows[i].0)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("Deutsch"))
         .navigationSubtitle(vm.tr("de_home_sub"))
@@ -1324,7 +1329,7 @@ struct EnYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("English"))
         .navigationSubtitle(vm.tr("en_years_sub"))
@@ -1358,7 +1363,7 @@ struct OnYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("Občanská nauka"))
         .navigationSubtitle(vm.tr("on_years_sub"))
@@ -1472,9 +1477,14 @@ struct SlidesScreen: View {
             #else
             if slides.indices.contains(idx) {
                 slidePage(slides[idx])
+                    .id(idx)
+                    .transition(.opacity)
             }
             #endif
         }
+        #if os(macOS)
+        .animation(Motion.settle, value: idx)
+        #endif
         .detailScreen(title, subtitle: subtitle)
         .glassBottomBar {
             VStack(spacing: 10) {
@@ -1485,7 +1495,7 @@ struct SlidesScreen: View {
                             .frame(width: i == idx ? 18 : 6, height: 6)
                     }
                 }
-                .animation(.default, value: idx)
+                .animation(Motion.settle, value: idx)
                 HStack(spacing: 10) {
                     if idx > 0 {
                         Button {
@@ -1668,7 +1678,7 @@ struct LitYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("Literatura"))
         .navigationSubtitle(vm.tr("lit_years_sub"))
@@ -1710,7 +1720,7 @@ struct MatYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: years[i].3)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("Matematika"))
         .navigationSubtitle(vm.tr("mat_years_sub"))
@@ -1754,7 +1764,7 @@ struct FyzYearsScreen: View {
             NavigationLink(value: years[i].2) {
                 MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressScaleStyle())
         }
         .navigationTitle(vm.tr("Fyzika"))
         .navigationSubtitle(vm.tr("fyz_years_sub"))
@@ -1790,12 +1800,12 @@ struct SciMapScreen: View {
                 NavigationLink(value: Route.chemMap) {
                     MacLinkCard(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), systemImage: "flask.fill")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
             } else {
                 NavigationLink(value: Route.bioMap) {
                     MacLinkCard(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), systemImage: "leaf.fill")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
             }
         }
         .navigationTitle(vm.tr("Základy Přírodopisných věd"))
@@ -1835,17 +1845,17 @@ struct CzechMapScreen: View {
                 NavigationLink(value: Route.mluvnice) {
                     MacLinkCard(title: vm.tr("Mluvnice"), systemImage: "textformat")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
             case 2:
                 NavigationLink(value: Route.readingList) {
                     MacLinkCard(title: vm.tr("Maturitní četba"), systemImage: "books.vertical")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
             default:
                 NavigationLink(value: Route.litYears) {
                     MacLinkCard(title: vm.tr("Literatura"), systemImage: "book.closed")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
             }
         }
         .navigationTitle(vm.tr("Český jazyk a literatura"))
@@ -1932,7 +1942,7 @@ struct BookListScreen: View {
                         .frame(maxWidth: .infinity, minHeight: 168, alignment: .topLeading)
                         .softSurface(cornerRadius: 18)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(PressScaleStyle())
                 }
             }
             .padding(MacChrome.pageInset)
@@ -2070,7 +2080,7 @@ struct BookScreen: View {
                                             doneLabel: vm.tr("book_done")
                                         )
                                     }
-                                    .buttonStyle(.plain)
+                                    .buttonStyle(PressScaleStyle())
                                 }
                                 if hasPlot {
                                     NavigationLink(value: Route.bookPlot(id)) {
@@ -2082,7 +2092,7 @@ struct BookScreen: View {
                                             doneLabel: vm.tr("book_done")
                                         )
                                     }
-                                    .buttonStyle(.plain)
+                                    .buttonStyle(PressScaleStyle())
                                 }
                             }
                             #else
@@ -2096,7 +2106,7 @@ struct BookScreen: View {
                                         doneLabel: vm.tr("book_done")
                                     )
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(PressScaleStyle())
                             }
                             if hasPlot {
                                 NavigationLink(value: Route.bookPlot(id)) {
@@ -2108,7 +2118,7 @@ struct BookScreen: View {
                                         doneLabel: vm.tr("book_done")
                                     )
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(PressScaleStyle())
                             }
                             #endif
                         }

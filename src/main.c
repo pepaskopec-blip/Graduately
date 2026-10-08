@@ -736,10 +736,13 @@ void activate(GtkApplication *app, gpointer user_data) {
         const char *size = g_getenv("MATURITA_SIZE");
         int w, h;
 
+        gtk_stack_set_transition_type(main_stack, GTK_STACK_TRANSITION_TYPE_NONE);
         if (start && *start)
             gtk_stack_set_visible_child_name(main_stack, start);
         else
             gtk_stack_set_visible_child_name(main_stack, "welcome");
+        gtk_stack_set_transition_type(main_stack, GTK_STACK_TRANSITION_TYPE_CROSSFADE);
+        gtk_stack_set_transition_duration(main_stack, 180);
         if (size && sscanf(size, "%dx%d", &w, &h) == 2)
             gtk_window_set_default_size(window, w, h);
     }

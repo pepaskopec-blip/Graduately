@@ -1199,6 +1199,7 @@ void draw_bulb_icon(GtkDrawingArea *area, cairo_t *cr,
 void net_lesson_notes_ensure(NetLesson *L);
 void net_rescale_lesson_notes(NetLesson *L, int body, int head, int kick);
 GtkWidget *make_back_button(const char *target);
+void show_page(const char *name, int motion);
 void on_nav_clicked(GtkButton *button, gpointer user_data);
 int unit_done_count(const UnitCtx *u);
 void progress_for_units(int first, int n, ProgressSum *out);

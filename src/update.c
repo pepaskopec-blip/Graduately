@@ -413,7 +413,7 @@ static void update_refresh_ui(void) {
         gtk_widget_set_visible(up.progress, up.state == UPDATE_DOWNLOADING);
 
     if (up.banner) {
-        gtk_widget_set_visible(up.banner, banner);
+        gtk_revealer_set_reveal_child(GTK_REVEALER(up.banner), banner);
         if (banner) {
             gtk_label_set_text(GTK_LABEL(up.banner_label), status);
             gtk_button_set_label(GTK_BUTTON(up.banner_action), tr(action));
@@ -1019,7 +1019,7 @@ static void on_update_dismiss(GtkButton *btn, gpointer data) {
     (void)btn;
     (void)data;
     if (up.banner)
-        gtk_widget_set_visible(up.banner, FALSE);
+        gtk_revealer_set_reveal_child(GTK_REVEALER(up.banner), FALSE);
 }
 
 /* Strip shown above the page stack once an update is waiting. */
@@ -1030,7 +1030,6 @@ GtkWidget *build_update_banner(void) {
     GtkWidget *later = gtk_button_new();
 
     gtk_widget_add_css_class(bar, "update-banner");
-    gtk_widget_set_visible(bar, FALSE);
 
     gtk_widget_set_hexpand(label, TRUE);
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
@@ -1048,10 +1047,19 @@ GtkWidget *build_update_banner(void) {
     g_signal_connect(later, "clicked", G_CALLBACK(on_update_dismiss), NULL);
     gtk_box_append(GTK_BOX(bar), later);
 
-    up.banner = bar;
     up.banner_label = label;
     up.banner_action = action;
-    return bar;
+    {
+        GtkWidget *reveal = gtk_revealer_new();
+
+        gtk_revealer_set_transition_type(GTK_REVEALER(reveal),
+                                         GTK_REVEALER_TRANSITION_TYPE_SLIDE_DOWN);
+        gtk_revealer_set_transition_duration(GTK_REVEALER(reveal), 180);
+        gtk_revealer_set_reveal_child(GTK_REVEALER(reveal), FALSE);
+        gtk_revealer_set_child(GTK_REVEALER(reveal), bar);
+        up.banner = reveal;
+        return reveal;
+    }
 }
 
 /* "Updates" section of the settings popover. */

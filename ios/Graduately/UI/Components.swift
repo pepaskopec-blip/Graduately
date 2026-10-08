@@ -1,5 +1,47 @@
 import SwiftUI
 
+enum Motion {
+    static let press = Animation.easeOut(duration: 0.16)
+    static let settle = Animation.easeOut(duration: 0.28)
+    static let feedback = Animation.spring(response: 0.32, dampingFraction: 0.82)
+}
+
+/// Slight press-in for custom cards and map nodes. System buttons keep their own style.
+struct PressScaleStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(reduceMotion || !configuration.isPressed ? 1 : 0.98)
+            .animation(reduceMotion ? nil : Motion.press, value: configuration.isPressed)
+    }
+}
+
+private struct SoftAppear: ViewModifier {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var shown = false
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(reduceMotion || shown ? 1 : 0)
+            .offset(y: reduceMotion || shown ? 0 : 8)
+            .onAppear {
+                guard !reduceMotion else {
+                    shown = true
+                    return
+                }
+                withAnimation(Motion.settle) { shown = true }
+            }
+    }
+}
+
+extension View {
+    /// One short fade-in. Use on a landing surface, not on every pushed screen.
+    func softAppear() -> some View {
+        modifier(SoftAppear())
+    }
+}
+
 #if os(macOS)
 enum MacChrome {
     static let pageInset: CGFloat = 28
@@ -265,21 +307,27 @@ struct FeedbackLine: View {
     let text: String
     let kind: String
     let palette: Palette
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        if !text.isEmpty {
-            Label {
-                Text(text)
-            } icon: {
-                Image(systemName: kind == "ok" ? "checkmark.circle.fill" : kind == "warn" ? "exclamationmark.triangle.fill" : "xmark.circle.fill")
+        Group {
+            if !text.isEmpty {
+                Label {
+                    Text(text)
+                } icon: {
+                    Image(systemName: kind == "ok" ? "checkmark.circle.fill" : kind == "warn" ? "exclamationmark.triangle.fill" : "xmark.circle.fill")
+                }
+                #if os(macOS)
+                .font(.body.weight(.semibold))
+                #else
+                .font(.subheadline.weight(.semibold))
+                #endif
+                .foregroundStyle(kind == "ok" ? palette.success : kind == "warn" ? palette.warning : palette.error)
+                .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .leading)))
             }
-            #if os(macOS)
-            .font(.body.weight(.semibold))
-            #else
-            .font(.subheadline.weight(.semibold))
-            #endif
-            .foregroundStyle(kind == "ok" ? palette.success : kind == "warn" ? palette.warning : palette.error)
         }
+        .animation(reduceMotion ? nil : Motion.feedback, value: text)
+        .animation(reduceMotion ? nil : Motion.feedback, value: kind)
     }
 }
 
@@ -288,17 +336,23 @@ struct Meaning: View {
     let palette: Palette
     let visible: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
-        if visible && !text.isEmpty {
-            Text(text)
-                #if os(macOS)
-                .font(.body)
-                #else
-                .font(.footnote)
-                #endif
-                .foregroundStyle(.secondary)
-                .padding(.bottom, 4)
+        Group {
+            if visible && !text.isEmpty {
+                Text(text)
+                    #if os(macOS)
+                    .font(.body)
+                    #else
+                    .font(.footnote)
+                    #endif
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom, 4)
+                    .transition(.opacity)
+            }
         }
+        .animation(reduceMotion ? nil : Motion.settle, value: visible)
     }
 }
 
@@ -307,6 +361,7 @@ struct WordField: View {
     var placeholder: String
     var mark: Bool?
     var palette: Palette?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         HStack(spacing: 8) {
@@ -332,6 +387,7 @@ struct WordField: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .stroke(border, lineWidth: mark == nil ? 0.5 : 1.5)
         )
+        .animation(reduceMotion ? nil : Motion.settle, value: mark)
     }
 
     private var border: Color {
@@ -426,6 +482,7 @@ struct OptionChip: View {
     let selected: Bool
     let mark: Bool?
     var action: () -> Void
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Button(action: action) {
@@ -453,6 +510,8 @@ struct OptionChip: View {
         .controlSize(.large)
         #endif
         .padding(.bottom, 4)
+        .animation(reduceMotion ? nil : Motion.settle, value: mark)
+        .animation(reduceMotion ? nil : Motion.press, value: selected)
     }
 
     private var symbol: String {

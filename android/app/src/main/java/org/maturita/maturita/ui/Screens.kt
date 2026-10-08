@@ -44,7 +44,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -116,8 +115,8 @@ fun HomeScreen(vm: AppViewModel) {
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                     )
                     Spacer(Modifier.height(16.dp))
-                    LinearProgressIndicator(
-                        progress = { pct },
+                    SmoothProgress(
+                        progress = pct,
                         modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         trackColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.18f),
@@ -246,7 +245,7 @@ fun StatsScreen(vm: AppViewModel) {
                         Metric(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits), Modifier.weight(1f))
                     }
                     Spacer(Modifier.height(16.dp))
-                    LinearProgressIndicator(progress = { pct }, modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
+                    SmoothProgress(progress = pct, modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
                 }
             }
         }
@@ -262,8 +261,8 @@ fun StatsScreen(vm: AppViewModel) {
                     Column {
                         if (open && part.totalEx > 0) {
                             Spacer(Modifier.height(6.dp))
-                            LinearProgressIndicator(
-                                progress = { part.doneEx / part.totalEx.toFloat() },
+                            SmoothProgress(
+                                progress = part.doneEx / part.totalEx.toFloat(),
                                 modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
                             )
                         }
@@ -771,7 +770,6 @@ fun HwYearsScreen(vm: AppViewModel) {
 }
 
 @Composable
-@Composable
 fun DeHomeScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Deutsch"), vm.tr("de_home_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
@@ -808,6 +806,7 @@ fun EnYearsScreen(vm: AppViewModel) {
     }
 }
 
+@Composable
 fun OnYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Občanská nauka"), vm.tr("on_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {

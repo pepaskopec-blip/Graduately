@@ -2,6 +2,14 @@ package org.maturita.maturita
 
 import android.os.Bundle
 import java.util.Locale
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.Button
@@ -206,7 +214,24 @@ private fun MaturitaAppBody(vm: AppViewModel) {
         if (vm.searchOpen) vm.searchOpen = false else vm.back()
     }
     Box(Modifier.fillMaxSize()) {
-        when (val r = vm.route) {
+        AnimatedContent(
+            targetState = vm.route,
+            modifier = Modifier.fillMaxSize(),
+            transitionSpec = {
+                val tabs = targetState.isRoot && initialState.isRoot
+                if (tabs) {
+                    fadeIn(tween(180)) togetherWith fadeOut(tween(140))
+                } else if (vm.navigatingForward) {
+                    (fadeIn(tween(220)) + slideInHorizontally(tween(220)) { it / 5 })
+                        .togetherWith(fadeOut(tween(150)) + slideOutHorizontally(tween(150)) { -it / 8 })
+                } else {
+                    (fadeIn(tween(220)) + slideInHorizontally(tween(220)) { -it / 8 })
+                        .togetherWith(fadeOut(tween(150)) + slideOutHorizontally(tween(150)) { it / 5 })
+                }
+            },
+            label = "screen",
+        ) { route ->
+        when (val r = route) {
             Route.Welcome, Route.Subjects -> HomeScreen(vm)
             Route.Stats -> StatsScreen(vm)
             Route.Settings -> SettingsScreen(vm)
@@ -609,6 +634,13 @@ private fun MaturitaAppBody(vm: AppViewModel) {
             is Route.BookQuiz -> LitQuizScreen(vm, r.id)
             is Route.BookPlot -> PlotScreen(vm, r.id)
         }
-        if (vm.searchOpen) SearchScreen(vm)
+        }
+        AnimatedVisibility(
+            visible = vm.searchOpen,
+            enter = fadeIn(tween(160)),
+            exit = fadeOut(tween(120)),
+        ) {
+            Box(Modifier.fillMaxSize()) { SearchScreen(vm) }
+        }
     }
 }

@@ -35,10 +35,11 @@ struct ExerciseScaffold<Content: View>: View {
                 if !feedback.isEmpty {
                     FeedbackLine(text: feedback, kind: kind, palette: p)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .leading)))
                 }
             }
         }
-        .animation(.default, value: feedback)
+        .animation(Motion.feedback, value: feedback)
     }
 }
 

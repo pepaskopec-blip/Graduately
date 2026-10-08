@@ -4,17 +4,40 @@
 /* Navigation                                                         */
 /* ------------------------------------------------------------------ */
 
+/* motion: -1 slides back, 0 crossfades, 1 slides forward. */
+void show_page(const char *name, int motion) {
+    GtkStackTransitionType type = GTK_STACK_TRANSITION_TYPE_CROSSFADE;
+    guint ms = 180;
+
+    if (!main_stack || !name || !name[0])
+        return;
+    if (!gtk_stack_get_child_by_name(main_stack, name))
+        return;
+    if (motion > 0) {
+        type = GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT;
+        ms = 200;
+    } else if (motion < 0) {
+        type = GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT;
+        ms = 200;
+    }
+    gtk_stack_set_transition_type(main_stack, type);
+    gtk_stack_set_transition_duration(main_stack, ms);
+    gtk_stack_set_visible_child_name(main_stack, name);
+}
+
 void on_nav_clicked(GtkButton *button, gpointer user_data) {
     const char *target = g_object_get_data(G_OBJECT(button), "target");
+    int back = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(button), "nav-back"));
+
     (void)user_data;
     if (target)
-        gtk_stack_set_visible_child_name(main_stack, target);
+        show_page(target, back ? -1 : 1);
 }
 
 void on_continue_clicked(GtkButton *button, gpointer user_data) {
     (void)button;
     (void)user_data;
-    gtk_stack_set_visible_child_name(main_stack, "subjects");
+    show_page("subjects", 1);
 }
 
 GtkWidget *make_back_button(const char *target) {
@@ -31,6 +54,7 @@ GtkWidget *make_back_button(const char *target) {
     g_signal_connect_swapped(back, "state-flags-changed",
                              G_CALLBACK(gtk_widget_queue_draw), icon);
     g_object_set_data_full(G_OBJECT(back), "target", g_strdup(target), g_free);
+    g_object_set_data(G_OBJECT(back), "nav-back", GINT_TO_POINTER(1));
     g_signal_connect(back, "clicked", G_CALLBACK(on_nav_clicked), NULL);
     return back;
 }

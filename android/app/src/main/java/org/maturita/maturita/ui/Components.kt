@@ -1,5 +1,13 @@
 package org.maturita.maturita.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +44,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -53,9 +62,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Typography
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -234,8 +245,12 @@ fun ActionBar(
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 16.dp, vertical = 12.dp),
         ) {
-            if (feedback.isNotEmpty()) {
-                FeedbackLine(feedback, kind)
+            AnimatedVisibility(
+                visible = feedback.isNotEmpty(),
+                enter = fadeIn(tween(180)) + expandVertically(),
+                exit = fadeOut(tween(120)) + shrinkVertically(),
+            ) {
+                FeedbackLine(feedback, kind, animate = false)
                 Spacer(Modifier.height(10.dp))
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -309,8 +324,27 @@ fun PillButton(label: String, modifier: Modifier = Modifier, onClick: () -> Unit
 }
 
 @Composable
-fun FeedbackLine(text: String, kind: String) {
-    if (text.isEmpty()) return
+fun SmoothProgress(
+    progress: Float,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.primary,
+    trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+) {
+    val animated by animateFloatAsState(
+        targetValue = progress.coerceIn(0f, 1f),
+        animationSpec = tween(durationMillis = 380),
+        label = "progress",
+    )
+    LinearProgressIndicator(
+        progress = { animated },
+        modifier = modifier,
+        color = color,
+        trackColor = trackColor,
+    )
+}
+
+@Composable
+fun FeedbackLine(text: String, kind: String, animate: Boolean = true) {
     val color = when (kind) {
         "ok" -> MaterialTheme.colorScheme.primary
         "warn" -> MaterialTheme.colorScheme.tertiary
@@ -321,6 +355,22 @@ fun FeedbackLine(text: String, kind: String) {
         "warn" -> Icons.Filled.Warning
         else -> Icons.Filled.Cancel
     }
+    if (!animate) {
+        if (text.isEmpty()) return
+        FeedbackRow(text, color, icon)
+        return
+    }
+    AnimatedVisibility(
+        visible = text.isNotEmpty(),
+        enter = fadeIn(tween(180)) + expandVertically(),
+        exit = fadeOut(tween(120)) + shrinkVertically(),
+    ) {
+        FeedbackRow(text, color, icon)
+    }
+}
+
+@Composable
+private fun FeedbackRow(text: String, color: Color, icon: ImageVector) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(icon, null, tint = color, modifier = Modifier.size(20.dp))
         Spacer(Modifier.width(8.dp))
@@ -330,13 +380,18 @@ fun FeedbackLine(text: String, kind: String) {
 
 @Composable
 fun Meaning(text: String, visible: Boolean) {
-    if (!visible || text.isEmpty()) return
-    Text(
-        text,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodySmall,
-        modifier = Modifier.padding(bottom = 8.dp),
-    )
+    AnimatedVisibility(
+        visible = visible && text.isNotEmpty(),
+        enter = fadeIn(tween(180)),
+        exit = fadeOut(tween(120)),
+    ) {
+        Text(
+            text,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
+    }
 }
 
 @Composable
@@ -397,11 +452,12 @@ fun SegChip(label: String, selected: Boolean, onClick: () -> Unit) {
 /** Multiple-choice answer with radio state and, after checking, a correct/wrong mark. */
 @Composable
 fun OptionRow(text: String, selected: Boolean, mark: Boolean?, enabled: Boolean = true, onClick: () -> Unit) {
-    val container = when (mark) {
+    val target = when (mark) {
         true -> MaterialTheme.colorScheme.primaryContainer
         false -> MaterialTheme.colorScheme.errorContainer
         null -> if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh
     }
+    val container by animateColorAsState(target, tween(180), label = "option")
     Surface(
         onClick = onClick,
         enabled = enabled,

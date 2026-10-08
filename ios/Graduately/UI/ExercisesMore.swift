@@ -330,7 +330,7 @@ struct WordPicker: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .contentShape(Rectangle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(PressScaleStyle())
                 }
             }
             .listStyle(.plain)
@@ -1224,9 +1224,10 @@ private struct VlsmEx: View {
                     .padding(.horizontal)
                     .padding(.vertical, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .leading)))
             }
         }
-        .animation(.default, value: fb.0)
+        .animation(Motion.feedback, value: fb.0)
     }
 
     private func maybeFinish() {
@@ -1359,7 +1360,7 @@ struct LitQuizScreen: View {
                     }) { EmptyView() }
                 }
             }
-            .animation(.default, value: answered)
+            .animation(Motion.settle, value: answered)
         }
     }
 

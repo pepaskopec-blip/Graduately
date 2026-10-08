@@ -212,7 +212,7 @@ void on_stats_back_clicked(GtkButton *button, gpointer user_data) {
     (void)user_data;
     if (!target || !target[0])
         target = "subjects";
-    gtk_stack_set_visible_child_name(main_stack, target);
+    show_page(target, -1);
 }
 
 void on_stats_clicked(GtkButton *button, gpointer user_data) {
@@ -227,7 +227,7 @@ void on_stats_clicked(GtkButton *button, gpointer user_data) {
         stats_return_page = g_strdup(cur);
     }
     refresh_stats_ui();
-    gtk_stack_set_visible_child_name(main_stack, "stats");
+    show_page("stats", 0);
 }
 
 GtkWidget *stats_metric_card(const char *label_key, GtkWidget **value_out) {

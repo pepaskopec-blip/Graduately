@@ -1282,7 +1282,7 @@ static void on_stub_quiz_clicked(GtkButton *button, gpointer user_data) {
     (void)user_data;
     cetba_prepare_stub_quiz();
     if (main_stack)
-        gtk_stack_set_visible_child_name(main_stack, "cetbastubquiz");
+        show_page("cetbastubquiz", 1);
 }
 
 static void on_stub_plot_clicked(GtkButton *button, gpointer user_data) {
@@ -1290,7 +1290,7 @@ static void on_stub_plot_clicked(GtkButton *button, gpointer user_data) {
     (void)user_data;
     cetba_prepare_stub_plot();
     if (main_stack)
-        gtk_stack_set_visible_child_name(main_stack, "cetbastubdej");
+        show_page("cetbastubdej", 1);
 }
 
 static GtkWidget *book_rail;
@@ -1467,7 +1467,7 @@ static void on_book_node_clicked(GtkButton *button, gpointer user_data) {
         rebuild_stub_about(idx);
     }
     if (main_stack && target)
-        gtk_stack_set_visible_child_name(main_stack, target);
+        show_page(target, 1);
 }
 
 static GtkWidget *book_make_node(int i) {
@@ -1810,7 +1810,7 @@ void cetba_open_stub(int idx) {
         gtk_label_set_text(GTK_LABEL(stub_title_lbl), book_defs[idx].title);
     rebuild_stub_about(idx);
     if (main_stack)
-        gtk_stack_set_visible_child_name(main_stack, "cetbastub");
+        show_page("cetbastub", 1);
 }
 
 void cetba_register_search(void) {

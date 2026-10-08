@@ -33,7 +33,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -479,8 +478,8 @@ private fun VocabEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
         bottomBar = if (cur != null) ({ ActionBar(vm.tr("check"), fb.first, fb.second) { check() } }) else null,
     ) { inner ->
         Column(Modifier.fillMaxSize().padding(inner).verticalScroll(rememberScrollState()).padding(16.dp)) {
-            LinearProgressIndicator(
-                progress = { if (total == 0) 0f else done / total.toFloat() },
+            SmoothProgress(
+                progress = if (total == 0) 0f else done / total.toFloat(),
                 modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
             )
             Spacer(Modifier.height(6.dp))
@@ -1354,7 +1353,7 @@ fun LitQuizScreen(vm: AppViewModel, id: String) {
                 }
             } else {
                 val q = qs[idx]
-                LinearProgressIndicator(progress = { idx / qs.size.toFloat() }, modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
+                SmoothProgress(progress = idx / qs.size.toFloat(), modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
                 Spacer(Modifier.height(6.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(vm.fmt("lit_question_fmt", idx + 1, qs.size), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

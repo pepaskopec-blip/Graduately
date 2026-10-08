@@ -58,8 +58,10 @@ struct MacRoot: View {
                 if showsUpdateAccessory {
                     UpdateBanner(vm: vm)
                         .padding(16)
+                        .transition(.move(edge: .top).combined(with: .opacity))
                 }
             }
+            .animation(Motion.settle, value: showsUpdateAccessory)
             .onAppear { vm.checkUpdate(false) }
             .frame(minWidth: 980, minHeight: 640)
     }

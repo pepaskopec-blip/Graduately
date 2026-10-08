@@ -416,7 +416,7 @@ static void en_open_unit(GtkButton *button, gpointer data) {
         if (L->next_btn)
             gtk_button_set_label(GTK_BUTTON(L->next_btn), tr("net_slide_next"));
     }
-    gtk_stack_set_visible_child_name(main_stack, L->unit_page);
+    show_page(L->unit_page, 1);
 }
 
 static void en_add_node(EngMap *m, GtkFixed *fixed, int index) {
@@ -699,7 +699,7 @@ static void en_slide_next(GtkButton *button, gpointer data) {
         L->idx++;
         skill_slide_apply(L);
     } else {
-        gtk_stack_set_visible_child_name(main_stack, L->ex_page);
+        show_page(L->ex_page, 1);
     }
 }
 

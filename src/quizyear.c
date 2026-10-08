@@ -205,7 +205,7 @@ static void qy_slide_next(GtkButton *button, gpointer data) {
         L->idx++;
         skill_slide_apply(L);
     } else if (L->ex_page) {
-        gtk_stack_set_visible_child_name(main_stack, L->ex_page);
+        show_page(L->ex_page, 1);
     }
 }
 

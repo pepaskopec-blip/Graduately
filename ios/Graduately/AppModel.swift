@@ -110,12 +110,12 @@ final class AppModel: ObservableObject {
     }
 
     func setTheme(_ id: ThemeId) {
-        themeId = id
+        withAnimation(Motion.settle) { themeId = id }
         progress.themeId = id
     }
 
     func applyMode(_ m: ColorMode) {
-        mode = m
+        withAnimation(Motion.settle) { mode = m }
         progress.mode = m
     }
 
@@ -285,7 +285,7 @@ final class AppModel: ObservableObject {
 
     func dismissChangelog() {
         progress.seenCommit = AppConfig.commit
-        showChangelog = false
+        withAnimation(Motion.settle) { showChangelog = false }
     }
 }
 

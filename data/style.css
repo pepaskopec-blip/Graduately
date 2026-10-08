@@ -44,6 +44,7 @@ windowcontrols button:not(:hover) image {
 }
 button {
    background-image: none;
+   transition: background-color 120ms ease, color 120ms ease;
 }
 tooltip {
    background-color: @bg_crust;

@@ -16,6 +16,8 @@ typedef struct {
 } SearchItem;
 
 static GtkWidget *search_layer;
+static GtkWidget *search_reveal;
+static gboolean search_want_open;
 static GtkWidget *search_entry;
 static GtkWidget *search_list;
 static GtkWidget *search_empty;
@@ -472,7 +474,7 @@ static void search_go(const char *target) {
     if (!gtk_stack_get_child_by_name(main_stack, target))
         return;
     search_close();
-    gtk_stack_set_visible_child_name(main_stack, target);
+    show_page(target, 1);
 }
 
 static void on_row_activated(GtkListBox *box, GtkListBoxRow *row,
@@ -641,19 +643,40 @@ static void on_scrim_clicked(GtkGestureClick *g, gint n_press, gdouble x,
     search_close();
 }
 
+static void on_search_revealed(GObject *obj, GParamSpec *pspec, gpointer data) {
+    GtkRevealer *reveal = GTK_REVEALER(obj);
+
+    (void)pspec;
+    (void)data;
+    if (!gtk_revealer_get_reveal_child(reveal) &&
+        !gtk_revealer_get_child_revealed(reveal))
+        gtk_widget_set_visible(GTK_WIDGET(reveal), FALSE);
+}
+
 gboolean search_is_open(void) {
-    return search_layer && gtk_widget_get_visible(search_layer);
+    return search_want_open;
 }
 
 void search_close(void) {
-    if (search_layer)
-        gtk_widget_set_visible(search_layer, FALSE);
+    search_want_open = FALSE;
+    if (search_reveal)
+        gtk_revealer_set_reveal_child(GTK_REVEALER(search_reveal), FALSE);
+}
+
+static gboolean reveal_search(gpointer data) {
+    (void)data;
+    if (search_want_open && search_reveal)
+        gtk_revealer_set_reveal_child(GTK_REVEALER(search_reveal), TRUE);
+    return G_SOURCE_REMOVE;
 }
 
 void search_open(void) {
-    if (!search_layer)
+    if (!search_reveal)
         return;
-    gtk_widget_set_visible(search_layer, TRUE);
+    search_want_open = TRUE;
+    gtk_widget_set_visible(search_reveal, TRUE);
+    /* Wait a frame so the overlay is mapped and the fade actually runs. */
+    g_idle_add(reveal_search, NULL);
     if (search_entry) {
         gtk_editable_set_text(GTK_EDITABLE(search_entry), "");
         gtk_widget_grab_focus(search_entry);
@@ -711,7 +734,6 @@ void search_attach(GtkOverlay *overlay) {
     gtk_widget_add_css_class(search_layer, "search-layer");
     gtk_widget_set_hexpand(search_layer, TRUE);
     gtk_widget_set_vexpand(search_layer, TRUE);
-    gtk_widget_set_visible(search_layer, FALSE);
 
     scrim = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_add_css_class(scrim, "search-scrim");
@@ -763,5 +785,16 @@ void search_attach(GtkOverlay *overlay) {
     g_signal_connect(search_list, "row-activated",
                      G_CALLBACK(on_row_activated), NULL);
 
-    gtk_overlay_add_overlay(overlay, search_layer);
+    search_reveal = gtk_revealer_new();
+    gtk_revealer_set_transition_type(GTK_REVEALER(search_reveal),
+                                     GTK_REVEALER_TRANSITION_TYPE_CROSSFADE);
+    gtk_revealer_set_transition_duration(GTK_REVEALER(search_reveal), 160);
+    gtk_revealer_set_reveal_child(GTK_REVEALER(search_reveal), FALSE);
+    gtk_widget_set_hexpand(search_reveal, TRUE);
+    gtk_widget_set_vexpand(search_reveal, TRUE);
+    gtk_widget_set_visible(search_reveal, FALSE);
+    gtk_revealer_set_child(GTK_REVEALER(search_reveal), search_layer);
+    g_signal_connect(search_reveal, "notify::child-revealed",
+                     G_CALLBACK(on_search_revealed), NULL);
+    gtk_overlay_add_overlay(overlay, search_reveal);
 }

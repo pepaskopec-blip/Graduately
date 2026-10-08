@@ -215,6 +215,7 @@ struct PathMap: View {
         #else
         .frame(minHeight: 420)
         #endif
+        .softAppear()
     }
 
     @ViewBuilder
@@ -321,7 +322,7 @@ struct PathMap: View {
 
         if let dest = node.destination, !node.locked {
             NavigationLink(value: dest) { content }
-                .buttonStyle(.plain)
+                .buttonStyle(PressScaleStyle())
         } else {
             content.opacity(node.locked ? 0.55 : 1)
         }

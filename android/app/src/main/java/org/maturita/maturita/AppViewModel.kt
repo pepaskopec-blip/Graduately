@@ -34,6 +34,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         private set
     var showChangelog by mutableStateOf(shouldShowChangelog())
         private set
+    /** True when the latest navigation moved deeper; false for back and tab switches. */
+    var navigatingForward by mutableStateOf(true)
+        private set
 
     private val stack = mutableStateListOf<Route>(Route.Subjects)
     val route: Route get() = stack.last()
@@ -50,11 +53,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         searchOpen = false
         if (stack.last() == r) return
         if (r.isRoot) {
+            navigatingForward = false
             val target = if (r == Route.Welcome) Route.Subjects else r
             stack.clear()
             stack.add(target)
             return
         }
+        navigatingForward = true
         if (root != Route.Subjects) {
             stack.clear()
             stack.addAll(r.stack())
@@ -72,17 +77,20 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun openPage(page: String) {
         val r = routeFromPage(page) ?: return
         searchOpen = false
+        navigatingForward = true
         stack.clear()
         stack.addAll(r.stack())
     }
 
     /** Replace the current screen (lesson slides -> its exercise). */
     fun replace(r: Route) {
+        navigatingForward = true
         if (stack.size > 1) stack.removeAt(stack.lastIndex)
         stack.add(r)
     }
 
     fun back() {
+        navigatingForward = false
         when {
             stack.size > 1 -> stack.removeAt(stack.lastIndex)
             root != Route.Subjects -> go(Route.Subjects)
