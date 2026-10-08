@@ -1521,12 +1521,20 @@ struct SlidesScreen: View {
     private func slidePage(_ slide: J) -> some View {
         ScrollView {
             slideStack(slide)
-                .padding(.horizontal, MacChrome.pageInset)
+                .padding(.horizontal, slideInset)
                 .padding(.top, 22)
                 .padding(.bottom, 28)
                 .frame(maxWidth: 860)
                 .frame(maxWidth: .infinity, alignment: .top)
         }
+    }
+
+    private var slideInset: CGFloat {
+        #if os(macOS)
+        MacChrome.pageInset
+        #else
+        16
+        #endif
     }
 
     private func slideStack(_ slide: J) -> some View {

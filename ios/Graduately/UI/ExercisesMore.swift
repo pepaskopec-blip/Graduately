@@ -1402,7 +1402,7 @@ struct PlotScreen: View {
     }
 }
 
-private final class EnSpeaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
+private final class EnSpeaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
     enum Phase { case idle, playing, paused }
 
     private let synth = AVSpeechSynthesizer()
