@@ -17,12 +17,15 @@ struct PressScaleStyle: ButtonStyle {
     }
 }
 
-private struct SoftAppear: ViewModifier {
+/// Named so it does not collide with the app's `Content` type, which would
+/// otherwise hide `ViewModifier.Content` and fail the build.
+private struct SoftAppear<Inner: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var shown = false
+    var inner: Inner
 
-    func body(content: Content) -> some View {
-        content
+    var body: some View {
+        inner
             .opacity(reduceMotion || shown ? 1 : 0)
             .offset(y: reduceMotion || shown ? 0 : 8)
             .onAppear {
@@ -38,7 +41,7 @@ private struct SoftAppear: ViewModifier {
 extension View {
     /// One short fade-in. Use on a landing surface, not on every pushed screen.
     func softAppear() -> some View {
-        modifier(SoftAppear())
+        SoftAppear(inner: self)
     }
 }
 
