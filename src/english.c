@@ -36,7 +36,6 @@ typedef struct {
     GArray *entries;
     GArray *gap_hints;
     GtkWidget *essay;
-    GtkWidget *script;
     GtkWidget *play_note;
     GtkWidget *play_btn;
     gboolean played;
@@ -50,12 +49,8 @@ typedef struct {
     double gain;
     const char *voice;
     GPid pid;
-    guint timer;
-    guint tick_ms;
     guint apply_src;
     guint poll;
-    int tick;
-    gchar **sentences;
 #ifdef __APPLE__
     id synth;
 #endif
@@ -863,30 +858,6 @@ static gboolean en_has_word(const char *norm, const char *word) {
     return ok;
 }
 
-static void en_split_script(EnEx *ctx) {
-    GPtrArray *parts = g_ptr_array_new();
-    const char *text = ctx->lesson->listening;
-    const char *start = text;
-    const char *p = text;
-
-    while (p && *p) {
-        if ((*p == '.' || *p == '?' || *p == '!') && p[1] == ' ') {
-            g_ptr_array_add(parts, g_strndup(start, (gsize)(p - start + 1)));
-            p += 2;
-            start = p;
-            continue;
-        }
-        p++;
-    }
-    if (start && *start)
-        g_ptr_array_add(parts, g_strdup(start));
-    if (parts->len == 0)
-        g_ptr_array_add(parts, g_strdup(text ? text : ""));
-    g_ptr_array_add(parts, NULL);
-    ctx->sentences = (gchar **)g_ptr_array_free(parts, FALSE);
-    ctx->tick = 0;
-}
-
 static void en_sync_play(EnEx *ctx) {
     const char *key = "en_play";
 
@@ -899,78 +870,16 @@ static void en_sync_play(EnEx *ctx) {
     gtk_button_set_label(GTK_BUTTON(ctx->play_btn), tr(key));
 }
 
-static void en_show_script(EnEx *ctx) {
-    if (ctx->script && ctx->lesson->listening) {
-        gtk_label_set_text(GTK_LABEL(ctx->script), ctx->lesson->listening);
-        gtk_widget_set_visible(ctx->script, TRUE);
-    }
-}
-
-static void en_schedule_tick(EnEx *ctx);
-
-static gboolean en_tick(gpointer data) {
-    EnEx *ctx = data;
-    GString *shown;
-    int i;
-
-    if (ctx->paused)
-        return G_SOURCE_CONTINUE;
-    if (!ctx->sentences || !ctx->sentences[ctx->tick]) {
-        ctx->timer = 0;
-        ctx->busy = FALSE;
-        ctx->paused = FALSE;
-        en_sync_play(ctx);
-        en_show_script(ctx);
-        return G_SOURCE_REMOVE;
-    }
-    shown = g_string_new(NULL);
-    for (i = 0; i <= ctx->tick && ctx->sentences[i]; i++) {
-        if (i)
-            g_string_append_c(shown, ' ');
-        g_string_append(shown, ctx->sentences[i]);
-    }
-    gtk_label_set_text(GTK_LABEL(ctx->script), shown->str);
-    gtk_widget_set_visible(ctx->script, TRUE);
-    g_string_free(shown, TRUE);
-    ctx->tick++;
-    if (!ctx->sentences[ctx->tick]) {
-        ctx->timer = 0;
-        ctx->busy = FALSE;
-        ctx->paused = FALSE;
-        en_sync_play(ctx);
-        en_show_script(ctx);
-        return G_SOURCE_REMOVE;
-    }
-    return G_SOURCE_CONTINUE;
-}
-
-static void en_schedule_tick(EnEx *ctx) {
-    guint ms = ctx->tick_ms;
-
-    if (ctx->timer)
-        g_source_remove(ctx->timer);
-    if (ms < 400)
-        ms = 400;
-    ctx->timer = g_timeout_add(ms, en_tick, ctx);
-}
-
 static void en_start_fallback(EnEx *ctx) {
-    if (ctx->fallback)
-        return;
     ctx->fallback = TRUE;
     ctx->played = TRUE;
-    ctx->busy = TRUE;
+    ctx->busy = FALSE;
+    ctx->paused = FALSE;
     if (ctx->play_note) {
         gtk_label_set_text(GTK_LABEL(ctx->play_note), tr("en_listen_fallback"));
         gtk_widget_set_visible(ctx->play_note, TRUE);
     }
-    if (!ctx->sentences)
-        en_split_script(ctx);
-    ctx->tick = 0;
-    ctx->tick_ms = (guint)(2200.0 / (ctx->speed > 0.2 ? ctx->speed : 0.9));
-    en_schedule_tick(ctx);
     en_sync_play(ctx);
-    en_tick(ctx);
 }
 
 static gboolean en_launch(EnEx *ctx);
@@ -996,11 +905,8 @@ static void en_voice_done(GPid pid, gint status, gpointer data) {
     ctx->busy = FALSE;
     ctx->paused = FALSE;
     en_sync_play(ctx);
-    if (!ok) {
+    if (!ok)
         en_start_fallback(ctx);
-        return;
-    }
-    en_show_script(ctx);
 }
 
 static gboolean en_spawn(char **argv, GPid *pid) {
@@ -1156,7 +1062,6 @@ static gboolean en_poll_speech(gpointer data) {
     ctx->busy = FALSE;
     ctx->paused = FALSE;
     en_sync_play(ctx);
-    en_show_script(ctx);
     return G_SOURCE_REMOVE;
 }
 #endif
@@ -1242,10 +1147,7 @@ static void en_resume_voice(EnEx *ctx) {
 #endif
     if (ctx->voice_dirty) {
         ctx->voice_dirty = FALSE;
-        if (ctx->fallback) {
-            ctx->tick_ms = (guint)(2200.0 / (ctx->speed > 0.2 ? ctx->speed : 0.9));
-            en_schedule_tick(ctx);
-        } else if (ctx->pid) {
+        if (ctx->pid) {
             ctx->restarting = TRUE;
 #ifdef G_OS_UNIX
             kill((pid_t)ctx->pid, SIGKILL);
@@ -1279,11 +1181,8 @@ static void en_restart_voice(EnEx *ctx) {
         return;
     }
 #endif
-    if (ctx->fallback) {
-        ctx->tick_ms = (guint)(2200.0 / (ctx->speed > 0.2 ? ctx->speed : 0.9));
-        en_schedule_tick(ctx);
+    if (ctx->fallback)
         return;
-    }
     if (ctx->pid) {
         ctx->restarting = TRUE;
 #ifdef G_OS_UNIX
@@ -1332,24 +1231,116 @@ static void en_play_clicked(GtkButton *button, gpointer data) {
         en_pause_voice(ctx);
 }
 
-static GtkWidget *en_labeled_scale(EnEx *ctx, const char *key, const char *which,
-                                   double min, double max, double value, int digits) {
-    GtkWidget *row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+static char *en_format_level(GtkScale *scale, double value, gpointer data) {
+    const char *which = g_object_get_data(G_OBJECT(scale), "en-level");
+
+    (void)data;
+    if (g_strcmp0(which, "speed") == 0)
+        return g_strdup_printf("%.1f×", value);
+    return g_strdup_printf("%.0f %%", value);
+}
+
+static GtkWidget *en_level_control(EnEx *ctx, const char *key, const char *which,
+                                   double min, double max, double value) {
+    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
     GtkWidget *lab = gtk_label_new(NULL);
     GtkWidget *scale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL,
-                                                min, max, max > 10 ? 1 : 0.05);
+                                                min, max, max > 10 ? 1 : 0.1);
 
     i18n_bind(lab, key, 0);
-    gtk_widget_set_size_request(lab, 96, -1);
+    gtk_widget_add_css_class(lab, "listen-caption");
     gtk_label_set_xalign(GTK_LABEL(lab), 0);
-    gtk_range_set_value(GTK_RANGE(scale), value);
-    gtk_scale_set_digits(GTK_SCALE(scale), digits);
-    gtk_widget_set_hexpand(scale, TRUE);
+    gtk_widget_set_halign(lab, GTK_ALIGN_START);
     g_object_set_data(G_OBJECT(scale), "en-level", (gpointer)which);
+    gtk_scale_set_format_value_func(GTK_SCALE(scale), en_format_level, NULL, NULL);
+    gtk_scale_set_draw_value(GTK_SCALE(scale), TRUE);
+    gtk_scale_set_value_pos(GTK_SCALE(scale), GTK_POS_RIGHT);
+    gtk_range_set_value(GTK_RANGE(scale), value);
+    gtk_widget_add_css_class(scale, "listen-scale");
+    gtk_widget_set_size_request(scale, 156, -1);
+    gtk_widget_set_hexpand(scale, FALSE);
+    gtk_widget_set_halign(scale, GTK_ALIGN_FILL);
     g_signal_connect(scale, "value-changed", G_CALLBACK(en_level_changed), ctx);
-    gtk_box_append(GTK_BOX(row), lab);
-    gtk_box_append(GTK_BOX(row), scale);
-    return row;
+    gtk_box_append(GTK_BOX(box), lab);
+    gtk_box_append(GTK_BOX(box), scale);
+    gtk_widget_set_hexpand(box, FALSE);
+    gtk_widget_set_halign(box, GTK_ALIGN_FILL);
+    return box;
+}
+
+/* Transcript stays on screen. Speed and volume sit in a short column
+ * beside it, so the sliders do not run the width of the page. */
+static void en_add_listen(EnEx *ctx, GtkWidget *parent) {
+    GtkWidget *card;
+    GtkWidget *text_col;
+    GtkWidget *script;
+    GtkWidget *controls;
+    GtkWidget *play;
+    GtkWidget *note;
+
+    en_heading(parent, "en_sec_listen");
+
+    note = gtk_label_new(NULL);
+    i18n_bind(note, "en_listen_note", 0);
+    gtk_label_set_wrap(GTK_LABEL(note), TRUE);
+    gtk_label_set_xalign(GTK_LABEL(note), 0);
+    gtk_widget_set_halign(note, GTK_ALIGN_START);
+    gtk_widget_add_css_class(note, "quiz-intro");
+    gtk_box_append(GTK_BOX(parent), note);
+
+    card = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 22);
+    gtk_widget_add_css_class(card, "quiz-card");
+    gtk_widget_add_css_class(card, "listen-card");
+
+    controls = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_widget_set_hexpand(controls, FALSE);
+    gtk_widget_set_halign(controls, GTK_ALIGN_START);
+    gtk_widget_set_valign(controls, GTK_ALIGN_START);
+    gtk_widget_set_size_request(controls, 168, -1);
+
+    ctx->speed = 0.9;
+    ctx->gain = 1.0;
+    play = gtk_button_new_with_label(tr("en_play"));
+    gtk_widget_add_css_class(play, "btn-primary");
+    gtk_widget_set_hexpand(play, TRUE);
+    gtk_widget_set_halign(play, GTK_ALIGN_FILL);
+    ctx->play_btn = play;
+    g_signal_connect(play, "clicked", G_CALLBACK(en_play_clicked), ctx);
+    gtk_box_append(GTK_BOX(controls), play);
+    gtk_box_append(GTK_BOX(controls),
+                   en_level_control(ctx, "en_speed", "speed",
+                                    0.6, 1.5, ctx->speed));
+    gtk_box_append(GTK_BOX(controls),
+                   en_level_control(ctx, "en_volume", "volume",
+                                    0, 100, ctx->gain * 100.0));
+
+    text_col = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
+    gtk_widget_set_hexpand(text_col, TRUE);
+    gtk_widget_set_valign(text_col, GTK_ALIGN_CENTER);
+
+    script = gtk_label_new(ctx->lesson->listening);
+    gtk_label_set_wrap(GTK_LABEL(script), TRUE);
+    gtk_label_set_wrap_mode(GTK_LABEL(script), PANGO_WRAP_WORD_CHAR);
+    gtk_label_set_width_chars(GTK_LABEL(script), 36);
+    gtk_label_set_max_width_chars(GTK_LABEL(script), 72);
+    gtk_label_set_selectable(GTK_LABEL(script), TRUE);
+    gtk_label_set_xalign(GTK_LABEL(script), 0);
+    gtk_widget_set_halign(script, GTK_ALIGN_FILL);
+    gtk_widget_set_hexpand(script, TRUE);
+    gtk_widget_add_css_class(script, "listen-script");
+    gtk_box_append(GTK_BOX(text_col), script);
+
+    ctx->play_note = gtk_label_new("");
+    gtk_label_set_wrap(GTK_LABEL(ctx->play_note), TRUE);
+    gtk_label_set_xalign(GTK_LABEL(ctx->play_note), 0);
+    gtk_widget_set_halign(ctx->play_note, GTK_ALIGN_START);
+    gtk_widget_add_css_class(ctx->play_note, "meaning");
+    gtk_widget_set_visible(ctx->play_note, FALSE);
+    gtk_box_append(GTK_BOX(text_col), ctx->play_note);
+
+    gtk_box_append(GTK_BOX(card), controls);
+    gtk_box_append(GTK_BOX(card), text_col);
+    gtk_box_append(GTK_BOX(parent), card);
 }
 
 static void en_check(GtkButton *button, gpointer data) {
@@ -1474,6 +1465,11 @@ GtkWidget *skill_ex_page(const EnLesson *lesson, int year, int index,
     gtk_widget_set_margin_bottom(page, 24);
     gtk_box_append(GTK_BOX(page), top_bar(back, title_key, NULL));
 
+    /* Keep the recording in view while the questions scroll. Lessons that
+     * also have a reading passage leave it in the scroll, above the player. */
+    if (lesson->listening && !lesson->reading)
+        en_add_listen(ctx, page);
+
     scroll = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -1493,46 +1489,11 @@ GtkWidget *skill_ex_page(const EnLesson *lesson, int year, int index,
             en_add_mcq(ctx, body, lesson->readq, lesson->read_hints, lesson->n_read);
     }
 
-    if (lesson->listening) {
-        GtkWidget *play;
-        GtkWidget *note;
-
-        en_heading(body, "en_sec_listen");
-        note = gtk_label_new(NULL);
-        i18n_bind(note, "en_listen_note", 0);
-        gtk_label_set_wrap(GTK_LABEL(note), TRUE);
-        gtk_label_set_xalign(GTK_LABEL(note), 0);
-        gtk_widget_set_halign(note, GTK_ALIGN_START);
-        gtk_widget_add_css_class(note, "quiz-intro");
-        gtk_box_append(GTK_BOX(body), note);
-
-        ctx->speed = 0.9;
-        ctx->gain = 1.0;
-        play = gtk_button_new_with_label(tr("en_play"));
-        gtk_widget_add_css_class(play, "btn-primary");
-        gtk_widget_set_halign(play, GTK_ALIGN_START);
-        gtk_box_append(GTK_BOX(body), play);
-        ctx->play_btn = play;
-        g_signal_connect(play, "clicked", G_CALLBACK(en_play_clicked), ctx);
-        gtk_box_append(GTK_BOX(body),
-                       en_labeled_scale(ctx, "en_speed", "speed",
-                                        0.6, 1.5, ctx->speed, 1));
-        gtk_box_append(GTK_BOX(body),
-                       en_labeled_scale(ctx, "en_volume", "volume",
-                                        0, 100, ctx->gain * 100.0, 0));
-
-        ctx->play_note = gtk_label_new("");
-        gtk_label_set_wrap(GTK_LABEL(ctx->play_note), TRUE);
-        gtk_widget_set_halign(ctx->play_note, GTK_ALIGN_START);
-        gtk_widget_add_css_class(ctx->play_note, "meaning");
-        gtk_widget_set_visible(ctx->play_note, FALSE);
-        gtk_box_append(GTK_BOX(body), ctx->play_note);
-
-        ctx->script = en_passage(body, "", TRUE);
-        if (lesson->n_listen)
-            en_add_mcq(ctx, body, lesson->listenq, lesson->listen_hints,
-                       lesson->n_listen);
-    }
+    if (lesson->listening && lesson->reading)
+        en_add_listen(ctx, body);
+    if (lesson->n_listen)
+        en_add_mcq(ctx, body, lesson->listenq, lesson->listen_hints,
+                   lesson->n_listen);
 
     if (lesson->n_gaps) {
         en_heading(body, "en_sec_gap");

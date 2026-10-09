@@ -522,6 +522,29 @@ popover > contents,
    color: @fg_subtext;
    font-size: 14px;
 }
+.listen-script {
+   color: @fg_text;
+   font-size: 15px;
+}
+.listen-caption {
+   color: @fg_subtext;
+   font-size: 12px;
+   font-weight: 600;
+}
+.listen-scale trough {
+   min-height: 4px;
+   border-radius: 999px;
+   background-color: alpha(@fg_text, 0.16);
+}
+.listen-scale highlight {
+   border-radius: 999px;
+   background-color: @accent;
+}
+.listen-scale value {
+   color: @fg_subtext;
+   font-size: 12px;
+   font-weight: 600;
+}
 .quiz-q {
    color: @fg_text;
    font-size: 15px;

@@ -1511,7 +1511,6 @@ struct EngExScreen: View {
     @State private var gaps: [String]
     @State private var essay = ""
     @State private var played = false
-    @State private var showScript = false
     @State private var revealed = false
     @State private var showModel = false
     @State private var fb = ("", "")
@@ -1537,63 +1536,129 @@ struct EngExScreen: View {
 
     var body: some View {
         if let lesson = lessonOf(vm, year, id) {
-            let p = vm.palette
-            ExerciseScaffold(vm: vm, title: vm.tr(lesson.str("titleKey")), sub: nil, action: vm.tr("check"), onAction: {
-                check(lesson)
-            }, feedback: fb.0, kind: fb.1) {
-                if let reading = lesson.strOrNull("reading") {
-                    section("en_sec_read")
-                    Text(reading).textSelection(.enabled)
-                    choiceBlock(lesson.arr("readQuiz"), picks: $readPicks)
+            let listening = lesson.strOrNull("listening")
+            let pinListen = listening != nil && lesson.strOrNull("reading") == nil
+            if pinListen, let listening {
+                scaffold(lesson) {
+                    exerciseBody(lesson, inlineListening: nil)
                 }
-                if let listening = lesson.strOrNull("listening") {
-                    section("en_sec_listen")
-                    Text(vm.tr("en_listen_note"))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    listenControls(listening)
-                    if showScript {
-                        Text(listening).textSelection(.enabled)
-                    }
-                    choiceBlock(lesson.arr("listenQuiz"), picks: $listenPicks)
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    listenBlock(listening)
+                        .padding(.horizontal, pagePad)
+                        .padding(.top, 4)
+                        .padding(.bottom, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.background)
                 }
-                let gapRows = lesson.arr("gaps")
-                if !gapRows.isEmpty {
-                    section("en_sec_gap")
-                    ForEach(gapRows.indices, id: \.self) { i in
-                        Text("\(i + 1). \(gapRows[i].str("prompt"))")
-                            .font(.body.weight(.semibold))
-                        WordField(
-                            value: Binding(get: { gaps[i] }, set: { gaps[i] = $0 }),
-                            placeholder: "",
-                            mark: revealed ? answerAccepts(normalizeAnswer(gaps[i]), gapRows[i].str("answers")) : nil,
-                            palette: p
-                        )
-                        if revealed, let hint = gapRows[i].strOrNull("meaning") {
-                            Meaning(text: hint, palette: p, visible: true)
-                        }
-                    }
-                }
-                if let writing = lesson.obj("writing") {
-                    section("en_sec_write")
-                    Text(writing.str("prompt"))
-                    TextEditor(text: $essay)
-                        .frame(minHeight: 140)
-                        .padding(8)
-                        .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12))
-                    if showModel {
-                        Text(vm.tr("en_model"))
-                            .font(.subheadline.weight(.semibold))
-                        Text(writing.str("model")).textSelection(.enabled)
-                    }
-                }
-                let quiz = lesson.arr("quiz")
-                if !quiz.isEmpty {
-                    section("en_sec_quiz")
-                    choiceBlock(quiz, picks: $quizPicks)
+            } else {
+                scaffold(lesson) {
+                    exerciseBody(lesson, inlineListening: listening)
                 }
             }
         }
+    }
+
+    private func scaffold<Content: View>(_ lesson: J, @ViewBuilder content: @escaping () -> Content) -> some View {
+        ExerciseScaffold(
+            vm: vm,
+            title: vm.tr(lesson.str("titleKey")),
+            sub: nil,
+            action: vm.tr("check"),
+            onAction: { check(lesson) },
+            feedback: fb.0,
+            kind: fb.1,
+            content: content
+        )
+    }
+
+    @ViewBuilder
+    private func exerciseBody(_ lesson: J, inlineListening: String?) -> some View {
+        let p = vm.palette
+        if let reading = lesson.strOrNull("reading") {
+            section("en_sec_read")
+            Text(reading).textSelection(.enabled)
+            choiceBlock(lesson.arr("readQuiz"), picks: $readPicks)
+        }
+        if let inlineListening {
+            listenBlock(inlineListening)
+            choiceBlock(lesson.arr("listenQuiz"), picks: $listenPicks)
+        } else if lesson.strOrNull("listening") != nil {
+            choiceBlock(lesson.arr("listenQuiz"), picks: $listenPicks)
+        }
+        let gapRows = lesson.arr("gaps")
+        if !gapRows.isEmpty {
+            section("en_sec_gap")
+            ForEach(gapRows.indices, id: \.self) { i in
+                Text("\(i + 1). \(gapRows[i].str("prompt"))")
+                    .font(.body.weight(.semibold))
+                WordField(
+                    value: Binding(get: { gaps[i] }, set: { gaps[i] = $0 }),
+                    placeholder: "",
+                    mark: revealed ? answerAccepts(normalizeAnswer(gaps[i]), gapRows[i].str("answers")) : nil,
+                    palette: p
+                )
+                if revealed, let hint = gapRows[i].strOrNull("meaning") {
+                    Meaning(text: hint, palette: p, visible: true)
+                }
+            }
+        }
+        if let writing = lesson.obj("writing") {
+            section("en_sec_write")
+            Text(writing.str("prompt"))
+            TextEditor(text: $essay)
+                .frame(minHeight: 140)
+                .padding(8)
+                .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12))
+            if showModel {
+                Text(vm.tr("en_model"))
+                    .font(.subheadline.weight(.semibold))
+                Text(writing.str("model")).textSelection(.enabled)
+            }
+        }
+        let quiz = lesson.arr("quiz")
+        if !quiz.isEmpty {
+            section("en_sec_quiz")
+            choiceBlock(quiz, picks: $quizPicks)
+        }
+    }
+
+    private var pagePad: CGFloat {
+        #if os(macOS)
+        MacChrome.pageInset
+        #else
+        16
+        #endif
+    }
+
+    private func listenBlock(_ text: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            section("en_sec_listen")
+            Text(vm.tr("en_listen_note"))
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            GlassCard {
+                #if os(macOS)
+                HStack(alignment: .top, spacing: 22) {
+                    listenControls(text)
+                    listenScript(text)
+                }
+                #else
+                VStack(alignment: .leading, spacing: 14) {
+                    listenScript(text)
+                    listenControls(text)
+                }
+                #endif
+            }
+        }
+    }
+
+    private func listenScript(_ text: String) -> some View {
+        Text(text)
+            .font(.body)
+            .foregroundStyle(.primary)
+            .multilineTextAlignment(.leading)
+            .textSelection(.enabled)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func section(_ key: String) -> some View {
@@ -1608,12 +1673,14 @@ struct EngExScreen: View {
         case .paused: vm.tr("en_resume")
         case .idle: vm.tr("en_play")
         }
-        return VStack(alignment: .leading, spacing: 8) {
-            PillButton(label: label) {
+        return VStack(alignment: .leading, spacing: 12) {
+            Button(label) {
                 played = true
-                speaker.onFinish = { showScript = true }
                 speaker.toggle(text)
             }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .frame(maxWidth: .infinity)
             listenSlider(vm.tr("en_speed"), value: Double(speaker.rate), range: 0.6...1.5, caption: String(format: "%.1f×", speaker.rate)) { next in
                 speaker.rate = Float(next)
             }
@@ -1621,24 +1688,29 @@ struct EngExScreen: View {
                 speaker.volume = Float(next)
             }
         }
+        .frame(width: 228)
     }
 
     private func listenSlider(_ title: String, value: Double, range: ClosedRange<Double>, caption: String, set: @escaping (Double) -> Void) -> some View {
-        HStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: 2) {
             Text(title)
-                .frame(width: 88, alignment: .leading)
+                .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
-            Slider(
-                value: Binding(get: { value }, set: set),
-                in: range,
-                onEditingChanged: { editing in
-                    if !editing { speaker.applySettings() }
-                }
-            )
-            Text(caption)
-                .monospacedDigit()
-                .frame(width: 52, alignment: .trailing)
-                .foregroundStyle(.secondary)
+            HStack(spacing: 8) {
+                Slider(
+                    value: Binding(get: { value }, set: set),
+                    in: range,
+                    onEditingChanged: { editing in
+                        if !editing { speaker.applySettings() }
+                    }
+                )
+                .controlSize(.small)
+                Text(caption)
+                    .font(.caption.weight(.semibold))
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+                    .frame(width: 46, alignment: .trailing)
+            }
         }
     }
 
