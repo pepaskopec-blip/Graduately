@@ -2,8 +2,8 @@ import Foundation
 import SwiftUI
 
 final class AppModel: ObservableObject {
-    let content = Content.load()
-    let progress = ProgressStore()
+    let content: Content
+    let progress: ProgressStore
     let updater = Updater()
 
     @Published var themeId: ThemeId
@@ -19,6 +19,9 @@ final class AppModel: ObservableObject {
     @Published var showChangelog = false
 
     init() {
+        let content = Content.load()
+        self.content = content
+        progress = ProgressStore(content: content)
         themeId = progress.themeId
         mode = progress.mode
         lang = progress.lang

@@ -6,7 +6,7 @@ set -eu
 root=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
 cd "$root"
 
-# The Xcode target extracts content.json itself during the build.
+# The Xcode target builds content.json from content/ itself.
 export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 COMMIT="${COMMIT:-$(git -C "$root" rev-parse HEAD 2>/dev/null || echo dev)}"
 dd="$root/ios/DerivedData"

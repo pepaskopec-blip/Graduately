@@ -1,0 +1,160 @@
+# User-facing notes, newest first. Folded into content.json for every app.
+# After an update the home screen shows the latest blocks until dismissed.
+#
+# --- YYYY-MM-DD
+# cs: bullet
+# en: bullet
+
+--- 2026-10-07
+cs: Sítě a technické vybavení: doplněné 2. až 4. ročníky, v každém 8 lekcí
+cs: Výklad a kvíz od VLAN a sestavení počítače po maturitu
+en: Networks and hardware: years 2 to 4 are filled in, eight lessons each
+en: Slides and a quiz, from VLANs and PC assembly through to the exam
+
+--- 2026-10-07
+cs: Němčina: čtyři ročníky, 24 lekcí s poslechem, čtením a psaním
+cs: Učebnice Neue Freunde zůstává, k ní přibyl kurz od A1 k B1
+en: German: four years, 24 lessons with listening, reading and writing
+en: The Neue Freunde textbook stays, and a course from A1 to B1 sits beside it
+
+--- 2026-10-07
+cs: Angličtina: čtyři ročníky, 32 lekcí podle osnov gymnázia
+cs: Poslech, čtení, psaní, doplňování, kvízy a testy od A2 k maturitě
+en: English: four years, 32 lessons from the gymnasium syllabus
+en: Listening, reading, writing, gap-fill, quizzes and tests from A2 to the exam
+
+--- 2026-10-06
+cs: Matematika: opakování základní školy a čtyři ročníky, 40 lekcí
+cs: Příklady se píšou a kontrolují, u geometrie se rýsuje na mřížku
+en: Mathematics: elementary review and four years, 40 lessons
+en: Examples are typed and checked, and some geometry is drawn on a grid
+
+--- 2026-10-06
+cs: Fyzika: čtyři ročníky, 32 lekcí podle osnov středních škol
+cs: Od mechaniky přes teplo a elektřinu až po optiku, jádro a astrofyziku
+en: Physics: four years, 32 lessons from the secondary-school syllabus
+en: From mechanics through heat and electricity to optics, the nucleus and astrophysics
+
+--- 2026-10-06
+cs: Základy přírodopisných věd: chemie a biologie, v každé 8 lekcí podle osnov
+cs: Každá lekce má výklad a kvíz se čtyřmi otázkami
+en: Natural sciences: chemistry and biology, eight lessons each, from the syllabus
+en: Every lesson has an overview and a four-question quiz
+cs: Český jazyk: literatura ve čtyřech ročnících podle osnov středních škol
+cs: 32 lekcí od starověku po současnost, každá s výkladem a kvízem
+en: Czech: literature across four years, following the secondary-school syllabus
+en: 32 lessons from antiquity to the present, each with an overview and a quiz
+
+--- 2026-10-03
+cs: Občanská nauka: 4. ročník, 16 lekcí (hospodářství, svět a filozofie)
+en: Civics: year 4, 16 lessons (the economy, the world and philosophy)
+
+--- 2026-10-02
+cs: Občanská nauka: 1. ročník, 17 lekcí (člověk v lidském společenství)
+cs: Občanská nauka: 2. ročník, 16 lekcí (člověk jako občan)
+cs: Občanská nauka: 3. ročník, 16 lekcí (člověk a právo)
+en: Civics: year 1, 17 lessons (the individual and society)
+en: Civics: year 2, 16 lessons (the citizen in a democratic state)
+en: Civics: year 3, 16 lessons (the individual and the law)
+
+--- 2026-09-25
+cs: Technické vybavení: pět lekcí o digitalizaci zvuku (vzorkování, kvantování, PCM)
+cs: Technické vybavení: skříň, zdroj, deska, CPU, karty, disky a vstupní zařízení
+cs: Technické vybavení: dosavadní lekce jsou 1. ročník, další ročníky jsou zatím zamčené
+en: Hardware: five lessons on digitizing sound (sampling, quantization, PCM)
+en: Hardware: case, PSU, board, CPU, cards, drives and input devices
+en: Hardware: current lessons are year 1; later years are still locked
+
+--- 2026-09-23
+cs: Repozitář se jmenuje Graduately; instalátory a updater míří tam
+cs: Balíčky a instalátory se jmenují graduately-* (už ne maturita-*)
+cs: Aplikace se jmenuje Graduately; úvod stále říká „Maturita? To dáme.“
+cs: Kompletní maturitní četba (82 knih) se zápisky, kvízem a sestavením děje
+cs: Studium knih: nejdřív procvičení (kvíz / sestavte děj), pak zápisky
+cs: Kvíz a sestavení děje u všech knih i na GTK (Linux / Windows)
+cs: Větší a čitelnější rozhraní na Macu
+cs: Opravy výběru slov v dialogu a otevření knihy z vyhledávání
+en: Repository renamed to Graduately; installers and updater follow
+en: Packages and installers are now graduately-* (no more maturita-*)
+en: The app is now Graduately; the welcome line still says “Maturita? We've got this.”
+en: Full maturita reading list (82 books) with notes, quiz, and plot ordering
+en: Book study flow: practice first (quiz / order the plot), then notes
+en: Quiz and plot assembly for every book on GTK too (Linux / Windows)
+en: Larger, more readable Mac interface
+en: Fixes for dialogue word picking and opening a book from search
+
+--- 2026-09-18
+cs: Po aktualizaci se na hlavní stránce ukáže, co je nového
+cs: Android aplikace se stejnými cvičeními a funkčním updaterem
+cs: iOS aplikace nativně na iOS 26 (Liquid Glass) z Maturita.xcworkspace
+en: After an update the home screen shows what is new
+en: Android app with the same exercises and a working updater
+en: Native iOS 26 app (Liquid Glass) from Maturita.xcworkspace
+
+--- 2026-09-17
+cs: Vestavěný updater a instalátory, které stáhnou nejnovější build
+cs: Vyhledávání předmětů, lekcí a cvičení
+cs: Nový vzhled rozhraní a publikování do větve builds
+en: Built-in updater and installers that fetch the newest build
+en: Search for subjects, lessons and exercises
+en: A new interface look and publishing to the builds branch
+
+--- 2026-09-16
+cs: Samostatné balíčky pro Linux, macOS a Windows
+en: Self-contained packages for Linux, macOS and Windows
+
+--- 2026-09-15
+cs: Cvičení z české mluvnice
+cs: Ikona aplikace na macOS, Windows i Linuxu
+en: Czech grammar exercises
+en: App icon on macOS, Windows and Linux
+
+--- 2026-09-14
+cs: Česká literatura: 1984 a Spalovač mrtvol
+cs: Sítě: ročníky 1–4 a jednotky až po Wi-Fi
+cs: Slovní zásoba pro Deutsch jednotky 2 a 3
+en: Czech literature: 1984 and The Cremator
+en: Networks: years 1–4 and units through Wi-Fi
+en: Vocabulary for Deutsch units 2 and 3
+
+--- 2026-09-11
+cs: Technické vybavení: von Neumann, historie počítačů, bity a bajty
+cs: Deset jednotek sítí s kvízy
+cs: Slovní zásoba v Deutsch jednotce 1
+en: Hardware: von Neumann, computer history, bits and bytes
+en: Ten network units with quizzes
+en: Vocabulary in Deutsch unit 1
+
+--- 2026-09-10
+cs: Sestavení na Windows
+en: Windows build support
+
+--- 2026-09-09
+cs: Otevřený předmět sítí
+cs: Statistiky postupu po jednotkách
+en: Networks subject unlocked
+en: Progress statistics by unit
+
+--- 2026-09-08
+cs: Deutsch jednotka 3 a vylepšený hangman
+en: Deutsch unit 3 and a better hangman
+
+--- 2026-09-07
+cs: Z němčiny na více předmětů
+cs: Deutsch jednotka 2
+cs: Témata, světlý režim a čeština / angličtina
+en: From German-only to multiple subjects
+en: Deutsch unit 2
+en: Themes, light mode and Czech / English
+
+--- 2026-09-06
+cs: Cesta cvičení a překlady po kontrole
+en: Exercise path and translations after checking
+
+--- 2026-09-05
+cs: Cvičení v Deutsch jednotce 1
+en: Exercises in Deutsch unit 1
+
+--- 2026-09-03
+cs: První verze Graduately
+en: First version of Graduately

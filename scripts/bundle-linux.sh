@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Build a self-contained Linux AppImage (x86_64).
-# Requires: make, pkg-config, GTK4, curl, and fuse/appimagetool (pulled as needed).
+# Linux AppImage (x86_64) of the Compose desktop app, with its own Java runtime.
+# Needs python3, curl and a JDK 17+ that ships jmods (set PACKAGE_JDK, e.g.
+# Temurin 21). The asset name and the icon path inside the image are what the
+# installer and the updater of older builds expect; keep them.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -9,116 +11,52 @@ cd "$ROOT"
 ARCH="$(uname -m)"
 case "$ARCH" in
   x86_64|amd64) ARCH=x86_64 ;;
-  aarch64|arm64) ARCH=aarch64 ;;
   *)
-    echo "Unsupported architecture: $ARCH" >&2
+    echo "Only x86_64 AppImages are built, this machine is $ARCH" >&2
     exit 1
     ;;
 esac
 
-OUT_NAME="graduately-linux-${ARCH}.AppImage"
+OUT="$ROOT/dist/graduately-linux-${ARCH}.AppImage"
 APPDIR="$ROOT/dist/AppDir"
 TOOLS="$ROOT/dist/tools"
-# Real 512×512 PNG (assets/app-icon.png is 1024×1024 and linuxdeploy rejects it).
-ICON_512="$ROOT/data/share/icons/hicolor/512x512/apps/maturita.png"
+ICON="$ROOT/data/share/icons/hicolor/512x512/apps/maturita.png"
+IMAGE="$ROOT/android/desktop/build/compose/binaries/main-release/app/graduately"
 
-echo "==> Building graduately"
-make -C "$ROOT" clean
-make -C "$ROOT"
+echo "==> Building the desktop app"
+(cd android && ./gradlew :desktop:createReleaseDistributable --no-daemon)
 
 echo "==> Preparing AppDir"
 rm -rf "$APPDIR"
-mkdir -p "$APPDIR/usr/bin" \
-         "$APPDIR/usr/share/applications" \
-         "$APPDIR/usr/share/icons/hicolor/512x512/apps" \
-         "$APPDIR/icons/hicolor/512x512/apps" \
-         "$APPDIR/share"
+mkdir -p "$APPDIR/usr/share/icons/hicolor/512x512/apps" "$APPDIR/usr/share/applications"
+cp -R "$IMAGE" "$APPDIR/graduately"
+cp -f "$ICON" "$APPDIR/maturita.png"
+cp -f "$ICON" "$APPDIR/.DirIcon"
+cp -f "$ICON" "$APPDIR/usr/share/icons/hicolor/512x512/apps/maturita.png"
 
-cp -f "$ROOT/graduately" "$APPDIR/usr/bin/graduately"
-cp -f "$ROOT/data/style.css" "$APPDIR/style.css"
-cp -f "$ROOT/data/changelog.txt" "$APPDIR/changelog.txt"
-cp -f "$ICON_512" "$APPDIR/icons/hicolor/512x512/apps/maturita.png"
-cp -f "$ICON_512" "$APPDIR/usr/share/icons/hicolor/512x512/apps/maturita.png"
-cp -f "$ICON_512" "$APPDIR/maturita.png"
-cp -R "$ROOT/data/share/." "$APPDIR/share/"
-cp -R "$ROOT/data/share/." "$APPDIR/usr/share/"
-cp -f "$ROOT/data/share/applications/org.maturita.Maturita.desktop" \
-   "$APPDIR/usr/share/applications/org.maturita.Maturita.desktop"
-# AppImage desktop entry must live at AppDir root and Exec= must be AppRun-compatible.
-cp -f "$ROOT/data/share/applications/org.maturita.Maturita.desktop" \
-   "$APPDIR/org.maturita.Maturita.desktop"
-# linuxdeploy expects Icon= without path and a matching PNG at AppDir root.
-sed -i.bak 's|^Exec=.*|Exec=graduately|' "$APPDIR/org.maturita.Maturita.desktop"
-sed -i.bak 's|^Icon=.*|Icon=maturita|' "$APPDIR/org.maturita.Maturita.desktop"
-rm -f "$APPDIR/org.maturita.Maturita.desktop.bak"
+cat > "$APPDIR/AppRun" <<'EOF'
+#!/bin/sh
+HERE="$(dirname "$(readlink -f "$0")")"
+exec "$HERE/graduately/bin/graduately" "$@"
+EOF
+chmod +x "$APPDIR/AppRun"
 
-mkdir -p "$TOOLS"
-LINUXDEPLOY="$TOOLS/linuxdeploy-${ARCH}.AppImage"
-GTK_PLUGIN="$TOOLS/linuxdeploy-plugin-gtk.sh"
+DESKTOP="$ROOT/data/share/applications/org.maturita.Maturita.desktop"
+cp -f "$DESKTOP" "$APPDIR/org.maturita.Maturita.desktop"
+cp -f "$DESKTOP" "$APPDIR/usr/share/applications/org.maturita.Maturita.desktop"
 
-if [[ ! -x "$LINUXDEPLOY" ]]; then
-  echo "==> Downloading linuxdeploy"
-  curl -fsSL -o "$LINUXDEPLOY" \
-    "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-${ARCH}.AppImage"
-  chmod +x "$LINUXDEPLOY"
-fi
-if [[ ! -f "$GTK_PLUGIN" ]]; then
-  echo "==> Downloading linuxdeploy-plugin-gtk"
-  curl -fsSL -o "$GTK_PLUGIN" \
-    "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh"
-  chmod +x "$GTK_PLUGIN"
+TOOL="$TOOLS/appimagetool-${ARCH}.AppImage"
+if [[ ! -x "$TOOL" ]]; then
+  echo "==> Downloading appimagetool"
+  mkdir -p "$TOOLS"
+  curl -fsSL -o "$TOOL" \
+    "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${ARCH}.AppImage"
+  chmod +x "$TOOL"
 fi
 
-# Extract linuxdeploy if FUSE is unavailable (common on CI).
-run_linuxdeploy() {
-  if "$LINUXDEPLOY" --appimage-help >/dev/null 2>&1; then
-    "$LINUXDEPLOY" "$@"
-  else
-    local extract_dir="$TOOLS/linuxdeploy-extracted"
-    rm -rf "$extract_dir"
-    cd "$TOOLS"
-    "$LINUXDEPLOY" --appimage-extract >/dev/null
-    mv squashfs-root "$extract_dir"
-    cd "$ROOT"
-    "$extract_dir/AppRun" "$@"
-  fi
-}
-
-echo "==> Bundling GTK libraries into AppDir"
-export LDAI_OUTPUT="$ROOT/dist/$OUT_NAME"
-export LINUXDEPLOY_OUTPUT_VERSION="${VERSION:-continuous}"
-# Place plugin on PATH so linuxdeploy can find it.
-export PATH="$TOOLS:$PATH"
-
-run_linuxdeploy \
-  --appdir "$APPDIR" \
-  --executable "$APPDIR/usr/bin/graduately" \
-  --desktop-file "$APPDIR/org.maturita.Maturita.desktop" \
-  --icon-file "$APPDIR/maturita.png" \
-  --plugin gtk \
-  --output appimage
-
-# linuxdeploy may write the AppImage into the cwd under another name;
-# only rename when it is not already at the expected path (mv same→same
-# fails under `set -e` and was aborting an otherwise successful build).
-DEST="$ROOT/dist/$OUT_NAME"
-if [[ ! -f "$DEST" ]]; then
-  shopt -s nullglob
-  for f in "$ROOT"/*.AppImage "$ROOT/dist"/*.AppImage; do
-    case "$(basename "$f")" in
-      linuxdeploy*|appimagetool*) continue ;;
-    esac
-    mv -f "$f" "$DEST"
-    break
-  done
-  shopt -u nullglob
-fi
-
-if [[ ! -f "$DEST" ]]; then
-  echo "AppImage was not created" >&2
-  find "$ROOT" "$ROOT/dist" -maxdepth 2 -name '*.AppImage' -print >&2 || true
-  exit 1
-fi
-
-chmod +x "$DEST"
-echo "Created dist/$OUT_NAME"
+echo "==> Building AppImage"
+rm -f "$OUT"
+# CI runners have no FUSE; extract-and-run avoids needing it.
+APPIMAGE_EXTRACT_AND_RUN=1 ARCH="$ARCH" "$TOOL" --no-appstream "$APPDIR" "$OUT"
+chmod +x "$OUT"
+echo "Created ${OUT#"$ROOT"/}"

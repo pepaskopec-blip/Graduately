@@ -66,6 +66,9 @@ android {
         compose = true
         buildConfig = true
     }
+
+    // UI, data and navigation shared with the desktop app (../desktop).
+    sourceSets.getByName("main").kotlin.directories.add("../shared/src")
 }
 
 kotlin {
@@ -88,13 +91,14 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 }
 
-val extractContent = tasks.register<Exec>("extractContent") {
+val buildContent = tasks.register<Exec>("buildContent") {
     workingDir = rootProject.projectDir.parentFile
-    commandLine("python3", "scripts/extract-android-content.py")
-    inputs.dir(rootProject.projectDir.parentFile.resolve("src"))
+    commandLine("python3", "scripts/build-content.py")
+    inputs.dir(rootProject.projectDir.parentFile.resolve("content"))
+    inputs.file(rootProject.projectDir.parentFile.resolve("scripts/build-content.py"))
     outputs.file(file("src/main/assets/content.json"))
 }
 
 tasks.named("preBuild").configure {
-    dependsOn(extractContent)
+    dependsOn(buildContent)
 }

@@ -1,9 +1,28 @@
 package org.maturita.maturita.data
 
-import android.content.Context
+import org.maturita.maturita.platform.Prefs
 
-class ProgressStore(context: Context) {
-    private val prefs = context.getSharedPreferences("maturita", Context.MODE_PRIVATE)
+class ProgressStore(private val prefs: Prefs, content: Content) {
+    private val ids = content.progressKeys
+
+    init {
+        migrate(content.progressLegacy)
+    }
+
+    /** Progress is stored under each lesson's id from content/, so lessons can be
+     *  reordered or renamed without losing it. `address` is the in-app position. */
+    private fun key(address: String) = "done." + (ids[address] ?: address)
+    private fun done(address: String) = prefs.getBoolean(key(address), false)
+    private fun mark(address: String) { prefs.edit().putBoolean(key(address), true).apply() }
+
+    private fun migrate(legacy: Map<String, String>) {
+        if (prefs.getBoolean("progress_ids_v2", false)) return
+        val edit = prefs.edit()
+        for ((old, id) in legacy) {
+            if (prefs.getBoolean(old, false)) edit.putBoolean("done.$id", true)
+        }
+        edit.putBoolean("progress_ids_v2", true).apply()
+    }
 
     var themeId: ThemeId
         get() = ThemeId.entries.getOrElse(prefs.getInt("theme", 0)) { ThemeId.Catppuccin }
@@ -21,75 +40,75 @@ class ProgressStore(context: Context) {
         get() = prefs.getString("seen_commit", "") ?: ""
         set(v) { prefs.edit().putString("seen_commit", v).apply() }
 
-    fun germanDone(unit: Int, ex: Int) = prefs.getBoolean("g.$unit.$ex", false)
-    fun markGerman(unit: Int, ex: Int) { prefs.edit().putBoolean("g.$unit.$ex", true).apply() }
-    fun vocabDone(unit: Int) = prefs.getBoolean("g.$unit.vocab", false)
-    fun markVocab(unit: Int) { prefs.edit().putBoolean("g.$unit.vocab", true).apply() }
+    fun germanDone(unit: Int, ex: Int) = done("g.$unit.$ex")
+    fun markGerman(unit: Int, ex: Int) { mark("g.$unit.$ex") }
+    fun vocabDone(unit: Int) = done("g.$unit.vocab")
+    fun markVocab(unit: Int) { mark("g.$unit.vocab") }
 
-    fun netDone(id: Int) = prefs.getBoolean("net.$id", false)
-    fun markNet(id: Int) { prefs.edit().putBoolean("net.$id", true).apply() }
+    fun netDone(id: Int) = done("net.$id")
+    fun markNet(id: Int) { mark("net.$id") }
 
-    fun hwDone(id: Int) = prefs.getBoolean("hw.$id", false)
-    fun markHw(id: Int) { prefs.edit().putBoolean("hw.$id", true).apply() }
+    fun hwDone(id: Int) = done("hw.$id")
+    fun markHw(id: Int) { mark("hw.$id") }
 
-    fun onDone(id: Int) = prefs.getBoolean("on.$id", false)
-    fun markOn(id: Int) { prefs.edit().putBoolean("on.$id", true).apply() }
+    fun onDone(id: Int) = done("on.$id")
+    fun markOn(id: Int) { mark("on.$id") }
 
-    fun on2Done(id: Int) = prefs.getBoolean("on2.$id", false)
-    fun markOn2(id: Int) { prefs.edit().putBoolean("on2.$id", true).apply() }
+    fun on2Done(id: Int) = done("on2.$id")
+    fun markOn2(id: Int) { mark("on2.$id") }
 
-    fun on3Done(id: Int) = prefs.getBoolean("on3.$id", false)
-    fun markOn3(id: Int) { prefs.edit().putBoolean("on3.$id", true).apply() }
+    fun on3Done(id: Int) = done("on3.$id")
+    fun markOn3(id: Int) { mark("on3.$id") }
 
-    fun on4Done(id: Int) = prefs.getBoolean("on4.$id", false)
-    fun markOn4(id: Int) { prefs.edit().putBoolean("on4.$id", true).apply() }
+    fun on4Done(id: Int) = done("on4.$id")
+    fun markOn4(id: Int) { mark("on4.$id") }
 
-    fun enDone(year: Int, id: Int) = prefs.getBoolean("en.$year.$id", false)
-    fun markEn(year: Int, id: Int) { prefs.edit().putBoolean("en.$year.$id", true).apply() }
-    fun deDone(year: Int, id: Int) = prefs.getBoolean("de.$year.$id", false)
-    fun markDe(year: Int, id: Int) { prefs.edit().putBoolean("de.$year.$id", true).apply() }
-    fun courseDone(course: String, id: Int) = prefs.getBoolean("$course.$id", false)
-    fun markCourse(course: String, id: Int) { prefs.edit().putBoolean("$course.$id", true).apply() }
+    fun enDone(year: Int, id: Int) = done("en.$year.$id")
+    fun markEn(year: Int, id: Int) { mark("en.$year.$id") }
+    fun deDone(year: Int, id: Int) = done("de.$year.$id")
+    fun markDe(year: Int, id: Int) { mark("de.$year.$id") }
+    fun courseDone(course: String, id: Int) = done("$course.$id")
+    fun markCourse(course: String, id: Int) { mark("$course.$id") }
 
-    fun litDone(id: Int) = prefs.getBoolean("lit.$id", false)
-    fun markLit(id: Int) { prefs.edit().putBoolean("lit.$id", true).apply() }
-    fun lit2Done(id: Int) = prefs.getBoolean("lit2.$id", false)
-    fun markLit2(id: Int) { prefs.edit().putBoolean("lit2.$id", true).apply() }
-    fun lit3Done(id: Int) = prefs.getBoolean("lit3.$id", false)
-    fun markLit3(id: Int) { prefs.edit().putBoolean("lit3.$id", true).apply() }
-    fun lit4Done(id: Int) = prefs.getBoolean("lit4.$id", false)
-    fun markLit4(id: Int) { prefs.edit().putBoolean("lit4.$id", true).apply() }
+    fun litDone(id: Int) = done("lit.$id")
+    fun markLit(id: Int) { mark("lit.$id") }
+    fun lit2Done(id: Int) = done("lit2.$id")
+    fun markLit2(id: Int) { mark("lit2.$id") }
+    fun lit3Done(id: Int) = done("lit3.$id")
+    fun markLit3(id: Int) { mark("lit3.$id") }
+    fun lit4Done(id: Int) = done("lit4.$id")
+    fun markLit4(id: Int) { mark("lit4.$id") }
 
-    fun chemDone(id: Int) = prefs.getBoolean("chem.$id", false)
-    fun markChem(id: Int) { prefs.edit().putBoolean("chem.$id", true).apply() }
-    fun bioDone(id: Int) = prefs.getBoolean("bio.$id", false)
-    fun markBio(id: Int) { prefs.edit().putBoolean("bio.$id", true).apply() }
-    fun fyzDone(id: Int) = prefs.getBoolean("fyz.$id", false)
-    fun markFyz(id: Int) { prefs.edit().putBoolean("fyz.$id", true).apply() }
-    fun fyz2Done(id: Int) = prefs.getBoolean("fyz2.$id", false)
-    fun markFyz2(id: Int) { prefs.edit().putBoolean("fyz2.$id", true).apply() }
-    fun fyz3Done(id: Int) = prefs.getBoolean("fyz3.$id", false)
-    fun markFyz3(id: Int) { prefs.edit().putBoolean("fyz3.$id", true).apply() }
-    fun fyz4Done(id: Int) = prefs.getBoolean("fyz4.$id", false)
-    fun markFyz4(id: Int) { prefs.edit().putBoolean("fyz4.$id", true).apply() }
-    fun mat0Done(id: Int) = prefs.getBoolean("mat0.$id", false)
-    fun markMat0(id: Int) { prefs.edit().putBoolean("mat0.$id", true).apply() }
-    fun matDone(id: Int) = prefs.getBoolean("mat.$id", false)
-    fun markMat(id: Int) { prefs.edit().putBoolean("mat.$id", true).apply() }
-    fun mat2Done(id: Int) = prefs.getBoolean("mat2.$id", false)
-    fun markMat2(id: Int) { prefs.edit().putBoolean("mat2.$id", true).apply() }
-    fun mat3Done(id: Int) = prefs.getBoolean("mat3.$id", false)
-    fun markMat3(id: Int) { prefs.edit().putBoolean("mat3.$id", true).apply() }
-    fun mat4Done(id: Int) = prefs.getBoolean("mat4.$id", false)
-    fun markMat4(id: Int) { prefs.edit().putBoolean("mat4.$id", true).apply() }
+    fun chemDone(id: Int) = done("chem.$id")
+    fun markChem(id: Int) { mark("chem.$id") }
+    fun bioDone(id: Int) = done("bio.$id")
+    fun markBio(id: Int) { mark("bio.$id") }
+    fun fyzDone(id: Int) = done("fyz.$id")
+    fun markFyz(id: Int) { mark("fyz.$id") }
+    fun fyz2Done(id: Int) = done("fyz2.$id")
+    fun markFyz2(id: Int) { mark("fyz2.$id") }
+    fun fyz3Done(id: Int) = done("fyz3.$id")
+    fun markFyz3(id: Int) { mark("fyz3.$id") }
+    fun fyz4Done(id: Int) = done("fyz4.$id")
+    fun markFyz4(id: Int) { mark("fyz4.$id") }
+    fun mat0Done(id: Int) = done("mat0.$id")
+    fun markMat0(id: Int) { mark("mat0.$id") }
+    fun matDone(id: Int) = done("mat.$id")
+    fun markMat(id: Int) { mark("mat.$id") }
+    fun mat2Done(id: Int) = done("mat2.$id")
+    fun markMat2(id: Int) { mark("mat2.$id") }
+    fun mat3Done(id: Int) = done("mat3.$id")
+    fun markMat3(id: Int) { mark("mat3.$id") }
+    fun mat4Done(id: Int) = done("mat4.$id")
+    fun markMat4(id: Int) { mark("mat4.$id") }
 
-    fun mluvDone(n: Int) = prefs.getBoolean("mluv.$n", false)
-    fun markMluv(n: Int) { prefs.edit().putBoolean("mluv.$n", true).apply() }
+    fun mluvDone(n: Int) = done("mluv.$n")
+    fun markMluv(n: Int) { mark("mluv.$n") }
 
-    fun bookQuiz(id: String) = prefs.getBoolean("book.$id.quiz", false)
-    fun markBookQuiz(id: String) { prefs.edit().putBoolean("book.$id.quiz", true).apply() }
-    fun bookPlot(id: String) = prefs.getBoolean("book.$id.plot", false)
-    fun markBookPlot(id: String) { prefs.edit().putBoolean("book.$id.plot", true).apply() }
+    fun bookQuiz(id: String) = done("book.$id.quiz")
+    fun markBookQuiz(id: String) { mark("book.$id.quiz") }
+    fun bookPlot(id: String) = done("book.$id.plot")
+    fun markBookPlot(id: String) { mark("book.$id.plot") }
 }
 
 data class ProgressSum(var doneEx: Int = 0, var totalEx: Int = 0, var doneUnits: Int = 0, var openUnits: Int = 0)

@@ -1,6 +1,5 @@
 package org.maturita.maturita.data
 
-import android.content.Context
 import org.json.JSONObject
 
 class Content(root: JSONObject) {
@@ -65,6 +64,8 @@ class Content(root: JSONObject) {
     val mluvnice = raw.arr("mluvnice")
     val books = raw.arr("books")
     val changelog = raw.arr("changelog")
+    val progressKeys = stringMap(root.optJSONObject("progress")?.optJSONObject("keys"))
+    val progressLegacy = stringMap(root.optJSONObject("progress")?.optJSONObject("legacy"))
 
     fun germanUnit(id: Int) = german.firstOrNull { it.int("id") == id }
     fun netLesson(id: Int) = netLessons.firstOrNull { it.int("id") == id }
@@ -135,13 +136,13 @@ class Content(root: JSONObject) {
     }
 
     companion object {
-        fun load(context: Context): Content {
-            return try {
-                val text = context.assets.open("content.json").bufferedReader().use { it.readText() }
-                Content(JSONObject(text))
-            } catch (_: Exception) {
-                Content(JSONObject())
-            }
+        private fun stringMap(o: JSONObject?): Map<String, String> =
+            o?.keys()?.asSequence()?.associateWith { o.optString(it) } ?: emptyMap()
+
+        fun parse(text: String?): Content = try {
+            Content(JSONObject(text ?: "{}"))
+        } catch (_: Exception) {
+            Content(JSONObject())
         }
     }
 }

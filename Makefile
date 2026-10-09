@@ -1,111 +1,49 @@
-CC = gcc
+# Every app reads the lessons from content/ (built into content.json).
+#   Android, Linux, Windows: Kotlin + Compose in android/ (shared code in android/shared)
+#   iOS, macOS:              Swift + SwiftUI in ios/ and macos/
+#
+# Published builds pass COMMIT (the CI workflow exports it); the updaters
+# compare it against the build in the repository. Without it a build stays
+# "dev" and never offers an update.
 
-# Make sure pkg-config is found even when make runs with a minimal PATH
-# (e.g. launched from an IDE such as CLion on macOS).
-PKG_CONFIG ?= $(firstword $(wildcard \
-	$(addsuffix /pkg-config,$(subst :, ,$(PATH)) /opt/homebrew/bin /usr/local/bin)))
-ifeq ($(PKG_CONFIG),)
-PKG_CONFIG := pkg-config
-endif
+GRADLE = cd android && ./gradlew
 
-GTK_CFLAGS := $(shell $(PKG_CONFIG) --cflags gtk4)
-GTK_LIBS   := $(shell $(PKG_CONFIG) --libs gtk4)
+all: content
 
-SRC_DIR   := src
-DATA_DIR  := data
-BUILD_DIR := build
+content:
+	python3 scripts/build-content.py
 
-CFLAGS = -Wall -Wextra -Wno-deprecated-declarations -I$(SRC_DIR) \
-	-MMD -MP $(GTK_CFLAGS)
-LIBS = $(GTK_LIBS) -lm
+# Runs the desktop app from source on this machine (Linux, Windows or macOS).
+run:
+	$(GRADLE) :desktop:run
 
-# Published builds pass the commit they were made from (the CI workflow
-# exports it), which the updater compares against the build in the repository.
-# Without it the build keeps the "dev" default and never offers an update.
-COMMIT ?=
-ifneq ($(COMMIT),)
-CFLAGS += -DAPP_COMMIT='"$(COMMIT)"'
-endif
+# Answer checks shared by Kotlin and Swift (tests/answers.json), plus
+# progress migration and import of GTK progress.
+test:
+	$(GRADLE) :desktop:test
+	@if command -v xcrun >/dev/null 2>&1; then \
+	  chmod +x scripts/test-answers-swift.sh && ./scripts/test-answers-swift.sh; \
+	else \
+	  echo "Swift checks skipped (no Xcode)"; \
+	fi
 
-ifeq ($(OS),Windows_NT)
-TARGET = graduately.exe
-LIBS += -mwindows
-WINDRES ?= windres
-RC_SRC = $(DATA_DIR)/windows/maturita.rc
-RC_OBJ = $(BUILD_DIR)/maturita_rc.o
-UNAME_S :=
-else
-TARGET = graduately
-RC_SRC =
-RC_OBJ =
-UNAME_S := $(shell uname -s 2>/dev/null)
-ifeq ($(UNAME_S),Darwin)
-LIBS += -framework AppKit -framework Foundation
-endif
-endif
+android:
+	$(GRADLE) :app:assembleRelease
 
-SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC))
-DEP = $(OBJ:.o=.d)
+linux:
+	chmod +x scripts/bundle-linux.sh
+	./scripts/bundle-linux.sh
 
-ICON_DST = $(DATA_DIR)/share/icons/hicolor/512x512/apps/maturita.png
-ICON_ICO = assets/app-icon.ico
+windows:
+	bash scripts/bundle-windows.sh
 
-all: $(TARGET)
+ios:
+	chmod +x scripts/bundle-ios.sh
+	./scripts/bundle-ios.sh
 
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-ifeq ($(OS),Windows_NT)
-$(RC_OBJ): $(RC_SRC) $(ICON_ICO) | $(BUILD_DIR)
-	$(WINDRES) -I. -o $@ $<
-
-$(TARGET): $(OBJ) $(RC_OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(RC_OBJ) $(LIBS)
-else
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
-endif
-
-clean:
-	rm -f $(TARGET) graduately.exe maturita.exe maturita
-	rm -rf $(BUILD_DIR)
-
-run: $(TARGET)
-	./$(TARGET)
-
-ifeq ($(OS),Windows_NT)
-bundle: $(TARGET)
-	@rm -rf dist
-	@mkdir -p dist
-	@cp $(TARGET) dist/
-	@cp $(DATA_DIR)/style.css dist/
-	@cp $(DATA_DIR)/changelog.txt dist/
-	@mkdir -p dist/icons/hicolor/512x512/apps
-	@cp "$(ICON_DST)" dist/icons/hicolor/512x512/apps/
-	@cp -R $(DATA_DIR)/share dist/
-	@ldd $(TARGET) | grep -Ei '/(ucrt64|mingw64)/bin/' | awk '{print $$3}' \
-		| xargs -r -I{} cp -f {} dist/
-	@GTK_PREFIX="$$($(PKG_CONFIG) --variable=prefix gtk4)"; \
-	  if [ -d "$$GTK_PREFIX/share/glib-2.0" ]; then \
-	    mkdir -p dist/share && cp -R "$$GTK_PREFIX/share/glib-2.0" dist/share/; \
-	  fi; \
-	  if [ -d "$$GTK_PREFIX/lib/gdk-pixbuf-2.0" ]; then \
-	    mkdir -p dist/lib && cp -R "$$GTK_PREFIX/lib/gdk-pixbuf-2.0" dist/lib/; \
-	  fi
-	@echo "Bundled into dist/ - run dist/$(TARGET)"
-else ifeq ($(UNAME_S),Darwin)
-bundle:
-	@chmod +x scripts/bundle-macos-swift.sh
-	@./scripts/bundle-macos-swift.sh
-else
-bundle:
-	@chmod +x scripts/bundle-linux.sh
-	@./scripts/bundle-linux.sh
-endif
+macos:
+	chmod +x scripts/bundle-macos-swift.sh
+	./scripts/bundle-macos-swift.sh
 
 # Browsers render .command/.sh/.cmd as text/plain. Rebuild these zips after
 # changing a script so the README download links stay in sync. The macOS zip
@@ -118,18 +56,8 @@ smoke:
 	chmod +x scripts/smoke-platforms.sh
 	./scripts/smoke-platforms.sh
 
--include $(DEP)
+clean:
+	rm -rf build dist dist-android dist-ios
+	$(GRADLE) clean
 
-android:
-	python3 scripts/extract-android-content.py
-	cd android && ./gradlew :app:assembleRelease
-
-ios:
-	chmod +x scripts/bundle-ios.sh
-	./scripts/bundle-ios.sh
-
-macos:
-	chmod +x scripts/bundle-macos-swift.sh
-	./scripts/bundle-macos-swift.sh
-
-.PHONY: all clean run bundle installer-zips smoke android ios macos
+.PHONY: all content run test android linux windows ios macos installer-zips smoke clean

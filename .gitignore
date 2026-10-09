@@ -30,6 +30,7 @@ CLAUDE.md
 android/.gradle/
 android/build/
 android/app/build/
+android/desktop/build/
 android/local.properties
 android/.idea/
 android/*.iml

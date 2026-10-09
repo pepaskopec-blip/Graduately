@@ -37,16 +37,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.speech.tts.TextToSpeech
-import android.speech.tts.UtteranceProgressListener
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.platform.LocalContext
 import java.util.Locale
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -1423,18 +1417,9 @@ fun EngExScreen(
     var revealed by remember(year, id) { mutableStateOf(false) }
     var showModel by remember(year, id) { mutableStateOf(false) }
     var fb by remember(year, id) { mutableStateOf("" to "") }
-    val context = LocalContext.current
-    var tts by remember { mutableStateOf<TextToSpeech?>(null) }
-    DisposableEffect(context) {
-        var engine: TextToSpeech? = null
-        engine = TextToSpeech(context) { status ->
-            if (status == TextToSpeech.SUCCESS) engine?.language = locale
-        }
-        tts = engine
-        onDispose {
-            engine?.stop()
-            engine?.shutdown()
-        }
+    val tts = remember { vm.platform.speaker() }
+    DisposableEffect(tts) {
+        onDispose { tts?.close() }
     }
 
     fun picksOk(questions: List<J>, picks: List<Int>) =
@@ -1490,32 +1475,18 @@ fun EngExScreen(
                 val start = index.coerceIn(0, listening.length)
                 val id = "en-${System.nanoTime()}"
                 utterance = id
-                engine.language = locale
-                engine.setSpeechRate(speed)
-                engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-                    override fun onStart(utteranceId: String?) {}
-                    override fun onRangeStart(utteranceId: String?, rangeStart: Int, rangeEnd: Int, frame: Int) {
-                        if (utteranceId == id) cursor = start + rangeStart
-                    }
-                    override fun onDone(utteranceId: String?) {
-                        if (utteranceId != utterance) return
-                        Handler(Looper.getMainLooper()).post {
+                val rest = listening.substring(start).ifEmpty { listening }
+                engine.speak(
+                    rest, locale, speed, volume.coerceIn(0f, 1f),
+                    onRange = { offset -> if (utterance == id) cursor = start + offset },
+                    onEnd = { ok ->
+                        if (utterance == id) {
                             phase = 0
-                            cursor = 0
+                            if (ok) cursor = 0
                             showScript = true
                         }
-                    }
-                    @Deprecated("Deprecated in Java")
-                    override fun onError(utteranceId: String?) {
-                        if (utteranceId != utterance) return
-                        Handler(Looper.getMainLooper()).post { showScript = true; phase = 0 }
-                    }
-                })
-                val params = Bundle().apply {
-                    putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.coerceIn(0f, 1f))
-                }
-                val rest = listening.substring(start).ifEmpty { listening }
-                engine.speak(rest, TextToSpeech.QUEUE_FLUSH, params, id)
+                    },
+                )
                 phase = 1
             }
             Text(vm.tr("en_sec_listen"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))

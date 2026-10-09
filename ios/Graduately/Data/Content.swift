@@ -67,6 +67,8 @@ final class Content {
     let mluvnice: [J]
     let books: [J]
     let changelog: [J]
+    let progressKeys: [String: String]
+    let progressLegacy: [String: String]
 
     init(_ root: [String: Any]) {
         raw = J(root)
@@ -131,6 +133,9 @@ final class Content {
         mluvnice = raw.arr("mluvnice")
         books = raw.arr("books")
         changelog = raw.arr("changelog")
+        let progress = root["progress"] as? [String: Any]
+        progressKeys = progress?["keys"] as? [String: String] ?? [:]
+        progressLegacy = progress?["legacy"] as? [String: String] ?? [:]
     }
 
     func germanUnit(_ id: Int) -> J? { german.first { $0.int("id") == id } }

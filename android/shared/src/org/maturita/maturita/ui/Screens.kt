@@ -74,7 +74,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.maturita.maturita.AppViewModel
-import org.maturita.maturita.BuildConfig
 import org.maturita.maturita.Route
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.J
@@ -110,7 +109,7 @@ fun HomeScreen(vm: AppViewModel) {
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        vm.tr("welcome_body_android"),
+                        vm.tr(vm.platform.welcomeKey),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                     )
@@ -433,7 +432,7 @@ fun SettingsScreen(vm: AppViewModel) {
         item {
             ListItem(
                 headlineContent = { Text("Build") },
-                supportingContent = { Text("${BuildConfig.VERSION_NAME} · ${BuildConfig.COMMIT.take(7)}") },
+                supportingContent = { Text("${vm.platform.versionName} · ${vm.platform.commit.take(7)}") },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                 modifier = Modifier.padding(top = 8.dp),
             )

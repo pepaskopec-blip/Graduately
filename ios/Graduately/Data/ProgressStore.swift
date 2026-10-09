@@ -2,6 +2,26 @@ import Foundation
 
 final class ProgressStore {
     private let defaults = UserDefaults.standard
+    private let ids: [String: String]
+
+    init(content: Content) {
+        ids = content.progressKeys
+        migrate(content.progressLegacy)
+    }
+
+    /// Progress is stored under each lesson's id from content/, so lessons can be
+    /// reordered or renamed without losing it. `address` is the in-app position.
+    private func key(_ address: String) -> String { "done." + (ids[address] ?? address) }
+    private func done(_ address: String) -> Bool { defaults.bool(forKey: key(address)) }
+    private func mark(_ address: String) { defaults.set(true, forKey: key(address)) }
+
+    private func migrate(_ legacy: [String: String]) {
+        guard !defaults.bool(forKey: "progress_ids_v2") else { return }
+        for (old, id) in legacy where defaults.bool(forKey: old) {
+            defaults.set(true, forKey: "done." + id)
+        }
+        defaults.set(true, forKey: "progress_ids_v2")
+    }
 
     var themeId: ThemeId {
         get { ThemeId(rawValue: defaults.integer(forKey: "theme")) ?? .catppuccin }
@@ -23,75 +43,75 @@ final class ProgressStore {
         set { defaults.set(newValue, forKey: "seen_commit") }
     }
 
-    func germanDone(_ unit: Int, _ ex: Int) -> Bool { defaults.bool(forKey: "g.\(unit).\(ex)") }
-    func markGerman(_ unit: Int, _ ex: Int) { defaults.set(true, forKey: "g.\(unit).\(ex)") }
-    func vocabDone(_ unit: Int) -> Bool { defaults.bool(forKey: "g.\(unit).vocab") }
-    func markVocab(_ unit: Int) { defaults.set(true, forKey: "g.\(unit).vocab") }
+    func germanDone(_ unit: Int, _ ex: Int) -> Bool { done("g.\(unit).\(ex)") }
+    func markGerman(_ unit: Int, _ ex: Int) { mark("g.\(unit).\(ex)") }
+    func vocabDone(_ unit: Int) -> Bool { done("g.\(unit).vocab") }
+    func markVocab(_ unit: Int) { mark("g.\(unit).vocab") }
 
-    func netDone(_ id: Int) -> Bool { defaults.bool(forKey: "net.\(id)") }
-    func markNet(_ id: Int) { defaults.set(true, forKey: "net.\(id)") }
+    func netDone(_ id: Int) -> Bool { done("net.\(id)") }
+    func markNet(_ id: Int) { mark("net.\(id)") }
 
-    func hwDone(_ id: Int) -> Bool { defaults.bool(forKey: "hw.\(id)") }
-    func markHw(_ id: Int) { defaults.set(true, forKey: "hw.\(id)") }
+    func hwDone(_ id: Int) -> Bool { done("hw.\(id)") }
+    func markHw(_ id: Int) { mark("hw.\(id)") }
 
-    func onDone(_ id: Int) -> Bool { defaults.bool(forKey: "on.\(id)") }
-    func markOn(_ id: Int) { defaults.set(true, forKey: "on.\(id)") }
+    func onDone(_ id: Int) -> Bool { done("on.\(id)") }
+    func markOn(_ id: Int) { mark("on.\(id)") }
 
-    func on2Done(_ id: Int) -> Bool { defaults.bool(forKey: "on2.\(id)") }
-    func markOn2(_ id: Int) { defaults.set(true, forKey: "on2.\(id)") }
+    func on2Done(_ id: Int) -> Bool { done("on2.\(id)") }
+    func markOn2(_ id: Int) { mark("on2.\(id)") }
 
-    func on3Done(_ id: Int) -> Bool { defaults.bool(forKey: "on3.\(id)") }
-    func markOn3(_ id: Int) { defaults.set(true, forKey: "on3.\(id)") }
+    func on3Done(_ id: Int) -> Bool { done("on3.\(id)") }
+    func markOn3(_ id: Int) { mark("on3.\(id)") }
 
-    func on4Done(_ id: Int) -> Bool { defaults.bool(forKey: "on4.\(id)") }
-    func markOn4(_ id: Int) { defaults.set(true, forKey: "on4.\(id)") }
+    func on4Done(_ id: Int) -> Bool { done("on4.\(id)") }
+    func markOn4(_ id: Int) { mark("on4.\(id)") }
 
-    func enDone(_ year: Int, _ id: Int) -> Bool { defaults.bool(forKey: "en.\(year).\(id)") }
-    func markEn(_ year: Int, _ id: Int) { defaults.set(true, forKey: "en.\(year).\(id)") }
-    func deDone(_ year: Int, _ id: Int) -> Bool { defaults.bool(forKey: "de.\(year).\(id)") }
-    func markDe(_ year: Int, _ id: Int) { defaults.set(true, forKey: "de.\(year).\(id)") }
-    func courseDone(_ course: String, _ id: Int) -> Bool { defaults.bool(forKey: "\(course).\(id)") }
-    func markCourse(_ course: String, _ id: Int) { defaults.set(true, forKey: "\(course).\(id)") }
+    func enDone(_ year: Int, _ id: Int) -> Bool { done("en.\(year).\(id)") }
+    func markEn(_ year: Int, _ id: Int) { mark("en.\(year).\(id)") }
+    func deDone(_ year: Int, _ id: Int) -> Bool { done("de.\(year).\(id)") }
+    func markDe(_ year: Int, _ id: Int) { mark("de.\(year).\(id)") }
+    func courseDone(_ course: String, _ id: Int) -> Bool { done("\(course).\(id)") }
+    func markCourse(_ course: String, _ id: Int) { mark("\(course).\(id)") }
 
-    func litDone(_ id: Int) -> Bool { defaults.bool(forKey: "lit.\(id)") }
-    func markLit(_ id: Int) { defaults.set(true, forKey: "lit.\(id)") }
-    func lit2Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit2.\(id)") }
-    func markLit2(_ id: Int) { defaults.set(true, forKey: "lit2.\(id)") }
-    func lit3Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit3.\(id)") }
-    func markLit3(_ id: Int) { defaults.set(true, forKey: "lit3.\(id)") }
-    func lit4Done(_ id: Int) -> Bool { defaults.bool(forKey: "lit4.\(id)") }
-    func markLit4(_ id: Int) { defaults.set(true, forKey: "lit4.\(id)") }
+    func litDone(_ id: Int) -> Bool { done("lit.\(id)") }
+    func markLit(_ id: Int) { mark("lit.\(id)") }
+    func lit2Done(_ id: Int) -> Bool { done("lit2.\(id)") }
+    func markLit2(_ id: Int) { mark("lit2.\(id)") }
+    func lit3Done(_ id: Int) -> Bool { done("lit3.\(id)") }
+    func markLit3(_ id: Int) { mark("lit3.\(id)") }
+    func lit4Done(_ id: Int) -> Bool { done("lit4.\(id)") }
+    func markLit4(_ id: Int) { mark("lit4.\(id)") }
 
-    func chemDone(_ id: Int) -> Bool { defaults.bool(forKey: "chem.\(id)") }
-    func markChem(_ id: Int) { defaults.set(true, forKey: "chem.\(id)") }
-    func bioDone(_ id: Int) -> Bool { defaults.bool(forKey: "bio.\(id)") }
-    func markBio(_ id: Int) { defaults.set(true, forKey: "bio.\(id)") }
-    func fyzDone(_ id: Int) -> Bool { defaults.bool(forKey: "fyz.\(id)") }
-    func markFyz(_ id: Int) { defaults.set(true, forKey: "fyz.\(id)") }
-    func fyz2Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz2.\(id)") }
-    func markFyz2(_ id: Int) { defaults.set(true, forKey: "fyz2.\(id)") }
-    func fyz3Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz3.\(id)") }
-    func markFyz3(_ id: Int) { defaults.set(true, forKey: "fyz3.\(id)") }
-    func fyz4Done(_ id: Int) -> Bool { defaults.bool(forKey: "fyz4.\(id)") }
-    func markFyz4(_ id: Int) { defaults.set(true, forKey: "fyz4.\(id)") }
-    func mat0Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat0.\(id)") }
-    func markMat0(_ id: Int) { defaults.set(true, forKey: "mat0.\(id)") }
-    func matDone(_ id: Int) -> Bool { defaults.bool(forKey: "mat.\(id)") }
-    func markMat(_ id: Int) { defaults.set(true, forKey: "mat.\(id)") }
-    func mat2Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat2.\(id)") }
-    func markMat2(_ id: Int) { defaults.set(true, forKey: "mat2.\(id)") }
-    func mat3Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat3.\(id)") }
-    func markMat3(_ id: Int) { defaults.set(true, forKey: "mat3.\(id)") }
-    func mat4Done(_ id: Int) -> Bool { defaults.bool(forKey: "mat4.\(id)") }
-    func markMat4(_ id: Int) { defaults.set(true, forKey: "mat4.\(id)") }
+    func chemDone(_ id: Int) -> Bool { done("chem.\(id)") }
+    func markChem(_ id: Int) { mark("chem.\(id)") }
+    func bioDone(_ id: Int) -> Bool { done("bio.\(id)") }
+    func markBio(_ id: Int) { mark("bio.\(id)") }
+    func fyzDone(_ id: Int) -> Bool { done("fyz.\(id)") }
+    func markFyz(_ id: Int) { mark("fyz.\(id)") }
+    func fyz2Done(_ id: Int) -> Bool { done("fyz2.\(id)") }
+    func markFyz2(_ id: Int) { mark("fyz2.\(id)") }
+    func fyz3Done(_ id: Int) -> Bool { done("fyz3.\(id)") }
+    func markFyz3(_ id: Int) { mark("fyz3.\(id)") }
+    func fyz4Done(_ id: Int) -> Bool { done("fyz4.\(id)") }
+    func markFyz4(_ id: Int) { mark("fyz4.\(id)") }
+    func mat0Done(_ id: Int) -> Bool { done("mat0.\(id)") }
+    func markMat0(_ id: Int) { mark("mat0.\(id)") }
+    func matDone(_ id: Int) -> Bool { done("mat.\(id)") }
+    func markMat(_ id: Int) { mark("mat.\(id)") }
+    func mat2Done(_ id: Int) -> Bool { done("mat2.\(id)") }
+    func markMat2(_ id: Int) { mark("mat2.\(id)") }
+    func mat3Done(_ id: Int) -> Bool { done("mat3.\(id)") }
+    func markMat3(_ id: Int) { mark("mat3.\(id)") }
+    func mat4Done(_ id: Int) -> Bool { done("mat4.\(id)") }
+    func markMat4(_ id: Int) { mark("mat4.\(id)") }
 
-    func mluvDone(_ n: Int) -> Bool { defaults.bool(forKey: "mluv.\(n)") }
-    func markMluv(_ n: Int) { defaults.set(true, forKey: "mluv.\(n)") }
+    func mluvDone(_ n: Int) -> Bool { done("mluv.\(n)") }
+    func markMluv(_ n: Int) { mark("mluv.\(n)") }
 
-    func bookQuiz(_ id: String) -> Bool { defaults.bool(forKey: "book.\(id).quiz") }
-    func markBookQuiz(_ id: String) { defaults.set(true, forKey: "book.\(id).quiz") }
-    func bookPlot(_ id: String) -> Bool { defaults.bool(forKey: "book.\(id).plot") }
-    func markBookPlot(_ id: String) { defaults.set(true, forKey: "book.\(id).plot") }
+    func bookQuiz(_ id: String) -> Bool { done("book.\(id).quiz") }
+    func markBookQuiz(_ id: String) { mark("book.\(id).quiz") }
+    func bookPlot(_ id: String) -> Bool { done("book.\(id).plot") }
+    func markBookPlot(_ id: String) { mark("book.\(id).plot") }
 }
 
 struct ProgressSum {

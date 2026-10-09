@@ -1,0 +1,104 @@
+{
+  "_about": "Answer checking cases shared by the Swift (iOS, macOS) and Kotlin (Android, desktop) apps. Both must agree with every line. Run with `make test`.",
+  "normalize": [
+    ["Größe", "groesse"],
+    ["Über", "ueber"],
+    ["  Hallo,   Welt! ", "hallo welt"],
+    ["Příliš žluťoučký kůň", "prilis zlutoucky kun"],
+    ["a\tb\nc", "a b c"],
+    ["e-mail", "email"],
+    ["a , b", "a b"],
+    ["", ""]
+  ],
+  "accepts": [
+    ["Deutschland", "deutschland|eutschland", true],
+    ["Osterreich", "österreich|osterreich", true],
+    ["Oesterreich", "österreich", true],
+    ["hasnt", "hasn't|has not", true],
+    ["has  not", "hasn't|has not", true],
+    ["Seděla", "seděla|sedla", true],
+    ["sedela", "seděla|sedla", true],
+    ["is", "are", false],
+    ["", "", false],
+    ["x", null, false]
+  ],
+  "incomplete": [
+    ["der", "der Vater", true],
+    ["der vater", "der Vater", false],
+    ["", "der Vater", false],
+    ["die", "der Vater|die Mutter", true]
+  ],
+  "netTxtEq": [
+    ["10.0.0.0", " 10.0.0.0 ", true],
+    ["ABC", "abc", true],
+    ["10.0.0.1", "10.0.0.2", false],
+    [null, null, true],
+    ["a", null, false]
+  ],
+  "hasUmlaut": [
+    ["Mädchen", true],
+    ["Straße", true],
+    ["Strasse", false],
+    [null, false]
+  ],
+  "math": [
+    ["num:12", "12", true],
+    ["num:12", "12.0", true],
+    ["num:12", "12,0", true],
+    ["num:12", "12 cm", true],
+    ["num:12", "13", false],
+    ["num:12", "", false],
+    ["num:12", "abc", false],
+    ["num:1/2", "0,5", true],
+    ["num:1/2", "2/4", true],
+    ["num:1/2", "1/3", false],
+    ["num:3/2", "1 1/2", true],
+    ["num:-3", "−3", true],
+    ["num:50", "50 %", true],
+    ["num:2√3", "√12", true],
+    ["num:2√3", "sqrt(12)", true],
+    ["num:2√3", "3.4641", true],
+    ["num:2√3", "3.46", false],
+    ["num:2π", "2pi", true],
+    ["num:2π", "6.283", false],
+    ["set:2;3", "3; 2", true],
+    ["set:2;3", "2, 3", true],
+    ["set:2;3", "2;3;4", false],
+    ["set:2;3", "2", false],
+    ["pair:2;-1", "2; -1", true],
+    ["pair:2;-1", "-1; 2", false],
+    ["word:ano|yes", "Ano", true],
+    ["word:ano|yes", "áno", true],
+    ["word:ano|yes", "ne", false],
+    [null, "1", false]
+  ],
+  "drawNeed": [
+    ["square:2,3;5,3", 2],
+    ["mid:0,0;4,4", 1],
+    ["points:1,4;fix:1,1;fix:5,1", 1],
+    ["num:3", 0]
+  ],
+  "drawGiven": [
+    ["points:1,4;fix:1,1;fix:5,1", [[1, 1], [5, 1]]],
+    ["mid:0,0;4,4", [[0, 0], [4, 4]]],
+    ["para:0,0;2,0;0,2", [[0, 0], [2, 0], [0, 2]]],
+    ["num:3", []]
+  ],
+  "draw": [
+    ["mid:0,0;4,4", [[2, 2]], true],
+    ["mid:0,0;4,4", [[2, 3]], false],
+    ["mid:0,0;3,4", [[1, 2]], false],
+    ["para:0,0;2,0;0,2", [[2, 2]], true],
+    ["para:0,0;2,0;0,2", [[2, 1]], false],
+    ["right:2,4;8,4", [[5, 1]], true],
+    ["right:2,4;8,4", [[5, 4]], false],
+    ["square:2,3;5,3", [[5, 6], [2, 6]], true],
+    ["square:2,3;5,3", [[2, 6], [5, 6]], true],
+    ["square:2,3;5,3", [[5, 0], [2, 0]], true],
+    ["square:2,3;5,3", [[5, 5], [2, 5]], false],
+    ["points:1,4;fix:1,1", [[1, 4]], true],
+    ["points:1,4;fix:1,1", [[1, 5]], false],
+    ["points:1,4;fix:1,1", [[11, 0]], false],
+    ["num:3", [], false]
+  ]
+}

@@ -9,18 +9,12 @@ import android.os.Looper
 import android.provider.Settings
 import androidx.core.content.FileProvider
 import org.maturita.maturita.BuildConfig
+import org.maturita.maturita.platform.AppUpdater
+import org.maturita.maturita.platform.UpdateState
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.Executors
-
-data class UpdateState(
-    val status: String = "idle",
-    val remote: String? = null,
-    val messageKey: String = "update_current",
-    val messageArg: String? = BuildConfig.COMMIT.take(7),
-    val canInstall: Boolean = false,
-)
 
 /**
  * Self-update from the `builds` branch. CI rewrites that branch on every
@@ -28,7 +22,7 @@ data class UpdateState(
  * signed with the repository's sideload key, so Android accepts it as an
  * update over any earlier build signed the same way.
  */
-class Updater(private val app: Application) {
+class Updater(private val app: Application) : AppUpdater {
     private val io = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
     private val repo = BuildConfig.UPDATE_REPO
@@ -38,7 +32,7 @@ class Updater(private val app: Application) {
         main.post { cb(state) }
     }
 
-    fun check(interactive: Boolean, cb: (UpdateState) -> Unit) {
+    override fun check(interactive: Boolean, cb: (UpdateState) -> Unit) {
         if (BuildConfig.COMMIT == "dev") {
             emit(cb, UpdateState(status = "dev", messageKey = "update_err_devbuild", messageArg = null))
             return
@@ -63,7 +57,7 @@ class Updater(private val app: Application) {
         }
     }
 
-    fun install(cb: (UpdateState) -> Unit) {
+    override fun install(cb: (UpdateState) -> Unit) {
         // Android 8+ needs a per-app opt-in before we may hand an APK to the
         // package installer. Send the user there and keep the Update button
         // so the second tap goes straight to the download.

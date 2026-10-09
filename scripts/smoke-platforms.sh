@@ -32,9 +32,9 @@ expect_zip installers/graduately-installer-windows.zip "graduately-installer-win
 expect_zip installers/graduately-installer-android.zip "Stahnout Graduately.html"
 expect_zip installers/graduately-installer-ios.zip "Jak nainstalovat Graduately.html"
 
-say "Extract content.json"
+say "Build content.json"
 tmp=$(mktemp)
-python3 scripts/extract-android-content.py --out "$tmp" >/dev/null
+python3 scripts/build-content.py --out "$tmp" >/dev/null
 python3 - "$tmp" <<'PY'
 import json, sys
 path = sys.argv[1]
@@ -54,15 +54,18 @@ PY
 ok "content packs"
 rm -f "$tmp"
 
-say "GTK binary"
-if [[ -x ./graduately ]]; then
-  ./graduately --help >/dev/null
-  ok "graduately --help"
+say "Answer checks"
+if (cd android && ./gradlew -q :desktop:test); then
+  ok "Kotlin"
 else
-  say "Building GTK binary"
-  make -j"$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 2)"
-  ./graduately --help >/dev/null
-  ok "graduately --help after make"
+  bad "Kotlin answer checks"
+fi
+if command -v xcrun >/dev/null 2>&1; then
+  if ./scripts/test-answers-swift.sh >/dev/null; then
+    ok "Swift"
+  else
+    bad "Swift answer checks"
+  fi
 fi
 
 say "Published builds tip"

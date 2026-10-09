@@ -1,24 +1,22 @@
 package org.maturita.maturita
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Content
 import org.maturita.maturita.data.ProgressStore
 import org.maturita.maturita.data.ThemeId
 import org.maturita.maturita.data.UiLang
 import org.maturita.maturita.data.themePalette
-import org.maturita.maturita.update.UpdateState
-import org.maturita.maturita.update.Updater
+import org.maturita.maturita.platform.Platform
+import org.maturita.maturita.platform.UpdateState
 
-class AppViewModel(app: Application) : AndroidViewModel(app) {
-    val content = Content.load(app)
-    val progress = ProgressStore(app)
-    val updater = Updater(app)
+/** App state shared by every platform; the platform only supplies [Platform]. */
+class AppViewModel(val content: Content, val platform: Platform) {
+    val progress = ProgressStore(platform.prefs, content)
+    private val updater = platform.updater
 
     var themeId by mutableStateOf(progress.themeId)
         private set
@@ -30,7 +28,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     var searchQuery by mutableStateOf("")
     var tick by mutableStateOf(0)
         private set
-    var update by mutableStateOf(UpdateState())
+    var update by mutableStateOf(UpdateState(messageArg = platform.commit.take(7)))
         private set
     var showChangelog by mutableStateOf(shouldShowChangelog())
         private set
@@ -268,13 +266,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun dismissChangelog() {
-        progress.seenCommit = BuildConfig.COMMIT
+        progress.seenCommit = platform.commit
         showChangelog = false
     }
 
     private fun shouldShowChangelog(): Boolean {
         if (content.changelog.isEmpty()) return false
-        return !sameBuild(BuildConfig.COMMIT, progress.seenCommit)
+        return !sameBuild(platform.commit, progress.seenCommit)
     }
 }
 

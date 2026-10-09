@@ -54,8 +54,10 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 - [graduately-android.apk](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/graduately-android.apk)
 - [graduately-ios.ipa](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/graduately-ios.ipa)
 
-Postup a nastavení se ukládají vedle `.app` / složky / AppImage do `progress/`.
-Na Androidu, iOS a macOS do úložiště aplikace (stejné statistiky, témata a jazyk).
+Na Linuxu a Windows se postup a nastavení ukládají do `progress/` vedle
+AppImage / ve složce aplikace; postup ze starší GTK verze se při prvním
+spuštění převezme. Na Androidu, iOS a macOS do úložiště aplikace (stejné
+statistiky, témata a jazyk).
 
 Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#sestavení-ze-zdroje).
 
@@ -84,7 +86,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Angličtina** — 4 ročníky, 32 lekcí podle osnov gymnázia (A2 až maturita):
   poslech, čtení, psaní, doplňování, kvízy a ročníkové testy
 - statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
-- ukončení: `Cmd/Super+Q` nebo `Alt+F4`
+- ukončení: `Ctrl/Cmd+Q` nebo `Alt+F4`, zpět: `Esc`
 
 ### Použití
 
@@ -95,49 +97,42 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 ### Sestavení ze zdroje
 
-macOS je nativní SwiftUI aplikace (Xcode 26, macOS 26+). Linux a Windows
-zůstávají GTK 4.
+Dvě kódové základny, jeden obsah (`content/`) a společné testy (`tests/`):
 
-```bash
-# macOS
-# Xcode 26 z App Storu; žádné GTK
-
-# Debian / Ubuntu
-sudo apt install build-essential pkg-config libgtk-4-dev
-
-# Fedora
-sudo dnf install gcc make pkgconf-pkg-config gtk4-devel
-
-# Arch
-sudo pacman -S base-devel pkgconf gtk4
-```
+- **Kotlin + Compose** (`android/`): Android, Linux a Windows. Obrazovky,
+  cvičení a kontrola odpovědí jsou v `android/shared/`, platformy se liší jen
+  vstupním bodem (`android/app`, `android/desktop`).
+- **Swift + SwiftUI** (`ios/`, `macos/`): iPhone a Mac (Xcode 26, macOS 26+).
 
 ```bash
 git clone https://github.com/pepaskopec-blip/Graduately.git
 cd Graduately
+make test         # kontrola odpovědí v Kotlinu (a ve Swiftu, je-li Xcode)
 ```
+
+Linux, Windows (i Mac pro vývoj) — stačí JDK 17+ a Python 3:
+
+```bash
+make run          # spustí desktopovou aplikaci ze zdroje
+make linux        # dist/graduately-linux-x86_64.AppImage
+make windows      # dist/graduately-windows-x64.zip (v Git Bash)
+make smoke        # instalátory, obsah, testy, dostupnost builds
+```
+
+Na balení (`make linux` / `make windows`) je potřeba JDK s `jmods`, např.
+Temurin 21; cestu k němu předejte v `PACKAGE_JDK`. ProGuard zmenší balíček
+pod limit GitHubu 100 MB.
 
 Na Macu:
 
 ```bash
 open Graduately.xcworkspace        # scheme Graduately z macos/Graduately.xcodeproj
-# nebo: make bundle                # zip v dist/graduately-macos-arm64.zip
+# nebo: make macos                 # zip v dist/graduately-macos-arm64.zip
 ```
 
-Na Linuxu a Windows:
-
-```bash
-make
-make run          # nebo ./graduately
-make bundle       # AppImage / Windows složka s DLL
-make smoke        # instalátory, content packs, dostupnost builds
-```
-
-Volitelně CMake (GTK): `cmake -S . -B build && cmake --build build`.
-
-Na macOS `make bundle` automaticky vloží aktuální Git commit, aby fungovala
+Na macOS `make macos` automaticky vloží aktuální Git commit, aby fungovala
 kontrola aktualizací. Při balení ze zdrojů bez `.git` zadejte
-`COMMIT=<zdrojový-commit> make bundle`.
+`COMMIT=<zdrojový-commit> make macos`.
 
 Aby stažená aplikace na macOS šla otevřít bez potvrzení v Nastavení, CI
 potřebuje **Apple Developer Program** a GitHub Secrets:
@@ -149,43 +144,28 @@ potřebuje **Apple Developer Program** a GitHub Secrets:
 
 Bez toho zůstane jen ad-hoc podpis a Gatekeeper stažený build zablokuje.
 
-#### Windows (MSYS2 UCRT64, bez Visual Studia)
-
-```cmd
-winget install --id MSYS2.MSYS2 -e --source winget
-C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gtk4 mingw-w64-ucrt-x86_64-pkg-config make
-```
-
-V terminálu **MSYS2 UCRT64**:
-
-```bash
-cd /c/Users/<jméno>/Graduately  # C:\Users\<jméno>\Graduately v MSYS2
-make
-./graduately.exe
-make bundle                     # dist/graduately.exe jde spustit i z Průzkumníka
-```
-
 ### Struktura
 
 ```
-src/                 C zdroje (GTK přehrávač pro Linux a Windows)
-android/             Jetpack Compose přehrávač (stejný obsah)
-ios/                 SwiftUI přehrávač (stejný obsah)
-macos/               nativní SwiftUI aplikace pro Mac (stejný obsah)
-data/                style.css, changelog.txt, share/, cetba/*.json
+content/             texty lekcí, cvičení a knih v Markdownu (viz content/README.md)
+android/shared/      společný Kotlin: obrazovky, cvičení, kontrola odpovědí, postup
+android/app/         Android (vstupní bod, aktualizace APK, předčítání)
+android/desktop/     Linux a Windows (okno, aktualizace, předčítání, import z GTK)
+ios/                 SwiftUI pro iPhone
+macos/               SwiftUI pro Mac (sdílí kód s ios/)
+tests/               společné testy kontroly odpovědí (answers.json) + Swift harness
+data/share/          ikony a .desktop soubor
 assets/              zdrojová ikona a screenshoty
 installers/          instalátory, které stáhnou aktuální build
-scripts/             balení AppImage, .app, IPA, extract a smoke test
+scripts/             build-content.py, balení AppImage, zip, .app, IPA a smoke test
 .github/workflows/   CI: push na main → větev builds
-progress/            vzniká za běhu (cvičení, nastavení)
 ```
 
 Android ze zdroje (JDK 17 + Android SDK):
 
 ```bash
-python3 scripts/extract-android-content.py
 cd android
-./gradlew :app:assembleRelease
+./gradlew :app:assembleRelease   # obsah z content/ se sestaví sám
 # APK: android/app/build/outputs/apk/release/app-release.apk
 ```
 
@@ -202,12 +182,12 @@ iOS ze zdroje (Xcode 26, iOS 26+ / Liquid Glass):
 ```bash
 open Graduately.xcworkspace        # v kořeni repozitáře
 # Simulátor: vyber iPhone a Run, nic dalšího není potřeba (obsah se
-# vytáhne z C zdrojů při buildu). Na iPhone: v Signing vyber svůj Team.
+# sestaví z content/ při buildu). Na iPhone: v Signing vyber svůj Team.
 # nebo: make ios   # unsigned IPA v dist-ios/graduately-ios.ipa
 ```
 
 Workspace odkazuje na `ios/Graduately.xcodeproj` a `macos/Graduately.xcodeproj`.
-Projekty nepřesouvejte – build čte `../src` a `../scripts`.
+Projekty nepřesouvejte – build čte `../content` a `../scripts`.
 
 Licence: [GPL-3.0](LICENSE).
 
@@ -261,8 +241,10 @@ above, or download from that branch page:
 - [graduately-android.apk](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/graduately-android.apk)
 - [graduately-ios.ipa](https://github.com/pepaskopec-blip/Graduately/raw/refs/heads/builds/graduately-ios.ipa)
 
-Progress and settings live in `progress/` next to the `.app` / folder /
-AppImage. On Android, iOS and macOS they stay in app storage (same stats, themes, language).
+On Linux and Windows, progress and settings live in `progress/` next to the
+AppImage / in the app folder; progress from the older GTK build is taken over
+on first launch. On Android, iOS and macOS they stay in app storage (same
+stats, themes, language).
 
 Intel Mac, another architecture, or hacking on the code →
 [build from source](#build-from-source).
@@ -293,7 +275,7 @@ Intel Mac, another architecture, or hacking on the code →
 - **English** — 4 years, 32 lessons from the gymnasium syllabus (A2 through
   the maturita): listening, reading, writing, gap-fill, quizzes and year tests
 - statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
-- quit with `Cmd/Super+Q` or `Alt+F4`
+- quit with `Ctrl/Cmd+Q` or `Alt+F4`, back with `Esc`
 
 ### Usage
 
@@ -304,49 +286,42 @@ Intel Mac, another architecture, or hacking on the code →
 
 ### Build from source
 
-macOS is a native SwiftUI app (Xcode 26, macOS 26+). Linux and Windows
-stay on GTK 4.
+Two code bases, one content tree (`content/`) and shared tests (`tests/`):
 
-```bash
-# macOS
-# Xcode 26 from the App Store; no GTK
-
-# Debian / Ubuntu
-sudo apt install build-essential pkg-config libgtk-4-dev
-
-# Fedora
-sudo dnf install gcc make pkgconf-pkg-config gtk4-devel
-
-# Arch
-sudo pacman -S base-devel pkgconf gtk4
-```
+- **Kotlin + Compose** (`android/`): Android, Linux and Windows. Screens,
+  exercises and answer checking live in `android/shared/`; the platforms only
+  differ in their entry point (`android/app`, `android/desktop`).
+- **Swift + SwiftUI** (`ios/`, `macos/`): iPhone and Mac (Xcode 26, macOS 26+).
 
 ```bash
 git clone https://github.com/pepaskopec-blip/Graduately.git
 cd Graduately
+make test         # answer checks in Kotlin (and Swift when Xcode is there)
 ```
+
+Linux, Windows (and a Mac for development) need JDK 17+ and Python 3:
+
+```bash
+make run          # run the desktop app from source
+make linux        # dist/graduately-linux-x86_64.AppImage
+make windows      # dist/graduately-windows-x64.zip (in Git Bash)
+make smoke        # installers, content, tests, builds availability
+```
+
+Packaging (`make linux` / `make windows`) needs a JDK that ships `jmods`,
+such as Temurin 21; pass its path in `PACKAGE_JDK`. ProGuard keeps the
+package under GitHub's 100 MB limit.
 
 On a Mac:
 
 ```bash
 open Graduately.xcworkspace        # scheme Graduately from macos/Graduately.xcodeproj
-# or: make bundle                  # zip at dist/graduately-macos-arm64.zip
+# or: make macos                   # zip at dist/graduately-macos-arm64.zip
 ```
 
-On Linux and Windows:
-
-```bash
-make
-make run          # or ./graduately
-make bundle       # AppImage / Windows DLL folder
-make smoke        # installers, content packs, builds availability
-```
-
-Optional CMake (GTK): `cmake -S . -B build && cmake --build build`.
-
-On macOS, `make bundle` embeds the current Git commit so the installed app
+On macOS, `make macos` embeds the current Git commit so the installed app
 can check for updates. When packaging a source export without `.git`, use
-`COMMIT=<source-commit> make bundle`.
+`COMMIT=<source-commit> make macos`.
 
 Skipping Gatekeeper on a downloaded macOS build needs an
 **Apple Developer Program** membership and these GitHub Secrets:
@@ -358,43 +333,28 @@ Skipping Gatekeeper on a downloaded macOS build needs an
 
 Without them the bundle stays ad-hoc signed and Gatekeeper still blocks it.
 
-#### Windows (MSYS2 UCRT64, no Visual Studio)
-
-```cmd
-winget install --id MSYS2.MSYS2 -e --source winget
-C:\msys64\ucrt64.exe pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gtk4 mingw-w64-ucrt-x86_64-pkg-config make
-```
-
-In an **MSYS2 UCRT64** terminal:
-
-```bash
-cd /c/Users/<name>/Graduately   # C:\Users\<name>\Graduately in MSYS2
-make
-./graduately.exe
-make bundle                     # dist/graduately.exe can be double-clicked
-```
-
 ### Layout
 
 ```
-src/                 C sources (GTK player for Linux and Windows)
-android/             Jetpack Compose player (same content)
-ios/                 SwiftUI player (same content)
-macos/               native SwiftUI Mac app (same content)
-data/                style.css, changelog.txt, share/, cetba/*.json
+content/             lesson, exercise and book texts in Markdown (see content/README.md)
+android/shared/      shared Kotlin: screens, exercises, answer checking, progress
+android/app/         Android (entry point, APK updates, speech)
+android/desktop/     Linux and Windows (window, updates, speech, GTK progress import)
+ios/                 SwiftUI for iPhone
+macos/               SwiftUI for Mac (shares code with ios/)
+tests/               shared answer-check cases (answers.json) + Swift harness
+data/share/          icons and the .desktop file
 assets/              source icon and screenshots
 installers/          fetch-the-latest installers
-scripts/             AppImage / .app / IPA bundlers, extract, smoke test
+scripts/             build-content.py, AppImage / zip / .app / IPA bundlers, smoke test
 .github/workflows/   CI: push to main → builds branch
-progress/            created at runtime (exercises, settings)
 ```
 
 Android from source (JDK 17 + Android SDK):
 
 ```bash
-python3 scripts/extract-android-content.py
 cd android
-./gradlew :app:assembleRelease
+./gradlew :app:assembleRelease   # content/ is built automatically
 # APK: android/app/build/outputs/apk/release/app-release.apk
 ```
 
@@ -411,11 +371,11 @@ iOS from source (Xcode 26, iOS 26+ / Liquid Glass):
 ```bash
 open Graduately.xcworkspace        # at the repo root
 # Simulator: pick an iPhone and Run, nothing else needed (content is
-# extracted from the C sources during the build). Device: pick your Team.
+# built from content/ during the build). Device: pick your Team.
 # or: make ios   # unsigned IPA at dist-ios/graduately-ios.ipa
 ```
 
 The workspace points at `ios/Graduately.xcodeproj` and `macos/Graduately.xcodeproj`.
-Do not move the projects – the build reads `../src` and `../scripts`.
+Do not move the projects – the build reads `../content` and `../scripts`.
 
 License: [GPL-3.0](LICENSE).
