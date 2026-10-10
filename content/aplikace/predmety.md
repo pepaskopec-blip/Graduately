@@ -10,7 +10,7 @@
 | English | Angličtina | English | uk | enyears | ano |
 | Matematika | Matematika | Mathematics | function | matyears | ano |
 | Fyzika | Fyzika | Physics | bolt | fyzyears | ano |
-| Základy Přírodních věd | Základy Přírodních věd | Fundamentals of Natural Sciences | flask | scimap | ano |
+| Základy Přírodních věd | Základy přírodních věd | Fundamentals of Natural Sciences | flask | scimap | ano |
 | Technická grafika | Technická grafika | Technical Drawing | lock |  | ne |
 | Prezentační grafika | Prezentační grafika | Presentation Graphics | lock |  | ne |
 | Programování | Programování | Programming | lock |  | ne |
