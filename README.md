@@ -78,7 +78,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
   příklady se píšou a kontrolují, u geometrie jde i rýsovat na mřížku
 - **Fyzika** — 4 ročníky, 32 lekcí podle osnov středních škol
   (mechanika, teplo a vlny, elektřina a magnetismus, optika až astrofyzika)
-- **Základy přírodopisných věd** — chemie a biologie, v každé 8 lekcí
+- **Základy přírodních věd** — chemie a biologie, v každé 8 lekcí
   (od atomu a buňky po biochemii a ekologii) s výkladem a kvízem
 - **Občanská nauka** — 1. ročník, 17 lekcí (člověk v lidském společenství);
   2. ročník, 16 lekcí (člověk jako občan); 3. ročník, 16 lekcí (člověk a právo);

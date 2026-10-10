@@ -1808,7 +1808,7 @@ struct SciMapScreen: View {
                 .buttonStyle(PressScaleStyle())
             }
         }
-        .navigationTitle(vm.tr("Základy Přírodopisných věd"))
+        .navigationTitle(vm.tr("Základy přírodních věd"))
         .navigationSubtitle(vm.tr("sci_sub"))
         #else
         List {
@@ -1827,7 +1827,7 @@ struct SciMapScreen: View {
                 }
             }
         }
-        .navigationTitle(vm.tr("Základy Přírodopisných věd"))
+        .navigationTitle(vm.tr("Základy přírodních věd"))
         .navigationSubtitle(vm.tr("sci_sub"))
         .appListStyle()
         #endif

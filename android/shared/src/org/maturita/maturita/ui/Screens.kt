@@ -864,7 +864,7 @@ fun FyzYearsScreen(vm: AppViewModel) {
 
 @Composable
 fun SciMapScreen(vm: AppViewModel) {
-    DetailScaffold(vm, vm.tr("Základy Přírodopisných věd"), vm.tr("sci_sub")) { inner ->
+    DetailScaffold(vm, vm.tr("Základy přírodních věd"), vm.tr("sci_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
                 NavRow(
