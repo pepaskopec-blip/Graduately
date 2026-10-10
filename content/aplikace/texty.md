@@ -51,7 +51,7 @@
 | welcome_feat1_body | Cvičení, nápovědy a vokabeltraining. Aplikace si pamatuje, kde jste skončili. | Exercises, hints and vocabulary drills. The app remembers where you left off. |
 | welcome_feat1_link | Začít procvičovat | Start practicing |
 | welcome_feat2_title | Osm otevřených předmětů | Eight open subjects |
-| welcome_feat2_body | Deutsch, sítě, hardware, čeština, občanská nauka, matematika, fyzika a přírodní vědy. Ostatní předměty čekají na svůj obsah. | German, networks, hardware, Czech, civics, mathematics, physics and natural sciences. The other subjects are still locked. |
+| welcome_feat2_body | Deutsch, sítě, hardware, čeština, občanská nauka, matematika, fyzika a základy přírodních věd. Ostatní předměty čekají na svůj obsah. | German, networks, hardware, Czech, civics, mathematics, physics and natural sciences. The other subjects are still locked. |
 | welcome_feat2_link | Jaké předměty jsou otevřené? | Which subjects are open? |
 | welcome_stat_value | 8 | 8 |
 | welcome_stat_label | otevřené\npředměty | open\nsubjects |
@@ -206,7 +206,7 @@
 | on3_sub | Člověk a právo. Vyberte lekci na cestě. | The individual and the law. Pick a lesson on the path. |
 | on4_sub | Hospodářství, svět a filozofie. Vyberte lekci na cestě. | The economy, the world and philosophy. Pick a lesson on the path. |
 
-# Přírodní vědy
+# Základy přírodních věd
 
 | Klíč | Česky | Anglicky |
 |---|---|---|

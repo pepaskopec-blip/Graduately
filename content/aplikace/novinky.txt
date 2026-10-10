@@ -36,7 +36,7 @@ en: Physics: four years, 32 lessons from the secondary-school syllabus
 en: From mechanics through heat and electricity to optics, the nucleus and astrophysics
 
 --- 2026-10-06
-cs: Základy přírodopisných věd: chemie a biologie, v každé 8 lekcí podle osnov
+cs: Základy přírodních věd: chemie a biologie, v každé 8 lekcí podle osnov
 cs: Každá lekce má výklad a kvíz se čtyřmi otázkami
 en: Natural sciences: chemistry and biology, eight lessons each, from the syllabus
 en: Every lesson has an overview and a four-question quiz
