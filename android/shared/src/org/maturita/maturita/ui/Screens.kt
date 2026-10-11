@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.Science
+import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material3.Card
@@ -227,6 +228,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "bolt" -> Icon(Icons.Filled.Bolt, null, tint = tint, modifier = Modifier.size(26.dp))
             "function" -> Icon(Icons.Filled.Functions, null, tint = tint, modifier = Modifier.size(26.dp))
             "ruler" -> Icon(Icons.Filled.Architecture, null, tint = tint, modifier = Modifier.size(26.dp))
+            "code" -> Icon(Icons.Filled.Terminal, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -349,6 +351,13 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
                 vm.content.fyz2.count { vm.progress.fyz2Done(it.int("id")) } +
                 vm.content.fyz3.count { vm.progress.fyz3Done(it.int("id")) } +
                 vm.content.fyz4.count { vm.progress.fyz4Done(it.int("id")) }
+        }
+        "csyears", "csmap", "cs2map", "cs3map", "cs4map" -> {
+            sum.totalEx = vm.content.cs.size + vm.content.cs2.size + vm.content.cs3.size + vm.content.cs4.size
+            sum.doneEx = vm.content.cs.count { vm.progress.csDone(it.int("id")) } +
+                vm.content.cs2.count { vm.progress.cs2Done(it.int("id")) } +
+                vm.content.cs3.count { vm.progress.cs3Done(it.int("id")) } +
+                vm.content.cs4.count { vm.progress.cs4Done(it.int("id")) }
         }
         "tgyears", "tgmap", "tg2map", "tg3map", "tg4map" -> {
             sum.totalEx = vm.content.tg.size + vm.content.tg2.size + vm.content.tg3.size + vm.content.tg4.size
@@ -679,6 +688,23 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg4unit${l.int("id")}", extra = "autocad")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg4ex${l.int("id")}")
     }
+    add(vm.tr("Programování"), vm.tr("search_lesson"), "csyears", extra = "csharp c#")
+    add(vm.tr("cs_year1"), vm.tr("search_lesson"), "csmap", extra = "rocnik")
+    add(vm.tr("cs_year2"), vm.tr("search_lesson"), "cs2map", extra = "rocnik")
+    add(vm.tr("cs_year3"), vm.tr("search_lesson"), "cs3map", extra = "rocnik")
+    add(vm.tr("cs_year4"), vm.tr("search_lesson"), "cs4map", extra = "rocnik")
+    vm.content.cs.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "csunit${l.int("id")}", extra = "csharp")
+    }
+    vm.content.cs2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "cs2unit${l.int("id")}", extra = "csharp")
+    }
+    vm.content.cs3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "cs3unit${l.int("id")}", extra = "csharp")
+    }
+    vm.content.cs4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "cs4unit${l.int("id")}", extra = "csharp")
+    }
     add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra = "chemie")
     add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra = "biologie")
     vm.content.chem.forEach { l ->
@@ -873,6 +899,20 @@ fun MatYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("mat_year2"), subtitle = vm.tr("mat2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat2Map) }
                 NavRow(title = vm.tr("mat_year3"), subtitle = vm.tr("mat3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat3Map) }
                 NavRow(title = vm.tr("mat_year4"), subtitle = vm.tr("mat4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun CsYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Programování"), vm.tr("cs_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("cs_year1"), subtitle = vm.tr("cs_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.CsMap) }
+                NavRow(title = vm.tr("cs_year2"), subtitle = vm.tr("cs2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Cs2Map) }
+                NavRow(title = vm.tr("cs_year3"), subtitle = vm.tr("cs3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Cs3Map) }
+                NavRow(title = vm.tr("cs_year4"), subtitle = vm.tr("cs4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Cs4Map) }
             }
         }
     }

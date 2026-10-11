@@ -18,7 +18,17 @@ interface Platform {
 
     /** A speech engine for listening exercises, or null when there is none. */
     fun speaker(): Speaker?
+
+    /**
+     * Compiles and runs a C# program. [cb] runs on the UI thread.
+     * Status is ok, fail, timeout or unavailable.
+     */
+    fun runCSharp(source: String, stdin: String, cb: (CSharpRun) -> Unit) {
+        cb(CSharpRun("unavailable", ""))
+    }
 }
+
+data class CSharpRun(val status: String, val output: String)
 
 /** The subset of Android's SharedPreferences the app uses. */
 interface Prefs {

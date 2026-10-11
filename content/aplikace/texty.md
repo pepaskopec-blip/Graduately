@@ -243,6 +243,29 @@
 | tg3_sub | Pohledy, řezy, bloky a tisk. | Views, sections, blocks and plotting. |
 | tg4_sub | 3D model a výkres k maturitě. | A 3D model and the exam drawing. |
 
+# Programování
+
+| Klíč | Česky | Anglicky |
+|---|---|---|
+| cs_years_sub | C# od prvního výpisu po pokročilejší nástroje. Kód se píše a spouští vedle výkladu. | C# from the first line of output to the later tools. You write the code and run it beside the lesson. |
+| cs_year1 | 1. ročník | Year 1 |
+| cs_year2 | 2. ročník | Year 2 |
+| cs_year3 | 3. ročník | Year 3 |
+| cs_year4 | 4. ročník | Year 4 |
+| cs_sub | Výpis, proměnné, typy, operátory a řetězce. | Output, variables, types, operators and strings. |
+| cs2_sub | Podmínky, cykly, pole a metody. | Conditions, loops, arrays and methods. |
+| cs3_sub | Třídy, dědičnost, rozhraní a výčty. | Classes, inheritance, interfaces and enums. |
+| cs4_sub | Výjimky, kolekce, LINQ, soubory a async. | Exceptions, collections, LINQ, files and async. |
+| cs_code | Kód | Code |
+| cs_output | Výstup | Output |
+| cs_stdin | Vstup pro Console.ReadLine | Input for Console.ReadLine |
+| cs_run | Spustit | Run |
+| cs_reset | Obnovit ukázku | Reset example |
+| cs_running | Překládám… | Compiling… |
+| cs_empty | Zatím nic. Upravte kód a spusťte ho. | Nothing yet. Edit the code and run it. |
+| cs_timeout | Program běžel příliš dlouho a byl zastaven. | The program ran too long and was stopped. |
+| cs_unavailable | Tady C# nespustíte. Na počítači s nainstalovaným .NET se výstup objeví vedle kódu. | C# cannot run here. On a computer with .NET installed the output appears beside the code. |
+
 # Angličtina a němčina
 
 | Klíč | Česky | Anglicky |

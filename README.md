@@ -73,6 +73,8 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
   ročníky 2–4 po 8 lekcích (monitory, sestavení, RAID, servery, údržba)
 - **Technická grafika** — 4 ročníky AutoCADu, v každém 8 lekcí:
   výkres a souřadnice, úpravy a kóty, pohledy a tisk, 3D a maturitní zadání
+- **Programování** — 4 ročníky C# po vzoru W3Schools. U každé lekce se kód
+  píše a spouští vedle výkladu, od výpisu po třídy, LINQ a async
 - **Český jazyk a literatura** — literatura (4 ročníky, 32 lekcí podle osnov
   středních škol), mluvnice (20 cvičení) a maturitní četba
   (82 knih: zápisky, kvíz, sestavení děje)
@@ -92,7 +94,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 ### Použití
 
-1. **Úvod** ukáže postup a mřížku předmětů. Otevřený předmět spustí cestu. Zamčené dlaždice zatím nic neotevřou: prezentační grafika, programování a programové vybavení.
+1. **Úvod** ukáže postup a mřížku předmětů. Otevřený předmět spustí cestu. Zamčené dlaždice zatím nic neotevřou: prezentační grafika a programové vybavení.
 2. U němčiny je učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause) a čtyři ročníky. Ostatní otevřené předměty mají ročníky, lekce nebo knihy.
 3. Z cesty se otevře výklad, poslech, čtení, psaní nebo kvíz.
 4. **Statistiky**, **Nastavení** a **Hledat** jsou v postranním panelu na Macu. Na telefonu a v desktopové aplikaci jsou na záložkách, hledání navíc ikonou lupy. Zkratka je `Cmd/Ctrl+K`.
@@ -263,6 +265,8 @@ Intel Mac, another architecture, or hacking on the code →
   years 2–4 have 8 lessons each (displays, assembly, RAID, servers, maintenance)
 - **Technical graphics** — 4 years of AutoCAD, 8 lessons each:
   the sheet and coordinates, editing and dimensions, views and plotting, 3D and the exam drawing
+- **Programming** — 4 years of C# in the style of W3Schools. Each lesson has
+  code you edit and run beside the explanation, from output to classes, LINQ and async
 - **Czech language** — literature (4 years, 32 lessons from the secondary-school
   syllabus), grammar (20 exercises) and required reading
   (82 books: notes, quiz, plot ordering)
@@ -283,7 +287,7 @@ Intel Mac, another architecture, or hacking on the code →
 
 ### Usage
 
-1. **Welcome** shows progress and the subject grid. An open subject starts its path. Locked tiles do nothing yet: presentation graphics, programming and software.
+1. **Welcome** shows progress and the subject grid. An open subject starts its path. Locked tiles do nothing yet: presentation graphics and software.
 2. German has the textbook (Neue Freunde, Aus aller Welt, Bei uns zu Hause) and four years. The other open subjects have years, lessons or books.
 3. A path opens an overview, listening, reading, writing or a quiz.
 4. **Statistics**, **Settings** and **Search** sit in the sidebar on Mac. On the phone and the desktop app they are tabs, with search also on the magnifier. The shortcut is `Cmd/Ctrl+K`.

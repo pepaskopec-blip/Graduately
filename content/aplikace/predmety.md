@@ -13,5 +13,5 @@
 | Základy přírodních věd | Základy přírodních věd | Fundamentals of Natural Sciences | flask | scimap | ano |
 | Technická grafika | Technická grafika | Technical Graphics | ruler | tgyears | ano |
 | Prezentační grafika | Prezentační grafika | Presentation Graphics | lock |  | ne |
-| Programování | Programování | Programming | lock |  | ne |
+| Programování | Programování | Programming | code | csyears | ano |
 | Programové vybavení | Programové vybavení | Software | lock |  | ne |

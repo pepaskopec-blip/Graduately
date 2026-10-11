@@ -116,9 +116,20 @@ def parse_doc(path: Path) -> Doc:
     para: Node | None = None
     table: Node | None = None
     in_comment = False
-    for n in range(i, len(lines)):
+    indexes = iter(range(i, len(lines)))
+    for n in indexes:
         ln = lines[n].rstrip()
         no = n + 1
+        if ln.startswith("```"):
+            para = table = None
+            body: list[str] = []
+            for n2 in indexes:
+                raw_line = lines[n2]
+                if raw_line.rstrip().startswith("```"):
+                    break
+                body.append(raw_line)
+            nodes.append(Node("code", "\n".join(body).strip("\n"), no))
+            continue
         if in_comment:
             if "-->" in ln:
                 in_comment = False
@@ -537,6 +548,36 @@ def lesson_files(directory: Path) -> list[Path]:
         if not re.match(r"^\d+-", p.name):
             fail(p, None, "název souboru musí začínat pořadím, např. 03-nazev.md")
     return files
+
+
+def code_of(p: Part | None) -> str:
+    if p is None:
+        return ""
+    for nd in p.nodes:
+        if nd.kind == "code":
+            return nd.text
+    return ""
+
+
+def code_lessons(directory: Path, prefix: str) -> list[dict]:
+    """Lessons with an explanation and a C# program the student can edit and run."""
+    out = []
+    for i, path in enumerate(lesson_files(directory), start=1):
+        doc, en = parse_doc(path), en_doc(path)
+        load_translations(en)
+        lid = lesson_id(doc, f"{prefix}.{i}")
+        code = code_of(part(doc, "Kód", "Code"))
+        if not code.strip():
+            fail(path, None, "lekce nemá ukázkový kód v sekci # Kód")
+        out.append({
+            "id": i,
+            "key": lid,
+            "titleKey": keyed(f"{prefix}_unit{i}", doc, en, "nazev"),
+            "subKey": keyed(f"{prefix}_unit{i}_sub", doc, en, "popis"),
+            "slides": read_slides(doc, part(doc, "Výklad")),
+            "code": code,
+        })
+    return out
 
 
 def std_lessons(directory: Path, prefix: str) -> list[dict]:
@@ -1068,6 +1109,10 @@ STD = [
     ("technicka-grafika/1-rocnik", "tg"), ("technicka-grafika/2-rocnik", "tg2"),
     ("technicka-grafika/3-rocnik", "tg3"), ("technicka-grafika/4-rocnik", "tg4"),
 ]
+CODE = [
+    ("programovani/1-rocnik", "cs"), ("programovani/2-rocnik", "cs2"),
+    ("programovani/3-rocnik", "cs3"), ("programovani/4-rocnik", "cs4"),
+]
 MATH = [
     ("matematika/0-opakovani", "mat0"), ("matematika/1-rocnik", "mat"),
     ("matematika/2-rocnik", "mat2"), ("matematika/3-rocnik", "mat3"),
@@ -1091,6 +1136,8 @@ def build(content: Path = CONTENT) -> dict:
         payload[key] = std_lessons(content / d, key)
     for d, key in MATH:
         payload[key] = math_lessons(content / d, key)
+    for d, key in CODE:
+        payload[key] = code_lessons(content / d, key)
     for d, tag in SKILLS:
         for year in range(1, 5):
             payload[tag if year == 1 else f"{tag}{year}"] = skill_lessons(

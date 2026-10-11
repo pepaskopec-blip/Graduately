@@ -680,6 +680,7 @@ func subjectSymbol(_ icon: String) -> String {
     case "bolt": return "bolt.fill"
     case "function": return "function"
     case "ruler": return "ruler.fill"
+    case "code": return "chevron.left.forwardslash.chevron.right"
     default: return "lock.fill"
     }
 }

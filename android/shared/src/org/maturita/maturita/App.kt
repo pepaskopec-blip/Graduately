@@ -23,6 +23,8 @@ import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Palette
 import org.maturita.maturita.ui.BookListScreen
 import org.maturita.maturita.ui.BookScreen
+import org.maturita.maturita.ui.CodeLessonScreen
+import org.maturita.maturita.ui.CsYearsScreen
 import org.maturita.maturita.ui.CzechMapScreen
 import org.maturita.maturita.ui.GermanExercise
 import org.maturita.maturita.ui.HomeScreen
@@ -584,6 +586,51 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Tg4Ex -> TgQuizScreen(vm, 4, r.id)
+            Route.CsYears -> CsYearsScreen(vm)
+            Route.CsMap -> LessonListScreen(
+                vm, vm.tr("cs_year1"), vm.tr("cs_sub"),
+                vm.content.cs.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.csDone(id), Route.CsLesson(id))
+                },
+            )
+            is Route.CsLesson -> {
+                val l = vm.content.csLesson(r.id)
+                if (l != null) CodeLessonScreen(vm, l) { vm.markCs(r.id) }
+            }
+            Route.Cs2Map -> LessonListScreen(
+                vm, vm.tr("cs_year2"), vm.tr("cs2_sub"),
+                vm.content.cs2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.cs2Done(id), Route.Cs2Lesson(id))
+                },
+            )
+            is Route.Cs2Lesson -> {
+                val l = vm.content.cs2Lesson(r.id)
+                if (l != null) CodeLessonScreen(vm, l) { vm.markCs2(r.id) }
+            }
+            Route.Cs3Map -> LessonListScreen(
+                vm, vm.tr("cs_year3"), vm.tr("cs3_sub"),
+                vm.content.cs3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.cs3Done(id), Route.Cs3Lesson(id))
+                },
+            )
+            is Route.Cs3Lesson -> {
+                val l = vm.content.cs3Lesson(r.id)
+                if (l != null) CodeLessonScreen(vm, l) { vm.markCs3(r.id) }
+            }
+            Route.Cs4Map -> LessonListScreen(
+                vm, vm.tr("cs_year4"), vm.tr("cs4_sub"),
+                vm.content.cs4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.cs4Done(id), Route.Cs4Lesson(id))
+                },
+            )
+            is Route.Cs4Lesson -> {
+                val l = vm.content.cs4Lesson(r.id)
+                if (l != null) CodeLessonScreen(vm, l) { vm.markCs4(r.id) }
+            }
             Route.SciMap -> SciMapScreen(vm)
             Route.ChemMap -> LessonListScreen(
                 vm, vm.tr("Chemie"), vm.tr("chem_sub"),

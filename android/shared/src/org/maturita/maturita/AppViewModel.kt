@@ -262,6 +262,26 @@ class AppViewModel(val content: Content, val platform: Platform) {
         refresh()
     }
 
+    fun markCs(id: Int) {
+        progress.markCs(id)
+        refresh()
+    }
+
+    fun markCs2(id: Int) {
+        progress.markCs2(id)
+        refresh()
+    }
+
+    fun markCs3(id: Int) {
+        progress.markCs3(id)
+        refresh()
+    }
+
+    fun markCs4(id: Int) {
+        progress.markCs4(id)
+        refresh()
+    }
+
     fun markMluv(n: Int) {
         progress.markMluv(n)
         refresh()

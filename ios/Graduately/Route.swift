@@ -124,6 +124,15 @@ enum Route: Hashable {
     case tg4Map
     case tg4Lesson(Int)
     case tg4Ex(Int)
+    case csYears
+    case csMap
+    case csLesson(Int)
+    case cs2Map
+    case cs2Lesson(Int)
+    case cs3Map
+    case cs3Lesson(Int)
+    case cs4Map
+    case cs4Lesson(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -250,6 +259,15 @@ enum Route: Hashable {
         case .tg4Map: return "tg4map"
         case .tg4Lesson(let id): return "tg4unit\(id)"
         case .tg4Ex(let id): return "tg4ex\(id)"
+        case .csYears: return "csyears"
+        case .csMap: return "csmap"
+        case .csLesson(let id): return "csunit\(id)"
+        case .cs2Map: return "cs2map"
+        case .cs2Lesson(let id): return "cs2unit\(id)"
+        case .cs3Map: return "cs3map"
+        case .cs3Lesson(let id): return "cs3unit\(id)"
+        case .cs4Map: return "cs4map"
+        case .cs4Lesson(let id): return "cs4unit\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -500,6 +518,24 @@ enum Route: Hashable {
             return [.tgYears, .tg4Map, .tg4Lesson(id)]
         case .tg4Ex(let id):
             return [.tgYears, .tg4Map, .tg4Lesson(id), .tg4Ex(id)]
+        case .csYears:
+            return [.csYears]
+        case .csMap:
+            return [.csYears, .csMap]
+        case .csLesson(let id):
+            return [.csYears, .csMap, .csLesson(id)]
+        case .cs2Map:
+            return [.csYears, .cs2Map]
+        case .cs2Lesson(let id):
+            return [.csYears, .cs2Map, .cs2Lesson(id)]
+        case .cs3Map:
+            return [.csYears, .cs3Map]
+        case .cs3Lesson(let id):
+            return [.csYears, .cs3Map, .cs3Lesson(id)]
+        case .cs4Map:
+            return [.csYears, .cs4Map]
+        case .cs4Lesson(let id):
+            return [.csYears, .cs4Map, .cs4Lesson(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -565,6 +601,11 @@ func routeFromPage(_ page: String) -> Route? {
     case "tg2map": return .tg2Map
     case "tg3map": return .tg3Map
     case "tg4map": return .tg4Map
+    case "csyears": return .csYears
+    case "csmap": return .csMap
+    case "cs2map": return .cs2Map
+    case "cs3map": return .cs3Map
+    case "cs4map": return .cs4Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -697,6 +738,18 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /tgex(\d+)/), let n = Int(m.1) {
             return .tgEx(n)
+        }
+        if let m = page.wholeMatch(of: /cs4unit(\d+)/), let n = Int(m.1) {
+            return .cs4Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /cs3unit(\d+)/), let n = Int(m.1) {
+            return .cs3Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /cs2unit(\d+)/), let n = Int(m.1) {
+            return .cs2Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /csunit(\d+)/), let n = Int(m.1) {
+            return .csLesson(n)
         }
         if let m = page.wholeMatch(of: /lit4unit(\d+)/), let n = Int(m.1) {
             return .lit4Lesson(n)

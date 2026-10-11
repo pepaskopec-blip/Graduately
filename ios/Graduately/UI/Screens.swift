@@ -713,6 +713,12 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
             + vm.content.mat2.filter { vm.progress.mat2Done($0.int("id")) }.count
             + vm.content.mat3.filter { vm.progress.mat3Done($0.int("id")) }.count
             + vm.content.mat4.filter { vm.progress.mat4Done($0.int("id")) }.count
+    case "csyears", "csmap", "cs2map", "cs3map", "cs4map":
+        sum.totalEx = vm.content.cs.count + vm.content.cs2.count + vm.content.cs3.count + vm.content.cs4.count
+        sum.doneEx = vm.content.cs.filter { vm.progress.csDone($0.int("id")) }.count
+            + vm.content.cs2.filter { vm.progress.cs2Done($0.int("id")) }.count
+            + vm.content.cs3.filter { vm.progress.cs3Done($0.int("id")) }.count
+            + vm.content.cs4.filter { vm.progress.cs4Done($0.int("id")) }.count
     case "tgyears", "tgmap", "tg2map", "tg3map", "tg4map":
         sum.totalEx = vm.content.tg.count + vm.content.tg2.count + vm.content.tg3.count + vm.content.tg4.count
         sum.doneEx = vm.content.tg.filter { vm.progress.tgDone($0.int("id")) }.count
@@ -1041,6 +1047,23 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.tg4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg4unit\(l.int("id"))", extra: "autocad")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg4ex\(l.int("id"))")
+    }
+    add(vm.tr("Programování"), vm.tr("search_lesson"), "csyears", extra: "csharp c#")
+    add(vm.tr("cs_year1"), vm.tr("search_lesson"), "csmap", extra: "rocnik")
+    add(vm.tr("cs_year2"), vm.tr("search_lesson"), "cs2map", extra: "rocnik")
+    add(vm.tr("cs_year3"), vm.tr("search_lesson"), "cs3map", extra: "rocnik")
+    add(vm.tr("cs_year4"), vm.tr("search_lesson"), "cs4map", extra: "rocnik")
+    for l in vm.content.cs {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "csunit\(l.int("id"))", extra: "csharp")
+    }
+    for l in vm.content.cs2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "cs2unit\(l.int("id"))", extra: "csharp")
+    }
+    for l in vm.content.cs3 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "cs3unit\(l.int("id"))", extra: "csharp")
+    }
+    for l in vm.content.cs4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "cs4unit\(l.int("id"))", extra: "csharp")
     }
     add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra: "chemie")
     add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra: "biologie")
@@ -1771,6 +1794,47 @@ struct MatYearsScreen: View {
         }
         .navigationTitle(vm.tr("Matematika"))
         .navigationSubtitle(vm.tr("mat_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct CsYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route)] = [
+            ("cs_year1", "cs_sub", .csMap),
+            ("cs_year2", "cs2_sub", .cs2Map),
+            ("cs_year3", "cs3_sub", .cs3Map),
+            ("cs_year4", "cs4_sub", .cs4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+            }
+            .buttonStyle(PressScaleStyle())
+        }
+        .navigationTitle(vm.tr("Programování"))
+        .navigationSubtitle(vm.tr("cs_years_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.csMap) {
+                ListRowLabel(title: vm.tr("cs_year1"), subtitle: vm.tr("cs_sub"))
+            }
+            NavigationLink(value: Route.cs2Map) {
+                ListRowLabel(title: vm.tr("cs_year2"), subtitle: vm.tr("cs2_sub"))
+            }
+            NavigationLink(value: Route.cs3Map) {
+                ListRowLabel(title: vm.tr("cs_year3"), subtitle: vm.tr("cs3_sub"))
+            }
+            NavigationLink(value: Route.cs4Map) {
+                ListRowLabel(title: vm.tr("cs_year4"), subtitle: vm.tr("cs4_sub"))
+            }
+        }
+        .navigationTitle(vm.tr("Programování"))
+        .navigationSubtitle(vm.tr("cs_years_sub"))
         .appListStyle()
         #endif
     }
@@ -2876,6 +2940,64 @@ struct RouteDestination: View {
             }
         case .fyz4Ex(let id):
             FyzQuizScreen(vm: vm, year: 4, id: id)
+        case .csYears:
+            CsYearsScreen(vm: vm)
+        case .csMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("cs_year1"),
+                subtitle: vm.tr("cs_sub"),
+                rows: vm.content.cs.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "c\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.csDone(id), destination: .csLesson(id))
+                }
+            )
+        case .csLesson(let id):
+            if let l = vm.content.csLesson(id) {
+                CodeLessonScreen(vm: vm, lesson: l, onSuccess: { vm.markCs(id) })
+            }
+        case .cs2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("cs_year2"),
+                subtitle: vm.tr("cs2_sub"),
+                rows: vm.content.cs2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "c2\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.cs2Done(id), destination: .cs2Lesson(id))
+                }
+            )
+        case .cs2Lesson(let id):
+            if let l = vm.content.cs2Lesson(id) {
+                CodeLessonScreen(vm: vm, lesson: l, onSuccess: { vm.markCs2(id) })
+            }
+        case .cs3Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("cs_year3"),
+                subtitle: vm.tr("cs3_sub"),
+                rows: vm.content.cs3.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "c3\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.cs3Done(id), destination: .cs3Lesson(id))
+                }
+            )
+        case .cs3Lesson(let id):
+            if let l = vm.content.cs3Lesson(id) {
+                CodeLessonScreen(vm: vm, lesson: l, onSuccess: { vm.markCs3(id) })
+            }
+        case .cs4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("cs_year4"),
+                subtitle: vm.tr("cs4_sub"),
+                rows: vm.content.cs4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "c4\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.cs4Done(id), destination: .cs4Lesson(id))
+                }
+            )
+        case .cs4Lesson(let id):
+            if let l = vm.content.cs4Lesson(id) {
+                CodeLessonScreen(vm: vm, lesson: l, onSuccess: { vm.markCs4(id) })
+            }
         case .tgYears:
             TgYearsScreen(vm: vm)
         case .tgMap:
@@ -2969,4 +3091,252 @@ struct RouteDestination: View {
             PlotScreen(vm: vm, id: id)
         }
     }
+}
+
+struct CodeLessonScreen: View {
+    @ObservedObject var vm: AppModel
+    let lesson: J
+    let onSuccess: () -> Void
+    @State private var code = ""
+    @State private var stdin = ""
+    @State private var output = ""
+    @State private var running = false
+
+    var body: some View {
+        GeometryReader { geo in
+            if geo.size.width >= 840 {
+                HStack(alignment: .top, spacing: 16) {
+                    explanation.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    editor.frame(maxWidth: .infinity, maxHeight: .infinity)
+                    outputPane.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                }
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        explanation
+                        editor.frame(minHeight: 240)
+                        outputPane.frame(minHeight: 160)
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .detailScreen(vm.tr(lesson.str("titleKey")), subtitle: vm.tr(lesson.str("subKey")))
+        .onAppear {
+            if code.isEmpty { code = lesson.str("code") }
+        }
+    }
+
+    private var explanation: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                ForEach(Array(lesson.arr("slides").enumerated()), id: \.offset) { _, slide in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(slide.str("kicker"))
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(Color.accentColor)
+                        Text(slide.str("title"))
+                            .font(.title3.bold())
+                        ForEach(slide.strs("lines"), id: \.self) { line in
+                            Text("•  \(line)")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        if let tip = slide.strOrNull("tip") {
+                            Text(tip)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private var editor: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(vm.tr("cs_code")).font(.headline)
+            TextEditor(text: $code)
+                .font(.system(.body, design: .monospaced))
+                .scrollContentBackground(.hidden)
+                .padding(8)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(codeFill, in: RoundedRectangle(cornerRadius: 12))
+            Text(vm.tr("cs_stdin"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            TextField("", text: $stdin, axis: .vertical)
+                .font(.system(.body, design: .monospaced))
+                .lineLimit(2...4)
+                .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    private var outputPane: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Button(vm.tr("cs_run")) { run() }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(running)
+                Button(vm.tr("cs_reset")) { code = lesson.str("code") }
+                    .disabled(running)
+            }
+            Text(vm.tr("cs_output")).font(.headline)
+            ScrollView {
+                Text(output.isEmpty ? vm.tr("cs_empty") : output)
+                    .font(.system(.body, design: .monospaced))
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .textSelection(.enabled)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(codeFill, in: RoundedRectangle(cornerRadius: 12))
+        }
+    }
+
+    private var codeFill: Color {
+        #if os(macOS)
+        Color(.textBackgroundColor).opacity(0.55)
+        #else
+        Color(.secondarySystemBackground)
+        #endif
+    }
+
+    private func run() {
+        running = true
+        output = vm.tr("cs_running")
+        CSharpRunner.run(code, stdin: stdin) { status, text in
+            running = false
+            switch status {
+            case "unavailable":
+                output = vm.tr("cs_unavailable")
+            case "timeout":
+                output = (text + "\n\n" + vm.tr("cs_timeout")).trimmingCharacters(in: .whitespacesAndNewlines)
+            default:
+                output = text.isEmpty ? vm.tr("cs_empty") : text
+            }
+            if status == "ok" { onSuccess() }
+        }
+    }
+}
+
+enum CSharpRunner {
+    static func run(_ source: String, stdin: String, done: @escaping (String, String) -> Void) {
+        #if os(macOS)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = runMac(source, stdin: stdin)
+            DispatchQueue.main.async { done(result.0, result.1) }
+        }
+        #else
+        done("unavailable", "")
+        #endif
+    }
+
+    #if os(macOS)
+    private static func runMac(_ source: String, stdin: String) -> (String, String) {
+        guard source.count <= 100_000 else { return ("fail", "Program je příliš dlouhý.") }
+        guard let dotnet = findDotnet() else { return ("unavailable", "") }
+        let dir = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent(".graduately/csharp-lab")
+        let csproj = dir.appendingPathComponent("Lab.csproj")
+        if !FileManager.default.fileExists(atPath: csproj.path) {
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let framework = targetFramework(dotnet)
+            let xml = """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <PropertyGroup>
+                <OutputType>Exe</OutputType>
+                <TargetFramework>\(framework)</TargetFramework>
+                <ImplicitUsings>enable</ImplicitUsings>
+                <Nullable>disable</Nullable>
+                <LangVersion>latest</LangVersion>
+              </PropertyGroup>
+            </Project>
+            """
+            try? xml.write(to: csproj, atomically: true, encoding: .utf8)
+            let restored = command(dotnet, ["restore", dir.path], dir, "", 90)
+            if restored.0 != "ok" { return restored }
+        }
+        do {
+            try source.write(to: dir.appendingPathComponent("Program.cs"), atomically: true, encoding: .utf8)
+        } catch {
+            return ("fail", error.localizedDescription)
+        }
+        var args = ["run", "--project", dir.path, "--verbosity", "quiet"]
+        if FileManager.default.fileExists(atPath: dir.appendingPathComponent("obj").path) {
+            args.append("--no-restore")
+        }
+        return command(dotnet, args, dir, stdin, 20)
+    }
+
+    private static func command(_ dotnet: String, _ args: [String], _ dir: URL, _ stdin: String, _ seconds: Double) -> (String, String) {
+        let proc = Process()
+        proc.executableURL = URL(fileURLWithPath: dotnet)
+        proc.arguments = args
+        proc.currentDirectoryURL = dir
+        var env = ProcessInfo.processInfo.environment
+        let root = (dotnet as NSString).deletingLastPathComponent
+        env["PATH"] = [root, "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin", "/bin"].joined(separator: ":")
+        env["DOTNET_ROOT"] = root
+        env["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
+        env["DOTNET_NOLOGO"] = "1"
+        env["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"] = "1"
+        proc.environment = env
+        let out = Pipe()
+        let input = Pipe()
+        proc.standardOutput = out
+        proc.standardError = out
+        proc.standardInput = input
+        var collected = Data()
+        let lock = NSLock()
+        out.fileHandleForReading.readabilityHandler = { handle in
+            let chunk = handle.availableData
+            guard !chunk.isEmpty else { return }
+            lock.lock()
+            collected.append(chunk)
+            lock.unlock()
+        }
+        do { try proc.run() } catch { return ("fail", error.localizedDescription) }
+        if let data = stdin.data(using: .utf8) { input.fileHandleForWriting.write(data) }
+        try? input.fileHandleForWriting.close()
+        let group = DispatchGroup()
+        group.enter()
+        proc.terminationHandler = { _ in group.leave() }
+        if group.wait(timeout: .now() + seconds) == .timedOut {
+            proc.terminate()
+            kill(proc.processIdentifier, SIGKILL)
+            out.fileHandleForReading.readabilityHandler = nil
+            return ("timeout", clip(collected, lock))
+        }
+        out.fileHandleForReading.readabilityHandler = nil
+        let rest = out.fileHandleForReading.readDataToEndOfFile()
+        lock.lock()
+        collected.append(rest)
+        lock.unlock()
+        let text = clip(collected, lock)
+        return proc.terminationStatus == 0 ? ("ok", text) : ("fail", text)
+    }
+
+    private static func clip(_ data: Data, _ lock: NSLock) -> String {
+        lock.lock()
+        let copy = data
+        lock.unlock()
+        let text = String(data: copy, encoding: .utf8) ?? ""
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.count <= 16_000 ? trimmed : String(trimmed.prefix(16_000)) + "\n…"
+    }
+
+    private static func targetFramework(_ dotnet: String) -> String {
+        let version = command(dotnet, ["--version"], URL(fileURLWithPath: NSTemporaryDirectory()), "", 20)
+        let major = version.1.split(separator: ".").first.map(String.init) ?? ""
+        return major.allSatisfy(\.isNumber) && !major.isEmpty ? "net\(major).0" : "net8.0"
+    }
+
+    private static func findDotnet() -> String? {
+        let names = [
+            "/usr/local/share/dotnet/dotnet",
+            "/opt/homebrew/share/dotnet/dotnet",
+            "/usr/local/bin/dotnet",
+            NSHomeDirectory() + "/.dotnet/dotnet",
+        ]
+        return names.first { FileManager.default.isExecutableFile(atPath: $0) }
+    }
+    #endif
 }

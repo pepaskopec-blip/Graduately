@@ -63,6 +63,10 @@ final class Content {
     let tg2: [J]
     let tg3: [J]
     let tg4: [J]
+    let cs: [J]
+    let cs2: [J]
+    let cs3: [J]
+    let cs4: [J]
     let mat0: [J]
     let mat: [J]
     let mat2: [J]
@@ -133,6 +137,10 @@ final class Content {
         tg2 = raw.arr("tg2")
         tg3 = raw.arr("tg3")
         tg4 = raw.arr("tg4")
+        cs = raw.arr("cs")
+        cs2 = raw.arr("cs2")
+        cs3 = raw.arr("cs3")
+        cs4 = raw.arr("cs4")
         mat0 = raw.arr("mat0")
         mat = raw.arr("mat")
         mat2 = raw.arr("mat2")
@@ -199,6 +207,10 @@ final class Content {
     func tg2Lesson(_ id: Int) -> J? { tg2.first { $0.int("id") == id } }
     func tg3Lesson(_ id: Int) -> J? { tg3.first { $0.int("id") == id } }
     func tg4Lesson(_ id: Int) -> J? { tg4.first { $0.int("id") == id } }
+    func csLesson(_ id: Int) -> J? { cs.first { $0.int("id") == id } }
+    func cs2Lesson(_ id: Int) -> J? { cs2.first { $0.int("id") == id } }
+    func cs3Lesson(_ id: Int) -> J? { cs3.first { $0.int("id") == id } }
+    func cs4Lesson(_ id: Int) -> J? { cs4.first { $0.int("id") == id } }
     func mat0Lesson(_ id: Int) -> J? { mat0.first { $0.int("id") == id } }
     func matLesson(_ id: Int) -> J? { mat.first { $0.int("id") == id } }
     func mat2Lesson(_ id: Int) -> J? { mat2.first { $0.int("id") == id } }

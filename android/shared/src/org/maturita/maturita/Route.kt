@@ -118,6 +118,15 @@ sealed class Route(val page: String) {
     data object Tg4Map : Route("tg4map")
     data class Tg4Lesson(val id: Int) : Route("tg4unit$id")
     data class Tg4Ex(val id: Int) : Route("tg4ex$id")
+    data object CsYears : Route("csyears")
+    data object CsMap : Route("csmap")
+    data class CsLesson(val id: Int) : Route("csunit$id")
+    data object Cs2Map : Route("cs2map")
+    data class Cs2Lesson(val id: Int) : Route("cs2unit$id")
+    data object Cs3Map : Route("cs3map")
+    data class Cs3Lesson(val id: Int) : Route("cs3unit$id")
+    data object Cs4Map : Route("cs4map")
+    data class Cs4Lesson(val id: Int) : Route("cs4unit$id")
     data object CzechMap : Route("czechmap")
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
@@ -263,6 +272,15 @@ sealed class Route(val page: String) {
         Tg4Map -> listOf(Subjects, TgYears, Tg4Map)
         is Tg4Lesson -> listOf(Subjects, TgYears, Tg4Map, this)
         is Tg4Ex -> listOf(Subjects, TgYears, Tg4Map, Tg4Lesson(id), this)
+        CsYears -> listOf(Subjects, CsYears)
+        CsMap -> listOf(Subjects, CsYears, CsMap)
+        is CsLesson -> listOf(Subjects, CsYears, CsMap, this)
+        Cs2Map -> listOf(Subjects, CsYears, Cs2Map)
+        is Cs2Lesson -> listOf(Subjects, CsYears, Cs2Map, this)
+        Cs3Map -> listOf(Subjects, CsYears, Cs3Map)
+        is Cs3Lesson -> listOf(Subjects, CsYears, Cs3Map, this)
+        Cs4Map -> listOf(Subjects, CsYears, Cs4Map)
+        is Cs4Lesson -> listOf(Subjects, CsYears, Cs4Map, this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -320,6 +338,11 @@ fun routeFromPage(page: String): Route? = when (page) {
     "tg2map" -> Route.Tg2Map
     "tg3map" -> Route.Tg3Map
     "tg4map" -> Route.Tg4Map
+    "csyears" -> Route.CsYears
+    "csmap" -> Route.CsMap
+    "cs2map" -> Route.Cs2Map
+    "cs3map" -> Route.Cs3Map
+    "cs4map" -> Route.Cs4Map
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
     "readinglist" -> Route.ReadingList
@@ -440,6 +463,18 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""tgex(\d+)""").matchEntire(page)?.let {
             return Route.TgEx(it.groupValues[1].toInt())
+        }
+        Regex("""cs4unit(\d+)""").matchEntire(page)?.let {
+            return Route.Cs4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""cs3unit(\d+)""").matchEntire(page)?.let {
+            return Route.Cs3Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""cs2unit(\d+)""").matchEntire(page)?.let {
+            return Route.Cs2Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""csunit(\d+)""").matchEntire(page)?.let {
+            return Route.CsLesson(it.groupValues[1].toInt())
         }
         Regex("""lit4unit(\d+)""").matchEntire(page)?.let {
             return Route.Lit4Lesson(it.groupValues[1].toInt())

@@ -6,6 +6,12 @@
 # en: bullet
 
 --- 2026-10-11
+cs: Programování: čtyři ročníky C#, od výpisu po LINQ a async
+cs: Kód se píše v lekci a hned vedle se spustí
+en: Programming: four years of C#, from output to LINQ and async
+en: You write the code in the lesson and run it right beside the text
+
+--- 2026-10-11
 cs: Technická grafika: čtyři ročníky AutoCADu, od výkresu po 3D
 cs: V každé lekci je postup, zadání s rozměry a kvíz
 en: Technical graphics: four years of AutoCAD, from the drawing sheet to 3D
