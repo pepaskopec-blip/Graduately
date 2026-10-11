@@ -30,6 +30,8 @@ import org.maturita.maturita.ui.HwQuizScreen
 import org.maturita.maturita.ui.HwYearsScreen
 import org.maturita.maturita.ui.LessonListScreen
 import org.maturita.maturita.ui.FyzQuizScreen
+import org.maturita.maturita.ui.TgQuizScreen
+import org.maturita.maturita.ui.TgYearsScreen
 import org.maturita.maturita.ui.MathPracticeScreen
 import org.maturita.maturita.ui.MatYearsScreen
 import org.maturita.maturita.ui.FyzYearsScreen
@@ -525,6 +527,63 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Fyz4Ex -> FyzQuizScreen(vm, 4, r.id)
+            Route.TgYears -> TgYearsScreen(vm)
+            Route.TgMap -> LessonListScreen(
+                vm, vm.tr("tg_year1"), vm.tr("tg_sub"),
+                vm.content.tg.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.tgDone(id), Route.TgLesson(id))
+                },
+            )
+            is Route.TgLesson -> {
+                val l = vm.content.tgLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.TgEx(r.id))
+                }
+            }
+            is Route.TgEx -> TgQuizScreen(vm, 1, r.id)
+            Route.Tg2Map -> LessonListScreen(
+                vm, vm.tr("tg_year2"), vm.tr("tg2_sub"),
+                vm.content.tg2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.tg2Done(id), Route.Tg2Lesson(id))
+                },
+            )
+            is Route.Tg2Lesson -> {
+                val l = vm.content.tg2Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Tg2Ex(r.id))
+                }
+            }
+            is Route.Tg2Ex -> TgQuizScreen(vm, 2, r.id)
+            Route.Tg3Map -> LessonListScreen(
+                vm, vm.tr("tg_year3"), vm.tr("tg3_sub"),
+                vm.content.tg3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.tg3Done(id), Route.Tg3Lesson(id))
+                },
+            )
+            is Route.Tg3Lesson -> {
+                val l = vm.content.tg3Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Tg3Ex(r.id))
+                }
+            }
+            is Route.Tg3Ex -> TgQuizScreen(vm, 3, r.id)
+            Route.Tg4Map -> LessonListScreen(
+                vm, vm.tr("tg_year4"), vm.tr("tg4_sub"),
+                vm.content.tg4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.tg4Done(id), Route.Tg4Lesson(id))
+                },
+            )
+            is Route.Tg4Lesson -> {
+                val l = vm.content.tg4Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Tg4Ex(r.id))
+                }
+            }
+            is Route.Tg4Ex -> TgQuizScreen(vm, 4, r.id)
             Route.SciMap -> SciMapScreen(vm)
             Route.ChemMap -> LessonListScreen(
                 vm, vm.tr("Chemie"), vm.tr("chem_sub"),

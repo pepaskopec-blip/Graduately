@@ -713,6 +713,12 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
             + vm.content.mat2.filter { vm.progress.mat2Done($0.int("id")) }.count
             + vm.content.mat3.filter { vm.progress.mat3Done($0.int("id")) }.count
             + vm.content.mat4.filter { vm.progress.mat4Done($0.int("id")) }.count
+    case "tgyears", "tgmap", "tg2map", "tg3map", "tg4map":
+        sum.totalEx = vm.content.tg.count + vm.content.tg2.count + vm.content.tg3.count + vm.content.tg4.count
+        sum.doneEx = vm.content.tg.filter { vm.progress.tgDone($0.int("id")) }.count
+            + vm.content.tg2.filter { vm.progress.tg2Done($0.int("id")) }.count
+            + vm.content.tg3.filter { vm.progress.tg3Done($0.int("id")) }.count
+            + vm.content.tg4.filter { vm.progress.tg4Done($0.int("id")) }.count
     case "fyzyears", "fyzmap", "fyz2map", "fyz3map", "fyz4map":
         sum.totalEx = vm.content.fyz.count + vm.content.fyz2.count + vm.content.fyz3.count + vm.content.fyz4.count
         sum.doneEx = vm.content.fyz.filter { vm.progress.fyzDone($0.int("id")) }.count
@@ -1014,6 +1020,27 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.fyz4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit\(l.int("id"))", extra: "fyzika")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex\(l.int("id"))")
+    }
+    add(vm.tr("Technická grafika"), vm.tr("search_lesson"), "tgyears", extra: "autocad grafika")
+    add(vm.tr("tg_year1"), vm.tr("search_lesson"), "tgmap", extra: "rocnik")
+    add(vm.tr("tg_year2"), vm.tr("search_lesson"), "tg2map", extra: "rocnik")
+    add(vm.tr("tg_year3"), vm.tr("search_lesson"), "tg3map", extra: "rocnik")
+    add(vm.tr("tg_year4"), vm.tr("search_lesson"), "tg4map", extra: "rocnik")
+    for l in vm.content.tg {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tgunit\(l.int("id"))", extra: "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tgex\(l.int("id"))")
+    }
+    for l in vm.content.tg2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg2unit\(l.int("id"))", extra: "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg2ex\(l.int("id"))")
+    }
+    for l in vm.content.tg3 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg3unit\(l.int("id"))", extra: "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg3ex\(l.int("id"))")
+    }
+    for l in vm.content.tg4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg4unit\(l.int("id"))", extra: "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg4ex\(l.int("id"))")
     }
     add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra: "chemie")
     add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra: "biologie")
@@ -1744,6 +1771,47 @@ struct MatYearsScreen: View {
         }
         .navigationTitle(vm.tr("Matematika"))
         .navigationSubtitle(vm.tr("mat_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct TgYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route)] = [
+            ("tg_year1", "tg_sub", .tgMap),
+            ("tg_year2", "tg2_sub", .tg2Map),
+            ("tg_year3", "tg3_sub", .tg3Map),
+            ("tg_year4", "tg4_sub", .tg4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+            }
+            .buttonStyle(PressScaleStyle())
+        }
+        .navigationTitle(vm.tr("Technická grafika"))
+        .navigationSubtitle(vm.tr("tg_years_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.tgMap) {
+                ListRowLabel(title: vm.tr("tg_year1"), subtitle: vm.tr("tg_sub"))
+            }
+            NavigationLink(value: Route.tg2Map) {
+                ListRowLabel(title: vm.tr("tg_year2"), subtitle: vm.tr("tg2_sub"))
+            }
+            NavigationLink(value: Route.tg3Map) {
+                ListRowLabel(title: vm.tr("tg_year3"), subtitle: vm.tr("tg3_sub"))
+            }
+            NavigationLink(value: Route.tg4Map) {
+                ListRowLabel(title: vm.tr("tg_year4"), subtitle: vm.tr("tg4_sub"))
+            }
+        }
+        .navigationTitle(vm.tr("Technická grafika"))
+        .navigationSubtitle(vm.tr("tg_years_sub"))
         .appListStyle()
         #endif
     }
@@ -2808,6 +2876,72 @@ struct RouteDestination: View {
             }
         case .fyz4Ex(let id):
             FyzQuizScreen(vm: vm, year: 4, id: id)
+        case .tgYears:
+            TgYearsScreen(vm: vm)
+        case .tgMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("tg_year1"),
+                subtitle: vm.tr("tg_sub"),
+                rows: vm.content.tg.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "t\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.tgDone(id), destination: .tgLesson(id))
+                }
+            )
+        case .tgLesson(let id):
+            if let l = vm.content.tgLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .tgEx(id))
+            }
+        case .tgEx(let id):
+            TgQuizScreen(vm: vm, year: 1, id: id)
+        case .tg2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("tg_year2"),
+                subtitle: vm.tr("tg2_sub"),
+                rows: vm.content.tg2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "t2\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.tg2Done(id), destination: .tg2Lesson(id))
+                }
+            )
+        case .tg2Lesson(let id):
+            if let l = vm.content.tg2Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .tg2Ex(id))
+            }
+        case .tg2Ex(let id):
+            TgQuizScreen(vm: vm, year: 2, id: id)
+        case .tg3Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("tg_year3"),
+                subtitle: vm.tr("tg3_sub"),
+                rows: vm.content.tg3.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "t3\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.tg3Done(id), destination: .tg3Lesson(id))
+                }
+            )
+        case .tg3Lesson(let id):
+            if let l = vm.content.tg3Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .tg3Ex(id))
+            }
+        case .tg3Ex(let id):
+            TgQuizScreen(vm: vm, year: 3, id: id)
+        case .tg4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("tg_year4"),
+                subtitle: vm.tr("tg4_sub"),
+                rows: vm.content.tg4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "t4\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.tg4Done(id), destination: .tg4Lesson(id))
+                }
+            )
+        case .tg4Lesson(let id):
+            if let l = vm.content.tg4Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .tg4Ex(id))
+            }
+        case .tg4Ex(let id):
+            TgQuizScreen(vm: vm, year: 4, id: id)
         case .mluvnice:
             LessonListScreen(
                 vm: vm,

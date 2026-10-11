@@ -5,6 +5,12 @@
 # cs: bullet
 # en: bullet
 
+--- 2026-10-11
+cs: Technická grafika: čtyři ročníky AutoCADu, od výkresu po 3D
+cs: V každé lekci je postup, zadání s rozměry a kvíz
+en: Technical graphics: four years of AutoCAD, from the drawing sheet to 3D
+en: Every lesson has a method, a dimensioned assignment and a quiz
+
 --- 2026-10-07
 cs: Sítě a technické vybavení: doplněné 2. až 4. ročníky, v každém 8 lekcí
 cs: Výklad a kvíz od VLAN a sestavení počítače po maturitu

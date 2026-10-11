@@ -40,7 +40,7 @@
 |---|---|---|
 | welcome_kicker | Graduately | Graduately |
 | welcome_title | Maturita?\nTo dáme. | Maturita?\nWe've got this. |
-| welcome_body | Procvičování k maturitě v jednom okně. Česky i anglicky, napsané v C studenty ze SSŠVT. | Exam practice in one window. Czech and English, written in C by students from SSŠVT. |
+| welcome_body | Procvičování k maturitě v jednom okně. Česky i anglicky, napsané studenty ze SSŠVT. | Exam practice in one window. Czech and English, written by students from SSŠVT. |
 | welcome_body_android | Procvičování k maturitě v telefonu. Česky i anglicky, stejný obsah jako na počítači. | Exam practice on your phone. Czech and English, the same content as on the computer. |
 | welcome_body_desktop | Procvičování k maturitě na počítači. Česky i anglicky, stejný obsah jako v telefonu. | Exam practice on your computer. Czech and English, the same content as on your phone. |
 | welcome_body_ios | Nativní procvičování na iPhonu. Česky i anglicky, stejný obsah, rozhraní podle iOS. | Native exam practice on iPhone. Czech and English, the same content, adapted to iOS. |
@@ -228,6 +228,20 @@
 | fyz2_sub | Molekulová fyzika, teplo, kmity a vlny. | Molecular physics, heat, oscillations and waves. |
 | fyz3_sub | Elektřina a magnetismus. | Electricity and magnetism. |
 | fyz4_sub | Optika, relativita, mikročástice a vesmír. | Optics, relativity, the micro-world and the universe. |
+
+# Technická grafika
+
+| Klíč | Česky | Anglicky |
+|---|---|---|
+| tg_years_sub | Čtyři ročníky AutoCADu, od výkresu po maturitní zadání. | Four years of AutoCAD, from the drawing sheet to the exam project. |
+| tg_year1 | 1. ročník | Year 1 |
+| tg_year2 | 2. ročník | Year 2 |
+| tg_year3 | 3. ročník | Year 3 |
+| tg_year4 | 4. ročník | Year 4 |
+| tg_sub | Výkres, souřadnice a první příkazy. | The sheet, coordinates and the first commands. |
+| tg2_sub | Úpravy, hladiny, šrafy a kóty. | Editing, layers, hatches and dimensions. |
+| tg3_sub | Pohledy, řezy, bloky a tisk. | Views, sections, blocks and plotting. |
+| tg4_sub | 3D model a výkres k maturitě. | A 3D model and the exam drawing. |
 
 # Angličtina a němčina
 

@@ -56,6 +56,10 @@ class Content(root: JSONObject) {
     val fyz2 = raw.arr("fyz2")
     val fyz3 = raw.arr("fyz3")
     val fyz4 = raw.arr("fyz4")
+    val tg = raw.arr("tg")
+    val tg2 = raw.arr("tg2")
+    val tg3 = raw.arr("tg3")
+    val tg4 = raw.arr("tg4")
     val mat0 = raw.arr("mat0")
     val mat = raw.arr("mat")
     val mat2 = raw.arr("mat2")
@@ -108,6 +112,10 @@ class Content(root: JSONObject) {
     fun fyz2Lesson(id: Int) = fyz2.firstOrNull { it.int("id") == id }
     fun fyz3Lesson(id: Int) = fyz3.firstOrNull { it.int("id") == id }
     fun fyz4Lesson(id: Int) = fyz4.firstOrNull { it.int("id") == id }
+    fun tgLesson(id: Int) = tg.firstOrNull { it.int("id") == id }
+    fun tg2Lesson(id: Int) = tg2.firstOrNull { it.int("id") == id }
+    fun tg3Lesson(id: Int) = tg3.firstOrNull { it.int("id") == id }
+    fun tg4Lesson(id: Int) = tg4.firstOrNull { it.int("id") == id }
     fun mat0Lesson(id: Int) = mat0.firstOrNull { it.int("id") == id }
     fun matLesson(id: Int) = mat.firstOrNull { it.int("id") == id }
     fun mat2Lesson(id: Int) = mat2.firstOrNull { it.int("id") == id }

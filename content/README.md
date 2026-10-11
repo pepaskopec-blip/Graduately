@@ -18,7 +18,7 @@ Skript vypíše počet lekcí, nebo chyby s cestou a číslem řádku
 
 | Složka | Obsah |
 |---|---|
-| `pocitacove-site/`, `technicke-vybaveni/`, `obcanska-nauka/`, `fyzika/` | `N-rocnik/`, v nich lekce |
+| `pocitacove-site/`, `technicke-vybaveni/`, `technicka-grafika/`, `obcanska-nauka/`, `fyzika/` | `N-rocnik/`, v nich lekce |
 | `prirodni-vedy/chemie`, `prirodni-vedy/biologie` | lekce |
 | `cestina/literatura/N-rocnik` | lekce literatury |
 | `cestina/mluvnice` | cvičení z mluvnice |
@@ -97,7 +97,7 @@ a smažte `puvodni`.
 
 ## Běžná lekce
 
-Sítě, hardware, občanka, literatura, chemie, biologie, fyzika.
+Sítě, hardware, technická grafika, občanka, literatura, chemie, biologie, fyzika.
 
 ```md
 ---

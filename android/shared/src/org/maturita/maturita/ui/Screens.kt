@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.filled.Architecture
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Functions
 import androidx.compose.material.icons.filled.Check
@@ -225,6 +226,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "flask" -> Icon(Icons.Filled.Science, null, tint = tint, modifier = Modifier.size(26.dp))
             "bolt" -> Icon(Icons.Filled.Bolt, null, tint = tint, modifier = Modifier.size(26.dp))
             "function" -> Icon(Icons.Filled.Functions, null, tint = tint, modifier = Modifier.size(26.dp))
+            "ruler" -> Icon(Icons.Filled.Architecture, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -347,6 +349,13 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
                 vm.content.fyz2.count { vm.progress.fyz2Done(it.int("id")) } +
                 vm.content.fyz3.count { vm.progress.fyz3Done(it.int("id")) } +
                 vm.content.fyz4.count { vm.progress.fyz4Done(it.int("id")) }
+        }
+        "tgyears", "tgmap", "tg2map", "tg3map", "tg4map" -> {
+            sum.totalEx = vm.content.tg.size + vm.content.tg2.size + vm.content.tg3.size + vm.content.tg4.size
+            sum.doneEx = vm.content.tg.count { vm.progress.tgDone(it.int("id")) } +
+                vm.content.tg2.count { vm.progress.tg2Done(it.int("id")) } +
+                vm.content.tg3.count { vm.progress.tg3Done(it.int("id")) } +
+                vm.content.tg4.count { vm.progress.tg4Done(it.int("id")) }
         }
         "czechmap" -> {
             val litDone = vm.content.lit.count { vm.progress.litDone(it.int("id")) } +
@@ -649,6 +658,27 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit${l.int("id")}", extra = "fyzika")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex${l.int("id")}")
     }
+    add(vm.tr("Technická grafika"), vm.tr("search_lesson"), "tgyears", extra = "autocad grafika")
+    add(vm.tr("tg_year1"), vm.tr("search_lesson"), "tgmap", extra = "rocnik")
+    add(vm.tr("tg_year2"), vm.tr("search_lesson"), "tg2map", extra = "rocnik")
+    add(vm.tr("tg_year3"), vm.tr("search_lesson"), "tg3map", extra = "rocnik")
+    add(vm.tr("tg_year4"), vm.tr("search_lesson"), "tg4map", extra = "rocnik")
+    vm.content.tg.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tgunit${l.int("id")}", extra = "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tgex${l.int("id")}")
+    }
+    vm.content.tg2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg2unit${l.int("id")}", extra = "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg2ex${l.int("id")}")
+    }
+    vm.content.tg3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg3unit${l.int("id")}", extra = "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg3ex${l.int("id")}")
+    }
+    vm.content.tg4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "tg4unit${l.int("id")}", extra = "autocad")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "tg4ex${l.int("id")}")
+    }
     add(vm.tr("Chemie"), vm.tr("search_lesson"), "chemmap", extra = "chemie")
     add(vm.tr("Biologie"), vm.tr("search_lesson"), "biomap", extra = "biologie")
     vm.content.chem.forEach { l ->
@@ -843,6 +873,20 @@ fun MatYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("mat_year2"), subtitle = vm.tr("mat2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat2Map) }
                 NavRow(title = vm.tr("mat_year3"), subtitle = vm.tr("mat3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat3Map) }
                 NavRow(title = vm.tr("mat_year4"), subtitle = vm.tr("mat4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun TgYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Technická grafika"), vm.tr("tg_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("tg_year1"), subtitle = vm.tr("tg_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.TgMap) }
+                NavRow(title = vm.tr("tg_year2"), subtitle = vm.tr("tg2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Tg2Map) }
+                NavRow(title = vm.tr("tg_year3"), subtitle = vm.tr("tg3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Tg3Map) }
+                NavRow(title = vm.tr("tg_year4"), subtitle = vm.tr("tg4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Tg4Map) }
             }
         }
     }

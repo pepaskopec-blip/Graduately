@@ -1065,6 +1065,8 @@ STD = [
     ("prirodni-vedy/chemie", "chem"), ("prirodni-vedy/biologie", "bio"),
     ("fyzika/1-rocnik", "fyz"), ("fyzika/2-rocnik", "fyz2"),
     ("fyzika/3-rocnik", "fyz3"), ("fyzika/4-rocnik", "fyz4"),
+    ("technicka-grafika/1-rocnik", "tg"), ("technicka-grafika/2-rocnik", "tg2"),
+    ("technicka-grafika/3-rocnik", "tg3"), ("technicka-grafika/4-rocnik", "tg4"),
 ]
 MATH = [
     ("matematika/0-opakovani", "mat0"), ("matematika/1-rocnik", "mat"),

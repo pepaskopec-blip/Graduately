@@ -11,7 +11,7 @@
 | Matematika | Matematika | Mathematics | function | matyears | ano |
 | Fyzika | Fyzika | Physics | bolt | fyzyears | ano |
 | Základy přírodních věd | Základy přírodních věd | Fundamentals of Natural Sciences | flask | scimap | ano |
-| Technická grafika | Technická grafika | Technical Drawing | lock |  | ne |
+| Technická grafika | Technická grafika | Technical Graphics | ruler | tgyears | ano |
 | Prezentační grafika | Prezentační grafika | Presentation Graphics | lock |  | ne |
 | Programování | Programování | Programming | lock |  | ne |
 | Programové vybavení | Programové vybavení | Software | lock |  | ne |

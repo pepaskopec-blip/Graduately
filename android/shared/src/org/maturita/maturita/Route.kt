@@ -105,6 +105,19 @@ sealed class Route(val page: String) {
     data object Fyz4Map : Route("fyz4map")
     data class Fyz4Lesson(val id: Int) : Route("fyz4unit$id")
     data class Fyz4Ex(val id: Int) : Route("fyz4ex$id")
+    data object TgYears : Route("tgyears")
+    data object TgMap : Route("tgmap")
+    data class TgLesson(val id: Int) : Route("tgunit$id")
+    data class TgEx(val id: Int) : Route("tgex$id")
+    data object Tg2Map : Route("tg2map")
+    data class Tg2Lesson(val id: Int) : Route("tg2unit$id")
+    data class Tg2Ex(val id: Int) : Route("tg2ex$id")
+    data object Tg3Map : Route("tg3map")
+    data class Tg3Lesson(val id: Int) : Route("tg3unit$id")
+    data class Tg3Ex(val id: Int) : Route("tg3ex$id")
+    data object Tg4Map : Route("tg4map")
+    data class Tg4Lesson(val id: Int) : Route("tg4unit$id")
+    data class Tg4Ex(val id: Int) : Route("tg4ex$id")
     data object CzechMap : Route("czechmap")
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
@@ -237,6 +250,19 @@ sealed class Route(val page: String) {
         Fyz4Map -> listOf(Subjects, FyzYears, Fyz4Map)
         is Fyz4Lesson -> listOf(Subjects, FyzYears, Fyz4Map, this)
         is Fyz4Ex -> listOf(Subjects, FyzYears, Fyz4Map, Fyz4Lesson(id), this)
+        TgYears -> listOf(Subjects, TgYears)
+        TgMap -> listOf(Subjects, TgYears, TgMap)
+        is TgLesson -> listOf(Subjects, TgYears, TgMap, this)
+        is TgEx -> listOf(Subjects, TgYears, TgMap, TgLesson(id), this)
+        Tg2Map -> listOf(Subjects, TgYears, Tg2Map)
+        is Tg2Lesson -> listOf(Subjects, TgYears, Tg2Map, this)
+        is Tg2Ex -> listOf(Subjects, TgYears, Tg2Map, Tg2Lesson(id), this)
+        Tg3Map -> listOf(Subjects, TgYears, Tg3Map)
+        is Tg3Lesson -> listOf(Subjects, TgYears, Tg3Map, this)
+        is Tg3Ex -> listOf(Subjects, TgYears, Tg3Map, Tg3Lesson(id), this)
+        Tg4Map -> listOf(Subjects, TgYears, Tg4Map)
+        is Tg4Lesson -> listOf(Subjects, TgYears, Tg4Map, this)
+        is Tg4Ex -> listOf(Subjects, TgYears, Tg4Map, Tg4Lesson(id), this)
         CzechMap -> listOf(Subjects, CzechMap)
         Mluvnice -> listOf(Subjects, CzechMap, Mluvnice)
         is MluvEx -> listOf(Subjects, CzechMap, Mluvnice, this)
@@ -289,6 +315,11 @@ fun routeFromPage(page: String): Route? = when (page) {
     "fyz2map" -> Route.Fyz2Map
     "fyz3map" -> Route.Fyz3Map
     "fyz4map" -> Route.Fyz4Map
+    "tgyears" -> Route.TgYears
+    "tgmap" -> Route.TgMap
+    "tg2map" -> Route.Tg2Map
+    "tg3map" -> Route.Tg3Map
+    "tg4map" -> Route.Tg4Map
     "czechmap" -> Route.CzechMap
     "mluvnice" -> Route.Mluvnice
     "readinglist" -> Route.ReadingList
@@ -385,6 +416,30 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""fyzex(\d+)""").matchEntire(page)?.let {
             return Route.FyzEx(it.groupValues[1].toInt())
+        }
+        Regex("""tg4unit(\d+)""").matchEntire(page)?.let {
+            return Route.Tg4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""tg4ex(\d+)""").matchEntire(page)?.let {
+            return Route.Tg4Ex(it.groupValues[1].toInt())
+        }
+        Regex("""tg3unit(\d+)""").matchEntire(page)?.let {
+            return Route.Tg3Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""tg3ex(\d+)""").matchEntire(page)?.let {
+            return Route.Tg3Ex(it.groupValues[1].toInt())
+        }
+        Regex("""tg2unit(\d+)""").matchEntire(page)?.let {
+            return Route.Tg2Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""tg2ex(\d+)""").matchEntire(page)?.let {
+            return Route.Tg2Ex(it.groupValues[1].toInt())
+        }
+        Regex("""tgunit(\d+)""").matchEntire(page)?.let {
+            return Route.TgLesson(it.groupValues[1].toInt())
+        }
+        Regex("""tgex(\d+)""").matchEntire(page)?.let {
+            return Route.TgEx(it.groupValues[1].toInt())
         }
         Regex("""lit4unit(\d+)""").matchEntire(page)?.let {
             return Route.Lit4Lesson(it.groupValues[1].toInt())

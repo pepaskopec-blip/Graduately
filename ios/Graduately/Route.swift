@@ -111,6 +111,19 @@ enum Route: Hashable {
     case fyz4Map
     case fyz4Lesson(Int)
     case fyz4Ex(Int)
+    case tgYears
+    case tgMap
+    case tgLesson(Int)
+    case tgEx(Int)
+    case tg2Map
+    case tg2Lesson(Int)
+    case tg2Ex(Int)
+    case tg3Map
+    case tg3Lesson(Int)
+    case tg3Ex(Int)
+    case tg4Map
+    case tg4Lesson(Int)
+    case tg4Ex(Int)
     case czechMap
     case mluvnice
     case mluvEx(Int)
@@ -224,6 +237,19 @@ enum Route: Hashable {
         case .fyz4Map: return "fyz4map"
         case .fyz4Lesson(let id): return "fyz4unit\(id)"
         case .fyz4Ex(let id): return "fyz4ex\(id)"
+        case .tgYears: return "tgyears"
+        case .tgMap: return "tgmap"
+        case .tgLesson(let id): return "tgunit\(id)"
+        case .tgEx(let id): return "tgex\(id)"
+        case .tg2Map: return "tg2map"
+        case .tg2Lesson(let id): return "tg2unit\(id)"
+        case .tg2Ex(let id): return "tg2ex\(id)"
+        case .tg3Map: return "tg3map"
+        case .tg3Lesson(let id): return "tg3unit\(id)"
+        case .tg3Ex(let id): return "tg3ex\(id)"
+        case .tg4Map: return "tg4map"
+        case .tg4Lesson(let id): return "tg4unit\(id)"
+        case .tg4Ex(let id): return "tg4ex\(id)"
         case .czechMap: return "czechmap"
         case .mluvnice: return "mluvnice"
         case .mluvEx(let n): return "mluve\(n)"
@@ -448,6 +474,32 @@ enum Route: Hashable {
             return [.fyzYears, .fyz4Map, .fyz4Lesson(id)]
         case .fyz4Ex(let id):
             return [.fyzYears, .fyz4Map, .fyz4Lesson(id), .fyz4Ex(id)]
+        case .tgYears:
+            return [.tgYears]
+        case .tgMap:
+            return [.tgYears, .tgMap]
+        case .tgLesson(let id):
+            return [.tgYears, .tgMap, .tgLesson(id)]
+        case .tgEx(let id):
+            return [.tgYears, .tgMap, .tgLesson(id), .tgEx(id)]
+        case .tg2Map:
+            return [.tgYears, .tg2Map]
+        case .tg2Lesson(let id):
+            return [.tgYears, .tg2Map, .tg2Lesson(id)]
+        case .tg2Ex(let id):
+            return [.tgYears, .tg2Map, .tg2Lesson(id), .tg2Ex(id)]
+        case .tg3Map:
+            return [.tgYears, .tg3Map]
+        case .tg3Lesson(let id):
+            return [.tgYears, .tg3Map, .tg3Lesson(id)]
+        case .tg3Ex(let id):
+            return [.tgYears, .tg3Map, .tg3Lesson(id), .tg3Ex(id)]
+        case .tg4Map:
+            return [.tgYears, .tg4Map]
+        case .tg4Lesson(let id):
+            return [.tgYears, .tg4Map, .tg4Lesson(id)]
+        case .tg4Ex(let id):
+            return [.tgYears, .tg4Map, .tg4Lesson(id), .tg4Ex(id)]
         case .czechMap:
             return [.czechMap]
         case .mluvnice:
@@ -508,6 +560,11 @@ func routeFromPage(_ page: String) -> Route? {
     case "fyz2map": return .fyz2Map
     case "fyz3map": return .fyz3Map
     case "fyz4map": return .fyz4Map
+    case "tgyears": return .tgYears
+    case "tgmap": return .tgMap
+    case "tg2map": return .tg2Map
+    case "tg3map": return .tg3Map
+    case "tg4map": return .tg4Map
     case "czechmap": return .czechMap
     case "mluvnice": return .mluvnice
     case "readinglist": return .readingList
@@ -616,6 +673,30 @@ func routeFromPage(_ page: String) -> Route? {
         }
         if let m = page.wholeMatch(of: /fyzex(\d+)/), let n = Int(m.1) {
             return .fyzEx(n)
+        }
+        if let m = page.wholeMatch(of: /tg4unit(\d+)/), let n = Int(m.1) {
+            return .tg4Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /tg4ex(\d+)/), let n = Int(m.1) {
+            return .tg4Ex(n)
+        }
+        if let m = page.wholeMatch(of: /tg3unit(\d+)/), let n = Int(m.1) {
+            return .tg3Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /tg3ex(\d+)/), let n = Int(m.1) {
+            return .tg3Ex(n)
+        }
+        if let m = page.wholeMatch(of: /tg2unit(\d+)/), let n = Int(m.1) {
+            return .tg2Lesson(n)
+        }
+        if let m = page.wholeMatch(of: /tg2ex(\d+)/), let n = Int(m.1) {
+            return .tg2Ex(n)
+        }
+        if let m = page.wholeMatch(of: /tgunit(\d+)/), let n = Int(m.1) {
+            return .tgLesson(n)
+        }
+        if let m = page.wholeMatch(of: /tgex(\d+)/), let n = Int(m.1) {
+            return .tgEx(n)
         }
         if let m = page.wholeMatch(of: /lit4unit(\d+)/), let n = Int(m.1) {
             return .lit4Lesson(n)
