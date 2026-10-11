@@ -8,6 +8,8 @@ struct MapNode: Identifiable {
     let current: Bool
     var finish: Bool = false
     var destination: Route?
+    /// Glyph for a node that has no number, such as a side branch.
+    var symbol: String? = nil
 }
 
 private struct NodePos {
@@ -256,6 +258,8 @@ struct PathMap: View {
                 .overlay {
                     if node.locked {
                         Circle().strokeBorder(palette.lockedBorder, lineWidth: 1)
+                    } else if !node.current && !node.done {
+                        Circle().strokeBorder(palette.accent.opacity(0.55), lineWidth: 2.5)
                     }
                 }
             if node.finish {
@@ -298,6 +302,13 @@ struct PathMap: View {
                             #else
                             .font(.headline.weight(.black))
                             #endif
+                    } else if let symbol = node.symbol {
+                        Image(systemName: symbol)
+                            #if os(macOS)
+                            .font(.title3.weight(.semibold))
+                            #else
+                            .font(.body.weight(.semibold))
+                            #endif
                     }
                     Image(systemName: "checkmark")
                         #if os(macOS)
@@ -313,6 +324,14 @@ struct PathMap: View {
                     .font(.title2.weight(.black))
                     #else
                     .font(.headline.weight(.black))
+                    #endif
+                    .foregroundStyle(node.current ? palette.onAccent : palette.text)
+            } else if let symbol = node.symbol {
+                Image(systemName: symbol)
+                    #if os(macOS)
+                    .font(.title2.weight(.semibold))
+                    #else
+                    .font(.headline.weight(.semibold))
                     #endif
                     .foregroundStyle(node.current ? palette.onAccent : palette.text)
             }

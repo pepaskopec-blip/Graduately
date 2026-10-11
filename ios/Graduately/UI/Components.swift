@@ -50,109 +50,47 @@ enum MacChrome {
     static let pageInset: CGFloat = 28
     static let cardPadding: CGFloat = 22
     static let listRowMinHeight: CGFloat = 52
-    static let homeTileMin: CGFloat = 240
-    static let homeTileHeight: CGFloat = 168
+    static let homeTileMin: CGFloat = 260
+    static let homeTileHeight: CGFloat = 172
     static let pathNode: CGFloat = 84
+    /// Pages stop growing here so cards and text keep their shape on wide displays.
+    static let contentWidth: CGFloat = 1240
+    static let readableWidth: CGFloat = 860
+    static let actionWidth: CGFloat = 520
 }
 
-enum MacGrid {
-    /// Picks a column count that fills the width and keeps tiles wider than they are tall.
-    static func columns(width: CGFloat, height: CGFloat, count: Int, minWidth: CGFloat, minHeight: CGFloat, spacing: CGFloat) -> Int {
-        guard count > 0, width > 0 else { return 1 }
-        let maxCols = max(1, min(count, Int((width + spacing) / (minWidth + spacing))))
-        var best = maxCols
-        var bestScore = CGFloat.greatestFiniteMagnitude
-        let offeredH = height > 1 ? height : minHeight * CGFloat(count)
-        for cols in 1...maxCols {
-            let rows = Int(ceil(Double(count) / Double(cols)))
-            let tileW = (width - spacing * CGFloat(cols - 1)) / CGFloat(cols)
-            if tileW + 0.5 < minWidth { continue }
-            let needed = CGFloat(rows) * minHeight + spacing * CGFloat(max(rows - 1, 0))
-            let tileH = max(minHeight, (offeredH - spacing * CGFloat(max(rows - 1, 0))) / CGFloat(rows))
-            let aspect = tileH / max(tileW, 1)
-            let rem = count % cols
-            let ragged = rem == 0 ? 0 : CGFloat(1.5)
-            let lonely = rem == 1 ? CGFloat(1.4) : 0
-            let tooTall = max(0, aspect - 1.05) * 3
-            let overflow = max(0, needed - offeredH)
-            let score = abs(aspect - 0.78) * 2 + ragged + lonely + tooTall + overflow / 180
-            if score < bestScore {
-                bestScore = score
-                best = cols
-            }
-        }
-        return best
-    }
-
-    static func contentHeight(width: CGFloat, height: CGFloat, count: Int, minWidth: CGFloat, minHeight: CGFloat, spacing: CGFloat) -> CGFloat {
-        let cols = columns(width: width, height: height, count: count, minWidth: minWidth, minHeight: minHeight, spacing: spacing)
-        let rows = max(1, Int(ceil(Double(max(count, 1)) / Double(cols))))
-        return CGFloat(rows) * minHeight + spacing * CGFloat(max(rows - 1, 0))
-    }
-}
-
-struct MacHeaderHeight: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-    }
-}
-
-/// Card grid that grows into the space it is given and scrolls only when the
-/// minimum tile size no longer fits.
+/// Fixed-height cards in as many columns as fit, centred and capped in width.
 struct MacFillGrid<Content: View>: View {
     var count: Int
     var minWidth: CGFloat = 240
     var minHeight: CGFloat = 148
     var spacing: CGFloat = 16
     var inset: CGFloat = 28
-    /// Home embeds the grid in its own scroll view. A second scroller here
-    /// swallows the wheel once a banner (the changelog) makes the page taller.
-    var scrolls = true
+    var maxTileWidth: CGFloat = 340
     @ViewBuilder var content: (Int) -> Content
 
     var body: some View {
         GeometryReader { geo in
-            let innerW = max(geo.size.width - inset * 2, minWidth)
-            let available = max(geo.size.height - inset * 2, minHeight)
-            let cols = MacGrid.columns(width: innerW, height: available, count: count, minWidth: minWidth, minHeight: minHeight, spacing: spacing)
-            let rows = max(1, Int(ceil(Double(max(count, 1)) / Double(cols))))
-            let floorH = CGFloat(rows) * minHeight + spacing * CGFloat(max(rows - 1, 0))
-            let gridH = max(available, floorH)
-            let tileH = max(minHeight, (gridH - spacing * CGFloat(max(rows - 1, 0))) / CGFloat(rows))
-            let tileW = (innerW - spacing * CGFloat(max(cols - 1, 0))) / CGFloat(max(cols, 1))
-            let lastCount = count - (rows - 1) * cols
-            let tiles = VStack(spacing: spacing) {
-                ForEach(0..<rows, id: \.self) { row in
-                    let stretch = row < rows - 1 || lastCount > 1
-                    HStack(spacing: spacing) {
-                        ForEach(0..<cols, id: \.self) { col in
-                            let index = row * cols + col
-                            if index < count {
-                                content(index)
-                                    .frame(
-                                        maxWidth: stretch ? .infinity : tileW,
-                                        minHeight: tileH,
-                                        maxHeight: tileH,
-                                        alignment: .topLeading
-                                    )
-                            }
-                        }
+            let available = max(geo.size.width - inset * 2, minWidth)
+            let fit = max(1, Int((available + spacing) / (minWidth + spacing)))
+            let cols = max(1, min(count, fit))
+            let width = min(available, CGFloat(cols) * maxTileWidth + CGFloat(cols - 1) * spacing)
+            ScrollView {
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.flexible(), spacing: spacing, alignment: .top), count: cols),
+                    alignment: .leading,
+                    spacing: spacing
+                ) {
+                    ForEach(0..<count, id: \.self) { i in
+                        content(i).frame(height: minHeight)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-            }
-            .frame(height: gridH, alignment: .top)
-            .padding(inset)
-            .frame(maxWidth: .infinity, minHeight: scrolls ? geo.size.height : nil, alignment: .top)
-
-            if scrolls {
-                ScrollView { tiles }
-                    .scrollDisabled(floorH + inset * 2 <= geo.size.height + 1)
-            } else {
-                tiles
+                .frame(width: width)
+                .padding(inset)
+                .frame(maxWidth: .infinity)
             }
         }
+        .softAppear()
     }
 }
 
@@ -162,44 +100,102 @@ struct MacLinkCard: View {
     var badge: String? = nil
     var systemImage: String? = nil
     var locked = false
+    var progress: (done: Int, total: Int)? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        let tint = locked ? Color.secondary : Color.accentColor
+        VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .center) {
-                if let badge {
-                    Text(badge)
-                        .font(.title.weight(.bold))
-                        .foregroundStyle(locked ? Color.secondary : Color.accentColor)
+                Group {
+                    if let systemImage {
+                        Image(systemName: systemImage)
+                            .font(.title3.weight(.semibold))
+                    } else if let badge {
+                        Text(badge.hasSuffix(".") ? String(badge.dropLast()) : badge)
+                            .font(.title3.weight(.bold))
+                            .monospacedDigit()
+                    }
                 }
-                if let systemImage {
-                    Image(systemName: systemImage)
-                        .font(.title2.weight(.semibold))
-                        .foregroundStyle(locked ? Color.secondary : Color.accentColor)
-                }
+                .foregroundStyle(tint)
+                .frame(width: 40, height: 40)
+                .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                 Spacer(minLength: 0)
-                if locked {
-                    Image(systemName: "lock.fill")
+                Image(systemName: locked ? "lock.fill" : "chevron.right")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(locked ? .secondary : .primary)
+                    .lineLimit(2)
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .font(.body)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .multilineTextAlignment(.leading)
+            Spacer(minLength: 0)
+            if let progress, progress.total > 0 {
+                HStack(spacing: 10) {
+                    ProgressBar(value: Double(progress.done) / Double(progress.total))
+                    Text("\(progress.done) / \(progress.total)")
+                        .font(.subheadline.monospacedDigit())
                         .foregroundStyle(.secondary)
                 }
             }
-            Text(title)
-                .font(.title2.weight(.semibold))
-                .foregroundStyle(locked ? .secondary : .primary)
-                .fixedSize(horizontal: false, vertical: true)
-            if let subtitle, !subtitle.isEmpty {
-                Text(subtitle)
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer(minLength: 0)
         }
-        .padding(22)
+        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .softSurface(cornerRadius: 22)
+        .softSurface(cornerRadius: 20)
+        .contentShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 }
 #endif
+
+/// Flat capsule bar. Unlike ProgressView it shows nothing at zero.
+struct ProgressBar: View {
+    let value: Double
+    var height: CGFloat = 8
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule().fill(Color.primary.opacity(0.08))
+                if value > 0 {
+                    Capsule()
+                        .fill(Color.accentColor)
+                        .frame(width: max(height, geo.size.width * min(value, 1)))
+                }
+            }
+        }
+        .frame(height: height)
+        .animation(Motion.settle, value: value)
+    }
+}
+
+struct ProgressRing<Label: View>: View {
+    let value: Double
+    var lineWidth: CGFloat = 12
+    @ViewBuilder var label: () -> Label
+
+    var body: some View {
+        ZStack {
+            Circle().stroke(Color.primary.opacity(0.08), lineWidth: lineWidth)
+            if value > 0 {
+                Circle()
+                    .trim(from: 0, to: min(value, 1))
+                    .stroke(Color.accentColor, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+            }
+            label()
+        }
+        .animation(Motion.settle, value: value)
+    }
+}
 
 struct FlowLayout: Layout {
     var spacing: CGFloat = 6
@@ -574,15 +570,28 @@ extension View {
         #endif
     }
 
-    /// Full-width, leading-aligned content for exercise screens.
+    /// Leading-aligned content for exercise screens; on the Mac a centred readable column.
     func exerciseContent() -> some View {
-        frame(maxWidth: .infinity, alignment: .leading)
-            #if os(macOS)
+        #if os(macOS)
+        frame(maxWidth: MacChrome.readableWidth, alignment: .leading)
             .padding(.horizontal, MacChrome.pageInset)
-            .padding(.vertical, 20)
-            #else
+            .padding(.vertical, 28)
+            .frame(maxWidth: .infinity)
+        #else
+        frame(maxWidth: .infinity, alignment: .leading)
             .padding()
-            #endif
+        #endif
+    }
+
+    /// Caps a Mac page at [width] and centres it; no-op on iOS.
+    @ViewBuilder
+    func macPage(_ width: CGFloat? = nil) -> some View {
+        #if os(macOS)
+        frame(maxWidth: width ?? MacChrome.contentWidth)
+            .frame(maxWidth: .infinity)
+        #else
+        self
+        #endif
     }
 
     /// macOS content lists use the inset style so they sit under the floating
@@ -636,7 +645,8 @@ struct BottomAction<Extra: View>: View {
         }())
         #if os(macOS)
         .padding(.top, 12)
-        .padding(.bottom, 10)
+        .padding(.bottom, 14)
+        .frame(maxWidth: MacChrome.actionWidth)
         .frame(maxWidth: .infinity)
         #else
         .padding(.top, 8)
@@ -645,10 +655,11 @@ struct BottomAction<Extra: View>: View {
     }
 }
 
-/// Primary + secondary text sized for desktop lists.
+/// Primary + secondary text sized for desktop lists, with optional exercise progress.
 struct ListRowLabel: View {
     let title: String
     var subtitle: String? = nil
+    var progress: (done: Int, total: Int)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
@@ -665,6 +676,25 @@ struct ListRowLabel: View {
                     #endif
                     .foregroundStyle(.secondary)
             }
+            if let progress, progress.total > 0 {
+                ProgressLine(done: progress.done, total: progress.total)
+                    .padding(.top, 4)
+            }
+        }
+    }
+}
+
+/// Slim bar with "done / total" beside it, for list rows.
+struct ProgressLine: View {
+    let done: Int
+    let total: Int
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ProgressBar(value: total == 0 ? 0 : Double(done) / Double(total), height: 5)
+            Text("\(done) / \(total)")
+                .font(.caption.monospacedDigit())
+                .foregroundStyle(.secondary)
         }
     }
 }

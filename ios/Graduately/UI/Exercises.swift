@@ -12,21 +12,9 @@ struct ExerciseScaffold<Content: View>: View {
 
     var body: some View {
         let p = vm.palette
-        Group {
-            #if os(macOS)
-            GeometryReader { geo in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 8) { content() }
-                        .exerciseContent()
-                        .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .center)
-                }
-            }
-            #else
-            ScrollView {
-                VStack(alignment: .leading, spacing: 8) { content() }
-                    .exerciseContent()
-            }
-            #endif
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) { content() }
+                .exerciseContent()
         }
         .scrollDismissesKeyboard(.interactively)
         .detailScreen(title, subtitle: sub)

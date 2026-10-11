@@ -117,6 +117,7 @@
 | search_page | Stránka | Page |
 | search_home | Úvod | Welcome |
 | subjects_title | Předměty | Subjects |
+| subjects_soon | Připravujeme | Coming soon |
 | subjects_sub | Otevřený předmět spustí učební cestu. Zamčené zatím jen čekají. | An open subject opens its path. Locked ones are placeholders for now. |
 
 # Čeština
@@ -262,6 +263,8 @@
 | cs_run | Spustit | Run |
 | cs_reset | Obnovit ukázku | Reset example |
 | cs_running | Překládám… | Compiling… |
+| cs_done | Hotovo | Done |
+| cs_failed | Chyba | Error |
 | cs_empty | Zatím nic. Upravte kód a spusťte ho. | Nothing yet. Edit the code and run it. |
 | cs_timeout | Program běžel příliš dlouho a byl zastaven. | The program ran too long and was stopped. |
 | cs_unavailable | Tady C# nespustíte. Na počítači s nainstalovaným .NET se výstup objeví vedle kódu. | C# cannot run here. On a computer with .NET installed the output appears beside the code. |

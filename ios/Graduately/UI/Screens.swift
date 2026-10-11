@@ -1,10 +1,10 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 
 struct PracticeHome: View {
     @ObservedObject var vm: AppModel
-    #if os(macOS)
-    @State private var homeHeader: CGFloat = 280
-    #endif
 
     var body: some View {
         #if os(macOS)
@@ -18,111 +18,124 @@ struct PracticeHome: View {
     private var macHome: some View {
         let sum = summarize(vm.content, vm.progress)
         let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
-        let subjects = vm.content.subjects
-        return GeometryReader { geo in
-            let width = max(geo.size.width - MacChrome.pageInset * 2, MacChrome.homeTileMin)
-            let offered = max(geo.size.height - homeHeader - 20 - MacChrome.pageInset * 2, MacChrome.homeTileHeight)
-            let minGrid = MacGrid.contentHeight(
-                width: width,
-                height: offered,
-                count: subjects.count,
-                minWidth: MacChrome.homeTileMin,
-                minHeight: MacChrome.homeTileHeight,
-                spacing: 16
-            )
-            let gridH = max(minGrid, geo.size.height - homeHeader - 20 - MacChrome.pageInset * 2)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 16) {
-                        if vm.showChangelog {
-                            ChangelogCard(vm: vm)
+        let open = vm.content.subjects.filter { $0.bool("open") }
+        let soon = vm.content.subjects.filter { !$0.bool("open") }
+        return ScrollView {
+            VStack(alignment: .leading, spacing: 28) {
+                if vm.showChangelog {
+                    ChangelogCard(vm: vm)
+                }
+                welcomeCard(sum: sum, pct: pct)
+                VStack(alignment: .leading, spacing: 14) {
+                    Text(vm.tr("subjects_title"))
+                        .font(.title2.weight(.semibold))
+                    LazyVGrid(
+                        columns: [GridItem(.adaptive(minimum: MacChrome.homeTileMin), spacing: 16, alignment: .top)],
+                        alignment: .leading,
+                        spacing: 16
+                    ) {
+                        ForEach(Array(open.enumerated()), id: \.offset) { _, s in
+                            subjectTile(s)
                         }
-                        GlassCard {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text(vm.tr("welcome_title"))
-                                    .font(.largeTitle.bold())
-                                Text(vm.tr(Self.welcomeBodyKey))
-                                    .font(.title3)
+                    }
+                }
+                if !soon.isEmpty {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(vm.tr("subjects_soon"))
+                            .font(.headline)
+                            .foregroundStyle(.secondary)
+                        FlowLayout(spacing: 10) {
+                            ForEach(Array(soon.enumerated()), id: \.offset) { _, s in
+                                Label(vm.tr(s.str("key")), systemImage: "lock.fill")
+                                    .font(.body)
                                     .foregroundStyle(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                ProgressView(value: pct)
-                                    .animation(Motion.settle, value: pct)
-                                Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 9)
+                                    .background(Color.primary.opacity(0.05), in: Capsule())
                             }
                         }
-                        Text(vm.tr("subjects_title"))
-                            .font(.title2.weight(.semibold))
                     }
-                    .fixedSize(horizontal: false, vertical: true)
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear.preference(key: MacHeaderHeight.self, value: proxy.size.height)
-                        }
-                    }
-                    MacFillGrid(
-                        count: subjects.count,
-                        minWidth: MacChrome.homeTileMin,
-                        minHeight: MacChrome.homeTileHeight,
-                        spacing: 16,
-                        inset: 0,
-                        scrolls: false
-                    ) { index in
-                        subjectTile(subjects[index])
-                    }
-                    .frame(height: gridH)
                 }
-                .padding(MacChrome.pageInset)
-                .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .topLeading)
             }
-            .onPreferenceChange(MacHeaderHeight.self) { homeHeader = $0 }
+            .padding(MacChrome.pageInset)
+            .macPage()
         }
         .navigationTitle("Graduately")
     }
 
-    @ViewBuilder
-    private func subjectTile(_ s: J) -> some View {
-        let open = s.bool("open")
-        let dest = s.strOrNull("target").flatMap(routeFromPage)
-        let part = subjectSum(vm, s)
-        let progress = open && part.totalEx > 0 ? Double(part.doneEx) / Double(part.totalEx) : 0
-        Group {
-            if open, let dest, dest != .subjects, dest != .welcome {
-                NavigationLink(value: dest) {
-                    subjectTileBody(s, open: true, progress: progress, part: part)
+    private func welcomeCard(sum: ProgressSum, pct: Double) -> some View {
+        GlassCard {
+            HStack(alignment: .center, spacing: 32) {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(vm.tr("welcome_title"))
+                        .font(.system(size: 34, weight: .bold))
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(vm.tr(Self.welcomeBodyKey))
+                        .font(.title3)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .buttonStyle(PressScaleStyle())
-            } else {
-                subjectTileBody(s, open: false, progress: 0, part: part)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                ProgressRing(value: pct) {
+                    VStack(spacing: 2) {
+                        Text(vm.fmt("stats_pct_fmt", Int((pct * 100).rounded(.down))))
+                            .font(.system(size: 26, weight: .bold, design: .rounded))
+                            .monospacedDigit()
+                        Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                            .font(.subheadline.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(width: 132, height: 132)
             }
+            .padding(.vertical, 6)
         }
     }
 
-    private func subjectTileBody(_ s: J, open: Bool, progress: Double, part: ProgressSum) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
-            SubjectIcon(icon: s.str("icon"), open: open, size: 44)
+    @ViewBuilder
+    private func subjectTile(_ s: J) -> some View {
+        let dest = s.strOrNull("target").flatMap(routeFromPage)
+        if let dest, dest != .subjects, dest != .welcome {
+            NavigationLink(value: dest) {
+                subjectTileBody(s)
+            }
+            .buttonStyle(PressScaleStyle())
+        } else {
+            subjectTileBody(s)
+        }
+    }
+
+    private func subjectTileBody(_ s: J) -> some View {
+        let part = subjectSum(vm, s)
+        let progress = part.totalEx > 0 ? Double(part.doneEx) / Double(part.totalEx) : 0
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .center) {
+                SubjectIcon(icon: s.str("icon"), open: true, size: 40)
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+            }
             Text(vm.tr(s.str("key")))
                 .font(.title3.weight(.semibold))
-                .foregroundStyle(open ? .primary : .secondary)
+                .foregroundStyle(.primary)
                 .multilineTextAlignment(.leading)
+                .lineLimit(2)
             Spacer(minLength: 0)
-            if open && part.totalEx > 0 {
-                ProgressView(value: progress)
-                    .animation(Motion.settle, value: progress)
+            ProgressBar(value: progress)
+            HStack {
                 Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .monospacedDigit()
-            } else if !open {
-                Text(vm.tr("stats_locked"))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                Spacer(minLength: 0)
+                Text(vm.fmt("stats_pct_fmt", Int((progress * 100).rounded(.down))))
             }
+            .font(.subheadline.monospacedDigit())
+            .foregroundStyle(.secondary)
         }
-        .padding(22)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .frame(height: MacChrome.homeTileHeight)
         .softSurface(cornerRadius: 22)
+        .contentShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
     #endif
 
@@ -160,16 +173,28 @@ struct PracticeHome: View {
             }
 
             Section(vm.tr("subjects_title")) {
-                ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
-                    let open = s.bool("open")
+                ForEach(Array(vm.content.subjects.filter { $0.bool("open") }.enumerated()), id: \.offset) { _, s in
                     let dest = s.strOrNull("target").flatMap(routeFromPage)
-                    if open, let dest, dest != .subjects, dest != .welcome {
+                    if let dest, dest != .subjects, dest != .welcome {
                         NavigationLink(value: dest) {
                             subjectLabel(s)
                         }
                     } else {
                         subjectLabel(s)
-                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+
+            let soon = vm.content.subjects.filter { !$0.bool("open") }
+            if !soon.isEmpty {
+                Section(vm.tr("subjects_soon")) {
+                    ForEach(Array(soon.enumerated()), id: \.offset) { _, s in
+                        Label {
+                            Text(vm.tr(s.str("key")))
+                        } icon: {
+                            SubjectIcon(icon: s.str("icon"), open: false)
+                        }
+                        .foregroundStyle(.secondary)
                     }
                 }
             }
@@ -179,15 +204,17 @@ struct PracticeHome: View {
     }
 
     private func subjectLabel(_ s: J) -> some View {
-        Label {
-            VStack(alignment: .leading, spacing: 2) {
+        let part = subjectSum(vm, s)
+        return Label {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(vm.tr(s.str("key")))
-                if !s.bool("open") {
-                    Text(vm.tr("stats_locked")).font(.caption).foregroundStyle(.secondary)
+                if part.totalEx > 0 {
+                    ProgressLine(done: part.doneEx, total: part.totalEx)
                 }
             }
+            .padding(.vertical, 2)
         } icon: {
-            SubjectIcon(icon: s.str("icon"), open: s.bool("open"))
+            SubjectIcon(icon: s.str("icon"), open: true)
         }
     }
     #endif
@@ -423,7 +450,8 @@ struct SettingsScreen: View {
             }
         }
         .padding(MacChrome.pageInset)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: MacChrome.contentWidth, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle(vm.tr("settings_title"))
     }
 
@@ -566,7 +594,8 @@ struct StatsScreen: View {
             }
         }
         .padding(MacChrome.pageInset)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: MacChrome.contentWidth, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle(vm.tr("stats_title"))
     }
 
@@ -661,6 +690,68 @@ struct StatsScreen: View {
                 .monospacedDigit()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// Done and total exercises behind one card of a years screen, or nil when there is no count.
+func routeProgress(_ vm: AppModel, _ r: Route) -> (done: Int, total: Int)? {
+    let c = vm.content
+    let p = vm.progress
+    func tally(_ lessons: [J], _ done: (Int) -> Bool) -> (done: Int, total: Int) {
+        (lessons.filter { done($0.int("id")) }.count, lessons.count)
+    }
+    switch r {
+    case .netMap: return tally(c.netLessons, p.netDone)
+    case .net2Map: return tally(c.itLessons("net2")) { p.courseDone("net2", $0) }
+    case .net3Map: return tally(c.itLessons("net3")) { p.courseDone("net3", $0) }
+    case .net4Map: return tally(c.itLessons("net4")) { p.courseDone("net4", $0) }
+    case .hwMap: return tally(c.hw, p.hwDone)
+    case .hw2Map: return tally(c.itLessons("hw2")) { p.courseDone("hw2", $0) }
+    case .hw3Map: return tally(c.itLessons("hw3")) { p.courseDone("hw3", $0) }
+    case .hw4Map: return tally(c.itLessons("hw4")) { p.courseDone("hw4", $0) }
+    case .onMap: return tally(c.on, p.onDone)
+    case .on2Map: return tally(c.on2, p.on2Done)
+    case .on3Map: return tally(c.on3, p.on3Done)
+    case .on4Map: return tally(c.on4, p.on4Done)
+    case .enMap(let year): return tally(c.enYear(year)) { p.enDone(year, $0) }
+    case .deMap(let year): return tally(c.deYear(year)) { p.deDone(year, $0) }
+    case .roadmap:
+        var done = 0
+        var total = 0
+        for u in c.german where u.bool("unlocked") {
+            let n = u.strs("names").count
+            total += n
+            done += (0..<n).filter { p.germanDone(u.int("id"), $0 + 1) }.count
+        }
+        return (done, total)
+    case .litYears:
+        let parts = [tally(c.lit, p.litDone), tally(c.lit2, p.lit2Done), tally(c.lit3, p.lit3Done), tally(c.lit4, p.lit4Done)]
+        return (parts.reduce(0) { $0 + $1.done }, parts.reduce(0) { $0 + $1.total })
+    case .litMap: return tally(c.lit, p.litDone)
+    case .lit2Map: return tally(c.lit2, p.lit2Done)
+    case .lit3Map: return tally(c.lit3, p.lit3Done)
+    case .lit4Map: return tally(c.lit4, p.lit4Done)
+    case .mluvnice: return tally(c.mluvnice, p.mluvDone)
+    case .chemMap: return tally(c.chem, p.chemDone)
+    case .bioMap: return tally(c.bio, p.bioDone)
+    case .mat0Map: return tally(c.mat0, p.mat0Done)
+    case .matMap: return tally(c.mat, p.matDone)
+    case .mat2Map: return tally(c.mat2, p.mat2Done)
+    case .mat3Map: return tally(c.mat3, p.mat3Done)
+    case .mat4Map: return tally(c.mat4, p.mat4Done)
+    case .fyzMap: return tally(c.fyz, p.fyzDone)
+    case .fyz2Map: return tally(c.fyz2, p.fyz2Done)
+    case .fyz3Map: return tally(c.fyz3, p.fyz3Done)
+    case .fyz4Map: return tally(c.fyz4, p.fyz4Done)
+    case .tgMap: return tally(c.tg, p.tgDone)
+    case .tg2Map: return tally(c.tg2, p.tg2Done)
+    case .tg3Map: return tally(c.tg3, p.tg3Done)
+    case .tg4Map: return tally(c.tg4, p.tg4Done)
+    case .csMap: return tally(c.cs, p.csDone)
+    case .cs2Map: return tally(c.cs2, p.cs2Done)
+    case .cs3Map: return tally(c.cs3, p.cs3Done)
+    case .cs4Map: return tally(c.cs4, p.cs4Done)
+    default: return nil
     }
 }
 
@@ -795,6 +886,7 @@ struct SearchScreen: View {
                     }
                 }
                 .padding(MacChrome.pageInset)
+                .macPage()
             }
         }
         .navigationTitle(vm.tr("search"))
@@ -1108,7 +1200,7 @@ struct RoadmapScreen: View {
                     vm.progress.germanDone(u.int("id"), $0 + 1)
                 }
                 return MapNode(
-                    id: u.str("page"),
+                    id: "unit-\(i)",
                     label: u.str("title"),
                     locked: !unlocked,
                     done: done,
@@ -1186,9 +1278,10 @@ struct UnitMapScreen: View {
                     id: "vocab-\(unitId)",
                     label: vm.tr("Vokabeltraining"),
                     locked: false,
-                    done: false,
+                    done: vm.progress.vocabDone(unitId),
                     current: false,
-                    destination: .vocab(unitId)
+                    destination: .vocab(unitId),
+                    symbol: "character.book.closed.fill"
                 )
             )
             : nil
@@ -1256,9 +1349,9 @@ struct NetYearsScreen: View {
             ("net_year3", "net3_sub", .net3Map),
             ("net_year4", "net4_sub", .net4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1267,16 +1360,16 @@ struct NetYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.netMap) {
-                ListRowLabel(title: vm.tr("net_year1"), subtitle: vm.tr("net_sub"))
+                ListRowLabel(title: vm.tr("net_year1"), subtitle: vm.tr("net_sub"), progress: routeProgress(vm, Route.netMap))
             }
             NavigationLink(value: Route.net2Map) {
-                ListRowLabel(title: vm.tr("net_year2"), subtitle: vm.tr("net2_sub"))
+                ListRowLabel(title: vm.tr("net_year2"), subtitle: vm.tr("net2_sub"), progress: routeProgress(vm, Route.net2Map))
             }
             NavigationLink(value: Route.net3Map) {
-                ListRowLabel(title: vm.tr("net_year3"), subtitle: vm.tr("net3_sub"))
+                ListRowLabel(title: vm.tr("net_year3"), subtitle: vm.tr("net3_sub"), progress: routeProgress(vm, Route.net3Map))
             }
             NavigationLink(value: Route.net4Map) {
-                ListRowLabel(title: vm.tr("net_year4"), subtitle: vm.tr("net4_sub"))
+                ListRowLabel(title: vm.tr("net_year4"), subtitle: vm.tr("net4_sub"), progress: routeProgress(vm, Route.net4Map))
             }
         }
         .navigationTitle(vm.tr("net_years_title"))
@@ -1297,9 +1390,9 @@ struct HwYearsScreen: View {
             ("hw_year3", "hw3_sub", .hw3Map),
             ("hw_year4", "hw4_sub", .hw4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1308,16 +1401,16 @@ struct HwYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.hwMap) {
-                ListRowLabel(title: vm.tr("hw_year1"), subtitle: vm.tr("hw_sub"))
+                ListRowLabel(title: vm.tr("hw_year1"), subtitle: vm.tr("hw_sub"), progress: routeProgress(vm, Route.hwMap))
             }
             NavigationLink(value: Route.hw2Map) {
-                ListRowLabel(title: vm.tr("hw_year2"), subtitle: vm.tr("hw2_sub"))
+                ListRowLabel(title: vm.tr("hw_year2"), subtitle: vm.tr("hw2_sub"), progress: routeProgress(vm, Route.hw2Map))
             }
             NavigationLink(value: Route.hw3Map) {
-                ListRowLabel(title: vm.tr("hw_year3"), subtitle: vm.tr("hw3_sub"))
+                ListRowLabel(title: vm.tr("hw_year3"), subtitle: vm.tr("hw3_sub"), progress: routeProgress(vm, Route.hw3Map))
             }
             NavigationLink(value: Route.hw4Map) {
-                ListRowLabel(title: vm.tr("hw_year4"), subtitle: vm.tr("hw4_sub"))
+                ListRowLabel(title: vm.tr("hw_year4"), subtitle: vm.tr("hw4_sub"), progress: routeProgress(vm, Route.hw4Map))
             }
         }
         .navigationTitle(vm.tr("Technické vybavení"))
@@ -1339,9 +1432,9 @@ struct DeHomeScreen: View {
             ("3", "de_year3", "de_y3_sub", .deMap(3)),
             ("4", "de_year4", "de_y4_sub", .deMap(4)),
         ]
-        MacFillGrid(count: rows.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: rows.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: rows[i].3) {
-                MacLinkCard(title: vm.tr(rows[i].1), subtitle: vm.tr(rows[i].2), badge: rows[i].0)
+                MacLinkCard(title: vm.tr(rows[i].1), subtitle: vm.tr(rows[i].2), badge: rows[i].0, progress: routeProgress(vm, rows[i].3))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1350,11 +1443,11 @@ struct DeHomeScreen: View {
         #else
         List {
             NavigationLink(value: Route.roadmap) {
-                ListRowLabel(title: vm.tr("de_book_title"), subtitle: vm.tr("de_book_sub"))
+                ListRowLabel(title: vm.tr("de_book_title"), subtitle: vm.tr("de_book_sub"), progress: routeProgress(vm, Route.roadmap))
             }
             ForEach(1...4, id: \.self) { year in
                 NavigationLink(value: Route.deMap(year)) {
-                    ListRowLabel(title: vm.tr("de_year\(year)"), subtitle: vm.tr("de_y\(year)_sub"))
+                    ListRowLabel(title: vm.tr("de_year\(year)"), subtitle: vm.tr("de_y\(year)_sub"), progress: routeProgress(vm, Route.deMap(year)))
                 }
             }
         }
@@ -1375,9 +1468,9 @@ struct EnYearsScreen: View {
             ("en_year3", "en_y3_sub", .enMap(3)),
             ("en_year4", "en_y4_sub", .enMap(4)),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1387,7 +1480,7 @@ struct EnYearsScreen: View {
         List {
             ForEach(1...4, id: \.self) { year in
                 NavigationLink(value: Route.enMap(year)) {
-                    ListRowLabel(title: vm.tr("en_year\(year)"), subtitle: vm.tr("en_y\(year)_sub"))
+                    ListRowLabel(title: vm.tr("en_year\(year)"), subtitle: vm.tr("en_y\(year)_sub"), progress: routeProgress(vm, Route.enMap(year)))
                 }
             }
         }
@@ -1409,9 +1502,9 @@ struct OnYearsScreen: View {
             ("on_year3", "on3_sub", .on3Map),
             ("on_year4", "on4_sub", .on4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1420,16 +1513,16 @@ struct OnYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.onMap) {
-                ListRowLabel(title: vm.tr("on_year1"), subtitle: vm.tr("on_sub"))
+                ListRowLabel(title: vm.tr("on_year1"), subtitle: vm.tr("on_sub"), progress: routeProgress(vm, Route.onMap))
             }
             NavigationLink(value: Route.on2Map) {
-                ListRowLabel(title: vm.tr("on_year2"), subtitle: vm.tr("on2_sub"))
+                ListRowLabel(title: vm.tr("on_year2"), subtitle: vm.tr("on2_sub"), progress: routeProgress(vm, Route.on2Map))
             }
             NavigationLink(value: Route.on3Map) {
-                ListRowLabel(title: vm.tr("on_year3"), subtitle: vm.tr("on3_sub"))
+                ListRowLabel(title: vm.tr("on_year3"), subtitle: vm.tr("on3_sub"), progress: routeProgress(vm, Route.on3Map))
             }
             NavigationLink(value: Route.on4Map) {
-                ListRowLabel(title: vm.tr("on_year4"), subtitle: vm.tr("on4_sub"))
+                ListRowLabel(title: vm.tr("on_year4"), subtitle: vm.tr("on4_sub"), progress: routeProgress(vm, Route.on4Map))
             }
         }
         .navigationTitle(vm.tr("Občanská nauka"))
@@ -1575,12 +1668,15 @@ struct SlidesScreen: View {
             .padding(.horizontal)
             .padding(.top, 8)
             .padding(.bottom, 4)
+            #if os(macOS)
+            .macPage(MacChrome.actionWidth)
+            #endif
         }
     }
 
     private func slidePage(_ slide: J) -> some View {
         ScrollView {
-            slideStack(slide)
+            SlideBody(slide: slide)
                 .padding(.horizontal, slideInset)
                 .padding(.top, 22)
                 .padding(.bottom, 28)
@@ -1595,6 +1691,15 @@ struct SlidesScreen: View {
         #else
         16
         #endif
+    }
+}
+
+/// One explanation slide: label, title, tip and numbered points.
+struct SlideBody: View {
+    let slide: J
+
+    var body: some View {
+        slideStack(slide)
     }
 
     private func slideStack(_ slide: J) -> some View {
@@ -1724,9 +1829,9 @@ struct LitYearsScreen: View {
             ("lit_year3", "lit3_sub", .lit3Map),
             ("lit_year4", "lit4_sub", .lit4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1735,16 +1840,16 @@ struct LitYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.litMap) {
-                ListRowLabel(title: vm.tr("lit_year1"), subtitle: vm.tr("lit_sub"))
+                ListRowLabel(title: vm.tr("lit_year1"), subtitle: vm.tr("lit_sub"), progress: routeProgress(vm, Route.litMap))
             }
             NavigationLink(value: Route.lit2Map) {
-                ListRowLabel(title: vm.tr("lit_year2"), subtitle: vm.tr("lit2_sub"))
+                ListRowLabel(title: vm.tr("lit_year2"), subtitle: vm.tr("lit2_sub"), progress: routeProgress(vm, Route.lit2Map))
             }
             NavigationLink(value: Route.lit3Map) {
-                ListRowLabel(title: vm.tr("lit_year3"), subtitle: vm.tr("lit3_sub"))
+                ListRowLabel(title: vm.tr("lit_year3"), subtitle: vm.tr("lit3_sub"), progress: routeProgress(vm, Route.lit3Map))
             }
             NavigationLink(value: Route.lit4Map) {
-                ListRowLabel(title: vm.tr("lit_year4"), subtitle: vm.tr("lit4_sub"))
+                ListRowLabel(title: vm.tr("lit_year4"), subtitle: vm.tr("lit4_sub"), progress: routeProgress(vm, Route.lit4Map))
             }
         }
         .navigationTitle(vm.tr("Literatura"))
@@ -1766,9 +1871,9 @@ struct MatYearsScreen: View {
             ("mat_year3", "mat3_sub", .mat3Map, "3."),
             ("mat_year4", "mat4_sub", .mat4Map, "4."),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: years[i].3)
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: years[i].3, progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1777,19 +1882,19 @@ struct MatYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.mat0Map) {
-                ListRowLabel(title: vm.tr("mat0_year"), subtitle: vm.tr("mat0_sub"))
+                ListRowLabel(title: vm.tr("mat0_year"), subtitle: vm.tr("mat0_sub"), progress: routeProgress(vm, Route.mat0Map))
             }
             NavigationLink(value: Route.matMap) {
-                ListRowLabel(title: vm.tr("mat_year1"), subtitle: vm.tr("mat_sub"))
+                ListRowLabel(title: vm.tr("mat_year1"), subtitle: vm.tr("mat_sub"), progress: routeProgress(vm, Route.matMap))
             }
             NavigationLink(value: Route.mat2Map) {
-                ListRowLabel(title: vm.tr("mat_year2"), subtitle: vm.tr("mat2_sub"))
+                ListRowLabel(title: vm.tr("mat_year2"), subtitle: vm.tr("mat2_sub"), progress: routeProgress(vm, Route.mat2Map))
             }
             NavigationLink(value: Route.mat3Map) {
-                ListRowLabel(title: vm.tr("mat_year3"), subtitle: vm.tr("mat3_sub"))
+                ListRowLabel(title: vm.tr("mat_year3"), subtitle: vm.tr("mat3_sub"), progress: routeProgress(vm, Route.mat3Map))
             }
             NavigationLink(value: Route.mat4Map) {
-                ListRowLabel(title: vm.tr("mat_year4"), subtitle: vm.tr("mat4_sub"))
+                ListRowLabel(title: vm.tr("mat_year4"), subtitle: vm.tr("mat4_sub"), progress: routeProgress(vm, Route.mat4Map))
             }
         }
         .navigationTitle(vm.tr("Matematika"))
@@ -1810,9 +1915,9 @@ struct CsYearsScreen: View {
             ("cs_year3", "cs3_sub", .cs3Map),
             ("cs_year4", "cs4_sub", .cs4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1821,16 +1926,16 @@ struct CsYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.csMap) {
-                ListRowLabel(title: vm.tr("cs_year1"), subtitle: vm.tr("cs_sub"))
+                ListRowLabel(title: vm.tr("cs_year1"), subtitle: vm.tr("cs_sub"), progress: routeProgress(vm, Route.csMap))
             }
             NavigationLink(value: Route.cs2Map) {
-                ListRowLabel(title: vm.tr("cs_year2"), subtitle: vm.tr("cs2_sub"))
+                ListRowLabel(title: vm.tr("cs_year2"), subtitle: vm.tr("cs2_sub"), progress: routeProgress(vm, Route.cs2Map))
             }
             NavigationLink(value: Route.cs3Map) {
-                ListRowLabel(title: vm.tr("cs_year3"), subtitle: vm.tr("cs3_sub"))
+                ListRowLabel(title: vm.tr("cs_year3"), subtitle: vm.tr("cs3_sub"), progress: routeProgress(vm, Route.cs3Map))
             }
             NavigationLink(value: Route.cs4Map) {
-                ListRowLabel(title: vm.tr("cs_year4"), subtitle: vm.tr("cs4_sub"))
+                ListRowLabel(title: vm.tr("cs_year4"), subtitle: vm.tr("cs4_sub"), progress: routeProgress(vm, Route.cs4Map))
             }
         }
         .navigationTitle(vm.tr("Programování"))
@@ -1851,9 +1956,9 @@ struct TgYearsScreen: View {
             ("tg_year3", "tg3_sub", .tg3Map),
             ("tg_year4", "tg4_sub", .tg4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1862,16 +1967,16 @@ struct TgYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.tgMap) {
-                ListRowLabel(title: vm.tr("tg_year1"), subtitle: vm.tr("tg_sub"))
+                ListRowLabel(title: vm.tr("tg_year1"), subtitle: vm.tr("tg_sub"), progress: routeProgress(vm, Route.tgMap))
             }
             NavigationLink(value: Route.tg2Map) {
-                ListRowLabel(title: vm.tr("tg_year2"), subtitle: vm.tr("tg2_sub"))
+                ListRowLabel(title: vm.tr("tg_year2"), subtitle: vm.tr("tg2_sub"), progress: routeProgress(vm, Route.tg2Map))
             }
             NavigationLink(value: Route.tg3Map) {
-                ListRowLabel(title: vm.tr("tg_year3"), subtitle: vm.tr("tg3_sub"))
+                ListRowLabel(title: vm.tr("tg_year3"), subtitle: vm.tr("tg3_sub"), progress: routeProgress(vm, Route.tg3Map))
             }
             NavigationLink(value: Route.tg4Map) {
-                ListRowLabel(title: vm.tr("tg_year4"), subtitle: vm.tr("tg4_sub"))
+                ListRowLabel(title: vm.tr("tg_year4"), subtitle: vm.tr("tg4_sub"), progress: routeProgress(vm, Route.tg4Map))
             }
         }
         .navigationTitle(vm.tr("Technická grafika"))
@@ -1892,9 +1997,9 @@ struct FyzYearsScreen: View {
             ("fyz_year3", "fyz3_sub", .fyz3Map),
             ("fyz_year4", "fyz4_sub", .fyz4Map),
         ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
             NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).")
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
             }
             .buttonStyle(PressScaleStyle())
         }
@@ -1903,16 +2008,16 @@ struct FyzYearsScreen: View {
         #else
         List {
             NavigationLink(value: Route.fyzMap) {
-                ListRowLabel(title: vm.tr("fyz_year1"), subtitle: vm.tr("fyz_sub"))
+                ListRowLabel(title: vm.tr("fyz_year1"), subtitle: vm.tr("fyz_sub"), progress: routeProgress(vm, Route.fyzMap))
             }
             NavigationLink(value: Route.fyz2Map) {
-                ListRowLabel(title: vm.tr("fyz_year2"), subtitle: vm.tr("fyz2_sub"))
+                ListRowLabel(title: vm.tr("fyz_year2"), subtitle: vm.tr("fyz2_sub"), progress: routeProgress(vm, Route.fyz2Map))
             }
             NavigationLink(value: Route.fyz3Map) {
-                ListRowLabel(title: vm.tr("fyz_year3"), subtitle: vm.tr("fyz3_sub"))
+                ListRowLabel(title: vm.tr("fyz_year3"), subtitle: vm.tr("fyz3_sub"), progress: routeProgress(vm, Route.fyz3Map))
             }
             NavigationLink(value: Route.fyz4Map) {
-                ListRowLabel(title: vm.tr("fyz_year4"), subtitle: vm.tr("fyz4_sub"))
+                ListRowLabel(title: vm.tr("fyz_year4"), subtitle: vm.tr("fyz4_sub"), progress: routeProgress(vm, Route.fyz4Map))
             }
         }
         .navigationTitle(vm.tr("Fyzika"))
@@ -1927,15 +2032,15 @@ struct SciMapScreen: View {
 
     var body: some View {
         #if os(macOS)
-        MacFillGrid(count: 2, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: 2, minWidth: 260, minHeight: 200) { i in
             if i == 0 {
                 NavigationLink(value: Route.chemMap) {
-                    MacLinkCard(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), systemImage: "flask.fill")
+                    MacLinkCard(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), systemImage: "flask.fill", progress: routeProgress(vm, .chemMap))
                 }
                 .buttonStyle(PressScaleStyle())
             } else {
                 NavigationLink(value: Route.bioMap) {
-                    MacLinkCard(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), systemImage: "leaf.fill")
+                    MacLinkCard(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), systemImage: "leaf.fill", progress: routeProgress(vm, .bioMap))
                 }
                 .buttonStyle(PressScaleStyle())
             }
@@ -1946,14 +2051,14 @@ struct SciMapScreen: View {
         List {
             NavigationLink(value: Route.chemMap) {
                 Label {
-                    ListRowLabel(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"))
+                    ListRowLabel(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), progress: routeProgress(vm, .chemMap))
                 } icon: {
                     Image(systemName: "flask.fill")
                 }
             }
             NavigationLink(value: Route.bioMap) {
                 Label {
-                    ListRowLabel(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"))
+                    ListRowLabel(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), progress: routeProgress(vm, .bioMap))
                 } icon: {
                     Image(systemName: "leaf.fill")
                 }
@@ -1971,21 +2076,21 @@ struct CzechMapScreen: View {
 
     var body: some View {
         #if os(macOS)
-        MacFillGrid(count: 3, minWidth: 260, minHeight: 180) { i in
+        MacFillGrid(count: 3, minWidth: 260, minHeight: 200) { i in
             switch i {
             case 1:
                 NavigationLink(value: Route.mluvnice) {
-                    MacLinkCard(title: vm.tr("Mluvnice"), systemImage: "textformat")
+                    MacLinkCard(title: vm.tr("Mluvnice"), subtitle: vm.tr("mluv_sub"), systemImage: "textformat", progress: routeProgress(vm, .mluvnice))
                 }
                 .buttonStyle(PressScaleStyle())
             case 2:
                 NavigationLink(value: Route.readingList) {
-                    MacLinkCard(title: vm.tr("Maturitní četba"), systemImage: "books.vertical")
+                    MacLinkCard(title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"), systemImage: "books.vertical")
                 }
                 .buttonStyle(PressScaleStyle())
             default:
                 NavigationLink(value: Route.litYears) {
-                    MacLinkCard(title: vm.tr("Literatura"), systemImage: "book.closed")
+                    MacLinkCard(title: vm.tr("Literatura"), subtitle: vm.tr("lit_years_sub"), systemImage: "book.closed", progress: routeProgress(vm, .litYears))
                 }
                 .buttonStyle(PressScaleStyle())
             }
@@ -1996,21 +2101,21 @@ struct CzechMapScreen: View {
         List {
             NavigationLink(value: Route.litYears) {
                 Label {
-                    Text(vm.tr("Literatura"))
+                    ListRowLabel(title: vm.tr("Literatura"), subtitle: vm.tr("lit_years_sub"), progress: routeProgress(vm, .litYears))
                 } icon: {
                     Image(systemName: "book.closed")
                 }
             }
             NavigationLink(value: Route.mluvnice) {
                 Label {
-                    Text(vm.tr("Mluvnice"))
+                    ListRowLabel(title: vm.tr("Mluvnice"), subtitle: vm.tr("mluv_sub"), progress: routeProgress(vm, .mluvnice))
                 } icon: {
                     Image(systemName: "textformat")
                 }
             }
             NavigationLink(value: Route.readingList) {
                 Label {
-                    Text(vm.tr("Maturitní četba"))
+                    ListRowLabel(title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"))
                 } icon: {
                     Image(systemName: "books.vertical")
                 }
@@ -3100,27 +3205,38 @@ struct CodeLessonScreen: View {
     @State private var code = ""
     @State private var stdin = ""
     @State private var output = ""
-    @State private var running = false
+    @State private var status = ""
+
+    private var running: Bool { status == "running" }
+    private var needsInput: Bool { code.contains("ReadLine") }
 
     var body: some View {
         GeometryReader { geo in
-            if geo.size.width >= 840 {
-                HStack(alignment: .top, spacing: 16) {
-                    explanation.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    editor.frame(maxWidth: .infinity, maxHeight: .infinity)
-                    outputPane.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            if geo.size.width >= 900 {
+                HStack(alignment: .top, spacing: 28) {
+                    ScrollView {
+                        explanation
+                            .padding(.vertical, 4)
+                    }
+                    .frame(width: min(560, geo.size.width * 0.4))
+                    workspace(height: geo.size.height)
                 }
+                .padding(.horizontal, 28)
+                .padding(.vertical, 20)
+                .frame(maxWidth: 1640)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 16) {
+                    VStack(alignment: .leading, spacing: 20) {
                         explanation
-                        editor.frame(minHeight: 240)
-                        outputPane.frame(minHeight: 160)
+                        editorCard.frame(height: 320)
+                        if needsInput { inputField }
+                        outputCard.frame(height: 220)
                     }
+                    .padding(16)
                 }
             }
         }
-        .padding(16)
         .detailScreen(vm.tr(lesson.str("titleKey")), subtitle: vm.tr(lesson.str("subKey")))
         .onAppear {
             if code.isEmpty { code = lesson.str("code") }
@@ -3128,84 +3244,154 @@ struct CodeLessonScreen: View {
     }
 
     private var explanation: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                ForEach(Array(lesson.arr("slides").enumerated()), id: \.offset) { _, slide in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(slide.str("kicker"))
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(Color.accentColor)
-                        Text(slide.str("title"))
-                            .font(.title3.bold())
-                        ForEach(slide.strs("lines"), id: \.self) { line in
-                            Text("•  \(line)")
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        if let tip = slide.strOrNull("tip") {
-                            Text(tip)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
+        VStack(alignment: .leading, spacing: 34) {
+            ForEach(Array(lesson.arr("slides").enumerated()), id: \.offset) { _, slide in
+                SlideBody(slide: slide)
             }
         }
     }
 
-    private var editor: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(vm.tr("cs_code")).font(.headline)
-            TextEditor(text: $code)
-                .font(.system(.body, design: .monospaced))
-                .scrollContentBackground(.hidden)
-                .padding(8)
+    private func workspace(height: CGFloat) -> some View {
+        VStack(spacing: 16) {
+            editorCard
+                .frame(maxHeight: .infinity)
+            if needsInput { inputField }
+            outputCard
+                .frame(height: max(180, height * 0.32))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var editorCard: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 10) {
+                Image(systemName: "chevron.left.forwardslash.chevron.right")
+                    .foregroundStyle(Color.accentColor)
+                Text("Program.cs")
+                    .font(.headline.monospaced())
+                Spacer(minLength: 8)
+                Button {
+                    code = lesson.str("code")
+                    output = ""
+                    status = ""
+                } label: {
+                    Label(vm.tr("cs_reset"), systemImage: "arrow.counterclockwise")
+                }
+                .buttonStyle(.bordered)
+                .disabled(running)
+                Button { run() } label: {
+                    Label(vm.tr("cs_run"), systemImage: "play.fill")
+                        .padding(.horizontal, 4)
+                }
+                .buttonStyle(.borderedProminent)
+                .keyboardShortcut(.return, modifiers: .command)
+                .help("⌘↩")
+                .disabled(running)
+            }
+            #if os(macOS)
+            .controlSize(.large)
+            #endif
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            Divider().opacity(0.5)
+            editorField
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(codeFill, in: RoundedRectangle(cornerRadius: 12))
-            Text(vm.tr("cs_stdin"))
-                .font(.caption)
+        }
+        .background(codeFill, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(.separator.opacity(0.6), lineWidth: 0.5)
+        }
+    }
+
+    @ViewBuilder
+    private var editorField: some View {
+        #if os(macOS)
+        CodeEditor(text: $code)
+        #else
+        TextEditor(text: $code)
+            .font(.system(size: 15, design: .monospaced))
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .scrollContentBackground(.hidden)
+            .padding(8)
+        #endif
+    }
+
+    private var inputField: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label(vm.tr("cs_stdin"), systemImage: "keyboard")
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
             TextField("", text: $stdin, axis: .vertical)
-                .font(.system(.body, design: .monospaced))
-                .lineLimit(2...4)
+                .font(.system(size: 15, design: .monospaced))
+                .lineLimit(1...4)
                 .textFieldStyle(.roundedBorder)
         }
     }
 
-    private var outputPane: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Button(vm.tr("cs_run")) { run() }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(running)
-                Button(vm.tr("cs_reset")) { code = lesson.str("code") }
-                    .disabled(running)
+    private var outputCard: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 10) {
+                Image(systemName: "terminal")
+                    .foregroundStyle(.secondary)
+                Text(vm.tr("cs_output"))
+                    .font(.headline)
+                Spacer(minLength: 8)
+                statusBadge
             }
-            Text(vm.tr("cs_output")).font(.headline)
+            .padding(.horizontal, 14)
+            .frame(height: 44)
+            Divider().opacity(0.5)
             ScrollView {
                 Text(output.isEmpty ? vm.tr("cs_empty") : output)
-                    .font(.system(.body, design: .monospaced))
+                    .font(.system(size: 15, design: .monospaced))
+                    .foregroundStyle(output.isEmpty || running ? .secondary : .primary)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     .textSelection(.enabled)
+                    .padding(14)
             }
-            .padding(12)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(codeFill, in: RoundedRectangle(cornerRadius: 12))
+        }
+        .background(codeFill, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(.separator.opacity(0.6), lineWidth: 0.5)
         }
     }
 
-    private var codeFill: Color {
+    @ViewBuilder
+    private var statusBadge: some View {
+        switch status {
+        case "running":
+            ProgressView().controlSize(.small)
+        case "ok":
+            Label(vm.tr("cs_done"), systemImage: "checkmark.circle.fill")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(vm.palette.success)
+        case "fail", "timeout":
+            Label(vm.tr("cs_failed"), systemImage: "xmark.octagon.fill")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(vm.palette.error)
+        default:
+            EmptyView()
+        }
+    }
+
+    private var codeFill: AnyShapeStyle {
         #if os(macOS)
-        Color(.textBackgroundColor).opacity(0.55)
+        AnyShapeStyle(.background.secondary)
         #else
-        Color(.secondarySystemBackground)
+        AnyShapeStyle(Color(.secondarySystemBackground))
         #endif
     }
 
     private func run() {
-        running = true
+        guard !running else { return }
+        status = "running"
         output = vm.tr("cs_running")
-        CSharpRunner.run(code, stdin: stdin) { status, text in
-            running = false
-            switch status {
+        CSharpRunner.run(code, stdin: needsInput ? stdin : "") { result, text in
+            status = result
+            switch result {
             case "unavailable":
                 output = vm.tr("cs_unavailable")
             case "timeout":
@@ -3213,10 +3399,124 @@ struct CodeLessonScreen: View {
             default:
                 output = text.isEmpty ? vm.tr("cs_empty") : text
             }
-            if status == "ok" { onSuccess() }
+            if result == "ok" { onSuccess() }
         }
     }
 }
+
+#if os(macOS)
+/// Plain-text editor for C#: monospaced, coloured, and without smart quotes or
+/// autocorrect, which would turn "text" into “text” and break the program.
+struct CodeEditor: NSViewRepresentable {
+    @Binding var text: String
+
+    func makeCoordinator() -> Coordinator { Coordinator(text: $text) }
+
+    func makeNSView(context: Context) -> NSScrollView {
+        let scroll = NSTextView.scrollableTextView()
+        scroll.drawsBackground = false
+        scroll.autohidesScrollers = true
+        guard let view = scroll.documentView as? NSTextView else { return scroll }
+        view.delegate = context.coordinator
+        view.isRichText = false
+        view.allowsUndo = true
+        view.isAutomaticQuoteSubstitutionEnabled = false
+        view.isAutomaticDashSubstitutionEnabled = false
+        view.isAutomaticTextReplacementEnabled = false
+        view.isAutomaticSpellingCorrectionEnabled = false
+        view.isContinuousSpellCheckingEnabled = false
+        view.isGrammarCheckingEnabled = false
+        view.isAutomaticLinkDetectionEnabled = false
+        view.smartInsertDeleteEnabled = false
+        view.drawsBackground = false
+        view.font = CSharpStyle.font
+        view.textContainerInset = NSSize(width: 10, height: 12)
+        view.typingAttributes = CSharpStyle.base
+        view.string = text
+        CSharpStyle.highlight(view.textStorage)
+        return scroll
+    }
+
+    func updateNSView(_ scroll: NSScrollView, context: Context) {
+        context.coordinator.text = $text
+        guard let view = scroll.documentView as? NSTextView, view.string != text else { return }
+        view.string = text
+        CSharpStyle.highlight(view.textStorage)
+    }
+
+    final class Coordinator: NSObject, NSTextViewDelegate {
+        var text: Binding<String>
+
+        init(text: Binding<String>) {
+            self.text = text
+        }
+
+        func textDidChange(_ notification: Notification) {
+            guard let view = notification.object as? NSTextView else { return }
+            text.wrappedValue = view.string
+            CSharpStyle.highlight(view.textStorage)
+            view.typingAttributes = CSharpStyle.base
+        }
+    }
+}
+
+enum CSharpStyle {
+    static let font = NSFont.monospacedSystemFont(ofSize: 15, weight: .regular)
+    static var base: [NSAttributedString.Key: Any] { [.font: font, .foregroundColor: NSColor.labelColor] }
+
+    private static func adaptive(_ light: Int, _ dark: Int) -> NSColor {
+        func color(_ hex: Int) -> NSColor {
+            NSColor(
+                srgbRed: CGFloat((hex >> 16) & 0xFF) / 255,
+                green: CGFloat((hex >> 8) & 0xFF) / 255,
+                blue: CGFloat(hex & 0xFF) / 255,
+                alpha: 1
+            )
+        }
+        return NSColor(name: nil) { appearance in
+            appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua ? color(dark) : color(light)
+        }
+    }
+
+    private static let keywords = [
+        "abstract", "as", "async", "await", "base", "bool", "break", "case", "catch", "char", "class",
+        "const", "continue", "decimal", "default", "do", "double", "else", "enum", "false", "finally",
+        "float", "for", "foreach", "get", "if", "in", "int", "interface", "internal", "is", "long",
+        "namespace", "new", "null", "object", "out", "override", "private", "protected", "public",
+        "readonly", "record", "ref", "return", "sealed", "set", "static", "string", "struct", "switch",
+        "this", "throw", "true", "try", "using", "var", "virtual", "void", "while",
+    ]
+
+    private static let rules: [(NSRegularExpression, NSColor)] = {
+        func re(_ pattern: String) -> NSRegularExpression {
+            try! NSRegularExpression(pattern: pattern)
+        }
+        return [
+            (re("\\b(?:" + keywords.joined(separator: "|") + ")\\b"), adaptive(0x9B2393, 0xFF7AB2)),
+            (re("\\b(?:Console|Math|List|Dictionary|File|Task|Exception|Func|Action|String|DateTime|Random)\\b"), adaptive(0x0B4F79, 0x5DD8FF)),
+            (re("\\b\\d+(?:\\.\\d+)?\\b"), adaptive(0x1C00CF, 0xD9C97C)),
+            (re("\\$?@?\"(?:\\\\.|[^\"\\\\\\n])*\"|'(?:\\\\.|[^'\\\\\\n])'"), adaptive(0xC41A16, 0xFC6A5D)),
+            (re("//[^\\n]*|/\\*[\\s\\S]*?\\*/"), adaptive(0x5D6C79, 0x7F8C98)),
+        ]
+    }()
+
+    static func highlight(_ storage: NSTextStorage?) {
+        guard let storage else { return }
+        let text = storage.string
+        let full = NSRange(location: 0, length: (text as NSString).length)
+        storage.beginEditing()
+        storage.setAttributes(base, range: full)
+        for (pattern, color) in rules {
+            pattern.enumerateMatches(in: text, range: full) { match, _, _ in
+                if let range = match?.range {
+                    storage.addAttribute(.foregroundColor, value: color, range: range)
+                }
+            }
+        }
+        storage.endEditing()
+    }
+}
+#endif
 
 enum CSharpRunner {
     static func run(_ source: String, stdin: String, done: @escaping (String, String) -> Void) {

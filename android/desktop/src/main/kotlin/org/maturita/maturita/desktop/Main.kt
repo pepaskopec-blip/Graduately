@@ -40,6 +40,8 @@ fun main() {
     val info = Properties().apply { resourceText("build-info.properties")?.let { load(it.reader()) } }
     val platform = DesktopPlatform(info.getProperty("commit") ?: "dev", prefs, install)
     val vm = AppViewModel(Content.parse(resourceText("content.json")), platform)
+    // `GRADUATELY_PAGE=u1e3 make run` opens a page, for screenshots.
+    System.getenv("GRADUATELY_PAGE")?.takeIf { it.isNotBlank() }?.let { vm.openPage(it) }
     val icon = Thread.currentThread().contextClassLoader.getResourceAsStream("icon.png")
         ?.use { ImageIO.read(it) }?.let { BitmapPainter(it.toComposeImageBitmap()) }
 

@@ -8,15 +8,22 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -24,7 +31,17 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.KeyboardOptions
@@ -44,7 +61,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -150,7 +166,19 @@ fun AppNavBar(vm: AppViewModel) {
 private fun navIconColor(selected: Boolean): Color =
     if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
 
-/** Tab root: large collapsing title, search action, bottom navigation. */
+/** Lists and exercises stop growing here so they keep their shape in wide desktop windows. */
+val ContentMaxWidth = 880.dp
+val ActionMaxWidth = 560.dp
+
+/** Caps the width of [content] and centres it; phones are narrower than the cap anyway. */
+@Composable
+fun CenteredColumn(maxWidth: Dp = ContentMaxWidth, content: @Composable () -> Unit) {
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        Box(Modifier.widthIn(max = maxWidth).fillMaxSize()) { content() }
+    }
+}
+
+/** Tab root: large collapsing title on phones, a compact one in wide windows. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootScaffold(
@@ -159,30 +187,48 @@ fun RootScaffold(
     showSearch: Boolean = true,
     content: LazyListScope.() -> Unit,
 ) {
-    val scroll = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-    Scaffold(
-        modifier = Modifier.nestedScroll(scroll.nestedScrollConnection),
-        topBar = {
-            LargeTopAppBar(
-                title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                actions = {
-                    if (showSearch) {
-                        IconButton(onClick = { vm.searchOpen = true }) {
-                            Icon(Icons.Filled.Search, contentDescription = vm.tr("search_placeholder"))
-                        }
-                    }
-                },
-                scrollBehavior = scroll,
-            )
-        },
-        bottomBar = { AppNavBar(vm) },
-    ) { inner ->
-        LazyColumn(
-            contentPadding = PaddingValues(
-                top = inner.calculateTopPadding(),
-                bottom = inner.calculateBottomPadding() + 16.dp,
-            ),
-        ) { content() }
+    BoxWithConstraints {
+        val wide = maxWidth >= 600.dp
+        val scroll = if (wide) {
+            TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+        } else {
+            TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+        }
+        val actions: @Composable RowScope.() -> Unit = {
+            if (showSearch) {
+                IconButton(onClick = { vm.searchOpen = true }) {
+                    Icon(Icons.Filled.Search, contentDescription = vm.tr("search_placeholder"))
+                }
+            }
+        }
+        Scaffold(
+            modifier = Modifier.nestedScroll(scroll.nestedScrollConnection),
+            topBar = {
+                if (wide) {
+                    TopAppBar(
+                        title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.headlineSmall) },
+                        actions = actions,
+                        scrollBehavior = scroll,
+                    )
+                } else {
+                    LargeTopAppBar(
+                        title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        actions = actions,
+                        scrollBehavior = scroll,
+                    )
+                }
+            },
+            bottomBar = { AppNavBar(vm) },
+        ) { inner ->
+            CenteredColumn {
+                LazyColumn(
+                    contentPadding = PaddingValues(
+                        top = inner.calculateTopPadding(),
+                        bottom = inner.calculateBottomPadding() + 16.dp,
+                    ),
+                ) { content() }
+            }
+        }
     }
 }
 
@@ -194,6 +240,7 @@ fun DetailScaffold(
     title: String,
     subtitle: String? = null,
     bottomBar: (@Composable () -> Unit)? = null,
+    maxContentWidth: Dp = ContentMaxWidth,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val scroll = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -224,8 +271,9 @@ fun DetailScaffold(
             )
         },
         bottomBar = { bottomBar?.invoke() },
-        content = content,
-    )
+    ) { inner ->
+        CenteredColumn(maxContentWidth) { content(inner) }
+    }
 }
 
 /** Feedback line plus the primary action, anchored at the bottom of an exercise. */
@@ -242,6 +290,8 @@ fun ActionBar(
         Column(
             Modifier
                 .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .widthIn(max = ActionMaxWidth)
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 16.dp, vertical = 12.dp),
         ) {
@@ -276,6 +326,27 @@ fun SectionHeader(text: String) {
     )
 }
 
+/** Number or short label in a tinted square, so rows line up whatever the label's width. */
+@Composable
+fun LeadingBadge(text: String) {
+    Box(
+        Modifier.size(36.dp).clip(RoundedCornerShape(10.dp)).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(text, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+    }
+}
+
+@Composable
+fun LeadingIcon(icon: ImageVector) {
+    Box(
+        Modifier.size(36.dp).clip(RoundedCornerShape(10.dp)).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+    }
+}
+
 /** One navigable row: done/pending/locked state on the left, chevron on the right. */
 @Composable
 fun NavRow(
@@ -284,15 +355,33 @@ fun NavRow(
     done: Boolean = false,
     locked: Boolean = false,
     leading: (@Composable () -> Unit)? = null,
+    progress: Pair<Int, Int>? = null,
     onClick: (() -> Unit)?,
 ) {
     val enabled = !locked && onClick != null
     val textColor = if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
     val rowModifier = if (enabled) Modifier.clickable(onClick = onClick!!) else Modifier
+    val shownSubtitle = subtitle?.takeIf { it.isNotBlank() }
+    val shownProgress = progress?.takeIf { it.second > 0 }
     ListItem(
         headlineContent = { Text(title, color = textColor) },
-        supportingContent = subtitle?.takeIf { it.isNotBlank() }?.let {
-            { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        supportingContent = if (shownSubtitle == null && shownProgress == null) null else {
+            {
+                Column {
+                    shownSubtitle?.let { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                    shownProgress?.let { (doneCount, total) ->
+                        Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            SmoothProgress(doneCount / total.toFloat(), Modifier.weight(1f).height(6.dp))
+                            Spacer(Modifier.width(10.dp))
+                            Text(
+                                "$doneCount / $total",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
+            }
         },
         leadingContent = {
             when {
@@ -328,19 +417,38 @@ fun SmoothProgress(
     progress: Float,
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.primary,
-    trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    trackColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
 ) {
     val animated by animateFloatAsState(
         targetValue = progress.coerceIn(0f, 1f),
         animationSpec = tween(durationMillis = 380),
         label = "progress",
     )
-    LinearProgressIndicator(
-        progress = { animated },
-        modifier = modifier,
-        color = color,
-        trackColor = trackColor,
-    )
+    Box(modifier.heightIn(min = 4.dp).clip(CircleShape).background(trackColor)) {
+        if (animated > 0f) {
+            Box(Modifier.fillMaxHeight().fillMaxWidth(animated).clip(CircleShape).background(color))
+        }
+    }
+}
+
+/** Circular progress with a label in the middle. */
+@Composable
+fun ProgressRing(progress: Float, modifier: Modifier = Modifier, stroke: Dp = 10.dp, label: @Composable () -> Unit) {
+    val animated by animateFloatAsState(progress.coerceIn(0f, 1f), tween(durationMillis = 380), label = "ring")
+    val track = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+    val fill = MaterialTheme.colorScheme.primary
+    Box(modifier, contentAlignment = Alignment.Center) {
+        Canvas(Modifier.fillMaxSize()) {
+            val width = stroke.toPx()
+            val inset = width / 2
+            val arcSize = Size(size.width - width, size.height - width)
+            drawArc(track, 0f, 360f, false, Offset(inset, inset), arcSize, style = Stroke(width))
+            if (animated > 0f) {
+                drawArc(fill, -90f, 360f * animated, false, Offset(inset, inset), arcSize, style = Stroke(width, cap = StrokeCap.Round))
+            }
+        }
+        label()
+    }
 }
 
 @Composable

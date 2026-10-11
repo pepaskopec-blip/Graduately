@@ -26,7 +26,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Architecture
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.Functions
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -101,49 +104,60 @@ fun HomeScreen(vm: AppViewModel) {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                ),
             ) {
-                Column(Modifier.padding(20.dp)) {
-                    Text(
-                        vm.tr("welcome_title"),
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        vm.tr(vm.platform.welcomeKey),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
-                    )
-                    Spacer(Modifier.height(16.dp))
-                    SmoothProgress(
-                        progress = pct,
-                        modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        trackColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.18f),
-                    )
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
-                    )
+                Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text(vm.tr("welcome_title"), style = MaterialTheme.typography.headlineMedium)
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            vm.tr(vm.platform.welcomeKey),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Spacer(Modifier.width(16.dp))
+                    ProgressRing(pct, Modifier.size(104.dp)) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(vm.fmt("stats_pct_fmt", (pct * 100).toInt()), style = MaterialTheme.typography.titleLarge)
+                            Text(
+                                vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
                 }
             }
         }
         if (vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged") {
             item { UpdateBanner(vm) }
         }
+        val open = vm.content.subjects.filter { it.bool("open") }
+        val soon = vm.content.subjects.filter { !it.bool("open") }
         item { SectionHeader(vm.tr("subjects_title")) }
-        items(vm.content.subjects) { s ->
-            val open = s.bool("open")
+        items(open) { s ->
+            val part = subjectSum(vm, s)
             NavRow(
                 title = vm.tr(s.str("key")),
-                subtitle = if (open) null else vm.tr("stats_locked"),
-                locked = !open,
-                leading = { SubjectIcon(s.str("icon"), open) },
-                onClick = if (open) ({ vm.goPage(s.str("target")) }) else null,
+                leading = { SubjectIcon(s.str("icon"), true) },
+                progress = part.doneEx to part.totalEx,
+                onClick = { vm.goPage(s.str("target")) },
             )
+        }
+        if (soon.isNotEmpty()) {
+            item { SectionHeader(vm.tr("subjects_soon")) }
+            items(soon) { s ->
+                NavRow(
+                    title = vm.tr(s.str("key")),
+                    locked = true,
+                    leading = { SubjectIcon(s.str("icon"), false) },
+                    onClick = null,
+                )
+            }
         }
     }
 }
@@ -154,14 +168,18 @@ private fun ChangelogCard(vm: AppViewModel) {
     val blocks = vm.content.changelog.take(3)
     Card(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+        ),
     ) {
         Column(Modifier.padding(20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.AutoAwesome, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                Spacer(Modifier.width(8.dp))
                 Text(
                     vm.tr("changelog_title"),
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.weight(1f),
                 )
                 val date = blocks.firstOrNull()?.str("date").orEmpty()
@@ -169,7 +187,7 @@ private fun ChangelogCard(vm: AppViewModel) {
                     Text(
                         date,
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.7f),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -180,7 +198,6 @@ private fun ChangelogCard(vm: AppViewModel) {
                     Text(
                         "•  $line",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
                         modifier = Modifier.padding(bottom = 4.dp),
                     )
                 }
@@ -290,6 +307,67 @@ private fun Metric(label: String, value: String, modifier: Modifier) {
     Column(modifier) {
         Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(value, style = MaterialTheme.typography.titleLarge)
+    }
+}
+
+/** Done and total exercises behind one row of a years screen, or null when there is no count. */
+fun routeProgress(vm: AppViewModel, r: Route): Pair<Int, Int>? {
+    val c = vm.content
+    val p = vm.progress
+    fun tally(lessons: List<J>, done: (Int) -> Boolean) = lessons.count { done(it.int("id")) } to lessons.size
+    return when (r) {
+        Route.NetMap -> tally(c.netLessons, p::netDone)
+        Route.Net2Map -> tally(c.itLessons("net2")) { p.courseDone("net2", it) }
+        Route.Net3Map -> tally(c.itLessons("net3")) { p.courseDone("net3", it) }
+        Route.Net4Map -> tally(c.itLessons("net4")) { p.courseDone("net4", it) }
+        Route.HwMap -> tally(c.hw, p::hwDone)
+        Route.Hw2Map -> tally(c.itLessons("hw2")) { p.courseDone("hw2", it) }
+        Route.Hw3Map -> tally(c.itLessons("hw3")) { p.courseDone("hw3", it) }
+        Route.Hw4Map -> tally(c.itLessons("hw4")) { p.courseDone("hw4", it) }
+        Route.OnMap -> tally(c.on, p::onDone)
+        Route.On2Map -> tally(c.on2, p::on2Done)
+        Route.On3Map -> tally(c.on3, p::on3Done)
+        Route.On4Map -> tally(c.on4, p::on4Done)
+        is Route.EnMap -> tally(c.enYear(r.year)) { p.enDone(r.year, it) }
+        is Route.DeMap -> tally(c.deYear(r.year)) { p.deDone(r.year, it) }
+        Route.Roadmap -> {
+            var done = 0
+            var total = 0
+            c.german.filter { it.bool("unlocked") }.forEach { u ->
+                val n = u.strs("names").size
+                total += n
+                done += (1..n).count { p.germanDone(u.int("id"), it) }
+            }
+            done to total
+        }
+        Route.LitYears -> listOf(
+            tally(c.lit, p::litDone), tally(c.lit2, p::lit2Done), tally(c.lit3, p::lit3Done), tally(c.lit4, p::lit4Done),
+        ).let { parts -> parts.sumOf { it.first } to parts.sumOf { it.second } }
+        Route.LitMap -> tally(c.lit, p::litDone)
+        Route.Lit2Map -> tally(c.lit2, p::lit2Done)
+        Route.Lit3Map -> tally(c.lit3, p::lit3Done)
+        Route.Lit4Map -> tally(c.lit4, p::lit4Done)
+        Route.Mluvnice -> tally(c.mluvnice, p::mluvDone)
+        Route.ChemMap -> tally(c.chem, p::chemDone)
+        Route.BioMap -> tally(c.bio, p::bioDone)
+        Route.Mat0Map -> tally(c.mat0, p::mat0Done)
+        Route.MatMap -> tally(c.mat, p::matDone)
+        Route.Mat2Map -> tally(c.mat2, p::mat2Done)
+        Route.Mat3Map -> tally(c.mat3, p::mat3Done)
+        Route.Mat4Map -> tally(c.mat4, p::mat4Done)
+        Route.FyzMap -> tally(c.fyz, p::fyzDone)
+        Route.Fyz2Map -> tally(c.fyz2, p::fyz2Done)
+        Route.Fyz3Map -> tally(c.fyz3, p::fyz3Done)
+        Route.Fyz4Map -> tally(c.fyz4, p::fyz4Done)
+        Route.TgMap -> tally(c.tg, p::tgDone)
+        Route.Tg2Map -> tally(c.tg2, p::tg2Done)
+        Route.Tg3Map -> tally(c.tg3, p::tg3Done)
+        Route.Tg4Map -> tally(c.tg4, p::tg4Done)
+        Route.CsMap -> tally(c.cs, p::csDone)
+        Route.Cs2Map -> tally(c.cs2, p::cs2Done)
+        Route.Cs3Map -> tally(c.cs3, p::cs3Done)
+        Route.Cs4Map -> tally(c.cs4, p::cs4Done)
+        else -> null
     }
 }
 
@@ -801,10 +879,10 @@ fun NetYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("net_years_title"), vm.tr("net_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("net_year1"), subtitle = vm.tr("net_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.NetMap) }
-                NavRow(title = vm.tr("net_year2"), subtitle = vm.tr("net2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Net2Map) }
-                NavRow(title = vm.tr("net_year3"), subtitle = vm.tr("net3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Net3Map) }
-                NavRow(title = vm.tr("net_year4"), subtitle = vm.tr("net4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Net4Map) }
+                NavRow(title = vm.tr("net_year1"), subtitle = vm.tr("net_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.NetMap)) { vm.go(Route.NetMap) }
+                NavRow(title = vm.tr("net_year2"), subtitle = vm.tr("net2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Net2Map)) { vm.go(Route.Net2Map) }
+                NavRow(title = vm.tr("net_year3"), subtitle = vm.tr("net3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Net3Map)) { vm.go(Route.Net3Map) }
+                NavRow(title = vm.tr("net_year4"), subtitle = vm.tr("net4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Net4Map)) { vm.go(Route.Net4Map) }
             }
         }
     }
@@ -815,10 +893,10 @@ fun HwYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Technické vybavení"), vm.tr("hw_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("hw_year1"), subtitle = vm.tr("hw_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.HwMap) }
-                NavRow(title = vm.tr("hw_year2"), subtitle = vm.tr("hw2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Hw2Map) }
-                NavRow(title = vm.tr("hw_year3"), subtitle = vm.tr("hw3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Hw3Map) }
-                NavRow(title = vm.tr("hw_year4"), subtitle = vm.tr("hw4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Hw4Map) }
+                NavRow(title = vm.tr("hw_year1"), subtitle = vm.tr("hw_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.HwMap)) { vm.go(Route.HwMap) }
+                NavRow(title = vm.tr("hw_year2"), subtitle = vm.tr("hw2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Hw2Map)) { vm.go(Route.Hw2Map) }
+                NavRow(title = vm.tr("hw_year3"), subtitle = vm.tr("hw3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Hw3Map)) { vm.go(Route.Hw3Map) }
+                NavRow(title = vm.tr("hw_year4"), subtitle = vm.tr("hw4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Hw4Map)) { vm.go(Route.Hw4Map) }
             }
         }
     }
@@ -829,7 +907,7 @@ fun DeHomeScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Deutsch"), vm.tr("de_home_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("de_book_title"), subtitle = vm.tr("de_book_sub"), leading = { Text("U", style = MaterialTheme.typography.titleMedium) }) {
+                NavRow(title = vm.tr("de_book_title"), subtitle = vm.tr("de_book_sub"), leading = { LeadingBadge("U") }, progress = routeProgress(vm, Route.Roadmap)) {
                     vm.go(Route.Roadmap)
                 }
             }
@@ -838,7 +916,8 @@ fun DeHomeScreen(vm: AppViewModel) {
                 NavRow(
                     title = vm.tr("de_year$year"),
                     subtitle = vm.tr("de_y${year}_sub"),
-                    leading = { Text("$year.", style = MaterialTheme.typography.titleMedium) },
+                    leading = { LeadingBadge("$year") },
+                    progress = routeProgress(vm, Route.DeMap(year)),
                 ) { vm.go(Route.DeMap(year)) }
             }
         }
@@ -854,7 +933,8 @@ fun EnYearsScreen(vm: AppViewModel) {
                 NavRow(
                     title = vm.tr("en_year$year"),
                     subtitle = vm.tr("en_y${year}_sub"),
-                    leading = { Text("$year.", style = MaterialTheme.typography.titleMedium) },
+                    leading = { LeadingBadge("$year") },
+                    progress = routeProgress(vm, Route.EnMap(year)),
                 ) { vm.go(Route.EnMap(year)) }
             }
         }
@@ -866,10 +946,10 @@ fun OnYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Občanská nauka"), vm.tr("on_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("on_year1"), subtitle = vm.tr("on_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.OnMap) }
-                NavRow(title = vm.tr("on_year2"), subtitle = vm.tr("on2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On2Map) }
-                NavRow(title = vm.tr("on_year3"), subtitle = vm.tr("on3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On3Map) }
-                NavRow(title = vm.tr("on_year4"), subtitle = vm.tr("on4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.On4Map) }
+                NavRow(title = vm.tr("on_year1"), subtitle = vm.tr("on_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.OnMap)) { vm.go(Route.OnMap) }
+                NavRow(title = vm.tr("on_year2"), subtitle = vm.tr("on2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.On2Map)) { vm.go(Route.On2Map) }
+                NavRow(title = vm.tr("on_year3"), subtitle = vm.tr("on3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.On3Map)) { vm.go(Route.On3Map) }
+                NavRow(title = vm.tr("on_year4"), subtitle = vm.tr("on4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.On4Map)) { vm.go(Route.On4Map) }
             }
         }
     }
@@ -880,10 +960,10 @@ fun LitYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Literatura"), vm.tr("lit_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("lit_year1"), subtitle = vm.tr("lit_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.LitMap) }
-                NavRow(title = vm.tr("lit_year2"), subtitle = vm.tr("lit2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit2Map) }
-                NavRow(title = vm.tr("lit_year3"), subtitle = vm.tr("lit3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit3Map) }
-                NavRow(title = vm.tr("lit_year4"), subtitle = vm.tr("lit4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Lit4Map) }
+                NavRow(title = vm.tr("lit_year1"), subtitle = vm.tr("lit_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.LitMap)) { vm.go(Route.LitMap) }
+                NavRow(title = vm.tr("lit_year2"), subtitle = vm.tr("lit2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Lit2Map)) { vm.go(Route.Lit2Map) }
+                NavRow(title = vm.tr("lit_year3"), subtitle = vm.tr("lit3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Lit3Map)) { vm.go(Route.Lit3Map) }
+                NavRow(title = vm.tr("lit_year4"), subtitle = vm.tr("lit4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Lit4Map)) { vm.go(Route.Lit4Map) }
             }
         }
     }
@@ -894,11 +974,11 @@ fun MatYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Matematika"), vm.tr("mat_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("mat0_year"), subtitle = vm.tr("mat0_sub"), leading = { Text("ZŠ", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat0Map) }
-                NavRow(title = vm.tr("mat_year1"), subtitle = vm.tr("mat_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.MatMap) }
-                NavRow(title = vm.tr("mat_year2"), subtitle = vm.tr("mat2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat2Map) }
-                NavRow(title = vm.tr("mat_year3"), subtitle = vm.tr("mat3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat3Map) }
-                NavRow(title = vm.tr("mat_year4"), subtitle = vm.tr("mat4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Mat4Map) }
+                NavRow(title = vm.tr("mat0_year"), subtitle = vm.tr("mat0_sub"), leading = { LeadingBadge("ZŠ") }, progress = routeProgress(vm, Route.Mat0Map)) { vm.go(Route.Mat0Map) }
+                NavRow(title = vm.tr("mat_year1"), subtitle = vm.tr("mat_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.MatMap)) { vm.go(Route.MatMap) }
+                NavRow(title = vm.tr("mat_year2"), subtitle = vm.tr("mat2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Mat2Map)) { vm.go(Route.Mat2Map) }
+                NavRow(title = vm.tr("mat_year3"), subtitle = vm.tr("mat3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Mat3Map)) { vm.go(Route.Mat3Map) }
+                NavRow(title = vm.tr("mat_year4"), subtitle = vm.tr("mat4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Mat4Map)) { vm.go(Route.Mat4Map) }
             }
         }
     }
@@ -909,10 +989,10 @@ fun CsYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Programování"), vm.tr("cs_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("cs_year1"), subtitle = vm.tr("cs_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.CsMap) }
-                NavRow(title = vm.tr("cs_year2"), subtitle = vm.tr("cs2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Cs2Map) }
-                NavRow(title = vm.tr("cs_year3"), subtitle = vm.tr("cs3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Cs3Map) }
-                NavRow(title = vm.tr("cs_year4"), subtitle = vm.tr("cs4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Cs4Map) }
+                NavRow(title = vm.tr("cs_year1"), subtitle = vm.tr("cs_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.CsMap)) { vm.go(Route.CsMap) }
+                NavRow(title = vm.tr("cs_year2"), subtitle = vm.tr("cs2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Cs2Map)) { vm.go(Route.Cs2Map) }
+                NavRow(title = vm.tr("cs_year3"), subtitle = vm.tr("cs3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Cs3Map)) { vm.go(Route.Cs3Map) }
+                NavRow(title = vm.tr("cs_year4"), subtitle = vm.tr("cs4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Cs4Map)) { vm.go(Route.Cs4Map) }
             }
         }
     }
@@ -923,10 +1003,10 @@ fun TgYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Technická grafika"), vm.tr("tg_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("tg_year1"), subtitle = vm.tr("tg_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.TgMap) }
-                NavRow(title = vm.tr("tg_year2"), subtitle = vm.tr("tg2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Tg2Map) }
-                NavRow(title = vm.tr("tg_year3"), subtitle = vm.tr("tg3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Tg3Map) }
-                NavRow(title = vm.tr("tg_year4"), subtitle = vm.tr("tg4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Tg4Map) }
+                NavRow(title = vm.tr("tg_year1"), subtitle = vm.tr("tg_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.TgMap)) { vm.go(Route.TgMap) }
+                NavRow(title = vm.tr("tg_year2"), subtitle = vm.tr("tg2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Tg2Map)) { vm.go(Route.Tg2Map) }
+                NavRow(title = vm.tr("tg_year3"), subtitle = vm.tr("tg3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Tg3Map)) { vm.go(Route.Tg3Map) }
+                NavRow(title = vm.tr("tg_year4"), subtitle = vm.tr("tg4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Tg4Map)) { vm.go(Route.Tg4Map) }
             }
         }
     }
@@ -937,10 +1017,10 @@ fun FyzYearsScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Fyzika"), vm.tr("fyz_years_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("fyz_year1"), subtitle = vm.tr("fyz_sub"), leading = { Text("1.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.FyzMap) }
-                NavRow(title = vm.tr("fyz_year2"), subtitle = vm.tr("fyz2_sub"), leading = { Text("2.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Fyz2Map) }
-                NavRow(title = vm.tr("fyz_year3"), subtitle = vm.tr("fyz3_sub"), leading = { Text("3.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Fyz3Map) }
-                NavRow(title = vm.tr("fyz_year4"), subtitle = vm.tr("fyz4_sub"), leading = { Text("4.", style = MaterialTheme.typography.titleMedium) }) { vm.go(Route.Fyz4Map) }
+                NavRow(title = vm.tr("fyz_year1"), subtitle = vm.tr("fyz_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.FyzMap)) { vm.go(Route.FyzMap) }
+                NavRow(title = vm.tr("fyz_year2"), subtitle = vm.tr("fyz2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Fyz2Map)) { vm.go(Route.Fyz2Map) }
+                NavRow(title = vm.tr("fyz_year3"), subtitle = vm.tr("fyz3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Fyz3Map)) { vm.go(Route.Fyz3Map) }
+                NavRow(title = vm.tr("fyz_year4"), subtitle = vm.tr("fyz4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Fyz4Map)) { vm.go(Route.Fyz4Map) }
             }
         }
     }
@@ -954,11 +1034,17 @@ fun SciMapScreen(vm: AppViewModel) {
                 NavRow(
                     title = vm.tr("Chemie"),
                     subtitle = vm.tr("chem_sub"),
-                    leading = { Icon(Icons.Filled.Science, null, tint = MaterialTheme.colorScheme.primary) },
+                    leading = { LeadingIcon(Icons.Filled.Science) },
+                    progress = routeProgress(vm, Route.ChemMap),
                 ) { vm.go(Route.ChemMap) }
             }
             item {
-                NavRow(title = vm.tr("Biologie"), subtitle = vm.tr("bio_sub")) { vm.go(Route.BioMap) }
+                NavRow(
+                    title = vm.tr("Biologie"),
+                    subtitle = vm.tr("bio_sub"),
+                    leading = { LeadingIcon(Icons.Filled.Eco) },
+                    progress = routeProgress(vm, Route.BioMap),
+                ) { vm.go(Route.BioMap) }
             }
         }
     }
@@ -969,20 +1055,26 @@ fun CzechMapScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("Český jazyk a literatura"), vm.tr("czech_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
             item {
-                NavRow(title = vm.tr("Literatura"), subtitle = vm.tr("lit_years_sub")) { vm.go(Route.LitYears) }
+                NavRow(
+                    title = vm.tr("Literatura"),
+                    subtitle = vm.tr("lit_years_sub"),
+                    leading = { LeadingIcon(Icons.Filled.AutoStories) },
+                    progress = routeProgress(vm, Route.LitYears),
+                ) { vm.go(Route.LitYears) }
             }
             item {
                 NavRow(
                     title = vm.tr("Mluvnice"),
                     subtitle = vm.tr("mluv_sub"),
-                    leading = { Icon(Icons.Filled.FormatListNumbered, null, tint = MaterialTheme.colorScheme.primary) },
+                    leading = { LeadingIcon(Icons.Filled.FormatListNumbered) },
+                    progress = routeProgress(vm, Route.Mluvnice),
                 ) { vm.go(Route.Mluvnice) }
             }
             item {
                 NavRow(
                     title = vm.tr("Maturitní četba"),
                     subtitle = vm.tr("reading_sub"),
-                    leading = { Icon(Icons.AutoMirrored.Filled.MenuBook, null, tint = MaterialTheme.colorScheme.primary) },
+                    leading = { LeadingIcon(Icons.AutoMirrored.Filled.MenuBook) },
                 ) { vm.go(Route.ReadingList) }
             }
         }
@@ -1045,6 +1137,52 @@ fun BookScreen(vm: AppViewModel, id: String) {
 // ---------------------------------------------------------------------------
 // Lesson slides
 
+/** One explanation slide: label, title, tip and numbered points. */
+@Composable
+fun SlideContent(slide: J) {
+    Column {
+        Text(slide.str("kicker"), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(slide.str("title"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 4.dp, bottom = 12.dp))
+        slide.strOrNull("tip")?.let { tip ->
+            Card(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+            ) {
+                Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Outlined.Lightbulb, null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                    Spacer(Modifier.width(10.dp))
+                    Text(tip, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+        }
+        slide.strs("lines").forEachIndexed { index, line ->
+            val numbered = Regex("""^(\d+)\.\s+(.*)$""").find(line)
+            val badge = numbered?.groupValues?.get(1) ?: "${index + 1}"
+            val text = numbered?.groupValues?.get(2) ?: line
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 5.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f), androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
+                    .padding(horizontal = 14.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.Top,
+            ) {
+                Box(
+                    Modifier
+                        .padding(top = 2.dp)
+                        .size(28.dp)
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f), CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(badge, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                }
+                Spacer(Modifier.width(12.dp))
+                Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SlidesScreen(
@@ -1095,52 +1233,13 @@ fun SlidesScreen(
         },
     ) { inner ->
         HorizontalPager(state = pager, modifier = Modifier.fillMaxSize().padding(inner)) { page ->
-            val slide = slides[page]
             Column(
                 Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = 16.dp, vertical = 12.dp),
             ) {
-                Text(slide.str("kicker"), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(slide.str("title"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 4.dp, bottom = 12.dp))
-                slide.strOrNull("tip")?.let { tip ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-                    ) {
-                        Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Outlined.Lightbulb, null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
-                            Spacer(Modifier.width(10.dp))
-                            Text(tip, style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
-                }
-                slide.strs("lines").forEachIndexed { index, line ->
-                    val numbered = Regex("""^(\d+)\.\s+(.*)$""").find(line)
-                    val badge = numbered?.groupValues?.get(1) ?: "${index + 1}"
-                    val text = numbered?.groupValues?.get(2) ?: line
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 5.dp)
-                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f), androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
-                            .padding(horizontal = 14.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.Top,
-                    ) {
-                        Box(
-                            Modifier
-                                .padding(top = 2.dp)
-                                .size(28.dp)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f), CircleShape),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(badge, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                        }
-                        Spacer(Modifier.width(12.dp))
-                        Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-                    }
-                }
+                SlideContent(slides[page])
                 Spacer(Modifier.height(24.dp))
             }
         }
