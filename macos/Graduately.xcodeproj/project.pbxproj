@@ -23,6 +23,7 @@
 		B101000000000000000014 /* Exercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000014 /* Exercises.swift */; };
 		B101000000000000000015 /* ExercisesMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000015 /* ExercisesMore.swift */; };
 		B101000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B201000000000000000016 /* Assets.xcassets */; };
+		B101000000000000000018 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B201000000000000000020 /* Localizable.strings */; };
 		B101000000000000000017 /* PathMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B201000000000000000019 /* PathMap.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,8 @@
 		B201000000000000000017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B201000000000000000018 /* Graduately.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Graduately.entitlements; sourceTree = "<group>"; };
 		B201000000000000000019 /* PathMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathMap.swift; path = ../ios/Graduately/UI/PathMap.swift; sourceTree = SOURCE_ROOT; };
+		B201000000000000000021 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B201000000000000000022 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B301000000000000000001 /* Graduately.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graduately.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -79,6 +82,7 @@
 				B501000000000000000004 /* Update */,
 				B501000000000000000005 /* UI */,
 				B201000000000000000016 /* Assets.xcassets */,
+				B201000000000000000020 /* Localizable.strings */,
 				B201000000000000000017 /* Info.plist */,
 				B201000000000000000018 /* Graduately.entitlements */,
 			);
@@ -128,6 +132,18 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXVariantGroup section */
+		B201000000000000000020 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B201000000000000000021 /* en */,
+				B201000000000000000022 /* cs */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin PBXNativeTarget section */
 		B601000000000000000001 /* Graduately */ = {
 			isa = PBXNativeTarget;
@@ -164,7 +180,7 @@
 			};
 			buildConfigurationList = B801000000000000000001 /* Build configuration list for PBXProject "Graduately" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = cs;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -187,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B101000000000000000016 /* Assets.xcassets in Resources */,
+				B101000000000000000018 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
