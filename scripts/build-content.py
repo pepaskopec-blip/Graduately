@@ -14,6 +14,21 @@ import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
 
+
+def _force_utf8_stdio() -> None:
+    """Windows defaults stdout to cp1252, which cannot print Czech logs."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except (OSError, ValueError):
+            pass
+
+
+_force_utf8_stdio()
+
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content"
 OUTS = [ROOT / "android" / "app" / "src" / "main" / "assets" / "content.json"]

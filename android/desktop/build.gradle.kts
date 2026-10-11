@@ -41,6 +41,8 @@ val buildContent = tasks.register<Exec>("buildContent") {
     workingDir = repoRoot
     val python = System.getenv("PYTHON")?.takeIf { it.isNotBlank() }
         ?: if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+    environment("PYTHONUTF8", "1")
+    environment("PYTHONIOENCODING", "utf-8")
     commandLine(python, "scripts/build-content.py", "--out", out.path)
     inputs.dir(repoRoot.resolve("content"))
     inputs.file(repoRoot.resolve("scripts/build-content.py"))

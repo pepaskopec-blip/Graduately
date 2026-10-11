@@ -93,6 +93,8 @@ dependencies {
 
 val buildContent = tasks.register<Exec>("buildContent") {
     workingDir = rootProject.projectDir.parentFile
+    environment("PYTHONUTF8", "1")
+    environment("PYTHONIOENCODING", "utf-8")
     commandLine("python3", "scripts/build-content.py")
     inputs.dir(rootProject.projectDir.parentFile.resolve("content"))
     inputs.file(rootProject.projectDir.parentFile.resolve("scripts/build-content.py"))
