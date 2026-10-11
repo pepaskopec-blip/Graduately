@@ -11,9 +11,9 @@ Vzdělávací aplikace k přípravě na maturitu (repo `Graduately`). / An educa
 Rozhraní je v češtině a angličtině. Otevřené předměty jsou v seznamu níže;
 ostatní jsou zatím zamčené. Aplikace se po instalaci aktualizuje sama.
 
-| Úvod | Předměty | Německá cesta |
-| ---- | -------- | ------------- |
-| ![Úvod](assets/welcomescreen.png) | ![Předměty](assets/subjectsscreen.png) | ![Německá cesta](assets/germanlection.png) |
+| Úvod | Němčina | Neue Freunde |
+| ---- | -------- | ------------ |
+| ![Úvod](assets/home.png) | ![Němčina](assets/deutsch.png) | ![Neue Freunde](assets/neue-freunde.png) |
 
 ### Instalace
 
@@ -90,10 +90,10 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 ### Použití
 
-1. **Pokračuj** otevře mapu předmětů.
-2. Otevřený předmět (vlajka, Wi‑Fi, čip, česká vlajka, váhy, funkce, atom, baňka) vede na učební cestu.
-3. Uzly cvičení / lekcí otevřou obsah; zamčené nic nedělají.
-4. **Hledat** (lupa), **Statistiky** (graf) a **Nastavení** (ozubené kolo) jsou vpravo nahoře.
+1. **Úvod** ukáže postup a mřížku předmětů. Otevřený předmět spustí cestu. Zamčené dlaždice zatím nic neotevřou: technická grafika, prezentační grafika, programování a programové vybavení.
+2. U němčiny je učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause) a čtyři ročníky. Ostatní otevřené předměty mají ročníky, lekce nebo knihy.
+3. Z cesty se otevře výklad, poslech, čtení, psaní nebo kvíz.
+4. **Statistiky**, **Nastavení** a **Hledat** jsou v postranním panelu na Macu. Na telefonu a v desktopové aplikaci jsou na záložkách, hledání navíc ikonou lupy. Zkratka je `Cmd/Ctrl+K`.
 
 ### Sestavení ze zdroje
 
@@ -198,9 +198,9 @@ Licence: [GPL-3.0](LICENSE).
 The UI is Czech and English. Open subjects are listed below; the rest are
 still locked. After install the app updates itself.
 
-| Welcome | Subjects | German path |
-| ------- | -------- | ----------- |
-| ![Welcome](assets/welcomescreen.png) | ![Subjects](assets/subjectsscreen.png) | ![German path](assets/germanlection.png) |
+| Welcome | German | Neue Freunde |
+| ------- | ------ | ----------- |
+| ![Welcome](assets/home.png) | ![German](assets/deutsch.png) | ![Neue Freunde](assets/neue-freunde.png) |
 
 ### Install
 
@@ -279,10 +279,10 @@ Intel Mac, another architecture, or hacking on the code →
 
 ### Usage
 
-1. **Continue** opens the subject map.
-2. An open subject (flag, Wi‑Fi, chip, Czech flag, scales, function, atom, flask) opens its path.
-3. Exercise / lesson nodes open content; locked nodes do nothing.
-4. **Search** (magnifier), **Statistics** (chart) and **Settings** (gear) sit in the top-right.
+1. **Welcome** shows progress and the subject grid. An open subject starts its path. Locked tiles do nothing yet: technical drawing, presentation graphics, programming and software.
+2. German has the textbook (Neue Freunde, Aus aller Welt, Bei uns zu Hause) and four years. The other open subjects have years, lessons or books.
+3. A path opens an overview, listening, reading, writing or a quiz.
+4. **Statistics**, **Settings** and **Search** sit in the sidebar on Mac. On the phone and the desktop app they are tabs, with search also on the magnifier. The shortcut is `Cmd/Ctrl+K`.
 
 ### Build from source
 
