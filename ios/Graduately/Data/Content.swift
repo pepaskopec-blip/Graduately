@@ -67,6 +67,10 @@ final class Content {
     let pg2: [J]
     let pg3: [J]
     let pg4: [J]
+    let sw: [J]
+    let sw2: [J]
+    let sw3: [J]
+    let sw4: [J]
     let cs: [J]
     let cs2: [J]
     let cs3: [J]
@@ -145,6 +149,10 @@ final class Content {
         pg2 = raw.arr("pg2")
         pg3 = raw.arr("pg3")
         pg4 = raw.arr("pg4")
+        sw = raw.arr("sw")
+        sw2 = raw.arr("sw2")
+        sw3 = raw.arr("sw3")
+        sw4 = raw.arr("sw4")
         cs = raw.arr("cs")
         cs2 = raw.arr("cs2")
         cs3 = raw.arr("cs3")
@@ -219,6 +227,10 @@ final class Content {
     func pg2Lesson(_ id: Int) -> J? { pg2.first { $0.int("id") == id } }
     func pg3Lesson(_ id: Int) -> J? { pg3.first { $0.int("id") == id } }
     func pg4Lesson(_ id: Int) -> J? { pg4.first { $0.int("id") == id } }
+    func swLesson(_ id: Int) -> J? { sw.first { $0.int("id") == id } }
+    func sw2Lesson(_ id: Int) -> J? { sw2.first { $0.int("id") == id } }
+    func sw3Lesson(_ id: Int) -> J? { sw3.first { $0.int("id") == id } }
+    func sw4Lesson(_ id: Int) -> J? { sw4.first { $0.int("id") == id } }
     func csLesson(_ id: Int) -> J? { cs.first { $0.int("id") == id } }
     func cs2Lesson(_ id: Int) -> J? { cs2.first { $0.int("id") == id } }
     func cs3Lesson(_ id: Int) -> J? { cs3.first { $0.int("id") == id } }

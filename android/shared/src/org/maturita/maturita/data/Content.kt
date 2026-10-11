@@ -64,6 +64,10 @@ class Content(root: JSONObject) {
     val pg2 = raw.arr("pg2")
     val pg3 = raw.arr("pg3")
     val pg4 = raw.arr("pg4")
+    val sw = raw.arr("sw")
+    val sw2 = raw.arr("sw2")
+    val sw3 = raw.arr("sw3")
+    val sw4 = raw.arr("sw4")
     val cs = raw.arr("cs")
     val cs2 = raw.arr("cs2")
     val cs3 = raw.arr("cs3")
@@ -128,6 +132,10 @@ class Content(root: JSONObject) {
     fun pg2Lesson(id: Int) = pg2.firstOrNull { it.int("id") == id }
     fun pg3Lesson(id: Int) = pg3.firstOrNull { it.int("id") == id }
     fun pg4Lesson(id: Int) = pg4.firstOrNull { it.int("id") == id }
+    fun swLesson(id: Int) = sw.firstOrNull { it.int("id") == id }
+    fun sw2Lesson(id: Int) = sw2.firstOrNull { it.int("id") == id }
+    fun sw3Lesson(id: Int) = sw3.firstOrNull { it.int("id") == id }
+    fun sw4Lesson(id: Int) = sw4.firstOrNull { it.int("id") == id }
     fun csLesson(id: Int) = cs.firstOrNull { it.int("id") == id }
     fun cs2Lesson(id: Int) = cs2.firstOrNull { it.int("id") == id }
     fun cs3Lesson(id: Int) = cs3.firstOrNull { it.int("id") == id }

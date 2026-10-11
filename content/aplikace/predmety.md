@@ -14,4 +14,4 @@
 | Technická grafika | Technická grafika | Technical Graphics | ruler | tgyears | ano |
 | Prezentační grafika | Prezentační grafika | Presentation Graphics | brush | pgyears | ano |
 | Programování | Programování | Programming | code | csyears | ano |
-| Programové vybavení | Programové vybavení | Software | lock |  | ne |
+| Programové vybavení | Programové vybavení | Software | apps | swyears | ano |

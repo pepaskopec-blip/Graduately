@@ -1110,6 +1110,8 @@ STD = [
     ("technicka-grafika/3-rocnik", "tg3"), ("technicka-grafika/4-rocnik", "tg4"),
     ("prezentacni-grafika/1-rocnik", "pg"), ("prezentacni-grafika/2-rocnik", "pg2"),
     ("prezentacni-grafika/3-rocnik", "pg3"), ("prezentacni-grafika/4-rocnik", "pg4"),
+    ("programove-vybaveni/1-rocnik", "sw"), ("programove-vybaveni/2-rocnik", "sw2"),
+    ("programove-vybaveni/3-rocnik", "sw3"), ("programove-vybaveni/4-rocnik", "sw4"),
 ]
 CODE = [
     ("programovani/1-rocnik", "cs"), ("programovani/2-rocnik", "cs2"),

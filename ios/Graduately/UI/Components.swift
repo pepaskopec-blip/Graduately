@@ -712,6 +712,7 @@ func subjectSymbol(_ icon: String) -> String {
     case "ruler": return "ruler.fill"
     case "code": return "chevron.left.forwardslash.chevron.right"
     case "brush": return "paintbrush.fill"
+    case "apps": return "square.grid.2x2.fill"
     default: return "lock.fill"
     }
 }

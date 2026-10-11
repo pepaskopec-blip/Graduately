@@ -1131,6 +1131,30 @@ fun PgQuizScreen(vm: AppViewModel, year: Int, id: Int) {
 }
 
 @Composable
+fun SwQuizScreen(vm: AppViewModel, year: Int, id: Int) {
+    val lesson = when (year) {
+        2 -> vm.content.sw2Lesson(id)
+        3 -> vm.content.sw3Lesson(id)
+        4 -> vm.content.sw4Lesson(id)
+        else -> vm.content.swLesson(id)
+    } ?: return
+    val spec = J(org.json.JSONObject().apply {
+        put("type", "choice")
+        put("title", vm.tr(lesson.str("exTitleKey")))
+        put("sub", lesson.str("quizHeadKey"))
+        put("questions", lesson.o.optJSONArray("quiz"))
+    })
+    DispatchExercise(vm, spec, vm.tr(lesson.str("exTitleKey"))) {
+        when (year) {
+            2 -> vm.markSw2(id)
+            3 -> vm.markSw3(id)
+            4 -> vm.markSw4(id)
+            else -> vm.markSw(id)
+        }
+    }
+}
+
+@Composable
 fun FyzQuizScreen(vm: AppViewModel, year: Int, id: Int) {
     val lesson = when (year) {
         2 -> vm.content.fyz2Lesson(id)

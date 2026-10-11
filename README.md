@@ -76,6 +76,8 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 - **Prezentační grafika** — 4 ročníky, v každém 8 lekcí: Photoshop od pixelu
   po plakát, Premiere Pro a ve čtvrtém ročníku Illustrator, After Effects
   a InDesign
+- **Programové vybavení** — 4 ročníky, v každém 8 lekcí: Windows a licence,
+  Word a Excel, Access a MySQL, pak WordPress, Power BI, dávkové soubory a zásady
 - **Programování** — 4 ročníky C# po vzoru W3Schools. U každé lekce se kód
   píše a spouští vedle výkladu, od výpisu po třídy, LINQ a async
 - **Český jazyk a literatura** — literatura (4 ročníky, 32 lekcí podle osnov
@@ -97,7 +99,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 
 ### Použití
 
-1. **Úvod** ukáže postup a mřížku předmětů. Otevřený předmět spustí cestu. Zamčená dlaždice zatím nic neotevře: programové vybavení.
+1. **Úvod** ukáže postup a mřížku předmětů. Každý předmět spustí svou cestu.
 2. U němčiny je učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause) a čtyři ročníky. Ostatní otevřené předměty mají ročníky, lekce nebo knihy.
 3. Z cesty se otevře výklad, poslech, čtení, psaní nebo kvíz.
 4. **Statistiky**, **Nastavení** a **Hledat** jsou v postranním panelu na Macu. Na telefonu a v desktopové aplikaci jsou na záložkách, hledání navíc ikonou lupy. Zkratka je `Cmd/Ctrl+K`.

@@ -6,6 +6,12 @@
 # en: bullet
 
 --- 2026-10-11
+cs: Programové vybavení: Windows, Word, Excel, Access, MySQL a správa účtů
+cs: Čtyři ročníky, od licence a složek po WordPress, Power BI a zásady
+en: Software: Windows, Word, Excel, Access, MySQL and account administration
+en: Four years, from licences and folders to WordPress, Power BI and policy
+
+--- 2026-10-11
 cs: Prezentační grafika: Photoshop, Premiere Pro a další programy Adobe
 cs: Čtyři ročníky, v každé lekci postup, zadání a kvíz
 en: Presentation graphics: Photoshop, Premiere Pro and the other Adobe apps

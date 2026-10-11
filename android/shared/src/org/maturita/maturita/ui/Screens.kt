@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Architecture
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.AutoStories
@@ -248,6 +249,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "ruler" -> Icon(Icons.Filled.Architecture, null, tint = tint, modifier = Modifier.size(26.dp))
             "code" -> Icon(Icons.Filled.Terminal, null, tint = tint, modifier = Modifier.size(26.dp))
             "brush" -> Icon(Icons.Filled.Brush, null, tint = tint, modifier = Modifier.size(26.dp))
+            "apps" -> Icon(Icons.Filled.Apps, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -369,6 +371,10 @@ fun routeProgress(vm: AppViewModel, r: Route): Pair<Int, Int>? {
         Route.Pg2Map -> tally(c.pg2, p::pg2Done)
         Route.Pg3Map -> tally(c.pg3, p::pg3Done)
         Route.Pg4Map -> tally(c.pg4, p::pg4Done)
+        Route.SwMap -> tally(c.sw, p::swDone)
+        Route.Sw2Map -> tally(c.sw2, p::sw2Done)
+        Route.Sw3Map -> tally(c.sw3, p::sw3Done)
+        Route.Sw4Map -> tally(c.sw4, p::sw4Done)
         Route.CsMap -> tally(c.cs, p::csDone)
         Route.Cs2Map -> tally(c.cs2, p::cs2Done)
         Route.Cs3Map -> tally(c.cs3, p::cs3Done)
@@ -456,6 +462,13 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
                 vm.content.pg2.count { vm.progress.pg2Done(it.int("id")) } +
                 vm.content.pg3.count { vm.progress.pg3Done(it.int("id")) } +
                 vm.content.pg4.count { vm.progress.pg4Done(it.int("id")) }
+        }
+        "swyears", "swmap", "sw2map", "sw3map", "sw4map" -> {
+            sum.totalEx = vm.content.sw.size + vm.content.sw2.size + vm.content.sw3.size + vm.content.sw4.size
+            sum.doneEx = vm.content.sw.count { vm.progress.swDone(it.int("id")) } +
+                vm.content.sw2.count { vm.progress.sw2Done(it.int("id")) } +
+                vm.content.sw3.count { vm.progress.sw3Done(it.int("id")) } +
+                vm.content.sw4.count { vm.progress.sw4Done(it.int("id")) }
         }
         "czechmap" -> {
             val litDone = vm.content.lit.count { vm.progress.litDone(it.int("id")) } +
@@ -758,6 +771,27 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit${l.int("id")}", extra = "fyzika")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex${l.int("id")}")
     }
+    add(vm.tr("Programové vybavení"), vm.tr("search_lesson"), "swyears", extra = "office windows excel mysql")
+    add(vm.tr("sw_year1"), vm.tr("search_lesson"), "swmap", extra = "rocnik")
+    add(vm.tr("sw_year2"), vm.tr("search_lesson"), "sw2map", extra = "rocnik")
+    add(vm.tr("sw_year3"), vm.tr("search_lesson"), "sw3map", extra = "rocnik")
+    add(vm.tr("sw_year4"), vm.tr("search_lesson"), "sw4map", extra = "rocnik")
+    vm.content.sw.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "swunit${l.int("id")}", extra = "windows")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "swex${l.int("id")}")
+    }
+    vm.content.sw2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "sw2unit${l.int("id")}", extra = "word excel")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "sw2ex${l.int("id")}")
+    }
+    vm.content.sw3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "sw3unit${l.int("id")}", extra = "access mysql")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "sw3ex${l.int("id")}")
+    }
+    vm.content.sw4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "sw4unit${l.int("id")}", extra = "wordpress")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "sw4ex${l.int("id")}")
+    }
     add(vm.tr("Prezentační grafika"), vm.tr("search_lesson"), "pgyears", extra = "photoshop premiere illustrator")
     add(vm.tr("pg_year1"), vm.tr("search_lesson"), "pgmap", extra = "rocnik")
     add(vm.tr("pg_year2"), vm.tr("search_lesson"), "pg2map", extra = "rocnik")
@@ -1027,6 +1061,20 @@ fun CsYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("cs_year2"), subtitle = vm.tr("cs2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Cs2Map)) { vm.go(Route.Cs2Map) }
                 NavRow(title = vm.tr("cs_year3"), subtitle = vm.tr("cs3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Cs3Map)) { vm.go(Route.Cs3Map) }
                 NavRow(title = vm.tr("cs_year4"), subtitle = vm.tr("cs4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Cs4Map)) { vm.go(Route.Cs4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun SwYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Programové vybavení"), vm.tr("sw_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("sw_year1"), subtitle = vm.tr("sw_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.SwMap)) { vm.go(Route.SwMap) }
+                NavRow(title = vm.tr("sw_year2"), subtitle = vm.tr("sw2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Sw2Map)) { vm.go(Route.Sw2Map) }
+                NavRow(title = vm.tr("sw_year3"), subtitle = vm.tr("sw3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Sw3Map)) { vm.go(Route.Sw3Map) }
+                NavRow(title = vm.tr("sw_year4"), subtitle = vm.tr("sw4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Sw4Map)) { vm.go(Route.Sw4Map) }
             }
         }
     }

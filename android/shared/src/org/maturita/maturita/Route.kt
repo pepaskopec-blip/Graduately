@@ -131,6 +131,19 @@ sealed class Route(val page: String) {
     data object Pg4Map : Route("pg4map")
     data class Pg4Lesson(val id: Int) : Route("pg4unit$id")
     data class Pg4Ex(val id: Int) : Route("pg4ex$id")
+    data object SwYears : Route("swyears")
+    data object SwMap : Route("swmap")
+    data class SwLesson(val id: Int) : Route("swunit$id")
+    data class SwEx(val id: Int) : Route("swex$id")
+    data object Sw2Map : Route("sw2map")
+    data class Sw2Lesson(val id: Int) : Route("sw2unit$id")
+    data class Sw2Ex(val id: Int) : Route("sw2ex$id")
+    data object Sw3Map : Route("sw3map")
+    data class Sw3Lesson(val id: Int) : Route("sw3unit$id")
+    data class Sw3Ex(val id: Int) : Route("sw3ex$id")
+    data object Sw4Map : Route("sw4map")
+    data class Sw4Lesson(val id: Int) : Route("sw4unit$id")
+    data class Sw4Ex(val id: Int) : Route("sw4ex$id")
     data object CsYears : Route("csyears")
     data object CsMap : Route("csmap")
     data class CsLesson(val id: Int) : Route("csunit$id")
@@ -298,6 +311,19 @@ sealed class Route(val page: String) {
         Pg4Map -> listOf(Subjects, PgYears, Pg4Map)
         is Pg4Lesson -> listOf(Subjects, PgYears, Pg4Map, this)
         is Pg4Ex -> listOf(Subjects, PgYears, Pg4Map, Pg4Lesson(id), this)
+        SwYears -> listOf(Subjects, SwYears)
+        SwMap -> listOf(Subjects, SwYears, SwMap)
+        is SwLesson -> listOf(Subjects, SwYears, SwMap, this)
+        is SwEx -> listOf(Subjects, SwYears, SwMap, SwLesson(id), this)
+        Sw2Map -> listOf(Subjects, SwYears, Sw2Map)
+        is Sw2Lesson -> listOf(Subjects, SwYears, Sw2Map, this)
+        is Sw2Ex -> listOf(Subjects, SwYears, Sw2Map, Sw2Lesson(id), this)
+        Sw3Map -> listOf(Subjects, SwYears, Sw3Map)
+        is Sw3Lesson -> listOf(Subjects, SwYears, Sw3Map, this)
+        is Sw3Ex -> listOf(Subjects, SwYears, Sw3Map, Sw3Lesson(id), this)
+        Sw4Map -> listOf(Subjects, SwYears, Sw4Map)
+        is Sw4Lesson -> listOf(Subjects, SwYears, Sw4Map, this)
+        is Sw4Ex -> listOf(Subjects, SwYears, Sw4Map, Sw4Lesson(id), this)
         CsYears -> listOf(Subjects, CsYears)
         CsMap -> listOf(Subjects, CsYears, CsMap)
         is CsLesson -> listOf(Subjects, CsYears, CsMap, this)
@@ -369,6 +395,11 @@ fun routeFromPage(page: String): Route? = when (page) {
     "pg2map" -> Route.Pg2Map
     "pg3map" -> Route.Pg3Map
     "pg4map" -> Route.Pg4Map
+    "swyears" -> Route.SwYears
+    "swmap" -> Route.SwMap
+    "sw2map" -> Route.Sw2Map
+    "sw3map" -> Route.Sw3Map
+    "sw4map" -> Route.Sw4Map
     "csyears" -> Route.CsYears
     "csmap" -> Route.CsMap
     "cs2map" -> Route.Cs2Map
@@ -518,6 +549,30 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
         Regex("""pgex(\d+)""").matchEntire(page)?.let {
             return Route.PgEx(it.groupValues[1].toInt())
+        }
+        Regex("""sw4unit(\d+)""").matchEntire(page)?.let {
+            return Route.Sw4Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""sw4ex(\d+)""").matchEntire(page)?.let {
+            return Route.Sw4Ex(it.groupValues[1].toInt())
+        }
+        Regex("""sw3unit(\d+)""").matchEntire(page)?.let {
+            return Route.Sw3Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""sw3ex(\d+)""").matchEntire(page)?.let {
+            return Route.Sw3Ex(it.groupValues[1].toInt())
+        }
+        Regex("""sw2unit(\d+)""").matchEntire(page)?.let {
+            return Route.Sw2Lesson(it.groupValues[1].toInt())
+        }
+        Regex("""sw2ex(\d+)""").matchEntire(page)?.let {
+            return Route.Sw2Ex(it.groupValues[1].toInt())
+        }
+        Regex("""swunit(\d+)""").matchEntire(page)?.let {
+            return Route.SwLesson(it.groupValues[1].toInt())
+        }
+        Regex("""swex(\d+)""").matchEntire(page)?.let {
+            return Route.SwEx(it.groupValues[1].toInt())
         }
         Regex("""cs4unit(\d+)""").matchEntire(page)?.let {
             return Route.Cs4Lesson(it.groupValues[1].toInt())

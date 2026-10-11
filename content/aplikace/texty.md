@@ -258,6 +258,20 @@
 | pg3_sub | Premiere Pro: střih, zvuk, titulky a video. | Premiere Pro: the cut, sound, titles and the video. |
 | pg4_sub | Illustrator, After Effects, InDesign a maturitní kampaň. | Illustrator, After Effects, InDesign and the exam campaign. |
 
+# Programové vybavení
+
+| Klíč | Česky | Anglicky |
+|---|---|---|
+| sw_years_sub | Operační systém, Office, databáze a správa Windows. | The operating system, Office, databases and Windows administration. |
+| sw_year1 | 1. ročník | Year 1 |
+| sw_year2 | 2. ročník | Year 2 |
+| sw_year3 | 3. ročník | Year 3 |
+| sw_year4 | 4. ročník | Year 4 |
+| sw_sub | Software, licence a práce ve Windows. | Software, licences and working in Windows. |
+| sw2_sub | Word a Excel: dokument, vzorce a graf. | Word and Excel: a document, formulas and a chart. |
+| sw3_sub | Access a MySQL: tabulky, dotazy a vztahy. | Access and MySQL: tables, queries and relationships. |
+| sw4_sub | WordPress, Power BI, dávkové soubory a zásady. | WordPress, Power BI, batch files and policy. |
+
 # Programování
 
 | Klíč | Česky | Anglicky |

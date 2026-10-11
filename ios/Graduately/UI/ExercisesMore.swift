@@ -1018,6 +1018,39 @@ struct PgQuizScreen: View {
     }
 }
 
+struct SwQuizScreen: View {
+    @ObservedObject var vm: AppModel
+    let year: Int
+    let id: Int
+
+    var body: some View {
+        let lesson: J? = {
+            switch year {
+            case 2: return vm.content.sw2Lesson(id)
+            case 3: return vm.content.sw3Lesson(id)
+            case 4: return vm.content.sw4Lesson(id)
+            default: return vm.content.swLesson(id)
+            }
+        }()
+        if let lesson {
+            let spec = J([
+                "type": "choice",
+                "title": vm.tr(lesson.str("exTitleKey")),
+                "sub": lesson.str("quizHeadKey"),
+                "questions": lesson.rawArray("quiz"),
+            ])
+            DispatchExercise(vm: vm, spec: spec, titleFallback: vm.tr(lesson.str("exTitleKey"))) {
+                switch year {
+                case 2: vm.markSw2(id)
+                case 3: vm.markSw3(id)
+                case 4: vm.markSw4(id)
+                default: vm.markSw(id)
+                }
+            }
+        }
+    }
+}
+
 struct FyzQuizScreen: View {
     @ObservedObject var vm: AppModel
     let year: Int

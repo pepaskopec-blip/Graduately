@@ -34,6 +34,8 @@ import org.maturita.maturita.ui.LessonListScreen
 import org.maturita.maturita.ui.FyzQuizScreen
 import org.maturita.maturita.ui.PgQuizScreen
 import org.maturita.maturita.ui.PgYearsScreen
+import org.maturita.maturita.ui.SwQuizScreen
+import org.maturita.maturita.ui.SwYearsScreen
 import org.maturita.maturita.ui.TgQuizScreen
 import org.maturita.maturita.ui.TgYearsScreen
 import org.maturita.maturita.ui.MathPracticeScreen
@@ -645,6 +647,63 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Pg4Ex -> PgQuizScreen(vm, 4, r.id)
+            Route.SwYears -> SwYearsScreen(vm)
+            Route.SwMap -> LessonListScreen(
+                vm, vm.tr("sw_year1"), vm.tr("sw_sub"),
+                vm.content.sw.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.swDone(id), Route.SwLesson(id))
+                },
+            )
+            is Route.SwLesson -> {
+                val l = vm.content.swLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.SwEx(r.id))
+                }
+            }
+            is Route.SwEx -> SwQuizScreen(vm, 1, r.id)
+            Route.Sw2Map -> LessonListScreen(
+                vm, vm.tr("sw_year2"), vm.tr("sw2_sub"),
+                vm.content.sw2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.sw2Done(id), Route.Sw2Lesson(id))
+                },
+            )
+            is Route.Sw2Lesson -> {
+                val l = vm.content.sw2Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Sw2Ex(r.id))
+                }
+            }
+            is Route.Sw2Ex -> SwQuizScreen(vm, 2, r.id)
+            Route.Sw3Map -> LessonListScreen(
+                vm, vm.tr("sw_year3"), vm.tr("sw3_sub"),
+                vm.content.sw3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.sw3Done(id), Route.Sw3Lesson(id))
+                },
+            )
+            is Route.Sw3Lesson -> {
+                val l = vm.content.sw3Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Sw3Ex(r.id))
+                }
+            }
+            is Route.Sw3Ex -> SwQuizScreen(vm, 3, r.id)
+            Route.Sw4Map -> LessonListScreen(
+                vm, vm.tr("sw_year4"), vm.tr("sw4_sub"),
+                vm.content.sw4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.sw4Done(id), Route.Sw4Lesson(id))
+                },
+            )
+            is Route.Sw4Lesson -> {
+                val l = vm.content.sw4Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Sw4Ex(r.id))
+                }
+            }
+            is Route.Sw4Ex -> SwQuizScreen(vm, 4, r.id)
             Route.CsYears -> CsYearsScreen(vm)
             Route.CsMap -> LessonListScreen(
                 vm, vm.tr("cs_year1"), vm.tr("cs_sub"),
