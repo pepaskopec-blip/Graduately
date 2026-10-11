@@ -99,6 +99,14 @@ class ProgressStore(private val prefs: Prefs, content: Content) {
     fun markTg3(id: Int) { mark("tg3.$id") }
     fun tg4Done(id: Int) = done("tg4.$id")
     fun markTg4(id: Int) { mark("tg4.$id") }
+    fun pgDone(id: Int) = done("pg.$id")
+    fun markPg(id: Int) { mark("pg.$id") }
+    fun pg2Done(id: Int) = done("pg2.$id")
+    fun markPg2(id: Int) { mark("pg2.$id") }
+    fun pg3Done(id: Int) = done("pg3.$id")
+    fun markPg3(id: Int) { mark("pg3.$id") }
+    fun pg4Done(id: Int) = done("pg4.$id")
+    fun markPg4(id: Int) { mark("pg4.$id") }
     fun csDone(id: Int) = done("cs.$id")
     fun markCs(id: Int) { mark("cs.$id") }
     fun cs2Done(id: Int) = done("cs2.$id")
@@ -324,6 +332,38 @@ fun summarize(content: Content, p: ProgressStore): ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if (p.tg4Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.pg.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.pgDone(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.pg2.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.pg2Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.pg3.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.pg3Done(l.int("id"))) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    content.pg4.forEach { l ->
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if (p.pg4Done(l.int("id"))) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

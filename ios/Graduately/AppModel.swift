@@ -249,6 +249,26 @@ final class AppModel: ObservableObject {
         refresh()
     }
 
+    func markPg(_ id: Int) {
+        progress.markPg(id)
+        refresh()
+    }
+
+    func markPg2(_ id: Int) {
+        progress.markPg2(id)
+        refresh()
+    }
+
+    func markPg3(_ id: Int) {
+        progress.markPg3(id)
+        refresh()
+    }
+
+    func markPg4(_ id: Int) {
+        progress.markPg4(id)
+        refresh()
+    }
+
     func markTg4(_ id: Int) {
         progress.markTg4(id)
         refresh()

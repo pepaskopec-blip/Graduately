@@ -6,6 +6,12 @@
 # en: bullet
 
 --- 2026-10-11
+cs: Prezentační grafika: Photoshop, Premiere Pro a další programy Adobe
+cs: Čtyři ročníky, v každé lekci postup, zadání a kvíz
+en: Presentation graphics: Photoshop, Premiere Pro and the other Adobe apps
+en: Four years, and every lesson has a method, an assignment and a quiz
+
+--- 2026-10-11
 cs: Programování: čtyři ročníky C#, od výpisu po LINQ a async
 cs: Kód se píše v lekci a hned vedle se spustí
 en: Programming: four years of C#, from output to LINQ and async

@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Architecture
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.AutoStories
 import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.Brush
 import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.Functions
 import androidx.compose.material.icons.filled.Check
@@ -246,6 +247,7 @@ private fun SubjectIcon(icon: String, open: Boolean) {
             "function" -> Icon(Icons.Filled.Functions, null, tint = tint, modifier = Modifier.size(26.dp))
             "ruler" -> Icon(Icons.Filled.Architecture, null, tint = tint, modifier = Modifier.size(26.dp))
             "code" -> Icon(Icons.Filled.Terminal, null, tint = tint, modifier = Modifier.size(26.dp))
+            "brush" -> Icon(Icons.Filled.Brush, null, tint = tint, modifier = Modifier.size(26.dp))
             else -> Icon(Icons.Filled.Lock, null, tint = tint)
         }
     }
@@ -363,6 +365,10 @@ fun routeProgress(vm: AppViewModel, r: Route): Pair<Int, Int>? {
         Route.Tg2Map -> tally(c.tg2, p::tg2Done)
         Route.Tg3Map -> tally(c.tg3, p::tg3Done)
         Route.Tg4Map -> tally(c.tg4, p::tg4Done)
+        Route.PgMap -> tally(c.pg, p::pgDone)
+        Route.Pg2Map -> tally(c.pg2, p::pg2Done)
+        Route.Pg3Map -> tally(c.pg3, p::pg3Done)
+        Route.Pg4Map -> tally(c.pg4, p::pg4Done)
         Route.CsMap -> tally(c.cs, p::csDone)
         Route.Cs2Map -> tally(c.cs2, p::cs2Done)
         Route.Cs3Map -> tally(c.cs3, p::cs3Done)
@@ -443,6 +449,13 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
                 vm.content.tg2.count { vm.progress.tg2Done(it.int("id")) } +
                 vm.content.tg3.count { vm.progress.tg3Done(it.int("id")) } +
                 vm.content.tg4.count { vm.progress.tg4Done(it.int("id")) }
+        }
+        "pgyears", "pgmap", "pg2map", "pg3map", "pg4map" -> {
+            sum.totalEx = vm.content.pg.size + vm.content.pg2.size + vm.content.pg3.size + vm.content.pg4.size
+            sum.doneEx = vm.content.pg.count { vm.progress.pgDone(it.int("id")) } +
+                vm.content.pg2.count { vm.progress.pg2Done(it.int("id")) } +
+                vm.content.pg3.count { vm.progress.pg3Done(it.int("id")) } +
+                vm.content.pg4.count { vm.progress.pg4Done(it.int("id")) }
         }
         "czechmap" -> {
             val litDone = vm.content.lit.count { vm.progress.litDone(it.int("id")) } +
@@ -745,6 +758,27 @@ private fun buildSearch(vm: AppViewModel): List<Hit> {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit${l.int("id")}", extra = "fyzika")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex${l.int("id")}")
     }
+    add(vm.tr("Prezentační grafika"), vm.tr("search_lesson"), "pgyears", extra = "photoshop premiere illustrator")
+    add(vm.tr("pg_year1"), vm.tr("search_lesson"), "pgmap", extra = "rocnik")
+    add(vm.tr("pg_year2"), vm.tr("search_lesson"), "pg2map", extra = "rocnik")
+    add(vm.tr("pg_year3"), vm.tr("search_lesson"), "pg3map", extra = "rocnik")
+    add(vm.tr("pg_year4"), vm.tr("search_lesson"), "pg4map", extra = "rocnik")
+    vm.content.pg.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pgunit${l.int("id")}", extra = "photoshop")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pgex${l.int("id")}")
+    }
+    vm.content.pg2.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pg2unit${l.int("id")}", extra = "photoshop")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pg2ex${l.int("id")}")
+    }
+    vm.content.pg3.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pg3unit${l.int("id")}", extra = "premiere")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pg3ex${l.int("id")}")
+    }
+    vm.content.pg4.forEach { l ->
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pg4unit${l.int("id")}", extra = "illustrator")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pg4ex${l.int("id")}")
+    }
     add(vm.tr("Technická grafika"), vm.tr("search_lesson"), "tgyears", extra = "autocad grafika")
     add(vm.tr("tg_year1"), vm.tr("search_lesson"), "tgmap", extra = "rocnik")
     add(vm.tr("tg_year2"), vm.tr("search_lesson"), "tg2map", extra = "rocnik")
@@ -993,6 +1027,20 @@ fun CsYearsScreen(vm: AppViewModel) {
                 NavRow(title = vm.tr("cs_year2"), subtitle = vm.tr("cs2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Cs2Map)) { vm.go(Route.Cs2Map) }
                 NavRow(title = vm.tr("cs_year3"), subtitle = vm.tr("cs3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Cs3Map)) { vm.go(Route.Cs3Map) }
                 NavRow(title = vm.tr("cs_year4"), subtitle = vm.tr("cs4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Cs4Map)) { vm.go(Route.Cs4Map) }
+            }
+        }
+    }
+}
+
+@Composable
+fun PgYearsScreen(vm: AppViewModel) {
+    DetailScaffold(vm, vm.tr("Prezentační grafika"), vm.tr("pg_years_sub")) { inner ->
+        LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            item {
+                NavRow(title = vm.tr("pg_year1"), subtitle = vm.tr("pg_sub"), leading = { LeadingBadge("1") }, progress = routeProgress(vm, Route.PgMap)) { vm.go(Route.PgMap) }
+                NavRow(title = vm.tr("pg_year2"), subtitle = vm.tr("pg2_sub"), leading = { LeadingBadge("2") }, progress = routeProgress(vm, Route.Pg2Map)) { vm.go(Route.Pg2Map) }
+                NavRow(title = vm.tr("pg_year3"), subtitle = vm.tr("pg3_sub"), leading = { LeadingBadge("3") }, progress = routeProgress(vm, Route.Pg3Map)) { vm.go(Route.Pg3Map) }
+                NavRow(title = vm.tr("pg_year4"), subtitle = vm.tr("pg4_sub"), leading = { LeadingBadge("4") }, progress = routeProgress(vm, Route.Pg4Map)) { vm.go(Route.Pg4Map) }
             }
         }
     }

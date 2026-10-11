@@ -32,6 +32,8 @@ import org.maturita.maturita.ui.HwQuizScreen
 import org.maturita.maturita.ui.HwYearsScreen
 import org.maturita.maturita.ui.LessonListScreen
 import org.maturita.maturita.ui.FyzQuizScreen
+import org.maturita.maturita.ui.PgQuizScreen
+import org.maturita.maturita.ui.PgYearsScreen
 import org.maturita.maturita.ui.TgQuizScreen
 import org.maturita.maturita.ui.TgYearsScreen
 import org.maturita.maturita.ui.MathPracticeScreen
@@ -586,6 +588,63 @@ private fun MaturitaAppBody(vm: AppViewModel) {
                 }
             }
             is Route.Tg4Ex -> TgQuizScreen(vm, 4, r.id)
+            Route.PgYears -> PgYearsScreen(vm)
+            Route.PgMap -> LessonListScreen(
+                vm, vm.tr("pg_year1"), vm.tr("pg_sub"),
+                vm.content.pg.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.pgDone(id), Route.PgLesson(id))
+                },
+            )
+            is Route.PgLesson -> {
+                val l = vm.content.pgLesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.PgEx(r.id))
+                }
+            }
+            is Route.PgEx -> PgQuizScreen(vm, 1, r.id)
+            Route.Pg2Map -> LessonListScreen(
+                vm, vm.tr("pg_year2"), vm.tr("pg2_sub"),
+                vm.content.pg2.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.pg2Done(id), Route.Pg2Lesson(id))
+                },
+            )
+            is Route.Pg2Lesson -> {
+                val l = vm.content.pg2Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Pg2Ex(r.id))
+                }
+            }
+            is Route.Pg2Ex -> PgQuizScreen(vm, 2, r.id)
+            Route.Pg3Map -> LessonListScreen(
+                vm, vm.tr("pg_year3"), vm.tr("pg3_sub"),
+                vm.content.pg3.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.pg3Done(id), Route.Pg3Lesson(id))
+                },
+            )
+            is Route.Pg3Lesson -> {
+                val l = vm.content.pg3Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Pg3Ex(r.id))
+                }
+            }
+            is Route.Pg3Ex -> PgQuizScreen(vm, 3, r.id)
+            Route.Pg4Map -> LessonListScreen(
+                vm, vm.tr("pg_year4"), vm.tr("pg4_sub"),
+                vm.content.pg4.map { l ->
+                    val id = l.int("id")
+                    LessonRow(vm.tr(l.str("titleKey")), vm.progress.pg4Done(id), Route.Pg4Lesson(id))
+                },
+            )
+            is Route.Pg4Lesson -> {
+                val l = vm.content.pg4Lesson(r.id)
+                if (l != null) SlidesScreen(vm, vm.tr(l.str("titleKey")), vm.tr(l.str("subKey")), l.arr("slides")) {
+                    vm.replace(Route.Pg4Ex(r.id))
+                }
+            }
+            is Route.Pg4Ex -> PgQuizScreen(vm, 4, r.id)
             Route.CsYears -> CsYearsScreen(vm)
             Route.CsMap -> LessonListScreen(
                 vm, vm.tr("cs_year1"), vm.tr("cs_sub"),

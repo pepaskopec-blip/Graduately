@@ -102,6 +102,14 @@ final class ProgressStore {
     func markTg3(_ id: Int) { mark("tg3.\(id)") }
     func tg4Done(_ id: Int) -> Bool { done("tg4.\(id)") }
     func markTg4(_ id: Int) { mark("tg4.\(id)") }
+    func pgDone(_ id: Int) -> Bool { done("pg.\(id)") }
+    func markPg(_ id: Int) { mark("pg.\(id)") }
+    func pg2Done(_ id: Int) -> Bool { done("pg2.\(id)") }
+    func markPg2(_ id: Int) { mark("pg2.\(id)") }
+    func pg3Done(_ id: Int) -> Bool { done("pg3.\(id)") }
+    func markPg3(_ id: Int) { mark("pg3.\(id)") }
+    func pg4Done(_ id: Int) -> Bool { done("pg4.\(id)") }
+    func markPg4(_ id: Int) { mark("pg4.\(id)") }
     func csDone(_ id: Int) -> Bool { done("cs.\(id)") }
     func markCs(_ id: Int) { mark("cs.\(id)") }
     func cs2Done(_ id: Int) -> Bool { done("cs2.\(id)") }
@@ -332,6 +340,38 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
         sum.totalEx += 1
         sum.openUnits += 1
         if p.tg4Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.pg {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.pgDone(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.pg2 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.pg2Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.pg3 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.pg3Done(l.int("id")) {
+            sum.doneEx += 1
+            sum.doneUnits += 1
+        }
+    }
+    for l in content.pg4 {
+        sum.totalEx += 1
+        sum.openUnits += 1
+        if p.pg4Done(l.int("id")) {
             sum.doneEx += 1
             sum.doneUnits += 1
         }

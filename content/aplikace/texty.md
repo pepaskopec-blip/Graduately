@@ -244,6 +244,20 @@
 | tg3_sub | Pohledy, řezy, bloky a tisk. | Views, sections, blocks and plotting. |
 | tg4_sub | 3D model a výkres k maturitě. | A 3D model and the exam drawing. |
 
+# Prezentační grafika
+
+| Klíč | Česky | Anglicky |
+|---|---|---|
+| pg_years_sub | Od Photoshopu přes Premiere Pro k Illustratoru, After Effects a InDesignu. | From Photoshop through Premiere Pro to Illustrator, After Effects and InDesign. |
+| pg_year1 | 1. ročník | Year 1 |
+| pg_year2 | 2. ročník | Year 2 |
+| pg_year3 | 3. ročník | Year 3 |
+| pg_year4 | 4. ročník | Year 4 |
+| pg_sub | Photoshop: pixely, vrstvy, výběr a retuš. | Photoshop: pixels, layers, selections and retouching. |
+| pg2_sub | Masky, barvy, plakát a export. | Masks, colour, a poster and export. |
+| pg3_sub | Premiere Pro: střih, zvuk, titulky a video. | Premiere Pro: the cut, sound, titles and the video. |
+| pg4_sub | Illustrator, After Effects, InDesign a maturitní kampaň. | Illustrator, After Effects, InDesign and the exam campaign. |
+
 # Programování
 
 | Klíč | Česky | Anglicky |

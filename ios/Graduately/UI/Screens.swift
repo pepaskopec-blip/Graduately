@@ -747,6 +747,10 @@ func routeProgress(_ vm: AppModel, _ r: Route) -> (done: Int, total: Int)? {
     case .tg2Map: return tally(c.tg2, p.tg2Done)
     case .tg3Map: return tally(c.tg3, p.tg3Done)
     case .tg4Map: return tally(c.tg4, p.tg4Done)
+    case .pgMap: return tally(c.pg, p.pgDone)
+    case .pg2Map: return tally(c.pg2, p.pg2Done)
+    case .pg3Map: return tally(c.pg3, p.pg3Done)
+    case .pg4Map: return tally(c.pg4, p.pg4Done)
     case .csMap: return tally(c.cs, p.csDone)
     case .cs2Map: return tally(c.cs2, p.cs2Done)
     case .cs3Map: return tally(c.cs3, p.cs3Done)
@@ -810,6 +814,12 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
             + vm.content.cs2.filter { vm.progress.cs2Done($0.int("id")) }.count
             + vm.content.cs3.filter { vm.progress.cs3Done($0.int("id")) }.count
             + vm.content.cs4.filter { vm.progress.cs4Done($0.int("id")) }.count
+    case "pgyears", "pgmap", "pg2map", "pg3map", "pg4map":
+        sum.totalEx = vm.content.pg.count + vm.content.pg2.count + vm.content.pg3.count + vm.content.pg4.count
+        sum.doneEx = vm.content.pg.filter { vm.progress.pgDone($0.int("id")) }.count
+            + vm.content.pg2.filter { vm.progress.pg2Done($0.int("id")) }.count
+            + vm.content.pg3.filter { vm.progress.pg3Done($0.int("id")) }.count
+            + vm.content.pg4.filter { vm.progress.pg4Done($0.int("id")) }.count
     case "tgyears", "tgmap", "tg2map", "tg3map", "tg4map":
         sum.totalEx = vm.content.tg.count + vm.content.tg2.count + vm.content.tg3.count + vm.content.tg4.count
         sum.doneEx = vm.content.tg.filter { vm.progress.tgDone($0.int("id")) }.count
@@ -1118,6 +1128,27 @@ private func buildSearch(_ vm: AppModel) -> [Hit] {
     for l in vm.content.fyz4 {
         add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "fyz4unit\(l.int("id"))", extra: "fyzika")
         add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "fyz4ex\(l.int("id"))")
+    }
+    add(vm.tr("Prezentační grafika"), vm.tr("search_lesson"), "pgyears", extra: "photoshop premiere illustrator")
+    add(vm.tr("pg_year1"), vm.tr("search_lesson"), "pgmap", extra: "rocnik")
+    add(vm.tr("pg_year2"), vm.tr("search_lesson"), "pg2map", extra: "rocnik")
+    add(vm.tr("pg_year3"), vm.tr("search_lesson"), "pg3map", extra: "rocnik")
+    add(vm.tr("pg_year4"), vm.tr("search_lesson"), "pg4map", extra: "rocnik")
+    for l in vm.content.pg {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pgunit\(l.int("id"))", extra: "photoshop")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pgex\(l.int("id"))")
+    }
+    for l in vm.content.pg2 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pg2unit\(l.int("id"))", extra: "photoshop")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pg2ex\(l.int("id"))")
+    }
+    for l in vm.content.pg3 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pg3unit\(l.int("id"))", extra: "premiere")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pg3ex\(l.int("id"))")
+    }
+    for l in vm.content.pg4 {
+        add(vm.tr(l.str("titleKey")), vm.tr("search_lesson"), "pg4unit\(l.int("id"))", extra: "illustrator")
+        add(vm.tr(l.str("titleKey")), vm.tr("search_exercise"), "pg4ex\(l.int("id"))")
     }
     add(vm.tr("Technická grafika"), vm.tr("search_lesson"), "tgyears", extra: "autocad grafika")
     add(vm.tr("tg_year1"), vm.tr("search_lesson"), "tgmap", extra: "rocnik")
@@ -1940,6 +1971,47 @@ struct CsYearsScreen: View {
         }
         .navigationTitle(vm.tr("Programování"))
         .navigationSubtitle(vm.tr("cs_years_sub"))
+        .appListStyle()
+        #endif
+    }
+}
+
+struct PgYearsScreen: View {
+    @ObservedObject var vm: AppModel
+
+    var body: some View {
+        #if os(macOS)
+        let years: [(String, String, Route)] = [
+            ("pg_year1", "pg_sub", .pgMap),
+            ("pg_year2", "pg2_sub", .pg2Map),
+            ("pg_year3", "pg3_sub", .pg3Map),
+            ("pg_year4", "pg4_sub", .pg4Map),
+        ]
+        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
+            NavigationLink(value: years[i].2) {
+                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
+            }
+            .buttonStyle(PressScaleStyle())
+        }
+        .navigationTitle(vm.tr("Prezentační grafika"))
+        .navigationSubtitle(vm.tr("pg_years_sub"))
+        #else
+        List {
+            NavigationLink(value: Route.pgMap) {
+                ListRowLabel(title: vm.tr("pg_year1"), subtitle: vm.tr("pg_sub"), progress: routeProgress(vm, Route.pgMap))
+            }
+            NavigationLink(value: Route.pg2Map) {
+                ListRowLabel(title: vm.tr("pg_year2"), subtitle: vm.tr("pg2_sub"), progress: routeProgress(vm, Route.pg2Map))
+            }
+            NavigationLink(value: Route.pg3Map) {
+                ListRowLabel(title: vm.tr("pg_year3"), subtitle: vm.tr("pg3_sub"), progress: routeProgress(vm, Route.pg3Map))
+            }
+            NavigationLink(value: Route.pg4Map) {
+                ListRowLabel(title: vm.tr("pg_year4"), subtitle: vm.tr("pg4_sub"), progress: routeProgress(vm, Route.pg4Map))
+            }
+        }
+        .navigationTitle(vm.tr("Prezentační grafika"))
+        .navigationSubtitle(vm.tr("pg_years_sub"))
         .appListStyle()
         #endif
     }
@@ -3103,6 +3175,72 @@ struct RouteDestination: View {
             if let l = vm.content.cs4Lesson(id) {
                 CodeLessonScreen(vm: vm, lesson: l, onSuccess: { vm.markCs4(id) })
             }
+        case .pgYears:
+            PgYearsScreen(vm: vm)
+        case .pgMap:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("pg_year1"),
+                subtitle: vm.tr("pg_sub"),
+                rows: vm.content.pg.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "p\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.pgDone(id), destination: .pgLesson(id))
+                }
+            )
+        case .pgLesson(let id):
+            if let l = vm.content.pgLesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .pgEx(id))
+            }
+        case .pgEx(let id):
+            PgQuizScreen(vm: vm, year: 1, id: id)
+        case .pg2Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("pg_year2"),
+                subtitle: vm.tr("pg2_sub"),
+                rows: vm.content.pg2.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "p2\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.pg2Done(id), destination: .pg2Lesson(id))
+                }
+            )
+        case .pg2Lesson(let id):
+            if let l = vm.content.pg2Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .pg2Ex(id))
+            }
+        case .pg2Ex(let id):
+            PgQuizScreen(vm: vm, year: 2, id: id)
+        case .pg3Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("pg_year3"),
+                subtitle: vm.tr("pg3_sub"),
+                rows: vm.content.pg3.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "p3\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.pg3Done(id), destination: .pg3Lesson(id))
+                }
+            )
+        case .pg3Lesson(let id):
+            if let l = vm.content.pg3Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .pg3Ex(id))
+            }
+        case .pg3Ex(let id):
+            PgQuizScreen(vm: vm, year: 3, id: id)
+        case .pg4Map:
+            LessonListScreen(
+                vm: vm,
+                title: vm.tr("pg_year4"),
+                subtitle: vm.tr("pg4_sub"),
+                rows: vm.content.pg4.map { l in
+                    let id = l.int("id")
+                    return LessonRow(id: "p4\(id)", title: vm.tr(l.str("titleKey")), done: vm.progress.pg4Done(id), destination: .pg4Lesson(id))
+                }
+            )
+        case .pg4Lesson(let id):
+            if let l = vm.content.pg4Lesson(id) {
+                SlidesScreen(vm: vm, title: vm.tr(l.str("titleKey")), subtitle: vm.tr(l.str("subKey")), slides: l.arr("slides"), next: .pg4Ex(id))
+            }
+        case .pg4Ex(let id):
+            PgQuizScreen(vm: vm, year: 4, id: id)
         case .tgYears:
             TgYearsScreen(vm: vm)
         case .tgMap:
