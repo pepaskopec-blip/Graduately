@@ -8,8 +8,8 @@ Vzdělávací aplikace k přípravě na maturitu (repo `Graduately`). / An educa
 
 ## Česky
 
-Rozhraní je v češtině a angličtině. Otevřené předměty jsou v seznamu níže;
-ostatní jsou zatím zamčené. Aplikace se po instalaci aktualizuje sama.
+Rozhraní je v češtině a angličtině. Všechny předměty v seznamu níže jsou
+otevřené. Aplikace se po instalaci aktualizuje sama.
 
 | Úvod | Němčina | Neue Freunde |
 | ---- | -------- | ------------ |
@@ -100,7 +100,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
 ### Použití
 
 1. **Úvod** ukáže postup a mřížku předmětů. Každý předmět spustí svou cestu.
-2. U němčiny je učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause) a čtyři ročníky. Ostatní otevřené předměty mají ročníky, lekce nebo knihy.
+2. U němčiny je učebnice (Neue Freunde, Aus aller Welt, Bei uns zu Hause) a čtyři ročníky. Ostatní předměty mají ročníky, lekce nebo knihy.
 3. Z cesty se otevře výklad, poslech, čtení, psaní nebo kvíz.
 4. **Statistiky**, **Nastavení** a **Hledat** jsou v postranním panelu na Macu. Na telefonu a v desktopové aplikaci jsou na záložkách, hledání navíc ikonou lupy. Zkratka je `Cmd/Ctrl+K`.
 
@@ -204,8 +204,8 @@ Licence: [GPL-3.0](LICENSE).
 
 ## English
 
-The UI is Czech and English. Open subjects are listed below; the rest are
-still locked. After install the app updates itself.
+The UI is Czech and English. Every subject listed below is open. After
+install the app updates itself.
 
 | Welcome | German | Neue Freunde |
 | ------- | ------ | ----------- |
@@ -270,6 +270,10 @@ Intel Mac, another architecture, or hacking on the code →
   years 2–4 have 8 lessons each (displays, assembly, RAID, servers, maintenance)
 - **Technical graphics** — 4 years of AutoCAD, 8 lessons each:
   the sheet and coordinates, editing and dimensions, views and plotting, 3D and the exam drawing
+- **Presentation graphics** — 4 years, 8 lessons each: Photoshop from the pixel
+  to a poster, Premiere Pro, and in year 4 Illustrator, After Effects and InDesign
+- **Software** — 4 years, 8 lessons each: Windows and licences,
+  Word and Excel, Access and MySQL, then WordPress, Power BI, batch files and policy
 - **Programming** — 4 years of C# in the style of W3Schools. Each lesson has
   code you edit and run beside the explanation, from output to classes, LINQ and async
 - **Czech language** — literature (4 years, 32 lessons from the secondary-school
@@ -292,8 +296,8 @@ Intel Mac, another architecture, or hacking on the code →
 
 ### Usage
 
-1. **Welcome** shows progress and the subject grid. An open subject starts its path. Locked tiles do nothing yet: presentation graphics and software.
-2. German has the textbook (Neue Freunde, Aus aller Welt, Bei uns zu Hause) and four years. The other open subjects have years, lessons or books.
+1. **Welcome** shows progress and the subject grid. A subject starts its path.
+2. German has the textbook (Neue Freunde, Aus aller Welt, Bei uns zu Hause) and four years. The other subjects have years, lessons or books.
 3. A path opens an overview, listening, reading, writing or a quiz.
 4. **Statistics**, **Settings** and **Search** sit in the sidebar on Mac. On the phone and the desktop app they are tabs, with search also on the magnifier. The shortcut is `Cmd/Ctrl+K`.
 
