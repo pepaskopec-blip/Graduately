@@ -22,6 +22,10 @@ rm -f "$here/graduately-installer-macos.zip"
 (cd "$tmp" && zip -r -q "$here/graduately-installer-macos.zip" \
     "Nainstalovat Graduately.app")
 
+# cmd.exe requires CRLF line endings for reliable label seeks and parsing.
+awk '{ sub(/\r$/, ""); printf "%s\r\n", $0 }' graduately-installer-windows.cmd \
+    > "$tmp/graduately-installer-windows.cmd"
+cp "$tmp/graduately-installer-windows.cmd" graduately-installer-windows.cmd
 zip -q -FS graduately-installer-windows.zip graduately-installer-windows.cmd
 zip -q -FS graduately-installer-linux.zip graduately-installer-linux.sh
 

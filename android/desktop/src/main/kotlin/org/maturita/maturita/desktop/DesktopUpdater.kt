@@ -115,6 +115,7 @@ class DesktopUpdater(private val commit: String, private val install: Install) :
 
     private fun atomTip(atom: String): String? =
         Regex("""Commit/([0-9a-f]{40})""", RegexOption.IGNORE_CASE).find(atom)?.groupValues?.get(1)
+            ?: Regex("""/commit/([0-9a-f]{7,40})""", RegexOption.IGNORE_CASE).find(atom)?.groupValues?.get(1)
 
     private fun atomMainSha(atom: String): String? =
         Regex("""Build from ([0-9a-f]{7,40})""", RegexOption.IGNORE_CASE).find(atom)?.groupValues?.get(1)
@@ -198,7 +199,7 @@ rm -f "${'$'}0"
         val WINDOWS_SWAP = """@echo off
 if not defined GRADUATELY_UPDATE_DETACHED (
   set GRADUATELY_UPDATE_DETACHED=1
-  start "" /b cmd /c "%~f0" %*
+  start "" /b cmd /c ""%~f0" %*"
   exit /b 0
 )
 set "PID=%~1"

@@ -26,9 +26,8 @@ chmod +x "$TMP/bin/xcodebuild" "$TMP/bin/uname"
 
 new_fixture() {
   mkdir -p "$1/scripts"
-  cp "$ROOT/scripts/bundle-macos.sh" "$1/scripts/bundle-macos.sh"
   cp "$ROOT/scripts/bundle-macos-swift.sh" "$1/scripts/bundle-macos-swift.sh"
-  chmod +x "$1/scripts/bundle-macos.sh" "$1/scripts/bundle-macos-swift.sh"
+  chmod +x "$1/scripts/bundle-macos-swift.sh"
 }
 
 run_bundle() {
@@ -45,7 +44,7 @@ run_bundle() {
     if [[ "$mode" == supplied ]]; then
       export COMMIT="$value"
     fi
-    bash "$fixture/scripts/bundle-macos.sh"
+    bash "$fixture/scripts/bundle-macos-swift.sh"
   ) > "$OUTPUT_LOG" 2>&1; then
     STATUS=0
   else

@@ -74,4 +74,20 @@ class ProgressTest {
         assertEquals("hw3.2", gtkAddress("hw3", "2"))
         assertEquals(null, gtkAddress("cetba", "1"))
     }
+
+    @Test
+    fun everyBookPageResolvesAndRoundTrips() {
+        assertEquals(82, content.books.size)
+        for (book in content.books) {
+            val id = book.str("id")
+            val page = book.str("page")
+            val route = routeFromPage(page)
+            assertEquals(Route.Book(id), route, "routeFromPage($page) for book $id")
+            assertEquals(page, route?.page, "Route.Book($id).page")
+            val quiz = Route.BookQuiz(id)
+            assertEquals(quiz, routeFromPage(quiz.page), "quiz route for $id")
+            val plot = Route.BookPlot(id)
+            assertEquals(plot, routeFromPage(plot.page), "plot route for $id")
+        }
+    }
 }

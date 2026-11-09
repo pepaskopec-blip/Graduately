@@ -157,9 +157,21 @@ sealed class Route(val page: String) {
     data object Mluvnice : Route("mluvnice")
     data class MluvEx(val n: Int) : Route("mluve$n")
     data object ReadingList : Route("readinglist")
-    data class Book(val id: String) : Route(if (id == "1984") "cetba1984" else "cetbaFuks")
-    data class BookQuiz(val id: String) : Route(if (id == "1984") "cetba1984quiz" else "cetbaFuksQuiz")
-    data class BookPlot(val id: String) : Route(if (id == "1984") "cetba1984dej" else "cetbaFuksDej")
+    data class Book(val id: String) : Route(when (id) {
+        "1984" -> "cetba1984"
+        "fuks" -> "cetbaFuks"
+        else -> "cetba_" + id.replace('-', '_')
+    })
+    data class BookQuiz(val id: String) : Route(when (id) {
+        "1984" -> "cetba1984quiz"
+        "fuks" -> "cetbaFuksQuiz"
+        else -> "cetba_" + id.replace('-', '_') + "_quiz"
+    })
+    data class BookPlot(val id: String) : Route(when (id) {
+        "1984" -> "cetba1984dej"
+        "fuks" -> "cetbaFuksDej"
+        else -> "cetba_" + id.replace('-', '_') + "_dej"
+    })
 
     /** Bottom-navigation roots; everything else is pushed on top of [Subjects]. */
     val isRoot: Boolean get() = this is Welcome || this is Subjects || this is Stats || this is Settings
@@ -178,7 +190,14 @@ sealed class Route(val page: String) {
             this is Fyz3Lesson || this is Fyz3Ex || this is Fyz4Lesson || this is Fyz4Ex ||
             this is Mat0Lesson || this is Mat0Ex || this is MatLesson || this is MatEx ||
             this is Mat2Lesson || this is Mat2Ex || this is Mat3Lesson || this is Mat3Ex ||
-            this is Mat4Lesson || this is Mat4Ex
+            this is Mat4Lesson || this is Mat4Ex ||
+            this is TgLesson || this is TgEx || this is Tg2Lesson || this is Tg2Ex ||
+            this is Tg3Lesson || this is Tg3Ex || this is Tg4Lesson || this is Tg4Ex ||
+            this is PgLesson || this is PgEx || this is Pg2Lesson || this is Pg2Ex ||
+            this is Pg3Lesson || this is Pg3Ex || this is Pg4Lesson || this is Pg4Ex ||
+            this is SwLesson || this is SwEx || this is Sw2Lesson || this is Sw2Ex ||
+            this is Sw3Lesson || this is Sw3Ex || this is Sw4Lesson || this is Sw4Ex ||
+            this is CsLesson || this is Cs2Lesson || this is Cs3Lesson || this is Cs4Lesson
 
     /** Full stack from the practice root to this screen, so back always goes up one level. */
     fun stack(): List<Route> = when (this) {
@@ -414,7 +433,14 @@ fun routeFromPage(page: String): Route? = when (page) {
     "cetbaFuks" -> Route.Book("fuks")
     "cetbaFuksQuiz" -> Route.BookQuiz("fuks")
     "cetbaFuksDej" -> Route.BookPlot("fuks")
-    else -> {
+    else -> when {
+        page.startsWith("cetba_") && page.endsWith("_quiz") ->
+            Route.BookQuiz(page.removePrefix("cetba_").removeSuffix("_quiz").replace('_', '-'))
+        page.startsWith("cetba_") && page.endsWith("_dej") ->
+            Route.BookPlot(page.removePrefix("cetba_").removeSuffix("_dej").replace('_', '-'))
+        page.startsWith("cetba_") ->
+            Route.Book(page.removePrefix("cetba_").replace('_', '-'))
+        else -> {
         Regex("""unit(\d+)""").matchEntire(page)?.let {
             return Route.UnitMap(it.groupValues[1].toInt() - 1)
         }
@@ -692,5 +718,6 @@ fun routeFromPage(page: String): Route? = when (page) {
             return Route.MluvEx(it.groupValues[1].toInt())
         }
         null
+        }
     }
 }

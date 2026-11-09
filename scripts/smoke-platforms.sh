@@ -32,6 +32,19 @@ expect_zip installers/graduately-installer-windows.zip "graduately-installer-win
 expect_zip installers/graduately-installer-android.zip "Stahnout Graduately.html"
 expect_zip installers/graduately-installer-ios.zip "Jak nainstalovat Graduately.html"
 
+if python3 - <<'PY'
+import zipfile
+with zipfile.ZipFile("installers/graduately-installer-windows.zip") as z:
+    raw = z.read("graduately-installer-windows.cmd")
+assert b"\r\n" in raw and b"\n" not in raw.replace(b"\r\n", b""), "expected CRLF line endings"
+assert b"$r -match" not in raw, "PowerShell array -match bug present"
+PY
+then
+  ok "graduately-installer-windows.cmd CRLF + syntax"
+else
+  bad "graduately-installer-windows.cmd CRLF or syntax check"
+fi
+
 say "Build content.json"
 tmp=$(mktemp)
 python3 scripts/build-content.py --out "$tmp" >/dev/null
