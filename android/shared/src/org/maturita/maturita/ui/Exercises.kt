@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -667,9 +668,14 @@ private fun ComboEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun InlineText(text: String) {
-    Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(vertical = 8.dp))
+private fun FlowRowScope.InlineText(text: String) {
+    Text(
+        text,
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.align(Alignment.CenterVertically).padding(vertical = 8.dp),
+    )
 }
 
 @Composable
@@ -761,10 +767,9 @@ private fun ComboLine(
             Modifier.fillMaxWidth().padding(bottom = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.Center,
-            itemVerticalAlignment = Alignment.CenterVertically,
         ) {
             if (prefix.isNotBlank()) InlineText(prefix)
-            chip()
+            Box(Modifier.align(Alignment.CenterVertically)) { chip() }
             if (suffix.isNotBlank()) InlineText(suffix)
         }
     }
@@ -797,14 +802,15 @@ private fun Ex2Ex(vm: AppViewModel, title: String, sub: String?, spec: J, onDone
                     FlowRow(
                         verticalArrangement = Arrangement.Center,
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        itemVerticalAlignment = Alignment.CenterVertically,
                     ) {
                         row.strOrNull("num")?.let { InlineText(it) }
                         segs.forEachIndexed { si, seg ->
                             if (!seg.isNullOrEmpty()) InlineText(seg)
                             if (si < ans.size) {
                                 val idx = blank++
-                                ComboLine(vm, pool, picks, expected, idx, ans[si], revealed = revealed, inline = true)
+                                Box(Modifier.align(Alignment.CenterVertically)) {
+                                    ComboLine(vm, pool, picks, expected, idx, ans[si], revealed = revealed, inline = true)
+                                }
                             }
                         }
                     }

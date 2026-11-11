@@ -28,6 +28,7 @@ CLAUDE.md
 
 # Android
 android/.gradle/
+android/.kotlin/
 android/build/
 android/app/build/
 android/desktop/build/
