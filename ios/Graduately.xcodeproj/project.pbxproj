@@ -23,6 +23,8 @@
 		A101000000000000000014 /* Exercises.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000014 /* Exercises.swift */; };
 		A101000000000000000015 /* ExercisesMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000000000000000015 /* ExercisesMore.swift */; };
 		A101000000000000000016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A201000000000000000016 /* Assets.xcassets */; };
+		A101000000000000000031 /* PlayfairDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A201000000000000000031 /* PlayfairDisplay.ttf */; };
+		A101000000000000000032 /* PlayfairDisplay-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A201000000000000000032 /* PlayfairDisplay-Italic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		A201000000000000000016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A201000000000000000018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A301000000000000000001 /* Graduately.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graduately.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A201000000000000000031 /* PlayfairDisplay.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PlayfairDisplay.ttf"; path = "../assets/fonts/PlayfairDisplay.ttf"; sourceTree = SOURCE_ROOT; };
+		A201000000000000000032 /* PlayfairDisplay-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PlayfairDisplay-Italic.ttf"; path = "../assets/fonts/PlayfairDisplay-Italic.ttf"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,7 @@
 				A501000000000000000003 /* Data */,
 				A501000000000000000004 /* Update */,
 				A501000000000000000005 /* UI */,
+				A501000000000000000007 /* Fonts */,
 				A201000000000000000016 /* Assets.xcassets */,
 				A201000000000000000018 /* Info.plist */,
 			);
@@ -119,6 +124,15 @@
 				A301000000000000000001 /* Graduately.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A501000000000000000007 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A201000000000000000031 /* PlayfairDisplay.ttf */,
+				A201000000000000000032 /* PlayfairDisplay-Italic.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +196,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A101000000000000000016 /* Assets.xcassets in Resources */,
+				A101000000000000000031 /* PlayfairDisplay.ttf in Resources */,
+				A101000000000000000032 /* PlayfairDisplay-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,7 +4,6 @@ import org.json.JSONObject
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Content
 import org.maturita.maturita.data.ProgressStore
-import org.maturita.maturita.data.ThemeId
 import org.maturita.maturita.desktop.FilePrefs
 import org.maturita.maturita.desktop.gtkAddress
 import org.maturita.maturita.desktop.importGtkProgress
@@ -61,7 +60,6 @@ class ProgressTest {
         assertTrue(store.germanDone(0, 1))
         assertTrue(store.vocabDone(0))
         assertTrue(store.enDone(2, 3))
-        assertEquals(ThemeId.Nord, store.themeId)
         assertEquals(ColorMode.Dark, store.mode)
         assertEquals("abcdef1", store.seenCommit)
     }

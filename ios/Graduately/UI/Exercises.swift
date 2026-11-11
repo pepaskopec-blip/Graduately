@@ -8,16 +8,12 @@ struct ExerciseScaffold<Content: View>: View {
     var onAction: () -> Void
     let feedback: String
     let kind: String
+    var header = true
     @ViewBuilder var content: () -> Content
 
     var body: some View {
         let p = vm.palette
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) { content() }
-                .exerciseContent()
-        }
-        .scrollDismissesKeyboard(.interactively)
-        .detailScreen(title, subtitle: sub)
+        ExercisePage(title: title, sub: sub, header: header, content: content)
         .glassBottomBar {
             BottomAction(label: action, action: onAction) {
                 if !feedback.isEmpty {
@@ -131,18 +127,16 @@ private struct ChoiceEx: View {
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
             ForEach(qs.indices, id: \.self) { i in
-                Text("\(i + 1). \(qs[i].str("prompt"))")
-                    .font(.body.weight(.semibold))
-                    .padding(.bottom, 6)
-                choiceOptions(qs[i], index: i)
-                if revealed {
-                    if i < meanings.count { Meaning(text: vm.tr(meanings[i]), palette: p, visible: true) }
-                    if i < expls.count { Meaning(text: expls[i], palette: p, visible: true) }
-                    if let expl = qs[i].strOrNull("expl") {
-                        Meaning(text: expl, palette: p, visible: true)
+                QuestionCard(number: i + 1, prompt: qs[i].str("prompt")) {
+                    choiceOptions(qs[i], index: i)
+                    if revealed {
+                        if i < meanings.count { Meaning(text: vm.tr(meanings[i]), palette: p, visible: true) }
+                        if i < expls.count { Meaning(text: expls[i], palette: p, visible: true) }
+                        if let expl = qs[i].strOrNull("expl") {
+                            Meaning(text: expl, palette: p, visible: true)
+                        }
                     }
                 }
-                Spacer().frame(height: 10)
             }
         }
     }
@@ -156,12 +150,14 @@ private struct ChoiceEx: View {
                 GridItem(.flexible(), spacing: 12, alignment: .top),
                 GridItem(.flexible(), spacing: 12, alignment: .top),
             ],
-            spacing: 8
+            spacing: 10
         ) {
             optionChips(options, index: index, correct: question.int("correct"))
         }
         #else
-        optionChips(options, index: index, correct: question.int("correct"))
+        VStack(spacing: 8) {
+            optionChips(options, index: index, correct: question.int("correct"))
+        }
         #endif
     }
 
@@ -213,7 +209,7 @@ private struct AssemblyEx: View {
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
             ForEach(items.indices, id: \.self) { i in
-                if let prompt = items[i].strOrNull("prompt") { Hint(text: prompt) }
+                QuestionCard(number: i + 1, prompt: items[i].strOrNull("prompt")) {
                 WordSlot(empty: placed[i].isEmpty) {
                     FlowLayout {
                         ForEach(placed[i], id: \.self) { idx in
@@ -226,7 +222,6 @@ private struct AssemblyEx: View {
                         }
                     }
                 }
-                .padding(.bottom, 6)
                 FlowLayout(spacing: 6) {
                     ForEach(pools[i], id: \.self) { idx in
                         if idx < items[i].strs("words").count {
@@ -240,7 +235,7 @@ private struct AssemblyEx: View {
                 if revealed, i < meanings.count {
                     Meaning(text: vm.tr(meanings[i]), palette: p, visible: true)
                 }
-                Spacer().frame(height: 12)
+                }
             }
         }
     }
@@ -297,9 +292,9 @@ private struct TypedEx: View {
             if umlaut { Hint(text: vm.tr("hint_umlauts")) }
             ForEach(items.indices, id: \.self) { i in
                 let q = items[i]
-                Prompt(text: q.str("prompt"))
                 let answers = q.answerList()
                 let hints = q.strs("hints")
+                QuestionCard(number: i + 1, prompt: q.str("prompt")) {
                 ForEach(fields[i].indices, id: \.self) { j in
                     let ans = j < answers.count ? answers[j] : ""
                     WordField(
@@ -308,7 +303,6 @@ private struct TypedEx: View {
                         mark: revealed ? answerAccepts(normalizeAnswer(fields[i][j]), ans) : nil,
                         palette: p
                     )
-                    .padding(.bottom, 4)
                 }
                 if revealed {
                     if let m = q.strOrNull("meaning") { Meaning(text: vm.tr(m), palette: p, visible: true) }
@@ -316,7 +310,7 @@ private struct TypedEx: View {
                     if let g = q.strOrNull("german") { Meaning(text: g, palette: p, visible: true) }
                     if let s = q.strOrNull("shown") { Meaning(text: s, palette: p, visible: true) }
                 }
-                Spacer().frame(height: 10)
+                }
             }
         }
     }
@@ -354,10 +348,9 @@ private struct FreeEx: View {
             if let tip = spec.strOrNull("tip") { Hint(text: vm.tr(tip)) }
             ForEach(qs.indices, id: \.self) { i in
                 let q = qs[i]
-                Prompt(text: q.str("question").isEmpty ? q.str("stem") : q.str("question"))
+                QuestionCard(number: i + 1, prompt: q.str("question").isEmpty ? q.str("stem") : q.str("question")) {
                 WordField(value: Binding(get: { values[i] }, set: { values[i] = $0 }), placeholder: vm.tr("your_answer"), palette: p)
                 PillButton(label: vm.tr("show_sample")) { shown[i].toggle() }
-                    .padding(.vertical, 6)
                 if shown[i] {
                     let sample = q.str("sample")
                     let qcs = q.str("qCs")
@@ -368,7 +361,7 @@ private struct FreeEx: View {
                         visible: true
                     )
                 }
-                Spacer().frame(height: 10)
+                }
             }
         }
     }
@@ -384,6 +377,11 @@ private struct AssignEx: View {
     @State private var loc: [Int]
     @State private var fb = ("", "")
     @State private var revealed = false
+    @Environment(\.accent) private var accent
+
+    private func label(_ item: J) -> String {
+        [item.strOrNull("emoji"), item.str("label")].compactMap { $0 }.joined(separator: " ")
+    }
 
     init(vm: AppModel, title: String, sub: String?, spec: J, onDone: @escaping () -> Void) {
         self.vm = vm
@@ -406,38 +404,49 @@ private struct AssignEx: View {
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
             Hint(text: vm.tr("assign_hint"))
-            FlowLayout(spacing: 8) {
-                ForEach(groups.indices, id: \.self) { i in
-                    SegChip(label: groups[i], selected: active == i) { active = i }
-                }
-            }
-            Text(vm.tr("wordbank"))
-                #if os(macOS)
-                .font(.body)
-                #else
-                .font(.caption)
-                #endif
-                .foregroundStyle(.secondary)
-                .padding(.top, 10)
-            FlowLayout(spacing: 6) {
-                ForEach(items.indices, id: \.self) { i in
-                    if loc[i] == -1 {
-                        let label = [items[i].strOrNull("emoji"), items[i].str("label")].compactMap { $0 }.joined(separator: " ")
-                        WordChip(text: label) { loc[i] = active }
-                    }
-                }
-            }
-            ForEach(groups.indices, id: \.self) { g in
-                Text(groups[g]).font(.caption.weight(.semibold)).foregroundStyle(.secondary).padding(.top, 10)
-                FlowLayout(spacing: 6) {
+            QuestionCard {
+                Text(vm.tr("wordbank")).kicker().foregroundStyle(p.ink3)
+                FlowLayout(spacing: 8) {
                     ForEach(items.indices, id: \.self) { i in
-                        if loc[i] == g {
-                            let label = [items[i].strOrNull("emoji"), items[i].str("label")].compactMap { $0 }.joined(separator: " ")
-                            WordChip(text: label) { loc[i] = -1 }
+                        if loc[i] == -1 {
+                            WordChip(text: label(items[i])) { loc[i] = active }
                         }
                     }
                 }
+                .frame(minHeight: 36, alignment: .topLeading)
             }
+            // Each group is a tray: tap it to make it the target, tap a word in it to send it back.
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: 12, alignment: .top), count: max(1, min(groups.count, onMac(3, 1)))),
+                spacing: 12
+            ) {
+                ForEach(groups.indices, id: \.self) { g in
+                    let selected = active == g
+                    VStack(alignment: .leading, spacing: 10) {
+                        Label(groups[g], systemImage: selected ? "largecircle.fill.circle" : "circle")
+                            .font(onMac(Font.title3, Font.body).weight(.semibold))
+                            .foregroundStyle(selected ? accent.text : p.ink)
+                        FlowLayout(spacing: 8) {
+                            ForEach(items.indices, id: \.self) { i in
+                                if loc[i] == g {
+                                    WordChip(text: label(items[i])) { loc[i] = -1 }
+                                }
+                            }
+                        }
+                    }
+                    .padding(onMac(18, 14))
+                    .frame(maxWidth: .infinity, minHeight: 110, alignment: .topLeading)
+                    .background(selected ? accent.soft : p.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .strokeBorder(selected ? accent.solid : p.line, lineWidth: selected ? 1.5 : 1)
+                    }
+                    .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .onTapGesture { active = g }
+                    .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+                }
+            }
+            .animation(Motion.press, value: active)
             if revealed {
                 ForEach(items.indices, id: \.self) { i in
                     if i < meanings.count { Meaning(text: vm.tr(meanings[i]), palette: p, visible: true) }
@@ -458,6 +467,7 @@ private struct HangmanEx: View {
     @State private var guessed: [Bool]
     @State private var fb = ("", "")
     @State private var finished = false
+    @Environment(\.accent) private var accent
 
     init(vm: AppModel, title: String, sub: String?, spec: J, onDone: @escaping () -> Void) {
         self.vm = vm
@@ -474,10 +484,17 @@ private struct HangmanEx: View {
         let letters = spec.strs("letters")
         let p = vm.palette
         let cur = word < words.count ? words[word].uppercased() : ""
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-            Text(vm.fmt("hm_progress", word + 1, words.count)).foregroundStyle(.secondary)
-            if word < tips.count { Hint(text: "\(vm.tr("hm_hint")): \(vm.tr(tips[word]))") }
+        ExercisePage(title: title, sub: sub) {
+            QuestionCard {
+            HStack {
+                Text(vm.fmt("hm_progress", word + 1, words.count)).kicker().foregroundStyle(p.ink3)
+                Spacer()
+                Text("\(misses) / 6").font(.subheadline.monospacedDigit()).foregroundStyle(misses >= 4 ? p.error : p.ink3)
+            }
+            if word < tips.count {
+                Text("\(vm.tr("hm_hint")): \(vm.tr(tips[word]))")
+                    .font(onMac(Font.title3, Font.body).weight(.semibold))
+            }
             Canvas { ctx, size in
                 var gallows = Path()
                 gallows.move(to: CGPoint(x: 40, y: size.height - 10))
@@ -485,45 +502,50 @@ private struct HangmanEx: View {
                 gallows.move(to: CGPoint(x: 70, y: size.height - 10))
                 gallows.addLine(to: CGPoint(x: 70, y: 16))
                 gallows.addLine(to: CGPoint(x: size.width * 0.3 + 40, y: 16))
-                ctx.stroke(gallows, with: .color(.primary), style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                ctx.stroke(gallows, with: .color(p.ink), style: StrokeStyle(lineWidth: 6, lineCap: .round))
                 let x = size.width * 0.3 + 40
                 if misses > 0 {
                     var rope = Path(); rope.move(to: CGPoint(x: x, y: 16)); rope.addLine(to: CGPoint(x: x, y: 36))
-                    ctx.stroke(rope, with: .color(.primary), lineWidth: 4)
+                    ctx.stroke(rope, with: .color(p.ink), lineWidth: 4)
                 }
                 if misses > 1 {
-                    ctx.stroke(Path(ellipseIn: CGRect(x: x - 16, y: 36, width: 32, height: 32)), with: .color(.primary), lineWidth: 4)
+                    ctx.stroke(Path(ellipseIn: CGRect(x: x - 16, y: 36, width: 32, height: 32)), with: .color(p.ink), lineWidth: 4)
                 }
                 if misses > 2 {
                     var body = Path(); body.move(to: CGPoint(x: x, y: 68)); body.addLine(to: CGPoint(x: x, y: 110))
-                    ctx.stroke(body, with: .color(.primary), lineWidth: 4)
+                    ctx.stroke(body, with: .color(p.ink), lineWidth: 4)
                 }
                 if misses > 3 {
                     var a = Path(); a.move(to: CGPoint(x: x, y: 80)); a.addLine(to: CGPoint(x: x - 22, y: 100))
-                    ctx.stroke(a, with: .color(.primary), lineWidth: 4)
+                    ctx.stroke(a, with: .color(p.ink), lineWidth: 4)
                 }
                 if misses > 4 {
                     var a = Path(); a.move(to: CGPoint(x: x, y: 80)); a.addLine(to: CGPoint(x: x + 22, y: 100))
-                    ctx.stroke(a, with: .color(.primary), lineWidth: 4)
+                    ctx.stroke(a, with: .color(p.ink), lineWidth: 4)
                 }
                 if misses > 5 {
                     var a = Path(); a.move(to: CGPoint(x: x, y: 110)); a.addLine(to: CGPoint(x: x - 22, y: 140))
-                    ctx.stroke(a, with: .color(.primary), lineWidth: 4)
+                    ctx.stroke(a, with: .color(p.ink), lineWidth: 4)
                 }
             }
-            .frame(height: 160)
-            HStack(spacing: 6) {
+            .frame(width: 300, height: 160)
+            .frame(maxWidth: .infinity)
+            HStack(spacing: 8) {
                 ForEach(Array(cur.enumerated()), id: \.offset) { _, ch in
                     let idx = letters.firstIndex { $0.compare(String(ch), options: .caseInsensitive) == .orderedSame }
                     let show = idx.map { guessed[$0] } ?? false
-                    Text(show ? String(ch) : "_")
-                        .font(.system(size: 26, weight: .bold, design: .rounded))
-                        .monospaced()
+                    Text(show ? String(ch) : " ")
+                        .display(onMac(30, 24), relativeTo: .title)
+                        .frame(width: onMac(34, 26), height: onMac(44, 36))
+                        .overlay(alignment: .bottom) {
+                            Capsule().fill(show ? accent.solid : p.ink3).frame(height: 3)
+                        }
                 }
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
-            FlowLayout(spacing: 6) {
+            }
+            FlowLayout(spacing: 8) {
                     ForEach(letters, id: \.self) { letter in
                         if let i = letters.firstIndex(of: letter) {
                             Button {
@@ -551,8 +573,7 @@ private struct HangmanEx: View {
                                     .font(.body.weight(.semibold))
                                     .frame(minWidth: 22)
                             }
-                            .buttonStyle(.bordered)
-                            .tint(guessed[i] ? .secondary : .primary)
+                            .buttonStyle(ChipStyle(compact: true))
                             .disabled(guessed[i] || finished)
                         }
                     }
@@ -566,9 +587,6 @@ private struct HangmanEx: View {
                 }
             }
         }
-        .exerciseContent()
-        }
-        .detailScreen(title, subtitle: sub)
     }
 }
 
@@ -606,10 +624,11 @@ private struct VocabEx: View {
 
     var body: some View {
         let p = vm.palette
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-            ProgressView(value: Double(done), total: Double(max(total, 1)))
-            Text(vm.fmt("trans_progress", done, total)).font(.footnote).foregroundStyle(.secondary)
+        ExercisePage(title: title, sub: sub) {
+            HStack(spacing: 12) {
+                ProgressBar(value: Double(done) / Double(max(total, 1)))
+                Text(vm.fmt("trans_progress", done, total)).font(.subheadline.monospacedDigit()).foregroundStyle(p.ink2)
+            }
             if cards.isEmpty {
                 Label(vm.tr("trans_done"), systemImage: "checkmark.seal.fill")
                     .font(.headline)
@@ -617,24 +636,18 @@ private struct VocabEx: View {
                     .padding(.top, 8)
             } else if index < cards.count {
                 let cur = cards[index]
-                GlassCard {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(cur.0).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
-                        Text(cur.1).font(.title2.weight(.semibold))
-                    }
+                QuestionCard {
+                    Text(cur.0).kicker().foregroundStyle(p.ink3)
+                    Text(cur.1).display(onMac(34, 28), relativeTo: .title2)
+                        .padding(.bottom, 4)
+                    WordField(value: $value, placeholder: vm.tr("your_answer"), palette: p)
+                        .submitLabel(.done)
+                        .onSubmit { check(cur) }
+                    if hasUmlaut(cur.2) { Hint(text: vm.tr("hint_umlauts")) }
                 }
-                .padding(.vertical, 8)
-                if hasUmlaut(cur.2) { Hint(text: vm.tr("hint_umlauts")) }
-                WordField(value: $value, placeholder: vm.tr("your_answer"), palette: p)
-                    .submitLabel(.done)
-                    .onSubmit { check(cur) }
                 FeedbackLine(text: fb.0, kind: fb.1, palette: p)
             }
         }
-        .exerciseContent()
-        }
-        .scrollDismissesKeyboard(.interactively)
-        .detailScreen(title, subtitle: sub)
         .glassBottomBar {
             if index < cards.count {
                 BottomAction(label: vm.tr("check"), action: { check(cards[index]) }) { EmptyView() }

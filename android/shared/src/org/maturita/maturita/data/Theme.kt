@@ -1,53 +1,50 @@
 package org.maturita.maturita.data
 
 import androidx.compose.ui.graphics.Color
+import kotlin.math.pow
+import kotlin.math.roundToLong
 
-enum class ThemeId { Catppuccin, Nord, Dracula, RosePine, Ocean, Gruvbox, Solarized, Everforest, Monokai, OneDark }
 enum class ColorMode { Dark, Light }
 enum class UiLang { Cs, En }
 
-val themeNames = listOf(
-    "Catppuccin", "Nord", "Dracula", "Rose Pine", "Ocean",
-    "Gruvbox", "Solarized", "Everforest", "Monokai", "One Dark",
+/**
+ * Fill, its label colour, a tint that stays readable as text on paper, and a
+ * pale wash of the same hue. The brand has one, and so does every subject.
+ */
+data class Accent(val solid: Color, val onSolid: Color, val text: Color, val soft: Color)
+
+/** One design in two modes: warm paper and ink, with the orange of the app icon. */
+data class Palette(
+    val paper: Color,
+    val surface: Color,
+    val sunken: Color,
+    val line: Color,
+    val ink: Color,
+    val ink2: Color,
+    val ink3: Color,
+    val accent: Accent,
+    val success: Color,
+    val successSoft: Color,
+    val error: Color,
+    val errorSoft: Color,
+    val warning: Color,
+    val warningSoft: Color,
+    val glowInner: Color,
+    val glowOuter: Color,
+    val onGlow: Color,
 )
 
-data class Palette(
-    val crust: Color,
-    val base: Color,
-    val mantle: Color,
-    val surface0: Color,
-    val surface1: Color,
-    val surface2: Color,
-    val overlay: Color,
-    val text: Color,
-    val subtext: Color,
-    val accent: Color,
-    val accent2: Color,
-    val accent3: Color,
-    val success: Color,
-    val success2: Color,
-    val warning: Color,
-    val error: Color,
-    val onAccent: Color,
-    val node: Color,
-    val lockedBg: Color,
-    val lockedBorder: Color,
-    val rail: Color,
-    val finishDark: Color,
-    val finishLight: Color,
-    val finishStroke: Color,
-    /** Accent that stays readable as text and icon tint on [base]. */
-    val tint: Color,
-    /** Text colour that reads on [tint]. */
-    val onTint: Color,
-)
+private class Tone(val paper: Long, val surface: Long, val ink: Long, val dark: Boolean)
+
+private val lightTone = Tone(0xFAF5EC, 0xFFFFFF, 0x17130F, false)
+private val darkTone = Tone(0x131110, 0x1E1B18, 0xF5EEE3, true)
 
 private fun hx(v: Long) = Color(0xFF000000L or v)
 
 private fun luminance(v: Long): Double {
     fun channel(c: Long): Double {
         val s = c / 255.0
-        return if (s <= 0.03928) s / 12.92 else Math.pow((s + 0.055) / 1.055, 2.4)
+        return if (s <= 0.03928) s / 12.92 else ((s + 0.055) / 1.055).pow(2.4)
     }
     return 0.2126 * channel((v shr 16) and 0xFF) + 0.7152 * channel((v shr 8) and 0xFF) + 0.0722 * channel(v and 0xFF)
 }
@@ -58,139 +55,80 @@ private fun contrast(a: Long, b: Long): Double {
     return (maxOf(la, lb) + 0.05) / (minOf(la, lb) + 0.05)
 }
 
-/** Yellow on white is unreadable as link text; fall back to the next accent. */
-private fun readableTint(c: LongArray): Long {
-    val background = c[1]
-    for (candidate in longArrayOf(c[9], c[10], c[11])) {
-        if (contrast(candidate, background) >= 3.0) return candidate
+private fun mix(a: Long, b: Long, t: Double): Long {
+    fun channel(shift: Int): Long {
+        val x = ((a shr shift) and 0xFF).toDouble()
+        val y = ((b shr shift) and 0xFF).toDouble()
+        return (x + (y - x) * t).roundToLong()
     }
-    return c[7]
+    return (channel(16) shl 16) or (channel(8) shl 8) or channel(0)
 }
 
-private fun pal(vararg c: Long): Palette {
-    val tint = readableTint(c)
-    return Palette(
-        hx(c[0]), hx(c[1]), hx(c[2]), hx(c[3]), hx(c[4]), hx(c[5]), hx(c[6]),
-        hx(c[7]), hx(c[8]), hx(c[9]), hx(c[10]), hx(c[11]), hx(c[12]), hx(c[13]),
-        hx(c[14]), hx(c[15]), hx(c[16]), hx(c[17]), hx(c[18]), hx(c[19]), hx(c[20]),
-        hx(c[21]), hx(c[22]), hx(c[23]),
-        tint = hx(tint),
-        onTint = if (luminance(tint) > 0.4) Color(0xFF111111) else Color.White,
+/**
+ * Amber and olive are fine as fills but unreadable as text on paper, so the
+ * text tint is the same hue pushed towards the ink until it reaches 4.5 : 1.
+ */
+private fun readable(hex: Long, tone: Tone): Long {
+    var t = 0.0
+    while (t < 1 && contrast(mix(hex, tone.ink, t), tone.paper) < 4.5) t += 0.05
+    return mix(hex, tone.ink, t)
+}
+
+private fun accent(hex: Long, tone: Tone) = Accent(
+    solid = hx(hex),
+    onSolid = if (contrast(hex, 0xFFFFFF) >= 3) Color.White else hx(0x1F1503),
+    text = hx(readable(hex, tone)),
+    soft = hx(mix(hex, tone.surface, if (tone.dark) 0.78 else 0.88)),
+)
+
+fun themePalette(mode: ColorMode): Palette = if (mode == ColorMode.Light) {
+    Palette(
+        paper = hx(lightTone.paper), surface = hx(lightTone.surface), sunken = hx(0xF1E9DC), line = hx(0xE4DACB),
+        ink = hx(lightTone.ink), ink2 = hx(0x5E564C), ink3 = hx(0x8F8577),
+        accent = accent(0xD9612A, lightTone),
+        success = hx(0x1E8A4C), successSoft = hx(0xDDF1E3),
+        error = hx(0xC8352B), errorSoft = hx(0xFBE0DC),
+        warning = hx(0x9A6700), warningSoft = hx(0xFBEBC8),
+        glowInner = hx(0xFFF6E8), glowOuter = hx(0xE8935A), onGlow = hx(0x17130F),
+    )
+} else {
+    Palette(
+        paper = hx(darkTone.paper), surface = hx(darkTone.surface), sunken = hx(0x2A2622), line = hx(0x37322D),
+        ink = hx(darkTone.ink), ink2 = hx(0xB5AA9B), ink3 = hx(0x80776B),
+        accent = accent(0xF0854A, darkTone),
+        success = hx(0x4CC27E), successSoft = hx(0x173524),
+        error = hx(0xFF6B5E), errorSoft = hx(0x3D1A17),
+        warning = hx(0xF2B544), warningSoft = hx(0x3A2C10),
+        glowInner = hx(0x6A3A1E), glowOuter = hx(0x1E1B18), onGlow = hx(0xF5EEE3),
     )
 }
 
-fun themePalette(id: ThemeId, mode: ColorMode): Palette {
-    val light = mode == ColorMode.Light
-    return when (id) {
-        ThemeId.Catppuccin -> if (light) pal(
-            0xf3eee6, 0xfaf7f2, 0xffffff, 0xffffff, 0xf0ebe3, 0xe5dfd4,
-            0x8a8378, 0x1a1a1a, 0x5c574f, 0xffcc00, 0x0071e3, 0x2997ff,
-            0x1f8a4c, 0x1a7f4a, 0xe6a800, 0xd32f2f, 0x1a1a1a,
-            0xffffff, 0xf0ebe3, 0xd5cfc4, 0xe5dfd4, 0xf3eee6, 0xd5cfc4, 0x8a8378,
-        ) else pal(
-            0x000000, 0x000000, 0x111111, 0x1d1d1f, 0x2c2c2e, 0x3a3a3c,
-            0x86868b, 0xf5f5f7, 0xa1a1a6, 0xffd60a, 0x2997ff, 0x64d2ff,
-            0x30d158, 0x64d2ff, 0xffd60a, 0xff453a, 0x1d1d1f,
-            0x1d1d1f, 0x111111, 0x3a3a3c, 0x2c2c2e, 0x000000, 0x3a3a3c, 0x86868b,
-        )
-        ThemeId.Nord -> if (light) pal(
-            0xd8dee9, 0xeceff4, 0xe5e9f0, 0xd8dee9, 0xc7ceda, 0xb0b8c8,
-            0x7b88a1, 0x2e3440, 0x4c566a, 0x5e81ac, 0x81a1c1, 0x5e81ac,
-            0xa3be8c, 0x8fbcbb, 0xebcb8b, 0xbf616a, 0xeceff4,
-            0xe5e9f0, 0xd8dee9, 0xc7ceda, 0xd8dee9, 0xd8dee9, 0xc7ceda, 0x7b88a1,
-        ) else pal(
-            0x2e3440, 0x3b4252, 0x2e3440, 0x434c5e, 0x4c566a, 0x616e88,
-            0x7b88a1, 0xeceff4, 0xd8dee9, 0x88c0d0, 0x81a1c1, 0x5e81ac,
-            0xa3be8c, 0x8fbcbb, 0xebcb8b, 0xbf616a, 0x2e3440,
-            0x434c5e, 0x3b4252, 0x4c566a, 0x2e3440, 0x2e3440, 0x434c5e, 0x4c566a,
-        )
-        ThemeId.Dracula -> if (light) pal(
-            0xd5d7e0, 0xf8f8f2, 0xefefea, 0xe2e2d8, 0xd0d0c4, 0xbfbfb2,
-            0x9a9a8c, 0x282a36, 0x44475a, 0x7c3aed, 0xd946a6, 0x0891b2,
-            0x16a34a, 0x0e7490, 0xca8a04, 0xdc2626, 0xf8f8f2,
-            0xefefea, 0xe2e2d8, 0xd0d0c4, 0xe2e2d8, 0xd5d7e0, 0xd0d0c4, 0x9a9a8c,
-        ) else pal(
-            0x191a21, 0x282a36, 0x21222c, 0x44475a, 0x6272a4, 0x707eb0,
-            0x6272a4, 0xf8f8f2, 0xbfbfb2, 0xbd93f9, 0xff79c6, 0x8be9fd,
-            0x50fa7b, 0x8be9fd, 0xf1fa8c, 0xff5555, 0x282a36,
-            0x383a4a, 0x2f3240, 0x44475a, 0x21222c, 0x191a21, 0x383a4a, 0x6272a4,
-        )
-        ThemeId.RosePine -> if (light) pal(
-            0xf2e9e1, 0xfaf4ed, 0xfffaf3, 0xf2e9e1, 0xdfdad9, 0xcecacd,
-            0x9893a5, 0x575279, 0x797593, 0x907aa9, 0xd7827e, 0x56949f,
-            0x286983, 0x56949f, 0xea9d34, 0xb4637a, 0xfaf4ed,
-            0xfffaf3, 0xf2e9e1, 0xdfdad9, 0xf2e9e1, 0xf2e9e1, 0xdfdad9, 0x9893a5,
-        ) else pal(
-            0x191724, 0x1f1d2e, 0x1f1d2e, 0x26233a, 0x403d52, 0x524f67,
-            0x6e6a86, 0xe0def4, 0x908caa, 0xc4a7e7, 0xebbcba, 0x9ccfd8,
-            0x31748f, 0x9ccfd8, 0xf6c177, 0xeb6f92, 0x191724,
-            0x26233a, 0x21202e, 0x403d52, 0x191724, 0x191724, 0x26233a, 0x524f67,
-        )
-        ThemeId.Ocean -> if (light) pal(
-            0xd6dae8, 0xe1e2ec, 0xd5d6e2, 0xc8c9d6, 0xb4b6c5, 0x9aa0b5,
-            0x7a8199, 0x2e3446, 0x4a5168, 0x2e7de9, 0x7847bd, 0x007197,
-            0x387068, 0x007197, 0x8c6c3e, 0xc64343, 0xe1e2ec,
-            0xd5d6e2, 0xc8c9d6, 0xb4b6c5, 0xc8c9d6, 0xd6dae8, 0xb4b6c5, 0x7a8199,
-        ) else pal(
-            0x16161e, 0x1a1b26, 0x16161e, 0x24283b, 0x414868, 0x565f89,
-            0x565f89, 0xc0caf5, 0xa9b1d6, 0x7aa2f7, 0xbb9af7, 0x7dcfff,
-            0x9ece6a, 0x73daca, 0xe0af68, 0xf7768e, 0x1a1b26,
-            0x24283b, 0x1f2335, 0x3b4261, 0x16161e, 0x16161e, 0x24283b, 0x414868,
-        )
-        ThemeId.Gruvbox -> if (light) pal(
-            0xebdbb2, 0xfbf1c7, 0xf2e5bc, 0xebdbb2, 0xd5c4a1, 0xbdae93,
-            0x928374, 0x3c3836, 0x504945, 0xd65d0e, 0xb16286, 0x076678,
-            0x79740e, 0x427b58, 0xb57614, 0x9d0006, 0xfbf1c7,
-            0xf2e5bc, 0xebdbb2, 0xd5c4a1, 0xebdbb2, 0xebdbb2, 0xd5c4a1, 0x928374,
-        ) else pal(
-            0x1d2021, 0x282828, 0x1d2021, 0x3c3836, 0x504945, 0x665c54,
-            0x928374, 0xebdbb2, 0xa89984, 0xfe8019, 0xd3869b, 0x83a598,
-            0xb8bb26, 0x8ec07c, 0xfabd2f, 0xfb4934, 0x1d2021,
-            0x3c3836, 0x32302f, 0x504945, 0x1d2021, 0x1d2021, 0x3c3836, 0x504945,
-        )
-        ThemeId.Solarized -> if (light) pal(
-            0xeee8d5, 0xfdf6e3, 0xeee8d5, 0xeee8d5, 0xe2dbc6, 0xc9c0a6,
-            0x657b83, 0x586e75, 0x657b83, 0x268bd2, 0x6c71c4, 0x2aa198,
-            0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0xfdf6e3,
-            0xeee8d5, 0xe6dfc8, 0x93a1a1, 0xeee8d5, 0xeee8d5, 0x93a1a1, 0x586e75,
-        ) else pal(
-            0x002b36, 0x073642, 0x002b36, 0x586e75, 0x657b83, 0x839496,
-            0x93a1a1, 0xfdf6e3, 0x93a1a1, 0x268bd2, 0x6c71c4, 0x2aa198,
-            0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0x002b36,
-            0x073642, 0x002b36, 0x586e75, 0x002b36, 0x002b36, 0x073642, 0x586e75,
-        )
-        ThemeId.Everforest -> if (light) pal(
-            0xe6e2cc, 0xfdf6e3, 0xf4f0d9, 0xefebd4, 0xe0dcc7, 0xa6b0a0,
-            0x939f91, 0x5c6a72, 0x829181, 0x8da101, 0xdf69ba, 0x35a77c,
-            0x8da101, 0x35a77c, 0xdfa000, 0xf85552, 0xfdf6e3,
-            0xf4f0d9, 0xefebd4, 0xe0dcc7, 0xe6e2cc, 0xe6e2cc, 0xe0dcc7, 0x939f91,
-        ) else pal(
-            0x1e2326, 0x272e33, 0x2d353b, 0x374145, 0x4f5b58, 0x7a8478,
-            0x859289, 0xd3c6aa, 0xa7c080, 0xa7c080, 0xd699b6, 0x7fbbb3,
-            0xa7c080, 0x83c092, 0xdbbc7f, 0xe67e80, 0x272e33,
-            0x374145, 0x2d353b, 0x4f5b58, 0x1e2326, 0x1e2326, 0x374145, 0x4f5b58,
-        )
-        ThemeId.Monokai -> if (light) pal(
-            0xe6e3d4, 0xfaf8f0, 0xf3f0e4, 0xe8e4d4, 0xd6d2c0, 0xb8b49e,
-            0x8a8674, 0x2d2a2e, 0x5b5854, 0xe14775, 0x7c5cbf, 0x1c7d9b,
-            0x5b8c2a, 0x1c7d9b, 0xb08900, 0xe14775, 0xfaf8f0,
-            0xf3f0e4, 0xe8e4d4, 0xd6d2c0, 0xe6e3d4, 0xe6e3d4, 0xd6d2c0, 0x8a8674,
-        ) else pal(
-            0x1d1e19, 0x272822, 0x1e1f1a, 0x3e3d32, 0x49483e, 0x75715e,
-            0x75715e, 0xf8f8f2, 0xa59f85, 0xf92672, 0xae81ff, 0x66d9ef,
-            0xa6e22e, 0xa1efe4, 0xe6db74, 0xf92672, 0x272822,
-            0x3e3d32, 0x2e2f29, 0x49483e, 0x1d1e19, 0x1d1e19, 0x3e3d32, 0x49483e,
-        )
-        ThemeId.OneDark -> if (light) pal(
-            0xe5e5e6, 0xfafafa, 0xf0f0f0, 0xe5e5e6, 0xd0d0d2, 0xa0a1a7,
-            0xa0a1a7, 0x383a42, 0x696c77, 0xa626a4, 0x4078f2, 0x0184bc,
-            0x50a14f, 0x0184bc, 0xc18401, 0xe45649, 0xfafafa,
-            0xf0f0f0, 0xe5e5e6, 0xd0d0d2, 0xe5e5e6, 0xe5e5e6, 0xd0d0d2, 0xa0a1a7,
-        ) else pal(
-            0x21252b, 0x282c34, 0x21252b, 0x3b4048, 0x4b5263, 0x5c6370,
-            0x5c6370, 0xabb2bf, 0x7f848e, 0xc678dd, 0x61afef, 0x56b6c2,
-            0x98c379, 0x56b6c2, 0xe5c07b, 0xe06c75, 0x282c34,
-            0x3b4048, 0x2c313a, 0x4b5263, 0x21252b, 0x21252b, 0x3b4048, 0x4b5263,
-        )
-    }
+/**
+ * A subject keeps one colour everywhere: its cover on the home screen, the
+ * list of its lessons and the buttons in its exercises.
+ *
+ * [key] is the `Ikona` column of content/aplikace/predmety.md; [cs] and [en]
+ * are the timetable abbreviation shown as the cover's watermark.
+ */
+class Subject(val key: String, val cs: String, val en: String, private val hex: Long) {
+    fun accent(mode: ColorMode): Accent = accent(hex, if (mode == ColorMode.Light) lightTone else darkTone)
+    fun mark(lang: UiLang): String = if (lang == UiLang.En) en else cs
 }
+
+val subjects = listOf(
+    Subject("de", "NJ", "DE", 0xE5A50A),
+    Subject("wifi", "PS", "NET", 0x2E74DE),
+    Subject("chip", "HW", "HW", 0x56616F),
+    Subject("cz", "ČJ", "CZ", 0x3848B8),
+    Subject("people", "ON", "CIV", 0x9A3FA8),
+    Subject("uk", "AJ", "EN", 0xC4314B),
+    Subject("function", "MAT", "MAT", 0x7345D8),
+    Subject("bolt", "FYZ", "PHY", 0xE2681A),
+    Subject("flask", "ZPV", "SCI", 0x12908A),
+    Subject("ruler", "TG", "TG", 0x1787B5),
+    Subject("brush", "PG", "PG", 0xD03A80),
+    Subject("code", "PRG", "PRG", 0x1E8E5A),
+    Subject("apps", "PV", "SW", 0x7A9A1E),
+)
+
+fun subjectStyle(key: String): Subject? = subjects.firstOrNull { it.key == key }

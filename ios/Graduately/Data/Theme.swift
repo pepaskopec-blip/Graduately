@@ -1,8 +1,8 @@
+import CoreText
 import SwiftUI
-
-enum ThemeId: Int, CaseIterable {
-    case catppuccin, nord, dracula, rosePine, ocean, gruvbox, solarized, everforest, monokai, oneDark
-}
+#if os(iOS)
+import UIKit
+#endif
 
 enum ColorMode {
     case dark, light
@@ -12,21 +12,31 @@ enum UiLang {
     case cs, en
 }
 
-let themeNames = [
-    "Catppuccin", "Nord", "Dracula", "Rose Pine", "Ocean",
-    "Gruvbox", "Solarized", "Everforest", "Monokai", "One Dark",
-]
-
-struct Palette {
-    let crust, base, mantle, surface0, surface1, surface2: Color
-    let overlay, text, subtext: Color
-    let accent, accent2, accent3: Color
-    let success, success2, warning, error: Color
-    let onAccent, node, lockedBg, lockedBorder, rail: Color
-    let finishDark, finishLight, finishStroke: Color
-    /// Accent that stays readable as text and icon tint on the theme's background.
-    let tint: Color
+/// Fill, its label colour, a tint that stays readable as text on paper, and a
+/// pale wash of the same hue. The brand has one, and so does every subject.
+struct Accent {
+    let solid: Color
+    let onSolid: Color
+    let text: Color
+    let soft: Color
 }
+
+/// One design in two modes: warm paper and ink, with the orange of the app icon.
+struct Palette {
+    let paper, surface, sunken, line: Color
+    let ink, ink2, ink3: Color
+    let accent: Accent
+    let success, successSoft, error, errorSoft, warning, warningSoft: Color
+    let glowInner, glowOuter, onGlow: Color
+}
+
+private struct Tone {
+    let paper, surface, ink: UInt32
+    let dark: Bool
+}
+
+private let lightTone = Tone(paper: 0xFAF5EC, surface: 0xFFFFFF, ink: 0x17130F, dark: false)
+private let darkTone = Tone(paper: 0x131110, surface: 0x1E1B18, ink: 0xF5EEE3, dark: true)
 
 private func hx(_ v: UInt32) -> Color {
     Color(
@@ -49,151 +59,222 @@ private func contrast(_ a: UInt32, _ b: UInt32) -> Double {
     return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
 }
 
-/// Pick the first accent with enough contrast against the background; yellow on
-/// white is unreadable as tab labels and link text.
-private func readableTint(_ c: [UInt32]) -> UInt32 {
-    let background = c[1]
-    for candidate in [c[9], c[10], c[11]] where contrast(candidate, background) >= 3.0 {
-        return candidate
+private func mix(_ a: UInt32, _ b: UInt32, _ t: Double) -> UInt32 {
+    func channel(_ shift: UInt32) -> UInt32 {
+        let x = Double((a >> shift) & 0xFF), y = Double((b >> shift) & 0xFF)
+        return UInt32((x + (y - x) * t).rounded())
     }
-    return c[7]
+    return channel(16) << 16 | channel(8) << 8 | channel(0)
 }
 
-private func pal(_ c: [UInt32]) -> Palette {
-    Palette(
-        crust: hx(c[0]), base: hx(c[1]), mantle: hx(c[2]), surface0: hx(c[3]),
-        surface1: hx(c[4]), surface2: hx(c[5]), overlay: hx(c[6]), text: hx(c[7]),
-        subtext: hx(c[8]), accent: hx(c[9]), accent2: hx(c[10]), accent3: hx(c[11]),
-        success: hx(c[12]), success2: hx(c[13]), warning: hx(c[14]), error: hx(c[15]),
-        onAccent: hx(c[16]), node: hx(c[17]), lockedBg: hx(c[18]),
-        lockedBorder: hx(c[19]), rail: hx(c[20]), finishDark: hx(c[21]),
-        finishLight: hx(c[22]), finishStroke: hx(c[23]),
-        tint: hx(readableTint(c))
+/// Amber and olive are fine as fills but unreadable as text on paper, so the
+/// text tint is the same hue pushed towards the ink until it reaches 4.5 : 1.
+private func readable(_ hex: UInt32, on tone: Tone) -> UInt32 {
+    var t = 0.0
+    while t < 1, contrast(mix(hex, tone.ink, t), tone.paper) < 4.5 { t += 0.05 }
+    return mix(hex, tone.ink, t)
+}
+
+private func makeAccent(_ hex: UInt32, _ tone: Tone) -> Accent {
+    Accent(
+        solid: hx(hex),
+        onSolid: contrast(hex, 0xFFFFFF) >= 3 ? .white : hx(0x1F1503),
+        text: hx(readable(hex, on: tone)),
+        soft: hx(mix(hex, tone.surface, tone.dark ? 0.78 : 0.88))
     )
 }
 
-func themePalette(_ id: ThemeId, _ mode: ColorMode) -> Palette {
-    let light = mode == .light
-    switch id {
-    case .catppuccin:
-        return light ? pal([
-            0xf3eee6, 0xfaf7f2, 0xffffff, 0xffffff, 0xf0ebe3, 0xe5dfd4,
-            0x8a8378, 0x1a1a1a, 0x5c574f, 0xffcc00, 0x0071e3, 0x2997ff,
-            0x1f8a4c, 0x1a7f4a, 0xe6a800, 0xd32f2f, 0x1a1a1a,
-            0xffffff, 0xf0ebe3, 0xd5cfc4, 0xe5dfd4, 0xf3eee6, 0xd5cfc4, 0x8a8378,
-        ]) : pal([
-            0x000000, 0x000000, 0x111111, 0x1d1d1f, 0x2c2c2e, 0x3a3a3c,
-            0x86868b, 0xf5f5f7, 0xa1a1a6, 0xffd60a, 0x2997ff, 0x64d2ff,
-            0x30d158, 0x64d2ff, 0xffd60a, 0xff453a, 0x1d1d1f,
-            0x1d1d1f, 0x111111, 0x3a3a3c, 0x2c2c2e, 0x000000, 0x3a3a3c, 0x86868b,
-        ])
-    case .nord:
-        return light ? pal([
-            0xd8dee9, 0xeceff4, 0xe5e9f0, 0xd8dee9, 0xc7ceda, 0xb0b8c8,
-            0x7b88a1, 0x2e3440, 0x4c566a, 0x5e81ac, 0x81a1c1, 0x5e81ac,
-            0xa3be8c, 0x8fbcbb, 0xebcb8b, 0xbf616a, 0xeceff4,
-            0xe5e9f0, 0xd8dee9, 0xc7ceda, 0xd8dee9, 0xd8dee9, 0xc7ceda, 0x7b88a1,
-        ]) : pal([
-            0x2e3440, 0x3b4252, 0x2e3440, 0x434c5e, 0x4c566a, 0x616e88,
-            0x7b88a1, 0xeceff4, 0xd8dee9, 0x88c0d0, 0x81a1c1, 0x5e81ac,
-            0xa3be8c, 0x8fbcbb, 0xebcb8b, 0xbf616a, 0x2e3440,
-            0x434c5e, 0x3b4252, 0x4c566a, 0x2e3440, 0x2e3440, 0x434c5e, 0x4c566a,
-        ])
-    case .dracula:
-        return light ? pal([
-            0xd5d7e0, 0xf8f8f2, 0xefefea, 0xe2e2d8, 0xd0d0c4, 0xbfbfb2,
-            0x9a9a8c, 0x282a36, 0x44475a, 0x7c3aed, 0xd946a6, 0x0891b2,
-            0x16a34a, 0x0e7490, 0xca8a04, 0xdc2626, 0xf8f8f2,
-            0xefefea, 0xe2e2d8, 0xd0d0c4, 0xe2e2d8, 0xd5d7e0, 0xd0d0c4, 0x9a9a8c,
-        ]) : pal([
-            0x191a21, 0x282a36, 0x21222c, 0x44475a, 0x6272a4, 0x707eb0,
-            0x6272a4, 0xf8f8f2, 0xbfbfb2, 0xbd93f9, 0xff79c6, 0x8be9fd,
-            0x50fa7b, 0x8be9fd, 0xf1fa8c, 0xff5555, 0x282a36,
-            0x383a4a, 0x2f3240, 0x44475a, 0x21222c, 0x191a21, 0x383a4a, 0x6272a4,
-        ])
-    case .rosePine:
-        return light ? pal([
-            0xf2e9e1, 0xfaf4ed, 0xfffaf3, 0xf2e9e1, 0xdfdad9, 0xcecacd,
-            0x9893a5, 0x575279, 0x797593, 0x907aa9, 0xd7827e, 0x56949f,
-            0x286983, 0x56949f, 0xea9d34, 0xb4637a, 0xfaf4ed,
-            0xfffaf3, 0xf2e9e1, 0xdfdad9, 0xf2e9e1, 0xf2e9e1, 0xdfdad9, 0x9893a5,
-        ]) : pal([
-            0x191724, 0x1f1d2e, 0x1f1d2e, 0x26233a, 0x403d52, 0x524f67,
-            0x6e6a86, 0xe0def4, 0x908caa, 0xc4a7e7, 0xebbcba, 0x9ccfd8,
-            0x31748f, 0x9ccfd8, 0xf6c177, 0xeb6f92, 0x191724,
-            0x26233a, 0x21202e, 0x403d52, 0x191724, 0x191724, 0x26233a, 0x524f67,
-        ])
-    case .ocean:
-        return light ? pal([
-            0xd6dae8, 0xe1e2ec, 0xd5d6e2, 0xc8c9d6, 0xb4b6c5, 0x9aa0b5,
-            0x7a8199, 0x2e3446, 0x4a5168, 0x2e7de9, 0x7847bd, 0x007197,
-            0x387068, 0x007197, 0x8c6c3e, 0xc64343, 0xe1e2ec,
-            0xd5d6e2, 0xc8c9d6, 0xb4b6c5, 0xc8c9d6, 0xd6dae8, 0xb4b6c5, 0x7a8199,
-        ]) : pal([
-            0x16161e, 0x1a1b26, 0x16161e, 0x24283b, 0x414868, 0x565f89,
-            0x565f89, 0xc0caf5, 0xa9b1d6, 0x7aa2f7, 0xbb9af7, 0x7dcfff,
-            0x9ece6a, 0x73daca, 0xe0af68, 0xf7768e, 0x1a1b26,
-            0x24283b, 0x1f2335, 0x3b4261, 0x16161e, 0x16161e, 0x24283b, 0x414868,
-        ])
-    case .gruvbox:
-        return light ? pal([
-            0xebdbb2, 0xfbf1c7, 0xf2e5bc, 0xebdbb2, 0xd5c4a1, 0xbdae93,
-            0x928374, 0x3c3836, 0x504945, 0xd65d0e, 0xb16286, 0x076678,
-            0x79740e, 0x427b58, 0xb57614, 0x9d0006, 0xfbf1c7,
-            0xf2e5bc, 0xebdbb2, 0xd5c4a1, 0xebdbb2, 0xebdbb2, 0xd5c4a1, 0x928374,
-        ]) : pal([
-            0x1d2021, 0x282828, 0x1d2021, 0x3c3836, 0x504945, 0x665c54,
-            0x928374, 0xebdbb2, 0xa89984, 0xfe8019, 0xd3869b, 0x83a598,
-            0xb8bb26, 0x8ec07c, 0xfabd2f, 0xfb4934, 0x1d2021,
-            0x3c3836, 0x32302f, 0x504945, 0x1d2021, 0x1d2021, 0x3c3836, 0x504945,
-        ])
-    case .solarized:
-        return light ? pal([
-            0xeee8d5, 0xfdf6e3, 0xeee8d5, 0xeee8d5, 0xe2dbc6, 0xc9c0a6,
-            0x657b83, 0x586e75, 0x657b83, 0x268bd2, 0x6c71c4, 0x2aa198,
-            0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0xfdf6e3,
-            0xeee8d5, 0xe6dfc8, 0x93a1a1, 0xeee8d5, 0xeee8d5, 0x93a1a1, 0x586e75,
-        ]) : pal([
-            0x002b36, 0x073642, 0x002b36, 0x586e75, 0x657b83, 0x839496,
-            0x93a1a1, 0xfdf6e3, 0x93a1a1, 0x268bd2, 0x6c71c4, 0x2aa198,
-            0x859900, 0x2aa198, 0xb58900, 0xdc322f, 0x002b36,
-            0x073642, 0x002b36, 0x586e75, 0x002b36, 0x002b36, 0x073642, 0x586e75,
-        ])
-    case .everforest:
-        return light ? pal([
-            0xe6e2cc, 0xfdf6e3, 0xf4f0d9, 0xefebd4, 0xe0dcc7, 0xa6b0a0,
-            0x939f91, 0x5c6a72, 0x829181, 0x8da101, 0xdf69ba, 0x35a77c,
-            0x8da101, 0x35a77c, 0xdfa000, 0xf85552, 0xfdf6e3,
-            0xf4f0d9, 0xefebd4, 0xe0dcc7, 0xe6e2cc, 0xe6e2cc, 0xe0dcc7, 0x939f91,
-        ]) : pal([
-            0x1e2326, 0x272e33, 0x2d353b, 0x374145, 0x4f5b58, 0x7a8478,
-            0x859289, 0xd3c6aa, 0xa7c080, 0xa7c080, 0xd699b6, 0x7fbbb3,
-            0xa7c080, 0x83c092, 0xdbbc7f, 0xe67e80, 0x272e33,
-            0x374145, 0x2d353b, 0x4f5b58, 0x1e2326, 0x1e2326, 0x374145, 0x4f5b58,
-        ])
-    case .monokai:
-        return light ? pal([
-            0xe6e3d4, 0xfaf8f0, 0xf3f0e4, 0xe8e4d4, 0xd6d2c0, 0xb8b49e,
-            0x8a8674, 0x2d2a2e, 0x5b5854, 0xe14775, 0x7c5cbf, 0x1c7d9b,
-            0x5b8c2a, 0x1c7d9b, 0xb08900, 0xe14775, 0xfaf8f0,
-            0xf3f0e4, 0xe8e4d4, 0xd6d2c0, 0xe6e3d4, 0xe6e3d4, 0xd6d2c0, 0x8a8674,
-        ]) : pal([
-            0x1d1e19, 0x272822, 0x1e1f1a, 0x3e3d32, 0x49483e, 0x75715e,
-            0x75715e, 0xf8f8f2, 0xa59f85, 0xf92672, 0xae81ff, 0x66d9ef,
-            0xa6e22e, 0xa1efe4, 0xe6db74, 0xf92672, 0x272822,
-            0x3e3d32, 0x2e2f29, 0x49483e, 0x1d1e19, 0x1d1e19, 0x3e3d32, 0x49483e,
-        ])
-    case .oneDark:
-        return light ? pal([
-            0xe5e5e6, 0xfafafa, 0xf0f0f0, 0xe5e5e6, 0xd0d0d2, 0xa0a1a7,
-            0xa0a1a7, 0x383a42, 0x696c77, 0xa626a4, 0x4078f2, 0x0184bc,
-            0x50a14f, 0x0184bc, 0xc18401, 0xe45649, 0xfafafa,
-            0xf0f0f0, 0xe5e5e6, 0xd0d0d2, 0xe5e5e6, 0xe5e5e6, 0xd0d0d2, 0xa0a1a7,
-        ]) : pal([
-            0x21252b, 0x282c34, 0x21252b, 0x3b4048, 0x4b5263, 0x5c6370,
-            0x5c6370, 0xabb2bf, 0x7f848e, 0xc678dd, 0x61afef, 0x56b6c2,
-            0x98c379, 0x56b6c2, 0xe5c07b, 0xe06c75, 0x282c34,
-            0x3b4048, 0x2c313a, 0x4b5263, 0x21252b, 0x21252b, 0x3b4048, 0x4b5263,
-        ])
+func themePalette(_ mode: ColorMode) -> Palette {
+    mode == .light
+        ? Palette(
+            paper: hx(lightTone.paper), surface: hx(lightTone.surface), sunken: hx(0xF1E9DC), line: hx(0xE4DACB),
+            ink: hx(lightTone.ink), ink2: hx(0x5E564C), ink3: hx(0x8F8577),
+            accent: makeAccent(0xD9612A, lightTone),
+            success: hx(0x1E8A4C), successSoft: hx(0xDDF1E3),
+            error: hx(0xC8352B), errorSoft: hx(0xFBE0DC),
+            warning: hx(0x9A6700), warningSoft: hx(0xFBEBC8),
+            glowInner: hx(0xFFF6E8), glowOuter: hx(0xE8935A), onGlow: hx(0x17130F)
+        )
+        : Palette(
+            paper: hx(darkTone.paper), surface: hx(darkTone.surface), sunken: hx(0x2A2622), line: hx(0x37322D),
+            ink: hx(darkTone.ink), ink2: hx(0xB5AA9B), ink3: hx(0x80776B),
+            accent: makeAccent(0xF0854A, darkTone),
+            success: hx(0x4CC27E), successSoft: hx(0x173524),
+            error: hx(0xFF6B5E), errorSoft: hx(0x3D1A17),
+            warning: hx(0xF2B544), warningSoft: hx(0x3A2C10),
+            glowInner: hx(0x6A3A1E), glowOuter: hx(0x1E1B18), onGlow: hx(0xF5EEE3)
+        )
+}
+
+/// A subject keeps one colour everywhere: its cover on the home screen, the
+/// path through its lessons and the buttons in its exercises.
+struct Subject {
+    /// The `Ikona` column of content/aplikace/predmety.md.
+    let key: String
+    /// Timetable abbreviation, shown as the cover's watermark.
+    let cs, en: String
+    let symbol: String
+    let hex: UInt32
+
+    func accent(_ mode: ColorMode) -> Accent {
+        makeAccent(hex, mode == .light ? lightTone : darkTone)
+    }
+
+    func mark(_ lang: UiLang) -> String { lang == .en ? en : cs }
+}
+
+let subjects: [Subject] = [
+    Subject(key: "de", cs: "NJ", en: "DE", symbol: "character.book.closed.fill", hex: 0xE5A50A),
+    Subject(key: "wifi", cs: "PS", en: "NET", symbol: "wifi", hex: 0x2E74DE),
+    Subject(key: "chip", cs: "HW", en: "HW", symbol: "cpu", hex: 0x56616F),
+    Subject(key: "cz", cs: "ČJ", en: "CZ", symbol: "text.book.closed.fill", hex: 0x3848B8),
+    Subject(key: "people", cs: "ON", en: "CIV", symbol: "person.2.fill", hex: 0x9A3FA8),
+    Subject(key: "uk", cs: "AJ", en: "EN", symbol: "quote.bubble.fill", hex: 0xC4314B),
+    Subject(key: "function", cs: "MAT", en: "MAT", symbol: "function", hex: 0x7345D8),
+    Subject(key: "bolt", cs: "FYZ", en: "PHY", symbol: "bolt.fill", hex: 0xE2681A),
+    Subject(key: "flask", cs: "ZPV", en: "SCI", symbol: "flask.fill", hex: 0x12908A),
+    Subject(key: "ruler", cs: "TG", en: "TG", symbol: "ruler.fill", hex: 0x1787B5),
+    Subject(key: "brush", cs: "PG", en: "PG", symbol: "paintbrush.fill", hex: 0xD03A80),
+    Subject(key: "code", cs: "PRG", en: "PRG", symbol: "chevron.left.forwardslash.chevron.right", hex: 0x1E8E5A),
+    Subject(key: "apps", cs: "PV", en: "SW", symbol: "square.grid.2x2.fill", hex: 0x7A9A1E),
+]
+
+func subjectStyle(_ key: String) -> Subject? {
+    subjects.first { $0.key == key }
+}
+
+extension Route {
+    /// The subject a screen belongs to, read from the root of its navigation stack.
+    var subject: Subject? {
+        switch stack.first {
+        case .deHome: return subjectStyle("de")
+        case .netYears: return subjectStyle("wifi")
+        case .hwYears: return subjectStyle("chip")
+        case .czechMap: return subjectStyle("cz")
+        case .onYears: return subjectStyle("people")
+        case .enYears: return subjectStyle("uk")
+        case .matYears: return subjectStyle("function")
+        case .fyzYears: return subjectStyle("bolt")
+        case .sciMap: return subjectStyle("flask")
+        case .tgYears: return subjectStyle("ruler")
+        case .pgYears: return subjectStyle("brush")
+        case .csYears: return subjectStyle("code")
+        case .swYears: return subjectStyle("apps")
+        default: return nil
+        }
+    }
+}
+
+/// Playfair Display, the serif of the app icon, for titles and numerals.
+/// Body text stays in the system font.
+enum Display {
+    private static let registered: Bool = {
+        for name in ["PlayfairDisplay", "PlayfairDisplay-Italic"] {
+            guard let url = Bundle.main.url(forResource: name, withExtension: "ttf") else { return false }
+            CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
+        }
+        return true
+    }()
+
+    private static var cache: [String: Font] = [:]
+
+    /// Bold roman, or black italic as on the icon. Playfair's default figures
+    /// are old-style, where a 1 reads as a small I, so lining figures are on.
+    static func font(_ size: CGFloat, italic: Bool = false) -> Font {
+        guard registered else {
+            let system = Font.system(size: size, weight: italic ? .black : .bold, design: .serif)
+            return italic ? system.italic() : system
+        }
+        let name = italic ? "PlayfairDisplayItalic-Black" : "PlayfairDisplayRoman-Bold"
+        let key = "\(name)/\(size)"
+        if let font = cache[key] { return font }
+        let font = Font(coreText(name, size))
+        cache[key] = font
+        return font
+    }
+
+    private static func coreText(_ name: String, _ size: CGFloat) -> CTFont {
+        let lining: [CFString: Any] = [kCTFontOpenTypeFeatureTag: "lnum", kCTFontOpenTypeFeatureValue: 1]
+        let descriptor = CTFontDescriptorCreateWithAttributes([
+            kCTFontNameAttribute: name,
+            kCTFontFeatureSettingsAttribute: [lining],
+        ] as CFDictionary)
+        return CTFontCreateWithFontDescriptor(descriptor, size, nil)
+    }
+
+    #if os(iOS)
+    /// Navigation bar titles on the iPhone are set in the display serif too.
+    static func styleNavigationBars() {
+        guard registered else { return }
+        func scaled(_ size: CGFloat, _ style: UIFont.TextStyle) -> UIFont {
+            UIFontMetrics(forTextStyle: style).scaledFont(for: coreText("PlayfairDisplayRoman-Bold", size) as UIFont)
+        }
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font: scaled(32, .largeTitle)]
+        UINavigationBar.appearance().titleTextAttributes = [.font: scaled(18, .headline)]
+    }
+    #endif
+}
+
+/// Applies the display serif at a size that follows Dynamic Type.
+private struct DisplayType<Inner: View>: View {
+    @ScaledMetric private var size: CGFloat
+    private let italic: Bool
+    private let inner: Inner
+
+    init(size: CGFloat, relativeTo style: Font.TextStyle, italic: Bool, inner: Inner) {
+        _size = ScaledMetric(wrappedValue: size, relativeTo: style)
+        self.italic = italic
+        self.inner = inner
+    }
+
+    var body: some View {
+        inner.font(Display.font(size, italic: italic))
+    }
+}
+
+extension View {
+    func display(_ size: CGFloat, relativeTo style: Font.TextStyle = .title) -> some View {
+        DisplayType(size: size, relativeTo: style, italic: false, inner: self)
+    }
+
+    func displayItalic(_ size: CGFloat, relativeTo style: Font.TextStyle = .largeTitle) -> some View {
+        DisplayType(size: size, relativeTo: style, italic: true, inner: self)
+    }
+}
+
+private struct PaletteKey: EnvironmentKey {
+    static let defaultValue = themePalette(.light)
+}
+
+private struct AccentKey: EnvironmentKey {
+    static let defaultValue = themePalette(.light).accent
+}
+
+private struct PageKickerKey: EnvironmentKey {
+    static let defaultValue: String? = nil
+}
+
+extension EnvironmentValues {
+    var palette: Palette {
+        get { self[PaletteKey.self] }
+        set { self[PaletteKey.self] = newValue }
+    }
+
+    var accent: Accent {
+        get { self[AccentKey.self] }
+        set { self[AccentKey.self] = newValue }
+    }
+
+    /// Name of the subject a pushed screen belongs to, shown above its title.
+    var pageKicker: String? {
+        get { self[PageKickerKey.self] }
+        set { self[PageKickerKey.self] = newValue }
+    }
+}
+
+extension View {
+    /// Colours everything below: system controls through the tint, custom ones through the environment.
+    func accented(_ accent: Accent) -> some View {
+        environment(\.accent, accent).tint(accent.text)
     }
 }

@@ -1,7 +1,8 @@
 package org.maturita.maturita.ui
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,9 +18,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -28,14 +31,16 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.EmojiEvents
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
@@ -58,7 +63,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -152,18 +156,18 @@ private fun ChoiceEx(vm: AppViewModel, title: String, sub: String?, spec: J, onD
         revealed = true
     }, fb.first, fb.second) {
         qs.forEachIndexed { i, q ->
-            Text("${i + 1}. ${q.str("prompt")}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(bottom = 8.dp))
-            q.strs("options").forEachIndexed { o, opt ->
-                val sel = picks[i] == o
-                val mark = if (revealed && sel) picks[i] == q.int("correct") else null
-                OptionRow(opt, sel, mark) { picks[i] = o; revealed = false }
+            QuestionCard(i + 1, q.str("prompt")) {
+                q.strs("options").forEachIndexed { o, opt ->
+                    val sel = picks[i] == o
+                    val mark = if (revealed && sel) picks[i] == q.int("correct") else null
+                    OptionRow(opt, sel, mark) { picks[i] = o; revealed = false }
+                }
+                if (revealed) {
+                    meanings.getOrNull(i)?.let { Meaning(vm.tr(it), true) }
+                    expls.getOrNull(i)?.let { Meaning(it, true) }
+                    q.strOrNull("expl")?.let { Meaning(it, true) }
+                }
             }
-            if (revealed) {
-                meanings.getOrNull(i)?.let { Meaning(vm.tr(it), true) }
-                expls.getOrNull(i)?.let { Meaning(it, true) }
-                q.strOrNull("expl")?.let { Meaning(it, true) }
-            }
-            Spacer(Modifier.height(12.dp))
         }
     }
 }
@@ -193,7 +197,7 @@ private fun AssemblyEx(vm: AppViewModel, title: String, sub: String?, spec: J, o
     }, fb.first, fb.second) {
         items.forEachIndexed { i, item ->
             val words = item.strs("words")
-            item.strOrNull("prompt")?.let { Hint(it) }
+            QuestionCard(i + 1, item.strOrNull("prompt")) {
             WordSlot(placed[i].isEmpty()) {
                 placed[i].toList().forEach { idx ->
                     val word = words.getOrNull(idx) ?: return@forEach
@@ -213,7 +217,7 @@ private fun AssemblyEx(vm: AppViewModel, title: String, sub: String?, spec: J, o
                 }
             }
             if (revealed) meanings.getOrNull(i)?.let { Meaning(vm.tr(it), true) }
-            Spacer(Modifier.height(16.dp))
+            }
         }
     }
 }
@@ -259,9 +263,9 @@ private fun TypedEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
         spec.strOrNull("bank")?.let { Hint("${vm.tr("wordbank")} $it") }
         if (umlaut) Hint(vm.tr("hint_umlauts"))
         items.forEachIndexed { i, q ->
-            Prompt(q.str("prompt"))
             val answers = q.answerList()
             val hints = q.strs("hints")
+            QuestionCard(i + 1, q.str("prompt")) {
             fields[i].forEachIndexed { j, value ->
                 val ans = answers.getOrNull(j) ?: ""
                 WordField(
@@ -277,7 +281,7 @@ private fun TypedEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
                 q.strOrNull("german")?.let { Meaning(it, true) }
                 q.strOrNull("shown")?.let { Meaning(it, true) }
             }
-            Spacer(Modifier.height(10.dp))
+            }
         }
     }
 }
@@ -295,7 +299,7 @@ private fun FreeEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDon
     }, fb.first, fb.second) {
         spec.strOrNull("tip")?.let { Hint(vm.tr(it)) }
         qs.forEachIndexed { i, q ->
-            Prompt(q.str("question").ifEmpty { q.str("stem") })
+            QuestionCard(i + 1, q.str("question").ifEmpty { q.str("stem") }) {
             WordField(values[i], { values[i] = it }, vm.tr("your_answer"))
             PillButton(vm.tr("show_sample"), Modifier.padding(vertical = 4.dp)) { shown[i] = !shown[i] }
             if (shown[i]) {
@@ -304,7 +308,7 @@ private fun FreeEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDon
                 val acs = q.str("aCs")
                 Meaning(if (qcs.isNotEmpty()) vm.fmt("sample_fmt", vm.tr(qcs), sample, vm.tr(acs)) else sample, true)
             }
-            Spacer(Modifier.height(12.dp))
+            }
         }
     }
 }
@@ -326,20 +330,40 @@ private fun AssignEx(vm: AppViewModel, title: String, sub: String?, spec: J, onD
         else fb = vm.tr("feedback_retry") to "err"
         revealed = true
     }, fb.first, fb.second) {
+        val palette = LocalPalette.current
+        val accent = LocalAccent.current
         Hint(vm.tr("assign_hint"))
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            groups.forEachIndexed { i, g -> SegChip(g, active == i) { active = i } }
+        QuestionCard {
+            Kicker(vm.tr("wordbank"), modifier = Modifier.padding(bottom = 6.dp))
+            FlowRow(Modifier.heightIn(min = 36.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                items.forEachIndexed { i, it -> if (loc[i] == -1) Chip(label(it)) { loc[i] = active } }
+            }
         }
-        Spacer(Modifier.height(12.dp))
-        Text(vm.tr("wordbank"), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            items.forEachIndexed { i, it -> if (loc[i] == -1) Chip(label(it)) { loc[i] = active } }
-        }
+        // Each group is a tray: tap it to make it the target, tap a word in it to send it back.
         groups.forEachIndexed { g, name ->
-            Spacer(Modifier.height(12.dp))
-            Text(name, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-            WordSlot(items.indices.none { loc[it] == g }) {
-                items.forEachIndexed { i, it -> if (loc[i] == g) Chip(label(it)) { loc[i] = -1 } }
+            val selected = active == g
+            AppCard(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                color = if (selected) accent.soft else palette.surface,
+                border = if (selected) accent.solid else palette.line,
+                radius = 18.dp,
+                onClick = { active = g },
+            ) {
+                Column(Modifier.heightIn(min = 96.dp).padding(14.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            if (selected) Icons.Filled.RadioButtonChecked else Icons.Filled.RadioButtonUnchecked,
+                            null,
+                            tint = if (selected) accent.text else palette.ink3,
+                            modifier = Modifier.size(20.dp),
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(name, style = MaterialTheme.typography.titleMedium, color = if (selected) accent.text else palette.ink)
+                    }
+                    FlowRow(Modifier.padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items.forEachIndexed { i, it -> if (loc[i] == g) Chip(label(it)) { loc[i] = -1 } }
+                    }
+                }
             }
         }
         if (revealed) items.indices.forEach { i -> meanings.getOrNull(i)?.let { Meaning(vm.tr(it), true) } }
@@ -376,9 +400,15 @@ private fun HangmanEx(vm: AppViewModel, title: String, sub: String?, spec: J, on
         Column(
             Modifier.fillMaxSize().padding(inner).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 12.dp),
         ) {
-            Text(vm.fmt("hm_progress", word + 1, words.size), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            tips.getOrNull(word)?.let { Hint("${vm.tr("hm_hint")}: ${vm.tr(it)}") }
-            Canvas(Modifier.fillMaxWidth().height(160.dp)) {
+            QuestionCard {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Kicker(vm.fmt("hm_progress", word + 1, words.size), modifier = Modifier.weight(1f))
+                Text("$misses / 6", style = MaterialTheme.typography.labelMedium, color = if (misses >= 4) LocalPalette.current.error else LocalPalette.current.ink3)
+            }
+            tips.getOrNull(word)?.let {
+                Text("${vm.tr("hm_hint")}: ${vm.tr(it)}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 6.dp))
+            }
+            Canvas(Modifier.padding(top = 8.dp).width(300.dp).height(160.dp).align(Alignment.CenterHorizontally)) {
                 val x = size.width * 0.3f
                 drawLine(stroke, Offset(40f, size.height - 10), Offset(size.width * 0.55f, size.height - 10), 6f, StrokeCap.Round)
                 drawLine(stroke, Offset(70f, size.height - 10), Offset(70f, 16f), 6f, StrokeCap.Round)
@@ -393,19 +423,21 @@ private fun HangmanEx(vm: AppViewModel, title: String, sub: String?, spec: J, on
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 cur.forEach { ch ->
                     val show = idxOf(ch).let { it >= 0 && guessed[it] }
-                    Text(
-                        if (show) ch.toString() else "_",
-                        style = MaterialTheme.typography.headlineMedium.copy(fontFamily = FontFamily.Monospace),
-                        modifier = Modifier.padding(horizontal = 3.dp),
-                    )
+                    Column(Modifier.padding(horizontal = 4.dp).width(26.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(if (show) ch.toString() else " ", style = MaterialTheme.typography.headlineMedium)
+                        Box(Modifier.fillMaxWidth().height(3.dp).clip(CircleShape).background(if (show) LocalAccent.current.solid else LocalPalette.current.ink3))
+                    }
                 }
             }
-            Spacer(Modifier.height(12.dp))
+            }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 letters.forEachIndexed { i, letter ->
                     OutlinedButton(
                         enabled = !guessed[i] && !finished,
                         contentPadding = PaddingValues(0.dp),
+                        shape = RoundedCornerShape(11.dp),
+                        border = BorderStroke(1.dp, LocalPalette.current.line),
+                        colors = ButtonDefaults.outlinedButtonColors(containerColor = LocalPalette.current.surface, contentColor = LocalPalette.current.ink),
                         modifier = Modifier.widthIn(min = 44.dp).height(40.dp),
                         onClick = {
                             guessed[i] = true
@@ -472,38 +504,43 @@ private fun VocabEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
         bottomBar = if (cur != null) ({ ActionBar(vm.tr("check"), fb.first, fb.second) { check() } }) else null,
     ) { inner ->
         Column(Modifier.fillMaxSize().padding(inner).verticalScroll(rememberScrollState()).padding(16.dp)) {
-            SmoothProgress(
-                progress = if (total == 0) 0f else done / total.toFloat(),
-                modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
-            )
-            Spacer(Modifier.height(6.dp))
-            Text(vm.fmt("trans_progress", done, total), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Spacer(Modifier.height(12.dp))
+            val palette = LocalPalette.current
+            Row(Modifier.padding(bottom = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+                SmoothProgress(if (total == 0) 0f else done / total.toFloat(), Modifier.weight(1f).height(6.dp))
+                Spacer(Modifier.width(10.dp))
+                Text(vm.fmt("trans_progress", done, total), style = MaterialTheme.typography.labelMedium, color = palette.ink2)
+            }
             if (cur == null) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.EmojiEvents, null, tint = MaterialTheme.colorScheme.primary)
+                    Icon(Icons.Filled.EmojiEvents, null, tint = palette.success)
                     Spacer(Modifier.width(8.dp))
-                    Text(vm.tr("trans_done"), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    Text(vm.tr("trans_done"), style = MaterialTheme.typography.titleMedium, color = palette.success)
                 }
             } else {
-                Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {
-                    Column(Modifier.padding(20.dp)) {
-                        Text(cur.first, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.75f))
-                        Spacer(Modifier.height(4.dp))
-                        Text(cur.second, style = MaterialTheme.typography.headlineSmall)
+                QuestionCard {
+                    Kicker(cur.first)
+                    Text(cur.second, style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 4.dp, bottom = 10.dp))
+                    OutlinedTextField(
+                        value = value,
+                        onValueChange = { value = it },
+                        placeholder = { Text(vm.tr("your_answer"), color = palette.ink3) },
+                        singleLine = true,
+                        shape = RoundedCornerShape(12.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = palette.paper,
+                            unfocusedContainerColor = palette.paper,
+                            focusedBorderColor = LocalAccent.current.solid,
+                            unfocusedBorderColor = palette.line,
+                        ),
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false, imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(onDone = { check() }),
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    if (hasUmlaut(cur.third)) {
+                        Spacer(Modifier.height(8.dp))
+                        Hint(vm.tr("hint_umlauts"))
                     }
                 }
-                Spacer(Modifier.height(12.dp))
-                if (hasUmlaut(cur.third)) Hint(vm.tr("hint_umlauts"))
-                OutlinedTextField(
-                    value = value,
-                    onValueChange = { value = it },
-                    placeholder = { Text(vm.tr("your_answer")) },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrectEnabled = false, imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions(onDone = { check() }),
-                    modifier = Modifier.fillMaxWidth(),
-                )
             }
         }
     }
@@ -518,18 +555,20 @@ private fun DialogEx(vm: AppViewModel, title: String, sub: String?, spec: J, onD
     val rows = spec.arr("dialogues").flatMap { it.arr("rows") }
     ComboRows(vm, title, sub, rows.size, onDone) { picks, expected, revealed ->
         var i = 0
-        spec.arr("dialogues").forEachIndexed { di, d ->
-            if (di > 0) HorizontalDivider(Modifier.padding(vertical = 8.dp))
-            Text(d.str("name"), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(vertical = 6.dp))
-            d.arr("rows").forEach { row ->
-                val idx = i++
-                ComboLine(
-                    vm, pool, picks, expected, idx, row.str("answer"),
-                    prefix = listOf(row.str("speaker"), row.str("before")).filter { it.isNotBlank() }.joinToString(" "),
-                    suffix = row.str("after"),
-                    meaning = meanings.getOrNull(idx),
-                    revealed = revealed,
-                )
+        spec.arr("dialogues").forEach { d ->
+            val first = i
+            i += d.arr("rows").size
+            QuestionCard(prompt = d.str("name")) {
+                d.arr("rows").forEachIndexed { ri, row ->
+                    val idx = first + ri
+                    ComboLine(
+                        vm, pool, picks, expected, idx, row.str("answer"),
+                        prefix = listOf(row.str("speaker"), row.str("before")).filter { it.isNotBlank() }.joinToString(" "),
+                        suffix = row.str("after"),
+                        meaning = meanings.getOrNull(idx),
+                        revealed = revealed,
+                    )
+                }
             }
         }
     }
@@ -548,15 +587,17 @@ private fun ComboEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
         ComboRows(vm, title, sub, allRows.size, onDone, spec.bool("transUpfront")) { picks, expected, revealed ->
             var i = 0
             sections.forEach { sec ->
-                Text(sec.str("title"), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(vertical = 6.dp))
-                sec.arr("rows").forEachIndexed { ri, row ->
-                    val idx = i++
-                    ComboLine(
-                        vm, pool, picks, expected, idx, row.str("answer"),
-                        prefix = row.str("before"), suffix = row.str("after"),
-                        meaning = sec.strs("meanings").getOrNull(ri),
-                        revealed = revealed || spec.bool("transUpfront"),
-                    )
+                val first = i
+                i += sec.arr("rows").size
+                QuestionCard(prompt = sec.str("title")) {
+                    sec.arr("rows").forEachIndexed { ri, row ->
+                        ComboLine(
+                            vm, pool, picks, expected, first + ri, row.str("answer"),
+                            prefix = row.str("before"), suffix = row.str("after"),
+                            meaning = sec.strs("meanings").getOrNull(ri),
+                            revealed = revealed || spec.bool("transUpfront"),
+                        )
+                    }
                 }
             }
         }
@@ -565,9 +606,10 @@ private fun ComboEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
     if (type == "ordne") {
         ComboRows(vm, title, sub, rows.size * 2, onDone) { picks, expected, revealed ->
             rows.forEachIndexed { i, r ->
-                ComboLine(vm, spec.strs("fwPool"), picks, expected, i * 2, r.str("fw"), prefix = "${i + 1}. ", suffix = r.str("mid"), revealed = revealed)
-                ComboLine(vm, spec.strs("ansPool"), picks, expected, i * 2 + 1, r.str("ans"), prefix = "→ ", meaning = meanings.getOrNull(i), revealed = revealed)
-                Spacer(Modifier.height(6.dp))
+                QuestionCard(i + 1) {
+                    ComboLine(vm, spec.strs("fwPool"), picks, expected, i * 2, r.str("fw"), suffix = r.str("mid"), revealed = revealed)
+                    ComboLine(vm, spec.strs("ansPool"), picks, expected, i * 2 + 1, r.str("ans"), prefix = "→ ", meaning = meanings.getOrNull(i), revealed = revealed)
+                }
             }
         }
         return
@@ -577,6 +619,7 @@ private fun ComboEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
         ComboRows(vm, title, sub, blanks, onDone, spec.bool("preMeaning")) { picks, expected, revealed ->
             spec.strOrNull("sample")?.let { Hint(it) }
             var i = 0
+            QuestionCard {
             rows.forEachIndexed { ri, r ->
                 val segs = r.strsOrEmpty("segs")
                 val ans = r.answerList()
@@ -599,11 +642,13 @@ private fun ComboEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
                     r.strOrNull("mean")?.let { Meaning(vm.tr(it), true) }
                 }
             }
+            }
         }
         return
     }
     ComboRows(vm, title, sub, rows.size, onDone, spec.bool("preMeaning")) { picks, expected, revealed ->
         spec.strOrNull("sample")?.let { Hint(it) }
+        QuestionCard {
         rows.forEachIndexed { i, r ->
             val prefix = when (type) {
                 "number" -> "${r.str("digits")} = "
@@ -617,6 +662,7 @@ private fun ComboEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
                 else -> ""
             }
             ComboLine(vm, pool, picks, expected, i, r.str("answer"), prefix, suffix, meanings.getOrNull(i) ?: r.strOrNull("mean"), revealed || spec.bool("preMeaning"))
+        }
         }
     }
 }
@@ -676,25 +722,46 @@ private fun ComboLine(
     val pick = picks.getOrNull(idx).orEmpty()
     val mark = if (revealed && pick.isNotEmpty()) answerAccepts(normalizeAnswer(pick), answer) else null
     val chip = @Composable {
-        AssistChip(
+        val palette = LocalPalette.current
+        val edge = when (mark) {
+            true -> palette.success
+            false -> palette.error
+            null -> palette.line
+        }
+        Surface(
             onClick = { open = true },
-            label = { Text(pick.ifEmpty { "…" }, color = if (pick.isEmpty()) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified) },
-            trailingIcon = {
-                when (mark) {
-                    true -> Icon(Icons.Filled.CheckCircle, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.width(18.dp))
-                    false -> Icon(Icons.Filled.Cancel, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.width(18.dp))
-                    null -> Icon(Icons.Filled.ArrowDropDown, null, modifier = Modifier.width(18.dp))
-                }
-            },
-        )
+            color = palette.surface,
+            shape = RoundedCornerShape(11.dp),
+            border = BorderStroke(if (mark == null) 1.dp else 1.5.dp, edge),
+        ) {
+            Row(Modifier.padding(start = 12.dp, end = 6.dp, top = 7.dp, bottom = 7.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    pick.ifEmpty { "…" },
+                    style = MaterialTheme.typography.labelLarge,
+                    color = if (pick.isEmpty()) palette.ink3 else palette.ink,
+                    modifier = Modifier.widthIn(min = 28.dp),
+                )
+                Icon(
+                    when (mark) {
+                        true -> Icons.Filled.CheckCircle
+                        false -> Icons.Filled.Cancel
+                        null -> Icons.Filled.ArrowDropDown
+                    },
+                    null,
+                    tint = if (mark == null) palette.ink3 else edge,
+                    modifier = Modifier.padding(start = 4.dp).size(18.dp),
+                )
+            }
+        }
     }
     if (inline) {
         chip()
     } else {
         FlowRow(
             Modifier.fillMaxWidth().padding(bottom = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.Center,
+            itemVerticalAlignment = Alignment.CenterVertically,
         ) {
             if (prefix.isNotBlank()) InlineText(prefix)
             chip()
@@ -718,19 +785,27 @@ private fun Ex2Ex(vm: AppViewModel, title: String, sub: String?, spec: J, onDone
     val blanks = items.sumOf { it.arr("rows").sumOf { r -> r.strs("answers").size } }
     ComboRows(vm, title, sub, blanks, onDone) { picks, expected, revealed ->
         var i = 0
-        items.forEachIndexed { ii, item ->
-            if (ii > 0) HorizontalDivider(Modifier.padding(vertical = 8.dp))
-            Meaning(item.str("czech"), true)
-            item.arr("rows").forEach { row ->
-                val segs = row.strsOrEmpty("segs")
-                val ans = row.strs("answers")
-                FlowRow(verticalArrangement = Arrangement.Center, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    row.strOrNull("num")?.let { InlineText(it) }
-                    segs.forEachIndexed { si, seg ->
-                        if (!seg.isNullOrEmpty()) InlineText(seg)
-                        if (si < ans.size) {
-                            val idx = i++
-                            ComboLine(vm, pool, picks, expected, idx, ans[si], revealed = revealed, inline = true)
+        items.forEach { item ->
+            val first = i
+            i += item.arr("rows").sumOf { it.strs("answers").size }
+            QuestionCard {
+                var blank = first
+                Meaning(item.str("czech"), true)
+                item.arr("rows").forEach { row ->
+                    val segs = row.strsOrEmpty("segs")
+                    val ans = row.strs("answers")
+                    FlowRow(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        itemVerticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        row.strOrNull("num")?.let { InlineText(it) }
+                        segs.forEachIndexed { si, seg ->
+                            if (!seg.isNullOrEmpty()) InlineText(seg)
+                            if (si < ans.size) {
+                                val idx = blank++
+                                ComboLine(vm, pool, picks, expected, idx, ans[si], revealed = revealed, inline = true)
+                            }
                         }
                     }
                 }
@@ -763,6 +838,7 @@ private fun LettersEx(vm: AppViewModel, title: String, sub: String?, spec: J, on
     }, fb.first, fb.second) {
         if (rows.any { it.strs("answers").any { a -> hasUmlaut(a) } }) Hint(vm.tr("hint_umlauts"))
         var i = 0
+        QuestionCard {
         rows.forEach { r ->
             r.strOrNull("num")?.let { Text(it, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
             FlowRow(verticalArrangement = Arrangement.Center, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -782,6 +858,7 @@ private fun LettersEx(vm: AppViewModel, title: String, sub: String?, spec: J, on
             if (revealed) r.strOrNull("czech")?.let { Meaning(it, true) }
             if (revealed) r.strOrNull("mean")?.let { Meaning(it, true) }
             Spacer(Modifier.height(8.dp))
+        }
         }
     }
 }
@@ -807,17 +884,19 @@ private fun TableEx(vm: AppViewModel, title: String, sub: String?, spec: J, onDo
         revealed = true
     }, fb.first, fb.second) {
         nouns.forEachIndexed { r, noun ->
-            Text(noun, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp))
-            persons.forEachIndexed { c, person ->
-                val i = r * persons.size + c
-                val ans = answers.getOrNull(r)?.getOrNull(c) ?: ""
-                Text(person, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 6.dp))
-                WordField(
-                    fields[i], { fields[i] = it; revealed = false }, "",
-                    if (revealed) normalizeAnswer(fields[i]) == normalizeAnswer(ans) else null,
-                )
+            QuestionCard(prompt = noun) {
+                persons.forEachIndexed { c, person ->
+                    val i = r * persons.size + c
+                    val ans = answers.getOrNull(r)?.getOrNull(c) ?: ""
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(person, style = MaterialTheme.typography.bodyLarge, color = LocalPalette.current.ink2, modifier = Modifier.width(76.dp))
+                        WordField(
+                            fields[i], { fields[i] = it; revealed = false }, "",
+                            if (revealed) normalizeAnswer(fields[i]) == normalizeAnswer(ans) else null,
+                        )
+                    }
+                }
             }
-            Spacer(Modifier.height(8.dp))
         }
     }
 }
@@ -834,10 +913,10 @@ private fun RevealEx(vm: AppViewModel, title: String, sub: String?, spec: J, onD
     }, fb.first, fb.second) {
         spec.strOrNull("note")?.let { Hint(it) }
         items.forEachIndexed { i, it ->
-            Prompt(it.str("prompt"))
-            PillButton(vm.tr("show_sample"), Modifier.padding(vertical = 4.dp)) { shown[i] = !shown[i] }
-            if (shown[i]) Meaning(it.str("solution"), true)
-            Spacer(Modifier.height(8.dp))
+            QuestionCard(i + 1, it.str("prompt")) {
+                PillButton(vm.tr("show_sample")) { shown[i] = !shown[i] }
+                if (shown[i]) Meaning(it.str("solution"), true)
+            }
         }
     }
 }
@@ -928,28 +1007,10 @@ fun MathPracticeScreen(vm: AppViewModel, year: Int, id: Int) {
         feedback,
         kind,
     ) {
-        Text(
-            vm.tr("math_quiz_intro"),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Spacer(Modifier.height(8.dp))
+        Hint(vm.tr("math_quiz_intro"))
         problems.forEachIndexed { i, problem ->
             val spec = problem.str("answer")
-            val border = when (marks.getOrNull(i)) {
-                true -> Color(0xFF2E7D32)
-                false -> MaterialTheme.colorScheme.error
-                else -> MaterialTheme.colorScheme.outlineVariant
-            }
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 10.dp)
-                    .border(1.5.dp, border, MaterialTheme.shapes.medium)
-                    .padding(12.dp),
-            ) {
-                Text(problem.str("prompt"), style = MaterialTheme.typography.bodyLarge)
-                Spacer(Modifier.height(8.dp))
+            QuestionCard(i + 1, problem.str("prompt"), marks.getOrNull(i)) {
                 if (mathIsDraw(spec)) {
                     Text(
                         vm.tr("math_draw_hint"),
@@ -960,33 +1021,24 @@ fun MathPracticeScreen(vm: AppViewModel, year: Int, id: Int) {
                     MathBoard(mathDrawGiven(spec), placed[i], mathDrawNeed(spec), marks.getOrNull(i)) { next ->
                         placed = placed.toMutableList().also { it[i] = next }
                     }
-                    Row {
-                        OutlinedButton(onClick = {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        PillButton(vm.tr("math_undo")) {
                             val next = placed[i].dropLast(1)
                             placed = placed.toMutableList().also { it[i] = next }
-                        }) { Text(vm.tr("math_undo")) }
-                        Spacer(Modifier.width(8.dp))
-                        OutlinedButton(onClick = {
+                        }
+                        PillButton(vm.tr("math_clear")) {
                             placed = placed.toMutableList().also { it[i] = emptyList() }
-                        }) { Text(vm.tr("math_clear")) }
+                        }
                     }
                 } else {
-                    OutlinedTextField(
-                        value = texts[i],
-                        onValueChange = { value -> texts = texts.toMutableList().also { it[i] = value } },
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text(vm.tr("math_answer_ph")) },
-                        singleLine = true,
+                    WordField(
+                        texts[i],
+                        { value -> texts = texts.toMutableList().also { it[i] = value } },
+                        vm.tr("math_answer_ph"),
+                        marks.getOrNull(i),
                     )
                 }
-                if (revealed) {
-                    Spacer(Modifier.height(6.dp))
-                    Text(
-                        problem.str("hint"),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                if (revealed) Meaning(problem.str("hint"), true)
             }
         }
     }
@@ -1292,20 +1344,14 @@ private fun VlsmEx(vm: AppViewModel) {
             tasks.forEachIndexed { ti, task ->
                 val block = answers.getOrNull(ti).orEmpty()
                 val infeasible = block.isEmpty() || block.all { it.int("pfx") <= 0 }
-                Card(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-                    Row(Modifier.padding(16.dp), verticalAlignment = Alignment.Top) {
-                        if (done[ti]) Icon(Icons.Filled.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
-                        else Text("${ti + 1}", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                        Spacer(Modifier.width(12.dp))
-                        Text(task.str("prompt"), style = MaterialTheme.typography.bodyMedium)
-                    }
-                }
+                // The prompts carry their own numbering.
+                QuestionCard(prompt = task.str("prompt"), mark = if (done[ti]) true else null) {
                 if (infeasible) {
                     Hint(vm.tr("net_infeasible"))
                 } else {
                     block.forEachIndexed { si, _ ->
                         val field = rows.getOrNull(ti)?.getOrNull(si) ?: return@forEachIndexed
-                        Text("Podsíť ${'A' + si}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp))
+                        Kicker("Podsíť ${'A' + si}", modifier = Modifier.padding(top = 8.dp))
                         PrefixMenu(field.pfx) { field.pfx = it }
                         WordField(field.net, { field.net = it }, "síť", numeric = true)
                         WordField(field.bc, { field.bc = it }, "broadcast", numeric = true)
@@ -1351,7 +1397,7 @@ private fun VlsmEx(vm: AppViewModel) {
                     }
                 }
                 if (done[ti]) Meaning(task.str("solution"), true)
-                HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                }
             }
         }
     }
@@ -1360,8 +1406,14 @@ private fun VlsmEx(vm: AppViewModel) {
 @Composable
 private fun PrefixMenu(value: String, onPick: (String) -> Unit) {
     var open by remember { mutableStateOf(false) }
-    OutlinedButton(onClick = { open = true }, modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-        Text("Prefix", color = MaterialTheme.colorScheme.onSurfaceVariant)
+    OutlinedButton(
+        onClick = { open = true },
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(1.dp, LocalPalette.current.line),
+        colors = ButtonDefaults.outlinedButtonColors(containerColor = LocalPalette.current.surface, contentColor = LocalPalette.current.ink),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+    ) {
+        Text("Prefix", color = LocalPalette.current.ink3)
         Spacer(Modifier.weight(1f))
         Text(value.ifEmpty { "/…" })
         Icon(Icons.Filled.ArrowDropDown, null)
@@ -1404,28 +1456,26 @@ fun LitQuizScreen(vm: AppViewModel, id: String) {
     ) { inner ->
         Column(Modifier.fillMaxSize().padding(inner).verticalScroll(rememberScrollState()).padding(16.dp)) {
             if (finished) {
-                Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
-                    Column(Modifier.padding(20.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Filled.EmojiEvents, null)
-                            Spacer(Modifier.width(8.dp))
-                            Text(vm.tr("lit_finished"), style = MaterialTheme.typography.headlineSmall)
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        Text(vm.tr("lit_finished_text"), style = MaterialTheme.typography.bodyMedium)
-                        Spacer(Modifier.height(8.dp))
-                        Text(vm.fmt("lit_score_fmt", score, qs.size), style = MaterialTheme.typography.titleMedium)
+                QuestionCard {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Filled.EmojiEvents, null, tint = LocalAccent.current.text)
+                        Spacer(Modifier.width(8.dp))
+                        Text(vm.tr("lit_finished"), style = MaterialTheme.typography.headlineMedium)
                     }
+                    Spacer(Modifier.height(8.dp))
+                    Text(vm.tr("lit_finished_text"), style = MaterialTheme.typography.bodyLarge, color = LocalPalette.current.ink2)
+                    Spacer(Modifier.height(8.dp))
+                    Text(vm.fmt("lit_score_fmt", score, qs.size), style = MaterialTheme.typography.headlineSmall)
                 }
             } else {
                 val q = qs[idx]
-                SmoothProgress(progress = idx / qs.size.toFloat(), modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
-                Spacer(Modifier.height(6.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(vm.fmt("lit_question_fmt", idx + 1, qs.size), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(vm.fmt("lit_score_fmt", score, qs.size), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Row(Modifier.padding(bottom = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(vm.fmt("lit_question_fmt", idx + 1, qs.size), style = MaterialTheme.typography.labelMedium, color = LocalPalette.current.ink2)
+                    SmoothProgress(idx / qs.size.toFloat(), Modifier.weight(1f).padding(horizontal = 12.dp).height(6.dp))
+                    Text(vm.fmt("lit_score_fmt", score, qs.size), style = MaterialTheme.typography.labelMedium, color = LocalPalette.current.ink2)
                 }
-                Text(q.str("prompt"), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(vertical = 14.dp))
+                QuestionCard {
+                Text(q.str("prompt"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 14.dp))
                 q.strs("options").forEachIndexed { i, opt ->
                     val correct = i == q.int("correct")
                     val chosen = picked == i
@@ -1440,6 +1490,7 @@ fun LitQuizScreen(vm: AppViewModel, id: String) {
                     }
                 }
                 if (answered) Meaning(q.str("expl"), true)
+                }
             }
         }
     }
@@ -1532,8 +1583,8 @@ fun EngExScreen(
         }
     }, fb.first, fb.second) {
         lesson.strOrNull("reading")?.let { reading ->
-            Text(vm.tr("en_sec_read"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
-            Text(reading)
+            Text(vm.tr("en_sec_read"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 12.dp, bottom = 10.dp))
+            QuestionCard { Text(reading, style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 26.sp)) }
             EngChoices(readQ, readPicks, revealed) { index, option -> readPicks[index] = option }
         }
         if (listening != null) {
@@ -1561,9 +1612,10 @@ fun EngExScreen(
                 )
                 phase = 1
             }
-            Text(vm.tr("en_sec_listen"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
-            Text(vm.tr("en_listen_note"), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            OutlinedButton(onClick = {
+            Text(vm.tr("en_sec_listen"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 12.dp, bottom = 10.dp))
+            Hint(vm.tr("en_listen_note"))
+            QuestionCard {
+            Button(shape = RoundedCornerShape(14.dp), colors = solidButtonColors(), modifier = Modifier.fillMaxWidth().height(48.dp), onClick = {
                 played = true
                 when (phase) {
                     1 -> {
@@ -1606,34 +1658,44 @@ fun EngExScreen(
                 )
                 Text("${(volume * 100).toInt()} %", modifier = Modifier.width(48.dp))
             }
-            if (showScript) Text(listening)
+            if (showScript) Text(listening, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(top = 8.dp))
+            }
             EngChoices(listenQ, listenPicks, revealed) { index, option -> listenPicks[index] = option }
         }
         if (gapRows.isNotEmpty()) {
-            Text(vm.tr("en_sec_gap"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(vm.tr("en_sec_gap"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 12.dp, bottom = 10.dp))
             gapRows.forEachIndexed { i, row ->
-                Text("${i + 1}. ${row.str("prompt")}", style = MaterialTheme.typography.titleSmall)
-                val mark = if (!revealed) null else answerAccepts(normalizeAnswer(gapText[i]), row.str("answers"))
-                WordField(gapText[i], { gapText[i] = it }, "", mark)
-                if (revealed) row.strOrNull("meaning")?.let { Meaning(it, true) }
+                QuestionCard(i + 1, row.str("prompt")) {
+                    val mark = if (!revealed) null else answerAccepts(normalizeAnswer(gapText[i]), row.str("answers"))
+                    WordField(gapText[i], { gapText[i] = it }, vm.tr("your_answer"), mark)
+                    if (revealed) row.strOrNull("meaning")?.let { Meaning(it, true) }
+                }
             }
         }
         if (writing != null) {
-            Text(vm.tr("en_sec_write"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
-            Text(writing.str("prompt"))
-            OutlinedTextField(
-                value = essay,
-                onValueChange = { essay = it },
-                modifier = Modifier.fillMaxWidth().height(160.dp),
-                minLines = 5,
-            )
-            if (showModel) {
-                Text(vm.tr("en_model"), style = MaterialTheme.typography.titleSmall)
-                Text(writing.str("model"))
+            Text(vm.tr("en_sec_write"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 12.dp, bottom = 10.dp))
+            QuestionCard(prompt = writing.str("prompt")) {
+                OutlinedTextField(
+                    value = essay,
+                    onValueChange = { essay = it },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = LocalPalette.current.paper,
+                        unfocusedContainerColor = LocalPalette.current.paper,
+                        focusedBorderColor = LocalAccent.current.solid,
+                        unfocusedBorderColor = LocalPalette.current.line,
+                    ),
+                    modifier = Modifier.fillMaxWidth().height(160.dp),
+                    minLines = 5,
+                )
+                if (showModel) {
+                    Kicker(vm.tr("en_model"), modifier = Modifier.padding(top = 12.dp, bottom = 4.dp))
+                    Text(writing.str("model"), style = MaterialTheme.typography.bodyLarge)
+                }
             }
         }
         if (quiz.isNotEmpty()) {
-            Text(vm.tr("en_sec_quiz"), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(vm.tr("en_sec_quiz"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 12.dp, bottom = 10.dp))
             EngChoices(quiz, quizPicks, revealed) { index, option -> quizPicks[index] = option }
         }
     }
@@ -1647,12 +1709,13 @@ private fun EngChoices(
     onPick: (Int, Int) -> Unit,
 ) {
     questions.forEachIndexed { i, q ->
-        Text("${i + 1}. ${q.str("prompt")}", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-        q.strs("options").forEachIndexed { o, opt ->
-            val selected = picks.getOrElse(i) { -1 } == o
-            val mark = if (revealed && selected) picks[i] == q.int("correct") else null
-            OptionRow(opt, selected, mark) { onPick(i, o) }
+        QuestionCard(i + 1, q.str("prompt")) {
+            q.strs("options").forEachIndexed { o, opt ->
+                val selected = picks.getOrElse(i) { -1 } == o
+                val mark = if (revealed && selected) picks[i] == q.int("correct") else null
+                OptionRow(opt, selected, mark) { onPick(i, o) }
+            }
+            if (revealed) q.strOrNull("expl")?.let { Meaning(it, true) }
         }
-        if (revealed) q.strOrNull("expl")?.let { Meaning(it, true) }
     }
 }

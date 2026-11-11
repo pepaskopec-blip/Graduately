@@ -1,5 +1,6 @@
 package org.maturita.maturita.platform
 
+import androidx.compose.ui.text.font.FontFamily
 import java.util.Locale
 
 /**
@@ -15,6 +16,12 @@ interface Platform {
     val welcomeKey: String
     val prefs: Prefs
     val updater: AppUpdater
+
+    /**
+     * Playfair Display, the serif of the app icon: bold roman for titles and
+     * numerals, black italic for the wordmark and the headline.
+     */
+    val displayFont: FontFamily get() = FontFamily.Serif
 
     /** A speech engine for listening exercises, or null when there is none. */
     fun speaker(): Speaker?

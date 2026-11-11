@@ -2,9 +2,13 @@ package org.maturita.maturita.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -21,6 +25,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -37,31 +42,26 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Forum
 import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Lightbulb
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -71,6 +71,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -79,18 +84,18 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.maturita.maturita.AppViewModel
 import org.maturita.maturita.Route
+import org.maturita.maturita.data.Accent
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.J
 import org.maturita.maturita.data.ProgressSum
-import org.maturita.maturita.data.ThemeId
 import org.maturita.maturita.data.UiLang
 import org.maturita.maturita.data.normalizeAnswer
 import org.maturita.maturita.data.summarize
-import org.maturita.maturita.data.themeNames
-import org.maturita.maturita.data.themePalette
+import org.maturita.maturita.data.subjectStyle
 
 // ---------------------------------------------------------------------------
 // Roots
@@ -98,67 +103,131 @@ import org.maturita.maturita.data.themePalette
 @Composable
 fun HomeScreen(vm: AppViewModel) {
     val sum = summarize(vm.content, vm.progress)
-    val pct = if (sum.totalEx == 0) 0f else sum.doneEx / sum.totalEx.toFloat()
-    RootScaffold(vm, "Graduately") {
+    val open = vm.content.subjects.filter { it.bool("open") }
+    val soon = vm.content.subjects.filter { !it.bool("open") }
+    val parts = open.map { it to subjectSum(vm, it) }
+    RootScaffold(vm, "Graduately", wordmark = true) {
+        item { HomeHero(vm, sum, parts.map { (s, part) -> Triple(subjectAccent(vm, s), part.doneEx, part.totalEx) }) }
         if (vm.showChangelog) {
             item { ChangelogCard(vm) }
         }
+        if (vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged") {
+            item { UpdateBanner(vm) }
+        }
+        item { SectionHeader(vm.tr("subjects_title")) }
         item {
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    contentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-            ) {
-                Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text(vm.tr("welcome_title"), style = MaterialTheme.typography.headlineMedium)
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            vm.tr(vm.platform.welcomeKey),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Spacer(Modifier.width(16.dp))
-                    ProgressRing(pct, Modifier.size(104.dp)) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(vm.fmt("stats_pct_fmt", (pct * 100).toInt()), style = MaterialTheme.typography.titleLarge)
-                            Text(
-                                vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
+            // Covers in as many columns as fit: two on a phone, up to four in a wide window.
+            BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                val columns = ((maxWidth + 12.dp) / (176.dp + 12.dp)).toInt().coerceIn(2, 4)
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    parts.chunked(columns).forEach { row ->
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            row.forEach { (s, part) ->
+                                SubjectCover(vm, s, part, Modifier.weight(1f))
+                            }
+                            repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                         }
                     }
                 }
             }
         }
-        if (vm.update.canInstall || vm.update.status == "downloading" || vm.update.status == "staged") {
-            item { UpdateBanner(vm) }
-        }
-        val open = vm.content.subjects.filter { it.bool("open") }
-        val soon = vm.content.subjects.filter { !it.bool("open") }
-        item { SectionHeader(vm.tr("subjects_title")) }
-        items(open) { s ->
-            val part = subjectSum(vm, s)
-            NavRow(
-                title = vm.tr(s.str("key")),
-                leading = { SubjectIcon(s.str("icon"), true) },
-                progress = part.doneEx to part.totalEx,
-                onClick = { vm.goPage(s.str("target")) },
-            )
-        }
         if (soon.isNotEmpty()) {
             item { SectionHeader(vm.tr("subjects_soon")) }
             items(soon) { s ->
-                NavRow(
-                    title = vm.tr(s.str("key")),
-                    locked = true,
-                    leading = { SubjectIcon(s.str("icon"), false) },
-                    onClick = null,
+                NavRow(title = vm.tr(s.str("key")), locked = true, onClick = null)
+            }
+        }
+    }
+}
+
+private fun subjectAccent(vm: AppViewModel, s: J): Accent =
+    subjectStyle(s.str("icon"))?.accent(vm.mode) ?: vm.palette.accent
+
+/**
+ * The glow of the app icon with the headline in its typeface, the share of
+ * finished exercises, and every subject's part in it.
+ */
+@Composable
+private fun HomeHero(vm: AppViewModel, sum: ProgressSum, parts: List<Triple<Accent, Int, Int>>) {
+    val palette = LocalPalette.current
+    val display = LocalDisplayFont.current
+    val pct = if (sum.totalEx == 0) 0 else sum.doneEx * 100 / sum.totalEx
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(28.dp))
+            .drawBehind {
+                drawRect(
+                    Brush.radialGradient(
+                        listOf(palette.glowInner, palette.glowOuter),
+                        center = Offset(size.width * 0.3f, size.height * 0.3f),
+                        radius = maxOf(size.width, size.height) * 0.9f,
+                    ),
                 )
+            }
+            .padding(22.dp),
+    ) {
+        Text(vm.tr("welcome_title"), style = displayStyle(display, 38.sp, italic = true).copy(lineHeight = 40.sp), color = palette.onGlow)
+        Spacer(Modifier.height(10.dp))
+        Text(
+            vm.tr(vm.platform.welcomeKey),
+            style = MaterialTheme.typography.bodyMedium,
+            color = palette.onGlow.copy(alpha = 0.72f),
+            modifier = Modifier.widthIn(max = 520.dp),
+        )
+        Spacer(Modifier.height(18.dp))
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text(vm.fmt("stats_pct_fmt", pct), style = displayStyle(display, 42.sp), color = palette.onGlow)
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.padding(bottom = 6.dp)) {
+                Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx), style = MaterialTheme.typography.titleSmall, color = palette.onGlow)
+                Kicker(vm.tr("stats_ex_label"), palette.onGlow.copy(alpha = 0.7f))
+            }
+        }
+        Spacer(Modifier.height(18.dp))
+        SpectrumBar(parts, palette.onGlow.copy(alpha = 0.12f), Modifier.fillMaxWidth())
+    }
+}
+
+/**
+ * A subject as a book cover: its colour, its glyph, and its timetable
+ * abbreviation set large behind the title.
+ */
+@Composable
+private fun SubjectCover(vm: AppViewModel, s: J, part: ProgressSum, modifier: Modifier = Modifier) {
+    val accent = subjectAccent(vm, s)
+    val ink = accent.onSolid
+    val mark = subjectStyle(s.str("icon"))?.mark(vm.lang).orEmpty()
+    Surface(
+        onClick = { vm.goPage(s.str("target")) },
+        color = accent.solid,
+        contentColor = ink,
+        shape = RoundedCornerShape(24.dp),
+        modifier = modifier.height(168.dp),
+    ) {
+        Box(Modifier.clipToBounds()) {
+            Text(
+                mark,
+                style = displayStyle(LocalDisplayFont.current, if (mark.length > 2) 56.sp else 74.sp, italic = true),
+                color = ink.copy(alpha = 0.16f),
+                maxLines = 1,
+                softWrap = false,
+                modifier = Modifier.align(Alignment.TopEnd).offset(x = 6.dp, y = if (mark.length > 2) (-6).dp else (-18).dp),
+            )
+            Column(Modifier.fillMaxSize().padding(16.dp)) {
+                Box(Modifier.size(38.dp).clip(CircleShape).background(ink.copy(alpha = 0.16f)), contentAlignment = Alignment.Center) {
+                    Icon(subjectIcon(s.str("icon")), null, tint = ink, modifier = Modifier.size(20.dp))
+                }
+                Spacer(Modifier.weight(1f))
+                Text(vm.tr(s.str("key")), style = displayStyle(LocalDisplayFont.current, 17.sp), maxLines = 2, overflow = TextOverflow.Ellipsis)
+                if (part.totalEx > 0) {
+                    Row(Modifier.padding(top = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                        SmoothProgress(part.doneEx / part.totalEx.toFloat(), Modifier.weight(1f).height(5.dp), ink, ink.copy(alpha = 0.24f))
+                        Spacer(Modifier.width(10.dp))
+                        Text("${part.doneEx} / ${part.totalEx}", style = MaterialTheme.typography.labelSmall, color = ink.copy(alpha = 0.85f))
+                    }
+                }
             }
         }
     }
@@ -166,58 +235,41 @@ fun HomeScreen(vm: AppViewModel) {
 
 @Composable
 private fun ChangelogCard(vm: AppViewModel) {
+    val palette = LocalPalette.current
+    val accent = LocalAccent.current
     val langKey = if (vm.lang == UiLang.En) "en" else "cs"
     val blocks = vm.content.changelog.take(3)
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-    ) {
+    AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
         Column(Modifier.padding(20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.AutoAwesome, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                Icon(Icons.Filled.AutoAwesome, null, tint = accent.text, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(8.dp))
-                Text(
-                    vm.tr("changelog_title"),
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.weight(1f),
-                )
+                Kicker(vm.tr("changelog_title"), accent.text, Modifier.weight(1f))
                 val date = blocks.firstOrNull()?.str("date").orEmpty()
                 if (date.isNotEmpty()) {
-                    Text(
-                        date,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    Text(date, style = MaterialTheme.typography.labelMedium, color = palette.ink3)
                 }
             }
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(12.dp))
             blocks.forEachIndexed { index, block ->
                 if (index > 0) Spacer(Modifier.height(8.dp))
                 block.strs(langKey).ifEmpty { block.strs("cs") }.forEach { line ->
-                    Text(
-                        "•  $line",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 4.dp),
-                    )
+                    Row(Modifier.padding(bottom = 6.dp)) {
+                        Box(Modifier.padding(top = 8.dp).size(5.dp).clip(CircleShape).background(accent.solid))
+                        Spacer(Modifier.width(10.dp))
+                        Text(line, style = MaterialTheme.typography.bodyMedium, color = palette.ink2)
+                    }
                 }
             }
             Spacer(Modifier.height(8.dp))
-            FilledTonalButton(onClick = { vm.dismissChangelog() }) {
-                Text(vm.tr("changelog_dismiss"))
-            }
+            PrimaryButton(vm.tr("changelog_dismiss")) { vm.dismissChangelog() }
         }
     }
 }
 
 @Composable
 private fun UpdateBanner(vm: AppViewModel) {
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-    ) {
+    AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), radius = 16.dp) {
         Row(Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 vm.fmt(vm.update.messageKey, *(listOfNotNull(vm.update.messageArg).toTypedArray())),
@@ -226,91 +278,112 @@ private fun UpdateBanner(vm: AppViewModel) {
             )
             if (vm.update.canInstall) {
                 Spacer(Modifier.width(8.dp))
-                FilledTonalButton(onClick = { vm.installUpdate() }) { Text(vm.tr("update_install")) }
+                PrimaryButton(vm.tr("update_install")) { vm.installUpdate() }
             }
         }
     }
 }
 
+private fun subjectIcon(icon: String): ImageVector = when (icon) {
+    "de" -> Icons.Filled.Translate
+    "wifi" -> Icons.Filled.Wifi
+    "chip" -> Icons.Filled.Memory
+    "cz" -> Icons.Filled.AutoStories
+    "people" -> Icons.Filled.Groups
+    "uk" -> Icons.Filled.Forum
+    "flask" -> Icons.Filled.Science
+    "bolt" -> Icons.Filled.Bolt
+    "function" -> Icons.Filled.Functions
+    "ruler" -> Icons.Filled.Architecture
+    "code" -> Icons.Filled.Terminal
+    "brush" -> Icons.Filled.Brush
+    "apps" -> Icons.Filled.Apps
+    else -> Icons.Filled.Lock
+}
+
+/** Subject glyph on its own colour, for the statistics table. */
 @Composable
-private fun SubjectIcon(icon: String, open: Boolean) {
-    val tint = if (open) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.outline
-    Box(Modifier.size(32.dp), contentAlignment = Alignment.Center) {
-        when (icon) {
-            "de" -> GermanFlag(28.dp)
-            "wifi" -> WifiIcon(tint, 26.dp)
-            "chip" -> ChipIcon(tint, 26.dp)
-            "people" -> Icon(Icons.Filled.Groups, null, tint = tint, modifier = Modifier.size(26.dp))
-            "cz" -> CzechFlag(28.dp)
-            "uk" -> UkFlag(28.dp)
-            "flask" -> Icon(Icons.Filled.Science, null, tint = tint, modifier = Modifier.size(26.dp))
-            "bolt" -> Icon(Icons.Filled.Bolt, null, tint = tint, modifier = Modifier.size(26.dp))
-            "function" -> Icon(Icons.Filled.Functions, null, tint = tint, modifier = Modifier.size(26.dp))
-            "ruler" -> Icon(Icons.Filled.Architecture, null, tint = tint, modifier = Modifier.size(26.dp))
-            "code" -> Icon(Icons.Filled.Terminal, null, tint = tint, modifier = Modifier.size(26.dp))
-            "brush" -> Icon(Icons.Filled.Brush, null, tint = tint, modifier = Modifier.size(26.dp))
-            "apps" -> Icon(Icons.Filled.Apps, null, tint = tint, modifier = Modifier.size(26.dp))
-            else -> Icon(Icons.Filled.Lock, null, tint = tint)
-        }
+private fun SubjectIcon(vm: AppViewModel, s: J) {
+    if (s.bool("open")) {
+        Badge(icon = subjectIcon(s.str("icon")), size = 38.dp, accent = subjectAccent(vm, s))
+    } else {
+        Badge(icon = Icons.Filled.Lock, filled = false, size = 38.dp)
     }
 }
 
 @Composable
 fun StatsScreen(vm: AppViewModel) {
+    val palette = LocalPalette.current
     val sum = summarize(vm.content, vm.progress)
     val pct = if (sum.totalEx == 0) 0f else sum.doneEx / sum.totalEx.toFloat()
+    // Open subjects by how far along they are, locked ones last.
+    val rows = vm.content.subjects.map { it to subjectSum(vm, it) }
+        .sortedWith(compareBy({ !it.first.bool("open") }, { -share(it.second) }))
     RootScaffold(vm, vm.tr("stats_title")) {
         item {
-            Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
+            AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
                 Column(Modifier.padding(20.dp)) {
                     Row(Modifier.fillMaxWidth()) {
-                        Metric(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx), Modifier.weight(1f))
                         Metric(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", (pct * 100).toInt()), Modifier.weight(1f))
+                        Metric(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx), Modifier.weight(1f))
                         Metric(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits), Modifier.weight(1f))
                     }
-                    Spacer(Modifier.height(16.dp))
-                    SmoothProgress(progress = pct, modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
+                    Spacer(Modifier.height(18.dp))
+                    SpectrumBar(
+                        rows.filter { it.first.bool("open") }.map { (s, part) -> Triple(subjectAccent(vm, s), part.doneEx, part.totalEx) },
+                        palette.sunken,
+                        Modifier.fillMaxWidth(),
+                    )
                 }
             }
         }
         item { SectionHeader(vm.tr("stats_section")) }
-        items(vm.content.subjects) { s ->
-            val open = s.bool("open")
-            val part = subjectSum(vm, s)
-            ListItem(
-                headlineContent = {
-                    Text(vm.tr(s.str("key")), color = if (open) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant)
-                },
-                supportingContent = {
-                    Column {
-                        if (open && part.totalEx > 0) {
-                            Spacer(Modifier.height(6.dp))
-                            SmoothProgress(
-                                progress = part.doneEx / part.totalEx.toFloat(),
-                                modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
-                            )
+        item {
+            AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                Column {
+                    rows.forEachIndexed { index, (s, part) ->
+                        val open = s.bool("open")
+                        val counted = open && part.totalEx > 0
+                        if (index > 0) HorizontalDivider(Modifier.padding(start = 66.dp), color = palette.line)
+                        Row(Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                            SubjectIcon(vm, s)
+                            Spacer(Modifier.width(14.dp))
+                            Column(Modifier.weight(1f)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(
+                                        vm.tr(s.str("key")),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = if (open) palette.ink else palette.ink3,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                    Text(
+                                        if (counted) vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) else vm.tr("stats_locked"),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = palette.ink2,
+                                    )
+                                }
+                                if (counted) {
+                                    Spacer(Modifier.height(8.dp))
+                                    SmoothProgress(share(part), Modifier.fillMaxWidth().height(6.dp), subjectAccent(vm, s).solid)
+                                }
+                            }
                         }
                     }
-                },
-                leadingContent = { SubjectIcon(s.str("icon"), open) },
-                trailingContent = {
-                    Text(
-                        if (open) vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) else vm.tr("stats_locked"),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                },
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-            )
+                }
+            }
         }
     }
 }
 
+private fun share(part: ProgressSum): Float = if (part.totalEx == 0) 0f else part.doneEx / part.totalEx.toFloat()
+
 @Composable
 private fun Metric(label: String, value: String, modifier: Modifier) {
     Column(modifier) {
-        Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Text(value, style = MaterialTheme.typography.titleLarge)
+        Text(value, style = MaterialTheme.typography.headlineSmall, maxLines = 1)
+        Kicker(label)
     }
 }
 
@@ -483,68 +556,46 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
     return sum
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(vm: AppViewModel) {
+    val palette = LocalPalette.current
+    @Composable
+    fun card(title: String, content: @Composable () -> Unit) {
+        AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
+            Column(Modifier.padding(horizontal = 18.dp, vertical = 16.dp)) {
+                Kicker(title, modifier = Modifier.padding(bottom = 8.dp))
+                content()
+            }
+        }
+    }
     RootScaffold(vm, vm.tr("settings_title"), showSearch = false) {
-        item { SectionHeader(vm.tr("mode")) }
         item {
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-                SegmentedButton(
-                    selected = vm.mode == ColorMode.Light,
-                    onClick = { vm.applyMode(ColorMode.Light) },
-                    shape = SegmentedButtonDefaults.itemShape(0, 2),
-                ) { Text(vm.tr("mode_light")) }
-                SegmentedButton(
-                    selected = vm.mode == ColorMode.Dark,
-                    onClick = { vm.applyMode(ColorMode.Dark) },
-                    shape = SegmentedButtonDefaults.itemShape(1, 2),
-                ) { Text(vm.tr("mode_dark")) }
+            card(vm.tr("mode")) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    SegChip(vm.tr("mode_light"), vm.mode == ColorMode.Light) { vm.applyMode(ColorMode.Light) }
+                    SegChip(vm.tr("mode_dark"), vm.mode == ColorMode.Dark) { vm.applyMode(ColorMode.Dark) }
+                }
             }
         }
-        item { SectionHeader(vm.tr("theme")) }
-        items(ThemeId.entries.size) { i ->
-            val id = ThemeId.entries[i]
-            val sw = themePalette(id, vm.mode)
-            val sel = vm.themeId == id
-            ListItem(
-                headlineContent = { Text(themeNames[i]) },
-                leadingContent = {
-                    Box(Modifier.size(28.dp).clip(CircleShape).background(sw.base), contentAlignment = Alignment.Center) {
-                        Box(Modifier.size(14.dp).clip(CircleShape).background(sw.tint))
-                    }
-                },
-                trailingContent = { RadioButton(selected = sel, onClick = null) },
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                modifier = Modifier.clickable { vm.setTheme(id) },
-            )
-        }
-        item { SectionHeader(vm.tr("language")) }
         item {
-            SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-                SegmentedButton(
-                    selected = vm.lang == UiLang.Cs,
-                    onClick = { vm.applyLang(UiLang.Cs) },
-                    shape = SegmentedButtonDefaults.itemShape(0, 2),
-                ) { Text("Čeština") }
-                SegmentedButton(
-                    selected = vm.lang == UiLang.En,
-                    onClick = { vm.applyLang(UiLang.En) },
-                    shape = SegmentedButtonDefaults.itemShape(1, 2),
-                ) { Text("English") }
+            card(vm.tr("language")) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    SegChip("Čeština", vm.lang == UiLang.Cs) { vm.applyLang(UiLang.Cs) }
+                    SegChip("English", vm.lang == UiLang.En) { vm.applyLang(UiLang.En) }
+                }
             }
         }
-        item { SectionHeader(vm.tr("updates")) }
         item {
-            Column(Modifier.padding(horizontal = 16.dp)) {
+            card(vm.tr("updates")) {
                 Text(
                     vm.fmt(vm.update.messageKey, *(listOfNotNull(vm.update.messageArg).toTypedArray())),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = palette.ink2,
                 )
                 Spacer(Modifier.height(10.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedButton(onClick = { vm.checkUpdate(true) }) { Text(vm.tr("update_check")) }
+                    PillButton(vm.tr("update_check")) { vm.checkUpdate(true) }
                     if (vm.update.canInstall) {
                         PrimaryButton(vm.tr("update_install")) { vm.installUpdate() }
                     }
@@ -552,12 +603,14 @@ fun SettingsScreen(vm: AppViewModel) {
             }
         }
         item {
-            ListItem(
-                headlineContent = { Text("Build") },
-                supportingContent = { Text("${vm.platform.versionName} · ${vm.platform.commit.take(7)}") },
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                modifier = Modifier.padding(top = 8.dp),
-            )
+            Column(Modifier.padding(horizontal = 20.dp, vertical = 18.dp)) {
+                Text("Graduately", style = displayStyle(LocalDisplayFont.current, 24.sp, italic = true), color = palette.ink)
+                Text(
+                    "Build ${vm.platform.versionName} · ${vm.platform.commit.take(7)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = palette.ink3,
+                )
+            }
         }
     }
 }
@@ -574,7 +627,7 @@ fun SearchScreen(vm: AppViewModel) {
     LaunchedEffect(Unit) { focus.requestFocus() }
     Scaffold(
         topBar = {
-            Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
+            Surface(color = LocalPalette.current.paper) {
                 Row(
                     Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 4.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -618,7 +671,6 @@ fun SearchScreen(vm: AppViewModel) {
                         title = hit.title,
                         subtitle = hit.sub,
                         locked = hit.locked,
-                        leading = { Icon(Icons.Filled.Search, null, tint = MaterialTheme.colorScheme.outline) },
                         onClick = if (hit.locked) null else ({ vm.openPage(hit.target) }),
                     )
                 }
@@ -879,8 +931,17 @@ data class LessonRow(val title: String, val done: Boolean, val route: Route, val
 fun LessonListScreen(vm: AppViewModel, title: String, sub: String, rows: List<LessonRow>) {
     DetailScaffold(vm, title, sub) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
-            items(rows) { row ->
-                NavRow(title = row.title, subtitle = row.subtitle, done = row.done, onClick = { vm.go(row.route) })
+            val next = rows.indexOfFirst { !it.done }
+            item {
+                Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    SmoothProgress(if (rows.isEmpty()) 0f else rows.count { it.done } / rows.size.toFloat(), Modifier.weight(1f).height(6.dp))
+                    Spacer(Modifier.width(10.dp))
+                    Text("${rows.count { it.done }} / ${rows.size}", style = MaterialTheme.typography.labelMedium, color = LocalPalette.current.ink2)
+                }
+            }
+            items(rows.size) { i ->
+                val row = rows[i]
+                NavRow(title = row.title, subtitle = row.subtitle, done = row.done, index = i + 1, current = i == next, onClick = { vm.go(row.route) })
             }
         }
     }
@@ -890,7 +951,8 @@ fun LessonListScreen(vm: AppViewModel, title: String, sub: String, rows: List<Le
 fun RoadmapScreen(vm: AppViewModel) {
     DetailScaffold(vm, vm.tr("roadmap_title"), vm.tr("roadmap_sub")) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
-            items(vm.content.german) { u ->
+            items(vm.content.german.size) { i ->
+                val u = vm.content.german[i]
                 val unlocked = u.bool("unlocked")
                 val names = u.strs("names")
                 val doneCount = names.indices.count { vm.progress.germanDone(u.int("id"), it + 1) }
@@ -900,6 +962,7 @@ fun RoadmapScreen(vm: AppViewModel) {
                     subtitle = if (unlocked) vm.fmt("stats_ex_fmt", doneCount, names.size) else null,
                     done = done,
                     locked = !unlocked,
+                    index = i + 1,
                     onClick = if (unlocked) ({ vm.go(Route.UnitMap(u.int("id"))) }) else null,
                 )
             }
@@ -913,17 +976,17 @@ fun UnitMapScreen(vm: AppViewModel, unitId: Int) {
     val names = u.strs("names")
     DetailScaffold(vm, u.str("title"), vm.tr(u.str("sub"))) { inner ->
         LazyColumn(contentPadding = PaddingValues(top = inner.calculateTopPadding(), bottom = inner.calculateBottomPadding() + 16.dp)) {
+            val next = names.indices.firstOrNull { !vm.progress.germanDone(unitId, it + 1) }
             items(names.size) { i ->
-                NavRow(title = names[i], done = vm.progress.germanDone(unitId, i + 1)) { vm.go(Route.GermanEx(unitId, i + 1)) }
+                NavRow(title = names[i], done = vm.progress.germanDone(unitId, i + 1), index = i + 1, current = i == next) { vm.go(Route.GermanEx(unitId, i + 1)) }
             }
             if (u.has("branch")) {
-                item { HorizontalDivider(Modifier.padding(vertical = 8.dp)) }
+                item { Spacer(Modifier.height(12.dp)) }
                 item {
                     NavRow(
                         title = vm.tr("Vokabeltraining"),
                         subtitle = vm.tr("sub_translate"),
-                        done = vm.progress.vocabDone(unitId),
-                        leading = { Icon(Icons.AutoMirrored.Filled.MenuBook, null, tint = MaterialTheme.colorScheme.primary) },
+                        leading = { Badge(icon = if (vm.progress.vocabDone(unitId)) Icons.Filled.Check else Icons.AutoMirrored.Filled.MenuBook) },
                     ) { vm.go(Route.Vocab(unitId)) }
                 }
             }
@@ -1187,7 +1250,6 @@ fun BookListScreen(vm: AppViewModel) {
                     title = b.str("title"),
                     subtitle = vm.tr(b.str("subKey")),
                     done = vm.progress.bookQuiz(id) && vm.progress.bookPlot(id),
-                    leading = { Icon(Icons.AutoMirrored.Filled.MenuBook, null, tint = MaterialTheme.colorScheme.primary) },
                 ) { vm.go(Route.Book(id)) }
             }
         }
@@ -1203,25 +1265,23 @@ fun BookScreen(vm: AppViewModel, id: String) {
                 NavRow(
                     title = vm.tr(b.str("quizTitle")),
                     subtitle = vm.tr(b.str("quizSub")),
-                    done = vm.progress.bookQuiz(id),
-                    leading = { Icon(Icons.Filled.Quiz, null, tint = MaterialTheme.colorScheme.primary) },
+                    leading = { Badge(icon = if (vm.progress.bookQuiz(id)) Icons.Filled.Check else Icons.Filled.Quiz) },
                 ) { vm.go(Route.BookQuiz(id)) }
             }
             item {
                 NavRow(
                     title = vm.tr(b.str("plotTitle")),
                     subtitle = vm.tr(b.str("plotSub")),
-                    done = vm.progress.bookPlot(id),
-                    leading = { Icon(Icons.Filled.FormatListNumbered, null, tint = MaterialTheme.colorScheme.primary) },
+                    leading = { Badge(icon = if (vm.progress.bookPlot(id)) Icons.Filled.Check else Icons.Filled.FormatListNumbered) },
                 ) { vm.go(Route.BookPlot(id)) }
             }
             items(b.arr("notes")) { note ->
                 SectionHeader(note.str("title"))
-                Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
                     Column(Modifier.padding(16.dp)) {
                         note.strs("lines").forEachIndexed { i, line ->
-                            if (i > 0) HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                            Text(line, style = MaterialTheme.typography.bodyMedium)
+                            if (i > 0) HorizontalDivider(Modifier.padding(vertical = 10.dp), color = LocalPalette.current.line)
+                            Text(line, style = MaterialTheme.typography.bodyLarge)
                         }
                     }
                 }
@@ -1233,48 +1293,39 @@ fun BookScreen(vm: AppViewModel, id: String) {
 // ---------------------------------------------------------------------------
 // Lesson slides
 
-/** One explanation slide: label, title, tip and numbered points. */
+/** One explanation slide: label, title, tip, then the points as a numbered list set apart by rules. */
 @Composable
 fun SlideContent(slide: J) {
+    val palette = LocalPalette.current
+    val accent = LocalAccent.current
     Column {
-        Text(slide.str("kicker"), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Text(slide.str("title"), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 4.dp, bottom = 12.dp))
+        Kicker(slide.str("kicker"), accent.text)
+        Text(slide.str("title"), style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 6.dp, bottom = 14.dp))
         slide.strOrNull("tip")?.let { tip ->
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+            Row(
+                Modifier.fillMaxWidth().padding(bottom = 8.dp).clip(RoundedCornerShape(16.dp)).background(accent.soft).padding(14.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Outlined.Lightbulb, null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
-                    Spacer(Modifier.width(10.dp))
-                    Text(tip, style = MaterialTheme.typography.bodyMedium)
-                }
+                Icon(Icons.Outlined.Lightbulb, null, tint = accent.text)
+                Spacer(Modifier.width(10.dp))
+                Text(tip, style = MaterialTheme.typography.bodyMedium)
             }
         }
-        slide.strs("lines").forEachIndexed { index, line ->
+        val lines = slide.strs("lines")
+        lines.forEachIndexed { index, line ->
             val numbered = Regex("""^(\d+)\.\s+(.*)$""").find(line)
             val badge = numbered?.groupValues?.get(1) ?: "${index + 1}"
             val text = numbered?.groupValues?.get(2) ?: line
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 5.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f), androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
-                    .padding(horizontal = 14.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.Top,
-            ) {
-                Box(
-                    Modifier
-                        .padding(top = 2.dp)
-                        .size(28.dp)
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f), CircleShape),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(badge, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                }
-                Spacer(Modifier.width(12.dp))
-                Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+            Row(Modifier.fillMaxWidth().padding(vertical = 14.dp)) {
+                Text(
+                    badge,
+                    style = displayStyle(LocalDisplayFont.current, 20.sp),
+                    color = accent.text,
+                    modifier = Modifier.alignByBaseline().widthIn(min = 34.dp),
+                )
+                Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.alignByBaseline().weight(1f))
             }
+            if (index < lines.lastIndex) HorizontalDivider(color = palette.line)
         }
     }
 }
@@ -1306,9 +1357,9 @@ fun SlidesScreen(
                         Box(
                             Modifier
                                 .padding(horizontal = 3.dp)
-                                .size(width = if (active) 18.dp else 6.dp, height = 6.dp)
+                                .size(width = if (active) 22.dp else 6.dp, height = 6.dp)
                                 .clip(CircleShape)
-                                .background(if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHighest),
+                                .background(if (active) LocalAccent.current.solid else LocalPalette.current.ink3.copy(alpha = 0.35f)),
                         )
                     }
                 }

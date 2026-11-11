@@ -130,6 +130,9 @@ struct PathMap: View {
     var gap: CGFloat = 220
     var wave: CGFloat = 18
     var branch: (index: Int, node: MapNode)? = nil
+    /// Title, subtitle and progress set above the path; they scroll away with it.
+    var heading: (title: String, subtitle: String, done: Int, total: Int)? = nil
+    @Environment(\.accent) private var accent
 
     var body: some View {
         GeometryReader { geo in
@@ -147,6 +150,12 @@ struct PathMap: View {
             let labelWidth = min(140, max(88, layout.spacing - 16))
             let canvasH = layout.height + labelBand + 24
             ScrollView([.horizontal, .vertical]) {
+                VStack(alignment: .leading, spacing: 0) {
+                if let heading {
+                    PageHeader(title: heading.title, subtitle: heading.subtitle, progress: (heading.done, heading.total))
+                        .padding([.horizontal, .top], Page.inset)
+                        .frame(width: geo.size.width)
+                }
                 ZStack(alignment: .topLeading) {
                     railCanvas(points: layout.points)
                         .frame(width: layout.width, height: canvasH)
@@ -157,16 +166,16 @@ struct PathMap: View {
                         nodeView(node, index: i)
                             .position(x: pt.x, y: pt.y)
                         Text(node.label)
-                            #if os(macOS)
-                            .font(.callout.weight(.semibold))
-                            #else
-                            .font(.caption2.weight(.semibold))
-                            #endif
-                            .foregroundStyle(node.locked ? palette.overlay : palette.text)
+                            .font(onMac(Font.callout, Font.caption2).weight(node.current ? .bold : .medium))
+                            .foregroundStyle(node.locked ? palette.ink3 : palette.ink)
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
                             .minimumScaleFactor(0.85)
-                            .frame(width: labelWidth, height: labelBand, alignment: labelBelow ? .top : .bottom)
+                            // Keeps the caption readable where the rail turns behind it.
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 2)
+                            .background(palette.paper.opacity(0.88), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                            .frame(width: labelWidth + 10, height: labelBand, alignment: labelBelow ? .top : .bottom)
                             .position(
                                 x: pt.x,
                                 y: labelBelow
@@ -185,16 +194,12 @@ struct PathMap: View {
                                 control: CGPoint(x: base.x + 14, y: tip.y + 28)
                             )
                         }
-                        .stroke(palette.rail, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        .stroke(palette.line, style: StrokeStyle(lineWidth: 8, lineCap: .round))
                         nodeView(branch.node, index: nil)
                             .position(x: tip.x, y: tip.y)
                         Text(branch.node.label)
-                            #if os(macOS)
-                            .font(.callout.weight(.semibold))
-                            #else
-                            .font(.caption2.weight(.semibold))
-                            #endif
-                            .foregroundStyle(palette.text)
+                            .font(onMac(Font.callout, Font.caption2).weight(.medium))
+                            .foregroundStyle(palette.ink)
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
                             .frame(width: labelWidth, height: labelBand, alignment: .bottom)
@@ -202,14 +207,8 @@ struct PathMap: View {
                     }
                 }
                 .frame(width: layout.width + 24, height: canvasH, alignment: .topLeading)
-                .frame(
-                    minWidth: geo.size.width,
-                    minHeight: max(canvasH, geo.size.height),
-                    alignment: Alignment(
-                        horizontal: layout.width + 24 < geo.size.width ? .center : .leading,
-                        vertical: canvasH < geo.size.height ? .center : .top
-                    )
-                )
+                .frame(minWidth: geo.size.width, alignment: layout.width + 24 < geo.size.width ? .center : .leading)
+                }
             }
         }
         #if os(macOS)
@@ -239,138 +238,55 @@ struct PathMap: View {
                 ctx.stroke(path, with: .color(color), style: style)
             }
             let end = CGFloat(points.count - 1)
-            stroke(0, end, color: palette.rail, width: 10)
+            stroke(0, end, color: palette.line, width: 8)
             if litUntil > 0 {
-                stroke(0, min(litUntil, end), color: palette.accent, width: 10)
-            }
-            let mutedStart = litUntil > 0 ? litUntil : 0
-            if mutedStart < end {
-                stroke(mutedStart, end, color: palette.subtext.opacity(0.22), width: 10, dashed: true)
+                stroke(0, min(litUntil, end), color: accent.solid, width: 8)
             }
         }
     }
 
+    /// Done steps are filled with a tick, the next one is filled and ringed,
+    /// the rest wait as outlines.
     @ViewBuilder
     private func nodeView(_ node: MapNode, index: Int?) -> some View {
+        let lit = !node.locked && (node.current || node.done)
+        let ink = node.locked ? palette.ink3 : lit ? accent.onSolid : palette.ink
         let content = ZStack {
-            Circle()
-                .fill(nodeFill(node))
-                .overlay {
-                    if node.locked {
-                        Circle().strokeBorder(palette.lockedBorder, lineWidth: 1)
-                    } else if !node.current && !node.done {
-                        Circle().strokeBorder(palette.accent.opacity(0.55), lineWidth: 2.5)
-                    }
-                }
-            if node.finish {
-                VStack(spacing: 2) {
-                    if let index {
-                        Text("\(index + 1)")
-                            #if os(macOS)
-                            .font(.title2.weight(.black))
-                            #else
-                            .font(.headline.weight(.black))
-                            #endif
-                    }
-                    FinishFlagBadge(palette: palette)
-                }
-                .foregroundStyle(palette.overlay)
-            } else if node.locked {
-                VStack(spacing: 2) {
-                    if let index {
-                        Text("\(index + 1)")
-                            #if os(macOS)
-                            .font(.title2.weight(.black))
-                            #else
-                            .font(.headline.weight(.black))
-                            #endif
-                    }
-                    Image(systemName: "lock.fill")
-                        #if os(macOS)
-                        .font(.caption.weight(.bold))
-                        #else
-                        .font(.caption2.weight(.bold))
-                        #endif
-                }
-                .foregroundStyle(palette.overlay)
-            } else if node.done {
-                VStack(spacing: 2) {
-                    if let index {
-                        Text("\(index + 1)")
-                            #if os(macOS)
-                            .font(.title2.weight(.black))
-                            #else
-                            .font(.headline.weight(.black))
-                            #endif
-                    } else if let symbol = node.symbol {
-                        Image(systemName: symbol)
-                            #if os(macOS)
-                            .font(.title3.weight(.semibold))
-                            #else
-                            .font(.body.weight(.semibold))
-                            #endif
-                    }
-                    Image(systemName: "checkmark")
-                        #if os(macOS)
-                        .font(.caption.weight(.bold))
-                        #else
-                        .font(.caption2.weight(.bold))
-                        #endif
-                }
-                .foregroundStyle(palette.onAccent)
-            } else if let index {
-                Text("\(index + 1)")
-                    #if os(macOS)
-                    .font(.title2.weight(.black))
-                    #else
-                    .font(.headline.weight(.black))
-                    #endif
-                    .foregroundStyle(node.current ? palette.onAccent : palette.text)
-            } else if let symbol = node.symbol {
-                Image(systemName: symbol)
-                    #if os(macOS)
-                    .font(.title2.weight(.semibold))
-                    #else
-                    .font(.headline.weight(.semibold))
-                    #endif
-                    .foregroundStyle(node.current ? palette.onAccent : palette.text)
+            if node.current {
+                Circle()
+                    .strokeBorder(accent.solid.opacity(0.28), lineWidth: 5)
+                    .frame(width: nodeSize + 18, height: nodeSize + 18)
             }
+            Circle()
+                .fill(node.locked ? palette.sunken : lit ? accent.solid : palette.surface)
+                .overlay {
+                    if !lit {
+                        Circle().strokeBorder(node.locked ? palette.line : accent.solid.opacity(0.6), lineWidth: node.locked ? 1 : 2.5)
+                    }
+                }
+                .frame(width: nodeSize, height: nodeSize)
+            VStack(spacing: 1) {
+                if let index {
+                    Text("\(index + 1)")
+                        .display(onMac(28, 20), relativeTo: .title2)
+                } else if let symbol = node.symbol {
+                    Image(systemName: symbol)
+                        .font(onMac(Font.title2, Font.headline).weight(.semibold))
+                }
+                if let mark = node.finish ? "flag.checkered" : node.locked ? "lock.fill" : node.done ? "checkmark" : nil {
+                    Image(systemName: mark)
+                        .font(onMac(Font.caption, Font.caption2).weight(.bold))
+                }
+            }
+            .foregroundStyle(ink)
         }
-        .frame(width: nodeSize, height: nodeSize)
-        .shadow(color: .black.opacity(node.locked ? 0 : 0.12), radius: 6, y: 2)
+        .frame(width: nodeSize + 18, height: nodeSize + 18)
 
         if let dest = node.destination, !node.locked {
             NavigationLink(value: dest) { content }
                 .buttonStyle(PressScaleStyle())
         } else {
-            content.opacity(node.locked ? 0.55 : 1)
+            content
         }
-    }
-
-    private func nodeFill(_ node: MapNode) -> Color {
-        if node.locked { return palette.lockedBg }
-        if node.current || node.done { return palette.accent }
-        return palette.node
-    }
-}
-
-private struct FinishFlagBadge: View {
-    let palette: Palette
-
-    var body: some View {
-        let cell: CGFloat = 4
-        Canvas { ctx, _ in
-            for iy in 0..<2 {
-                for ix in 0..<3 {
-                    let dark = ((ix + iy) & 1) == 1
-                    let rect = CGRect(x: CGFloat(ix) * cell, y: CGFloat(iy) * cell, width: cell, height: cell)
-                    ctx.fill(
-                        Path(rect),
-                        with: .color(dark ? palette.finishLight : palette.finishStroke)
-                    )
-                }
-            }
-        }
-        .frame(width: cell * 3, height: cell * 2)
     }
 }

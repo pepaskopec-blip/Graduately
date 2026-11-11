@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Content
 import org.maturita.maturita.data.ProgressStore
-import org.maturita.maturita.data.ThemeId
 import org.maturita.maturita.data.UiLang
 import org.maturita.maturita.data.themePalette
 import org.maturita.maturita.platform.Platform
@@ -18,8 +17,6 @@ class AppViewModel(val content: Content, val platform: Platform) {
     val progress = ProgressStore(platform.prefs, content)
     private val updater = platform.updater
 
-    var themeId by mutableStateOf(progress.themeId)
-        private set
     var mode by mutableStateOf(progress.mode)
         private set
     var lang by mutableStateOf(progress.lang)
@@ -41,7 +38,7 @@ class AppViewModel(val content: Content, val platform: Platform) {
     val root: Route get() = stack.first()
     val canGoBack: Boolean get() = stack.size > 1 || root != Route.Subjects
 
-    val palette get() = themePalette(themeId, mode)
+    val palette get() = themePalette(mode)
 
     fun tr(key: String?) = content.tr(key, lang)
     fun fmt(key: String, vararg args: Any) = content.fmt(key, lang, *args)
@@ -93,11 +90,6 @@ class AppViewModel(val content: Content, val platform: Platform) {
             stack.size > 1 -> stack.removeAt(stack.lastIndex)
             root != Route.Subjects -> go(Route.Subjects)
         }
-    }
-
-    fun setTheme(id: ThemeId) {
-        themeId = id
-        progress.themeId = id
     }
 
     fun applyMode(m: ColorMode) {

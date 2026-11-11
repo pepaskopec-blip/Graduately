@@ -101,6 +101,14 @@ val buildContent = tasks.register<Exec>("buildContent") {
     outputs.file(file("src/main/assets/content.json"))
 }
 
+// The display font lives once in assets/fonts; Android wants it as a resource
+// with a lowercase name.
+val copyFonts = tasks.register<Copy>("copyFonts") {
+    from(rootProject.projectDir.parentFile.resolve("assets/fonts")) { include("*.ttf") }
+    into(file("src/main/res/font"))
+    rename { it.replace("PlayfairDisplay", "playfair_display").replace("-Italic", "_italic") }
+}
+
 tasks.named("preBuild").configure {
-    dependsOn(buildContent)
+    dependsOn(buildContent, copyFonts)
 }
