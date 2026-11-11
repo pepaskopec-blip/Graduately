@@ -37,6 +37,7 @@ android/*.iml
 android/.cxx/
 android/.local-sdk/
 android/app/src/main/assets/content.json
+android/app/src/main/res/font/
 
 # iOS
 ios/DerivedData/

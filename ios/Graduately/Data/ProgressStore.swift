@@ -23,11 +23,6 @@ final class ProgressStore {
         defaults.set(true, forKey: "progress_ids_v2")
     }
 
-    var themeId: ThemeId {
-        get { ThemeId(rawValue: defaults.integer(forKey: "theme")) ?? .catppuccin }
-        set { defaults.set(newValue.rawValue, forKey: "theme") }
-    }
-
     var mode: ColorMode {
         get { defaults.string(forKey: "mode") == "dark" ? .dark : .light }
         set { defaults.set(newValue == .light ? "light" : "dark", forKey: "mode") }

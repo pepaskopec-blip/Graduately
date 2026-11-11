@@ -1,7 +1,5 @@
 package org.maturita.maturita.desktop
 
-import org.maturita.maturita.data.ThemeId
-import org.maturita.maturita.data.themeNames
 import org.maturita.maturita.platform.Prefs
 import java.io.File
 
@@ -51,10 +49,6 @@ private fun yearKey(prefix: String, key: String): String? {
 }
 
 private fun importSettings(ui: Map<String, String>, edit: Prefs.Editor) {
-    ui["theme"]?.let { name ->
-        val i = themeNames.indexOfFirst { it.equals(name, ignoreCase = true) }
-        if (i >= 0) edit.putInt("theme", ThemeId.entries[i].ordinal)
-    }
     ui["mode"]?.let { edit.putString("mode", if (it.lowercase() in setOf("light", "white")) "light" else "dark") }
     ui["lang"]?.let { edit.putString("lang", if (it.lowercase() in setOf("en", "english")) "en" else "cs") }
     ui["seen_commit"]?.takeIf { it.isNotBlank() }?.let { edit.putString("seen_commit", it) }

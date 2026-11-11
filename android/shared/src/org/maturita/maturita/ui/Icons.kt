@@ -11,10 +11,8 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.maturita.maturita.data.Palette
 @Composable
 fun DrawnIcon(iconSize: Dp, modifier: Modifier = Modifier, onDraw: androidx.compose.ui.graphics.drawscope.DrawScope.() -> Unit) {
     Canvas(modifier.size(iconSize)) { onDraw() }
@@ -135,87 +133,6 @@ fun CheckIcon(color: Color, iconSize: Dp = 16.dp) {
 }
 
 @Composable
-fun WifiIcon(color: Color, iconSize: Dp = 28.dp) {
-    DrawnIcon(iconSize) {
-        val c = Offset(size.width / 2, size.height * 0.72f)
-        drawCircle(color, size.minDimension * 0.06f, c)
-        for (i in 1..3) {
-            val r = size.minDimension * (0.16f + i * 0.16f)
-            drawArc(color, 210f, 120f, false, Offset(c.x - r, c.y - r), Size(r * 2, r * 2), style = Stroke(size.minDimension * 0.08f, cap = StrokeCap.Round))
-        }
-    }
-}
-
-@Composable
-fun ChipIcon(color: Color, iconSize: Dp = 28.dp) {
-    DrawnIcon(iconSize) {
-        val m = size.minDimension * 0.22f
-        drawRoundRect(color, Offset(m, m), Size(size.width - 2 * m, size.height - 2 * m), androidx.compose.ui.geometry.CornerRadius(6f), style = Stroke(size.minDimension * 0.08f))
-        val pin = size.minDimension * 0.08f
-        for (i in 0 until 3) {
-            val t = m + (size.height - 2 * m) * (i + 1) / 4f
-            drawLine(color, Offset(m - pin, t), Offset(m, t), size.minDimension * 0.06f)
-            drawLine(color, Offset(size.width - m, t), Offset(size.width - m + pin, t), size.minDimension * 0.06f)
-        }
-    }
-}
-
-@Composable
-fun GermanFlag(iconSize: Dp = 48.dp) {
-    DrawnIcon(iconSize) {
-        val w = this.size.width
-        val h = this.size.height
-        val clip = Path().apply { addOval(androidx.compose.ui.geometry.Rect(0f, 0f, w, h)) }
-        clipPath(clip) {
-            val band = h / 3f
-            drawRect(Color(0xFF2E2E30), size = Size(w, band))
-            drawRect(Color(0xFFB8453D), topLeft = Offset(0f, band), size = Size(w, band))
-            drawRect(Color(0xFFD6B352), topLeft = Offset(0f, 2 * band), size = Size(w, band))
-        }
-    }
-}
-
-@Composable
-fun CzechFlag(iconSize: Dp = 48.dp) {
-    DrawnIcon(iconSize) {
-        val w = this.size.width
-        val h = this.size.height
-        val clip = Path().apply { addOval(androidx.compose.ui.geometry.Rect(0f, 0f, w, h)) }
-        clipPath(clip) {
-            drawRect(Color(0xFFFAFAFA), size = Size(w, h))
-            drawRect(Color(0xFFD4292E), topLeft = Offset(0f, h / 2), size = Size(w, h / 2))
-            val tri = Path().apply {
-                moveTo(0f, 0f)
-                lineTo(w * 0.55f, h / 2)
-                lineTo(0f, h)
-                close()
-            }
-            drawPath(tri, Color(0xFF123D8C))
-        }
-    }
-}
-
-@Composable
-fun UkFlag(iconSize: Dp = 48.dp) {
-    DrawnIcon(iconSize) {
-        val w = this.size.width
-        val h = this.size.height
-        val clip = Path().apply { addOval(androidx.compose.ui.geometry.Rect(0f, 0f, w, h)) }
-        clipPath(clip) {
-            drawRect(Color(0xFF012466), size = Size(w, h))
-            drawLine(Color.White, Offset(0f, 0f), Offset(w, h), strokeWidth = w * 0.16f)
-            drawLine(Color.White, Offset(w, 0f), Offset(0f, h), strokeWidth = w * 0.16f)
-            drawLine(Color(0xFFCC0D26), Offset(0f, 0f), Offset(w, h), strokeWidth = w * 0.055f)
-            drawLine(Color(0xFFCC0D26), Offset(w, 0f), Offset(0f, h), strokeWidth = w * 0.055f)
-            drawRect(Color.White, topLeft = Offset(0f, h * 0.38f), size = Size(w, h * 0.24f))
-            drawRect(Color.White, topLeft = Offset(w * 0.38f, 0f), size = Size(w * 0.24f, h))
-            drawRect(Color(0xFFCC0D26), topLeft = Offset(0f, h * 0.43f), size = Size(w, h * 0.14f))
-            drawRect(Color(0xFFCC0D26), topLeft = Offset(w * 0.43f, 0f), size = Size(w * 0.14f, h))
-        }
-    }
-}
-
-@Composable
 fun BookIcon(color: Color, iconSize: Dp = 22.dp) {
     DrawnIcon(iconSize) {
         drawRoundRect(color, Offset(size.width * 0.22f, size.height * 0.18f), Size(size.width * 0.56f, size.height * 0.64f), androidx.compose.ui.geometry.CornerRadius(4f), style = Stroke(size.minDimension * 0.08f))
@@ -265,22 +182,6 @@ fun BulbIcon(color: Color, iconSize: Dp = 22.dp) {
     DrawnIcon(iconSize) {
         drawCircle(color, size.minDimension * 0.22f, Offset(size.width / 2, size.height * 0.4f), style = Stroke(size.minDimension * 0.08f))
         drawRoundRect(color, Offset(size.width * 0.4f, size.height * 0.58f), Size(size.width * 0.2f, size.height * 0.2f), androidx.compose.ui.geometry.CornerRadius(3f))
-    }
-}
-
-@Composable
-fun FinishFlag(p: Palette, number: String, iconSize: Dp) {
-    DrawnIcon(iconSize) {
-        val r = size.minDimension / 2f - 2f
-        drawCircle(p.finishDark, r)
-        drawCircle(p.finishStroke, r, style = Stroke(2f))
-        val cell = 6f
-        val fx = center.x - 1.5f * cell
-        val fy = center.y + 8f
-        for (iy in 0 until 2) for (ix in 0 until 3) {
-            val c = if ((ix + iy) and 1 == 1) p.finishLight else p.finishStroke
-            drawRect(c, Offset(fx + ix * cell, fy + iy * cell), Size(cell, cell))
-        }
     }
 }
 

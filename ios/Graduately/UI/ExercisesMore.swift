@@ -13,22 +13,19 @@ struct DialogEx: View {
         let meanings = spec.strs("meanings")
         let lines = dialogLines()
         ComboRows(vm: vm, title: title, sub: sub, pool: pool, n: lines.count, onDone: onDone) { picks, expected, revealed in
-            ForEach(lines.indices, id: \.self) { i in
-                let line = lines[i]
-                if let name = line.name {
-                    Text(name)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, 6)
+            ForEach(Array(sectioned(lines) { $0.name }.enumerated()), id: \.offset) { _, section in
+                QuestionCard(prompt: section.title) {
+                    ForEach(section.items, id: \.index) { item in
+                        ComboLine(
+                            vm: vm, pool: pool, picks: picks, expected: expected, idx: item.index,
+                            answer: item.line.answer,
+                            prefix: item.line.prefix,
+                            suffix: item.line.suffix,
+                            meaning: item.index < meanings.count ? meanings[item.index] : nil,
+                            revealed: revealed
+                        )
+                    }
                 }
-                ComboLine(
-                    vm: vm, pool: pool, picks: picks, expected: expected, idx: i,
-                    answer: line.answer,
-                    prefix: line.prefix,
-                    suffix: line.suffix,
-                    meaning: i < meanings.count ? meanings[i] : nil,
-                    revealed: revealed
-                )
             }
         }
     }
@@ -51,12 +48,29 @@ struct DialogEx: View {
     }
 }
 
+/// Splits a flat list into runs that start at each line carrying a header,
+/// keeping every line's position in the flat list for its blank.
+private func sectioned<Line>(_ lines: [Line], header: (Line) -> String?) -> [(title: String?, items: [(index: Int, line: Line)])] {
+    var out: [(title: String?, items: [(index: Int, line: Line)])] = []
+    for (i, line) in lines.enumerated() {
+        if let title = header(line) {
+            out.append((title, [(i, line)]))
+        } else if out.isEmpty {
+            out.append((nil, [(i, line)]))
+        } else {
+            out[out.count - 1].items.append((i, line))
+        }
+    }
+    return out
+}
+
 struct ComboEx: View {
     @ObservedObject var vm: AppModel
     let title: String
     var sub: String?
     let spec: J
     var onDone: () -> Void
+    @Environment(\.accent) private var accent
 
     var body: some View {
         let pool = spec.strs("pool")
@@ -67,33 +81,37 @@ struct ComboEx: View {
             let sections = spec.arr("sections")
             let allRows = sections.flatMap { $0.arr("rows") }
             ComboRows(vm: vm, title: title, sub: sub, pool: spec.strs("pool"), n: allRows.count, onDone: onDone, revealMean: spec.bool("transUpfront")) { picks, expected, revealed in
-                ForEach(Array(verbSectionLines().enumerated()), id: \.offset) { idx, line in
-                    if let title = line.title {
-                        Text(title).font(.subheadline.weight(.semibold)).foregroundStyle(.secondary)
+                ForEach(Array(sectioned(verbSectionLines()) { $0.title }.enumerated()), id: \.offset) { _, section in
+                    QuestionCard(prompt: section.title) {
+                        ForEach(section.items, id: \.index) { item in
+                            ComboLine(
+                                vm: vm, pool: spec.strs("pool"), picks: picks, expected: expected, idx: item.index,
+                                answer: item.line.answer, prefix: item.line.before, suffix: item.line.after,
+                                meaning: item.line.meaning,
+                                revealed: revealed || spec.bool("transUpfront")
+                            )
+                        }
                     }
-                    ComboLine(
-                        vm: vm, pool: spec.strs("pool"), picks: picks, expected: expected, idx: idx,
-                        answer: line.answer, prefix: line.before, suffix: line.after,
-                        meaning: line.meaning,
-                        revealed: revealed || spec.bool("transUpfront")
-                    )
                 }
             }
         } else if type == "ordne" {
             ComboRows(vm: vm, title: title, sub: sub, pool: [], n: rows.count * 2, onDone: onDone) { picks, expected, revealed in
                 ForEach(rows.indices, id: \.self) { i in
-                    ComboLine(vm: vm, pool: spec.strs("fwPool"), picks: picks, expected: expected, idx: i * 2, answer: rows[i].str("fw"), prefix: "\(i + 1). ", suffix: rows[i].str("mid"), revealed: revealed)
-                    ComboLine(vm: vm, pool: spec.strs("ansPool"), picks: picks, expected: expected, idx: i * 2 + 1, answer: rows[i].str("ans"), prefix: "→ ", meaning: i < meanings.count ? meanings[i] : nil, revealed: revealed)
+                    QuestionCard(number: i + 1) {
+                        ComboLine(vm: vm, pool: spec.strs("fwPool"), picks: picks, expected: expected, idx: i * 2, answer: rows[i].str("fw"), suffix: rows[i].str("mid"), revealed: revealed)
+                        ComboLine(vm: vm, pool: spec.strs("ansPool"), picks: picks, expected: expected, idx: i * 2 + 1, answer: rows[i].str("ans"), prefix: "→ ", meaning: i < meanings.count ? meanings[i] : nil, revealed: revealed)
+                    }
                 }
             }
         } else if type == "fill" {
             let blanks = rows.reduce(0) { $0 + $1.answerList().count }
             ComboRows(vm: vm, title: title, sub: sub, pool: pool, n: blanks, onDone: onDone, revealMean: spec.bool("preMeaning")) { picks, expected, revealed in
                 if let sample = spec.strOrNull("sample") { Hint(text: sample) }
+                QuestionCard {
                 ForEach(Array(fillRows().enumerated()), id: \.offset) { _, block in
-                    FlowLayout(spacing: 4) {
+                    FlowLayout(spacing: 6) {
                         if let num = block.num {
-                            Text(num).font(.body.weight(.semibold)).foregroundStyle(.primary)
+                            Text(num).fontWeight(.semibold).foregroundStyle(accent.text)
                         }
                         ForEach(Array(block.parts.enumerated()), id: \.offset) { _, part in
                             switch part {
@@ -107,15 +125,16 @@ struct ComboEx: View {
                             Text(vm.tr(mean)).font(.caption).foregroundStyle(.secondary)
                         }
                     }
-                    .padding(.bottom, 6)
                     if revealed || spec.bool("preMeaning") || spec.bool("showGerman"), let mean = block.rowMean {
                         Meaning(text: vm.tr(mean), palette: vm.palette, visible: true)
                     }
+                }
                 }
             }
         } else {
             ComboRows(vm: vm, title: title, sub: sub, pool: pool, n: rows.count, onDone: onDone, revealMean: spec.bool("preMeaning")) { picks, expected, revealed in
                 if let sample = spec.strOrNull("sample") { Hint(text: sample) }
+                QuestionCard {
                 ForEach(rows.indices, id: \.self) { i in
                     let r = rows[i]
                     let prefix: String = {
@@ -139,6 +158,7 @@ struct ComboEx: View {
                         meaning: i < meanings.count ? meanings[i] : r.strOrNull("mean"),
                         revealed: revealed || spec.bool("preMeaning")
                     )
+                }
                 }
             }
         }
@@ -277,21 +297,23 @@ private struct ComboLine: View {
                     .foregroundStyle(mark == true ? p.success : mark == false ? p.error : Color.secondary)
             }
         }
-        .buttonStyle(.bordered)
-        .controlSize(.small)
-        .tint(mark == true ? p.success : mark == false ? p.error : .secondary)
+        .buttonStyle(ChipStyle(compact: true, tone: mark == true ? p.success : mark == false ? p.error : nil))
+        // On the chip itself, so the Mac's popover opens beside the blank.
+        .wordPicker(isPresented: $open, palette: p, pool: pool) { word in
+            if let word, idx < picks.count { picks[idx] = word }
+            open = false
+        }
 
         Group {
             if inline {
                 chip
             } else {
-                FlowLayout(spacing: 6) {
+                FlowLayout(spacing: 8) {
                     if !prefix.isEmpty { Text(prefix) }
                     chip
                     if !suffix.isEmpty { Text(suffix) }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.bottom, 8)
             }
         }
         .onAppear {
@@ -300,25 +322,35 @@ private struct ComboLine: View {
         .onChange(of: answer) { _, new in
             if idx >= 0 && idx < expected.count { expected[idx] = new }
         }
-        .sheet(isPresented: $open) {
-            WordPicker(palette: p, pool: pool) { word in
-                if let word, idx < picks.count { picks[idx] = word }
-                open = false
-            }
-            .sheetDetents()
-        }
+
         if revealed, let meaning, !meaning.isEmpty {
             Meaning(text: vm.tr(meaning), palette: p, visible: true)
         }
     }
 }
 
+/// Word bank for a blank: a sheet on the iPhone, a popover beside the blank on the Mac.
 struct WordPicker: View {
     let palette: Palette
     let pool: [String]
     var onPick: (String?) -> Void
 
     var body: some View {
+        #if os(macOS)
+        // A List inside a Mac sheet has no height of its own and collapses to
+        // its title bar, so the Mac lists the words in a sized popover instead.
+        ScrollView {
+            VStack(spacing: 2) {
+                ForEach(Array(pool.enumerated()), id: \.offset) { _, w in
+                    WordPickerRow(text: w, palette: palette) { onPick(w) }
+                }
+            }
+            .padding(6)
+        }
+        .frame(width: 240)
+        .frame(maxHeight: min(CGFloat(pool.count) * 38 + 12, 380))
+        .background(palette.surface)
+        #else
         NavigationStack {
             List {
                 ForEach(Array(pool.enumerated()), id: \.offset) { _, w in
@@ -344,6 +376,46 @@ struct WordPicker: View {
             }
         }
         .sheetDetents()
+        #endif
+    }
+}
+
+#if os(macOS)
+private struct WordPickerRow: View {
+    let text: String
+    let palette: Palette
+    var action: () -> Void
+    @State private var hovered = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(text)
+                .font(.title3)
+                .foregroundStyle(palette.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 7)
+                .background(hovered ? palette.sunken : .clear, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onHover { hovered = $0 }
+    }
+}
+#endif
+
+extension View {
+    func wordPicker(isPresented: Binding<Bool>, palette: Palette, pool: [String], onPick: @escaping (String?) -> Void) -> some View {
+        #if os(macOS)
+        popover(isPresented: isPresented, arrowEdge: .bottom) {
+            WordPicker(palette: palette, pool: pool, onPick: onPick)
+        }
+        #else
+        sheet(isPresented: isPresented) {
+            WordPicker(palette: palette, pool: pool, onPick: onPick)
+                .sheetDetents()
+        }
+        #endif
     }
 }
 
@@ -362,11 +434,12 @@ struct Ex2Ex: View {
         }
         ComboRows(vm: vm, title: title, sub: sub, pool: pool, n: blanks, onDone: onDone) { picks, expected, revealed in
             ForEach(Array(ex2Blocks().enumerated()), id: \.offset) { _, block in
+                QuestionCard {
                 Meaning(text: block.czech, palette: vm.palette, visible: true)
                 ForEach(Array(block.rows.enumerated()), id: \.offset) { _, row in
-                    FlowLayout(spacing: 4) {
+                    FlowLayout(spacing: 6) {
                         if let num = row.num {
-                            Text(num).foregroundStyle(.primary).padding(.trailing, 6)
+                            Text(num).fontWeight(.semibold).padding(.trailing, 4)
                         }
                         ForEach(Array(row.parts.enumerated()), id: \.offset) { _, part in
                             switch part {
@@ -377,6 +450,7 @@ struct Ex2Ex: View {
                             }
                         }
                     }
+                }
                 }
             }
         }
@@ -446,7 +520,9 @@ struct LettersEx: View {
             if rows.contains(where: { $0.strs("answers").contains { hasUmlaut($0) } }) {
                 Hint(text: vm.tr("hint_umlauts"))
             }
-            LettersRows(vm: vm, rows: rows, fields: $fields, revealed: revealed)
+            QuestionCard {
+                LettersRows(vm: vm, rows: rows, fields: $fields, revealed: revealed)
+            }
         }
     }
 }
@@ -460,11 +536,11 @@ private struct LettersRows: View {
     var body: some View {
         let p = vm.palette
         let pairs = build()
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             ForEach(pairs.indices, id: \.self) { ri in
                 let row = pairs[ri]
                 if let num = row.num { Text(num).foregroundStyle(.secondary) }
-                FlowLayout {
+                FlowLayout(spacing: 4) {
                     ForEach(row.parts.indices, id: \.self) { pi in
                         switch row.parts[pi] {
                         case .text(let s):
@@ -474,9 +550,10 @@ private struct LettersRows: View {
                                 value: Binding(get: { idx < fields.count ? fields[idx] : "" }, set: { if idx < fields.count { fields[idx] = $0 } }),
                                 placeholder: "",
                                 mark: revealed ? answerAccepts(normalizeAnswer(idx < fields.count ? fields[idx] : ""), ans) : nil,
-                                palette: p
+                                palette: p,
+                                compact: true
                             )
-                            .frame(width: 72)
+                            .frame(width: 60)
                         }
                     }
                 }
@@ -552,14 +629,28 @@ struct TableEx: View {
             else { fb = (vm.tr("feedback_retry"), "err") }
             revealed = true
         }, feedback: fb.0, kind: fb.1) {
-            ForEach(nouns.indices, id: \.self) { r in
-                Text(nouns[r]).font(.body.weight(.bold)).foregroundStyle(.primary)
-                ForEach(persons.indices, id: \.self) { c in
-                    let i = r * persons.count + c
-                    Text(persons[c]).font(.caption).foregroundStyle(.secondary)
-                    WordField(value: Binding(get: { i < fields.count ? fields[i] : "" }, set: { if i < fields.count { fields[i] = $0 } }), placeholder: "", palette: p)
+            // One card per noun; each person is a row with its form beside it.
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 12, alignment: .top)], spacing: 12) {
+                ForEach(nouns.indices, id: \.self) { r in
+                    QuestionCard(prompt: nouns[r]) {
+                        Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 8) {
+                            ForEach(persons.indices, id: \.self) { c in
+                                let i = r * persons.count + c
+                                let answer = r < answers.count && c < answers[r].count ? answers[r][c] : ""
+                                GridRow {
+                                    Text(persons[c]).foregroundStyle(p.ink2)
+                                    WordField(
+                                        value: Binding(get: { i < fields.count ? fields[i] : "" }, set: { if i < fields.count { fields[i] = $0 } }),
+                                        placeholder: "",
+                                        mark: revealed && i < fields.count ? normalizeAnswer(fields[i]) == normalizeAnswer(answer) : nil,
+                                        palette: p,
+                                        compact: true
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
-                Spacer().frame(height: 8)
             }
         }
     }
@@ -593,11 +684,10 @@ struct RevealEx: View {
         }, feedback: fb.0, kind: fb.1) {
             if let note = spec.strOrNull("note") { Hint(text: note) }
             ForEach(items.indices, id: \.self) { i in
-                Prompt(text: items[i].str("prompt"))
-                PillButton(label: vm.tr("show_sample")) { shown[i].toggle() }
-                    .padding(.vertical, 6)
-                if shown[i] { Meaning(text: items[i].str("solution"), palette: p, visible: true) }
-                Spacer().frame(height: 8)
+                QuestionCard(number: i + 1, prompt: items[i].str("prompt")) {
+                    PillButton(label: vm.tr("show_sample")) { shown[i].toggle() }
+                    if shown[i] { Meaning(text: items[i].str("solution"), palette: p, visible: true) }
+                }
             }
         }
     }
@@ -690,10 +780,7 @@ struct MathPracticeScreen: View {
                 feedback: feedback,
                 kind: kind
             ) {
-                Text(vm.tr("math_quiz_intro"))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .padding(.bottom, 4)
+                Hint(text: vm.tr("math_quiz_intro"))
                 ForEach(problems.indices, id: \.self) { i in
                     mathCard(problems[i], index: i)
                 }
@@ -739,13 +826,7 @@ struct MathPracticeScreen: View {
     private func mathCard(_ problem: J, index i: Int) -> some View {
         let spec = problem.str("answer")
         let p = vm.palette
-        let border: Color = {
-            guard let mark = marks[i] else { return p.surface2 }
-            return mark ? p.success : p.error
-        }()
-        VStack(alignment: .leading, spacing: 8) {
-            Text(problem.str("prompt"))
-                .frame(maxWidth: .infinity, alignment: .leading)
+        QuestionCard(number: i + 1, prompt: problem.str("prompt"), mark: marks[i]) {
             if mathIsDraw(spec) {
                 Text(vm.tr("math_draw_hint"))
                     .font(.caption)
@@ -769,28 +850,21 @@ struct MathPracticeScreen: View {
                     }
                     Button(vm.tr("math_clear")) { points[i] = [] }
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(ChipStyle(compact: true))
             } else {
-                TextField(vm.tr("math_answer_ph"), text: Binding(
-                    get: { text[i] ?? "" },
-                    set: { text[i] = $0 }
-                ))
-                .textFieldStyle(.roundedBorder)
+                WordField(
+                    value: Binding(get: { text[i] ?? "" }, set: { text[i] = $0 }),
+                    placeholder: vm.tr("math_answer_ph"),
+                    mark: marks[i]
+                )
                 #if os(iOS)
-                .textInputAutocapitalization(.never)
                 .keyboardType(.numbersAndPunctuation)
                 #endif
-                .autocorrectionDisabled()
             }
             if revealed {
-                Text(problem.str("hint"))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                Meaning(text: problem.str("hint"), palette: p, visible: true)
             }
         }
-        .padding(12)
-        .background(p.surface0, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(border, lineWidth: 1.5))
     }
 }
 
@@ -801,6 +875,7 @@ private struct MathGrid: View {
     let mark: Bool?
     let palette: Palette
     var onChange: ([(Int, Int)]) -> Void
+    @Environment(\.accent) private var accent
 
     private let cell: CGFloat = 28
     private let pad: CGFloat = 18
@@ -826,7 +901,7 @@ private struct MathGrid: View {
     var body: some View {
         Canvas { ctx, _ in
             let rect = CGRect(x: 0, y: 0, width: width, height: height)
-            ctx.fill(Path(rect), with: .color(palette.surface1))
+            ctx.fill(Path(rect), with: .color(palette.surface))
             var grid = Path()
             for i in 0...gx {
                 let x = pad + CGFloat(i) * cell
@@ -838,13 +913,13 @@ private struct MathGrid: View {
                 grid.move(to: CGPoint(x: pad, y: y))
                 grid.addLine(to: CGPoint(x: width - pad, y: y))
             }
-            ctx.stroke(grid, with: .color(palette.subtext.opacity(0.55)), lineWidth: 1)
+            ctx.stroke(grid, with: .color(palette.line), lineWidth: 1)
             var axes = Path()
             axes.move(to: CGPoint(x: pad, y: height - pad))
             axes.addLine(to: CGPoint(x: width - pad, y: height - pad))
             axes.move(to: CGPoint(x: pad, y: height - pad))
             axes.addLine(to: CGPoint(x: pad, y: pad))
-            ctx.stroke(axes, with: .color(palette.text), lineWidth: 1.6)
+            ctx.stroke(axes, with: .color(palette.ink), lineWidth: 1.6)
             if given.count >= 2 {
                 var seg = Path()
                 seg.move(to: screen(given[0].0, given[0].1))
@@ -853,14 +928,14 @@ private struct MathGrid: View {
                     seg.move(to: screen(given[0].0, given[0].1))
                     seg.addLine(to: screen(given[2].0, given[2].1))
                 }
-                ctx.stroke(seg, with: .color(palette.accent), lineWidth: 2)
+                ctx.stroke(seg, with: .color(accent.solid), lineWidth: 2)
             }
             let names = ["A", "B", "C", "D"]
             for (i, g) in given.enumerated() where i < names.count {
                 let pt = screen(g.0, g.1)
-                ctx.fill(Path(ellipseIn: CGRect(x: pt.x - 5.5, y: pt.y - 5.5, width: 11, height: 11)), with: .color(palette.accent))
+                ctx.fill(Path(ellipseIn: CGRect(x: pt.x - 5.5, y: pt.y - 5.5, width: 11, height: 11)), with: .color(accent.solid))
                 ctx.draw(
-                    Text(names[i]).font(.system(size: 13, weight: .semibold)).foregroundStyle(palette.text),
+                    Text(names[i]).font(.system(size: 13, weight: .semibold)).foregroundStyle(palette.ink),
                     at: CGPoint(x: pt.x + 8, y: pt.y - 8),
                     anchor: .bottomLeading
                 )
@@ -870,7 +945,7 @@ private struct MathGrid: View {
                 let pt = screen(u.0, u.1)
                 ctx.fill(Path(ellipseIn: CGRect(x: pt.x - 5.5, y: pt.y - 5.5, width: 11, height: 11)), with: .color(dot))
                 ctx.draw(
-                    Text("\(i + 1)").font(.system(size: 12, weight: .bold)).foregroundStyle(palette.text),
+                    Text("\(i + 1)").font(.system(size: 12, weight: .bold)).foregroundStyle(palette.ink),
                     at: CGPoint(x: pt.x + 8, y: pt.y - 8),
                     anchor: .bottomLeading
                 )
@@ -1239,43 +1314,23 @@ private struct VlsmEx: View {
         let tasks = vm.content.netTasks
         let answers = vm.content.netAnswers
         let p = vm.palette
-        ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
-                    ForEach(tasks.indices, id: \.self) { ti in
-                        let task = tasks[ti]
-                        let block = ti < answers.count ? answers[ti] : []
-                        let infeasible = block.isEmpty || block.allSatisfy { $0.int("pfx") <= 0 }
-                        GlassCard {
-                            Label {
-                                Text(task.str("prompt"))
-                            } icon: {
-                                Image(systemName: done[ti] ? "checkmark.circle.fill" : "\(ti + 1).circle")
-                                    .foregroundStyle(done[ti] ? p.success : .secondary)
-                            }
+        ExercisePage(title: vm.tr("net_ex_title")) {
+            ForEach(tasks.indices, id: \.self) { ti in
+                let task = tasks[ti]
+                let block = ti < answers.count ? answers[ti] : []
+                let infeasible = block.isEmpty || block.allSatisfy { $0.int("pfx") <= 0 }
+                // The prompts carry their own numbering.
+                QuestionCard(prompt: task.str("prompt"), mark: done[ti] ? true : nil) {
+                    if infeasible {
+                        Hint(text: vm.tr("net_infeasible"))
+                    } else {
+                        ForEach(block.indices, id: \.self) { si in
+                            subnetRow(ti, si)
                         }
-                        .padding(.vertical, 4)
-                        if infeasible {
-                            Hint(text: vm.tr("net_infeasible"))
-                        } else {
-                            ForEach(block.indices, id: \.self) { si in
-                                Text("Podsíť \(String(UnicodeScalar(65 + si)!))")
-                                    .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(.secondary)
-                                    .padding(.top, 6)
-                                PrefixMenu(value: Binding(
-                                    get: { rows[ti][si].pfx },
-                                    set: { rows[ti][si].pfx = $0 }
-                                ), palette: p)
-                                WordField(value: Binding(get: { rows[ti][si].net }, set: { rows[ti][si].net = $0 }), placeholder: "síť", palette: p)
-                                    .keyboardType(.decimalPad)
-                                WordField(value: Binding(get: { rows[ti][si].bc }, set: { rows[ti][si].bc = $0 }), placeholder: "broadcast", palette: p)
-                                    .keyboardType(.decimalPad)
-                                WordField(value: Binding(get: { rows[ti][si].lo }, set: { rows[ti][si].lo = $0 }), placeholder: "první uzel", palette: p)
-                                    .keyboardType(.decimalPad)
-                                WordField(value: Binding(get: { rows[ti][si].hi }, set: { rows[ti][si].hi = $0 }), placeholder: "poslední uzel", palette: p)
-                                    .keyboardType(.decimalPad)
-                            }
-                            PillButton(label: vm.tr("check")) {
+                    }
+                    HStack(spacing: 10) {
+                        if !infeasible {
+                            Button(vm.tr("check")) {
                                 let ok = block.indices.allSatisfy { si in
                                     let a = block[si]
                                     let field = rows[ti][si]
@@ -1293,7 +1348,7 @@ private struct VlsmEx: View {
                                     fb = (vm.tr("feedback_retry"), "err")
                                 }
                             }
-                            .padding(.vertical, 6)
+                            .buttonStyle(ChipStyle(selected: true))
                         }
                         PillButton(label: vm.tr("net_solution")) {
                             if !infeasible {
@@ -1309,14 +1364,12 @@ private struct VlsmEx: View {
                             fb = ("", "")
                             maybeFinish()
                         }
-                        if done[ti] { Meaning(text: task.str("solution"), palette: p, visible: true) }
-                        Divider().padding(.vertical, 8)
                     }
+                    .padding(.top, 4)
+                    if done[ti] { Meaning(text: task.str("solution"), palette: p, visible: true) }
                 }
-                .exerciseContent()
+            }
         }
-        .scrollDismissesKeyboard(.interactively)
-        .detailScreen(vm.tr("net_ex_title"))
         .glassBottomBar {
             if !fb.0.isEmpty {
                 FeedbackLine(text: fb.0, kind: fb.1, palette: p)
@@ -1327,6 +1380,40 @@ private struct VlsmEx: View {
             }
         }
         .animation(Motion.feedback, value: fb.0)
+    }
+
+    /// One subnet: its letter, the prefix and the four addresses. A single line
+    /// on the Mac, stacked on the iPhone.
+    @ViewBuilder
+    private func subnetRow(_ ti: Int, _ si: Int) -> some View {
+        let p = vm.palette
+        let name = Text("Podsíť \(String(UnicodeScalar(65 + si)!))").kicker().foregroundStyle(p.ink3)
+        let prefix = PrefixMenu(value: Binding(get: { rows[ti][si].pfx }, set: { rows[ti][si].pfx = $0 }), palette: p)
+        let fields = Group {
+            WordField(value: Binding(get: { rows[ti][si].net }, set: { rows[ti][si].net = $0 }), placeholder: "síť", palette: p)
+                .keyboardType(.decimalPad)
+            WordField(value: Binding(get: { rows[ti][si].bc }, set: { rows[ti][si].bc = $0 }), placeholder: "broadcast", palette: p)
+                .keyboardType(.decimalPad)
+            WordField(value: Binding(get: { rows[ti][si].lo }, set: { rows[ti][si].lo = $0 }), placeholder: "první uzel", palette: p)
+                .keyboardType(.decimalPad)
+            WordField(value: Binding(get: { rows[ti][si].hi }, set: { rows[ti][si].hi = $0 }), placeholder: "poslední uzel", palette: p)
+                .keyboardType(.decimalPad)
+        }
+        #if os(macOS)
+        VStack(alignment: .leading, spacing: 6) {
+            name
+            HStack(spacing: 8) {
+                prefix.frame(width: 132)
+                fields
+            }
+        }
+        #else
+        VStack(alignment: .leading, spacing: 8) {
+            name.padding(.top, 4)
+            prefix
+            fields
+        }
+        #endif
     }
 
     private func maybeFinish() {
@@ -1350,14 +1437,11 @@ private struct PrefixMenu: View {
                 Image(systemName: "chevron.up.chevron.down").font(.caption2).foregroundStyle(.secondary)
             }
         }
-        .buttonStyle(.bordered)
-        .tint(.secondary)
-        .sheet(isPresented: $open) {
-            WordPicker(palette: palette, pool: (8...30).map { "/\($0)" }) { word in
-                if let word { value = word }
-                open = false
-            }
-            .sheetDetents()
+        .buttonStyle(ChipStyle())
+        .frame(maxWidth: .infinity)
+        .wordPicker(isPresented: $open, palette: palette, pool: (8...30).map { "/\($0)" }) { word in
+            if let word { value = word }
+            open = false
         }
     }
 }
@@ -1375,72 +1459,50 @@ struct LitQuizScreen: View {
         if let book = vm.content.book(id) {
             let qs = book.arr("quiz")
             let p = vm.palette
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    if finished {
-                        GlassCard {
-                            VStack(alignment: .leading, spacing: 10) {
-                                Label(vm.tr("lit_finished"), systemImage: "rosette")
-                                    #if os(macOS)
-                                    .font(.largeTitle.weight(.bold))
-                                    #else
-                                    .font(.title2.weight(.bold))
-                                    #endif
-                                Text(vm.tr("lit_finished_text"))
-                                    #if os(macOS)
-                                    .font(.title3)
-                                    #endif
-                                    .foregroundStyle(.secondary)
-                                Text(vm.fmt("lit_score_fmt", score, qs.count))
-                                    #if os(macOS)
-                                    .font(.title2.weight(.semibold))
-                                    #else
-                                    .font(.headline)
-                                    #endif
-                            }
-                        }
-                    } else if idx < qs.count {
-                        let q = qs[idx]
-                        ProgressView(value: Double(idx + (answered ? 1 : 0)), total: Double(qs.count))
-                        HStack {
-                            Text(vm.fmt("lit_question_fmt", idx + 1, qs.count))
-                            Spacer()
-                            Text(vm.fmt("lit_score_fmt", score, qs.count))
-                        }
-                        #if os(macOS)
-                        .font(.body.weight(.semibold))
-                        #else
-                        .font(.footnote)
-                        #endif
-                        .foregroundStyle(.secondary)
+            ExercisePage(title: vm.tr(book.str("quizTitle")), sub: vm.tr(book.str("quizSub"))) {
+                if finished {
+                    QuestionCard {
+                        Label(vm.tr("lit_finished"), systemImage: "rosette")
+                            .display(onMac(34, 24), relativeTo: .title2)
+                        Text(vm.tr("lit_finished_text"))
+                            .foregroundStyle(p.ink2)
+                        Text(vm.fmt("lit_score_fmt", score, qs.count))
+                            .display(onMac(28, 22), relativeTo: .title2)
+                            .monospacedDigit()
+                    }
+                } else if idx < qs.count {
+                    let q = qs[idx]
+                    HStack(spacing: 12) {
+                        Text(vm.fmt("lit_question_fmt", idx + 1, qs.count))
+                        ProgressBar(value: Double(idx + (answered ? 1 : 0)) / Double(max(qs.count, 1)))
+                        Text(vm.fmt("lit_score_fmt", score, qs.count))
+                    }
+                    .font(onMac(Font.body, Font.footnote).weight(.semibold).monospacedDigit())
+                    .foregroundStyle(p.ink2)
+                    QuestionCard {
                         Text(q.str("prompt"))
-                            #if os(macOS)
-                            .font(.title.weight(.semibold))
-                            #else
-                            .font(.title3.weight(.semibold))
-                            #endif
-                            .padding(.vertical, 12)
+                            .display(onMac(28, 22), relativeTo: .title3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.bottom, 6)
                         #if os(macOS)
                         LazyVGrid(
                             columns: [
                                 GridItem(.flexible(), spacing: 12, alignment: .top),
                                 GridItem(.flexible(), spacing: 12, alignment: .top),
                             ],
-                            spacing: 8
+                            spacing: 10
                         ) {
                             bookQuizOptions(q)
                         }
                         #else
-                        bookQuizOptions(q)
+                        VStack(spacing: 8) { bookQuizOptions(q) }
                         #endif
                         if answered {
                             Meaning(text: q.str("expl"), palette: p, visible: true)
                         }
                     }
                 }
-                .exerciseContent()
             }
-            .detailScreen(vm.tr(book.str("quizTitle")), subtitle: vm.tr(book.str("quizSub")))
             .glassBottomBar {
                 if finished {
                     BottomAction(label: vm.tr("lit_again"), action: {
@@ -1638,7 +1700,7 @@ struct EngExScreen: View {
             let listening = lesson.strOrNull("listening")
             let pinListen = listening != nil && lesson.strOrNull("reading") == nil
             if pinListen, let listening {
-                scaffold(lesson) {
+                scaffold(lesson, header: false) {
                     exerciseBody(lesson, inlineListening: nil)
                 }
                 .safeAreaInset(edge: .top, spacing: 0) {
@@ -1647,7 +1709,7 @@ struct EngExScreen: View {
                         .padding(.top, 4)
                         .padding(.bottom, 8)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(.background)
+                        .background(vm.palette.paper)
                 }
             } else {
                 scaffold(lesson) {
@@ -1657,7 +1719,7 @@ struct EngExScreen: View {
         }
     }
 
-    private func scaffold<Content: View>(_ lesson: J, @ViewBuilder content: @escaping () -> Content) -> some View {
+    private func scaffold<Content: View>(_ lesson: J, header: Bool = true, @ViewBuilder content: @escaping () -> Content) -> some View {
         ExerciseScaffold(
             vm: vm,
             title: vm.tr(lesson.str("titleKey")),
@@ -1666,6 +1728,7 @@ struct EngExScreen: View {
             onAction: { check(lesson) },
             feedback: fb.0,
             kind: fb.1,
+            header: header,
             content: content
         )
     }
@@ -1675,7 +1738,12 @@ struct EngExScreen: View {
         let p = vm.palette
         if let reading = lesson.strOrNull("reading") {
             section("en_sec_read")
-            Text(reading).textSelection(.enabled)
+            QuestionCard {
+                Text(reading)
+                    .lineSpacing(5)
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             choiceBlock(lesson.arr("readQuiz"), picks: $readPicks)
         }
         if let inlineListening {
@@ -1688,30 +1756,34 @@ struct EngExScreen: View {
         if !gapRows.isEmpty {
             section("en_sec_gap")
             ForEach(gapRows.indices, id: \.self) { i in
-                Text("\(i + 1). \(gapRows[i].str("prompt"))")
-                    .font(.body.weight(.semibold))
-                WordField(
-                    value: Binding(get: { gaps[i] }, set: { gaps[i] = $0 }),
-                    placeholder: "",
-                    mark: revealed ? answerAccepts(normalizeAnswer(gaps[i]), gapRows[i].str("answers")) : nil,
-                    palette: p
-                )
-                if revealed, let hint = gapRows[i].strOrNull("meaning") {
-                    Meaning(text: hint, palette: p, visible: true)
+                QuestionCard(number: i + 1, prompt: gapRows[i].str("prompt")) {
+                    WordField(
+                        value: Binding(get: { gaps[i] }, set: { gaps[i] = $0 }),
+                        placeholder: vm.tr("your_answer"),
+                        mark: revealed ? answerAccepts(normalizeAnswer(gaps[i]), gapRows[i].str("answers")) : nil,
+                        palette: p
+                    )
+                    if revealed, let hint = gapRows[i].strOrNull("meaning") {
+                        Meaning(text: hint, palette: p, visible: true)
+                    }
                 }
             }
         }
         if let writing = lesson.obj("writing") {
             section("en_sec_write")
-            Text(writing.str("prompt"))
-            TextEditor(text: $essay)
-                .frame(minHeight: 140)
-                .padding(8)
-                .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12))
-            if showModel {
-                Text(vm.tr("en_model"))
-                    .font(.subheadline.weight(.semibold))
-                Text(writing.str("model")).textSelection(.enabled)
+            QuestionCard(prompt: writing.str("prompt")) {
+                TextEditor(text: $essay)
+                    .scrollContentBackground(.hidden)
+                    .frame(minHeight: 140)
+                    .padding(8)
+                    .background(p.paper, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(p.line, lineWidth: 1)
+                    }
+                if showModel {
+                    Text(vm.tr("en_model")).kicker().foregroundStyle(p.ink3)
+                    Text(writing.str("model")).textSelection(.enabled)
+                }
             }
         }
         let quiz = lesson.arr("quiz")
@@ -1762,8 +1834,8 @@ struct EngExScreen: View {
 
     private func section(_ key: String) -> some View {
         Text(vm.tr(key))
-            .font(.title3.weight(.bold))
-            .padding(.top, 8)
+            .display(onMac(26, 22), relativeTo: .title3)
+            .padding(.top, 10)
     }
 
     private func listenControls(_ text: String) -> some View {
@@ -1777,9 +1849,7 @@ struct EngExScreen: View {
                 played = true
                 speaker.toggle(text)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .frame(maxWidth: .infinity)
+            .buttonStyle(SolidButtonStyle())
             listenSlider(vm.tr("en_speed"), value: Double(speaker.rate), range: 0.6...1.5, caption: String(format: "%.1f×", speaker.rate)) { next in
                 speaker.rate = Float(next)
             }
@@ -1817,21 +1887,20 @@ struct EngExScreen: View {
         let p = vm.palette
         return ForEach(questions.indices, id: \.self) { i in
             let q = questions[i]
-            VStack(alignment: .leading, spacing: 6) {
-                Text("\(i + 1). \(q.str("prompt"))")
-                    .font(.body.weight(.semibold))
-                ForEach(Array(q.strs("options").enumerated()), id: \.offset) { o, opt in
-                    let selected = picks.wrappedValue[i] == o
-                    let mark: Bool? = revealed && selected ? picks.wrappedValue[i] == q.int("correct") : nil
-                    OptionChip(text: opt, selected: selected, mark: mark) {
-                        picks.wrappedValue[i] = o
+            QuestionCard(number: i + 1, prompt: q.str("prompt")) {
+                VStack(spacing: 8) {
+                    ForEach(Array(q.strs("options").enumerated()), id: \.offset) { o, opt in
+                        let selected = picks.wrappedValue[i] == o
+                        let mark: Bool? = revealed && selected ? picks.wrappedValue[i] == q.int("correct") : nil
+                        OptionChip(text: opt, selected: selected, mark: mark) {
+                            picks.wrappedValue[i] = o
+                        }
                     }
                 }
                 if revealed, let expl = q.strOrNull("expl") {
                     Meaning(text: expl, palette: p, visible: true)
                 }
             }
-            .padding(.bottom, 8)
         }
     }
 

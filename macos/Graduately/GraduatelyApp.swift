@@ -36,9 +36,9 @@ struct GraduatelyApp: App {
 
         Settings {
             SettingsScreen(vm: vm)
-                .formStyle(.grouped)
                 .frame(minWidth: 480, minHeight: 520)
-                .tint(vm.palette.tint)
+                .environment(\.palette, vm.palette)
+                .accented(vm.palette.accent)
                 .preferredColorScheme(vm.mode == .dark ? .dark : .light)
         }
     }
@@ -52,7 +52,8 @@ struct MacRoot: View {
 
     var body: some View {
         tabs
-            .tint(vm.palette.tint)
+            .environment(\.palette, vm.palette)
+            .accented(vm.palette.accent)
             .preferredColorScheme(vm.mode == .dark ? .dark : .light)
             .overlay(alignment: .top) {
                 if showsUpdateAccessory {
@@ -151,8 +152,7 @@ private struct UpdateBanner: View {
             Spacer()
             if vm.update.canInstall {
                 Button(vm.tr("update_install")) { vm.installUpdate() }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
+                    .buttonStyle(SolidButtonStyle(wide: false))
             }
         }
         .padding(.horizontal, 18)

@@ -65,8 +65,13 @@ val appIcon = tasks.register<Copy>("appIcon") {
     rename { "icon.png" }
 }
 
+val fonts = tasks.register<Copy>("fonts") {
+    from(repoRoot.resolve("assets/fonts")) { include("*.ttf") }
+    into(generated.map { it.dir("fonts") })
+}
+
 tasks.named("processResources") {
-    dependsOn(buildContent, buildInfo, appIcon)
+    dependsOn(buildContent, buildInfo, appIcon, fonts)
 }
 
 tasks.withType<Test>().configureEach {

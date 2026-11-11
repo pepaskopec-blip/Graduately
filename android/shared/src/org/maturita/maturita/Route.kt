@@ -1,5 +1,8 @@
 package org.maturita.maturita
 
+import org.maturita.maturita.data.Subject
+import org.maturita.maturita.data.subjectStyle
+
 sealed class Route(val page: String) {
     data object Welcome : Route("welcome")
     data object Subjects : Route("subjects")
@@ -721,3 +724,22 @@ fun routeFromPage(page: String): Route? = when (page) {
         }
     }
 }
+
+/** The subject a screen belongs to, read from the first screen below the subject grid. */
+val Route.subject: Subject?
+    get() = when (stack().getOrNull(1)) {
+        Route.DeHome -> "de"
+        Route.NetYears -> "wifi"
+        Route.HwYears -> "chip"
+        Route.CzechMap -> "cz"
+        Route.OnYears -> "people"
+        Route.EnYears -> "uk"
+        Route.MatYears -> "function"
+        Route.FyzYears -> "bolt"
+        Route.SciMap -> "flask"
+        Route.TgYears -> "ruler"
+        Route.PgYears -> "brush"
+        Route.CsYears -> "code"
+        Route.SwYears -> "apps"
+        else -> null
+    }?.let(::subjectStyle)

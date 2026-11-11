@@ -24,10 +24,6 @@ class ProgressStore(private val prefs: Prefs, content: Content) {
         edit.putBoolean("progress_ids_v2", true).apply()
     }
 
-    var themeId: ThemeId
-        get() = ThemeId.entries.getOrElse(prefs.getInt("theme", 0)) { ThemeId.Catppuccin }
-        set(v) { prefs.edit().putInt("theme", v.ordinal).apply() }
-
     var mode: ColorMode
         get() = if (prefs.getString("mode", "light") == "dark") ColorMode.Dark else ColorMode.Light
         set(v) { prefs.edit().putString("mode", if (v == ColorMode.Light) "light" else "dark").apply() }

@@ -4,6 +4,12 @@ import SwiftUI
 struct GraduatelyApp: App {
     @StateObject private var vm = AppModel()
 
+    init() {
+        #if os(iOS)
+        Display.styleNavigationBars()
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             NativeRoot(vm: vm)
@@ -29,7 +35,8 @@ struct NativeRoot: View {
                 tabs
             }
         }
-        .tint(vm.palette.tint)
+        .environment(\.palette, vm.palette)
+        .accented(vm.palette.accent)
         .preferredColorScheme(vm.mode == .dark ? .dark : .light)
         .onAppear { vm.checkUpdate(false) }
         #if os(macOS)
@@ -87,6 +94,7 @@ private struct UpdateAccessory: View {
             if vm.update.canInstall {
                 Button(vm.tr("update_install")) { vm.installUpdate() }
                     .buttonStyle(.borderedProminent)
+                    .tint(vm.palette.accent.solid)
                     #if os(macOS)
                     .controlSize(.large)
                     #endif

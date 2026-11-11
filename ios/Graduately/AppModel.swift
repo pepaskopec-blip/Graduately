@@ -6,7 +6,6 @@ final class AppModel: ObservableObject {
     let progress: ProgressStore
     let updater = Updater()
 
-    @Published var themeId: ThemeId
     @Published var mode: ColorMode
     @Published var lang: UiLang
     @Published var tab: AppTab = .practice
@@ -22,7 +21,6 @@ final class AppModel: ObservableObject {
         let content = Content.load()
         self.content = content
         progress = ProgressStore(content: content)
-        themeId = progress.themeId
         mode = progress.mode
         lang = progress.lang
         showChangelog = !content.changelog.isEmpty && !sameBuild(AppConfig.commit, progress.seenCommit)
@@ -31,16 +29,22 @@ final class AppModel: ObservableObject {
         if let page = UserDefaults.standard.string(forKey: "route"), let r = routeFromPage(page) {
             openFromSearch(r.page)
         }
-        if let theme = UserDefaults.standard.string(forKey: "theme"), let n = Int(theme), let id = ThemeId(rawValue: n) {
-            themeId = id
-        }
         if let m = UserDefaults.standard.string(forKey: "mode") {
             mode = m == "dark" ? .dark : .light
+        }
+        switch UserDefaults.standard.string(forKey: "tab") {
+        case "stats": tab = .progress
+        case "settings": tab = .settings
+        case "search": tab = .search
+        default: break
         }
         #endif
     }
 
-    var palette: Palette { themePalette(themeId, mode) }
+    var palette: Palette { themePalette(mode) }
+
+    /// The colour of the subject a screen belongs to, or the brand outside any subject.
+    func accent(for route: Route) -> Accent { route.subject?.accent(mode) ?? palette.accent }
 
     func tr(_ key: String?) -> String { content.tr(key, lang: lang) }
 
@@ -110,11 +114,6 @@ final class AppModel: ObservableObject {
         DispatchQueue.main.async { [weak self] in
             self?.practicePath = path
         }
-    }
-
-    func setTheme(_ id: ThemeId) {
-        withAnimation(Motion.settle) { themeId = id }
-        progress.themeId = id
     }
 
     func applyMode(_ m: ColorMode) {

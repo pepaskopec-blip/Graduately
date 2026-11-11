@@ -2,18 +2,6 @@
 import AppKit
 import SwiftUI
 
-extension NSColor {
-    static var tertiarySystemFill: NSColor {
-        NSColor.quaternaryLabelColor.withAlphaComponent(0.16)
-    }
-
-    static var secondarySystemGroupedBackground: NSColor {
-        .controlBackgroundColor
-    }
-
-    static var separator: NSColor { .separatorColor }
-}
-
 enum TextInputAutocapitalization {
     case never
 }

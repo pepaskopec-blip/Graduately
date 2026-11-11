@@ -8,6 +8,12 @@ import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontVariation
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import org.maturita.maturita.platform.Platform
 import org.maturita.maturita.platform.Prefs
 import org.maturita.maturita.platform.Speaker
@@ -20,6 +26,16 @@ class AndroidPlatform(private val app: Application) : Platform {
     override val welcomeKey = "welcome_body_android"
     override val prefs: Prefs = AndroidPrefs(app.getSharedPreferences("maturita", Context.MODE_PRIVATE))
     override val updater = Updater(app)
+    // The font files are variable; without the weight axis set they render
+    // at their default, Regular.
+    @OptIn(ExperimentalTextApi::class)
+    override val displayFont = FontFamily(
+        Font(R.font.playfair_display, FontWeight.Bold, variationSettings = FontVariation.Settings(FontVariation.weight(700))),
+        Font(
+            R.font.playfair_display_italic, FontWeight.Black, FontStyle.Italic,
+            variationSettings = FontVariation.Settings(FontVariation.weight(900)),
+        ),
+    )
 
     override fun speaker(): Speaker = AndroidSpeaker(app)
 }

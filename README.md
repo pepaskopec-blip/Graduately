@@ -57,7 +57,7 @@ spolehlivější instalátor výše, nebo stažení přímo z té stránky větv
 Na Linuxu a Windows se postup a nastavení ukládají do `progress/` vedle
 AppImage / ve složce aplikace; postup ze starší GTK verze se při prvním
 spuštění převezme. Na Androidu, iOS a macOS do úložiště aplikace (stejné
-statistiky, témata a jazyk).
+statistiky, režim a jazyk).
 
 Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#sestavení-ze-zdroje).
 
@@ -94,7 +94,7 @@ Intel Mac, jiná architektura nebo úpravy kódu → [sestavení ze zdroje](#ses
   4. ročník, 16 lekcí (hospodářství, svět a filozofie)
 - **Angličtina** — 4 ročníky, 32 lekcí podle osnov gymnázia (A2 až maturita):
   poslech, čtení, psaní, doplňování, kvízy a ročníkové testy
-- statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), 10 témat, tmavý/světlý režim, čeština/angličtina
+- statistiky, hledání (lupa nebo `Cmd/Ctrl+K`), tmavý/světlý režim, čeština/angličtina
 - ukončení: `Ctrl/Cmd+Q` nebo `Alt+F4`, zpět: `Esc`
 
 ### Použití
@@ -253,7 +253,7 @@ above, or download from that branch page:
 On Linux and Windows, progress and settings live in `progress/` next to the
 AppImage / in the app folder; progress from the older GTK build is taken over
 on first launch. On Android, iOS and macOS they stay in app storage (same
-stats, themes, language).
+stats, mode, language).
 
 Intel Mac, another architecture, or hacking on the code →
 [build from source](#build-from-source).
@@ -291,7 +291,7 @@ Intel Mac, another architecture, or hacking on the code →
   year 4, 16 lessons (the economy, the world and philosophy)
 - **English** — 4 years, 32 lessons from the gymnasium syllabus (A2 through
   the maturita): listening, reading, writing, gap-fill, quizzes and year tests
-- statistics, search (magnifier or `Cmd/Ctrl+K`), 10 palettes, dark/light mode, Czech/English
+- statistics, search (magnifier or `Cmd/Ctrl+K`), dark/light mode, Czech/English
 - quit with `Ctrl/Cmd+Q` or `Alt+F4`, back with `Esc`
 
 ### Usage

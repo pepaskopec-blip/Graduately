@@ -11,14 +11,17 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import org.maturita.maturita.data.Accent
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Palette
 import org.maturita.maturita.ui.BookListScreen
@@ -67,74 +70,69 @@ import org.maturita.maturita.ui.SlidesScreen
 import org.maturita.maturita.ui.StatsScreen
 import org.maturita.maturita.ui.UnitMapScreen
 import org.maturita.maturita.ui.VocabExercise
+import org.maturita.maturita.ui.LocalAccent
+import org.maturita.maturita.ui.LocalDisplayFont
+import org.maturita.maturita.ui.LocalPalette
 import org.maturita.maturita.ui.appTypography
 
-/** Material 3 colour roles from the shared theme palette. */
-private fun schemeFor(p: Palette, dark: Boolean) = if (dark) {
-    darkColorScheme(
-        primary = p.tint,
-        onPrimary = p.onTint,
-        primaryContainer = p.accent,
-        onPrimaryContainer = p.onAccent,
-        secondary = p.accent2,
-        onSecondary = p.onAccent,
-        secondaryContainer = p.surface1,
-        onSecondaryContainer = p.text,
+/**
+ * Material 3 colour roles from the paper-and-ink palette. `primary` is the
+ * accent's readable tint, because Material also uses it for text; solid fills
+ * take [Accent.solid] directly (see solidButtonColors).
+ */
+private fun schemeFor(p: Palette, accent: Accent, dark: Boolean): ColorScheme {
+    val base = if (dark) darkColorScheme() else lightColorScheme()
+    return base.copy(
+        primary = accent.text,
+        onPrimary = if (dark) p.paper else Color.White,
+        primaryContainer = accent.soft,
+        onPrimaryContainer = p.ink,
+        secondary = accent.text,
+        onSecondary = if (dark) p.paper else Color.White,
+        secondaryContainer = accent.soft,
+        onSecondaryContainer = p.ink,
         tertiary = p.warning,
-        onTertiary = p.crust,
-        background = p.base,
-        onBackground = p.text,
-        surface = p.base,
-        onSurface = p.text,
-        surfaceVariant = p.surface0,
-        onSurfaceVariant = p.subtext,
-        surfaceContainerLowest = p.crust,
-        surfaceContainerLow = p.mantle,
-        surfaceContainer = p.mantle,
-        surfaceContainerHigh = p.surface0,
-        surfaceContainerHighest = p.surface1,
-        outline = p.overlay,
-        outlineVariant = p.surface1,
+        onTertiary = if (dark) p.paper else Color.White,
+        background = p.paper,
+        onBackground = p.ink,
+        surface = p.paper,
+        onSurface = p.ink,
+        surfaceVariant = p.sunken,
+        onSurfaceVariant = p.ink2,
+        surfaceContainerLowest = p.surface,
+        surfaceContainerLow = p.surface,
+        surfaceContainer = p.surface,
+        surfaceContainerHigh = p.surface,
+        surfaceContainerHighest = p.sunken,
+        outline = p.ink3,
+        outlineVariant = p.line,
         error = p.error,
         onError = Color.White,
-        errorContainer = p.error.copy(alpha = 0.22f),
-        onErrorContainer = p.text,
+        errorContainer = p.errorSoft,
+        onErrorContainer = p.ink,
     )
-} else {
-    lightColorScheme(
-        primary = p.tint,
-        onPrimary = p.onTint,
-        primaryContainer = p.accent,
-        onPrimaryContainer = p.onAccent,
-        secondary = p.accent2,
-        onSecondary = Color.White,
-        secondaryContainer = p.surface1,
-        onSecondaryContainer = p.text,
-        tertiary = p.warning,
-        onTertiary = Color.White,
-        background = p.base,
-        onBackground = p.text,
-        surface = p.base,
-        onSurface = p.text,
-        surfaceVariant = p.surface1,
-        onSurfaceVariant = p.subtext,
-        surfaceContainerLowest = p.mantle,
-        surfaceContainerLow = p.mantle,
-        surfaceContainer = p.mantle,
-        surfaceContainerHigh = p.surface1,
-        surfaceContainerHighest = p.surface2,
-        outline = p.overlay,
-        outlineVariant = p.surface2,
-        error = p.error,
-        onError = Color.White,
-        errorContainer = p.error.copy(alpha = 0.14f),
-        onErrorContainer = p.text,
-    )
+}
+
+/** The app's paper, type and one accent: the brand's, or a subject's on its screens. */
+@Composable
+private fun Themed(vm: AppViewModel, accent: Accent, content: @Composable () -> Unit) {
+    val palette = vm.palette
+    CompositionLocalProvider(
+        LocalPalette provides palette,
+        LocalAccent provides accent,
+        LocalDisplayFont provides vm.platform.displayFont,
+    ) {
+        MaterialTheme(
+            colorScheme = schemeFor(palette, accent, vm.mode == ColorMode.Dark),
+            typography = appTypography(vm.platform.displayFont),
+            content = content,
+        )
+    }
 }
 
 @Composable
 fun MaturitaApp(vm: AppViewModel) {
-    MaterialTheme(colorScheme = schemeFor(vm.palette, vm.mode == ColorMode.Dark), typography = appTypography()) {
+    Themed(vm, vm.palette.accent) {
         Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             MaturitaAppBody(vm)
         }
@@ -173,6 +171,8 @@ private fun MaturitaAppBody(vm: AppViewModel) {
             },
             label = "screen",
         ) { route ->
+        // Every screen of a subject wears that subject's colour.
+        Themed(vm, route.subject?.accent(vm.mode) ?: vm.palette.accent) {
         when (val r = route) {
             Route.Welcome, Route.Subjects -> HomeScreen(vm)
             Route.Stats -> StatsScreen(vm)
@@ -791,6 +791,7 @@ private fun MaturitaAppBody(vm: AppViewModel) {
             is Route.Book -> BookScreen(vm, r.id)
             is Route.BookQuiz -> LitQuizScreen(vm, r.id)
             is Route.BookPlot -> PlotScreen(vm, r.id)
+        }
         }
         }
         AnimatedVisibility(

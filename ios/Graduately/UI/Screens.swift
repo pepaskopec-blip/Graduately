@@ -5,258 +5,203 @@ import AppKit
 
 struct PracticeHome: View {
     @ObservedObject var vm: AppModel
+    @Environment(\.palette) private var palette
 
     var body: some View {
-        #if os(macOS)
-        macHome.softAppear()
-        #else
-        iosHome.softAppear()
-        #endif
-    }
-
-    #if os(macOS)
-    private var macHome: some View {
         let sum = summarize(vm.content, vm.progress)
-        let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
         let open = vm.content.subjects.filter { $0.bool("open") }
         let soon = vm.content.subjects.filter { !$0.bool("open") }
-        return ScrollView {
-            VStack(alignment: .leading, spacing: 28) {
+        let parts = open.map { (subject: $0, sum: subjectSum(vm, $0)) }
+        ScrollView {
+            VStack(alignment: .leading, spacing: onMac(34, 24)) {
+                #if os(iOS)
+                Text("Graduately")
+                    .displayItalic(32)
+                    .foregroundStyle(palette.ink)
+                    .padding(.top, 4)
+                    .accessibilityAddTraits(.isHeader)
+                #endif
+                HomeHero(
+                    vm: vm,
+                    sum: sum,
+                    parts: parts.map { part in
+                        (accent: accent(part.subject), done: part.sum.doneEx, total: part.sum.totalEx)
+                    }
+                )
                 if vm.showChangelog {
                     ChangelogCard(vm: vm)
                 }
-                welcomeCard(sum: sum, pct: pct)
-                VStack(alignment: .leading, spacing: 14) {
-                    Text(vm.tr("subjects_title"))
-                        .font(.title2.weight(.semibold))
-                    LazyVGrid(
-                        columns: [GridItem(.adaptive(minimum: MacChrome.homeTileMin), spacing: 16, alignment: .top)],
-                        alignment: .leading,
-                        spacing: 16
-                    ) {
-                        ForEach(Array(open.enumerated()), id: \.offset) { _, s in
-                            subjectTile(s)
+                VStack(alignment: .leading, spacing: onMac(18, 12)) {
+                    SectionTitle(text: vm.tr("subjects_title"))
+                    LazyVGrid(columns: columns, alignment: .leading, spacing: onMac(16, 12)) {
+                        ForEach(Array(parts.enumerated()), id: \.offset) { _, part in
+                            subjectTile(part.subject, part.sum)
                         }
                     }
                 }
                 if !soon.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(vm.tr("subjects_soon"))
-                            .font(.headline)
-                            .foregroundStyle(.secondary)
+                        SectionTitle(text: vm.tr("subjects_soon"))
                         FlowLayout(spacing: 10) {
                             ForEach(Array(soon.enumerated()), id: \.offset) { _, s in
                                 Label(vm.tr(s.str("key")), systemImage: "lock.fill")
-                                    .font(.body)
-                                    .foregroundStyle(.secondary)
+                                    .font(onMac(Font.body, Font.subheadline))
+                                    .foregroundStyle(palette.ink2)
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 9)
-                                    .background(Color.primary.opacity(0.05), in: Capsule())
+                                    .background(palette.sunken, in: Capsule())
                             }
                         }
                     }
                 }
             }
-            .padding(MacChrome.pageInset)
+            .padding(Page.inset)
             .macPage()
         }
+        .paper()
         .navigationTitle("Graduately")
+        #if os(iOS)
+        .toolbar(.hidden, for: .navigationBar)
+        #else
+        .toolbar(removing: .title)
+        #endif
+        .softAppear()
     }
 
-    private func welcomeCard(sum: ProgressSum, pct: Double) -> some View {
-        GlassCard {
-            HStack(alignment: .center, spacing: 32) {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text(vm.tr("welcome_title"))
-                        .font(.system(size: 34, weight: .bold))
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text(vm.tr(Self.welcomeBodyKey))
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                ProgressRing(value: pct) {
-                    VStack(spacing: 2) {
-                        Text(vm.fmt("stats_pct_fmt", Int((pct * 100).rounded(.down))))
-                            .font(.system(size: 26, weight: .bold, design: .rounded))
-                            .monospacedDigit()
-                        Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                            .font(.subheadline.monospacedDigit())
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .frame(width: 132, height: 132)
-            }
-            .padding(.vertical, 6)
-        }
+    private var columns: [GridItem] {
+        #if os(macOS)
+        [GridItem(.adaptive(minimum: MacChrome.homeTileMin), spacing: 16, alignment: .top)]
+        #else
+        [GridItem(.adaptive(minimum: 150), spacing: 12, alignment: .top)]
+        #endif
+    }
+
+    private func accent(_ s: J) -> Accent {
+        subjectStyle(s.str("icon"))?.accent(vm.mode) ?? palette.accent
     }
 
     @ViewBuilder
-    private func subjectTile(_ s: J) -> some View {
-        let dest = s.strOrNull("target").flatMap(routeFromPage)
-        if let dest, dest != .subjects, dest != .welcome {
-            NavigationLink(value: dest) {
-                subjectTileBody(s)
-            }
-            .buttonStyle(PressScaleStyle())
+    private func subjectTile(_ s: J, _ part: ProgressSum) -> some View {
+        let style = subjectStyle(s.str("icon"))
+        let cover = SubjectCover(
+            title: vm.tr(s.str("key")),
+            symbol: style?.symbol ?? "book.fill",
+            mark: style?.mark(vm.lang) ?? "",
+            accent: accent(s),
+            done: part.doneEx,
+            total: part.totalEx
+        )
+        if let dest = s.strOrNull("target").flatMap(routeFromPage), dest != .subjects, dest != .welcome {
+            NavigationLink(value: dest) { cover }
+                .buttonStyle(PressScaleStyle())
         } else {
-            subjectTileBody(s)
+            cover
         }
     }
+}
 
-    private func subjectTileBody(_ s: J) -> some View {
-        let part = subjectSum(vm, s)
-        let progress = part.totalEx > 0 ? Double(part.doneEx) / Double(part.totalEx) : 0
-        return VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .center) {
-                SubjectIcon(icon: s.str("icon"), open: true, size: 40)
+/// The glow of the app icon with the headline in its typeface, the share of
+/// finished exercises, and every subject's part in it.
+private struct HomeHero: View {
+    @ObservedObject var vm: AppModel
+    let sum: ProgressSum
+    let parts: [(accent: Accent, done: Int, total: Int)]
+    @Environment(\.palette) private var palette
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: onMac(24, 20)) {
+            #if os(macOS)
+            HStack(alignment: .bottom, spacing: 32) {
+                headline
                 Spacer(minLength: 0)
-                Image(systemName: "chevron.right")
-                    .font(.body.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                figure
             }
-            Text(vm.tr(s.str("key")))
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(.primary)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
-            Spacer(minLength: 0)
-            ProgressBar(value: progress)
-            HStack {
-                Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
-                Spacer(minLength: 0)
-                Text(vm.fmt("stats_pct_fmt", Int((progress * 100).rounded(.down))))
-            }
-            .font(.subheadline.monospacedDigit())
-            .foregroundStyle(.secondary)
+            #else
+            headline
+            figure
+            #endif
+            SpectrumBar(parts: parts, height: onMac(12, 10), track: palette.onGlow.opacity(0.12))
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, alignment: .topLeading)
-        .frame(height: MacChrome.homeTileHeight)
-        .softSurface(cornerRadius: 22)
-        .contentShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-    }
-    #endif
-
-    #if os(iOS)
-    private var iosHome: some View {
-        let sum = summarize(vm.content, vm.progress)
-        let pct = sum.totalEx == 0 ? 0 : Double(sum.doneEx) / Double(sum.totalEx)
-        return List {
-            if vm.showChangelog {
-                Section {
-                    ChangelogCard(vm: vm)
-                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                }
-            }
-            Section {
-                GlassCard {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(vm.tr("welcome_title"))
-                            .font(.title.bold())
-                        Text(vm.tr(Self.welcomeBodyKey))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        ProgressView(value: pct)
-                            .animation(Motion.settle, value: pct)
-                        Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-            }
-
-            Section(vm.tr("subjects_title")) {
-                ForEach(Array(vm.content.subjects.filter { $0.bool("open") }.enumerated()), id: \.offset) { _, s in
-                    let dest = s.strOrNull("target").flatMap(routeFromPage)
-                    if let dest, dest != .subjects, dest != .welcome {
-                        NavigationLink(value: dest) {
-                            subjectLabel(s)
-                        }
-                    } else {
-                        subjectLabel(s)
-                    }
-                }
-            }
-
-            let soon = vm.content.subjects.filter { !$0.bool("open") }
-            if !soon.isEmpty {
-                Section(vm.tr("subjects_soon")) {
-                    ForEach(Array(soon.enumerated()), id: \.offset) { _, s in
-                        Label {
-                            Text(vm.tr(s.str("key")))
-                        } icon: {
-                            SubjectIcon(icon: s.str("icon"), open: false)
-                        }
-                        .foregroundStyle(.secondary)
-                    }
-                }
+        .foregroundStyle(palette.onGlow)
+        .padding(.horizontal, onMac(36, 22))
+        .padding(.vertical, onMac(30, 22))
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            GeometryReader { geo in
+                RadialGradient(
+                    colors: [palette.glowInner, palette.glowOuter],
+                    center: UnitPoint(x: 0.3, y: 0.3),
+                    startRadius: 0,
+                    endRadius: max(geo.size.width, geo.size.height) * 0.9
+                )
             }
         }
-        .navigationTitle("Graduately")
-        .navigationBarTitleDisplayMode(.large)
+        .clipShape(RoundedRectangle(cornerRadius: onMac(32, 28), style: .continuous))
     }
 
-    private func subjectLabel(_ s: J) -> some View {
-        let part = subjectSum(vm, s)
-        return Label {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(vm.tr(s.str("key")))
-                if part.totalEx > 0 {
-                    ProgressLine(done: part.doneEx, total: part.totalEx)
+    private var headline: some View {
+        VStack(alignment: .leading, spacing: onMac(14, 10)) {
+            // Playfair's own leading is too loose for a two-line headline.
+            VStack(alignment: .leading, spacing: onMac(-14, -10)) {
+                ForEach(vm.tr("welcome_title").split(separator: "\n").map(String.init), id: \.self) { line in
+                    Text(line)
                 }
             }
-            .padding(.vertical, 2)
-        } icon: {
-            SubjectIcon(icon: s.str("icon"), open: true)
+            .displayItalic(onMac(54, 40))
+            .accessibilityElement(children: .combine)
+            Text(vm.tr(onMac("welcome_body_macos", "welcome_body_ios")))
+                .font(onMac(Font.title3, Font.subheadline))
+                .opacity(0.72)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: 520, alignment: .leading)
         }
     }
-    #endif
 
-    private static var welcomeBodyKey: String {
-        #if os(macOS)
-        "welcome_body_macos"
-        #else
-        "welcome_body_ios"
-        #endif
+    private var figure: some View {
+        let pct = sum.totalEx == 0 ? 0 : Int((Double(sum.doneEx) / Double(sum.totalEx) * 100).rounded(.down))
+        return HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Text(vm.fmt("stats_pct_fmt", pct))
+                .display(onMac(64, 44), relativeTo: .largeTitle)
+                .monospacedDigit()
+            VStack(alignment: .leading, spacing: 2) {
+                Text(vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                    .font(onMac(Font.title3, Font.subheadline).weight(.semibold).monospacedDigit())
+                Text(vm.tr("stats_ex_label"))
+                    .kicker()
+                    .opacity(0.7)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 
 struct ChangelogCard: View {
     @ObservedObject var vm: AppModel
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
         let langKey = vm.lang == .en ? "en" : "cs"
         let blocks = Array(vm.content.changelog.prefix(3))
         GlassCard {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 12) {
                 HStack {
                     Label(vm.tr("changelog_title"), systemImage: "sparkles")
-                        .font(.headline)
+                        .kicker()
+                        .foregroundStyle(accent.text)
                     Spacer()
                     if let date = blocks.first?.strOrNull("date") {
                         Text(date)
                             .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(palette.ink3)
                     }
                 }
                 ForEach(Array(blocks.enumerated()), id: \.offset) { index, block in
                     ChangelogLines(index: index, lines: changelogLines(block, langKey))
                 }
                 Button(vm.tr("changelog_dismiss")) { vm.dismissChangelog() }
-                    #if os(macOS)
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    #else
-                    .buttonStyle(.glassProminent)
-                    .controlSize(.small)
-                    #endif
+                    .buttonStyle(SolidButtonStyle(wide: false))
+                    .padding(.top, 2)
             }
         }
     }
@@ -270,208 +215,93 @@ private func changelogLines(_ block: J, _ langKey: String) -> [String] {
 private struct ChangelogLines: View {
     let index: Int
     let lines: [String]
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            if index > 0 { Spacer().frame(height: 4) }
-            VStack(alignment: .leading, spacing: 4) { lineList }
-        }
-    }
-
-    @ViewBuilder
-    private var lineList: some View {
-        ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
-            Text("•  \(line)")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 6) {
+            if index > 0 { Spacer().frame(height: 2) }
+            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Circle().fill(accent.solid).frame(width: 5, height: 5)
+                        .alignmentGuide(.firstTextBaseline) { $0[.bottom] + 3 }
+                    Text(line)
+                        .font(onMac(Font.body, Font.subheadline))
+                        .foregroundStyle(palette.ink2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
         }
     }
 }
 
 struct SettingsScreen: View {
     @ObservedObject var vm: AppModel
+    @Environment(\.palette) private var palette
 
     var body: some View {
-        #if os(macOS)
-        macSettings
-        #else
-        settingsForm
-        #endif
-    }
-
-    #if os(iOS)
-    private var settingsForm: some View {
-        Form {
-            Section(vm.tr("mode")) {
-                Picker(vm.tr("mode"), selection: modeBinding) {
-                    Text(vm.tr("mode_dark")).tag(ColorMode.dark)
-                    Text(vm.tr("mode_light")).tag(ColorMode.light)
-                }
-                .pickerStyle(.segmented)
+        ScrollView {
+            VStack(alignment: .leading, spacing: onMac(20, 16)) {
                 #if os(macOS)
-                .controlSize(.large)
+                PageHeader(title: vm.tr("settings_title"))
+                    .padding(.bottom, 8)
                 #endif
-            }
-            Section(vm.tr("theme")) {
-                ForEach(Array(ThemeId.allCases), id: \.self) { id in
-                    Button {
-                        vm.setTheme(id)
-                    } label: {
-                        HStack(spacing: 12) {
-                            Circle().fill(themePalette(id, vm.mode).tint)
-                                .frame(width: {
-                                    #if os(macOS)
-                                    18
-                                    #else
-                                    14
-                                    #endif
-                                }(), height: {
-                                    #if os(macOS)
-                                    18
-                                    #else
-                                    14
-                                    #endif
-                                }())
-                            Text(themeNames[id.rawValue])
-                                #if os(macOS)
-                                .font(.title3)
-                                #endif
-                                .foregroundStyle(.primary)
-                            Spacer()
-                            if vm.themeId == id {
-                                Image(systemName: "checkmark").fontWeight(.semibold)
-                            }
-                        }
-                        #if os(macOS)
-                        .padding(.vertical, 4)
-                        #endif
-                    }
-                }
-            }
-            Section(vm.tr("language")) {
-                Picker(vm.tr("language"), selection: langBinding) {
-                    Text("Čeština").tag(UiLang.cs)
-                    Text("English").tag(UiLang.en)
-                }
-                .pickerStyle(.segmented)
-                #if os(macOS)
-                .controlSize(.large)
-                #endif
-            }
-            Section(vm.tr("updates")) {
-                Text(updateText)
-                    #if os(macOS)
-                    .font(.body)
-                    #endif
-                    .foregroundStyle(.secondary)
-                Button(vm.tr("update_check")) { vm.checkUpdate(true) }
-                    #if os(macOS)
-                    .controlSize(.large)
-                    #endif
-                if vm.update.canInstall {
-                    Button(vm.tr("update_install")) { vm.installUpdate() }
-                        #if os(macOS)
-                        .controlSize(.large)
-                        #endif
-                }
-                LabeledContent("Build", value: "\(AppConfig.versionName) · \(String(AppConfig.commit.prefix(7)))")
-            }
-        }
-        .navigationTitle(vm.tr("settings_title"))
-        .appFormStyle()
-    }
-    #endif
-
-    #if os(macOS)
-    private var macSettings: some View {
-        let themes = Array(ThemeId.allCases)
-        return VStack(alignment: .leading, spacing: 20) {
-            HStack(alignment: .top, spacing: 16) {
                 settingsCard(vm.tr("mode")) {
-                    Picker(vm.tr("mode"), selection: modeBinding) {
-                        Text(vm.tr("mode_dark")).tag(ColorMode.dark)
-                        Text(vm.tr("mode_light")).tag(ColorMode.light)
+                    HStack(spacing: 10) {
+                        SegChip(label: vm.tr("mode_light"), selected: vm.mode == .light) { vm.applyMode(.light) }
+                        SegChip(label: vm.tr("mode_dark"), selected: vm.mode == .dark) { vm.applyMode(.dark) }
                     }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .controlSize(.large)
                 }
                 settingsCard(vm.tr("language")) {
-                    Picker(vm.tr("language"), selection: langBinding) {
-                        Text("Čeština").tag(UiLang.cs)
-                        Text("English").tag(UiLang.en)
+                    HStack(spacing: 10) {
+                        SegChip(label: "Čeština", selected: vm.lang == .cs) { vm.applyLang(.cs) }
+                        SegChip(label: "English", selected: vm.lang == .en) { vm.applyLang(.en) }
                     }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .controlSize(.large)
                 }
                 settingsCard(vm.tr("updates")) {
                     Text(updateText)
-                        .font(.body)
-                        .foregroundStyle(.secondary)
+                        .font(onMac(Font.body, Font.subheadline))
+                        .foregroundStyle(palette.ink2)
                         .fixedSize(horizontal: false, vertical: true)
-                    Button(vm.tr("update_check")) { vm.checkUpdate(true) }
-                        .controlSize(.large)
-                    if vm.update.canInstall {
-                        Button(vm.tr("update_install")) { vm.installUpdate() }
-                            .controlSize(.large)
-                    }
-                    LabeledContent("Build", value: "\(AppConfig.versionName) · \(String(AppConfig.commit.prefix(7)))")
-                }
-            }
-            .layoutPriority(1)
-            Text(vm.tr("theme"))
-                .font(.title2.weight(.semibold))
-                .layoutPriority(1)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 12)], spacing: 12) {
-                ForEach(themes, id: \.self) { id in
-                    Button {
-                        vm.setTheme(id)
-                    } label: {
-                        HStack(spacing: 12) {
-                            Circle().fill(themePalette(id, vm.mode).tint)
-                                .frame(width: 18, height: 18)
-                            Text(themeNames[id.rawValue])
-                                .font(.title3)
-                                .foregroundStyle(.primary)
-                            Spacer(minLength: 0)
-                            if vm.themeId == id {
-                                Image(systemName: "checkmark").fontWeight(.semibold)
-                            }
+                    HStack(spacing: 10) {
+                        Button(vm.tr("update_check")) { vm.checkUpdate(true) }
+                            .buttonStyle(ChipStyle())
+                        if vm.update.canInstall {
+                            Button(vm.tr("update_install")) { vm.installUpdate() }
+                                .buttonStyle(ChipStyle(selected: true))
                         }
-                        .padding(16)
-                        .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
-                        .softSurface(cornerRadius: 16)
                     }
-                    .buttonStyle(PressScaleStyle())
                 }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Graduately")
+                        .displayItalic(onMac(28, 24), relativeTo: .title2)
+                        .foregroundStyle(palette.ink)
+                    Text("Build \(AppConfig.versionName) · \(String(AppConfig.commit.prefix(7)))")
+                        .font(.footnote.monospacedDigit())
+                        .foregroundStyle(palette.ink3)
+                }
+                .padding(.top, 12)
+                .padding(.horizontal, 4)
             }
+            .padding(Page.inset)
+            .frame(maxWidth: 620, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: onMac(Alignment.center, Alignment.leading))
         }
-        .padding(MacChrome.pageInset)
-        .frame(maxWidth: MacChrome.contentWidth, maxHeight: .infinity, alignment: .topLeading)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .navigationTitle(vm.tr("settings_title"))
+        .paper()
+        .pageTitle(vm.tr("settings_title"))
     }
 
     private func settingsCard<Content: View>(_ title: String, @ViewBuilder content: @escaping () -> Content) -> some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 12) {
-                Text(title).font(.headline)
+                Text(title)
+                    .kicker()
+                    .foregroundStyle(palette.ink3)
                 content()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-    }
-    #endif
-
-    private var modeBinding: Binding<ColorMode> {
-        Binding(get: { vm.mode }, set: { vm.applyMode($0) })
-    }
-
-    private var langBinding: Binding<UiLang> {
-        Binding(get: { vm.lang }, set: { vm.applyLang($0) })
     }
 
     private var updateText: String {
@@ -484,121 +314,53 @@ struct SettingsScreen: View {
 
 struct StatsScreen: View {
     @ObservedObject var vm: AppModel
+    @Environment(\.palette) private var palette
 
     var body: some View {
-        #if os(macOS)
-        macStats
-        #else
-        iosStats
-        #endif
-    }
-
-    #if os(iOS)
-    private var iosStats: some View {
         let sum = summarize(vm.content, vm.progress)
         let pct = sum.totalEx == 0 ? 0.0 : Double(sum.doneEx) / Double(sum.totalEx)
-        return List {
-            Section {
+        let rows = rankedSubjects()
+        ScrollView {
+            VStack(alignment: .leading, spacing: onMac(24, 18)) {
+                #if os(macOS)
+                PageHeader(title: vm.tr("stats_title"), subtitle: vm.tr("stats_sub"))
+                #endif
                 GlassCard {
-                    VStack(alignment: .leading, spacing: 14) {
-                        HStack(alignment: .top) {
-                            stat(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                            stat(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
-                            stat(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
+                    VStack(alignment: .leading, spacing: onMac(22, 16)) {
+                        HStack(alignment: .top, spacing: 12) {
+                            metric(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
+                            metric(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
+                            metric(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
                         }
-                        ProgressView(value: pct)
-                            .animation(Motion.settle, value: pct)
+                        SpectrumBar(
+                            parts: rows.filter { $0.subject.bool("open") }.map { row in
+                                (accent: accent(row.subject), done: row.part.doneEx, total: row.part.totalEx)
+                            },
+                            height: onMac(12, 10),
+                            track: palette.sunken
+                        )
                     }
                 }
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-            }
-            Section(vm.tr("stats_section")) {
-                ForEach(Array(vm.content.subjects.enumerated()), id: \.offset) { _, s in
-                    let open = s.bool("open")
-                    let part = subjectSum(vm, s)
-                    Label {
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                Text(vm.tr(s.str("key")))
-                                    #if os(macOS)
-                                    .font(.title3)
-                                    #endif
-                                Spacer()
-                                Text(open ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
-                                    #if os(macOS)
-                                    .font(.body)
-                                    #else
-                                    .font(.caption)
-                                    #endif
-                                    .foregroundStyle(.secondary)
-                                    .monospacedDigit()
-                            }
-                            if open && part.totalEx > 0 {
-                                ProgressView(value: Double(part.doneEx) / Double(part.totalEx))
-                                    .animation(Motion.settle, value: part.doneEx)
-                            }
+                SectionTitle(text: vm.tr("stats_section"))
+                VStack(spacing: 0) {
+                    ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
+                        statRow(row.subject, part: row.part)
+                        if index < rows.count - 1 {
+                            Rectangle().fill(palette.line).frame(height: 1)
+                                .padding(.leading, onMac(72, 62))
                         }
-                    } icon: {
-                        SubjectIcon(icon: s.str("icon"), open: open, size: {
-                            #if os(macOS)
-                            32
-                            #else
-                            26
-                            #endif
-                        }())
                     }
-                    .foregroundStyle(open ? .primary : .secondary)
                 }
+                .softSurface(cornerRadius: 20)
             }
+            .padding(Page.inset)
+            .macPage(980)
         }
-        .navigationTitle(vm.tr("stats_title"))
-        .appListStyle()
-    }
-    #endif
-
-    #if os(macOS)
-    private var macStats: some View {
-        let sum = summarize(vm.content, vm.progress)
-        let pct = sum.totalEx == 0 ? 0.0 : Double(sum.doneEx) / Double(sum.totalEx)
-        let ranked = rankedSubjects()
-        return VStack(alignment: .leading, spacing: 22) {
-            HStack(spacing: 16) {
-                statMetric(vm.tr("stats_ex_label"), vm.fmt("stats_ex_fmt", sum.doneEx, sum.totalEx))
-                statMetric(vm.tr("stats_pct_label"), vm.fmt("stats_pct_fmt", Int(pct * 100)))
-                statMetric(vm.tr("stats_units_label"), vm.fmt("stats_units_fmt", sum.doneUnits, sum.openUnits))
-            }
-            Text(vm.tr("stats_section"))
-                .font(.title2.weight(.semibold))
-            GeometryReader { geo in
-                let count = max(ranked.count, 1)
-                let minRow: CGFloat = 54
-                let floorH = minRow * CGFloat(ranked.count)
-                let rowH = min(76, max(minRow, geo.size.height / CGFloat(count)))
-                let table = VStack(spacing: 0) {
-                    ForEach(Array(ranked.enumerated()), id: \.offset) { index, item in
-                        statRow(item.subject, part: item.part)
-                            .frame(height: floorH > geo.size.height + 1 ? minRow : rowH)
-                        if index < ranked.count - 1 {
-                            Divider().padding(.leading, 68)
-                        }
-                    }
-                }
-                .softSurface(cornerRadius: 18)
-                if floorH > geo.size.height + 1 {
-                    ScrollView { table }
-                } else {
-                    table.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                }
-            }
-        }
-        .padding(MacChrome.pageInset)
-        .frame(maxWidth: MacChrome.contentWidth, maxHeight: .infinity, alignment: .topLeading)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .navigationTitle(vm.tr("stats_title"))
+        .paper()
+        .pageTitle(vm.tr("stats_title"))
     }
 
+    /// Open subjects by how far along they are, locked ones last.
     private func rankedSubjects() -> [(subject: J, part: ProgressSum)] {
         let rows = vm.content.subjects.map { subject in
             (subject: subject, part: subjectSum(vm, subject))
@@ -614,82 +376,50 @@ struct StatsScreen: View {
         part.totalEx == 0 ? 0 : Double(part.doneEx) / Double(part.totalEx)
     }
 
-    private func statMetric(_ label: String, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+    private func accent(_ s: J) -> Accent {
+        subjectStyle(s.str("icon"))?.accent(vm.mode) ?? palette.accent
+    }
+
+    private func metric(_ label: String, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
             Text(value)
-                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .display(onMac(44, 22), relativeTo: .title)
                 .monospacedDigit()
+                .foregroundStyle(palette.ink)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
             Text(label)
-                .font(.headline)
-                .foregroundStyle(.secondary)
+                .kicker()
+                .foregroundStyle(palette.ink3)
         }
-        .padding(22)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .softSurface(cornerRadius: 18)
+        .accessibilityElement(children: .combine)
     }
 
     private func statRow(_ s: J, part: ProgressSum) -> some View {
         let open = s.bool("open")
-        let progress = share(part)
-        return HStack(spacing: 16) {
-            SubjectIcon(icon: s.str("icon"), open: open, size: 28)
-                .frame(width: 36)
-            Text(vm.tr(s.str("key")))
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(open ? .primary : .secondary)
-                .lineLimit(1)
-                .frame(width: 240, alignment: .leading)
-            if open && part.totalEx > 0 {
-                statTrack(progress)
-                Text(vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx))
-                    .font(.title3.monospacedDigit())
-                    .foregroundStyle(.secondary)
-                    .frame(width: 88, alignment: .trailing)
-            } else {
-                statTrack(0)
-                Text(vm.tr("stats_locked"))
-                    .font(.body)
-                    .foregroundStyle(.tertiary)
-                    .frame(width: 88, alignment: .trailing)
+        let counted = open && part.totalEx > 0
+        return HStack(spacing: onMac(16, 12)) {
+            SubjectIcon(icon: s.str("icon"), open: open, size: onMac(40, 36), mode: vm.mode)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(vm.tr(s.str("key")))
+                        .font(onMac(Font.title3, Font.body).weight(.semibold))
+                        .foregroundStyle(open ? palette.ink : palette.ink3)
+                        .lineLimit(1)
+                    Spacer(minLength: 8)
+                    Text(counted ? vm.fmt("stats_ex_fmt", part.doneEx, part.totalEx) : vm.tr("stats_locked"))
+                        .font(onMac(Font.body, Font.footnote).monospacedDigit())
+                        .foregroundStyle(palette.ink2)
+                }
+                if counted {
+                    ProgressBar(value: share(part), height: 6, fill: accent(s).solid)
+                }
             }
         }
-        .padding(.horizontal, 18)
-    }
-
-    private func statTrack(_ progress: Double) -> some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule().fill(Color.primary.opacity(0.08))
-                Capsule()
-                    .fill(Color.accentColor)
-                    .frame(width: max(0, geo.size.width * progress))
-            }
-        }
-        .frame(height: 12)
-        .frame(maxWidth: .infinity)
-    }
-    #endif
-
-    private func stat(_ label: String, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(label)
-                #if os(macOS)
-                .font(.subheadline)
-                #else
-                .font(.caption)
-                #endif
-                .foregroundStyle(.secondary)
-            Text(value)
-                #if os(macOS)
-                .font(.title2.bold())
-                #else
-                .font(.title3.bold())
-                #endif
-                .monospacedDigit()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, onMac(18, 14))
+        .padding(.vertical, onMac(14, 12))
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -859,6 +589,7 @@ private func subjectSum(_ vm: AppModel, _ s: J) -> ProgressSum {
 struct SearchScreen: View {
     @ObservedObject var vm: AppModel
     @State private var query = ""
+    @Environment(\.palette) private var palette
     #if os(iOS)
     @FocusState private var fieldFocused: Bool
     #endif
@@ -873,6 +604,28 @@ struct SearchScreen: View {
         #endif
     }
 
+    /// Where a result leads, in its subject's colour; pages outside any subject keep the brand's.
+    private func hitRow(_ hit: Hit) -> some View {
+        let subject = routeFromPage(hit.target)?.subject
+        return HStack(spacing: 14) {
+            Badge(symbol: hit.locked ? "lock.fill" : subject?.symbol ?? "arrow.up.right", size: onMac(40, 36), filled: !hit.locked)
+                .environment(\.accent, subject?.accent(vm.mode) ?? palette.accent)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(hit.title)
+                    .font(onMac(Font.title3, Font.body).weight(.semibold))
+                    .foregroundStyle(hit.locked ? palette.ink3 : palette.ink)
+                    .multilineTextAlignment(.leading)
+                if !hit.sub.isEmpty {
+                    Text(hit.sub)
+                        .font(onMac(Font.body, Font.footnote))
+                        .foregroundStyle(palette.ink2)
+                        .multilineTextAlignment(.leading)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
     #if os(macOS)
     private func macSearch(_ hits: [Hit]) -> some View {
         ScrollView {
@@ -885,30 +638,21 @@ struct SearchScreen: View {
                         Button {
                             if !hit.locked { vm.openFromSearch(hit.target) }
                         } label: {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(hit.title)
-                                    .font(.title3.weight(.semibold))
-                                    .foregroundStyle(hit.locked ? .secondary : .primary)
-                                    .multilineTextAlignment(.leading)
-                                if !hit.sub.isEmpty {
-                                    Text(hit.sub)
-                                        .font(.body)
-                                        .foregroundStyle(.secondary)
-                                        .multilineTextAlignment(.leading)
-                                }
-                            }
-                            .padding(16)
-                            .frame(maxWidth: .infinity, minHeight: 84, alignment: .leading)
-                            .softSurface(cornerRadius: 16)
+                            hitRow(hit)
+                                .padding(14)
+                                .frame(maxWidth: .infinity, minHeight: 72, alignment: .leading)
+                                .softSurface(cornerRadius: 16)
+                                .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         }
                         .buttonStyle(PressScaleStyle())
                         .disabled(hit.locked)
                     }
                 }
-                .padding(MacChrome.pageInset)
+                .padding(Page.inset)
                 .macPage()
             }
         }
+        .paper()
         .navigationTitle(vm.tr("search"))
         .searchable(text: $vm.searchQuery, prompt: vm.tr("search_placeholder"))
         .onAppear { query = vm.searchQuery }
@@ -926,18 +670,18 @@ struct SearchScreen: View {
             } else {
                 ForEach(hits) { hit in
                     Button {
-                        #if os(iOS)
                         fieldFocused = false
-                        #endif
                         if !hit.locked { vm.openFromSearch(hit.target) }
                     } label: {
-                        ListRowLabel(title: hit.title, subtitle: hit.sub)
+                        hitRow(hit)
                     }
                     .disabled(hit.locked)
-                    .foregroundStyle(hit.locked ? .secondary : .primary)
+                    .listRowBackground(palette.surface)
+                    .listRowSeparatorTint(palette.line)
                 }
             }
         }
+        .paper()
         .navigationTitle(vm.tr("search"))
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaBar(edge: .top) {
@@ -955,15 +699,12 @@ struct SearchScreen: View {
         .onChange(of: vm.searchQuery) { _, q in
             if q != query { query = q }
         }
-        .appListStyle()
     }
-    #endif
 
-    #if os(iOS)
     private var searchField: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(palette.ink3)
             TextField(vm.tr("search_placeholder"), text: $query)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
@@ -975,15 +716,15 @@ struct SearchScreen: View {
                     fieldFocused = true
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(palette.ink3)
                 }
                 .buttonStyle(PressScaleStyle())
                 .accessibilityLabel("Clear")
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
-        .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .softSurface(cornerRadius: 14)
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
     }
@@ -1241,77 +982,53 @@ struct RoadmapScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        roadmapPath
-        #else
-        roadmapList
-        #endif
-    }
-
-    #if os(macOS)
-    private var roadmapPath: some View {
-        let current = vm.content.german.firstIndex { u in
-            u.bool("unlocked") && u.strs("names").indices.contains { !vm.progress.germanDone(u.int("id"), $0 + 1) }
+        let units = vm.content.german
+        let finished = units.map { u -> Bool in
+            let names = u.strs("names")
+            return u.bool("unlocked") && !names.isEmpty && names.indices.allSatisfy { vm.progress.germanDone(u.int("id"), $0 + 1) }
         }
-        let lit = CGFloat(max((current ?? vm.content.german.count) - 1, 0))
-        return PathMap(
-            nodes: vm.content.german.enumerated().map { i, u in
+        let current = units.indices.first { units[$0].bool("unlocked") && !finished[$0] }
+        #if os(macOS)
+        PathMap(
+            nodes: units.enumerated().map { i, u in
                 let unlocked = u.bool("unlocked")
-                let names = u.strs("names")
-                let done = unlocked && !names.isEmpty && names.indices.allSatisfy {
-                    vm.progress.germanDone(u.int("id"), $0 + 1)
-                }
                 return MapNode(
                     id: "unit-\(i)",
                     label: u.str("title"),
                     locked: !unlocked,
-                    done: done,
+                    done: finished[i],
                     current: i == current,
-                    finish: i == vm.content.german.count - 1,
+                    finish: i == units.count - 1,
                     destination: unlocked ? .unitMap(u.int("id")) : nil
                 )
             },
             palette: vm.palette,
-            litUntil: lit,
+            litUntil: CGFloat(max((current ?? units.count) - 1, 0)),
             nodeSize: MacChrome.pathNode,
             mx: 100,
             my: 140,
             spac: 196,
             gap: 280,
-            wave: 18
+            wave: 18,
+            heading: (vm.tr("roadmap_title"), vm.tr("roadmap_sub"), finished.filter { $0 }.count, units.count)
         )
-        .padding(28)
-        .navigationTitle(vm.tr("roadmap_title"))
-        .navigationSubtitle(vm.tr("roadmap_sub"))
-    }
-    #endif
-
-    #if os(iOS)
-    private var roadmapList: some View {
+        .pageTitle(vm.tr("roadmap_title"))
+        #else
         List {
-            ForEach(Array(vm.content.german.enumerated()), id: \.offset) { _, u in
-                let unlocked = u.bool("unlocked")
-                let names = u.strs("names")
-                let done = unlocked && !names.isEmpty && names.indices.allSatisfy { vm.progress.germanDone(u.int("id"), $0 + 1) }
-                if unlocked {
-                    NavigationLink(value: Route.unitMap(u.int("id"))) {
-                        Label {
-                            Text(u.str("title"))
-                        } icon: {
-                            Image(systemName: done ? "checkmark.circle.fill" : "circle")
-                        }
-                    }
+            ForEach(Array(units.enumerated()), id: \.offset) { i, u in
+                let row = StepRow(index: i + 1, title: u.str("title"), done: finished[i], current: i == current, locked: !u.bool("unlocked"))
+                if u.bool("unlocked") {
+                    NavigationLink(value: Route.unitMap(u.int("id"))) { row }
                 } else {
-                    Label(u.str("title"), systemImage: "lock.fill")
-                        .foregroundStyle(.secondary)
+                    row
                 }
             }
+            .stepRows()
         }
         .navigationTitle(vm.tr("roadmap_title"))
         .navigationSubtitle(vm.tr("roadmap_sub"))
-        .appListStyle()
+        #endif
     }
-    #endif
 }
 
 struct UnitMapScreen: View {
@@ -1320,124 +1037,128 @@ struct UnitMapScreen: View {
 
     var body: some View {
         if let u = vm.content.germanUnit(unitId) {
+            let names = u.strs("names")
+            let next = names.indices.first { !vm.progress.germanDone(unitId, $0 + 1) }
             #if os(macOS)
-            unitPath(u)
-            #else
-            unitList(u)
-            #endif
-        }
-    }
-
-    #if os(macOS)
-    private func unitPath(_ u: J) -> some View {
-        let names = u.strs("names")
-        let next = names.indices.first { !vm.progress.germanDone(unitId, $0 + 1) }
-        let lit = CGFloat(next ?? names.count)
-        let branch: (index: Int, node: MapNode)? = u.has("branch")
-            ? (
-                1,
-                MapNode(
-                    id: "vocab-\(unitId)",
-                    label: vm.tr("Vokabeltraining"),
-                    locked: false,
-                    done: vm.progress.vocabDone(unitId),
-                    current: false,
-                    destination: .vocab(unitId),
-                    symbol: "character.book.closed.fill"
+            let branch: (index: Int, node: MapNode)? = u.has("branch")
+                ? (
+                    1,
+                    MapNode(
+                        id: "vocab-\(unitId)",
+                        label: vm.tr("Vokabeltraining"),
+                        locked: false,
+                        done: vm.progress.vocabDone(unitId),
+                        current: false,
+                        destination: .vocab(unitId),
+                        symbol: "character.book.closed.fill"
+                    )
+                )
+                : nil
+            PathMap(
+                nodes: names.enumerated().map { i, name in
+                    MapNode(
+                        id: "e\(i + 1)",
+                        label: name,
+                        locked: false,
+                        done: vm.progress.germanDone(unitId, i + 1),
+                        current: i == next,
+                        destination: .germanEx(unitId, i + 1)
+                    )
+                },
+                palette: vm.palette,
+                litUntil: CGFloat(next ?? names.count),
+                nodeSize: MacChrome.pathNode,
+                mx: 100,
+                my: 136,
+                spac: 190,
+                gap: 268,
+                wave: 16,
+                branch: branch,
+                heading: (
+                    u.str("title"),
+                    vm.tr(u.str("sub")),
+                    names.indices.filter { vm.progress.germanDone(unitId, $0 + 1) }.count,
+                    names.count
                 )
             )
-            : nil
-        return PathMap(
-            nodes: names.enumerated().map { i, name in
-                MapNode(
-                    id: "e\(i + 1)",
-                    label: name,
-                    locked: false,
-                    done: vm.progress.germanDone(unitId, i + 1),
-                    current: i == next,
-                    destination: .germanEx(unitId, i + 1)
-                )
-            },
-            palette: vm.palette,
-            litUntil: lit,
-            nodeSize: MacChrome.pathNode,
-            mx: 100,
-            my: 136,
-            spac: 190,
-            gap: 268,
-            wave: 16,
-            branch: branch
-        )
-        .padding(28)
-        .navigationTitle(u.str("title"))
-        .navigationSubtitle(vm.tr(u.str("sub")))
-    }
-    #endif
-
-    #if os(iOS)
-    private func unitList(_ u: J) -> some View {
-        let names = u.strs("names")
-        return List {
-            ForEach(names.indices, id: \.self) { i in
-                NavigationLink(value: Route.germanEx(unitId, i + 1)) {
-                    Label {
-                        Text(names[i])
-                    } icon: {
-                        Image(systemName: vm.progress.germanDone(unitId, i + 1) ? "checkmark.circle.fill" : "circle")
+            .pageTitle(u.str("title"))
+            #else
+            List {
+                Section {
+                    ForEach(names.indices, id: \.self) { i in
+                        NavigationLink(value: Route.germanEx(unitId, i + 1)) {
+                            StepRow(index: i + 1, title: names[i], done: vm.progress.germanDone(unitId, i + 1), current: i == next)
+                        }
+                    }
+                    .stepRows()
+                }
+                if u.has("branch") {
+                    Section {
+                        NavigationLink(value: Route.vocab(unitId)) {
+                            StepRow(index: nil, title: vm.tr("Vokabeltraining"), done: vm.progress.vocabDone(unitId), symbol: "character.book.closed.fill")
+                        }
+                        .stepRows()
                     }
                 }
             }
-            if u.has("branch") {
-                NavigationLink(value: Route.vocab(unitId)) {
-                    Label(vm.tr("Vokabeltraining"), systemImage: "character.book.closed")
-                }
-            }
+            .navigationTitle(u.str("title"))
+            .navigationSubtitle(vm.tr(u.str("sub")))
+            #endif
         }
-        .navigationTitle(u.str("title"))
-        .navigationSubtitle(vm.tr(u.str("sub")))
-        .appListStyle()
     }
-    #endif
+}
+
+/// One card of a subject's index: a year, or a branch such as grammar.
+struct IndexEntry {
+    let title: String
+    let subtitle: String
+    let route: Route
+    var badge: String? = nil
+    var symbol: String? = nil
+}
+
+/// A subject's index. The Mac sets the title in the page; the iPhone keeps it in the bar.
+struct IndexScreen: View {
+    @ObservedObject var vm: AppModel
+    let title: String
+    let subtitle: String
+    let entries: [IndexEntry]
+
+    var body: some View {
+        IndexGrid(count: entries.count, title: title, subtitle: subtitle) { i in
+            let entry = entries[i]
+            NavigationLink(value: entry.route) {
+                IndexCard(
+                    title: entry.title,
+                    subtitle: entry.subtitle,
+                    badge: entry.badge,
+                    symbol: entry.symbol,
+                    progress: routeProgress(vm, entry.route)
+                )
+            }
+            .buttonStyle(PressScaleStyle())
+        }
+        .pageTitle(title, subtitle: subtitle)
+    }
+
+    /// Four years that follow one naming pattern, numbered 1 to 4.
+    static func years(_ vm: AppModel, _ rows: [(title: String, subtitle: String, route: Route)]) -> [IndexEntry] {
+        rows.enumerated().map { i, row in
+            IndexEntry(title: vm.tr(row.title), subtitle: vm.tr(row.subtitle), route: row.route, badge: "\(i + 1)")
+        }
+    }
 }
 
 struct NetYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("net_years_title"), subtitle: vm.tr("net_years_sub"), entries: IndexScreen.years(vm, [
             ("net_year1", "net_sub", .netMap),
             ("net_year2", "net2_sub", .net2Map),
             ("net_year3", "net3_sub", .net3Map),
             ("net_year4", "net4_sub", .net4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("net_years_title"))
-        .navigationSubtitle(vm.tr("net_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.netMap) {
-                ListRowLabel(title: vm.tr("net_year1"), subtitle: vm.tr("net_sub"), progress: routeProgress(vm, Route.netMap))
-            }
-            NavigationLink(value: Route.net2Map) {
-                ListRowLabel(title: vm.tr("net_year2"), subtitle: vm.tr("net2_sub"), progress: routeProgress(vm, Route.net2Map))
-            }
-            NavigationLink(value: Route.net3Map) {
-                ListRowLabel(title: vm.tr("net_year3"), subtitle: vm.tr("net3_sub"), progress: routeProgress(vm, Route.net3Map))
-            }
-            NavigationLink(value: Route.net4Map) {
-                ListRowLabel(title: vm.tr("net_year4"), subtitle: vm.tr("net4_sub"), progress: routeProgress(vm, Route.net4Map))
-            }
-        }
-        .navigationTitle(vm.tr("net_years_title"))
-        .navigationSubtitle(vm.tr("net_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -1445,40 +1166,12 @@ struct HwYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Technické vybavení"), subtitle: vm.tr("hw_years_sub"), entries: IndexScreen.years(vm, [
             ("hw_year1", "hw_sub", .hwMap),
             ("hw_year2", "hw2_sub", .hw2Map),
             ("hw_year3", "hw3_sub", .hw3Map),
             ("hw_year4", "hw4_sub", .hw4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Technické vybavení"))
-        .navigationSubtitle(vm.tr("hw_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.hwMap) {
-                ListRowLabel(title: vm.tr("hw_year1"), subtitle: vm.tr("hw_sub"), progress: routeProgress(vm, Route.hwMap))
-            }
-            NavigationLink(value: Route.hw2Map) {
-                ListRowLabel(title: vm.tr("hw_year2"), subtitle: vm.tr("hw2_sub"), progress: routeProgress(vm, Route.hw2Map))
-            }
-            NavigationLink(value: Route.hw3Map) {
-                ListRowLabel(title: vm.tr("hw_year3"), subtitle: vm.tr("hw3_sub"), progress: routeProgress(vm, Route.hw3Map))
-            }
-            NavigationLink(value: Route.hw4Map) {
-                ListRowLabel(title: vm.tr("hw_year4"), subtitle: vm.tr("hw4_sub"), progress: routeProgress(vm, Route.hw4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Technické vybavení"))
-        .navigationSubtitle(vm.tr("hw_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -1486,36 +1179,14 @@ struct DeHomeScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let rows: [(String, String, String, Route)] = [
-            ("U", "de_book_title", "de_book_sub", .roadmap),
-            ("1", "de_year1", "de_y1_sub", .deMap(1)),
-            ("2", "de_year2", "de_y2_sub", .deMap(2)),
-            ("3", "de_year3", "de_y3_sub", .deMap(3)),
-            ("4", "de_year4", "de_y4_sub", .deMap(4)),
-        ]
-        MacFillGrid(count: rows.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: rows[i].3) {
-                MacLinkCard(title: vm.tr(rows[i].1), subtitle: vm.tr(rows[i].2), badge: rows[i].0, progress: routeProgress(vm, rows[i].3))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Deutsch"))
-        .navigationSubtitle(vm.tr("de_home_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.roadmap) {
-                ListRowLabel(title: vm.tr("de_book_title"), subtitle: vm.tr("de_book_sub"), progress: routeProgress(vm, Route.roadmap))
-            }
-            ForEach(1...4, id: \.self) { year in
-                NavigationLink(value: Route.deMap(year)) {
-                    ListRowLabel(title: vm.tr("de_year\(year)"), subtitle: vm.tr("de_y\(year)_sub"), progress: routeProgress(vm, Route.deMap(year)))
-                }
-            }
-        }
-        .navigationTitle(vm.tr("Deutsch"))
-        .navigationSubtitle(vm.tr("de_home_sub"))
-        #endif
+        IndexScreen(
+            vm: vm,
+            title: vm.tr("Deutsch"),
+            subtitle: vm.tr("de_home_sub"),
+            entries: [
+                IndexEntry(title: vm.tr("de_book_title"), subtitle: vm.tr("de_book_sub"), route: .roadmap, symbol: "text.book.closed.fill"),
+            ] + IndexScreen.years(vm, (1...4).map { ("de_year\($0)", "de_y\($0)_sub", Route.deMap($0)) })
+        )
     }
 }
 
@@ -1523,33 +1194,12 @@ struct EnYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
-            ("en_year1", "en_y1_sub", .enMap(1)),
-            ("en_year2", "en_y2_sub", .enMap(2)),
-            ("en_year3", "en_y3_sub", .enMap(3)),
-            ("en_year4", "en_y4_sub", .enMap(4)),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("English"))
-        .navigationSubtitle(vm.tr("en_years_sub"))
-        #else
-        List {
-            ForEach(1...4, id: \.self) { year in
-                NavigationLink(value: Route.enMap(year)) {
-                    ListRowLabel(title: vm.tr("en_year\(year)"), subtitle: vm.tr("en_y\(year)_sub"), progress: routeProgress(vm, Route.enMap(year)))
-                }
-            }
-        }
-        .navigationTitle(vm.tr("English"))
-        .navigationSubtitle(vm.tr("en_years_sub"))
-        .appListStyle()
-        #endif
+        IndexScreen(
+            vm: vm,
+            title: vm.tr("English"),
+            subtitle: vm.tr("en_years_sub"),
+            entries: IndexScreen.years(vm, (1...4).map { ("en_year\($0)", "en_y\($0)_sub", Route.enMap($0)) })
+        )
     }
 }
 
@@ -1557,40 +1207,12 @@ struct OnYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Občanská nauka"), subtitle: vm.tr("on_years_sub"), entries: IndexScreen.years(vm, [
             ("on_year1", "on_sub", .onMap),
             ("on_year2", "on2_sub", .on2Map),
             ("on_year3", "on3_sub", .on3Map),
             ("on_year4", "on4_sub", .on4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Občanská nauka"))
-        .navigationSubtitle(vm.tr("on_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.onMap) {
-                ListRowLabel(title: vm.tr("on_year1"), subtitle: vm.tr("on_sub"), progress: routeProgress(vm, Route.onMap))
-            }
-            NavigationLink(value: Route.on2Map) {
-                ListRowLabel(title: vm.tr("on_year2"), subtitle: vm.tr("on2_sub"), progress: routeProgress(vm, Route.on2Map))
-            }
-            NavigationLink(value: Route.on3Map) {
-                ListRowLabel(title: vm.tr("on_year3"), subtitle: vm.tr("on3_sub"), progress: routeProgress(vm, Route.on3Map))
-            }
-            NavigationLink(value: Route.on4Map) {
-                ListRowLabel(title: vm.tr("on_year4"), subtitle: vm.tr("on4_sub"), progress: routeProgress(vm, Route.on4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Občanská nauka"))
-        .navigationSubtitle(vm.tr("on_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -1608,17 +1230,9 @@ struct LessonListScreen: View {
     let rows: [LessonRow]
 
     var body: some View {
-        #if os(macOS)
-        lessonPath
-        #else
-        lessonList
-        #endif
-    }
-
-    #if os(macOS)
-    private var lessonPath: some View {
         let next = rows.firstIndex { !$0.done }
-        return PathMap(
+        #if os(macOS)
+        PathMap(
             nodes: rows.enumerated().map { i, row in
                 MapNode(
                     id: row.id,
@@ -1636,30 +1250,29 @@ struct LessonListScreen: View {
             my: 134,
             spac: 186,
             gap: 272,
-            wave: 16
+            wave: 16,
+            heading: (title, subtitle, rows.filter(\.done).count, rows.count)
         )
-        .padding(28)
-        .navigationTitle(title)
-        .navigationSubtitle(subtitle)
-    }
-    #endif
-
-    #if os(iOS)
-    private var lessonList: some View {
-        List(rows) { row in
-            NavigationLink(value: row.destination) {
-                Label {
-                    Text(row.title)
-                } icon: {
-                    Image(systemName: row.done ? "checkmark.circle.fill" : "circle")
+        .pageTitle(title)
+        #else
+        List {
+            Section {
+                ForEach(Array(rows.enumerated()), id: \.element.id) { i, row in
+                    NavigationLink(value: row.destination) {
+                        StepRow(index: i + 1, title: row.title, done: row.done, current: i == next)
+                    }
                 }
+                .stepRows()
+            } header: {
+                ProgressLine(done: rows.filter(\.done).count, total: rows.count)
+                    .textCase(nil)
+                    .padding(.bottom, 6)
             }
         }
         .navigationTitle(title)
         .navigationSubtitle(subtitle)
-        .appListStyle()
+        #endif
     }
-    #endif
 }
 
 struct SlidesScreen: View {
@@ -1669,6 +1282,8 @@ struct SlidesScreen: View {
     let slides: [J]
     let next: Route
     @State private var idx = 0
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
         Group {
@@ -1692,15 +1307,16 @@ struct SlidesScreen: View {
         #endif
         .detailScreen(title, subtitle: subtitle)
         .glassBottomBar {
-            VStack(spacing: 10) {
+            VStack(spacing: 12) {
                 HStack(spacing: 6) {
                     ForEach(slides.indices, id: \.self) { i in
                         Capsule()
-                            .fill(i == idx ? Color.accentColor : Color(.tertiarySystemFill))
-                            .frame(width: i == idx ? 18 : 6, height: 6)
+                            .fill(i == idx ? accent.solid : palette.ink3.opacity(0.35))
+                            .frame(width: i == idx ? 22 : 6, height: 6)
                     }
                 }
                 .animation(Motion.settle, value: idx)
+                .accessibilityHidden(true)
                 HStack(spacing: 10) {
                     if idx > 0 {
                         Button {
@@ -1709,12 +1325,8 @@ struct SlidesScreen: View {
                             Image(systemName: "chevron.left")
                                 .frame(minWidth: 24)
                         }
-                        #if os(macOS)
-                        .buttonStyle(.bordered)
-                        #else
-                        .buttonStyle(.glass)
-                        #endif
-                        .controlSize(.large)
+                        .buttonStyle(SolidButtonStyle(wide: false, quiet: true))
+                        .accessibilityLabel(vm.tr("back"))
                     }
                     if idx < slides.count - 1 {
                         PrimaryButton(label: vm.tr("net_slide_next")) {
@@ -1739,100 +1351,72 @@ struct SlidesScreen: View {
     private func slidePage(_ slide: J) -> some View {
         ScrollView {
             SlideBody(slide: slide)
-                .padding(.horizontal, slideInset)
-                .padding(.top, 22)
+                .padding(.horizontal, Page.inset)
+                .padding(.top, onMac(30, 20))
                 .padding(.bottom, 28)
-                .frame(maxWidth: 860)
+                .frame(maxWidth: 820)
                 .frame(maxWidth: .infinity, alignment: .top)
         }
-    }
-
-    private var slideInset: CGFloat {
-        #if os(macOS)
-        MacChrome.pageInset
-        #else
-        16
-        #endif
     }
 }
 
 /// One explanation slide: label, title, tip and numbered points.
 struct SlideBody: View {
     let slide: J
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
-        slideStack(slide)
-    }
-
-    private func slideStack(_ slide: J) -> some View {
-        VStack(alignment: .leading, spacing: 18) {
-            Text(slide.str("kicker"))
-                #if os(macOS)
-                .font(.subheadline.weight(.semibold))
-                #else
-                .font(.caption.weight(.semibold))
-                #endif
-                .foregroundStyle(Color.accentColor)
-            Text(slide.str("title"))
-                #if os(macOS)
-                .font(.title.bold())
-                #else
-                .font(.title2.bold())
-                #endif
-                .fixedSize(horizontal: false, vertical: true)
+        VStack(alignment: .leading, spacing: onMac(20, 16)) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(slide.str("kicker"))
+                    .kicker()
+                    .foregroundStyle(accent.text)
+                Text(slide.str("title"))
+                    .display(onMac(36, 28), relativeTo: .title)
+                    .foregroundStyle(palette.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if let tip = slide.strOrNull("tip") {
                 HStack(alignment: .top, spacing: 12) {
                     Image(systemName: "lightbulb.fill")
-                        .foregroundStyle(Color.accentColor)
+                        .foregroundStyle(accent.text)
                         .padding(.top, 2)
                     Text(tip)
-                        #if os(macOS)
-                        .font(.body)
-                        #else
-                        .font(.subheadline)
-                        #endif
+                        .font(onMac(Font.title3, Font.subheadline))
+                        .foregroundStyle(palette.ink)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(16)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .background(accent.soft, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
             slideLines(slide.strs("lines"))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
+    /// Points read as a numbered list on the page, set apart by rules rather than boxes.
     private func slideLines(_ lines: [String]) -> some View {
         let points = studyPoints(lines)
-        return VStack(alignment: .leading, spacing: 10) {
-            ForEach(Array(points.enumerated()), id: \.offset) { _, point in
-                HStack(alignment: .top, spacing: 14) {
+        return VStack(alignment: .leading, spacing: 0) {
+            ForEach(Array(points.enumerated()), id: \.offset) { index, point in
+                HStack(alignment: .firstTextBaseline, spacing: 16) {
                     Text(point.0)
-                        .font(.callout.weight(.bold))
-                        .foregroundStyle(Color.accentColor)
-                        .frame(minWidth: 28, minHeight: 28)
-                        .background(Color.accentColor.opacity(0.14), in: Circle())
+                        .display(onMac(24, 20), relativeTo: .title3)
+                        .foregroundStyle(accent.text)
+                        .frame(minWidth: onMac(34, 28), alignment: .leading)
                     Text(point.1)
-                        #if os(macOS)
-                        .font(.title3)
-                        #else
-                        .font(.body)
-                        #endif
+                        .font(onMac(Font.title3, Font.body))
+                        .foregroundStyle(palette.ink)
+                        .lineSpacing(3)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 3)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background {
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(Color.primary.opacity(0.045))
-                }
-                .overlay {
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
+                .padding(.vertical, onMac(16, 14))
+                if index < points.count - 1 {
+                    Rectangle().fill(palette.line).frame(height: 1)
                 }
             }
         }
@@ -1884,40 +1468,12 @@ struct LitYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Literatura"), subtitle: vm.tr("lit_years_sub"), entries: IndexScreen.years(vm, [
             ("lit_year1", "lit_sub", .litMap),
             ("lit_year2", "lit2_sub", .lit2Map),
             ("lit_year3", "lit3_sub", .lit3Map),
             ("lit_year4", "lit4_sub", .lit4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Literatura"))
-        .navigationSubtitle(vm.tr("lit_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.litMap) {
-                ListRowLabel(title: vm.tr("lit_year1"), subtitle: vm.tr("lit_sub"), progress: routeProgress(vm, Route.litMap))
-            }
-            NavigationLink(value: Route.lit2Map) {
-                ListRowLabel(title: vm.tr("lit_year2"), subtitle: vm.tr("lit2_sub"), progress: routeProgress(vm, Route.lit2Map))
-            }
-            NavigationLink(value: Route.lit3Map) {
-                ListRowLabel(title: vm.tr("lit_year3"), subtitle: vm.tr("lit3_sub"), progress: routeProgress(vm, Route.lit3Map))
-            }
-            NavigationLink(value: Route.lit4Map) {
-                ListRowLabel(title: vm.tr("lit_year4"), subtitle: vm.tr("lit4_sub"), progress: routeProgress(vm, Route.lit4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Literatura"))
-        .navigationSubtitle(vm.tr("lit_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -1925,44 +1481,19 @@ struct MatYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route, String)] = [
-            ("mat0_year", "mat0_sub", .mat0Map, "ZŠ"),
-            ("mat_year1", "mat_sub", .matMap, "1."),
-            ("mat_year2", "mat2_sub", .mat2Map, "2."),
-            ("mat_year3", "mat3_sub", .mat3Map, "3."),
-            ("mat_year4", "mat4_sub", .mat4Map, "4."),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: years[i].3, progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Matematika"))
-        .navigationSubtitle(vm.tr("mat_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.mat0Map) {
-                ListRowLabel(title: vm.tr("mat0_year"), subtitle: vm.tr("mat0_sub"), progress: routeProgress(vm, Route.mat0Map))
-            }
-            NavigationLink(value: Route.matMap) {
-                ListRowLabel(title: vm.tr("mat_year1"), subtitle: vm.tr("mat_sub"), progress: routeProgress(vm, Route.matMap))
-            }
-            NavigationLink(value: Route.mat2Map) {
-                ListRowLabel(title: vm.tr("mat_year2"), subtitle: vm.tr("mat2_sub"), progress: routeProgress(vm, Route.mat2Map))
-            }
-            NavigationLink(value: Route.mat3Map) {
-                ListRowLabel(title: vm.tr("mat_year3"), subtitle: vm.tr("mat3_sub"), progress: routeProgress(vm, Route.mat3Map))
-            }
-            NavigationLink(value: Route.mat4Map) {
-                ListRowLabel(title: vm.tr("mat_year4"), subtitle: vm.tr("mat4_sub"), progress: routeProgress(vm, Route.mat4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Matematika"))
-        .navigationSubtitle(vm.tr("mat_years_sub"))
-        .appListStyle()
-        #endif
+        IndexScreen(
+            vm: vm,
+            title: vm.tr("Matematika"),
+            subtitle: vm.tr("mat_years_sub"),
+            entries: [
+                IndexEntry(title: vm.tr("mat0_year"), subtitle: vm.tr("mat0_sub"), route: .mat0Map, badge: "ZŠ"),
+            ] + IndexScreen.years(vm, [
+                ("mat_year1", "mat_sub", .matMap),
+                ("mat_year2", "mat2_sub", .mat2Map),
+                ("mat_year3", "mat3_sub", .mat3Map),
+                ("mat_year4", "mat4_sub", .mat4Map),
+            ])
+        )
     }
 }
 
@@ -1970,40 +1501,12 @@ struct CsYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Programování"), subtitle: vm.tr("cs_years_sub"), entries: IndexScreen.years(vm, [
             ("cs_year1", "cs_sub", .csMap),
             ("cs_year2", "cs2_sub", .cs2Map),
             ("cs_year3", "cs3_sub", .cs3Map),
             ("cs_year4", "cs4_sub", .cs4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Programování"))
-        .navigationSubtitle(vm.tr("cs_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.csMap) {
-                ListRowLabel(title: vm.tr("cs_year1"), subtitle: vm.tr("cs_sub"), progress: routeProgress(vm, Route.csMap))
-            }
-            NavigationLink(value: Route.cs2Map) {
-                ListRowLabel(title: vm.tr("cs_year2"), subtitle: vm.tr("cs2_sub"), progress: routeProgress(vm, Route.cs2Map))
-            }
-            NavigationLink(value: Route.cs3Map) {
-                ListRowLabel(title: vm.tr("cs_year3"), subtitle: vm.tr("cs3_sub"), progress: routeProgress(vm, Route.cs3Map))
-            }
-            NavigationLink(value: Route.cs4Map) {
-                ListRowLabel(title: vm.tr("cs_year4"), subtitle: vm.tr("cs4_sub"), progress: routeProgress(vm, Route.cs4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Programování"))
-        .navigationSubtitle(vm.tr("cs_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -2011,40 +1514,12 @@ struct SwYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Programové vybavení"), subtitle: vm.tr("sw_years_sub"), entries: IndexScreen.years(vm, [
             ("sw_year1", "sw_sub", .swMap),
             ("sw_year2", "sw2_sub", .sw2Map),
             ("sw_year3", "sw3_sub", .sw3Map),
             ("sw_year4", "sw4_sub", .sw4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Programové vybavení"))
-        .navigationSubtitle(vm.tr("sw_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.swMap) {
-                ListRowLabel(title: vm.tr("sw_year1"), subtitle: vm.tr("sw_sub"), progress: routeProgress(vm, Route.swMap))
-            }
-            NavigationLink(value: Route.sw2Map) {
-                ListRowLabel(title: vm.tr("sw_year2"), subtitle: vm.tr("sw2_sub"), progress: routeProgress(vm, Route.sw2Map))
-            }
-            NavigationLink(value: Route.sw3Map) {
-                ListRowLabel(title: vm.tr("sw_year3"), subtitle: vm.tr("sw3_sub"), progress: routeProgress(vm, Route.sw3Map))
-            }
-            NavigationLink(value: Route.sw4Map) {
-                ListRowLabel(title: vm.tr("sw_year4"), subtitle: vm.tr("sw4_sub"), progress: routeProgress(vm, Route.sw4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Programové vybavení"))
-        .navigationSubtitle(vm.tr("sw_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -2052,40 +1527,12 @@ struct PgYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Prezentační grafika"), subtitle: vm.tr("pg_years_sub"), entries: IndexScreen.years(vm, [
             ("pg_year1", "pg_sub", .pgMap),
             ("pg_year2", "pg2_sub", .pg2Map),
             ("pg_year3", "pg3_sub", .pg3Map),
             ("pg_year4", "pg4_sub", .pg4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Prezentační grafika"))
-        .navigationSubtitle(vm.tr("pg_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.pgMap) {
-                ListRowLabel(title: vm.tr("pg_year1"), subtitle: vm.tr("pg_sub"), progress: routeProgress(vm, Route.pgMap))
-            }
-            NavigationLink(value: Route.pg2Map) {
-                ListRowLabel(title: vm.tr("pg_year2"), subtitle: vm.tr("pg2_sub"), progress: routeProgress(vm, Route.pg2Map))
-            }
-            NavigationLink(value: Route.pg3Map) {
-                ListRowLabel(title: vm.tr("pg_year3"), subtitle: vm.tr("pg3_sub"), progress: routeProgress(vm, Route.pg3Map))
-            }
-            NavigationLink(value: Route.pg4Map) {
-                ListRowLabel(title: vm.tr("pg_year4"), subtitle: vm.tr("pg4_sub"), progress: routeProgress(vm, Route.pg4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Prezentační grafika"))
-        .navigationSubtitle(vm.tr("pg_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -2093,40 +1540,12 @@ struct TgYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Technická grafika"), subtitle: vm.tr("tg_years_sub"), entries: IndexScreen.years(vm, [
             ("tg_year1", "tg_sub", .tgMap),
             ("tg_year2", "tg2_sub", .tg2Map),
             ("tg_year3", "tg3_sub", .tg3Map),
             ("tg_year4", "tg4_sub", .tg4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Technická grafika"))
-        .navigationSubtitle(vm.tr("tg_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.tgMap) {
-                ListRowLabel(title: vm.tr("tg_year1"), subtitle: vm.tr("tg_sub"), progress: routeProgress(vm, Route.tgMap))
-            }
-            NavigationLink(value: Route.tg2Map) {
-                ListRowLabel(title: vm.tr("tg_year2"), subtitle: vm.tr("tg2_sub"), progress: routeProgress(vm, Route.tg2Map))
-            }
-            NavigationLink(value: Route.tg3Map) {
-                ListRowLabel(title: vm.tr("tg_year3"), subtitle: vm.tr("tg3_sub"), progress: routeProgress(vm, Route.tg3Map))
-            }
-            NavigationLink(value: Route.tg4Map) {
-                ListRowLabel(title: vm.tr("tg_year4"), subtitle: vm.tr("tg4_sub"), progress: routeProgress(vm, Route.tg4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Technická grafika"))
-        .navigationSubtitle(vm.tr("tg_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -2134,40 +1553,12 @@ struct FyzYearsScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        let years: [(String, String, Route)] = [
+        IndexScreen(vm: vm, title: vm.tr("Fyzika"), subtitle: vm.tr("fyz_years_sub"), entries: IndexScreen.years(vm, [
             ("fyz_year1", "fyz_sub", .fyzMap),
             ("fyz_year2", "fyz2_sub", .fyz2Map),
             ("fyz_year3", "fyz3_sub", .fyz3Map),
             ("fyz_year4", "fyz4_sub", .fyz4Map),
-        ]
-        MacFillGrid(count: years.count, minWidth: 260, minHeight: 200) { i in
-            NavigationLink(value: years[i].2) {
-                MacLinkCard(title: vm.tr(years[i].0), subtitle: vm.tr(years[i].1), badge: "\(i + 1).", progress: routeProgress(vm, years[i].2))
-            }
-            .buttonStyle(PressScaleStyle())
-        }
-        .navigationTitle(vm.tr("Fyzika"))
-        .navigationSubtitle(vm.tr("fyz_years_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.fyzMap) {
-                ListRowLabel(title: vm.tr("fyz_year1"), subtitle: vm.tr("fyz_sub"), progress: routeProgress(vm, Route.fyzMap))
-            }
-            NavigationLink(value: Route.fyz2Map) {
-                ListRowLabel(title: vm.tr("fyz_year2"), subtitle: vm.tr("fyz2_sub"), progress: routeProgress(vm, Route.fyz2Map))
-            }
-            NavigationLink(value: Route.fyz3Map) {
-                ListRowLabel(title: vm.tr("fyz_year3"), subtitle: vm.tr("fyz3_sub"), progress: routeProgress(vm, Route.fyz3Map))
-            }
-            NavigationLink(value: Route.fyz4Map) {
-                ListRowLabel(title: vm.tr("fyz_year4"), subtitle: vm.tr("fyz4_sub"), progress: routeProgress(vm, Route.fyz4Map))
-            }
-        }
-        .navigationTitle(vm.tr("Fyzika"))
-        .navigationSubtitle(vm.tr("fyz_years_sub"))
-        .appListStyle()
-        #endif
+        ]))
     }
 }
 
@@ -2175,43 +1566,10 @@ struct SciMapScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        MacFillGrid(count: 2, minWidth: 260, minHeight: 200) { i in
-            if i == 0 {
-                NavigationLink(value: Route.chemMap) {
-                    MacLinkCard(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), systemImage: "flask.fill", progress: routeProgress(vm, .chemMap))
-                }
-                .buttonStyle(PressScaleStyle())
-            } else {
-                NavigationLink(value: Route.bioMap) {
-                    MacLinkCard(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), systemImage: "leaf.fill", progress: routeProgress(vm, .bioMap))
-                }
-                .buttonStyle(PressScaleStyle())
-            }
-        }
-        .navigationTitle(vm.tr("Základy přírodních věd"))
-        .navigationSubtitle(vm.tr("sci_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.chemMap) {
-                Label {
-                    ListRowLabel(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), progress: routeProgress(vm, .chemMap))
-                } icon: {
-                    Image(systemName: "flask.fill")
-                }
-            }
-            NavigationLink(value: Route.bioMap) {
-                Label {
-                    ListRowLabel(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), progress: routeProgress(vm, .bioMap))
-                } icon: {
-                    Image(systemName: "leaf.fill")
-                }
-            }
-        }
-        .navigationTitle(vm.tr("Základy přírodních věd"))
-        .navigationSubtitle(vm.tr("sci_sub"))
-        .appListStyle()
-        #endif
+        IndexScreen(vm: vm, title: vm.tr("Základy přírodních věd"), subtitle: vm.tr("sci_sub"), entries: [
+            IndexEntry(title: vm.tr("Chemie"), subtitle: vm.tr("chem_sub"), route: .chemMap, symbol: "flask.fill"),
+            IndexEntry(title: vm.tr("Biologie"), subtitle: vm.tr("bio_sub"), route: .bioMap, symbol: "leaf.fill"),
+        ])
     }
 }
 
@@ -2219,183 +1577,126 @@ struct CzechMapScreen: View {
     @ObservedObject var vm: AppModel
 
     var body: some View {
-        #if os(macOS)
-        MacFillGrid(count: 3, minWidth: 260, minHeight: 200) { i in
-            switch i {
-            case 1:
-                NavigationLink(value: Route.mluvnice) {
-                    MacLinkCard(title: vm.tr("Mluvnice"), subtitle: vm.tr("mluv_sub"), systemImage: "textformat", progress: routeProgress(vm, .mluvnice))
-                }
-                .buttonStyle(PressScaleStyle())
-            case 2:
-                NavigationLink(value: Route.readingList) {
-                    MacLinkCard(title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"), systemImage: "books.vertical")
-                }
-                .buttonStyle(PressScaleStyle())
-            default:
-                NavigationLink(value: Route.litYears) {
-                    MacLinkCard(title: vm.tr("Literatura"), subtitle: vm.tr("lit_years_sub"), systemImage: "book.closed", progress: routeProgress(vm, .litYears))
-                }
-                .buttonStyle(PressScaleStyle())
-            }
-        }
-        .navigationTitle(vm.tr("Český jazyk a literatura"))
-        .navigationSubtitle(vm.tr("czech_sub"))
-        #else
-        List {
-            NavigationLink(value: Route.litYears) {
-                Label {
-                    ListRowLabel(title: vm.tr("Literatura"), subtitle: vm.tr("lit_years_sub"), progress: routeProgress(vm, .litYears))
-                } icon: {
-                    Image(systemName: "book.closed")
-                }
-            }
-            NavigationLink(value: Route.mluvnice) {
-                Label {
-                    ListRowLabel(title: vm.tr("Mluvnice"), subtitle: vm.tr("mluv_sub"), progress: routeProgress(vm, .mluvnice))
-                } icon: {
-                    Image(systemName: "textformat")
-                }
-            }
-            NavigationLink(value: Route.readingList) {
-                Label {
-                    ListRowLabel(title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"))
-                } icon: {
-                    Image(systemName: "books.vertical")
-                }
-            }
-        }
-        .navigationTitle(vm.tr("Český jazyk a literatura"))
-        .navigationSubtitle(vm.tr("czech_sub"))
-        .appListStyle()
-        #endif
+        IndexScreen(vm: vm, title: vm.tr("Český jazyk a literatura"), subtitle: vm.tr("czech_sub"), entries: [
+            IndexEntry(title: vm.tr("Literatura"), subtitle: vm.tr("lit_years_sub"), route: .litYears, symbol: "book.closed.fill"),
+            IndexEntry(title: vm.tr("Mluvnice"), subtitle: vm.tr("mluv_sub"), route: .mluvnice, symbol: "textformat"),
+            IndexEntry(title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"), route: .readingList, symbol: "books.vertical.fill"),
+        ])
     }
 }
 
 struct BookListScreen: View {
     @ObservedObject var vm: AppModel
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
+        let books = vm.content.books
+        let read = books.filter { done($0) }.count
         #if os(macOS)
-        macBooks
-        #else
-        iosBooks
-        #endif
-    }
-
-    #if os(macOS)
-    private var macBooks: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 16)], spacing: 16) {
-                ForEach(Array(vm.content.books.enumerated()), id: \.offset) { _, b in
-                    let parts = bookTitleParts(b.str("title"))
-                    let quizDone = !b.arr("quiz").isEmpty && vm.progress.bookQuiz(b.str("id"))
-                    let plotDone = !b.arr("plot").isEmpty && vm.progress.bookPlot(b.str("id"))
-                    NavigationLink(value: Route.book(b.str("id"))) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Image(systemName: "book.fill")
-                                .font(.title2)
-                                .foregroundStyle(.tint)
-                            Text(parts.title)
-                                .font(.title3.weight(.semibold))
-                                .foregroundStyle(.primary)
-                                .multilineTextAlignment(.leading)
-                            if let author = parts.author {
-                                Text(author)
-                                    .font(.body)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer(minLength: 0)
-                            HStack(spacing: 8) {
-                                let genre = b.str("genre")
-                                Text(genre.isEmpty ? vm.tr(b.str("subKey")) : genre)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                                Spacer(minLength: 0)
-                                if quizDone || plotDone {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundStyle(.green)
-                                        .accessibilityLabel(vm.tr("book_done"))
-                                }
-                            }
+            VStack(alignment: .leading, spacing: 24) {
+                PageHeader(title: vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"), progress: (read, books.count))
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 16, alignment: .top)], spacing: 16) {
+                    ForEach(Array(books.enumerated()), id: \.offset) { _, b in
+                        NavigationLink(value: Route.book(b.str("id"))) {
+                            bookCard(b)
                         }
-                        .padding(18)
-                        .frame(maxWidth: .infinity, minHeight: 168, alignment: .topLeading)
-                        .softSurface(cornerRadius: 18)
+                        .buttonStyle(PressScaleStyle())
                     }
-                    .buttonStyle(PressScaleStyle())
                 }
             }
-            .padding(MacChrome.pageInset)
+            .padding(Page.inset)
+            .macPage()
+        }
+        .pageTitle(vm.tr("Maturitní četba"), subtitle: vm.tr("reading_sub"))
+        #else
+        List {
+            Section {
+                ForEach(Array(books.enumerated()), id: \.offset) { _, b in
+                    NavigationLink(value: Route.book(b.str("id"))) {
+                        bookRow(b)
+                    }
+                }
+                .stepRows()
+            } header: {
+                ProgressLine(done: read, total: books.count)
+                    .textCase(nil)
+                    .padding(.bottom, 6)
+            }
         }
         .navigationTitle(vm.tr("Maturitní četba"))
         .navigationSubtitle(vm.tr("reading_sub"))
+        #endif
+    }
+
+    private func done(_ b: J) -> Bool {
+        (!b.arr("quiz").isEmpty && vm.progress.bookQuiz(b.str("id")))
+            || (!b.arr("plot").isEmpty && vm.progress.bookPlot(b.str("id")))
+    }
+
+    private func genre(_ b: J) -> String {
+        let genre = b.str("genre")
+        return genre.isEmpty ? vm.tr(b.str("subKey")) : genre
+    }
+
+    #if os(macOS)
+    /// A book as an index card: author over the title, the genre along the bottom edge.
+    private func bookCard(_ b: J) -> some View {
+        let parts = bookTitleParts(b.str("title"))
+        return VStack(alignment: .leading, spacing: 6) {
+            if let author = parts.author {
+                Text(author)
+                    .kicker()
+                    .foregroundStyle(accent.text)
+                    .lineLimit(1)
+            }
+            Text(parts.title)
+                .display(22, relativeTo: .title3)
+                .foregroundStyle(palette.ink)
+                .multilineTextAlignment(.leading)
+                .lineLimit(3)
+            Spacer(minLength: 0)
+            HStack(spacing: 8) {
+                Text(genre(b))
+                    .font(.subheadline)
+                    .foregroundStyle(palette.ink2)
+                    .lineLimit(1)
+                Spacer(minLength: 0)
+                if done(b) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(palette.success)
+                        .accessibilityLabel(vm.tr("book_done"))
+                }
+            }
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, minHeight: 156, alignment: .topLeading)
+        .softSurface(cornerRadius: 20)
+        .contentShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
     #endif
 
     #if os(iOS)
-    private var iosBooks: some View {
-        List {
-            ForEach(Array(vm.content.books.enumerated()), id: \.offset) { _, b in
-                let parts = bookTitleParts(b.str("title"))
-                let quizDone = !b.arr("quiz").isEmpty && vm.progress.bookQuiz(b.str("id"))
-                let plotDone = !b.arr("plot").isEmpty && vm.progress.bookPlot(b.str("id"))
-                NavigationLink(value: Route.book(b.str("id"))) {
-                    HStack(alignment: .top, spacing: 12) {
-                        Image(systemName: "book.fill")
-                            #if os(macOS)
-                            .font(.title2)
-                            #else
-                            .font(.title3)
-                            #endif
-                            .foregroundStyle(.tint)
-                            .frame(width: 28)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(parts.title)
-                                #if os(macOS)
-                                .font(.title3.weight(.semibold))
-                                #else
-                                .font(.body.weight(.semibold))
-                                #endif
-                            if let author = parts.author {
-                                Text(author)
-                                    #if os(macOS)
-                                    .font(.body)
-                                    #else
-                                    .font(.subheadline)
-                                    #endif
-                                    .foregroundStyle(.secondary)
-                            }
-                            HStack(spacing: 8) {
-                                let genre = b.str("genre")
-                                Text(genre.isEmpty ? vm.tr(b.str("subKey")) : genre)
-                                    #if os(macOS)
-                                    .font(.subheadline)
-                                    #else
-                                    .font(.caption)
-                                    #endif
-                                    .foregroundStyle(.secondary)
-                                if quizDone || plotDone {
-                                    Label(vm.tr("book_done"), systemImage: "checkmark.circle.fill")
-                                        #if os(macOS)
-                                        .font(.subheadline.weight(.semibold))
-                                        #else
-                                        .font(.caption.weight(.semibold))
-                                        #endif
-                                        .foregroundStyle(.green)
-                                }
-                            }
-                        }
-                    }
-                    #if os(macOS)
-                    .padding(.vertical, 4)
-                    #endif
+    private func bookRow(_ b: J) -> some View {
+        let parts = bookTitleParts(b.str("title"))
+        return HStack(alignment: .top, spacing: 14) {
+            Badge(symbol: done(b) ? "checkmark" : "book.closed.fill", size: 34, filled: done(b))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(parts.title)
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(palette.ink)
+                if let author = parts.author {
+                    Text(author)
+                        .font(.subheadline)
+                        .foregroundStyle(palette.ink2)
                 }
+                Text(genre(b))
+                    .font(.caption)
+                    .foregroundStyle(palette.ink3)
             }
         }
-        .navigationTitle(vm.tr("Maturitní četba"))
-        .navigationSubtitle(vm.tr("reading_sub"))
-        .appListStyle()
+        .padding(.vertical, 2)
     }
     #endif
 }
@@ -2403,61 +1704,53 @@ struct BookListScreen: View {
 struct BookScreen: View {
     @ObservedObject var vm: AppModel
     let id: String
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
         if let b = vm.content.book(id) {
             let hasQuiz = !b.arr("quiz").isEmpty
             let hasPlot = !b.arr("plot").isEmpty
             let notes = b.arr("notes")
-            let quizDone = vm.progress.bookQuiz(id)
-            let plotDone = vm.progress.bookPlot(id)
             let parts = bookTitleParts(b.str("title"))
             ScrollView {
-                VStack(alignment: .leading, spacing: 28) {
-                    GlassCard {
-                        VStack(alignment: .leading, spacing: 10) {
-                            if let author = parts.author {
-                                Text(author)
-                                    #if os(macOS)
-                                    .font(.title3)
-                                    #else
-                                    .font(.subheadline)
-                                    #endif
-                                    .foregroundStyle(.secondary)
-                            }
-                            if !b.str("genre").isEmpty {
-                                Text(b.str("genre"))
-                                    .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(.tint)
-                            }
-                            Text(vm.tr("book_study_hint"))
-                                #if os(macOS)
-                                .font(.title3)
-                                #else
-                                .font(.body)
-                                #endif
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: onMac(32, 24)) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        // The iPhone already names the book and its author in the navigation bar.
+                        #if os(macOS)
+                        if let author = parts.author {
+                            Text(author)
+                                .kicker()
+                                .foregroundStyle(accent.text)
                         }
+                        Text(parts.title)
+                            .display(44, relativeTo: .largeTitle)
+                            .foregroundStyle(palette.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                        #endif
+                        if !b.str("genre").isEmpty {
+                            Text(b.str("genre"))
+                                .font(onMac(Font.title3, Font.subheadline).weight(.medium))
+                                .foregroundStyle(palette.ink2)
+                        }
+                        Text(vm.tr("book_study_hint"))
+                            .font(onMac(Font.title3, Font.subheadline))
+                            .foregroundStyle(palette.ink2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 4)
                     }
 
                     if hasQuiz || hasPlot {
                         VStack(alignment: .leading, spacing: 14) {
-                            Text(vm.tr("book_practice"))
-                                #if os(macOS)
-                                .font(.title.weight(.semibold))
-                                #else
-                                .font(.title2.weight(.semibold))
-                                #endif
-                            #if os(macOS)
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 320), spacing: 16)], spacing: 16) {
+                            SectionTitle(text: vm.tr("book_practice"))
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 14)], spacing: onMac(14, 10)) {
                                 if hasQuiz {
                                     NavigationLink(value: Route.bookQuiz(id)) {
                                         BookActionCard(
                                             title: vm.tr("book_quiz_heading"),
                                             subtitle: vm.tr("lit_quiz_sub"),
-                                            systemImage: "questionmark.circle.fill",
-                                            done: quizDone,
+                                            systemImage: "questionmark",
+                                            done: vm.progress.bookQuiz(id),
                                             doneLabel: vm.tr("book_done")
                                         )
                                     }
@@ -2469,74 +1762,35 @@ struct BookScreen: View {
                                             title: vm.tr("lit_plot_title"),
                                             subtitle: vm.tr("lit_plot_sub"),
                                             systemImage: "list.number",
-                                            done: plotDone,
+                                            done: vm.progress.bookPlot(id),
                                             doneLabel: vm.tr("book_done")
                                         )
                                     }
                                     .buttonStyle(PressScaleStyle())
                                 }
                             }
-                            #else
-                            if hasQuiz {
-                                NavigationLink(value: Route.bookQuiz(id)) {
-                                    BookActionCard(
-                                        title: vm.tr("book_quiz_heading"),
-                                        subtitle: vm.tr("lit_quiz_sub"),
-                                        systemImage: "questionmark.circle.fill",
-                                        done: quizDone,
-                                        doneLabel: vm.tr("book_done")
-                                    )
-                                }
-                                .buttonStyle(PressScaleStyle())
-                            }
-                            if hasPlot {
-                                NavigationLink(value: Route.bookPlot(id)) {
-                                    BookActionCard(
-                                        title: vm.tr("lit_plot_title"),
-                                        subtitle: vm.tr("lit_plot_sub"),
-                                        systemImage: "list.number",
-                                        done: plotDone,
-                                        doneLabel: vm.tr("book_done")
-                                    )
-                                }
-                                .buttonStyle(PressScaleStyle())
-                            }
-                            #endif
                         }
                     }
 
                     if !notes.isEmpty {
                         VStack(alignment: .leading, spacing: 14) {
-                            Text(vm.tr("book_notes"))
-                                #if os(macOS)
-                                .font(.title.weight(.semibold))
-                                #else
-                                .font(.title2.weight(.semibold))
-                                #endif
-                            #if os(macOS)
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 360), spacing: 16)], alignment: .leading, spacing: 16) {
+                            SectionTitle(text: vm.tr("book_notes"))
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 360), spacing: 16, alignment: .top)], alignment: .leading, spacing: onMac(16, 12)) {
                                 ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
                                     BookNoteCard(note: note)
                                 }
                             }
-                            #else
-                            ForEach(Array(notes.enumerated()), id: \.offset) { _, note in
-                                BookNoteCard(note: note)
-                            }
-                            #endif
                         }
                     }
                 }
-                #if os(macOS)
-                .padding(MacChrome.pageInset)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                #else
-                .padding()
+                .padding(Page.inset)
                 .padding(.bottom, 24)
-                #endif
+                .macPage()
             }
-            .navigationTitle(parts.title)
-            .navigationSubtitle(parts.author ?? vm.tr(b.str("subKey")))
+            .pageTitle(parts.title, subtitle: parts.author ?? vm.tr(b.str("subKey")))
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
         }
     }
 }
@@ -2547,83 +1801,63 @@ private struct BookActionCard: View {
     let systemImage: String
     let done: Bool
     let doneLabel: String
+    @Environment(\.palette) private var palette
 
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
-            Image(systemName: systemImage)
-                #if os(macOS)
-                .font(.largeTitle)
-                #else
-                .font(.title)
-                #endif
-                .foregroundStyle(.tint)
-                .frame(width: 44)
-            VStack(alignment: .leading, spacing: 4) {
+            Badge(symbol: systemImage, size: onMac(48, 44))
+            VStack(alignment: .leading, spacing: 3) {
                 Text(title)
-                    #if os(macOS)
-                    .font(.title3.weight(.semibold))
-                    #else
-                    .font(.headline)
-                    #endif
-                    .foregroundStyle(.primary)
+                    .display(onMac(21, 18), relativeTo: .headline)
+                    .foregroundStyle(palette.ink)
                 Text(subtitle)
-                    #if os(macOS)
-                    .font(.body)
-                    #else
-                    .font(.subheadline)
-                    #endif
-                    .foregroundStyle(.secondary)
+                    .font(onMac(Font.body, Font.subheadline))
+                    .foregroundStyle(palette.ink2)
+                    .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 8)
             if done {
                 Image(systemName: "checkmark.circle.fill")
-                    #if os(macOS)
-                    .font(.title2)
-                    #else
-                    .font(.title3)
-                    #endif
-                    .foregroundStyle(.green)
+                    .font(onMac(Font.title2, Font.title3))
+                    .foregroundStyle(palette.success)
                     .accessibilityLabel(doneLabel)
             } else {
                 Image(systemName: "chevron.right")
                     .font(.body.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(palette.ink3)
             }
         }
-        #if os(macOS)
-        .padding(20)
-        #else
-        .padding(16)
-        #endif
+        .padding(onMac(20, 16))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .softSurface(cornerRadius: 18)
+        .softSurface(cornerRadius: 20)
+        .contentShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 }
 
 private struct BookNoteCard: View {
     let note: J
+    @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     var body: some View {
         GlassCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Label(note.str("title"), systemImage: noteSymbol(note.str("icon")))
-                    #if os(macOS)
-                    .font(.title2.weight(.semibold))
-                    #else
-                    .font(.headline)
-                    #endif
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(spacing: 10) {
+                    Image(systemName: noteSymbol(note.str("icon")))
+                        .foregroundStyle(accent.text)
+                    Text(note.str("title"))
+                        .display(onMac(22, 19), relativeTo: .headline)
+                        .foregroundStyle(palette.ink)
+                }
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(Array(note.strs("lines").enumerated()), id: \.offset) { _, line in
-                        HStack(alignment: .top, spacing: 10) {
-                            Text("•")
-                                .foregroundStyle(.secondary)
+                        HStack(alignment: .firstTextBaseline, spacing: 10) {
+                            Circle().fill(accent.solid).frame(width: 5, height: 5)
+                                .alignmentGuide(.firstTextBaseline) { $0[.bottom] + 3 }
                             Text(line)
-                                #if os(macOS)
-                                .font(.title3)
-                                #else
-                                .font(.body)
-                                #endif
+                                .font(onMac(Font.title3, Font.body))
+                                .foregroundStyle(palette.ink)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -2657,7 +1891,27 @@ private func noteSymbol(_ icon: String) -> String {
     }
 }
 
+/// A pushed screen in the colour of its subject, on the paper.
 struct RouteDestination: View {
+    @ObservedObject var vm: AppModel
+    let route: Route
+
+    var body: some View {
+        RouteContent(vm: vm, route: route)
+            .accented(vm.accent(for: route))
+            .environment(\.pageKicker, kicker)
+            .paper()
+    }
+
+    /// The subject's name, for every screen below the subject's own index.
+    private var kicker: String? {
+        guard route.stack.count > 1, let key = route.subject?.key,
+              let entry = vm.content.subjects.first(where: { $0.str("icon") == key }) else { return nil }
+        return vm.tr(entry.str("key"))
+    }
+}
+
+private struct RouteContent: View {
     @ObservedObject var vm: AppModel
     let route: Route
 
@@ -3482,6 +2736,7 @@ struct CodeLessonScreen: View {
     @State private var stdin = ""
     @State private var output = ""
     @State private var status = ""
+    @Environment(\.palette) private var palette
 
     private var running: Bool { status == "running" }
     private var needsInput: Bool { code.contains("ReadLine") }
@@ -3576,7 +2831,7 @@ struct CodeLessonScreen: View {
         .background(codeFill, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(.separator.opacity(0.6), lineWidth: 0.5)
+                .strokeBorder(palette.line, lineWidth: 1)
         }
     }
 
@@ -3631,7 +2886,7 @@ struct CodeLessonScreen: View {
         .background(codeFill, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .strokeBorder(.separator.opacity(0.6), lineWidth: 0.5)
+                .strokeBorder(palette.line, lineWidth: 1)
         }
     }
 
@@ -3653,13 +2908,7 @@ struct CodeLessonScreen: View {
         }
     }
 
-    private var codeFill: AnyShapeStyle {
-        #if os(macOS)
-        AnyShapeStyle(.background.secondary)
-        #else
-        AnyShapeStyle(Color(.secondarySystemBackground))
-        #endif
-    }
+    private var codeFill: Color { palette.surface }
 
     private func run() {
         guard !running else { return }
