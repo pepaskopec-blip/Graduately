@@ -5,6 +5,12 @@
 # cs: bullet
 # en: bullet
 
+--- 2026-11-11
+cs: Nový papírový vzhled ve světlém i tmavém režimu, písmo Playfair Display a vlastní barva pro každý předmět
+cs: Přehlednější cvičení: zadání nahoře a každá úloha na vlastní kartě
+en: New paper-and-ink design in light and dark mode, Playfair Display titles and a dedicated colour for every subject
+en: Clearer exercises with the prompt at the top and one card per task
+
 --- 2026-10-11
 cs: Programové vybavení: Windows, Word, Excel, Access, MySQL a správa účtů
 cs: Čtyři ročníky, od licence a složek po WordPress, Power BI a zásady

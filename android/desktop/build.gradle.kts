@@ -15,7 +15,7 @@ kotlin {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
     sourceSets.named("main") {
-        kotlin.srcDir("../shared/src")
+        kotlin.srcDir(rootProject.file("shared/src"))
     }
 }
 

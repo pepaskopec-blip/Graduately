@@ -68,7 +68,7 @@ android {
     }
 
     // UI, data and navigation shared with the desktop app (../desktop).
-    sourceSets.getByName("main").kotlin.directories.add("../shared/src")
+    sourceSets.getByName("main").kotlin.directories.add(rootProject.file("shared/src").path)
 }
 
 kotlin {

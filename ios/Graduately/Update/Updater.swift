@@ -55,7 +55,9 @@ final class Updater {
             do {
                 let atom = try self.get("https://github.com/\(self.repo)/commits/\(self.branch).atom")
                 let tip = self.atomTip(atom) ?? ""
-                let page = "https://github.com/\(self.repo)/raw/main/installers/graduately-ios.html"
+                let page = tip.isEmpty
+                    ? "https://github.com/\(self.repo)/tree/\(self.branch)"
+                    : "https://raw.githubusercontent.com/\(self.repo)/\(tip)/graduately-ios.ipa"
                 DispatchQueue.main.async {
                     if let url = URL(string: page) {
                         UIApplication.shared.open(url)

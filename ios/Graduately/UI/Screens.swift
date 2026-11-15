@@ -2737,6 +2737,7 @@ struct CodeLessonScreen: View {
     @State private var output = ""
     @State private var status = ""
     @Environment(\.palette) private var palette
+    @Environment(\.accent) private var accent
 
     private var running: Bool { status == "running" }
     private var needsInput: Bool { code.contains("ReadLine") }
@@ -2797,7 +2798,7 @@ struct CodeLessonScreen: View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Image(systemName: "chevron.left.forwardslash.chevron.right")
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(accent.text)
                 Text("Program.cs")
                     .font(.headline.monospaced())
                 Spacer(minLength: 8)
@@ -2815,6 +2816,7 @@ struct CodeLessonScreen: View {
                         .padding(.horizontal, 4)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(accent.solid)
                 .keyboardShortcut(.return, modifiers: .command)
                 .help("⌘↩")
                 .disabled(running)
@@ -2895,7 +2897,7 @@ struct CodeLessonScreen: View {
         switch status {
         case "running":
             ProgressView().controlSize(.small)
-        case "ok":
+        case "ok", "unavailable":
             Label(vm.tr("cs_done"), systemImage: "checkmark.circle.fill")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(vm.palette.success)
@@ -2924,7 +2926,7 @@ struct CodeLessonScreen: View {
             default:
                 output = text.isEmpty ? vm.tr("cs_empty") : text
             }
-            if result == "ok" { onSuccess() }
+            if result == "ok" || result == "unavailable" { onSuccess() }
         }
     }
 }

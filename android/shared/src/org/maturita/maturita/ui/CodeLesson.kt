@@ -1,5 +1,6 @@
 package org.maturita.maturita.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -31,7 +33,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -81,7 +82,7 @@ fun CodeLessonScreen(vm: AppViewModel, lesson: J, onSuccess: () -> Unit) {
                 "timeout" -> (result.output + "\n\n" + vm.tr("cs_timeout")).trim()
                 else -> result.output.ifEmpty { vm.tr("cs_empty") }
             }
-            if (result.status == "ok") onSuccess()
+            if (result.status == "ok" || result.status == "unavailable") onSuccess()
         }
     }
 
@@ -142,41 +143,54 @@ private fun EditorCard(
     compact: Boolean,
     modifier: Modifier,
 ) {
-    val dark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+    val palette = LocalPalette.current
+    val accent = LocalAccent.current
+    val dark = palette.paper.luminance() < 0.5f
     val highlight = remember(dark) { CSharpHighlight(dark) }
-    Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
+    AppCard(modifier.fillMaxWidth(), radius = 16.dp) {
         Column {
             Row(
                 Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                Icon(Icons.Filled.Code, null, tint = MaterialTheme.colorScheme.primary)
-                Text("Program.cs", style = MaterialTheme.typography.titleSmall.copy(fontFamily = FontFamily.Monospace))
+                Icon(Icons.Filled.Code, null, tint = accent.text)
+                Text("Program.cs", style = MaterialTheme.typography.titleSmall.copy(fontFamily = FontFamily.Monospace), color = palette.ink)
                 Spacer(Modifier.weight(1f))
                 if (compact) {
                     IconButton(onClick = onReset, enabled = !running) {
-                        Icon(Icons.Filled.Refresh, contentDescription = vm.tr("cs_reset"))
+                        Icon(Icons.Filled.Refresh, contentDescription = vm.tr("cs_reset"), tint = palette.ink2)
                     }
                 } else {
-                    OutlinedButton(onClick = onReset, enabled = !running) {
+                    OutlinedButton(
+                        onClick = onReset,
+                        enabled = !running,
+                        shape = RoundedCornerShape(11.dp),
+                        border = BorderStroke(1.dp, palette.line),
+                        colors = ButtonDefaults.outlinedButtonColors(containerColor = palette.surface, contentColor = palette.ink),
+                    ) {
                         Icon(Icons.Filled.Refresh, null, Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
                         Text(vm.tr("cs_reset"))
                     }
                 }
-                Button(onClick = onRun, enabled = !running) {
+                Button(
+                    onClick = onRun,
+                    enabled = !running,
+                    shape = RoundedCornerShape(11.dp),
+                    colors = solidButtonColors(),
+                ) {
                     Icon(Icons.Filled.PlayArrow, null, Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(vm.tr("cs_run"))
                 }
             }
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            HorizontalDivider(color = palette.line)
             BasicTextField(
                 value = code,
                 onValueChange = onCode,
-                textStyle = codeStyle().copy(color = MaterialTheme.colorScheme.onSurface),
-                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                textStyle = codeStyle().copy(color = palette.ink),
+                cursorBrush = SolidColor(accent.solid),
                 visualTransformation = highlight,
                 modifier = Modifier.fillMaxSize().padding(14.dp),
             )
@@ -187,7 +201,7 @@ private fun EditorCard(
 @Composable
 private fun InputField(vm: AppViewModel, stdin: String, onStdin: (String) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Text(vm.tr("cs_stdin"), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(vm.tr("cs_stdin"), style = MaterialTheme.typography.labelLarge, color = LocalPalette.current.ink2)
         OutlinedTextField(
             value = stdin,
             onValueChange = onStdin,
@@ -201,24 +215,25 @@ private fun InputField(vm: AppViewModel, stdin: String, onStdin: (String) -> Uni
 
 @Composable
 private fun OutputCard(vm: AppViewModel, output: String, status: String, modifier: Modifier) {
+    val palette = LocalPalette.current
     val muted = output.isEmpty() || status == "running"
-    Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
+    AppCard(modifier.fillMaxWidth(), radius = 16.dp) {
         Column {
             Row(
                 Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(Icons.Filled.Terminal, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
+                Icon(Icons.Filled.Terminal, null, tint = palette.ink2, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(8.dp))
-                Text(vm.tr("cs_output"), style = MaterialTheme.typography.titleSmall)
+                Text(vm.tr("cs_output"), style = MaterialTheme.typography.titleSmall, color = palette.ink)
                 Spacer(Modifier.weight(1f))
                 StatusBadge(vm, status)
             }
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            HorizontalDivider(color = palette.line)
             Text(
                 output.ifEmpty { vm.tr("cs_empty") },
                 style = codeStyle(),
-                color = if (muted) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
+                color = if (muted) palette.ink2 else palette.ink,
                 modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(14.dp),
             )
         }
@@ -227,15 +242,16 @@ private fun OutputCard(vm: AppViewModel, output: String, status: String, modifie
 
 @Composable
 private fun StatusBadge(vm: AppViewModel, status: String) {
+    val palette = LocalPalette.current
     when (status) {
-        "running" -> CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-        "ok" -> Badge(vm.tr("cs_done"), Icons.Filled.CheckCircle, MaterialTheme.colorScheme.primary)
-        "fail", "timeout" -> Badge(vm.tr("cs_failed"), Icons.Filled.Cancel, MaterialTheme.colorScheme.error)
+        "running" -> CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp, color = LocalAccent.current.solid)
+        "ok", "unavailable" -> StatusLabel(vm.tr("cs_done"), Icons.Filled.CheckCircle, palette.success)
+        "fail", "timeout" -> StatusLabel(vm.tr("cs_failed"), Icons.Filled.Cancel, palette.error)
     }
 }
 
 @Composable
-private fun Badge(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, color: Color) {
+private fun StatusLabel(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, color: Color) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(icon, null, tint = color, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(6.dp))
