@@ -38,7 +38,10 @@ struct NativeRoot: View {
         .environment(\.palette, vm.palette)
         .accented(vm.palette.accent)
         .preferredColorScheme(vm.mode == .dark ? .dark : .light)
-        .onAppear { vm.checkUpdate(false) }
+        .onAppear {
+            vm.checkUpdate(false)
+            vm.syncAccount(interactive: false)
+        }
         #if os(macOS)
         .frame(minWidth: 980, minHeight: 640)
         #endif

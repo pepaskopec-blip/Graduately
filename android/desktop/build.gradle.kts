@@ -44,6 +44,8 @@ val buildContent = tasks.register<Exec>("buildContent") {
     environment("PYTHONUTF8", "1")
     environment("PYTHONIOENCODING", "utf-8")
     commandLine(python, "scripts/build-content.py", "--out", out.path)
+    inputs.property("supabaseUrl", System.getenv("SUPABASE_URL") ?: "")
+    inputs.property("supabaseAnonKey", System.getenv("SUPABASE_ANON_KEY") ?: "")
     inputs.dir(repoRoot.resolve("content"))
     inputs.file(repoRoot.resolve("scripts/build-content.py"))
     outputs.file(out)

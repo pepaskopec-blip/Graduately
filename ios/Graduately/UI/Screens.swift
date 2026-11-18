@@ -239,6 +239,10 @@ private struct ChangelogLines: View {
 struct SettingsScreen: View {
     @ObservedObject var vm: AppModel
     @Environment(\.palette) private var palette
+    @State private var accountUser = ""
+    @State private var accountPass = ""
+    @State private var supabaseUrl = ""
+    @State private var supabaseKey = ""
 
     var body: some View {
         ScrollView {
@@ -247,6 +251,60 @@ struct SettingsScreen: View {
                 PageHeader(title: vm.tr("settings_title"))
                     .padding(.bottom, 8)
                 #endif
+                settingsCard(vm.tr("account")) {
+                    if vm.account.isSignedIn {
+                        Text(vm.fmt("account_signed_in", vm.account.userDisplay))
+                            .font(onMac(Font.body, Font.subheadline).weight(.semibold))
+                            .foregroundStyle(palette.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                        if !accountStatusText.isEmpty {
+                            Text(accountStatusText)
+                                .font(onMac(Font.body, Font.subheadline))
+                                .foregroundStyle(vm.account.status == "error" ? palette.error : palette.ink2)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        HStack(spacing: 10) {
+                            Button(vm.tr("account_sync_now")) { vm.syncAccount(interactive: true) }
+                                .buttonStyle(ChipStyle(selected: true))
+                                .disabled(accountBusy)
+                            Button(vm.tr("account_signout")) {
+                                accountPass = ""
+                                vm.signOutAccount()
+                            }
+                            .buttonStyle(ChipStyle())
+                            .disabled(accountBusy)
+                        }
+                    } else {
+                        Text(vm.tr("account_hint"))
+                            .font(onMac(Font.body, Font.subheadline))
+                            .foregroundStyle(palette.ink2)
+                            .fixedSize(horizontal: false, vertical: true)
+                        if !vm.account.hasBuiltInConfig {
+                            WordField(value: $supabaseUrl, placeholder: vm.tr("account_url_placeholder"))
+                            WordField(value: $supabaseKey, placeholder: vm.tr("account_key_placeholder"))
+                        }
+                        WordField(value: $accountUser, placeholder: vm.tr("account_user_placeholder"))
+                        WordField(value: $accountPass, placeholder: vm.tr("account_pass_placeholder"), secure: true)
+                        if !accountStatusText.isEmpty {
+                            Text(accountStatusText)
+                                .font(onMac(Font.body, Font.subheadline))
+                                .foregroundStyle(vm.account.status == "error" ? palette.error : palette.ink2)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        HStack(spacing: 10) {
+                            Button(vm.tr("account_signin")) {
+                                vm.signInAccount(user: accountUser, pass: accountPass, url: supabaseUrl, key: supabaseKey)
+                            }
+                            .buttonStyle(ChipStyle(selected: true))
+                            .disabled(accountBusy)
+                            Button(vm.tr("account_signup")) {
+                                vm.signUpAccount(user: accountUser, pass: accountPass, url: supabaseUrl, key: supabaseKey)
+                            }
+                            .buttonStyle(ChipStyle())
+                            .disabled(accountBusy)
+                        }
+                    }
+                }
                 settingsCard(vm.tr("mode")) {
                     HStack(spacing: 10) {
                         SegChip(label: vm.tr("mode_light"), selected: vm.mode == .light) { vm.applyMode(.light) }
@@ -290,6 +348,11 @@ struct SettingsScreen: View {
         }
         .paper()
         .pageTitle(vm.tr("settings_title"))
+        .onAppear {
+            if supabaseUrl.isEmpty { supabaseUrl = vm.account.customUrl }
+            if supabaseKey.isEmpty { supabaseKey = vm.account.customAnonKey }
+            if accountUser.isEmpty { accountUser = vm.account.userDisplay }
+        }
     }
 
     private func settingsCard<Content: View>(_ title: String, @ViewBuilder content: @escaping () -> Content) -> some View {
@@ -302,6 +365,18 @@ struct SettingsScreen: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    private var accountBusy: Bool {
+        vm.account.status == "working" || vm.account.status == "syncing"
+    }
+
+    private var accountStatusText: String {
+        guard let key = vm.account.messageKey else { return "" }
+        if let count = vm.account.messageCount {
+            return vm.fmt(key, count)
+        }
+        return vm.tr(key)
     }
 
     private var updateText: String {

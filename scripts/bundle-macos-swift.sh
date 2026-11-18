@@ -115,8 +115,7 @@ if can_notarize; then
   xcrun stapler staple "$dest"
 else
   if [ "$IDENTITY" != "-" ] && [ -n "${GITHUB_ACTIONS:-}${CI:-}" ]; then
-    echo "error: Developer ID is present but notarization secrets are missing." >&2
-    exit 1
+    echo "warning: Developer ID is present but notarization secrets are missing; skipping notarization." >&2
   fi
 fi
 

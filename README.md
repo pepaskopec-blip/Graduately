@@ -152,6 +152,12 @@ potřebuje **Apple Developer Program** a GitHub Secrets:
   (nebo `APPLE_ID` + `APPLE_APP_SPECIFIC_PASSWORD` + `APPLE_TEAM_ID`)
 
 Bez toho zůstane jen ad-hoc podpis a Gatekeeper stažený build zablokuje.
+Nahrají se příkazem `make secrets` (viz `scripts/setup-github-secrets.sh`).
+
+Synchronizace účtů a postupu mezi zařízeními běží přes **Supabase**:
+v SQL Editoru projektu spusťte `scripts/supabase-schema.sql` a do GitHub
+Secrets (nebo přímo v aplikaci pod **Nastavení → Účet a synchronizace**)
+zadejte `SUPABASE_URL` a `SUPABASE_ANON_KEY`.
 
 ### Struktura
 
@@ -349,6 +355,12 @@ Skipping Gatekeeper on a downloaded macOS build needs an
   (or `APPLE_ID` + `APPLE_APP_SPECIFIC_PASSWORD` + `APPLE_TEAM_ID`)
 
 Without them the bundle stays ad-hoc signed and Gatekeeper still blocks it.
+Upload them with `make secrets` (see `scripts/setup-github-secrets.sh`).
+
+Cross-device account and progress sync uses **Supabase**: run
+`scripts/supabase-schema.sql` in your Supabase SQL Editor and set
+`SUPABASE_URL` and `SUPABASE_ANON_KEY` in GitHub Secrets (or directly in
+the app under **Settings → Account & Sync**).
 
 ### Layout
 

@@ -92,6 +92,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
@@ -489,17 +491,18 @@ fun solidButtonColors() = LocalAccent.current.let {
 }
 
 @Composable
-fun PrimaryButton(label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Button(onClick = onClick, modifier = modifier, shape = RoundedCornerShape(14.dp), colors = solidButtonColors()) { Text(label) }
+fun PrimaryButton(label: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
+    Button(onClick = onClick, modifier = modifier, enabled = enabled, shape = RoundedCornerShape(14.dp), colors = solidButtonColors()) { Text(label) }
 }
 
 /** Outlined companion of the solid button: "show the answer", "check for updates". */
 @Composable
-fun PillButton(label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun PillButton(label: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
     val palette = LocalPalette.current
     OutlinedButton(
         onClick = onClick,
         modifier = modifier,
+        enabled = enabled,
         shape = RoundedCornerShape(11.dp),
         border = BorderStroke(1.dp, palette.line),
         colors = ButtonDefaults.outlinedButtonColors(containerColor = palette.surface, contentColor = palette.ink),
@@ -650,6 +653,7 @@ fun WordField(
     mark: Boolean? = null,
     modifier: Modifier = Modifier,
     numeric: Boolean = false,
+    secure: Boolean = false,
 ) {
     val palette = LocalPalette.current
     val edge = when (mark) {
@@ -669,6 +673,7 @@ fun WordField(
         placeholder = if (placeholder.isNotEmpty()) ({ Text(placeholder, color = palette.ink3) }) else null,
         singleLine = true,
         isError = mark == false,
+        visualTransformation = if (secure) PasswordVisualTransformation() else VisualTransformation.None,
         shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = fill,
@@ -686,7 +691,11 @@ fun WordField(
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.None,
             autoCorrectEnabled = false,
-            keyboardType = if (numeric) KeyboardType.Decimal else KeyboardType.Text,
+            keyboardType = when {
+                numeric -> KeyboardType.Decimal
+                secure -> KeyboardType.Password
+                else -> KeyboardType.Text
+            },
         ),
         modifier = modifier.fillMaxWidth().padding(vertical = 4.dp),
     )

@@ -5,6 +5,7 @@ final class AppModel: ObservableObject {
     let content: Content
     let progress: ProgressStore
     let updater = Updater()
+    let accountSync: AccountSync
 
     @Published var mode: ColorMode
     @Published var lang: UiLang
@@ -15,15 +16,23 @@ final class AppModel: ObservableObject {
     @Published var searchQuery = ""
     @Published var tick = 0
     @Published var update = UpdateState()
+    @Published var account: AccountState
     @Published var showChangelog = false
 
     init() {
         let content = Content.load()
         self.content = content
-        progress = ProgressStore(content: content)
+        let progress = ProgressStore(content: content)
+        self.progress = progress
+        let sync = AccountSync(content: content)
+        self.accountSync = sync
+        self.account = sync.initialState()
         mode = progress.mode
         lang = progress.lang
         showChangelog = !content.changelog.isEmpty && !sameBuild(AppConfig.commit, progress.seenCommit)
+        progress.onMark = { [weak self] in
+            self?.syncAccount(interactive: false)
+        }
         #if DEBUG
         // `xcrun simctl launch <udid> com.bukovinafilip.maturita -route u1e3` opens a page for screenshots.
         if let page = UserDefaults.standard.string(forKey: "route"), let r = routeFromPage(page) {
@@ -362,6 +371,41 @@ final class AppModel: ObservableObject {
     func installUpdate() {
         updater.install { [weak self] state in
             self?.update = state
+        }
+    }
+
+    func signInAccount(user: String, pass: String, url: String, key: String) {
+        let local = progress.completedIds()
+        accountSync.signIn(user: user, pass: pass, urlOverride: url, keyOverride: key, localDone: local) { [weak self] state, merged in
+            self?.applyAccountResult(state, merged: merged)
+        }
+    }
+
+    func signUpAccount(user: String, pass: String, url: String, key: String) {
+        let local = progress.completedIds()
+        accountSync.signUp(user: user, pass: pass, urlOverride: url, keyOverride: key, localDone: local) { [weak self] state, merged in
+            self?.applyAccountResult(state, merged: merged)
+        }
+    }
+
+    func signOutAccount() {
+        accountSync.signOut { [weak self] state in
+            self?.account = state
+        }
+    }
+
+    func syncAccount(interactive: Bool) {
+        if !interactive && !account.isSignedIn { return }
+        let local = progress.completedIds()
+        accountSync.sync(localDone: local, interactive: interactive) { [weak self] state, merged in
+            self?.applyAccountResult(state, merged: merged)
+        }
+    }
+
+    private func applyAccountResult(_ state: AccountState, merged: Set<String>?) {
+        account = state
+        if let merged, progress.mergeCompletedIds(merged) {
+            refresh()
         }
     }
 

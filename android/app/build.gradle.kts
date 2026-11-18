@@ -96,6 +96,8 @@ val buildContent = tasks.register<Exec>("buildContent") {
     environment("PYTHONUTF8", "1")
     environment("PYTHONIOENCODING", "utf-8")
     commandLine("python3", "scripts/build-content.py")
+    inputs.property("supabaseUrl", System.getenv("SUPABASE_URL") ?: "")
+    inputs.property("supabaseAnonKey", System.getenv("SUPABASE_ANON_KEY") ?: "")
     inputs.dir(rootProject.projectDir.parentFile.resolve("content"))
     inputs.file(rootProject.projectDir.parentFile.resolve("scripts/build-content.py"))
     outputs.file(file("src/main/assets/content.json"))

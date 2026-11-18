@@ -66,8 +66,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -560,6 +564,14 @@ private fun subjectSum(vm: AppViewModel, s: J): ProgressSum {
 @Composable
 fun SettingsScreen(vm: AppViewModel) {
     val palette = LocalPalette.current
+    var accountUser by remember { mutableStateOf(vm.account.userDisplay) }
+    var accountPass by remember { mutableStateOf("") }
+    var supabaseUrl by remember { mutableStateOf(vm.account.customUrl) }
+    var supabaseKey by remember { mutableStateOf(vm.account.customAnonKey) }
+    val accountBusy = vm.account.status == "working" || vm.account.status == "syncing"
+    val accountStatusText = vm.account.messageKey?.let { key ->
+        vm.account.messageCount?.let { vm.fmt(key, it) } ?: vm.tr(key)
+    }.orEmpty()
     @Composable
     fun card(title: String, content: @Composable () -> Unit) {
         AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
@@ -570,6 +582,64 @@ fun SettingsScreen(vm: AppViewModel) {
         }
     }
     RootScaffold(vm, vm.tr("settings_title"), showSearch = false) {
+        item {
+            card(vm.tr("account")) {
+                if (vm.account.isSignedIn) {
+                    Text(
+                        vm.fmt("account_signed_in", vm.account.userDisplay),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium,
+                        color = palette.ink,
+                    )
+                    if (accountStatusText.isNotEmpty()) {
+                        Spacer(Modifier.height(6.dp))
+                        Text(
+                            accountStatusText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (vm.account.status == "error") palette.error else palette.ink2,
+                        )
+                    }
+                    Spacer(Modifier.height(10.dp))
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        PrimaryButton(vm.tr("account_sync_now"), enabled = !accountBusy) { vm.syncAccount(true) }
+                        PillButton(vm.tr("account_signout"), enabled = !accountBusy) {
+                            accountPass = ""
+                            vm.signOutAccount()
+                        }
+                    }
+                } else {
+                    Text(
+                        vm.tr("account_hint"),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = palette.ink2,
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    if (!vm.account.hasBuiltInConfig) {
+                        WordField(supabaseUrl, { supabaseUrl = it }, vm.tr("account_url_placeholder"))
+                        WordField(supabaseKey, { supabaseKey = it }, vm.tr("account_key_placeholder"))
+                    }
+                    WordField(accountUser, { accountUser = it }, vm.tr("account_user_placeholder"))
+                    WordField(accountPass, { accountPass = it }, vm.tr("account_pass_placeholder"), secure = true)
+                    if (accountStatusText.isNotEmpty()) {
+                        Spacer(Modifier.height(6.dp))
+                        Text(
+                            accountStatusText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = if (vm.account.status == "error") palette.error else palette.ink2,
+                        )
+                    }
+                    Spacer(Modifier.height(10.dp))
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        PrimaryButton(vm.tr("account_signin"), enabled = !accountBusy) {
+                            vm.signInAccount(accountUser, accountPass, supabaseUrl, supabaseKey)
+                        }
+                        PillButton(vm.tr("account_signup"), enabled = !accountBusy) {
+                            vm.signUpAccount(accountUser, accountPass, supabaseUrl, supabaseKey)
+                        }
+                    }
+                }
+            }
+        }
         item {
             card(vm.tr("mode")) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {

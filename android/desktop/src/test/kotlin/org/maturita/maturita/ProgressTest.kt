@@ -4,6 +4,7 @@ import org.json.JSONObject
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Content
 import org.maturita.maturita.data.ProgressStore
+import org.maturita.maturita.data.normalizeAccountEmail
 import org.maturita.maturita.desktop.FilePrefs
 import org.maturita.maturita.desktop.gtkAddress
 import org.maturita.maturita.desktop.importGtkProgress
@@ -87,5 +88,43 @@ class ProgressTest {
             val plot = Route.BookPlot(id)
             assertEquals(plot, routeFromPage(plot.page), "plot route for $id")
         }
+    }
+
+    @Test
+    fun syncExportsAndMergesProgressIds() {
+        val dir = Files.createTempDirectory("sync").toFile()
+        val prefs = FilePrefs(dir.resolve("p.properties"))
+        val store = ProgressStore(prefs, content)
+
+        var marks = 0
+        store.onMark = { marks++ }
+        store.markNet(1)
+        store.markBookQuiz("1984")
+        assertEquals(2, marks)
+
+        val local = store.completedIds()
+        assertTrue(local.contains(content.progressKeys["net.1"]))
+        assertTrue(local.contains(content.progressKeys["book.1984.quiz"]))
+
+        val changed = store.mergeCompletedIds(
+            listOf(
+                content.progressKeys["net.1"]!!,
+                content.progressKeys["mat.1"]!!,
+                "future-lesson-id",
+            ),
+        )
+        assertTrue(changed)
+        assertTrue(store.matDone(1))
+        assertTrue(store.completedIds().contains("future-lesson-id"))
+        assertFalse(store.mergeCompletedIds(listOf(content.progressKeys["mat.1"]!!)))
+    }
+
+    @Test
+    fun accountEmailNormalization() {
+        assertEquals("pepa@graduately.app", normalizeAccountEmail("  Pepa "))
+        assertEquals("student_1@graduately.app", normalizeAccountEmail("Student_1!"))
+        assertEquals("user@example.com", normalizeAccountEmail("User@Example.com"))
+        assertEquals("", normalizeAccountEmail("   "))
+        assertEquals("", normalizeAccountEmail("!!!"))
     }
 }

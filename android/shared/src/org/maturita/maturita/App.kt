@@ -152,7 +152,10 @@ fun AppViewModel.handleBack(): Boolean {
 
 @Composable
 private fun MaturitaAppBody(vm: AppViewModel) {
-    LaunchedEffect(Unit) { vm.checkUpdate(false) }
+    LaunchedEffect(Unit) {
+        vm.checkUpdate(false)
+        vm.syncAccount(false)
+    }
     Box(Modifier.fillMaxSize()) {
         AnimatedContent(
             targetState = vm.route,

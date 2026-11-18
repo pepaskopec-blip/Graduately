@@ -82,6 +82,8 @@ class Content(root: JSONObject) {
     val changelog = raw.arr("changelog")
     val progressKeys = stringMap(root.optJSONObject("progress")?.optJSONObject("keys"))
     val progressLegacy = stringMap(root.optJSONObject("progress")?.optJSONObject("legacy"))
+    val supabaseUrl = raw.obj("supabase")?.str("url")?.trim().orEmpty()
+    val supabaseAnonKey = raw.obj("supabase")?.str("anonKey")?.trim().orEmpty()
 
     fun germanUnit(id: Int) = german.firstOrNull { it.int("id") == id }
     fun netLesson(id: Int) = netLessons.firstOrNull { it.int("id") == id }

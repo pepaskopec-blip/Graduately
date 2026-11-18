@@ -85,6 +85,8 @@ final class Content {
     let changelog: [J]
     let progressKeys: [String: String]
     let progressLegacy: [String: String]
+    let supabaseUrl: String
+    let supabaseAnonKey: String
 
     init(_ root: [String: Any]) {
         raw = J(root)
@@ -168,6 +170,9 @@ final class Content {
         let progress = root["progress"] as? [String: Any]
         progressKeys = progress?["keys"] as? [String: String] ?? [:]
         progressLegacy = progress?["legacy"] as? [String: String] ?? [:]
+        let supabase = root["supabase"] as? [String: Any]
+        supabaseUrl = (supabase?["url"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        supabaseAnonKey = (supabase?["anonKey"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     func germanUnit(_ id: Int) -> J? { german.first { $0.int("id") == id } }

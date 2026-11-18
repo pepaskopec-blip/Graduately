@@ -480,10 +480,11 @@ struct Meaning: View {
 struct WordField: View {
     @Binding var value: String
     var placeholder: String
-    var mark: Bool?
-    var palette: Palette?
+    var mark: Bool? = nil
+    var palette: Palette? = nil
     /// A short blank inside a sentence or a table cell.
     var compact = false
+    var secure = false
     @Environment(\.palette) private var theme
     @Environment(\.accent) private var accent
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -491,15 +492,21 @@ struct WordField: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            TextField(placeholder, text: $value)
-                .textFieldStyle(.plain)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .focused($focused)
-                .multilineTextAlignment(compact ? .center : .leading)
-                #if os(macOS)
-                .font(.title3)
-                #endif
+            Group {
+                if secure {
+                    SecureField(placeholder, text: $value)
+                } else {
+                    TextField(placeholder, text: $value)
+                }
+            }
+            .textFieldStyle(.plain)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
+            .focused($focused)
+            .multilineTextAlignment(compact ? .center : .leading)
+            #if os(macOS)
+            .font(.title3)
+            #endif
             if let mark, !compact {
                 Image(systemName: mark ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundStyle(mark ? theme.success : theme.error)

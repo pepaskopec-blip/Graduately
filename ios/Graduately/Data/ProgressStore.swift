@@ -3,9 +3,12 @@ import Foundation
 final class ProgressStore {
     private let defaults = UserDefaults.standard
     private let ids: [String: String]
+    private let knownIds: Set<String>
+    var onMark: (() -> Void)?
 
     init(content: Content) {
         ids = content.progressKeys
+        knownIds = Set(content.progressKeys.values.filter { !$0.isEmpty })
         migrate(content.progressLegacy)
     }
 
@@ -13,7 +16,49 @@ final class ProgressStore {
     /// reordered or renamed without losing it. `address` is the in-app position.
     private func key(_ address: String) -> String { "done." + (ids[address] ?? address) }
     private func done(_ address: String) -> Bool { defaults.bool(forKey: key(address)) }
-    private func mark(_ address: String) { defaults.set(true, forKey: key(address)) }
+    private func mark(_ address: String) {
+        defaults.set(true, forKey: key(address))
+        onMark?()
+    }
+
+    func completedIds() -> Set<String> {
+        var out = Set<String>()
+        for id in knownIds where defaults.bool(forKey: "done." + id) {
+            out.insert(id)
+        }
+        if let extra = defaults.string(forKey: "sync_extra_done") {
+            for raw in extra.split(separator: "\n") {
+                let id = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !id.isEmpty { out.insert(id) }
+            }
+        }
+        return out
+    }
+
+    @discardableResult
+    func mergeCompletedIds(_ remote: Set<String>) -> Bool {
+        var changed = false
+        var extra = Set<String>()
+        if let existing = defaults.string(forKey: "sync_extra_done") {
+            for raw in existing.split(separator: "\n") {
+                let id = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !id.isEmpty && !knownIds.contains(id) { extra.insert(id) }
+            }
+        }
+        for raw in remote {
+            let id = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !id.isEmpty else { continue }
+            if !defaults.bool(forKey: "done." + id) {
+                defaults.set(true, forKey: "done." + id)
+                changed = true
+            }
+            if !knownIds.contains(id) {
+                extra.insert(id)
+            }
+        }
+        defaults.set(extra.sorted().joined(separator: "\n"), forKey: "sync_extra_done")
+        return changed
+    }
 
     private func migrate(_ legacy: [String: String]) {
         guard !defaults.bool(forKey: "progress_ids_v2") else { return }
@@ -489,4 +534,459 @@ func summarize(_ content: Content, _ p: ProgressStore) -> ProgressSum {
     sum.doneEx += md
     if md == content.mluvnice.count && !content.mluvnice.isEmpty { sum.doneUnits += 1 }
     return sum
+}
+
+struct AccountState {
+    var status = "idle"
+    var userDisplay = ""
+    var isSignedIn = false
+    var hasBuiltInConfig = false
+    var customUrl = ""
+    var customAnonKey = ""
+    var messageKey: String? = nil
+    var messageCount: Int? = nil
+}
+
+func normalizeAccountEmail(_ raw: String) -> String {
+    let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    if trimmed.isEmpty { return "" }
+    if trimmed.contains("@") { return trimmed }
+    let allowed = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789._-")
+    let local = String(trimmed.unicodeScalars.filter { allowed.contains($0) })
+    return local.isEmpty ? "" : "\(local)@graduately.app"
+}
+
+final class AccountSync {
+    private enum Keys {
+        static let accessToken = "account_access_token"
+        static let refreshToken = "account_refresh_token"
+        static let userId = "account_user_id"
+        static let userDisplay = "account_user_display"
+        static let customUrl = "supabase_url"
+        static let customAnonKey = "supabase_anon_key"
+    }
+
+    private struct HttpResult {
+        let code: Int
+        let body: Data
+    }
+
+    private enum SyncError: Error {
+        case config
+        case auth
+        case confirmEmail
+        case unauthorized
+        case network
+    }
+
+    private let defaults = UserDefaults.standard
+    private let content: Content
+    private let queue = DispatchQueue(label: "graduately.accountSync")
+
+    init(content: Content) {
+        self.content = content
+    }
+
+    func initialState() -> AccountState {
+        let cfg = resolvedConfig()
+        let token = defaults.string(forKey: Keys.accessToken) ?? ""
+        let uid = defaults.string(forKey: Keys.userId) ?? ""
+        let user = defaults.string(forKey: Keys.userDisplay) ?? ""
+        return AccountState(
+            status: "idle",
+            userDisplay: user,
+            isSignedIn: !token.isEmpty && !uid.isEmpty,
+            hasBuiltInConfig: hasBuiltInConfig(),
+            customUrl: defaults.string(forKey: Keys.customUrl) ?? cfg.url,
+            customAnonKey: defaults.string(forKey: Keys.customAnonKey) ?? cfg.anonKey,
+            messageKey: nil,
+            messageCount: nil
+        )
+    }
+
+    func signIn(
+        user: String,
+        pass: String,
+        urlOverride: String?,
+        keyOverride: String?,
+        localDone: Set<String>,
+        cb: @escaping (AccountState, Set<String>?) -> Void
+    ) {
+        authenticate(
+            signup: false,
+            user: user,
+            pass: pass,
+            urlOverride: urlOverride,
+            keyOverride: keyOverride,
+            localDone: localDone,
+            cb: cb
+        )
+    }
+
+    func signUp(
+        user: String,
+        pass: String,
+        urlOverride: String?,
+        keyOverride: String?,
+        localDone: Set<String>,
+        cb: @escaping (AccountState, Set<String>?) -> Void
+    ) {
+        authenticate(
+            signup: true,
+            user: user,
+            pass: pass,
+            urlOverride: urlOverride,
+            keyOverride: keyOverride,
+            localDone: localDone,
+            cb: cb
+        )
+    }
+
+    func signOut(cb: @escaping (AccountState) -> Void) {
+        queue.async {
+            self.clearSession()
+            let state = self.makeState(status: "idle", messageKey: nil, messageCount: nil)
+            DispatchQueue.main.async { cb(state) }
+        }
+    }
+
+    func sync(
+        localDone: Set<String>,
+        interactive: Bool,
+        cb: @escaping (AccountState, Set<String>?) -> Void
+    ) {
+        queue.async {
+            let token = self.defaults.string(forKey: Keys.accessToken) ?? ""
+            let uid = self.defaults.string(forKey: Keys.userId) ?? ""
+            guard !token.isEmpty, !uid.isEmpty else {
+                if interactive {
+                    let state = self.makeState(status: "error", messageKey: "account_err_auth", messageCount: nil)
+                    DispatchQueue.main.async { cb(state, nil) }
+                }
+                return
+            }
+            let cfg = self.resolvedConfig()
+            guard !cfg.url.isEmpty, !cfg.anonKey.isEmpty else {
+                if interactive {
+                    let state = self.makeState(status: "error", messageKey: "account_err_config", messageCount: nil)
+                    DispatchQueue.main.async { cb(state, nil) }
+                }
+                return
+            }
+            if interactive {
+                let working = self.makeState(status: "syncing", messageKey: "account_syncing", messageCount: nil)
+                DispatchQueue.main.async { cb(working, nil) }
+            }
+            do {
+                let merged = try self.syncWithRefresh(cfg: cfg, localDone: localDone)
+                let ok = self.makeState(status: "ok", messageKey: "account_synced", messageCount: merged.count)
+                DispatchQueue.main.async { cb(ok, merged) }
+            } catch SyncError.unauthorized {
+                self.clearSession()
+                let err = self.makeState(status: "error", messageKey: "account_err_auth", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+            } catch {
+                if interactive {
+                    let err = self.makeState(status: "error", messageKey: "account_err_network", messageCount: nil)
+                    DispatchQueue.main.async { cb(err, nil) }
+                }
+            }
+        }
+    }
+
+    private func authenticate(
+        signup: Bool,
+        user: String,
+        pass: String,
+        urlOverride: String?,
+        keyOverride: String?,
+        localDone: Set<String>,
+        cb: @escaping (AccountState, Set<String>?) -> Void
+    ) {
+        queue.async {
+            self.saveOverrides(urlOverride: urlOverride, keyOverride: keyOverride)
+            let cfg = self.resolvedConfig()
+            guard !cfg.url.isEmpty, !cfg.anonKey.isEmpty else {
+                let err = self.makeState(status: "error", messageKey: "account_err_config", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+                return
+            }
+            let display = user.trimmingCharacters(in: .whitespacesAndNewlines)
+            let email = normalizeAccountEmail(display)
+            guard !display.isEmpty, !email.isEmpty, !pass.isEmpty else {
+                let err = self.makeState(status: "error", messageKey: "account_err_fill", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+                return
+            }
+            guard pass.count >= 6 else {
+                let err = self.makeState(status: "error", messageKey: "account_err_short_pass", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+                return
+            }
+
+            let working = self.makeState(status: "working", messageKey: "account_working", messageCount: nil)
+            DispatchQueue.main.async { cb(working, nil) }
+
+            do {
+                try self.performAuth(signup: signup, cfg: cfg, email: email, pass: pass, display: display)
+                let merged = try self.syncWithRefresh(cfg: cfg, localDone: localDone)
+                let ok = self.makeState(status: "ok", messageKey: "account_synced", messageCount: merged.count)
+                DispatchQueue.main.async { cb(ok, merged) }
+            } catch SyncError.confirmEmail {
+                let ok = self.makeState(status: "idle", messageKey: "account_confirm_email", messageCount: nil)
+                DispatchQueue.main.async { cb(ok, nil) }
+            } catch SyncError.auth {
+                let err = self.makeState(status: "error", messageKey: "account_err_auth", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+            } catch SyncError.config {
+                let err = self.makeState(status: "error", messageKey: "account_err_config", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+            } catch {
+                let err = self.makeState(status: "error", messageKey: "account_err_network", messageCount: nil)
+                DispatchQueue.main.async { cb(err, nil) }
+            }
+        }
+    }
+
+    private func performAuth(
+        signup: Bool,
+        cfg: (url: String, anonKey: String),
+        email: String,
+        pass: String,
+        display: String
+    ) throws {
+        let path = signup ? "/auth/v1/signup" : "/auth/v1/token?grant_type=password"
+        let res = try request(
+            method: "POST",
+            urlString: cfg.url + path,
+            anonKey: cfg.anonKey,
+            bearer: nil,
+            jsonBody: ["email": email, "password": pass]
+        )
+        guard (200...299).contains(res.code) else {
+            if (400...422).contains(res.code) { throw SyncError.auth }
+            throw SyncError.network
+        }
+        guard let obj = try? JSONSerialization.jsonObject(with: res.body) as? [String: Any] else {
+            throw SyncError.network
+        }
+        let session = obj["session"] as? [String: Any]
+        let accessToken = (obj["access_token"] as? String) ?? (session?["access_token"] as? String) ?? ""
+        let refreshToken = (obj["refresh_token"] as? String) ?? (session?["refresh_token"] as? String) ?? ""
+        let userObj = (obj["user"] as? [String: Any]) ?? (session?["user"] as? [String: Any]) ?? obj
+        let userId = userObj["id"] as? String ?? ""
+
+        if accessToken.isEmpty || userId.isEmpty {
+            if signup {
+                if let identities = userObj["identities"] as? [Any], identities.isEmpty {
+                    throw SyncError.auth
+                }
+                throw SyncError.confirmEmail
+            }
+            throw SyncError.auth
+        }
+
+        defaults.set(accessToken, forKey: Keys.accessToken)
+        defaults.set(refreshToken, forKey: Keys.refreshToken)
+        defaults.set(userId, forKey: Keys.userId)
+        defaults.set(display, forKey: Keys.userDisplay)
+    }
+
+    private func syncWithRefresh(cfg: (url: String, anonKey: String), localDone: Set<String>) throws -> Set<String> {
+        do {
+            return try syncOnce(cfg: cfg, localDone: localDone)
+        } catch SyncError.unauthorized {
+            try refreshSession(cfg: cfg)
+            return try syncOnce(cfg: cfg, localDone: localDone)
+        }
+    }
+
+    private func syncOnce(cfg: (url: String, anonKey: String), localDone: Set<String>) throws -> Set<String> {
+        let token = defaults.string(forKey: Keys.accessToken) ?? ""
+        let uid = defaults.string(forKey: Keys.userId) ?? ""
+        guard !token.isEmpty, !uid.isEmpty else { throw SyncError.unauthorized }
+
+        let rpc = try request(
+            method: "POST",
+            urlString: cfg.url + "/rest/v1/rpc/sync_progress",
+            anonKey: cfg.anonKey,
+            bearer: token,
+            jsonBody: ["client_done": Array(localDone).sorted()]
+        )
+        if rpc.code == 401 { throw SyncError.unauthorized }
+        if (200...299).contains(rpc.code) {
+            if let arr = try? JSONSerialization.jsonObject(with: rpc.body) as? [String] {
+                return Set(arr.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty })
+            }
+            return localDone
+        }
+        if rpc.code != 404 {
+            throw SyncError.network
+        }
+
+        // Fallback when only the user_progress table is created without sync_progress RPC.
+        let encodedUid = uid.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? uid
+        let getRes = try request(
+            method: "GET",
+            urlString: cfg.url + "/rest/v1/user_progress?user_id=eq.\(encodedUid)&select=done",
+            anonKey: cfg.anonKey,
+            bearer: token,
+            jsonBody: nil
+        )
+        if getRes.code == 401 { throw SyncError.unauthorized }
+        guard (200...299).contains(getRes.code) else { throw SyncError.network }
+
+        var remote = Set<String>()
+        if let rows = try? JSONSerialization.jsonObject(with: getRes.body) as? [[String: Any]],
+           let arr = rows.first?["done"] as? [String] {
+            remote = Set(arr.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty })
+        }
+        let merged = localDone.union(remote)
+        let upsertRes = try request(
+            method: "POST",
+            urlString: cfg.url + "/rest/v1/user_progress?on_conflict=user_id",
+            anonKey: cfg.anonKey,
+            bearer: token,
+            extraHeaders: ["Prefer": "resolution=merge-duplicates,return=minimal"],
+            jsonBody: ["user_id": uid, "done": Array(merged).sorted()]
+        )
+        if upsertRes.code == 401 { throw SyncError.unauthorized }
+        guard (200...299).contains(upsertRes.code) else { throw SyncError.network }
+        return merged
+    }
+
+    private func refreshSession(cfg: (url: String, anonKey: String)) throws {
+        let refreshToken = defaults.string(forKey: Keys.refreshToken) ?? ""
+        guard !refreshToken.isEmpty else { throw SyncError.unauthorized }
+        let res = try request(
+            method: "POST",
+            urlString: cfg.url + "/auth/v1/token?grant_type=refresh_token",
+            anonKey: cfg.anonKey,
+            bearer: nil,
+            jsonBody: ["refresh_token": refreshToken]
+        )
+        if (400...403).contains(res.code) { throw SyncError.unauthorized }
+        guard (200...299).contains(res.code),
+              let obj = try? JSONSerialization.jsonObject(with: res.body) as? [String: Any],
+              let newAccess = obj["access_token"] as? String, !newAccess.isEmpty
+        else {
+            throw SyncError.network
+        }
+        defaults.set(newAccess, forKey: Keys.accessToken)
+        if let newRefresh = obj["refresh_token"] as? String, !newRefresh.isEmpty {
+            defaults.set(newRefresh, forKey: Keys.refreshToken)
+        }
+        if let userObj = obj["user"] as? [String: Any], let uid = userObj["id"] as? String, !uid.isEmpty {
+            defaults.set(uid, forKey: Keys.userId)
+        }
+    }
+
+    private func clearSession() {
+        defaults.removeObject(forKey: Keys.accessToken)
+        defaults.removeObject(forKey: Keys.refreshToken)
+        defaults.removeObject(forKey: Keys.userId)
+        defaults.removeObject(forKey: Keys.userDisplay)
+    }
+
+    private func hasBuiltInConfig() -> Bool {
+        let envUrl = (ProcessInfo.processInfo.environment["SUPABASE_URL"] ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let envKey = (ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"] ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        if !envUrl.isEmpty && !envKey.isEmpty { return true }
+        return !content.supabaseUrl.isEmpty && !content.supabaseAnonKey.isEmpty
+    }
+
+    private func resolvedConfig() -> (url: String, anonKey: String) {
+        let savedUrl = cleanUrl(defaults.string(forKey: Keys.customUrl) ?? "")
+        let savedKey = (defaults.string(forKey: Keys.customAnonKey) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let envUrl = cleanUrl(ProcessInfo.processInfo.environment["SUPABASE_URL"] ?? "")
+        let envKey = (ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"] ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let builtUrl = cleanUrl(content.supabaseUrl)
+        let builtKey = content.supabaseAnonKey.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let url = !savedUrl.isEmpty ? savedUrl : (!envUrl.isEmpty ? envUrl : builtUrl)
+        let key = !savedKey.isEmpty ? savedKey : (!envKey.isEmpty ? envKey : builtKey)
+        return (url, key)
+    }
+
+    private func saveOverrides(urlOverride: String?, keyOverride: String?) {
+        if let u = urlOverride {
+            let cleaned = cleanUrl(u)
+            if !cleaned.isEmpty || !hasBuiltInConfig() {
+                defaults.set(cleaned, forKey: Keys.customUrl)
+            }
+        }
+        if let k = keyOverride {
+            let cleaned = k.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !cleaned.isEmpty || !hasBuiltInConfig() {
+                defaults.set(cleaned, forKey: Keys.customAnonKey)
+            }
+        }
+    }
+
+    private func cleanUrl(_ raw: String) -> String {
+        var s = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        while s.hasSuffix("/") { s.removeLast() }
+        if !s.isEmpty && !s.contains("://") {
+            s = "https://" + s
+        }
+        return s
+    }
+
+    private func makeState(status: String, messageKey: String?, messageCount: Int?) -> AccountState {
+        let token = defaults.string(forKey: Keys.accessToken) ?? ""
+        let uid = defaults.string(forKey: Keys.userId) ?? ""
+        let user = defaults.string(forKey: Keys.userDisplay) ?? ""
+        let cfg = resolvedConfig()
+        return AccountState(
+            status: status,
+            userDisplay: user,
+            isSignedIn: !token.isEmpty && !uid.isEmpty,
+            hasBuiltInConfig: hasBuiltInConfig(),
+            customUrl: defaults.string(forKey: Keys.customUrl) ?? cfg.url,
+            customAnonKey: defaults.string(forKey: Keys.customAnonKey) ?? cfg.anonKey,
+            messageKey: messageKey,
+            messageCount: messageCount
+        )
+    }
+
+    private func request(
+        method: String,
+        urlString: String,
+        anonKey: String,
+        bearer: String?,
+        extraHeaders: [String: String] = [:],
+        jsonBody: [String: Any]?
+    ) throws -> HttpResult {
+        guard let url = URL(string: urlString) else { throw SyncError.config }
+        var req = URLRequest(url: url, timeoutInterval: 15)
+        req.httpMethod = method
+        req.setValue(anonKey, forHTTPHeaderField: "apikey")
+        if let bearer, !bearer.isEmpty {
+            req.setValue("Bearer \(bearer)", forHTTPHeaderField: "Authorization")
+        }
+        req.setValue("application/json", forHTTPHeaderField: "Accept")
+        for (k, v) in extraHeaders {
+            req.setValue(v, forHTTPHeaderField: k)
+        }
+        if let jsonBody {
+            req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            req.httpBody = try JSONSerialization.data(withJSONObject: jsonBody)
+        }
+        let sem = DispatchSemaphore(value: 0)
+        var outcome: Result<HttpResult, Error> = .failure(SyncError.network)
+        URLSession.shared.dataTask(with: req) { data, resp, err in
+            if err != nil {
+                outcome = .failure(SyncError.network)
+            } else if let http = resp as? HTTPURLResponse {
+                outcome = .success(HttpResult(code: http.statusCode, body: data ?? Data()))
+            } else {
+                outcome = .failure(SyncError.network)
+            }
+            sem.signal()
+        }.resume()
+        if sem.wait(timeout: .now() + 20) == .timedOut {
+            throw SyncError.network
+        }
+        return try outcome.get()
+    }
 }

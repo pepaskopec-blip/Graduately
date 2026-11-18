@@ -33,6 +33,26 @@
 | update_android_allow | Povolte této aplikaci instalovat aplikace a klepněte znovu na Aktualizovat. | Allow this app to install apps, then tap Update again. |
 | update_android_installing | Systém teď nabídne instalaci nové verze (%s). | The system will now offer to install the new version (%s). |
 | update_err_badapk | Stažený soubor není platný build Graduately. | The downloaded file is not a valid Graduately build. |
+| account | ÚČET A SYNCHRONIZACE | ACCOUNT & SYNC |
+| account_hint | Přihlaste se na Macu i v telefonu stejným účtem — postup se mezi zařízeními sloučí automaticky. | Sign in with the same account on your Mac and phone — your progress merges across devices automatically. |
+| account_user_placeholder | E-mail nebo přezdívka | Email or username |
+| account_pass_placeholder | Heslo (aspoň 6 znaků) | Password (at least 6 characters) |
+| account_url_placeholder | Supabase URL (https://….supabase.co) | Supabase URL (https://….supabase.co) |
+| account_key_placeholder | Supabase Anon Key | Supabase Anon Key |
+| account_signin | Přihlásit se | Sign in |
+| account_signup | Vytvořit účet | Create account |
+| account_signout | Odhlásit se | Sign out |
+| account_sync_now | Synchronizovat | Sync now |
+| account_signed_in | Přihlášen: %s | Signed in: %s |
+| account_working | Připojuji se… | Connecting… |
+| account_syncing | Synchronizuji postup… | Syncing progress… |
+| account_synced | Synchronizováno (%d hotových cvičení). | Synced (%d completed exercises). |
+| account_confirm_email | Účet vytvořen — potvrďte e-mail a pak se přihlaste. | Account created — confirm your email and then sign in. |
+| account_err_config | Zadejte Supabase URL a Anon Key. | Enter the Supabase URL and Anon Key. |
+| account_err_fill | Zadejte e-mail (nebo přezdívku) a heslo. | Enter your email (or username) and password. |
+| account_err_short_pass | Heslo musí mít aspoň 6 znaků. | Password must be at least 6 characters. |
+| account_err_auth | Přihlášení se nepovedlo. Zkontrolujte údaje (nebo zda účet už neexistuje). | Authentication failed. Check your credentials (or whether the account already exists). |
+| account_err_network | Synchronizace se nepovedla. Zkontrolujte připojení nebo tabulku v Supabase. | Sync failed. Check your connection or the Supabase table. |
 
 # Úvod a novinky
 

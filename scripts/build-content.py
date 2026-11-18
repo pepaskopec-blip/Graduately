@@ -8,6 +8,7 @@ generated JSON; nothing under content/ is read at run time.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import unicodedata
@@ -1125,6 +1126,21 @@ MATH = [
 SKILLS = [("anglictina", "en"), ("nemcina", "de")]
 
 
+def supabase_config(content: Path) -> dict[str, str]:
+    url = os.environ.get("SUPABASE_URL", "").strip().rstrip("/")
+    anon_key = os.environ.get("SUPABASE_ANON_KEY", "").strip()
+    cfg_path = content / "aplikace" / "supabase.json"
+    if (not url or not anon_key) and cfg_path.is_file():
+        try:
+            raw = json.loads(cfg_path.read_text(encoding="utf-8"))
+            if isinstance(raw, dict):
+                url = url or str(raw.get("url") or "").strip().rstrip("/")
+                anon_key = anon_key or str(raw.get("anonKey") or raw.get("anon_key") or "").strip()
+        except Exception:
+            pass
+    return {"url": url, "anonKey": anon_key}
+
+
 def build(content: Path = CONTENT) -> dict:
     ui_strings(content / "aplikace" / "texty.md")
     payload: dict = {"i18n": None}
@@ -1150,6 +1166,7 @@ def build(content: Path = CONTENT) -> dict:
     payload["books"] = books(content / "cestina" / "cetba")
     payload["changelog"] = parse_changelog(content / "aplikace" / "novinky.txt")
     payload["progress"] = {"keys": PROGRESS, "legacy": LEGACY}
+    payload["supabase"] = supabase_config(content)
     payload["i18n"] = I18N.map
     check(payload)
     return payload

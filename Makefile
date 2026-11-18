@@ -56,8 +56,12 @@ smoke:
 	chmod +x scripts/smoke-platforms.sh
 	./scripts/smoke-platforms.sh
 
+secrets:
+	chmod +x scripts/setup-github-secrets.sh
+	./scripts/setup-github-secrets.sh
+
 clean:
 	rm -rf build dist dist-android dist-ios
 	$(GRADLE) clean
 
-.PHONY: all content run test android linux windows ios macos installer-zips smoke clean
+.PHONY: all content run test android linux windows ios macos installer-zips smoke secrets clean

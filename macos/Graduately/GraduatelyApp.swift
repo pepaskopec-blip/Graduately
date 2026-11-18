@@ -63,7 +63,10 @@ struct MacRoot: View {
                 }
             }
             .animation(Motion.settle, value: showsUpdateAccessory)
-            .onAppear { vm.checkUpdate(false) }
+            .onAppear {
+                vm.checkUpdate(false)
+                vm.syncAccount(interactive: false)
+            }
             .frame(minWidth: 980, minHeight: 640)
     }
 

@@ -4,6 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.Snapshot
+import org.maturita.maturita.data.AccountState
+import org.maturita.maturita.data.AccountSync
 import org.maturita.maturita.data.ColorMode
 import org.maturita.maturita.data.Content
 import org.maturita.maturita.data.ProgressStore
@@ -16,6 +19,7 @@ import org.maturita.maturita.platform.UpdateState
 class AppViewModel(val content: Content, val platform: Platform) {
     val progress = ProgressStore(platform.prefs, content)
     private val updater = platform.updater
+    private val accountSync = AccountSync(platform.prefs, content)
 
     var mode by mutableStateOf(progress.mode)
         private set
@@ -27,8 +31,14 @@ class AppViewModel(val content: Content, val platform: Platform) {
         private set
     var update by mutableStateOf(UpdateState(messageArg = platform.commit.take(7)))
         private set
+    var account by mutableStateOf(accountSync.initialState())
+        private set
     var showChangelog by mutableStateOf(shouldShowChangelog())
         private set
+
+    init {
+        progress.onMark = { syncAccount(false) }
+    }
     /** True when the latest navigation moved deeper; false for back and tab switches. */
     var navigatingForward by mutableStateOf(true)
         private set
@@ -335,6 +345,33 @@ class AppViewModel(val content: Content, val platform: Platform) {
 
     fun installUpdate() {
         updater.install { update = it }
+    }
+
+    fun signInAccount(user: String, pass: String, url: String, key: String) {
+        accountSync.signIn(user, pass, url, key, progress.completedIds(), ::applyAccountResult)
+    }
+
+    fun signUpAccount(user: String, pass: String, url: String, key: String) {
+        accountSync.signUp(user, pass, url, key, progress.completedIds(), ::applyAccountResult)
+    }
+
+    fun signOutAccount() {
+        accountSync.signOut { state ->
+            Snapshot.withMutableSnapshot { account = state }
+        }
+    }
+
+    fun syncAccount(interactive: Boolean) {
+        if (!interactive && !account.isSignedIn) return
+        accountSync.sync(progress.completedIds(), interactive, ::applyAccountResult)
+    }
+
+    private fun applyAccountResult(state: AccountState, merged: Set<String>?) {
+        val changed = merged != null && progress.mergeCompletedIds(merged)
+        Snapshot.withMutableSnapshot {
+            account = state
+            if (changed) refresh()
+        }
     }
 
     fun dismissChangelog() {
